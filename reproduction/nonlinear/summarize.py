@@ -113,7 +113,7 @@ def main():
         "",
         "## Remaining gaps",
         "",
-        "Original registry/kernel/proof artifacts; original-size FP16 and production-kernel certificates; PTX and tensor-core collectives; induction-based scalable proofs; model pass rates/token costs and LLM ablations; H100 timing cells; numerical error bounds and complete hardware semantics. The independent mutation set is not the paper's original 42 mutants.",
+        "Original registry/kernel/proof artifacts; original-size FP16 and production-kernel certificates; PTX and tensor-core collectives; induction-based scalable proofs; model pass rates/token costs and LLM ablations; H100 timing cells; complete per-opcode hardware sweeps. The independent mutation set is not the paper's original 42 mutants. IEEE proofs and formal numerical-error bounds are outside the paper's main theorem as well as this study.",
         "",
         "Lean reduction remains costly even for these reduced cases. The attention kernel computes scores once per query row to avoid duplicate symbolic execution; the GQA dimension is minimal. These choices do not establish paper-scale verification performance. All successful baseline certificates were rechecked and their theorem/source/model hashes are preserved.",
         "",

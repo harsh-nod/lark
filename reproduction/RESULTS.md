@@ -83,4 +83,4 @@ The upstream revision is pinned separately from the unavailable paper registry r
 
 Finite hardware comparisons do not establish IEEE semantics, error bounds or complete machine conformance. Reference/source translation and phase-reduction metatheory retain the trust boundary described in [the trust model](../docs/trust.md).
 
-Still unreproduced: original KernelCraft model pass rates/token costs; original FP16/PTX and production-kernel certificates; H100 timings; fastest-library speedups; model/induction ablations; complete opcode calibration and numerical error analysis. Missing original artifacts and unsupported semantics remain blockers independently of NVIDIA hardware access.
+Still unreproduced: original KernelCraft model pass rates/token costs; original FP16/PTX and production-kernel certificates; H100 timings; fastest-library speedups; model/induction ablations; complete opcode calibration. Missing original artifacts and unsupported semantics remain blockers independently of NVIDIA hardware access. IEEE proofs and formal numerical-error bounds are outside the paper's main theorem as well as this study.

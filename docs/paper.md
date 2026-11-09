@@ -7,7 +7,8 @@ This is an independent implementation, not an upstream release.
 The [MI350X extension](../reproduction/nonlinear/README.md) adds a second pinned
 model with nonlinear scalar functions and explicit FP16 conversions. Its proofs
 still use concrete reduced shapes and abstract operations; it does not reproduce
-the paper's original programs, induction mechanism or IEEE error analysis.
+the paper's original programs or induction mechanism. IEEE rounding and formal
+numerical-error bounds are outside both the paper's main theorem and our proofs.
 
 The [pointwise induction extension](../reproduction/pointwise/README.md) now
 proves a restatement of the existing nonlinear machine's grid fold by induction.
@@ -35,7 +36,7 @@ scalable profile remains much narrower than general tiled/collective proofs.
 The [reproduction study](../reproduction/README.md) records exactly which experiments
 were run. KernelCraft model pass rates/token costs, the original production-kernel
 certificates, original kernel speedups, PTX/H100 experiments, induction/LLM ablations,
-and numerical error bounds remain unreproduced. Original artifacts were not present
+and complete per-opcode hardware sweeps remain unreproduced. Original artifacts were not present
 in the arXiv source bundle; NVIDIA hardware is only one of the missing requirements.
 
 The source frontend is intentionally smaller: no PTX, packed/vector arithmetic,

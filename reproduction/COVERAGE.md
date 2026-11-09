@@ -4,6 +4,11 @@
 from the authors' reported results. No model calls or paid services were used.
 Hardware evidence is from AMD GPUs.
 
+[Offline model experiment preparation](local_models/README.md) now identifies
+official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
+This makes local adaptations possible; it does not recover the original harness
+or hosted-model outcomes. No real-model proof results are recorded yet.
+
 Paper: [LARK, arXiv:2611.02028v1](https://arxiv.org/abs/2611.02028v1).
 Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 [full-length pointwise induction](pointwise/RESULTS.md).
