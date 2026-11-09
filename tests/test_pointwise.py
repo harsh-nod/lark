@@ -78,6 +78,11 @@ class PointwiseTests(unittest.TestCase):
             )
             self.assertEqual(report["status"], "verified")
             certificate.check(destination, lean=LEAN)
+            report["elements"] = 1
+            (destination / "report.json").write_text(json.dumps(report))
+            with self.assertRaises(Refusal):
+                certificate.check(destination, lean=LEAN)
+            report["elements"] = 16384
             main = destination / "Main.lean"
             main.write_text(
                 main.read_text().replace(

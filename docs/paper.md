@@ -15,6 +15,11 @@ proves a restatement of the existing nonlinear machine's grid fold by induction.
 It certifies three full-length FP16 families, with one thread per block. This
 scalable profile remains much narrower than general tiled/collective proofs.
 
+The [counted-loop extension](../reproduction/reduction/README.md) proves a
+serial dot-product loop and the actual grid fold, certifying full-size GEMV in
+the same machine. The two induction profiles now cover four paper-size families
+with independent scalar programs and exact-source checks on both MI350X hosts.
+
 | Paper component | Implementation | Extent and differences |
 | --- | --- | --- |
 | Machine state, §4.1 | `lean/Lark/Model.lean`, `Nonlinear.lean` | Separate pinned profiles with thread PCs, index/scalar registers, scoped memories, geometry and access traces |
@@ -23,15 +28,15 @@ scalable profile remains much narrower than general tiled/collective proofs.
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
 | Source translation and read-back | `lark_kernels/frontend.py` | Lossless token stream plus strict CUDA/HIP lowering; both parser and lowering remain trusted |
-| Segmentation, Obligation 2 | `Segment`, `flatten`; `Lark/Pointwise.lean` | Bounded profile checks syntactic grouping; separate pointwise profile proves a grid-fold restatement by induction in the same machine. No general counted-loop/tile recovery |
+| Segmentation, Obligation 2 | `Segment`, `flatten`; `Lark/Pointwise.lean`, `Reduction.lean` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds and a fixed GEMV counted loop by induction. No general loop/tile recovery |
 | Tensor reference formalization | `lark_kernels/spec.py` | Independent PyTorch AST reader for a closed set of fixed-shape operations; does not execute reference code |
 | Equivalence, Obligation 3 | `segment_equivalence` | Completion, race freedom, and output equality for every scalar interpretation, input, and outside-memory function |
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |
 | Agent–checker iteration | `lark_kernels/certificate.py` | Bounded local proof-provider protocol, diagnostics and immutable statements; deterministic default prover; optional HTTP model adapter |
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
-| Mutation evaluation, §5.2 | Three study runners under `reproduction/` | Independent reduced and full-length arithmetic mutants checked directly in Lean with numerical screens bypassed; not the original 42 mutants |
+| Mutation evaluation, §5.2 | Study runners under `reproduction/` | Independent reduced/full-length arithmetic mutants checked directly in Lean; GEMV changes fail fixed-program structural equality; not the original 42 mutants |
 | Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
-| Hardware experiments | Three GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced and full-length pointwise certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
+| Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced, full-length pointwise and full-size GEMV certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
 
 The [reproduction study](../reproduction/README.md) records exactly which experiments
 were run. KernelCraft model pass rates/token costs, the original production-kernel
@@ -55,6 +60,6 @@ The symbolic preflight checks expression structure, not algebraic equality.
 The proposed segmentation retains flat branch targets and verifies grouping
 by flattening. It is useful as a small proof-provider interface and a sound
 certificate boundary, but it does not reproduce the paper's scalability from
-induction over loop/tile restatements. The newer pointwise profile supplies a
-checked induction theorem for its narrow launch pattern. The [coverage ledger](../reproduction/COVERAGE.md)
+induction over loop/tile restatements. The newer pointwise and GEMV profiles supply
+checked induction theorems for narrow launch/program patterns. The [coverage ledger](../reproduction/COVERAGE.md)
 tracks the remaining paper results separately from these independent studies.

@@ -32,6 +32,9 @@ jobs:
       - name: Check pointwise induction proof
         run: lake env lean Lark/Pointwise.lean
         working-directory: lean
+      - name: Check counted-loop induction proof
+        run: lake env lean Lark/Reduction.lean
+        working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Export example certificates

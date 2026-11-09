@@ -316,6 +316,8 @@ def check(directory, *, lean=None, timeout=120):
     task, tr, body, ref_body = prepare(
         *((directory / x).read_text() for x in ("kernel.cu", "reference.py", "task.json"))
     )
+    if type(report.get("elements")) is not int or report["elements"] != task.buffers[0].size:
+        raise Refusal("integrity", "reported element count differs from the fixed signature")
     if json.loads((directory / "translation.json").read_text()) != json.loads(
         json.dumps(tr.data())
     ):

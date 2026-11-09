@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "experiment": "gemv-induction-v4-exact-source",
+  "timestamp_utc": "2026-11-09T21:49:38.719066+00:00",
+  "device": "AMD Instinct MI350X",
+  "architecture": "gfx950",
+  "compiler": "HIP version: 7.2.53150-b958ce88c2\nAMD clang version 22.0.0git (https://github.com/ROCm/llvm-project  25496 9b0f9aa3067a907226b0ebb8bee1fe51d1f0fca5)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.3.0/lib/llvm/bin\nBuild config: +assertions\nConfiguration file: /opt/rocm-7.3.0/lib/llvm/bin/clang++.cfg\n",
+  "runner_sha256": "f764a40a978fd6b92722ec27c11a63a96a25a8e8f806d9fd8d5ec0624c2052a6",
+  "dataset_sha256": "d2ef90d3292e42e34ea8dbf772b65f71068d5d13a83a7cdd568324c241e943ae",
+  "certificate_index_sha256": "f8607f6e1a8c3039da1146b1b194de4bfabbb246d7c4264bc247a54d9e03e84a",
+  "wrapper_sha256": "6009fc2ab10435994898c1ded9165120d5f54289a6134b76ff4aac36e054d46c",
+  "library_sha256": "c6f11a40312939b81b630c65c518a7dc38074ff32761d356f26878a93a7814d4",
+  "compile_command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "/tmp/lark-gemv-device-20261109/certified.hip",
+    "-o",
+    "/tmp/lark-gemv-device-20261109/results/certified.so"
+  ],
+  "model_calls": 0,
+  "reference": "CPU PyTorch 2.11.0+cu130",
+  "cases": [
+    {
+      "key": "gemv",
+      "certificate": {
+        "status": "verified",
+        "profile": "gemv-induction-v4",
+        "matrix_shape": [
+          512,
+          1024
+        ],
+        "model_hashes": {
+          "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+          "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+          "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa"
+        },
+        "theorem_sha256": "6a5d6edd6891250dcadcabd2bb402ac82b8264dc06a522efea373effb4fdb66d",
+        "source_sha256": "d7323f0b48201499fe7e8102754ad9408c35215e023f438236a422588af30820",
+        "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task_sha256": "4b982623878f5a82799bee073fb53d5e133558cfb8b764727b600e148926da26"
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.00048828125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.00048828125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 3.814697265625e-06,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 1.52587890625e-05,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 512
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "scope": "Full [512,1024] GEMV, exact certified source, one thread per row. Abstract operation proof plus separate finite numerical checks; not the paper's optimized source or launch."
+}

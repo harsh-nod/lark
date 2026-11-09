@@ -28,6 +28,11 @@ certificates and exact-source validation on both MI350X hosts. Its one-thread
 blocks differ from the paper's optimized launches. See the [paper result coverage
 ledger](reproduction/COVERAGE.md) for remaining work and unavailable dependencies.
 
+[Counted-loop induction](reproduction/reduction/README.md) adds full-size
+512×1024 GEMV certificates for HIP/CUDA and exact-source checks on both MI350X
+hosts. Its generic loop/grid proof covers arbitrary valid dimensions; proof-only
+scaling reaches reduction length 1,048,576 without allocating the matrix.
+
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
 segmentation, and proves the result equals the reference. Python preflight

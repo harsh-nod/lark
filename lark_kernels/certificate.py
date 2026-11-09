@@ -423,6 +423,10 @@ def check(directory, *, lean=None, timeout=120):
         from .pointwise import check as check_pointwise
 
         return check_pointwise(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "gemv-induction-v4":
+        from .gemv import check as check_gemv
+
+        return check_gemv(directory, lean=lean, timeout=timeout)
     required = {
         "Main.lean",
         "kernel.cu",

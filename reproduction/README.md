@@ -3,6 +3,9 @@
 This page records the original scalar-v1 study. The later
 [MI350X extension](nonlinear/README.md) adds nonlinear and explicit FP16-storage
 proof support; its reduced certificates and measurements have a separate report.
+Later [pointwise](pointwise/README.md) and [GEMV](reduction/README.md) studies add
+full-size induction certificates and exact-source validation on two MI350X hosts.
+The [coverage ledger](COVERAGE.md) tracks all paper results across these studies.
 
 This is an **independent, partial reproduction** of
 [LARK (arXiv:2611.02028v1)](https://arxiv.org/html/2611.02028v1).

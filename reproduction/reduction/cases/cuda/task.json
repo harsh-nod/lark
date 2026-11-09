@@ -1,0 +1,45 @@
+{
+  "name": "gemv_cuda_512_1024",
+  "entry": "induction_gemv_cuda_512_1024",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        512,
+        1024
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        1024,
+        1
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        512,
+        1
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 512,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    4102,
+    1,
+    1,
+    1
+  ]
+}
