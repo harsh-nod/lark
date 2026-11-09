@@ -97,3 +97,11 @@ zero, 16,384 generated tokens per request, 600-second request timeout and
 recommends for benchmarks. These budgets and this bounded harness differ from
 the paper's multi-agent loops, original registry, restart/review policies and
 API billing. Any resulting measurements must remain labeled as adaptations.
+
+`checkpoint.py --local-only --wait-timeout 7200` validates an existing snapshot
+while another downloader atomically completes missing files. It fetches pinned
+file metadata over HTTPS and makes no model calls or weight downloads. Every
+weight needs its official LFS SHA-256; configuration/tokenizer/support files are
+checked against their LFS digests or Git blob IDs, with SHA-256 also recorded.
+The readiness record cannot become `verified-download` until all selected files
+pass these checks. Same-length altered weights or configuration files are refused.
