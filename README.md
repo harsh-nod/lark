@@ -1,0 +1,167 @@
+# LARK
+
+An independent implementation of the verification workflow in
+[LARK: Lean-Assisted Reasoning for LLM-Generated GPU Kernels](https://arxiv.org/abs/2611.02028)
+(Zhang et al., 2026).
+
+**This repository implements a bounded scalar CUDA/HIP profile of the method.**
+It is not the authors' code or a reproduction of their KernelCraft results.
+It produces real, standalone Lean certificates for the supported kernels. The
+paper's broader PTX, tensor-core, transcendental, and production-kernel coverage
+is outside this implementation. [The implementation map](docs/paper.md)
+records the correspondence and differences.
+
+The pipeline reads a kernel and a separately written PyTorch reference,
+constructs a flat machine program, checks race freedom, verifies a proposed
+segmentation, and proves the result equals the reference. Python preflight
+can reject a candidate; acceptance requires Lean, successful proofs, and an
+axiom audit. Proofs quantify over **all input values** at the declared shapes,
+and all initial contents of memory outside the input regions.
+
+```mermaid
+flowchart LR
+  K[CUDA / HIP source] --> T[Strict reader + fixed lowering]
+  T --> F[Flat instruction program]
+  R[PyTorch reference AST] --> S[Tensor specification]
+  F --> P[Proof proposals and segments]
+  S --> P
+  P --> L[Lean: RF + SEG + EQ]
+  L -->|errors| P
+  L -->|checked| C[Standalone certificate + trust report]
+```
+
+## Run an example
+
+Requires Python 3.11+ and **Lean 4.19.0**. No GPU, Mathlib, or Python runtime
+dependencies are needed to verify a kernel. Install Lean using
+[the official Lean installation instructions](https://lean-lang.org/install/)
+and ensure `lean` and `lake` are on `PATH`.
+
+```bash
+git clone https://github.com/harsh-nod/lark.git
+cd lark
+python3 -m pip install -e .
+
+lark verify examples/vector_add/kernel.cu \
+  --reference examples/vector_add/reference.py \
+  --task examples/vector_add/task.json \
+  --output certificates/vector_add
+
+lark check certificates/vector_add
+```
+
+Use `python3 -m lark_kernels` instead of `lark` if another installed package owns that
+command. Set `LARK_LEAN=/absolute/path/to/lean` or pass `--lean` to select a
+toolchain. `verify` requires a new output directory, so a failed run cannot
+silently reuse an old certificate.
+
+The output contains the original kernel, reference, signature and launch,
+lossless token data, flat program, segmentation and proof proposals, a pinned
+machine model embedded in `Main.lean`, checker logs, SHA-256 artifact hashes,
+and `report.json`. The report lists the trust boundary and the actual axioms
+of each proof.
+
+A [checked vector-add certificate](examples/vector_add/certificate) is included
+so the standalone proof can also be inspected and rebuilt immediately.
+
+Recheck without installing this Python package:
+
+```bash
+cd certificates/vector_add
+lake build
+# Alternatively, with Lean 4.19.0 already selected:
+lean Main.lean
+```
+
+`lark check` additionally regenerates the fixed theorem statement and checks
+that the source, signature, reference, model, and proposal still bind to it.
+`lake build` checks the exported Lean theorem itself.
+
+## Included kernels
+
+| Example | Language | What it exercises |
+| --- | --- | --- |
+| `vector_add` | CUDA | Multiple blocks and disjoint output ownership |
+| `relu` | HIP | Exact maximum and HIP launch metadata |
+| `saxpy` | CUDA | Constants and scalar arithmetic |
+| `fused_relu` | CUDA | Register temporaries and fused operations |
+| `reverse` | CUDA | Shared-memory staging and a block barrier |
+| `block_sum` | CUDA | Separate shared memory per block and guarded writes |
+| `matmul` | CUDA | Integer division/remainder, counted `while`, accumulation |
+
+Examples deliberately use small shapes so the full symbolic execution is
+tractable in Lean's kernel. They are correctness demonstrations, not tuned
+performance kernels. Run all examples and mutation tests with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+Proof integration tests skip if Lean is absent. CI installs the pinned
+toolchain and runs them. `tools/verify_examples.py` exports all example
+certificates to a new directory. Optional CPU comparisons against installed
+PyTorch are available with `python3 tools/check_torch.py`; these are numerical
+tests, separate from the proofs. No GPU performance or hardware-conformance
+results are claimed.
+
+## Supported input
+
+The task JSON fixes argument order, buffer roles and shapes, language, launch,
+and four fuel bounds. See [the task format](docs/input.md).
+
+- Contiguous, disjoint `float32` input/output/scratch buffers; static shared arrays.
+- Scalar `+`, `-`, `*`, and `fmaxf`; local scalar registers.
+- Nonnegative integer indices within signed int32 range; `+`, `-`, `*`, `/`, `%`.
+- One-dimensional launches, integer comparisons, braced `if`/`else`, and `while`.
+- `__syncthreads()` and CUDA `__syncwarp()` on complete warps.
+- References using arithmetic, ReLU, maximum, reshape, sum, flip, and rank-2 matmul.
+
+Unsupported operations, overflow, missing initialization, invalid bounds,
+exhausted fuel, and divergent synchronization cause refusal. Even same-value
+conflicting writes count as races. A block barrier never orders different
+blocks. Atomics, asynchronous operations, PTX, pointer arithmetic, float-based
+control flow, and tensor-core collectives are refused.
+
+Arithmetic is interpreted through universally quantified scalar operations.
+This establishes equivalence for an exact real interpretation, without
+formalizing IEEE rounding or proving numerical error bounds. This
+profile requires matching scalar expression structure: algebraically
+equivalent rearrangements can be refused. Rejection is not proof of a bug.
+
+## Proof-provider loop
+
+The default prover proposes barrier-delimited segments and deterministic Lean
+tactics. To attach an external LLM prover, explicitly supply a local command:
+
+```bash
+lark verify examples/vector_add/kernel.cu \
+  --reference examples/vector_add/reference.py \
+  --task examples/vector_add/task.json \
+  --output certificates/with_provider \
+  --proposal my_initial_proposal.json \
+  --provider 'python3 tools/http_prover.py' --attempts 3
+```
+
+A failed check sends JSON containing the current proposal, fixed Lean source,
+and errors to the command's stdin. It returns replacement segments and three
+proof bodies. It cannot change the theorem statement or signature. Every
+attempt is checked again; admissions, declaration injection, unchecked native
+evaluation, and nonstandard axioms are rejected. Provider commands are local
+programs you choose to execute; this is not a sandbox for malicious executables.
+
+The optional HTTP adapter reads `LARK_PROVER_URL` (a complete chat-completions
+endpoint), `LARK_PROVER_MODEL`, and optionally `LARK_PROVER_API_KEY` from the
+environment. No provider, network call, or model delegation occurs by default.
+See [the provider protocol](docs/providers.md).
+
+## Trust and scope
+
+The machine semantics, Python parsers and lowering, reference formalization,
+host interface, Lean, and the phase-reduction metatheory are trusted and listed
+in each report. Unlike the paper, this repository has not measured per-operation
+semantics against GPU hardware, and its Python source lowering has not been
+formalized in Lean. The lossless token round trip detects byte loss; it does
+not prove semantic correctness of the lowering. See [the trust model](docs/trust.md).
+
+The source implementation is MIT licensed. The paper is cited for the design;
+its prose, figures, and implementation have not been copied into this repository.

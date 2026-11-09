@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "paper": "https://arxiv.org/abs/2611.02028",
+  "implementation": "independent bounded scalar profile",
+  "task": {
+    "name": "vector_add",
+    "entry": "vector_add",
+    "language": "cuda",
+    "buffers": [
+      {
+        "name": "x",
+        "role": "input",
+        "shape": [
+          4
+        ]
+      },
+      {
+        "name": "y",
+        "role": "input",
+        "shape": [
+          4
+        ]
+      },
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          4
+        ]
+      }
+    ],
+    "grid": 2,
+    "block": 2,
+    "warp": 32,
+    "fuel": [
+      128,
+      16,
+      16,
+      16
+    ]
+  },
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned scalar GPU machine and its per-operation definitions",
+    "Python CUDA/HIP parser, fixed lowering, and token read-back formatter",
+    "Python PyTorch AST formalization of the independent reference module",
+    "Host launch geometry, contiguous float32 layouts, aligned and disjoint named buffers",
+    "Exact arithmetic interpretation: floating-point rounding and numerical error are outside the theorem",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)"
+  ],
+  "scope": [
+    "Bounded, concrete shapes and one-dimensional launches; all input scalar values",
+    "Only float32 buffers; scalar +, -, *, max; exact nonnegative int32 index arithmetic",
+    "Warp/block/grid folds; CUDA/HIP frontend exposes block barriers, full warp barriers, and halt",
+    "No PTX, tensor-core collectives, async operations, atomics, data-dependent control, or numerical guarantee",
+    "Hardware conformance of the machine semantics has not been measured in this repository",
+    "Syntactic segment grouping and repetition; no general induction-based loop segmentation",
+    "Only computations with the same scalar expression structure currently prove automatically"
+  ],
+  "source_readback": true,
+  "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+  "files": {
+    "Main.lean": "8cbe2ccb45eb941b0c4cba4d8724e4f5965a57ca519af5f254e3a7c37a2bd921",
+    "kernel.cu": "196912135ccf005bf04993caaa21a359078c3bb556ec84a08e6969f27b6e507a",
+    "reference.py": "e47c8e04ab2e9e27812184f12faaf206b357e6470d7aa5f7e7dc39bfa7eda93a",
+    "task.json": "a3f39e1764694f4c7b2a374ac66f1ccc0e23ad29cdef3b035fa1862a4d6d93d4",
+    "translation.json": "38c947f30b9224a07a5b30cf26e5790765efc51662995bf88c9fc4424eee2b74",
+    "proposal.json": "915c5d7bf12636ddfdd6bbca854c862aefb9349bea35244707196e448a259661",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1"
+  },
+  "axiom_audit": "'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' does not depend on any axioms\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Quot.sound]\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "accepted": true
+    }
+  ],
+  "accesses": 12,
+  "numerical_testing": "not performed; proof concerns exact operations",
+  "recheck": "lake build (or lean Main.lean); lark check also validates source and artifact binding"
+}

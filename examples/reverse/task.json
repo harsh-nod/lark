@@ -1,0 +1,33 @@
+{
+  "name": "reverse",
+  "entry": "reverse",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 4
+  },
+  "fuel": [
+    128,
+    16,
+    16,
+    16
+  ]
+}

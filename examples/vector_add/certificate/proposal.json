@@ -1,0 +1,22 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by simp [flatten, flattenSegment, segments, program]",
+    "race_free": "by\n  refine ⟨finalState unitOps (fun _ _ => ()) (fun _ => some ()), rfl, ?_⟩\n  have htrace : (finalState unitOps (fun _ _ => ()) (fun _ => some ())).trace = traceData := by rfl\n  rw [htrace]\n  decide",
+    "segment_equivalence": "by\n  intro input outside\n  rw [segmentation_data]\n  refine ⟨finalState ops input outside, rfl, ?_, rfl⟩\n  have htrace : (finalState ops input outside).trace = traceData := by rfl\n  rw [htrace]\n  decide"
+  }
+}

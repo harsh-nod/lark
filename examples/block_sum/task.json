@@ -1,0 +1,33 @@
+{
+  "name": "block_sum",
+  "entry": "block_sum",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        2
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 2,
+    "block": 2
+  },
+  "fuel": [
+    128,
+    16,
+    16,
+    16
+  ]
+}

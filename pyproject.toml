@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lark-kernels"
+version = "0.1.0"
+description = "Lean-assisted verification of a strict CUDA/HIP kernel subset"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Harsh"}]
+dependencies = []
+
+[project.scripts]
+lark = "lark_kernels.cli:main"
+
+[tool.setuptools]
+packages = ["lark_kernels"]
+
+[tool.setuptools.data-files]
+"share/lark/lean" = ["lean/lean-toolchain", "lean/lakefile.toml"]
+"share/lark/lean/Lark" = ["lean/Lark/Model.lean"]
+
+[tool.ruff]
+line-length = 100
