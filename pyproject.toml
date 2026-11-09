@@ -20,7 +20,7 @@ packages = ["lark_kernels"]
 
 [tool.setuptools.data-files]
 "share/lark/lean" = ["lean/lean-toolchain", "lean/lakefile.toml"]
-"share/lark/lean/Lark" = ["lean/Lark/Model.lean"]
+"share/lark/lean/Lark" = ["lean/Lark/Model.lean", "lean/Lark/Nonlinear.lean"]
 
 [tool.ruff]
 line-length = 100
@@ -28,3 +28,4 @@ line-length = 100
 [tool.ruff.lint.per-file-ignores]
 # Preserve the exact reference bytes pinned by the recorded proof experiments.
 "reproduction/cases/*/reference.py" = ["F401"]
+"reproduction/nonlinear/cases/*/*/reference.py" = ["F401"]

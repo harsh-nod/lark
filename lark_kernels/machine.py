@@ -93,6 +93,8 @@ class Machine:
             return self.threads[t].regs[a[0]]
         if op == "bin":
             return node("bin", a[0], self.expr(t, a[1]), self.expr(t, a[2]))
+        if op == "un":
+            return node("un", a[0], self.expr(t, a[1]))
         if op == "load":
             loc = self.location(t, *a)
             if loc not in self.memory:

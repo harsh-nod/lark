@@ -1,0 +1,34 @@
+{
+  "name": "silu_float32",
+  "entry": "nonlinear_silu_float32",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 4,
+    "warp": 64
+  },
+  "fuel": [
+    1024,
+    16,
+    16,
+    16
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "batchmatmul_float16",
+  "entry": "nonlinear_batchmatmul_float16",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        2,
+        1,
+        2
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        2,
+        2,
+        2
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        2,
+        1,
+        2
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 4,
+    "warp": 64
+  },
+  "fuel": [
+    1024,
+    16,
+    16,
+    16
+  ]
+}

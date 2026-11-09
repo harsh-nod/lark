@@ -26,6 +26,9 @@ jobs:
       - name: Check machine model
         run: lake build
         working-directory: lean
+      - name: Check nonlinear machine model
+        run: lean Lark/Nonlinear.lean
+        working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Export example certificates

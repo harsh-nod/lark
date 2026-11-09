@@ -109,6 +109,12 @@ class Reader:
             "blockIdx",
             "blockDim",
             "fmaxf",
+            "expf",
+            "tanhf",
+            "rsqrtf",
+            "__half2float",
+            "__float2half",
+            "__half",
             "__syncthreads",
             "__syncwarp",
             "grid_sync",
@@ -154,6 +160,18 @@ class Reader:
             b = self.expr(mode)
             self.pop(")")
             lhs = node("bin", "max", a, b)
+        elif s in {"expf", "tanhf", "rsqrtf", "__half2float", "__float2half"} and mode == "scalar":
+            self.pop("(")
+            value = self.expr(mode)
+            self.pop(")")
+            opname = {
+                "expf": "exp",
+                "tanhf": "tanh",
+                "rsqrtf": "rsqrt",
+                "__half2float": "fromHalf",
+                "__float2half": "toHalf",
+            }[s]
+            lhs = node("un", opname, value)
         elif s in self.symbols:
             kind, id, _ = self.symbols[s]
             if kind in {"global", "shared"} and mode == "scalar":
@@ -173,8 +191,8 @@ class Reader:
             rhs = self.expr(mode, levels[op])
             name = {"+": "add", "-": "sub", "*": "mul", "/": "div", "%": "mod"}[op]
             if mode == "scalar":
-                if name in {"div", "mod"}:
-                    raise Refusal("operation", "scalar division/remainder is not implemented")
+                if name == "mod":
+                    raise Refusal("operation", "scalar remainder is not implemented")
                 lhs = node("bin", name, lhs, rhs)
             else:
                 lhs = node(name, lhs, rhs)
@@ -192,6 +210,27 @@ class Reader:
             a, b = b, a
             op = "<" if op == ">" else "<="
         return node({"<": "lt", "<=": "le", "==": "eq", "!=": "ne"}[op], a, b)
+
+    def scalar_type(self, value):
+        if value.op in {"lit", "reg"}:
+            return "float32"
+        if value.op == "load":
+            return (
+                self.task.buffers[value.args[1]].dtype if value.args[0] == "global" else "float32"
+            )
+        if value.op == "un":
+            op, arg = value.args
+            expected = "float16" if op == "fromHalf" else "float32"
+            if self.scalar_type(arg) != expected:
+                raise Refusal(
+                    "type", f"{op} requires {expected}; explicit half conversion required"
+                )
+            return "float16" if op == "toHalf" else "float32"
+        if value.op == "bin":
+            if any(self.scalar_type(a) != "float32" for a in value.args[1:]):
+                raise Refusal("type", "half arithmetic requires explicit __half2float conversion")
+            return "float32"
+        raise Refusal("type", "unsupported scalar expression type")
 
     def body(self):
         self.pop("{")
@@ -313,7 +352,7 @@ class Reader:
             if id:
                 self.pop(",")
             constant = self.accept("const")
-            self.pop("float")
+            self.pop("__half" if b.dtype == "float16" else "float")
             self.pop("*")
             name = self.name()
             if name != b.name:
@@ -324,6 +363,18 @@ class Reader:
         if self.peek() != "<eof>":
             raise Refusal("syntax", "expected exactly one kernel and no trailing declarations")
         self.code.append(node("halt"))
+        for instr in self.code:
+            if instr.op == "set":
+                expected, value = "float32", instr.args[1]
+            elif instr.op == "store":
+                space, buffer, _, value = instr.args
+                expected = self.task.buffers[buffer].dtype if space == "global" else "float32"
+            else:
+                continue
+            if self.scalar_type(value) != expected:
+                raise Refusal(
+                    "type", f"assignment requires {expected}; explicit conversion required"
+                )
         result = Translation(entry, self.tokens, self.trailing, self.code, self.shared)
         return result
 

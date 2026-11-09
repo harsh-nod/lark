@@ -20,7 +20,12 @@ one tensor per output buffer. Multiple outputs use a Python tuple.
 ```
 
 Shapes are positive literal dimensions, stored contiguously in row-major order.
-Source buffers are flat `float*` parameters, even for multidimensional tensors.
+Source buffers are flat `float*` or `__half*` parameters matching the declared
+dtype, even for multidimensional tensors. Half loads must be explicitly converted
+with `__half2float` before FP32 arithmetic; half stores require `__float2half`
+unless copying another half value directly. Shared arrays and scalar registers
+remain float. The nonlinear-v2 model is selected automatically for half storage,
+division or nonlinear operations; scalar-v1 certificates retain their old model.
 Scalar tensor results may occupy an output buffer of shape `[1]`.
 
 Roles are `input`, `output`, or `scratch`. Input writes are refused. Output and
@@ -49,13 +54,22 @@ guessed semantics.
 
 The reference grammar permits `import torch` and one undecorated function,
 ordinary tensor assignments, and a return. Supported operators are `+`, `-`,
-`*`, and rank-2 or rank-3 `@`. Calls are `torch.relu`, `torch.maximum`, `torch.sum`,
+`*`, `/`, and rank-2 or rank-3 `@`. Calls are `torch.relu`, `torch.maximum`, `torch.sum`,
 `torch.flip(..., [0])`, `torch.matmul`, `torch.bmm`, and corresponding tensor methods
 where appropriate, plus `.reshape(...)` and `.view(...)`. Rank-3 products require
 matching batch sizes. Fixed-shape broadcasting follows trailing dimensions of
 size one; dynamic Python control is unsupported. `torch.conv2d(x, weight,
 groups=literal)` supports NCHW inputs and OIHW weights with stride one, valid
 padding, dilation one, and no bias. Other convolution options are refused.
+
+The nonlinear profile also accepts exp, tanh, rsqrt, sigmoid, square, mean, amax,
+stable softmax, explicit `.float()`/`.half()`, transpose, select, stack and bounded
+repeat_interleave. Supported `torch.nn.functional` calls are ReLU, SiLU,
+tanh-approximate GELU, Softmax, LayerNorm and RMSNorm. Norms require one trailing
+normalized dimension, no affine arguments, and an explicit positive epsilon.
+Half arithmetic requires `.float()` in the reference, followed by an explicit
+`.half()` at the desired storage boundary. See the
+[extension contracts](../reproduction/nonlinear/README.md).
 
 Run `lark inspect` with the same input arguments as `verify` to translate and
 perform symbolic preflight without Lean. Its output explicitly says

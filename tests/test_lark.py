@@ -144,7 +144,7 @@ class FrontendTests(unittest.TestCase):
             source.replace("float*", "double*"),
             source.replace("x[i] + y[i]", "atomicAdd(x, y[i])"),
             source.replace("int i", "unsigned int i"),
-            source.replace("x[i] + y[i]", "x[i] / y[i]"),
+            source.replace("x[i] + y[i]", "x[i] % y[i]"),
             source.replace("threadIdx.x", "threadIdx.y"),
         ]
         for changed in cases:

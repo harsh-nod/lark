@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "model_calls": 0,
+  "lean": "4.19.0, commit 6caaee842e94",
+  "base_revision": "4e0f70a50575b1c50e33984e3a895e68e9684ec4",
+  "tests": [
+    {
+      "command": "LARK_LEAN=... python3 -m unittest discover -s tests -v",
+      "tests": 38,
+      "passed": true,
+      "seconds": 273.095
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_nonlinear.py -v",
+      "tests": 10,
+      "passed": 8,
+      "skipped_lean": 2,
+      "note": "Three later regressions and tightened namespace checks were included. The two Lean methods passed in the initial full run."
+    }
+  ],
+  "baseline_certificates_verified_and_rechecked": 25,
+  "current_fixed_statement_regenerations": 25,
+  "historical_statement_regenerations": 18,
+  "cpu_reference_comparisons": 220,
+  "mutation_outcome": {
+    "unproved": 28,
+    "accepted": 0,
+    "timeouts": 0
+  },
+  "equivalent_controls_proved": 6,
+  "checks": [
+    "Original machine hash unchanged",
+    "Nonlinear model compiled with Lean",
+    "Ruff and git diff checks passed",
+    "Both GPU runners and source hashes match published artifacts",
+    "Native bundle is rebuilt from actual certified source/task bytes"
+  ],
+  "timing_note": "CPU validation ran concurrently. Pending mutations were completed with four independent Lean processes after preserving and validating previously completed artifacts. No proof was accepted from an incomplete check."
+}

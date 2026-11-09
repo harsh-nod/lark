@@ -15,8 +15,25 @@ class Tensor:
     shape: tuple[int, ...]
     values: tuple[Node, ...]
     tensor: bool = True
+    dtype: str = "float32"
+
+    def require_float(self):
+        if self.dtype != "float32":
+            raise Refusal("spec-dtype", "half arithmetic requires an explicit .float() conversion")
+
+    def unary(self, op):
+        self.require_float()
+        return Tensor(self.shape, tuple(node("un", op, v) for v in self.values), self.tensor)
+
+    def cast(self, dtype):
+        if self.dtype == dtype:
+            return self
+        op = "fromHalf" if dtype == "float32" else "toHalf"
+        return Tensor(self.shape, tuple(node("un", op, v) for v in self.values), self.tensor, dtype)
 
     def binary(self, op: str, other: Tensor):
+        self.require_float()
+        other.require_float()
         if self.shape == other.shape:
             pairs = zip(self.values, other.values)
             shape = self.shape
@@ -53,9 +70,10 @@ class Tensor:
             raise Refusal(
                 "spec-shape", "reshape must preserve size and use positive literal dimensions"
             )
-        return Tensor(tuple(shape), self.values)
+        return Tensor(tuple(shape), self.values, self.tensor, self.dtype)
 
     def sum(self, dim=None):
+        self.require_float()
         if dim is None:
             value = literal(0)
             for v in self.values:
@@ -77,6 +95,8 @@ class Tensor:
         return Tensor(shape, tuple(output))
 
     def matmul(self, other):
+        self.require_float()
+        other.require_float()
         if len(self.shape) == len(other.shape) == 3:
             if self.shape[0] != other.shape[0] or self.shape[2] != other.shape[1]:
                 raise Refusal("spec-shape", "bmm requires matching batches and inner dimensions")
@@ -103,6 +123,8 @@ class Tensor:
         return Tensor((m, n), tuple(values))
 
     def conv2d(self, weight, groups=1):
+        self.require_float()
+        weight.require_float()
         if len(self.shape) != 4 or len(weight.shape) != 4 or type(groups) is not int or groups <= 0:
             raise Refusal(
                 "spec-shape", "conv2d requires NCHW inputs, OIHW weights, positive groups"
@@ -123,6 +145,132 @@ class Tensor:
                 acc = node("bin", "add", acc, node("bin", "mul", lhs, rhs))
             values.append(acc)
         return Tensor((batch, cout, h - kh + 1, w - kw + 1), tuple(values))
+
+    def axis(self, dim):
+        if type(dim) is not int or not -len(self.shape) <= dim < len(self.shape):
+            raise Refusal("spec-shape", "dimension is out of range")
+        return dim % len(self.shape)
+
+    def reduce(self, kind, dim=None, keepdim=False):
+        self.require_float()
+        if type(keepdim) is not bool:
+            raise Refusal("spec-shape", "keepdim must be a literal boolean")
+        if dim is None:
+            values = self.values
+            acc = literal(0) if kind == "add" else values[0]
+            for v in values if kind == "add" else values[1:]:
+                acc = node("bin", kind, acc, v)
+            return Tensor((1,) * len(self.shape) if keepdim else (), (acc,))
+        dim = self.axis(dim)
+        shape = self.shape[:dim] + self.shape[dim + 1 :]
+        output = []
+        for coords in itertools.product(*(range(n) for n in shape)):
+            values = []
+            for k in range(self.shape[dim]):
+                full = coords[:dim] + (k,) + coords[dim:]
+                values.append(self.values[flat_index(full, self.shape)])
+            acc = literal(0) if kind == "add" else values[0]
+            for value in values if kind == "add" else values[1:]:
+                acc = node("bin", kind, acc, value)
+            output.append(acc)
+        if keepdim:
+            shape = self.shape[:dim] + (1,) + self.shape[dim + 1 :]
+        return Tensor(shape, tuple(output))
+
+    def mean(self, dim=None, keepdim=False):
+        n = len(self.values) if dim is None else self.shape[self.axis(dim)]
+        return self.reduce("add", dim, keepdim).binary("div", scalar(n))
+
+    def softmax(self, dim):
+        dim = self.axis(dim)
+        shifted = self.binary("sub", self.reduce("max", dim, True)).unary("exp")
+        return shifted.binary("div", shifted.reduce("add", dim, True))
+
+    def silu(self):
+        denominator = scalar(1).binary("add", scalar(0).binary("sub", self).unary("exp"))
+        return self.binary("mul", scalar(1).binary("div", denominator))
+
+    def gelu(self):
+        cubic = scalar("0.044715").binary("mul", self).binary("mul", self).binary("mul", self)
+        arg = scalar("0.7978845608028654").binary("mul", self.binary("add", cubic))
+        return (
+            scalar("0.5")
+            .binary("mul", self)
+            .binary("mul", scalar(1).binary("add", arg.unary("tanh")))
+        )
+
+    def norm(self, normalized_shape, eps, centered):
+        if tuple(normalized_shape) != self.shape[-1:]:
+            raise Refusal("spec-shape", "norm supports one trailing normalized dimension")
+        if type(eps) not in {int, float} or not math.isfinite(eps) or eps <= 0:
+            raise Refusal("specification", "norm requires an explicit positive finite epsilon")
+        value = self.binary("sub", self.mean(-1, True)) if centered else self
+        variance = value.binary("mul", value).mean(-1, True)
+        return value.binary("mul", variance.binary("add", scalar(str(eps))).unary("rsqrt"))
+
+    def transpose(self, d0, d1):
+        d0, d1 = self.axis(d0), self.axis(d1)
+        shape = list(self.shape)
+        shape[d0], shape[d1] = shape[d1], shape[d0]
+        values = []
+        for coords in itertools.product(*(range(n) for n in shape)):
+            src = list(coords)
+            src[d0], src[d1] = src[d1], src[d0]
+            values.append(self.values[flat_index(src, self.shape)])
+        return Tensor(tuple(shape), tuple(values), self.tensor, self.dtype)
+
+    def select(self, dim, index):
+        dim = self.axis(dim)
+        if type(index) is not int or not -self.shape[dim] <= index < self.shape[dim]:
+            raise Refusal("spec-shape", "select index is out of range")
+        index %= self.shape[dim]
+        shape = self.shape[:dim] + self.shape[dim + 1 :]
+        values = tuple(
+            self.values[flat_index(c[:dim] + (index,) + c[dim:], self.shape)]
+            for c in itertools.product(*(range(n) for n in shape))
+        )
+        return Tensor(shape, values, self.tensor, self.dtype)
+
+    def repeat_interleave(self, repeats, dim):
+        dim = self.axis(dim)
+        if type(repeats) is not int or not 1 <= repeats <= 64:
+            raise Refusal("spec-shape", "repeat_interleave requires a positive bounded literal")
+        shape = list(self.shape)
+        shape[dim] *= repeats
+        values = []
+        for coords in itertools.product(*(range(n) for n in shape)):
+            src = list(coords)
+            src[dim] //= repeats
+            values.append(self.values[flat_index(src, self.shape)])
+        return Tensor(tuple(shape), tuple(values), self.tensor, self.dtype)
+
+
+def scalar(value):
+    return Tensor((), (literal(value),), False)
+
+
+def flat_index(coords, shape):
+    result = 0
+    for c, n in zip(coords, shape):
+        result = result * n + c
+    return result
+
+
+def stack(tensors, dim):
+    if not tensors or any(
+        (t.shape, t.dtype) != (tensors[0].shape, tensors[0].dtype) for t in tensors
+    ):
+        raise Refusal("spec-shape", "stack requires equally shaped and typed tensors")
+    t = tensors[0]
+    if type(dim) is not int or not -len(t.shape) - 1 <= dim <= len(t.shape):
+        raise Refusal("spec-shape", "stack dimension out of range")
+    dim %= len(t.shape) + 1
+    shape = t.shape[:dim] + (len(tensors),) + t.shape[dim:]
+    values = tuple(
+        tensors[c[dim]].values[flat_index(c[:dim] + c[dim + 1 :], t.shape)]
+        for c in itertools.product(*(range(n) for n in shape))
+    )
+    return Tensor(shape, values, True, t.dtype)
 
 
 class SpecReader:
@@ -147,13 +295,38 @@ class SpecReader:
             a, b = self.expr(x.left), self.expr(x.right)
             if isinstance(x.op, ast.MatMult):
                 return a.matmul(b)
-            op = {ast.Add: "add", ast.Sub: "sub", ast.Mult: "mul"}.get(type(x.op))
+            op = {ast.Add: "add", ast.Sub: "sub", ast.Mult: "mul", ast.Div: "div"}.get(type(x.op))
             if op:
                 return a.binary(op, b)
         if isinstance(x, ast.Call) and isinstance(x.func, ast.Attribute):
             f = x.func
-            is_torch = isinstance(f.value, ast.Name) and f.value.id == "torch"
+
+            def qualified(n):
+                if isinstance(n, ast.Name):
+                    return n.id
+                if isinstance(n, ast.Attribute):
+                    return qualified(n.value) + "." + n.attr
+                return ""
+
+            owner = qualified(f.value)
+            if owner == "torch.nn.functional" and f.attr not in {
+                "relu",
+                "silu",
+                "gelu",
+                "layer_norm",
+                "rms_norm",
+                "softmax",
+            }:
+                raise Refusal("specification", "unsupported torch.nn.functional call")
+            is_torch = owner in {"torch", "torch.nn.functional"}
             args = list(x.args)
+            if owner == "torch" and f.attr == "stack":
+                if len(args) != 1 or not isinstance(args[0], (ast.Tuple, ast.List)):
+                    raise Refusal("specification", "stack requires a literal sequence of tensors")
+                kw = {k.arg: self.constant(k.value) for k in x.keywords}
+                if len(kw) != len(x.keywords) or set(kw) - {"dim"}:
+                    raise Refusal("specification", "invalid stack options")
+                return stack([self.expr(v) for v in args[0].elts], kw.get("dim", 0))
             if is_torch:
                 if not args:
                     raise Refusal("specification", "torch calls require a tensor")
@@ -165,6 +338,45 @@ class SpecReader:
             kw = {k.arg: self.constant(k.value) for k in x.keywords}
             if len(kw) != len(x.keywords):
                 raise Refusal("specification", "duplicate keywords")
+            if f.attr in {"float", "half"} and not args and not kw and not is_torch:
+                return obj.cast("float32" if f.attr == "float" else "float16")
+            if f.attr in {"exp", "tanh", "rsqrt"} and not args and not kw:
+                return obj.unary(f.attr)
+            if f.attr == "square" and not args and not kw:
+                return obj.binary("mul", obj)
+            if f.attr == "sigmoid" and not args and not kw:
+                return scalar(1).binary(
+                    "div", scalar(1).binary("add", scalar(0).binary("sub", obj).unary("exp"))
+                )
+            if f.attr == "silu" and owner == "torch.nn.functional" and not args and not kw:
+                return obj.silu()
+            if (
+                f.attr == "gelu"
+                and owner == "torch.nn.functional"
+                and not args
+                and kw == {"approximate": "tanh"}
+            ):
+                return obj.gelu()
+            if f.attr in {"layer_norm", "rms_norm"} and is_torch:
+                if len(args) == 1 and set(kw) == {"eps"}:
+                    shape = self.constant(args[0])
+                    if isinstance(shape, (list, tuple)):
+                        return obj.norm(shape, kw["eps"], f.attr == "layer_norm")
+            if f.attr in {"mean", "amax", "softmax"}:
+                if len(args) <= 1 and set(kw) <= {"dim", "keepdim"}:
+                    if args and "dim" in kw:
+                        raise Refusal("specification", "duplicate dimension")
+                    dim = self.constant(args[0]) if args else kw.get("dim")
+                    if f.attr == "softmax" and dim is not None and "keepdim" not in kw:
+                        return obj.softmax(dim)
+                    if f.attr == "mean":
+                        return obj.mean(dim, kw.get("keepdim", False))
+                    if f.attr == "amax":
+                        return obj.reduce("max", dim, kw.get("keepdim", False))
+            if f.attr in {"transpose", "select"} and len(args) == 2 and not kw:
+                return getattr(obj, f.attr)(self.constant(args[0]), self.constant(args[1]))
+            if f.attr == "repeat_interleave" and len(args) == 1 and set(kw) == {"dim"}:
+                return obj.repeat_interleave(self.constant(args[0]), kw["dim"])
             if f.attr == "relu" and not args and not kw:
                 return obj.binary("max", Tensor((), (literal(0),)))
             if f.attr == "maximum" and len(args) == 1 and not kw and is_torch:
@@ -183,8 +395,8 @@ class SpecReader:
                 if len(shape) == 1 and isinstance(shape[0], (list, tuple)):
                     shape = shape[0]
                 return obj.reshape(shape)
-            if f.attr == "sum" and not args and set(kw) <= {"dim"}:
-                return obj.sum(kw.get("dim"))
+            if f.attr == "sum" and not args and set(kw) <= {"dim", "keepdim"}:
+                return obj.reduce("add", kw.get("dim"), kw.get("keepdim", False))
             if f.attr in {"matmul", "bmm"} and len(args) == 1 and not kw:
                 rhs = self.expr(args[0])
                 if f.attr == "bmm" and (len(obj.shape) != 3 or len(rhs.shape) != 3):
@@ -198,7 +410,7 @@ class SpecReader:
                     raise Refusal("specification", "flip currently supports dims=[0]")
                 if len(obj.shape) != 1:
                     raise Refusal("spec-shape", "flip currently requires rank 1")
-                return Tensor(obj.shape, obj.values[::-1])
+                return Tensor(obj.shape, obj.values[::-1], obj.tensor, obj.dtype)
         raise Refusal(
             "specification",
             f"unsupported reference construct: {ast.dump(x, include_attributes=False)}",
@@ -235,7 +447,9 @@ class SpecReader:
         for id, b in inputs:
             if b.name == "torch":
                 raise Refusal("specification", "input cannot shadow the torch namespace")
-            self.env[b.name] = Tensor(b.shape, tuple(node("input", id, i) for i in range(b.size)))
+            self.env[b.name] = Tensor(
+                b.shape, tuple(node("input", id, i) for i in range(b.size)), True, b.dtype
+            )
         returned = None
         for s in f.body:
             if returned is not None:
@@ -262,6 +476,10 @@ class SpecReader:
         if returned is None or len(returned) != len(outputs):
             raise Refusal("spec-signature", "reference must return one tensor per output buffer")
         for value, b in zip(returned, outputs):
+            if value.dtype != b.dtype:
+                raise Refusal(
+                    "spec-dtype", "output dtype differs from task; explicit conversion required"
+                )
             if not value.tensor:
                 raise Refusal(
                     "specification", "outputs must be tensors, not Python scalar constants"

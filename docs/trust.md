@@ -28,6 +28,14 @@ It can also be instantiated with other scalar semantics when those operations
 and literals mean what the source frontend intends. No floating-point error
 bound, NaN/overflow behavior, or reassociation guarantee follows from this.
 
+`Model.lean` pins scalar-v1. `Nonlinear.lean` independently pins nonlinear-v2,
+adding division, exp, tanh, reciprocal square root and explicit half conversions.
+These are universally quantified functions, not an IEEE binary16 implementation.
+Model selection follows the parsed program/specification and declared storage
+types; rechecking derives it again and validates the selected model hash.
+See the [MI350X validation](../reproduction/nonlinear/README.md) for separate
+finite numerical and bit-conversion evidence. No GPU test discharges a Lean goal.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom
@@ -47,7 +55,7 @@ bound, NaN/overflow behavior, or reassociation guarantee follows from this.
 4. **Independent reference formalization.** The PyTorch AST translator is fixed
    code, but is not a verified compiler. Optional CPU tests compare the shipped
    examples against PyTorch. They provide evidence about this component.
-5. **Host interface.** Named buffers are contiguous, float32, aligned, disjoint,
+5. **Host interface.** Named buffers have declared float32/float16 storage, are contiguous, aligned, disjoint,
    and allocated to the declared sizes. The host uses the declared launch and
    warp width. The proof covers only that interface and concrete dimensions.
 6. **Phase-reduction metatheory.** As in the paper, interpreting a race-free

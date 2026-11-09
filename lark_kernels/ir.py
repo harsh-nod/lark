@@ -38,6 +38,7 @@ class Buffer:
     name: str
     role: str
     shape: tuple[int, ...]
+    dtype: str = "float32"
 
     @property
     def size(self):
@@ -67,14 +68,19 @@ class Task:
             raise Refusal("signature", "unknown task fields")
         bufs = []
         for b in d["buffers"]:
-            if set(b) != {"name", "role", "shape", "dtype"} or b["dtype"] != "float32":
-                raise Refusal("dtype", "only named, contiguous float32 buffers are supported")
+            if set(b) != {"name", "role", "shape", "dtype"} or b["dtype"] not in {
+                "float32",
+                "float16",
+            }:
+                raise Refusal(
+                    "dtype", "only named, contiguous float32/float16 buffers are supported"
+                )
             shape = tuple(b["shape"])
             if not shape or any(type(x) is not int or x <= 0 for x in shape):
                 raise Refusal("shape", "dimensions must be positive integers")
             if b["role"] not in {"input", "output", "scratch"}:
                 raise Refusal("signature", "role must be input, output, or scratch")
-            bufs.append(Buffer(b["name"], b["role"], shape))
+            bufs.append(Buffer(b["name"], b["role"], shape, b["dtype"]))
         if len({b.name for b in bufs}) != len(bufs):
             raise Refusal("signature", "duplicate buffer names")
         launch = d["launch"]
@@ -119,6 +125,8 @@ def lean_node(n: Node) -> str:
         return f"(.{op} {lean_node(a[0])} {lean_node(a[1])})"
     if op == "bin":
         return f"(.bin .{a[0]} {lean_node(a[1])} {lean_node(a[2])})"
+    if op == "un":
+        return f"(.un .{a[0]} {lean_node(a[1])})"
     if op == "load":
         return f"(.load .{a[0]} {a[1]} {lean_node(a[2])})"
     if op == "set":
@@ -146,4 +154,6 @@ def lean_spec(n: Node) -> str:
     if n.op == "bin":
         op, a, b = n.args
         return f"(ops.{op} {lean_spec(a)} {lean_spec(b)})"
+    if n.op == "un":
+        return f"(ops.{n.args[0]} {lean_spec(n.args[1])})"
     raise Refusal("specification", f"unsupported scalar node {n.op}")

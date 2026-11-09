@@ -1,0 +1,34 @@
+{
+  "name": "relu_float16",
+  "entry": "nonlinear_relu_float16",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        4
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        4
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    1024,
+    16,
+    16,
+    16
+  ]
+}

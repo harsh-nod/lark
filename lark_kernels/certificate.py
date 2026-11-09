@@ -59,14 +59,28 @@ def digest(data: bytes):
     return sha256(data).hexdigest()
 
 
-def model_path():
-    repo = Path(__file__).resolve().parent.parent / "lean" / "Lark" / "Model.lean"
+def model_path(extended=False):
+    filename = "Nonlinear.lean" if extended else "Model.lean"
+    repo = Path(__file__).resolve().parent.parent / "lean" / "Lark" / filename
     if repo.exists():
         return repo
-    installed = Path(sysconfig.get_path("data")) / "share" / "lark" / "lean" / "Lark" / "Model.lean"
+    installed = Path(sysconfig.get_path("data")) / "share" / "lark" / "lean" / "Lark" / filename
     if installed.exists():
         return installed
     raise Refusal("installation", "pinned Lean machine model is missing")
+
+
+def extended_model(task, translation, spec):
+    def visit(n):
+        return (
+            n.op == "un"
+            or (n.op == "bin" and n.args[0] == "div")
+            or any(visit(a) for a in n.args if hasattr(a, "op"))
+        )
+
+    return any(b.dtype == "float16" for b in task.buffers) or any(
+        visit(n) for n in [*translation.program, *spec]
+    )
 
 
 def lean_binary(explicit=None):
@@ -149,6 +163,14 @@ def emit_segment(s, program, depth=0):
 
 
 def render(task, translation, spec, proposal):
+    extended = extended_model(task, translation, spec)
+    namespace = "LarkNonlinear" if extended else "Lark"
+    unit_ops = "⟨fun _ _ => (), fun _ _ => (), fun _ _ => (),\n  fun _ _ => (), fun _ _ => ()"
+    if extended:
+        unit_ops += (
+            ", fun _ _ => (), fun _ => (), fun _ => (), fun _ => (), fun _ => (), fun _ => ()"
+        )
+    unit_ops += "⟩"
     proofs = proposal["proofs"]
     validate_proofs(proofs)
     if len(proposal["segments"]) > 4096:
@@ -168,11 +190,11 @@ def render(task, translation, spec, proposal):
         for a in reversed(trace)
     )
     return (
-        model_path().read_text()
+        model_path(extended).read_text()
         + f"""
 
 namespace LarkCertificate
-open Lark
+open {namespace}
 set_option maxRecDepth 100000
 set_option maxHeartbeats 20000000
 
@@ -198,8 +220,7 @@ theorem segmentation (ops : Ops α) (s : State α) :
     runLaunch ops layout geometry fuel (flatten segments) s := by
   rw [segmentation_data]
 
-def unitOps : Ops Unit := ⟨fun _ _ => (), fun _ _ => (), fun _ _ => (),
-  fun _ _ => (), fun _ _ => ()⟩
+def unitOps : Ops Unit := {unit_ops}
 
 theorem race_free : ∃ final,
     runLaunch unitOps layout geometry fuel program
@@ -365,10 +386,26 @@ def verify(
         "paper": "https://arxiv.org/abs/2611.02028",
         "implementation": "independent bounded scalar profile",
         "task": asdict(task),
-        "trusted_assumptions": TRUST,
-        "scope": SCOPE,
+        "trusted_assumptions": TRUST
+        if not extended_model(task, translation, spec)
+        else [
+            *TRUST[:4],
+            "Host launch, declared float16/float32 storage, aligned disjoint buffers; explicit half conversions",
+            "Abstract div/exp/tanh/rsqrt/fromHalf/toHalf operations, not an IEEE implementation or error bound",
+            TRUST[-1],
+        ],
+        "scope": SCOPE
+        if not extended_model(task, translation, spec)
+        else [
+            SCOPE[0],
+            "Float32 arithmetic with explicit float16 storage conversions; +, -, *, max, /, exp, tanh, rsqrt",
+            *SCOPE[2:4],
+            "Operation-to-hardware correspondence remains trusted; numerical samples are separate evidence",
+            *SCOPE[5:],
+        ],
         "source_readback": True,
-        "model_sha256": digest(model_path().read_bytes()),
+        "model_sha256": digest(model_path(extended_model(task, translation, spec)).read_bytes()),
+        "model_profile": "nonlinear-v2" if extended_model(task, translation, spec) else "scalar-v1",
         "files": {f: digest((output / f).read_bytes()) for f in files},
         "axiom_audit": log,
         "attempts": history,
@@ -397,8 +434,6 @@ def check(directory, *, lean=None, timeout=120):
     for name, expected in report["files"].items():
         if digest((directory / name).read_bytes()) != expected:
             raise Refusal("integrity", f"file changed: {name}")
-    if report["model_sha256"] != digest(model_path().read_bytes()):
-        raise Refusal("integrity", "certificate was produced with a different model version")
     if (directory / "lean-toolchain").read_text() != TOOLCHAIN or (
         directory / "lakefile.toml"
     ).read_text() != LAKEFILE:
@@ -406,6 +441,8 @@ def check(directory, *, lean=None, timeout=120):
     task = Task.read(directory / "task.json")
     tr = translate((directory / "kernel.cu").read_bytes().decode("utf-8"), task)
     spec = read_spec((directory / "reference.py").read_text(), task)
+    if report["model_sha256"] != digest(model_path(extended_model(task, tr, spec)).read_bytes()):
+        raise Refusal("integrity", "certificate was produced with a different model version")
     if json.loads((directory / "translation.json").read_text()) != json.loads(
         json.dumps(tr.data())
     ):

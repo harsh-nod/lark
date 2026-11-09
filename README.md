@@ -7,7 +7,7 @@ An independent implementation of the verification workflow in
 **This repository implements a bounded scalar CUDA/HIP profile of the method.**
 It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
-paper's broader PTX, tensor-core, transcendental, and production-kernel coverage
+paper's broader PTX, tensor-core, and production-kernel coverage
 is outside this implementation. [The implementation map](docs/paper.md)
 records the correspondence and differences.
 
@@ -16,6 +16,11 @@ an upstream softmax race witness, and actual AMD MI300X measurements at the pape
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP
 benchmarks are numerically tested; the reduced float32 kernels have Lean certificates.
 See [the measured results](reproduction/RESULTS.md) for the coverage and limitations.
+
+[The MI350X extension](reproduction/nonlinear/README.md) adds nonlinear operations
+and explicit FP16 storage conversions in a separately pinned Lean model, with
+reduced fixtures for all 17 families. These abstract-operation certificates are
+distinct from numerical tests of the large FP16 benchmarks and from IEEE proofs.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
@@ -115,8 +120,9 @@ calibration samples are documented in the reproduction study.
 The task JSON fixes argument order, buffer roles and shapes, language, launch,
 and four fuel bounds. See [the task format](docs/input.md).
 
-- Contiguous, disjoint `float32` input/output/scratch buffers; static shared arrays.
-- Scalar `+`, `-`, `*`, and `fmaxf`; local scalar registers.
+- Contiguous, disjoint `float32` or `float16` buffers; static float shared arrays.
+- Scalar `+`, `-`, `*`, `/`, `fmaxf`, `expf`, `tanhf`, `rsqrtf`; float registers.
+- Explicit `__half2float`/`__float2half`; implicit half arithmetic is refused.
 - Nonnegative integer indices within signed int32 range; `+`, `-`, `*`, `/`, `%`.
 - One-dimensional launches, integer comparisons, braced `if`/`else`, and `while`.
 - `__syncthreads()` and CUDA `__syncwarp()` on complete warps.

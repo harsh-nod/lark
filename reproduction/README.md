@@ -1,5 +1,9 @@
 # Reproduction without NVIDIA hardware
 
+This page records the original scalar-v1 study. The later
+[MI350X extension](nonlinear/README.md) adds nonlinear and explicit FP16-storage
+proof support; its reduced certificates and measurements have a separate report.
+
 This is an **independent, partial reproduction** of
 [LARK (arXiv:2611.02028v1)](https://arxiv.org/html/2611.02028v1).
 The measured outcomes are in [RESULTS.md](RESULTS.md), with raw JSON, proof sources,

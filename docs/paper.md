@@ -4,10 +4,15 @@ Primary source: [arXiv:2611.02028v1](https://arxiv.org/html/2611.02028v1),
 read with particular attention to Sections 3–4 and Appendices A.7–A.13.
 This is an independent implementation, not an upstream release.
 
+The [MI350X extension](../reproduction/nonlinear/README.md) adds a second pinned
+model with nonlinear scalar functions and explicit FP16 conversions. Its proofs
+still use concrete reduced shapes and abstract operations; it does not reproduce
+the paper's original programs, induction mechanism or IEEE error analysis.
+
 | Paper component | Implementation | Extent and differences |
 | --- | --- | --- |
-| Machine state, §4.1 | `lean/Lark/Model.lean` | Thread PCs, index/scalar registers, scoped global/shared/local memory, geometry and access traces |
-| Per-operation semantics, §4.1 | `execute`, `evalExpr`, `evalIndex` | Closed scalar operation set; separate index and scalar types; float32 only at the source interface |
+| Machine state, §4.1 | `lean/Lark/Model.lean`, `Nonlinear.lean` | Separate pinned profiles with thread PCs, index/scalar registers, scoped memories, geometry and access traces |
+| Per-operation semantics, §4.1 | `execute`, `evalExpr`, `evalIndex` | Closed scalar operation sets; separate index/scalar types; nonlinear-v2 adds explicit FP16 storage conversions |
 | Exact arithmetic | `Ops α` | Universally quantified operations support an exact real interpretation; no Mathlib or IEEE formalization |
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
@@ -18,9 +23,9 @@ This is an independent implementation, not an upstream release.
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |
 | Agent–checker iteration | `lark_kernels/certificate.py` | Bounded local proof-provider protocol, diagnostics and immutable statements; deterministic default prover; optional HTTP model adapter |
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
-| Mutation evaluation, §5.2 | `reproduction/run_cpu.py` | Independent reduced-shape mutation set; every mutant sent directly to Lean with Python preflight bypassed; not the original 42 mutants |
+| Mutation evaluation, §5.2 | `reproduction/run_cpu.py`, `reproduction/nonlinear/run_cpu.py` | Independent reduced-shape mutation sets; every mutant sent directly to Lean with Python preflight bypassed; not the original 42 mutants |
 | Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
-| Hardware experiments | `reproduction/run_hip.py` | Actual MI300X numerical checks and timings for independent FP16 programs at all 17 workload dimensions; four scalar operations sampled separately |
+| Hardware experiments | `reproduction/run_hip.py`, `reproduction/nonlinear/run_gpu.py` | MI300X/MI350X numerical checks and timings; reduced certified-source checks on both MI350X hosts; separate scalar and binary16 conversion probes |
 
 The [reproduction study](../reproduction/README.md) records exactly which experiments
 were run. KernelCraft model pass rates/token costs, the original production-kernel
@@ -28,8 +33,8 @@ certificates, original kernel speedups, PTX/H100 experiments, induction/LLM abla
 and numerical error bounds remain unreproduced. Original artifacts were not present
 in the arXiv source bundle; NVIDIA hardware is only one of the missing requirements.
 
-The source frontend is intentionally smaller: no PTX, half/packed values,
-transcendentals, tensor-core fragment layouts, shuffles, cooperative grid-sync
+The source frontend is intentionally smaller: no PTX, packed/vector arithmetic,
+tensor-core fragment layouts, shuffles, cooperative grid-sync
 templates, asynchronous instructions, arbitrary layouts, dynamic shapes,
 in-place arguments, or general aliasing. The machine has a grid cut, but the
 source frontend refuses grid synchronization until a host contract and pinned
