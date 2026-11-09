@@ -40,6 +40,11 @@ allocating those proof-only arrays. Six full-size families now have independent
 scalar induction certificates; the coverage ledger separates them from the
 paper's original kernels, pass rates and performance results.
 
+[Full-size Linear](reproduction/linear/README.md) extends the counted-loop proof
+with a third input and a checked broadcast-bias read. Seven full-size families
+now have independent induction certificates, with HIP source validation on both
+MI350X hosts.
+
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
 segmentation, and proves the result equals the reference. Python preflight

@@ -431,6 +431,10 @@ def check(directory, *, lean=None, timeout=120):
         from .matrix import check as check_matrix
 
         return check_matrix(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "linear-induction-v6":
+        from .linear import check as check_linear
+
+        return check_linear(directory, lean=lean, timeout=timeout)
     required = {
         "Main.lean",
         "kernel.cu",

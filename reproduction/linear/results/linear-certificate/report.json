@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "model_profile": "linear-induction-v6",
+  "model_hashes": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "bias": "dd7fad9e409d70ad9a95f48422c3d2d8381940a5f0f90f2dc50679623d036d8e"
+  },
+  "source_readback": true,
+  "model_calls": 0,
+  "files": {
+    "Main.lean": "2c5fb5acf04ae45366defd0399fc027c3bc8e0e4eb43c29ae23699cb86955e9a",
+    "kernel.cu": "0b9be77c4b5bfbede3bed000780cd3b228fcfd08107a209386640fbd4bad56f5",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "reference.py": "e9be42251e3c805b12dab2b8cdf23a8a8d30999c4733ced7a46d7da88c13aa68",
+    "task.json": "d6cdbfbd7ed2ed5418c4e66916d3d1dca5bb673c901bac74cabfb14edf4a4524",
+    "translation.json": "09ef6ac5e0ea93f196fe31dcc28506febc6cc797c804dd6c1dca9dacfe96ec53"
+  },
+  "axiom_audit": "'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]\n'LarkBias.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkBias.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkBias.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkBias.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkBias.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "matrix_dimensions": [
+    1,
+    64,
+    256,
+    512
+  ],
+  "trusted_assumptions": [
+    "Lean 4.19.0 kernel and printed standard axioms; pinned Nonlinear machine",
+    "Strict CUDA/HIP lowering and the closed matrix-multiplication Torch AST formalization",
+    "Host launch, contiguous FP16 buffers, aligned disjoint named allocations",
+    "Abstract scalar/half operations; hardware correspondence and floating-point error outside theorem",
+    "External reduction from race-free phases to GPU interleavings"
+  ],
+  "scope": "Full counted loop and grid in existing runLaunch: completion, race freedom, every output, all inputs and arbitrary outside memory. One thread per output; independent scalar Linear, not the optimized original paper kernel."
+}
