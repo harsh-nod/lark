@@ -22,28 +22,18 @@ and explicit FP16 storage conversions in a separately pinned Lean model, with
 reduced fixtures for all 17 families. These abstract-operation certificates are
 distinct from numerical tests of the large FP16 benchmarks and from IEEE proofs.
 
-[The induction extension](reproduction/pointwise/README.md) proves full-length
-FP16 ReLU, SiLU and GELU in the same machine model, with separate CUDA/HIP
-certificates and exact-source validation on both MI350X hosts. Its one-thread
-blocks differ from the paper's optimized launches. See the [paper result coverage
-ledger](reproduction/COVERAGE.md) for remaining work and unavailable dependencies.
+Induction extensions certify **eight full-size FP16 task families** in the same
+machine: [ReLU/SiLU/GELU](reproduction/pointwise/README.md),
+[GEMV](reproduction/reduction/README.md), [GEMM/batched GEMM](reproduction/matrix/README.md),
+[Linear with bias](reproduction/linear/README.md) and [interleaved RoPE](reproduction/rotary/README.md).
+Every profile has separate CUDA/HIP certificates and exact-source HIP checks on
+both MI350X hosts. The scalar programs and one-thread blocks differ from the
+paper's optimized programs and launches.
 
-[Counted-loop induction](reproduction/reduction/README.md) adds full-size
-512×1024 GEMV certificates for HIP/CUDA and exact-source checks on both MI350X
-hosts. Its generic loop/grid proof covers arbitrary valid dimensions; proof-only
-scaling reaches reduction length 1,048,576 without allocating the matrix.
-
-[The matrix extension](reproduction/matrix/README.md) adds paper-size GEMM and
-batched GEMM certificates. Each MI350X host passed 20 exact-source trials checking
-10,813,440 outputs. Symbolic scaling includes a billion-output footprint, without
-allocating those proof-only arrays. Six full-size families now have independent
-scalar induction certificates; the coverage ledger separates them from the
-paper's original kernels, pass rates and performance results.
-
-[Full-size Linear](reproduction/linear/README.md) extends the counted-loop proof
-with a third input and a checked broadcast-bias read. Seven full-size families
-now have independent induction certificates, with HIP source validation on both
-MI350X hosts.
+Symbolic scaling includes million-term dot products and billion-cell output
+footprints with small standalone certificates. Those largest arrays were not
+allocated or executed. See the [paper coverage ledger](reproduction/COVERAGE.md)
+for original pass rates, kernels, timings and other results that remain missing.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed

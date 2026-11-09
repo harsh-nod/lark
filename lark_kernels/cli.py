@@ -23,6 +23,7 @@ def main(argv=None):
         "verify-gemv",
         "verify-matrix",
         "verify-linear",
+        "verify-rotary",
     ):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
@@ -34,6 +35,7 @@ def main(argv=None):
             "verify-gemv",
             "verify-matrix",
             "verify-linear",
+            "verify-rotary",
         }:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
@@ -69,15 +71,23 @@ def main(argv=None):
                     indent=2,
                 )
             )
-        elif args.command in {"verify-pointwise", "verify-gemv", "verify-matrix", "verify-linear"}:
+        elif args.command in {
+            "verify-pointwise",
+            "verify-gemv",
+            "verify-matrix",
+            "verify-linear",
+            "verify-rotary",
+        }:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
             elif args.command == "verify-gemv":
                 from .gemv import verify as verify_inductive
             elif args.command == "verify-matrix":
                 from .matrix import verify as verify_inductive
-            else:
+            elif args.command == "verify-linear":
                 from .linear import verify as verify_inductive
+            else:
+                from .rotary import verify as verify_inductive
 
             if args.provider or args.proposal or args.attempts != 1:
                 raise Refusal("configuration", "inductive profiles use their pinned proofs")

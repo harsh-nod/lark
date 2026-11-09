@@ -1,0 +1,54 @@
+{
+  "name": "induction_rotary_hip_256_128",
+  "entry": "induction_rotary_hip_256_128",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        256,
+        128
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "cosine",
+      "role": "input",
+      "shape": [
+        256,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "sine",
+      "role": "input",
+      "shape": [
+        256,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        256,
+        128
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 32768,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    8,
+    1,
+    1,
+    1
+  ]
+}

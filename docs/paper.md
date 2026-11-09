@@ -16,13 +16,12 @@ It certifies three full-length FP16 families, with one thread per block. This
 scalable profile remains much narrower than general tiled/collective proofs.
 
 The [counted-loop extension](../reproduction/reduction/README.md) proves a
-serial dot-product loop and the actual grid fold, certifying full-size GEMV in
-the same machine. The [matrix extension](../reproduction/matrix/README.md) adds
-GEMM and batched GEMM, using a generic dot-loop proof with checked address bounds
-and primitive index-evaluation lemmas. The three induction profiles cover six
-paper-size families with independent scalar programs and exact-source checks on
-both MI350X hosts. [Linear](../reproduction/linear/README.md) adds a checked bias
-epilogue and third input, bringing full-size coverage to seven families.
+serial dot-product loop and actual grid fold for full-size GEMV. The
+[matrix](../reproduction/matrix/README.md) and [Linear](../reproduction/linear/README.md)
+profiles add GEMM, BMM and bias epilogues. [RoPE](../reproduction/rotary/README.md)
+adds output-parity branches and interleaved input pairing. These five induction
+profiles cover eight paper-size families with independent scalar programs and
+exact-source HIP checks on both MI350X hosts.
 
 | Paper component | Implementation | Extent and differences |
 | --- | --- | --- |
@@ -32,7 +31,7 @@ epilogue and third input, bringing full-size coverage to seven families.
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
 | Source translation and read-back | `lark_kernels/frontend.py` | Lossless token stream plus strict CUDA/HIP lowering; both parser and lowering remain trusted |
-| Segmentation, Obligation 2 | `Segment`, `flatten`; `Pointwise.lean`, `Reduction.lean`, `DotLoop.lean`, `Matrix.lean`, `Bias.lean` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds and counted GEMV/GEMM/BMM/Linear loops by induction. No general loop/tile recovery |
+| Segmentation, Obligation 2 | `Segment`, `flatten`; `Pointwise.lean`, `Reduction.lean`, `DotLoop.lean`, `Matrix.lean`, `Bias.lean`, `Rotary.lean` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds and counted GEMV/GEMM/BMM/Linear loops and RoPE branches by induction. No general loop/tile recovery |
 | Tensor reference formalization | `lark_kernels/spec.py` | Independent PyTorch AST reader for a closed set of fixed-shape operations; does not execute reference code |
 | Equivalence, Obligation 3 | `segment_equivalence` | Completion, race freedom, and output equality for every scalar interpretation, input, and outside-memory function |
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |

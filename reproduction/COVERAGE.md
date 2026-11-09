@@ -15,12 +15,13 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 [full-length pointwise induction](pointwise/RESULTS.md),
 [full-size GEMV/counting-loop induction](reduction/RESULTS.md),
 [full-size GEMM/BMM induction](matrix/RESULTS.md),
-[full-size Linear with bias](linear/RESULTS.md).
+[full-size Linear with bias](linear/RESULTS.md),
+[full-size interleaved RoPE](rotary/RESULTS.md).
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; full-size ReLU/SiLU/GELU/GEMV/GEMM/BMM/Linear induction proofs | Authors' pinned kernels/registry and harness, original model endpoints/runs, PTX and broader instruction support |
-| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP numerical checks | Original PTX kernels/GQA export; scalable multi-stage/attention proofs and collectives |
+| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE induction and HIP numerical checks | Original PTX kernels/GQA export; scalable multi-stage/attention proofs and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six new full-length arithmetic mutants checked directly in Lean | Original mutants/harness, PTX, model-based diagnosis and second opinions. Independent sets are not the original 42 |
 | Nine accepted production kernels (§5.3, Table 5) | No full production-kernel correctness certificates | Original adapted files, revisions, signatures/departures; in-place buffers, packed/collective operations and scalable reductions |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |

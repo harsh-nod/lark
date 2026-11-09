@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "experiment": "rotary-induction-v7",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-09T22:44:28.126619+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "bias": "dd7fad9e409d70ad9a95f48422c3d2d8381940a5f0f90f2dc50679623d036d8e",
+    "rotary": "8632f43c68ae537a17432fae3ee8e80b64f101ed9e13a8fe876dd94d1b8f69c1"
+  },
+  "runner_sha256": "7eb764eea808d2fcf14013b35a33950763c84417513eb4190819bbe79edc091f",
+  "baselines": [
+    {
+      "key": "baselines/hip",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        256,
+        128
+      ],
+      "verify_seconds": 19.0792037199717,
+      "main_bytes": 165583,
+      "source_sha256": "c158cea3bf17df29c5603bd8ca6c25bf1f0bdb5b8cfc14a865817ef90daac44b",
+      "reference_sha256": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381",
+      "task_sha256": "5e89cc2d1259ec24796a871525eb1fbd2b5cccfa1720c2ccaeb394bb5865a853",
+      "theorem_sha256": "d0d74630db0a65eaded8541913d25529b2d562e39f46ac49301b1a430c8bfb33"
+    },
+    {
+      "key": "baselines/cuda",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        256,
+        128
+      ],
+      "verify_seconds": 21.341991110006347,
+      "main_bytes": 165583,
+      "source_sha256": "5d08f778e0265004644645cff418a2f17ab112e2c34dc45eb7413b4a09f3b5c1",
+      "reference_sha256": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381",
+      "task_sha256": "a27753ffd11c6f360ae49d670328c258ea1cadca0c0c3ca275a30591390587bc",
+      "theorem_sha256": "52efcddfd3b75fb6d4e3d67b337f2f414772c9e10952520575a6f517f3c80b5b"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/1-2",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        1,
+        2
+      ],
+      "verify_seconds": 19.643651563033927,
+      "main_bytes": 165547,
+      "source_sha256": "501a8348466e174cc578f1ca7b52ccb05c91041d6038b888fe7847962a6006b3",
+      "reference_sha256": "04e64de05e3a43587b7370395a8324efae9b1c95a58d46d13eba3f68ea77b6e3",
+      "task_sha256": "5a9f21dcff3d7415cf67cc5122f5f5c1b830cb4c84585f8a9077df3d112b0f52",
+      "theorem_sha256": "b364e4e50df364d617f0f8b53d476ddb64fd9d4d147efaea53b50d29409570bb"
+    },
+    {
+      "key": "scaling/256-128",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        256,
+        128
+      ],
+      "verify_seconds": 20.936114294978324,
+      "main_bytes": 165583,
+      "source_sha256": "c158cea3bf17df29c5603bd8ca6c25bf1f0bdb5b8cfc14a865817ef90daac44b",
+      "reference_sha256": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381",
+      "task_sha256": "5e89cc2d1259ec24796a871525eb1fbd2b5cccfa1720c2ccaeb394bb5865a853",
+      "theorem_sha256": "d0d74630db0a65eaded8541913d25529b2d562e39f46ac49301b1a430c8bfb33"
+    },
+    {
+      "key": "scaling/1048576-128",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        1048576,
+        128
+      ],
+      "verify_seconds": 22.034753145009745,
+      "main_bytes": 165612,
+      "source_sha256": "8036bfd8555cd6c5e48f6e37cf65bc1b6ea0126c6443b447372179ed1d58e547",
+      "reference_sha256": "89c3dcbadcce153ff210a71ee357d02d15292a1f74e576c89641a1b8e91cd5d8",
+      "task_sha256": "1894b1a9ae3e035d6b947da97ef3f9e4fc63dd21a70f8e20caa5735174fd4c07",
+      "theorem_sha256": "2b557a6f44bd47188d5d09cace74e3bdca5716263deb9ec8b5bcbe21bec490ea"
+    },
+    {
+      "key": "scaling/1073741823-2",
+      "status": "verified",
+      "rechecked": true,
+      "rotary_shape": [
+        1073741823,
+        2
+      ],
+      "verify_seconds": 20.98385793797206,
+      "main_bytes": 165628,
+      "source_sha256": "b5e991ce943fee1824a37f852a157c1fd3b1dc01f630ea4442a42a5686aef128",
+      "reference_sha256": "a935436f0519d5d51793c005c052b47cf17f8deed0d4dd4fbeabbb5d294a006d",
+      "task_sha256": "40134a60e73e8f4512057a9f2af23aaa94a8527546159ab21f223e0beefa90b7",
+      "theorem_sha256": "7929a2ac3f2de2e234e84c926cb35acbe3ef38bab27a2193ded8d076e3cbc903"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "arithmetic",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 20.07943121396238,
+      "source_sha256": "5a850aa4d34d159ccf46e7f83ff06c2a712bfee1c7fb2865e98e5211fa3133dc",
+      "theorem_sha256": "a20bfa5c4c677d4652cf094d0af5ef4b39a79417fcbbca20db2ea80fa6d989c1"
+    },
+    {
+      "name": "parity",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 20.57904713699827,
+      "source_sha256": "ad49aa63175c63c48ba119fbd524ec353d84be97668de1f40aa4c871b5db3313",
+      "theorem_sha256": "6bc36639574c6520cb11e3d587aeee6145366d7e49b6ee222c9bfb0ea1076c3a"
+    },
+    {
+      "name": "pair-index",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 20.863597058982123,
+      "source_sha256": "a5fc910155809bfb62418a6adf265f28f549e215c9d59f16eafd8ebf77e015a9",
+      "theorem_sha256": "c4e876324bfd65029d3e986633e7d78aee9c3a864ec9fdec91abefe0d65f888f"
+    }
+  ],
+  "status": "passed"
+}

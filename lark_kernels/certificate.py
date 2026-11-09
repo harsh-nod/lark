@@ -435,6 +435,10 @@ def check(directory, *, lean=None, timeout=120):
         from .linear import check as check_linear
 
         return check_linear(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "rotary-induction-v7":
+        from .rotary import check as check_rotary
+
+        return check_rotary(directory, lean=lean, timeout=timeout)
     required = {
         "Main.lean",
         "kernel.cu",
