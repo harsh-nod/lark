@@ -1,0 +1,2057 @@
+{
+  "schema": 1,
+  "experiment": "independent-hip-functional-and-latency-reimplementation",
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "paper_section": "A.4.10, Table 9, Table 14",
+  "timestamp_utc": "2026-11-09T18:10:45.182853+00:00",
+  "device": "AMD Instinct MI300X",
+  "architecture": "gfx942",
+  "torch": "2.14.1+rocm7.2",
+  "torch_hip": "7.2.53211",
+  "compiler": "HIP version: 7.2.53211-97f5574fe2\nAMD clang version 22.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-7.2.4 26084 f58b06dce1f9c15707c5f808fd002e18c2accf7e)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.2.4/lib/llvm/bin\nConfiguration file: /opt/rocm-7.2.4/lib/llvm/bin/clang++.cfg\n",
+  "python": "3.12.3",
+  "kernel_sha256": "0fab2c6b0b9a692ff8cc89928f97565369700c5725c26ce9eddf2f21df078b06",
+  "runner_sha256": "fa858e1fd54c1e685aa90aeae16c86c5cc76ab3bb8d9220f46e839edd8e830d2",
+  "catalog_sha256": "5701dc25a54f2093f70d359edc289a9d5a00f9d2f8b9a19f8ed380a546098198",
+  "compile_flags": [
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx942"
+  ],
+  "build_seconds": 1.4361910820007324,
+  "rtol": 0.01,
+  "atol": 0.01,
+  "seed": 261102028,
+  "limitations": [
+    "Original kernels/registry unavailable; no original-kernel latency reproduction",
+    "Independent FP16 HIP kernels at Table 9 dimensions; mathematical contracts are declared per task",
+    "FP32 arithmetic and FP16 storage; all numerical results are separate from Lean proofs",
+    "L2 ports are AMD extensions; the paper reports L2 only on PTX/H100",
+    "No fastest-vendor-library sweep; eager references include precision-conversion costs",
+    "Compile baseline uses max-autotune-no-cudagraphs to allow the same external timing graph"
+  ],
+  "cases": [
+    {
+      "task": "relu",
+      "contract": "max(x,0)",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 1.73,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 2.3195000365376472,
+        "rounds_us": [
+          2.329449914395809,
+          2.319449931383133,
+          2.3375000804662704,
+          2.3174500092864037,
+          2.317499928176403,
+          2.3195000365376472,
+          2.3195000365376472
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 7.793650031089783,
+        "rounds_us": [
+          7.871749997138977,
+          7.793650031089783,
+          7.779649645090103,
+          7.779649645090103,
+          7.803650200366974,
+          7.803700119256973,
+          7.765600085258484
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 3.3600560070365346,
+      "torch_compile": {
+        "median_us": 2.549850009381771,
+        "rounds_us": [
+          2.5537999346852303,
+          2.5337999686598778,
+          2.5377999991178513,
+          2.5558000430464745,
+          2.736099995672703,
+          2.537750080227852,
+          2.549850009381771
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "silu",
+      "contract": "x/(1+exp(-x))",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 1.75,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 2.32549998909235,
+        "rounds_us": [
+          2.32549998909235,
+          2.3174500092864037,
+          2.319449931383133,
+          2.4035999551415443,
+          2.32549998909235,
+          2.3135000839829445,
+          2.3375000804662704
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 6.97844997048378,
+        "rounds_us": [
+          7.046499848365784,
+          6.972450017929077,
+          6.97844997048378,
+          7.046499848365784,
+          6.9784000515937805,
+          6.984449923038483,
+          6.976400315761566
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 3.0008385307314023,
+      "torch_compile": {
+        "median_us": 2.363549917936325,
+        "rounds_us": [
+          2.3595500737428665,
+          2.363549917936325,
+          2.3755500093102455,
+          2.3535000160336494,
+          2.367500029504299,
+          2.3735500872135162,
+          2.353549934923649
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "gelu",
+      "contract": "tanh approximation, cubic coefficient 0.044715",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 1.77,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 2.32744999229908,
+        "rounds_us": [
+          2.3074500262737274,
+          2.311450056731701,
+          2.329449914395809,
+          2.47770007699728,
+          2.32744999229908,
+          2.303449995815754,
+          2.3295000195503235
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 7.1847498416900635,
+        "rounds_us": [
+          7.182750105857849,
+          7.194750010967255,
+          7.220800220966339,
+          7.180699706077576,
+          7.176750153303146,
+          7.1847498416900635,
+          7.198800146579742
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 3.0869620681271397,
+      "torch_compile": {
+        "median_us": 2.485699951648712,
+        "rounds_us": [
+          2.595899999141693,
+          2.485699951648712,
+          2.467699907720089,
+          2.4877499788999557,
+          2.485699951648712,
+          2.4896999821066856,
+          2.461699955165386
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "softmax",
+      "contract": "one row of length 16384, stable maximum subtraction",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 5.25,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 37.0213508605957,
+        "rounds_us": [
+          37.57215142250061,
+          37.00934946537018,
+          37.22564876079559,
+          36.855098605155945,
+          37.0213508605957,
+          36.903148889541626,
+          37.11549937725067
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 12.540750205516815,
+        "rounds_us": [
+          12.544749677181244,
+          12.540750205516815,
+          12.52869963645935,
+          12.546749413013458,
+          12.532700598239899,
+          12.534749507904053,
+          12.562750279903412
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.33874372258157587,
+      "torch_compile": {
+        "median_us": 11.679449677467346,
+        "rounds_us": [
+          11.739549785852432,
+          11.673449724912643,
+          11.689449846744537,
+          11.667399853467941,
+          11.679449677467346,
+          11.671449989080429,
+          11.68145015835762
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "layernorm",
+      "contract": "one row, population variance, eps=1e-5, no affine parameters",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 5.05,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.000244140625,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 7.62939453125e-06,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 7.62939453125e-06,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.00048828125,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 32.29624927043915,
+        "rounds_us": [
+          32.41649866104126,
+          32.442501187324524,
+          32.29624927043915,
+          32.58270025253296,
+          32.238200306892395,
+          32.07400143146515,
+          32.22615122795105
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 15.248799324035645,
+        "rounds_us": [
+          15.272800624370575,
+          15.236799418926239,
+          15.330949425697327,
+          15.208700299263,
+          15.282849967479706,
+          15.242800116539001,
+          15.248799324035645
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.4721538775709449,
+      "torch_compile": {
+        "median_us": 7.326950132846832,
+        "rounds_us": [
+          7.607349753379822,
+          7.348950207233429,
+          7.312899827957153,
+          7.355000078678131,
+          7.316900044679642,
+          7.32090026140213,
+          7.326950132846832
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "rmsnorm",
+      "contract": "one row, eps=1e-5, no affine parameters",
+      "input_shapes": [
+        [
+          16384
+        ]
+      ],
+      "output_shape": [
+        16384
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 4.02,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 24.979349970817566,
+        "rounds_us": [
+          24.979349970817566,
+          25.139600038528442,
+          24.883249402046204,
+          25.19969940185547,
+          24.81510043144226,
+          25.127550959587097,
+          24.88519996404648
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 18.69795024394989,
+        "rounds_us": [
+          18.741999566555023,
+          18.665950000286102,
+          18.689949810504913,
+          18.69795024394989,
+          18.681949377059937,
+          18.709950149059296,
+          18.731999397277832
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.7485363016168957,
+      "torch_compile": {
+        "median_us": 3.891799971461296,
+        "rounds_us": [
+          4.188250005245209,
+          3.9098501205444336,
+          3.8777999579906464,
+          3.913849964737892,
+          3.8777999579906464,
+          3.891799971461296,
+          3.889850154519081
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "gemv",
+      "contract": "FP32 accumulation, FP16 input/output",
+      "input_shapes": [
+        [
+          512,
+          1024
+        ],
+        [
+          1024,
+          1
+        ]
+      ],
+      "output_shape": [
+        512,
+        1
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 3.83,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.00048828125,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 9.5367431640625e-07,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 1.9073486328125e-06,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 254.4445037841797,
+        "rounds_us": [
+          254.84910011291504,
+          246.6088056564331,
+          254.9793004989624,
+          247.10755348205566,
+          254.4445037841797,
+          246.16611003875732,
+          254.9191951751709
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 13.381999731063843,
+        "rounds_us": [
+          13.40004950761795,
+          13.381999731063843,
+          13.416050374507904,
+          13.381999731063843,
+          13.448099792003632,
+          13.364000618457794,
+          13.335950672626495
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.0525929997781146,
+      "torch_compile": {
+        "median_us": 2.4737000465393066,
+        "rounds_us": [
+          2.47770007699728,
+          2.4737000465393066,
+          2.483700029551983,
+          2.469700016081333,
+          2.4737000465393066,
+          2.461699955165386,
+          2.475699968636036
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "gemm",
+      "contract": "FP32 accumulation, FP16 input/output",
+      "input_shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          512
+        ]
+      ],
+      "output_shape": [
+        64,
+        512
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 2.14,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.00048828125,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0009765625,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0009765625,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0009765625,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 34.541648626327515,
+        "rounds_us": [
+          34.5476508140564,
+          34.52560007572174,
+          34.541648626327515,
+          34.52965021133423,
+          34.54965054988861,
+          34.53559875488281,
+          34.555649757385254
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 11.421100050210953,
+        "rounds_us": [
+          11.399000138044357,
+          11.437100172042847,
+          11.413100361824036,
+          11.427100002765656,
+          11.427100002765656,
+          11.421100050210953,
+          11.417099833488464
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.33064721877536074,
+      "torch_compile": {
+        "median_us": 12.997449934482574,
+        "rounds_us": [
+          13.001449406147003,
+          12.993399798870087,
+          12.997449934482574,
+          12.993399798870087,
+          12.997399270534515,
+          12.99940049648285,
+          13.003450632095337
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "batchmatmul",
+      "contract": "32 independent products, FP32 accumulation, FP16 storage",
+      "input_shapes": [
+        [
+          32,
+          64,
+          256
+        ],
+        [
+          32,
+          256,
+          512
+        ]
+      ],
+      "output_shape": [
+        32,
+        64,
+        512
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 11.13,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.00390625,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 140.16159772872925,
+        "rounds_us": [
+          145.77194452285767,
+          141.05894565582275,
+          140.45604467391968,
+          139.54265117645264,
+          140.16159772872925,
+          139.62080478668213,
+          139.5106554031372
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 31.02239966392517,
+        "rounds_us": [
+          30.97429871559143,
+          30.982300639152527,
+          31.03039860725403,
+          31.118500232696533,
+          31.02239966392517,
+          31.196650862693787,
+          31.01235032081604
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.2213330909937711,
+      "torch_compile": {
+        "median_us": 29.2757511138916,
+        "rounds_us": [
+          29.259750247001648,
+          29.339849948883057,
+          29.311850666999817,
+          29.249700903892517,
+          29.207700490951538,
+          29.391950368881226,
+          29.2757511138916
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "linear",
+      "contract": "x@weight + bias; weight stored [in,out]",
+      "input_shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          512
+        ],
+        [
+          512
+        ]
+      ],
+      "output_shape": [
+        64,
+        512
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 3.36,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0009765625,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.001953125,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 34.69184935092926,
+        "rounds_us": [
+          34.70590114593506,
+          34.70790088176727,
+          34.68784987926483,
+          34.6838504076004,
+          34.693899750709534,
+          34.69184935092926,
+          34.679850935935974
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 15.471099317073822,
+        "rounds_us": [
+          15.471099317073822,
+          15.469150245189667,
+          15.505149960517883,
+          15.439049899578094,
+          15.465100109577179,
+          15.477150678634644,
+          15.64134955406189
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.44595775683718086,
+      "torch_compile": {
+        "median_us": 14.107050001621246,
+        "rounds_us": [
+          14.183199405670166,
+          14.09509927034378,
+          14.111149311065674,
+          14.111100137233734,
+          14.105099439620972,
+          14.097049832344055,
+          14.107050001621246
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "conv2d",
+      "contract": "NCHW, batch=1, stride=1, padding=0, no bias",
+      "input_shapes": [
+        [
+          1,
+          32,
+          8,
+          8
+        ],
+        [
+          8,
+          32,
+          3,
+          3
+        ]
+      ],
+      "output_shape": [
+        1,
+        8,
+        6,
+        6
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 2.65,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 9.5367431640625e-07,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 3.814697265625e-06,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 9.5367431640625e-07,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0009765625,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 28.805050253868103,
+        "rounds_us": [
+          28.909200429916382,
+          28.82309854030609,
+          28.6749005317688,
+          28.742998838424683,
+          28.805050253868103,
+          28.905248641967773,
+          28.71895134449005
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 21.752549707889557,
+        "rounds_us": [
+          21.752549707889557,
+          21.756500005722046,
+          21.752500534057617,
+          21.756500005722046,
+          21.742500364780426,
+          21.742500364780426,
+          21.764549612998962
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.7551644422133408,
+      "torch_compile": {
+        "median_us": 12.5668004155159,
+        "rounds_us": [
+          12.57680058479309,
+          12.570799887180328,
+          12.5668004155159,
+          12.536750733852386,
+          12.544749677181244,
+          12.5387504696846,
+          12.568800151348114
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "depthwise_conv",
+      "contract": "NCHW, batch=1, stride=1, padding=0, groups=32, no bias",
+      "input_shapes": [
+        [
+          1,
+          32,
+          16,
+          16
+        ],
+        [
+          32,
+          1,
+          5,
+          5
+        ]
+      ],
+      "output_shape": [
+        1,
+        32,
+        12,
+        12
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": 4.13,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.000244140625,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0001220703125,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 1.1920928955078125e-07,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 2.384185791015625e-07,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 4.176250100135803,
+        "rounds_us": [
+          4.172249883413315,
+          4.178249835968018,
+          4.176250100135803,
+          4.198300093412399,
+          4.170199856162071,
+          4.170199856162071,
+          4.178249835968018
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 12.8091499209404,
+        "rounds_us": [
+          12.813149392604828,
+          12.825149297714233,
+          12.80515044927597,
+          12.789100408554077,
+          12.8091499209404,
+          12.831200659275055,
+          12.807150185108185
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 3.0671414819059497,
+      "torch_compile": {
+        "median_us": 16.729000210762024,
+        "rounds_us": [
+          16.74100011587143,
+          16.72305017709732,
+          16.72700047492981,
+          16.729000210762024,
+          16.734999418258667,
+          16.70899987220764,
+          16.735050082206726
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "rope",
+      "contract": "adjacent pairs; already supplied FP16 cos/sin tables",
+      "input_shapes": [
+        [
+          256,
+          128
+        ],
+        [
+          256,
+          64
+        ],
+        [
+          256,
+          64
+        ]
+      ],
+      "output_shape": [
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": null,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 2.273399941623211,
+        "rounds_us": [
+          2.2693999111652374,
+          2.261349931359291,
+          2.283399924635887,
+          2.287450060248375,
+          2.273399941623211,
+          2.2814499214291573,
+          2.2614000365138054
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 23.32884967327118,
+        "rounds_us": [
+          23.433050513267517,
+          23.306849598884583,
+          23.308849334716797,
+          23.330900073051453,
+          23.37695062160492,
+          23.32884967327118,
+          23.32489937543869
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 10.261656669443893,
+      "torch_compile": {
+        "median_us": 2.978450059890747,
+        "rounds_us": [
+          2.9884500429034233,
+          2.9744500294327736,
+          3.246850147843361,
+          2.9824500903487206,
+          2.978450059890747,
+          2.9724499210715294,
+          2.9724499210715294
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "ffn",
+      "contract": "ReLU(x@W1), FP16 intermediate, then @W2; two kernel launches",
+      "input_shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          1024
+        ],
+        [
+          1024,
+          256
+        ]
+      ],
+      "output_shape": [
+        64,
+        256
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": null,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 170.26660442352295,
+        "rounds_us": [
+          170.67924737930298,
+          170.3147053718567,
+          170.26259899139404,
+          170.2425479888916,
+          170.26660442352295,
+          170.2365517616272,
+          170.2746033668518
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 30.72195053100586,
+        "rounds_us": [
+          30.663898587226868,
+          30.737951397895813,
+          30.752000212669373,
+          30.72195053100586,
+          30.74195086956024,
+          30.613800883293152,
+          30.663850903511047
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.18043438779449525,
+      "torch_compile": {
+        "median_us": 21.992850303649902,
+        "rounds_us": [
+          21.990850567817688,
+          21.990850567817688,
+          22.004899382591248,
+          21.988900005817413,
+          21.992850303649902,
+          21.998900175094604,
+          22.00089991092682
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "swiglu",
+      "contract": "SiLU(x@Wgate)*(x@Wup), FP16 intermediate, then @Wdown; two launches",
+      "input_shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          1024
+        ],
+        [
+          256,
+          1024
+        ],
+        [
+          1024,
+          256
+        ]
+      ],
+      "output_shape": [
+        64,
+        256
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": null,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.015625,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0078125,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 193.65154504776,
+        "rounds_us": [
+          193.63960027694702,
+          193.52940320968628,
+          193.6576008796692,
+          193.68159770965576,
+          193.63155364990234,
+          193.65154504776,
+          193.67765188217163
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 39.00634944438934,
+        "rounds_us": [
+          38.974300026893616,
+          39.00634944438934,
+          38.90019953250885,
+          38.98630142211914,
+          39.03835117816925,
+          39.06039893627167,
+          39.04635012149811
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.2014254491735104,
+      "torch_compile": {
+        "median_us": 36.4425003528595,
+        "rounds_us": [
+          36.436450481414795,
+          36.422500014305115,
+          36.4425003528595,
+          36.512601375579834,
+          36.34834885597229,
+          36.47854924201965,
+          36.4425003528595
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "flash_attn",
+      "contract": "dense scaled dot-product attention, noncausal, no dropout; not FlashAttention algorithm",
+      "input_shapes": [
+        [
+          1,
+          128,
+          256
+        ],
+        [
+          1,
+          128,
+          256
+        ],
+        [
+          1,
+          128,
+          256
+        ]
+      ],
+      "output_shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": null,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 5.960464477539063e-08,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 67.22854971885681,
+        "rounds_us": [
+          67.24259853363037,
+          67.23654866218567,
+          67.24655032157898,
+          67.22854971885681,
+          67.22655296325684,
+          67.21054911613464,
+          67.22049713134766
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 21.570250391960144,
+        "rounds_us": [
+          21.552249789237976,
+          21.572299301624298,
+          21.570250391960144,
+          21.932800114154816,
+          21.56825065612793,
+          21.56825065612793,
+          21.59229964017868
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.320849556954074,
+      "torch_compile": {
+        "median_us": 17.520199716091156,
+        "rounds_us": [
+          17.50819981098175,
+          17.51215010881424,
+          18.08905005455017,
+          17.500150203704834,
+          17.842650413513184,
+          17.804600298404694,
+          17.520199716091156
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    },
+    {
+      "task": "gqa",
+      "contract": "8 query/2 KV heads, dimension=64, noncausal, no dropout, head-major contiguous storage",
+      "input_shapes": [
+        [
+          8,
+          128,
+          64
+        ],
+        [
+          2,
+          128,
+          64
+        ],
+        [
+          2,
+          128,
+          64
+        ]
+      ],
+      "output_shape": [
+        8,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "formal_certificate_for_this_program": false,
+      "paper_hip_us": null,
+      "status": "passed",
+      "numerical_checks": [
+        {
+          "trial": 0,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 3.0517578125e-05,
+          "finite": true
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "finite": true
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "finite": true
+        }
+      ],
+      "hip": {
+        "median_us": 39.23470079898834,
+        "rounds_us": [
+          39.25069868564606,
+          39.21864926815033,
+          39.23470079898834,
+          39.24264907836914,
+          39.23470079898834,
+          39.2426997423172,
+          39.216649532318115
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "torch_eager": {
+        "median_us": 28.158101439476013,
+        "rounds_us": [
+          28.254249691963196,
+          28.150099515914917,
+          28.14610004425049,
+          28.16615104675293,
+          28.158101439476013,
+          28.164100646972656,
+          28.126099705696106
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      },
+      "eager_speedup": 0.7176836031894007,
+      "torch_compile": {
+        "median_us": 21.159599721431732,
+        "rounds_us": [
+          21.147599816322327,
+          21.17764949798584,
+          21.17764949798584,
+          21.133600175380707,
+          21.159599721431732,
+          21.22974991798401,
+          21.151599287986755
+        ],
+        "method": "HIP-event timing of one captured graph containing repeated calls",
+        "calls_per_graph": 20
+      }
+    }
+  ],
+  "scalar_calibration": {
+    "ops": [
+      "add",
+      "sub",
+      "mul",
+      "max"
+    ],
+    "pairs": 256,
+    "comparison": "GPU FP32 vs rounded Lean Float64 evaluations on finite strata",
+    "mismatches": 0,
+    "operand_sha256": "24b41fee40366ef766b6e71664d9b1ce0a3535265a07e736d8fd48e97886adb5",
+    "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+    "lean_source_sha256": "a04a1755e4177977fbf702a7107c94ba7c114c4711d1d228c835952fdc4dc6b7",
+    "max_abs_error": 0.0,
+    "scope": "Finite samples of four scalar operations only; not a proof of hardware semantics"
+  }
+}

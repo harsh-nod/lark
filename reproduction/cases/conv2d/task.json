@@ -1,0 +1,51 @@
+{
+  "name": "reduced_conv2d",
+  "entry": "verify_conv2d",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "w",
+      "role": "input",
+      "shape": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    16,
+    16
+  ]
+}

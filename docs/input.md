@@ -49,10 +49,13 @@ guessed semantics.
 
 The reference grammar permits `import torch` and one undecorated function,
 ordinary tensor assignments, and a return. Supported operators are `+`, `-`,
-`*`, and rank-2 `@`. Calls are `torch.relu`, `torch.maximum`, `torch.sum`,
-`torch.flip(..., [0])`, `torch.matmul`, and corresponding tensor methods where
-appropriate, plus `.reshape(...)` and `.view(...)`. Scalar broadcasting is
-supported; general broadcasting and dynamic Python control are not.
+`*`, and rank-2 or rank-3 `@`. Calls are `torch.relu`, `torch.maximum`, `torch.sum`,
+`torch.flip(..., [0])`, `torch.matmul`, `torch.bmm`, and corresponding tensor methods
+where appropriate, plus `.reshape(...)` and `.view(...)`. Rank-3 products require
+matching batch sizes. Fixed-shape broadcasting follows trailing dimensions of
+size one; dynamic Python control is unsupported. `torch.conv2d(x, weight,
+groups=literal)` supports NCHW inputs and OIHW weights with stride one, valid
+padding, dilation one, and no bias. Other convolution options are refused.
 
 Run `lark inspect` with the same input arguments as `verify` to translate and
 perform symbolic preflight without Lean. Its output explicitly says

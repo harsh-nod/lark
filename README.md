@@ -5,11 +5,17 @@ An independent implementation of the verification workflow in
 (Zhang et al., 2026).
 
 **This repository implements a bounded scalar CUDA/HIP profile of the method.**
-It is not the authors' code or a reproduction of their KernelCraft results.
+It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
 paper's broader PTX, tensor-core, transcendental, and production-kernel coverage
 is outside this implementation. [The implementation map](docs/paper.md)
 records the correspondence and differences.
+
+[The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
+an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
+17 workload dimensions. All model calls remain offline/free. The large FP16 HIP
+benchmarks are numerically tested; the reduced float32 kernels have Lean certificates.
+See [the measured results](reproduction/RESULTS.md) for the coverage and limitations.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
@@ -101,8 +107,8 @@ Proof integration tests skip if Lean is absent. CI installs the pinned
 toolchain and runs them. `tools/verify_examples.py` exports all example
 certificates to a new directory. Optional CPU comparisons against installed
 PyTorch are available with `python3 tools/check_torch.py`; these are numerical
-tests, separate from the proofs. No GPU performance or hardware-conformance
-results are claimed.
+tests, separate from the proofs. Additional GPU measurements and finite scalar
+calibration samples are documented in the reproduction study.
 
 ## Supported input
 
@@ -114,7 +120,8 @@ and four fuel bounds. See [the task format](docs/input.md).
 - Nonnegative integer indices within signed int32 range; `+`, `-`, `*`, `/`, `%`.
 - One-dimensional launches, integer comparisons, braced `if`/`else`, and `while`.
 - `__syncthreads()` and CUDA `__syncwarp()` on complete warps.
-- References using arithmetic, ReLU, maximum, reshape, sum, flip, and rank-2 matmul.
+- References using arithmetic with fixed-shape broadcasting, ReLU, maximum,
+  reshape, sum, flip, rank-2/rank-3 matmul, and grouped valid conv2d.
 
 Unsupported operations, overflow, missing initialization, invalid bounds,
 exhausted fuel, and divergent synchronization cause refusal. Even same-value
@@ -158,9 +165,9 @@ See [the provider protocol](docs/providers.md).
 
 The machine semantics, Python parsers and lowering, reference formalization,
 host interface, Lean, and the phase-reduction metatheory are trusted and listed
-in each report. Unlike the paper, this repository has not measured per-operation
-semantics against GPU hardware, and its Python source lowering has not been
-formalized in Lean. The lossless token round trip detects byte loss; it does
+in each report. The reproduction study compares four scalar operations on finite
+MI300X samples; it does not establish full hardware conformance. Python source
+lowering has not been formalized in Lean. The lossless token round trip detects byte loss; it does
 not prove semantic correctness of the lowering. See [the trust model](docs/trust.md).
 
 The source implementation is MIT licensed. The paper is cited for the design;

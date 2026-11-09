@@ -1,0 +1,51 @@
+{
+  "name": "reduced_depthwise_conv",
+  "entry": "verify_depthwise_conv",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "w",
+      "role": "input",
+      "shape": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    16,
+    16
+  ]
+}

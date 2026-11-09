@@ -1,0 +1,34 @@
+{
+  "name": "reduced_barrier_sum",
+  "entry": "verify_barrier_sum",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        4
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        2
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 2,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    16,
+    16
+  ]
+}

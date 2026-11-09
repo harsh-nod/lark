@@ -1,0 +1,53 @@
+{
+  "name": "reduced_linear",
+  "entry": "verify_linear",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "w",
+      "role": "input",
+      "shape": [
+        2,
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "bias",
+      "role": "input",
+      "shape": [
+        2
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        2
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    16,
+    16
+  ]
+}

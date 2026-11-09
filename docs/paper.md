@@ -18,11 +18,15 @@ This is an independent implementation, not an upstream release.
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |
 | Agent–checker iteration | `lark_kernels/certificate.py` | Bounded local proof-provider protocol, diagnostics and immutable statements; deterministic default prover; optional HTTP model adapter |
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
-| Mutation evaluation, §5.2 | `tests/test_lark.py` | Arithmetic, address, register, barrier and loop mutations; selected invalid candidates also sent directly to Lean |
+| Mutation evaluation, §5.2 | `reproduction/run_cpu.py` | Independent reduced-shape mutation set; every mutant sent directly to Lean with Python preflight bypassed; not the original 42 mutants |
+| Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
+| Hardware experiments | `reproduction/run_hip.py` | Actual MI300X numerical checks and timings for independent FP16 programs at all 17 workload dimensions; four scalar operations sampled separately |
 
-Not reproduced: KernelCraft pass rates, model-token budgets, the production
-kernel study, hardware timing, measured opcode calibration, numerical error
-analysis, or the paper's reported bug. Those results belong to the paper.
+The [reproduction study](../reproduction/README.md) records exactly which experiments
+were run. KernelCraft model pass rates/token costs, the original production-kernel
+certificates, original kernel speedups, PTX/H100 experiments, induction/LLM ablations,
+and numerical error bounds remain unreproduced. Original artifacts were not present
+in the arXiv source bundle; NVIDIA hardware is only one of the missing requirements.
 
 The source frontend is intentionally smaller: no PTX, half/packed values,
 transcendentals, tensor-core fragment layouts, shuffles, cooperative grid-sync

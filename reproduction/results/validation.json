@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "lean": "Lean 4.19.0, commit 6caaee842e94",
+  "python": "3.12.3",
+  "cpu": "AMD RYZEN AI MAX+ PRO 395 w/ Radeon 8060S, 32 logical CPUs",
+  "base_revision": "bbd4c2d95c204c10364cde0fa42f54b03cecab75",
+  "model_calls": 0,
+  "paid_model_calls": 0,
+  "torch_comparisons": 336,
+  "cpu_torch": "2.11.0+cu130 (CPU only)",
+  "checks": [
+    {
+      "command": "LARK_LEAN=... python3 -m unittest discover -s tests -v",
+      "tests": 30,
+      "wall_seconds": 156.6,
+      "status": "passed",
+      "note": "Before adding the new Lean regression method; includes the other eight reproduction tests."
+    },
+    {
+      "command": "LARK_LEAN=... python3 -m unittest discover -s tests -p test_reproduction.py -v",
+      "tests": 9,
+      "wall_seconds": 42.793,
+      "status": "passed",
+      "note": "Includes the new batched-matmul/convolution certificate regression."
+    },
+    {
+      "command": "python3 tools/check_torch.py",
+      "references": 21,
+      "trials_per_reference": 16,
+      "status": "passed"
+    },
+    {
+      "command": "python3 reproduction/run_cpu.py --lean ... --output ... --timeout 90",
+      "exit_code": 0,
+      "status": "passed"
+    },
+    {
+      "command": "ruff check lark_kernels tests tools reproduction",
+      "status": "passed"
+    },
+    {
+      "check": "All 18 baseline artifact manifests and fixed theorem regenerations against current code",
+      "status": "passed"
+    }
+  ],
+  "timing_note": "CPU experiments and validation ran concurrently. These wall times are not controlled performance comparisons."
+}

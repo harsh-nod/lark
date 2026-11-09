@@ -1,0 +1,45 @@
+{
+  "name": "reduced_gemv",
+  "entry": "verify_gemv",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        2,
+        3
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        3,
+        1
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        2,
+        1
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    16,
+    16
+  ]
+}

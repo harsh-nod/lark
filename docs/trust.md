@@ -35,7 +35,11 @@ bound, NaN/overflow behavior, or reassociation guarantee follows from this.
    are allowed. No `sorryAx` or native-evaluation axiom is accepted.
 2. **Machine and opcode semantics.** The embedded, hashed model must describe
    the intended target behavior under the exact-arithmetic abstraction. No
-   hardware calibration has been performed here.
+   complete hardware calibration has been performed here. The
+   [reproduction study](../reproduction/README.md) adds finite comparisons of
+   add/subtract/multiply/maximum against MI300X FP32 and numerical tests of
+   selected compiled sources. These do not prove the abstract machine matches
+   all hardware behavior or cover NaNs, infinities, subnormals, or rounding bounds.
 3. **Python frontend and fixed lowering.** Token read-back verifies byte
    preservation, including comments and newlines. It does not prove that the
    semantic lowering is correct. This is a larger frontend trust boundary than

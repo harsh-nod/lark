@@ -27,7 +27,23 @@ class Tensor:
             pairs = ((self.values[0], b) for b in other.values)
             shape = other.shape
         else:
-            raise Refusal("spec-shape", "only scalar broadcasting is implemented")
+            rank = max(len(self.shape), len(other.shape))
+            left = (1,) * (rank - len(self.shape)) + self.shape
+            right = (1,) * (rank - len(other.shape)) + other.shape
+            if any(a != b and a != 1 and b != 1 for a, b in zip(left, right)):
+                raise Refusal("spec-shape", "incompatible broadcast shapes")
+            shape = tuple(max(a, b) for a, b in zip(left, right))
+
+            def offset(coords, dims):
+                result = 0
+                for i, n in zip(coords, dims):
+                    result = result * n + (0 if n == 1 else i)
+                return result
+
+            pairs = (
+                (self.values[offset(c, left)], other.values[offset(c, right)])
+                for c in itertools.product(*(range(n) for n in shape))
+            )
         return Tensor(
             shape, tuple(node("bin", op, a, b) for a, b in pairs), self.tensor or other.tensor
         )
@@ -61,6 +77,17 @@ class Tensor:
         return Tensor(shape, tuple(output))
 
     def matmul(self, other):
+        if len(self.shape) == len(other.shape) == 3:
+            if self.shape[0] != other.shape[0] or self.shape[2] != other.shape[1]:
+                raise Refusal("spec-shape", "bmm requires matching batches and inner dimensions")
+            batch, m, k = self.shape
+            _, _, n = other.shape
+            result = []
+            for b in range(batch):
+                a = Tensor((m, k), self.values[b * m * k : (b + 1) * m * k])
+                rhs = Tensor((k, n), other.values[b * k * n : (b + 1) * k * n])
+                result.extend(a.matmul(rhs).values)
+            return Tensor((batch, m, n), tuple(result))
         if len(self.shape) != 2 or len(other.shape) != 2 or self.shape[1] != other.shape[0]:
             raise Refusal("spec-shape", "matmul requires two compatible rank-2 tensors")
         m, k = self.shape
@@ -74,6 +101,28 @@ class Tensor:
                     value = node("bin", "add", value, product)
                 values.append(value)
         return Tensor((m, n), tuple(values))
+
+    def conv2d(self, weight, groups=1):
+        if len(self.shape) != 4 or len(weight.shape) != 4 or type(groups) is not int or groups <= 0:
+            raise Refusal(
+                "spec-shape", "conv2d requires NCHW inputs, OIHW weights, positive groups"
+            )
+        batch, cin, h, w = self.shape
+        cout, cg, kh, kw = weight.shape
+        if cin % groups or cout % groups or cg != cin // groups or h < kh or w < kw:
+            raise Refusal("spec-shape", "invalid convolution shapes or groups")
+        values = []
+        for b, oc, y, x in itertools.product(
+            range(batch), range(cout), range(h - kh + 1), range(w - kw + 1)
+        ):
+            acc = literal(0)
+            group = oc // (cout // groups)
+            for c, ky, kx in itertools.product(range(cg), range(kh), range(kw)):
+                lhs = self.values[((b * cin + group * cg + c) * h + y + ky) * w + x + kx]
+                rhs = weight.values[((oc * cg + c) * kh + ky) * kw + kx]
+                acc = node("bin", "add", acc, node("bin", "mul", lhs, rhs))
+            values.append(acc)
+        return Tensor((batch, cout, h - kh + 1, w - kw + 1), tuple(values))
 
 
 class SpecReader:
@@ -136,8 +185,13 @@ class SpecReader:
                 return obj.reshape(shape)
             if f.attr == "sum" and not args and set(kw) <= {"dim"}:
                 return obj.sum(kw.get("dim"))
-            if f.attr == "matmul" and len(args) == 1 and not kw:
-                return obj.matmul(self.expr(args[0]))
+            if f.attr in {"matmul", "bmm"} and len(args) == 1 and not kw:
+                rhs = self.expr(args[0])
+                if f.attr == "bmm" and (len(obj.shape) != 3 or len(rhs.shape) != 3):
+                    raise Refusal("spec-shape", "bmm requires two rank-3 tensors")
+                return obj.matmul(rhs)
+            if f.attr == "conv2d" and is_torch and len(args) == 1 and set(kw) <= {"groups"}:
+                return obj.conv2d(self.expr(args[0]), kw.get("groups", 1))
             if f.attr == "flip" and not kw and len(args) == 1:
                 dims = self.constant(args[0])
                 if dims != [0] and dims != (0,):

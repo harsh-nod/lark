@@ -49,7 +49,7 @@ SCOPE = [
     "Only float32 buffers; scalar +, -, *, max; exact nonnegative int32 index arithmetic",
     "Warp/block/grid folds; CUDA/HIP frontend exposes block barriers, full warp barriers, and halt",
     "No PTX, tensor-core collectives, async operations, atomics, data-dependent control, or numerical guarantee",
-    "Hardware conformance of the machine semantics has not been measured in this repository",
+    "Full hardware conformance is not established; finite MI300X scalar samples are separate evidence",
     "Syntactic segment grouping and repetition; no general induction-based loop segmentation",
     "Only computations with the same scalar expression structure currently prove automatically",
 ]

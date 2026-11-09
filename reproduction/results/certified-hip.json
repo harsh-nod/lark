@@ -1,0 +1,534 @@
+{
+  "schema": 1,
+  "experiment": "exact-certified-source-hip-numerical-checks",
+  "device": "AMD Instinct MI300X",
+  "architecture": "gfx942",
+  "torch": "2.14.1+rocm7.2",
+  "cases": [
+    {
+      "task": "relu",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "eeb19c9ff43445fa15275421e20728a0ddc542fdcca4fc8e7b3cde326fe3ffb7",
+        "reference_sha256": "ea994e799a6b87595fa1f734d61b08a76eccba7dcd7c1f4ae367df7f791d1e8c",
+        "task_sha256": "1bbea36166dc1143573819d864c31ad168dfdd24d94ead500203463e60476c67",
+        "theorem_sha256": "c2babfea1292afec83c4581ad72726435f98e28afcfc802730b360d3abb4bca0",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "relu-hip"
+      },
+      "source_sha256": "eeb19c9ff43445fa15275421e20728a0ddc542fdcca4fc8e7b3cde326fe3ffb7",
+      "reference_sha256": "ea994e799a6b87595fa1f734d61b08a76eccba7dcd7c1f4ae367df7f791d1e8c",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "gemv",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "c57fe335bc3a513980db80b87d3c316b5e7a502037fdb5c6f35ee3ee4c9e3b71",
+        "reference_sha256": "77a5203befa90ea10f2c0e8e05329383d0f6dcc18fa0f8e0f6ffabc0baf6d2f2",
+        "task_sha256": "20f71b6fc5798a10be70e1c08ff842c72e799bb4dc4209990469329582e4787c",
+        "theorem_sha256": "1bc69ac347625c010a1cdfdf329c40dcbecc1cf44b49bb29c6e681996d9be679",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "gemv-hip"
+      },
+      "source_sha256": "c57fe335bc3a513980db80b87d3c316b5e7a502037fdb5c6f35ee3ee4c9e3b71",
+      "reference_sha256": "77a5203befa90ea10f2c0e8e05329383d0f6dcc18fa0f8e0f6ffabc0baf6d2f2",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "gemm",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "9194347d3b8e83a54670fedf38aae3a7d0970d92d2d9f1ca7ed3d25cdb9d2cb4",
+        "reference_sha256": "30b9142fd46d89e688f008fb5b63688378f30b272a5b796231c4d518c4902b53",
+        "task_sha256": "3fe9b198492379446c465440df45044a3f83db541cb3c521fe5a7214193f9dca",
+        "theorem_sha256": "b7199424e7c508929f53791ad75e0c1cc1932c8d113289e2574960275330c29e",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "gemm-hip"
+      },
+      "source_sha256": "9194347d3b8e83a54670fedf38aae3a7d0970d92d2d9f1ca7ed3d25cdb9d2cb4",
+      "reference_sha256": "30b9142fd46d89e688f008fb5b63688378f30b272a5b796231c4d518c4902b53",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "batchmatmul",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "ff1d20b62ffab7f09fffaca3444280cf2d1c71dea885f56097e25e48308e273e",
+        "reference_sha256": "b105a8b3b76dda76cdc41ffd61641cfd9857a6da5d8f57e054308c639be8dde7",
+        "task_sha256": "b17df57963d34e101786ec8e59340574c4d0d5cc17e1535c4cf8337f81359385",
+        "theorem_sha256": "086bc2ac9dc848426f46dbb144c9feb17542147e190cee842613359ecc345bcf",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "batchmatmul-hip"
+      },
+      "source_sha256": "ff1d20b62ffab7f09fffaca3444280cf2d1c71dea885f56097e25e48308e273e",
+      "reference_sha256": "b105a8b3b76dda76cdc41ffd61641cfd9857a6da5d8f57e054308c639be8dde7",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "linear",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "b7fd7bae399867e2f60154ba47863a33ce8b5c1a9f02b48e23eddec45e013fdc",
+        "reference_sha256": "8bb9d10d2a075ba03082365695da31015fe1406f277738fc1a2c8d6d27e2f6ae",
+        "task_sha256": "7079a18164f8571e3d95d182989eca2e899ecfa55c0d555ae2f5152dc1426c8c",
+        "theorem_sha256": "5c25ef883bef234df0fe5f6f67e1de4916111b998676af8568ca358a6cb7e1c9",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "linear-hip"
+      },
+      "source_sha256": "b7fd7bae399867e2f60154ba47863a33ce8b5c1a9f02b48e23eddec45e013fdc",
+      "reference_sha256": "8bb9d10d2a075ba03082365695da31015fe1406f277738fc1a2c8d6d27e2f6ae",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "conv2d",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "8a3fda057ae43a6e19f996a3af60d1041a17ed0836fd1d86f174525361661a3f",
+        "reference_sha256": "ccd4d9c50aa84f65dfd50e5ca57e9e71bd7e26fefbd787c78f14320c6ba8733b",
+        "task_sha256": "b8ac599a4376d10c238cd836acdaedefaa9df472dd997a5005731aea7446f964",
+        "theorem_sha256": "e5e00a3935b632c89cf6f40afc4a2ccb5f7fb6a15af268e690c5617fef8e9f17",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "conv2d-hip"
+      },
+      "source_sha256": "8a3fda057ae43a6e19f996a3af60d1041a17ed0836fd1d86f174525361661a3f",
+      "reference_sha256": "ccd4d9c50aa84f65dfd50e5ca57e9e71bd7e26fefbd787c78f14320c6ba8733b",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "depthwise_conv",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "b013693305c199ee60bd6f5b0ff5422f9901428bb91465e7b705c09b9c5f5e30",
+        "reference_sha256": "feddf9b360a3fdcb2b32cd3d3b2fd8bd8f8faf8170ea0f2870cf7d5d502d12dc",
+        "task_sha256": "2f0b478fb0f3c435c33b87d0739d66f0f5bdbda33e557c316afb9473df5d7501",
+        "theorem_sha256": "a0f53ba4b69d86b9298bdc36e70701d3981dd7ed0e1fa114dac749ab62286825",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "depthwise_conv-hip"
+      },
+      "source_sha256": "b013693305c199ee60bd6f5b0ff5422f9901428bb91465e7b705c09b9c5f5e30",
+      "reference_sha256": "feddf9b360a3fdcb2b32cd3d3b2fd8bd8f8faf8170ea0f2870cf7d5d502d12dc",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "barrier_sum",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "37b7629722eba45833308b2e1970b9f6b1a31b58aeb9afaecbfb02128c8713a3",
+        "reference_sha256": "5f2472fd12c65d165d8663704bbba14ff0c3da8e069be0e3e3398e9bc4362e97",
+        "task_sha256": "2ec185c8056bd922023123ab45ce07e742a18727cee15b35f556aeca1e2bf068",
+        "theorem_sha256": "9c7d104e3ce51a26514b5680c1912474529f4a36cba1c2684474acc0ab3df654",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "barrier_sum-hip"
+      },
+      "source_sha256": "37b7629722eba45833308b2e1970b9f6b1a31b58aeb9afaecbfb02128c8713a3",
+      "reference_sha256": "5f2472fd12c65d165d8663704bbba14ff0c3da8e069be0e3e3398e9bc4362e97",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    },
+    {
+      "task": "llmc_fixed",
+      "certificate": {
+        "status": "verified",
+        "source_sha256": "332b576544994bac49e35b4ee0afd39b418a8c6a49aecf086a1813d67651da1d",
+        "reference_sha256": "f1bd9927f0227ee6905a61fc4f63b5bda4868a66b764305fb3cf29a5d82065ae",
+        "task_sha256": "a85a9eb777e7edff575ede10d485a5f71d8fb78ac0023f49692277cdd3ff5032",
+        "theorem_sha256": "95b46cb3c60f4b41144a3b0601883c1858379230c9c899201361eefca0227f29",
+        "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+        "artifacts": "llmc_fixed-hip"
+      },
+      "source_sha256": "332b576544994bac49e35b4ee0afd39b418a8c6a49aecf086a1813d67651da1d",
+      "reference_sha256": "f1bd9927f0227ee6905a61fc4f63b5bda4868a66b764305fb3cf29a5d82065ae",
+      "trials": [
+        {
+          "seed": 0,
+          "exact_agreement": true
+        },
+        {
+          "seed": 1,
+          "exact_agreement": true
+        },
+        {
+          "seed": 2,
+          "exact_agreement": true
+        },
+        {
+          "seed": 3,
+          "exact_agreement": true
+        },
+        {
+          "seed": 4,
+          "exact_agreement": true
+        },
+        {
+          "seed": 5,
+          "exact_agreement": true
+        },
+        {
+          "seed": 6,
+          "exact_agreement": true
+        },
+        {
+          "seed": 7,
+          "exact_agreement": true
+        },
+        {
+          "seed": 8,
+          "exact_agreement": true
+        },
+        {
+          "seed": 9,
+          "exact_agreement": true
+        }
+      ],
+      "dtype": "float32",
+      "status": "passed"
+    }
+  ],
+  "wrapper_sha256": "6901ef7d9e6e68311afbefb98f9af840adc0e131d68246694afb62d135389e09",
+  "runner_sha256": "02f7aaee57a3c6bd89302c986042bf5f63dd13e77377dacd4c97f8b0f918a8f1",
+  "note": "Only the fixed/reduced kernels are executed. The deliberately racy source is tested symbolically on CPU."
+}
