@@ -5,3 +5,4 @@ import Lark.DotLoop
 import Lark.Matrix
 import Lark.Bias
 import Lark.Rotary
+import Lark.Convolution

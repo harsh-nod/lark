@@ -20,7 +20,7 @@ packages = ["lark_kernels"]
 
 [tool.setuptools.data-files]
 "share/lark/lean" = ["lean/lean-toolchain", "lean/lakefile.toml"]
-"share/lark/lean/Lark" = ["lean/Lark/Model.lean", "lean/Lark/Nonlinear.lean", "lean/Lark/Pointwise.lean", "lean/Lark/Reduction.lean", "lean/Lark/DotLoop.lean", "lean/Lark/Matrix.lean", "lean/Lark/Bias.lean", "lean/Lark/Rotary.lean"]
+"share/lark/lean/Lark" = ["lean/Lark/Model.lean", "lean/Lark/Nonlinear.lean", "lean/Lark/Pointwise.lean", "lean/Lark/Reduction.lean", "lean/Lark/DotLoop.lean", "lean/Lark/Matrix.lean", "lean/Lark/Bias.lean", "lean/Lark/Rotary.lean", "lean/Lark/Convolution.lean"]
 
 [tool.ruff]
 line-length = 100
@@ -35,3 +35,5 @@ line-length = 100
 "reproduction/linear/cases/*/reference.py" = ["F401"]
 
 "reproduction/rotary/cases/*/reference.py" = ["F401"]
+
+"reproduction/convolution/cases/*/*/reference.py" = ["F401"]

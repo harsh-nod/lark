@@ -8,6 +8,7 @@ full-size induction certificates and exact-source validation on two MI350X hosts
 The [matrix study](matrix/README.md) extends that evidence to full GEMM and BMM.
 The [Linear study](linear/README.md) adds the full biased matrix product;
 [RoPE](rotary/README.md) adds the full interleaved rotary-pair operation.
+[Convolution](convolution/README.md) adds full valid Conv2D and depthwise proofs.
 The [coverage ledger](COVERAGE.md) tracks all paper results across these studies.
 
 This is an **independent, partial reproduction** of

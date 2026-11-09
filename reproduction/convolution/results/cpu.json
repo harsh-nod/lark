@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "experiment": "convolution-induction-v8",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-09T23:00:53.659803+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "convolution": "d6bbeb66eae9943a45dba4d64d32c8310b4bb4d1429977e94b6a14e0008f6a04"
+  },
+  "runner_sha256": "b519ef0436986890d7a54d3b4e7cd4345b881dc3ce516473c182e584039544d5",
+  "baselines": [
+    {
+      "key": "baselines/hip/conv2d",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        8,
+        8,
+        3,
+        1
+      ],
+      "verify_seconds": 14.171992838033475,
+      "main_bytes": 115825,
+      "source_sha256": "ac3ae467185bda53ab090da746353cdbe999d861a1154e6558e97c96d0b222fb",
+      "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+      "task_sha256": "7a27f32339a1744176195b4a98e956185d670f7b36bc3fcd5874985e06f49994",
+      "theorem_sha256": "d3abe42fbd48db3204c063ba888c0d8496099023c68036b0df587483099f9931"
+    },
+    {
+      "key": "baselines/hip/depthwise_conv",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        32,
+        16,
+        5,
+        32
+      ],
+      "verify_seconds": 13.01125934702577,
+      "main_bytes": 115818,
+      "source_sha256": "c23a7a7009ce0e624c49ee0fd0aeb5c6ada748103d5135e36fb0668f17803f1c",
+      "reference_sha256": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+      "task_sha256": "72bab6c55caa7419116ced05a0c4a9e07fe01c63b447e097e5917fa38cfa8d19",
+      "theorem_sha256": "471683db59ffec0f6583e482fc519720a0870d96f064d9593ffe2e9ad367d125"
+    },
+    {
+      "key": "baselines/cuda/conv2d",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        8,
+        8,
+        3,
+        1
+      ],
+      "verify_seconds": 14.484286862018052,
+      "main_bytes": 115825,
+      "source_sha256": "ab62a8afbc0a438137d72e1f11e9c0efdb529bd5578eba5f0c50a9fac3bddc65",
+      "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+      "task_sha256": "14ef6a9354655a6a276afd62905b91710027b5a7501f0dd67eafa3ee5f7d7e08",
+      "theorem_sha256": "b0fb4355e3e5ac86b8456c4801fab0479a6b8ee8307758138641eac3faf77faa"
+    },
+    {
+      "key": "baselines/cuda/depthwise_conv",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        32,
+        16,
+        5,
+        32
+      ],
+      "verify_seconds": 16.39592310099397,
+      "main_bytes": 115818,
+      "source_sha256": "db453ca7ffbfc6b5898f1aa2cf31631b77369d8ed8632af48f4e2abf5cf56a7c",
+      "reference_sha256": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+      "task_sha256": "dfbf36682b5a84340b3e9b610a58de883d6cb96e1d0f96f0f462fd732aaaafda",
+      "theorem_sha256": "b521f6de1ca6909f46bb709a53ececccee37847b4e3908b60baef933b773098b"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/conv2d-2-1-2-1",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        2,
+        1,
+        2,
+        1,
+        1
+      ],
+      "verify_seconds": 14.201408788037952,
+      "main_bytes": 115819,
+      "source_sha256": "d7a968b3e6285d126c0a5b70e6ed723d21bde6f40a9c3a3affc40915668d17eb",
+      "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+      "task_sha256": "20203239cea999578f8cae910e480f33ebb56cb2a3c9275379c528358b928c4b",
+      "theorem_sha256": "5ed5ea93c573453aa95a176bcc392c569f36e1e22de233088705266deeb299d2"
+    },
+    {
+      "key": "scaling/conv2d-32-8-8-3",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        8,
+        8,
+        3,
+        1
+      ],
+      "verify_seconds": 14.000764421012718,
+      "main_bytes": 115825,
+      "source_sha256": "ac3ae467185bda53ab090da746353cdbe999d861a1154e6558e97c96d0b222fb",
+      "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+      "task_sha256": "7a27f32339a1744176195b4a98e956185d670f7b36bc3fcd5874985e06f49994",
+      "theorem_sha256": "d3abe42fbd48db3204c063ba888c0d8496099023c68036b0df587483099f9931"
+    },
+    {
+      "key": "scaling/depthwise_conv-32-32-16-5",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        32,
+        16,
+        5,
+        32
+      ],
+      "verify_seconds": 14.202619866991881,
+      "main_bytes": 115818,
+      "source_sha256": "c23a7a7009ce0e624c49ee0fd0aeb5c6ada748103d5135e36fb0668f17803f1c",
+      "reference_sha256": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+      "task_sha256": "72bab6c55caa7419116ced05a0c4a9e07fe01c63b447e097e5917fa38cfa8d19",
+      "theorem_sha256": "471683db59ffec0f6583e482fc519720a0870d96f064d9593ffe2e9ad367d125"
+    },
+    {
+      "key": "scaling/conv2d-32-8-1024-3",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        8,
+        1024,
+        3,
+        1
+      ],
+      "verify_seconds": 14.105638706998434,
+      "main_bytes": 115848,
+      "source_sha256": "c823739b4ff847f1f32ce6d5f45ba8f79accceb6b1951e83abff2a3d7d645539",
+      "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+      "task_sha256": "39eac6c801d8f0ebb99274a35a5def46bd3f2d1b7ee27b6b6c3140f0da1df687",
+      "theorem_sha256": "164a1cc9f83f1c0bca5d9949a4577f5b7a30c7f567d29bf422a0bbfa0e4e6062"
+    },
+    {
+      "key": "scaling/depthwise_conv-32-32-4096-5",
+      "status": "verified",
+      "rechecked": true,
+      "convolution_dimensions": [
+        32,
+        32,
+        4096,
+        5,
+        32
+      ],
+      "verify_seconds": 14.341878606006503,
+      "main_bytes": 115840,
+      "source_sha256": "b11325e3c6311ca2b75dc70c43c8ce1a5f2ce7ecd065b65dce58c3ee13285ec8",
+      "reference_sha256": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+      "task_sha256": "3619435f1b6fbd4c26b97d8dcfcf9260cf1bdd18376454734b72e04a28304dbb",
+      "theorem_sha256": "18f970bd96769dbca1e54ef2eaad17400cebc844c4cde1582452ca4de5519e9d"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "arithmetic",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 14.931631030980498,
+      "source_sha256": "4002d87c6dfdd9a2b4d054fced2e3366a53fb14950324793475d9b7652520381",
+      "theorem_sha256": "05345eb03663645eeae948fb455e9c8cfe4fc47f93dcd2114ea63f9a30307891"
+    },
+    {
+      "name": "kernel-row",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 14.907047808985226,
+      "source_sha256": "d4d3d31d4e43a96ae7b8c592c261aa4ce40ebfa945e8aa2b6ce56c11304d7d29",
+      "theorem_sha256": "fdcd07350946688ec379974566bcb97d7084d221b11d59f7787f89625d059e01"
+    },
+    {
+      "name": "output-channel",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 14.261961326992605,
+      "source_sha256": "ecdf19655e32461a931eca51bc0bb50ec70f9552962e6c67a6cc7f6667fd94f2",
+      "theorem_sha256": "4ecad3402dbf4094c378a66da9cc94bfb8efa2137e47915d813354f54c3dfbcc"
+    }
+  ],
+  "status": "passed"
+}

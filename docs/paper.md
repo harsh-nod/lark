@@ -19,8 +19,10 @@ The [counted-loop extension](../reproduction/reduction/README.md) proves a
 serial dot-product loop and actual grid fold for full-size GEMV. The
 [matrix](../reproduction/matrix/README.md) and [Linear](../reproduction/linear/README.md)
 profiles add GEMM, BMM and bias epilogues. [RoPE](../reproduction/rotary/README.md)
-adds output-parity branches and interleaved input pairing. These five induction
-profiles cover eight paper-size families with independent scalar programs and
+adds output-parity branches and interleaved input pairing.
+[Valid convolutions](../reproduction/convolution/README.md) add dense/depthwise
+NCHW address proofs. These six induction profiles cover ten paper-size families
+with independent scalar programs and
 exact-source HIP checks on both MI350X hosts.
 
 | Paper component | Implementation | Extent and differences |
@@ -31,7 +33,7 @@ exact-source HIP checks on both MI350X hosts.
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
 | Source translation and read-back | `lark_kernels/frontend.py` | Lossless token stream plus strict CUDA/HIP lowering; both parser and lowering remain trusted |
-| Segmentation, Obligation 2 | `Segment`, `flatten`; `Pointwise.lean`, `Reduction.lean`, `DotLoop.lean`, `Matrix.lean`, `Bias.lean`, `Rotary.lean` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds and counted GEMV/GEMM/BMM/Linear loops and RoPE branches by induction. No general loop/tile recovery |
+| Segmentation, Obligation 2 | `Segment`, `flatten`; induction libraries under `lean/Lark/` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds, counted GEMV/GEMM/BMM/Linear/convolution loops and RoPE branches by induction. No general loop/tile recovery |
 | Tensor reference formalization | `lark_kernels/spec.py` | Independent PyTorch AST reader for a closed set of fixed-shape operations; does not execute reference code |
 | Equivalence, Obligation 3 | `segment_equivalence` | Completion, race freedom, and output equality for every scalar interpretation, input, and outside-memory function |
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |

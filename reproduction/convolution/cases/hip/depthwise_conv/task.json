@@ -1,0 +1,51 @@
+{
+  "name": "induction_depthwise_conv_hip_32_32_16_5",
+  "entry": "induction_depthwise_conv_hip_32_32_16_5",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        1,
+        32,
+        16,
+        16
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "w",
+      "role": "input",
+      "shape": [
+        32,
+        1,
+        5,
+        5
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        32,
+        12,
+        12
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 4608,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    106,
+    1,
+    1,
+    1
+  ]
+}

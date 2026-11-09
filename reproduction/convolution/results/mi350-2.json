@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "experiment": "convolution-induction-v8-exact-source",
+  "timestamp_utc": "2026-11-09T23:06:19.543113+00:00",
+  "device": "AMD Instinct MI350X",
+  "architecture": "gfx950",
+  "compiler": "HIP version: 7.2.53150-b958ce88c2\nAMD clang version 22.0.0git (https://github.com/ROCm/llvm-project  25496 9b0f9aa3067a907226b0ebb8bee1fe51d1f0fca5)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.3.0/lib/llvm/bin\nBuild config: +assertions\nConfiguration file: /opt/rocm-7.3.0/lib/llvm/bin/clang++.cfg\n",
+  "runner_sha256": "d4584a378cea7fce654586b471286a77fd2b22a20e22e9a24ac5bd75b4d12a47",
+  "dataset_sha256": "608ae9f5cda9ba7c84819788c71f9b0f138e281dad873423ffc20097c98b6041",
+  "tensor_data_sha256": "9793888c8bfd198f50769eefae5b4de4eed94fe02c421ca03f77e74acc1d4cae",
+  "certificate_index_sha256": "5f072f576e2716ef549b9210967527ec4d879c74e57df00f5633054e459c28dd",
+  "wrapper_sha256": "584061f6dc61637222e64d0f6a48ea1fa64e70b8fe6f53e6b042991d7a3d1e62",
+  "library_sha256": "c2cd8d4f4c1153deddcf00f2ffe5f8bae985ab6e3e88673f5a2d050bac87b496",
+  "compile_command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "/tmp/lark-convolution-device-20261109/certified.hip",
+    "-o",
+    "/tmp/lark-convolution-device-20261109/results/certified.so"
+  ],
+  "model_calls": 0,
+  "reference": "CPU PyTorch 2.11.0+cu130",
+  "cases": [
+    {
+      "key": "conv2d",
+      "certificate": {
+        "status": "verified",
+        "profile": "convolution-induction-v8",
+        "convolution_dimensions": [
+          32,
+          8,
+          8,
+          3,
+          1
+        ],
+        "model_hashes": {
+          "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+          "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+          "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+          "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+          "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+          "convolution": "d6bbeb66eae9943a45dba4d64d32c8310b4bb4d1429977e94b6a14e0008f6a04"
+        },
+        "theorem_sha256": "d3abe42fbd48db3204c063ba888c0d8496099023c68036b0df587483099f9931",
+        "source_sha256": "ac3ae467185bda53ab090da746353cdbe999d861a1154e6558e97c96d0b222fb",
+        "reference_sha256": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+        "task_sha256": "7a27f32339a1744176195b4a98e956185d670f7b36bc3fcd5874985e06f49994"
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 6.103515625e-05,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 2.384185791015625e-07,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0001220703125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 288
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "key": "depthwise_conv",
+      "certificate": {
+        "status": "verified",
+        "profile": "convolution-induction-v8",
+        "convolution_dimensions": [
+          32,
+          32,
+          16,
+          5,
+          32
+        ],
+        "model_hashes": {
+          "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+          "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+          "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+          "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+          "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+          "convolution": "d6bbeb66eae9943a45dba4d64d32c8310b4bb4d1429977e94b6a14e0008f6a04"
+        },
+        "theorem_sha256": "471683db59ffec0f6583e482fc519720a0870d96f064d9593ffe2e9ad367d125",
+        "source_sha256": "c23a7a7009ce0e624c49ee0fd0aeb5c6ada748103d5135e36fb0668f17803f1c",
+        "reference_sha256": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+        "task_sha256": "72bab6c55caa7419116ced05a0c4a9e07fe01c63b447e097e5917fa38cfa8d19"
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 4608
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "scope": "Full Conv2D/depthwise, exact certified source, one thread per output. Abstract operation proof plus separate finite numerical checks; not the paper's optimized source or launch."
+}
