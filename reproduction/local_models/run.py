@@ -91,11 +91,23 @@ def run_case(case, output, args, server):
                 temperature=args.temperature,
                 max_tokens=args.max_tokens,
                 timeout=args.model_timeout,
+                reasoning_effort=getattr(args, "reasoning_effort", "max"),
             )
         except Exception as error:
-            row.update(status="transport-or-response-error", error=str(error))
+            no_content = (
+                str(error) == "Model produced no proof content"
+                and (destination / "response.json").is_file()
+            )
+            row.update(
+                status="no-proof-content" if no_content else "transport-or-response-error",
+                error=str(error),
+                elapsed_seconds=time.monotonic() - start,
+            )
+            if no_content:
+                feedback = "The previous response returned no final proof content. Submit concise JSON tactic candidates; Lean will check them."
             result["calls"].append(row)
             write(output / "result.json", result)
+            print(json.dumps({"case": case.name, **row}), flush=True)
             continue
         try:
             candidate = client.proposal(content)
@@ -136,7 +148,9 @@ def run_case(case, output, args, server):
         if result["status"] == "verified":
             break
     if result["status"] != "verified":
-        if all(row["status"] == "transport-or-response-error" for row in result["calls"]):
+        if all(row["status"] == "no-proof-content" for row in result["calls"]):
+            result["status"] = "no-proof-content"
+        elif all(row["status"] == "transport-or-response-error" for row in result["calls"]):
             result["status"] = "no-model-response"
         elif not any(row["status"] == "unproved" for row in result["calls"]):
             result["status"] = "invalid-proposals"
@@ -158,6 +172,7 @@ def main():
     p.add_argument("--max-tokens", type=int, default=16384)
     p.add_argument("--model-timeout", type=float, default=600)
     p.add_argument("--lean-timeout", type=float, default=150)
+    p.add_argument("--reasoning-effort", choices=("low", "high", "max"), default="max")
     args = p.parse_args()
     client.endpoint(args.url)
     if not 1 <= args.attempts <= 16:
@@ -187,6 +202,7 @@ def main():
         "attempts_per_case": args.attempts,
         "model_timeout_seconds": args.model_timeout,
         "lean_timeout_seconds": args.lean_timeout,
+        "reasoning_effort": args.reasoning_effort if args.model.startswith("zai-org/") else None,
         "external_api_spend_usd": 0,
         "cases": [],
         "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",

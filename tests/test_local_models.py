@@ -10,6 +10,7 @@ import tempfile
 import threading
 import unittest
 import urllib.error
+from unittest.mock import patch
 
 from reproduction.local_models import client
 
@@ -38,9 +39,12 @@ class LocalClientTests(unittest.TestCase):
     def test_local_request_and_usage_are_recorded_and_redirects_are_refused(self):
         class Handler(http.server.BaseHTTPRequestHandler):
             redirect = False
+            empty = False
+            seen = None
 
             def do_POST(self):
                 request = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                Handler.seen = request
                 if self.redirect:
                     self.send_response(302)
                     self.send_header("Location", "https://example.com/v1/chat/completions")
@@ -53,7 +57,12 @@ class LocalClientTests(unittest.TestCase):
                         {
                             "model": request["model"],
                             "usage": {"prompt_tokens": 2, "completion_tokens": 3},
-                            "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+                            "choices": [
+                                {
+                                    "finish_reason": "stop",
+                                    "message": {"content": None if self.empty else "{}"},
+                                }
+                            ],
                         }
                     ).encode()
                 )
@@ -68,10 +77,20 @@ class LocalClientTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as tmp:
                 url = f"http://127.0.0.1:{server.server_port}/v1/chat/completions"
                 target = Path(tmp) / "success"
-                self.assertEqual(client.call(url, "zai-org/GLM-5.3-Flash", [], target), "{}")
+                self.assertEqual(
+                    client.call(url, "zai-org/GLM-5.3-Flash", [], target, reasoning_effort="low"),
+                    "{}",
+                )
+                self.assertEqual(Handler.seen["reasoning_effort"], "low")
                 record = json.loads((target / "receipt.json").read_text())
                 self.assertEqual(record["usage"]["completion_tokens"], 3)
                 self.assertEqual(record["external_api_spend_usd"], 0)
+                Handler.empty = True
+                with self.assertRaises(ValueError):
+                    client.call(url, "zai-org/GLM-5.3-Flash", [], Path(tmp) / "empty")
+                empty = json.loads((Path(tmp) / "empty/receipt.json").read_text())
+                self.assertEqual(empty["usage"]["completion_tokens"], 3)
+                self.assertTrue((Path(tmp) / "empty/response.json").exists())
                 Handler.redirect = True
                 with self.assertRaises(urllib.error.HTTPError):
                     client.call(url, "zai-org/GLM-5.3-Flash", [], Path(tmp) / "redirect")
@@ -81,6 +100,47 @@ class LocalClientTests(unittest.TestCase):
             server.shutdown()
             server.server_close()
             thread.join()
+
+    def test_reasoning_only_response_is_not_a_transport_or_proof_rejection(self):
+        from reproduction.local_models.run import ROOT, run_case
+        from lark_kernels import certificate
+
+        def no_content(*args, **kwargs):
+            self.assertEqual(kwargs["reasoning_effort"], "low")
+            output = Path(args[3])
+            output.mkdir()
+            (output / "response.json").write_text(
+                json.dumps({"choices": [{"message": {"content": None}}]})
+            )
+            raise ValueError("Model produced no proof content")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            args = argparse.Namespace(
+                model="zai-org/GLM-5.3-Flash",
+                url="http://127.0.0.1:1/v1/chat/completions",
+                lean=None,
+                attempts=1,
+                seed=0,
+                temperature=0,
+                max_tokens=64,
+                model_timeout=1,
+                lean_timeout=1,
+                reasoning_effort="low",
+            )
+            with (
+                patch.object(certificate, "lean_binary", return_value="/unused/lean"),
+                patch.object(client, "call", no_content),
+                patch.object(certificate, "run_lean") as checked,
+            ):
+                result = run_case(
+                    ROOT / "reproduction/nonlinear/cases/float16/relu",
+                    Path(tmp) / "case",
+                    args,
+                    {"revision": "fixture"},
+                )
+            self.assertEqual(result["status"], "no-proof-content")
+            self.assertEqual(result["calls"][0]["status"], "no-proof-content")
+            checked.assert_not_called()
 
     @unittest.skipUnless(LEAN, "Lean is needed")
     def test_stub_proposal_gets_an_independently_checked_certificate(self):

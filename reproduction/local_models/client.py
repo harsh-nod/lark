@@ -37,10 +37,23 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         raise urllib.error.HTTPError(req.full_url, code, "Redirects are refused", headers, fp)
 
 
-def call(url, model, messages, output, *, seed=0, temperature=0, max_tokens=16384, timeout=600):
+def call(
+    url,
+    model,
+    messages,
+    output,
+    *,
+    seed=0,
+    temperature=0,
+    max_tokens=16384,
+    timeout=600,
+    reasoning_effort="max",
+):
     endpoint(url)
     if model not in MODELS:
         raise ValueError("Only the original paper's named open-weight model families are allowed")
+    if reasoning_effort not in {"low", "high", "max"}:
+        raise ValueError("GLM reasoning effort must be low, high or max")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     body = {
@@ -52,7 +65,7 @@ def call(url, model, messages, output, *, seed=0, temperature=0, max_tokens=1638
         "stream": False,
     }
     if model.startswith("zai-org/"):
-        body["reasoning_effort"] = "max"
+        body["reasoning_effort"] = reasoning_effort
     encoded = json.dumps(body, ensure_ascii=False).encode("utf-8")
     (output / "request.json").write_bytes(encoded)
     record = {
