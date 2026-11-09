@@ -13,6 +13,13 @@ at the 64-token cap with no final answer. This is inference evidence, not a proo
 success. A separate three-case proof pilot is in progress. Hosted API spending
 is zero; no original paper pass rate is claimed.
 
+The [initial 600-second pilot](results/pilot-600s-20261109/summary.json) was
+interrupted after its first request timed out and a retry had started. Both
+attempts and the intervention are archived, with unknown token usage; neither
+returned a proof or reached Lean. This is transport/incomplete-run evidence,
+with zero proof rejections. All three pilot cases are being rerun with an
+explicit 1,800-second request timeout; the original failure is retained.
+
 Three named model families have official ungated weights. Metadata was checked
 on 2026-11-09; revisions are pinned in `checkpoint.py`:
 
