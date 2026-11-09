@@ -185,6 +185,8 @@ def main():
         "temperature": args.temperature,
         "max_tokens": args.max_tokens,
         "attempts_per_case": args.attempts,
+        "model_timeout_seconds": args.model_timeout,
+        "lean_timeout_seconds": args.lean_timeout,
         "external_api_spend_usd": 0,
         "cases": [],
         "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",
