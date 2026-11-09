@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "model_profile": "pointwise-induction-v3",
+  "model_hashes": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e"
+  },
+  "source_readback": true,
+  "files": {
+    "Main.lean": "453c4e314ce0d51453d46527381bf0a3bf6387aaca25f427c6ed3195ea914986",
+    "kernel.cu": "14f68bc48bf260dde6b9ff6da1756fa8e72758d6338f5d1992b00fe3906720c2",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "reference.py": "29bb946e276ad839079c04d6bf8fb01810d51b3a6872e85115125da4e719378f",
+    "task.json": "b3bff4fc70822c8b7b5aab1313034b87ab5d23917f7017fc79a91627ea46abe0",
+    "translation.json": "20c676d290d16fea7de572153e776d634ed05fc9388bdd131ed47c534a0d021f"
+  },
+  "axiom_audit": "'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segmentation_data' does not depend on any axioms\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "elements": 16384,
+  "model_calls": 0,
+  "trusted_assumptions": [
+    "Lean 4.19.0 kernel and printed standard axioms",
+    "Existing pinned Nonlinear GPU machine; source lowering and elementwise Torch AST formalization",
+    "Host launch and contiguous, aligned, disjoint input/output FP16 buffers",
+    "Abstract scalar and half operations; hardware correspondence and numerical error outside theorem",
+    "Race-free sequential phase reduction to GPU interleavings remains external metatheory"
+  ],
+  "scope": "All inputs and arbitrary outside memory; full runLaunch completion, race freedom, all output cells. One thread per block; no optimized-launch or original paper result claim."
+}

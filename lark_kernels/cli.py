@@ -16,12 +16,12 @@ from .spec import read_spec
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="lark", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("verify", "inspect"):
+    for command in ("verify", "inspect", "verify-pointwise"):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
         p.add_argument("--reference", required=True, type=Path)
         p.add_argument("--task", required=True, type=Path)
-        if command == "verify":
+        if command in {"verify", "verify-pointwise"}:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
             p.add_argument("--timeout", type=float, default=120)
@@ -56,6 +56,21 @@ def main(argv=None):
                     indent=2,
                 )
             )
+        elif args.command == "verify-pointwise":
+            from .pointwise import verify as verify_pointwise
+
+            if args.provider or args.proposal or args.attempts != 1:
+                raise Refusal("configuration", "pointwise profile uses the pinned induction proof")
+            report = verify_pointwise(
+                args.kernel,
+                args.reference,
+                args.task,
+                args.output,
+                lean=args.lean,
+                timeout=args.timeout,
+            )
+            print(f"{report['status'].upper()}: {args.output / 'report.json'}")
+            return 0 if report["status"] == "verified" else 1
         else:
             if not 1 <= args.attempts <= 20 or args.timeout <= 0:
                 raise Refusal(

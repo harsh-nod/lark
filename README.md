@@ -4,7 +4,7 @@ An independent implementation of the verification workflow in
 [LARK: Lean-Assisted Reasoning for LLM-Generated GPU Kernels](https://arxiv.org/abs/2611.02028)
 (Zhang et al., 2026).
 
-**This repository implements a bounded scalar CUDA/HIP profile of the method.**
+**This repository implements restricted scalar CUDA/HIP profiles of the method.**
 It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
 paper's broader PTX, tensor-core, and production-kernel coverage
@@ -21,6 +21,12 @@ See [the measured results](reproduction/RESULTS.md) for the coverage and limitat
 and explicit FP16 storage conversions in a separately pinned Lean model, with
 reduced fixtures for all 17 families. These abstract-operation certificates are
 distinct from numerical tests of the large FP16 benchmarks and from IEEE proofs.
+
+[The induction extension](reproduction/pointwise/README.md) proves full-length
+FP16 ReLU, SiLU and GELU in the same machine model, with separate CUDA/HIP
+certificates and exact-source validation on both MI350X hosts. Its one-thread
+blocks differ from the paper's optimized launches. See the [paper result coverage
+ledger](reproduction/COVERAGE.md) for remaining work and unavailable dependencies.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed

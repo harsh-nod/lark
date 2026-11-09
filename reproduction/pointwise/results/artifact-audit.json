@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-11-09T20:25:03.154717+00:00",
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "scope": "GitHub repository search, the AICrossSim organization and author jiaeenie. Not an exhaustive search of all authors or private/unindexed/supplemental releases.",
+  "queries": [
+    {
+      "command": [
+        "gh",
+        "search",
+        "repos",
+        "\"Lean-Assisted Reasoning\"",
+        "--limit",
+        "100",
+        "--json",
+        "fullName,description,url"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "search",
+        "repos",
+        "LARK Lean GPU",
+        "--limit",
+        "100",
+        "--json",
+        "fullName,description,url"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft",
+        "--jq",
+        "{full_name,size,default_branch,pushed_at,html_url}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"default_branch\":\"main\",\"full_name\":\"AICrossSim/KernelCraft\",\"html_url\":\"https://github.com/AICrossSim/KernelCraft\",\"pushed_at\":\"2026-05-28T14:28:08Z\",\"size\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft/contents"
+      ],
+      "exit_code": 1,
+      "stdout": "{\"message\":\"This repository is empty.\",\"documentation_url\":\"https://docs.github.com/v3/repos/contents/#get-contents\",\"status\":\"404\"}",
+      "stderr": "gh: This repository is empty. (HTTP 404)\n"
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "orgs/AICrossSim/repos",
+        "--paginate",
+        "--jq",
+        ".[] | select((.name|ascii_downcase|contains(\"lark\")) or (.name|ascii_downcase|contains(\"kernel\"))) | {full_name,size,html_url}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"full_name\":\"AICrossSim/KernelCraft\",\"html_url\":\"https://github.com/AICrossSim/KernelCraft\",\"size\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "users/jiaeenie/repos",
+        "--paginate",
+        "--jq",
+        ".[] | {full_name,description,html_url}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"description\":\"AgentLab: An open-source framework for developing, testing, and benchmarking web agents on diverse tasks, designed for scalability and reproducibility.\",\"full_name\":\"jiaeenie/AgentLab\",\"html_url\":\"https://github.com/jiaeenie/AgentLab\"}\n{\"description\":\"A machine learning accelerator core designed for energy-efficient AI at the edge.\",\"full_name\":\"jiaeenie/coralnpu\",\"html_url\":\"https://github.com/jiaeenie/coralnpu\"}\n{\"description\":\"FlashInfer: Kernel Library for LLM Serving\",\"full_name\":\"jiaeenie/flashinfer\",\"html_url\":\"https://github.com/jiaeenie/flashinfer\"}\n{\"description\":null,\"full_name\":\"jiaeenie/gpu_optim_bench\",\"html_url\":\"https://github.com/jiaeenie/gpu_optim_bench\"}\n{\"description\":\"Self-referential self-improving agents that can optimize for any computable task\",\"full_name\":\"jiaeenie/HyperAgents\",\"html_url\":\"https://github.com/jiaeenie/HyperAgents\"}\n{\"description\":\"Personal website\",\"full_name\":\"jiaeenie/jiaeenie.github.io\",\"html_url\":\"https://github.com/jiaeenie/jiaeenie.github.io\"}\n{\"description\":\"Machine-Learning Accelerator System Exploration Tools\",\"full_name\":\"jiaeenie/mase\",\"html_url\":\"https://github.com/jiaeenie/mase\"}\n{\"description\":\"Triton kernels for MASE\",\"full_name\":\"jiaeenie/mase-triton\",\"html_url\":\"https://github.com/jiaeenie/mase-triton\"}\n{\"description\":\"[NeurIPS 2024] OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments\",\"full_name\":\"jiaeenie/OSWorld\",\"html_url\":\"https://github.com/jiaeenie/OSWorld\"}\n{\"description\":\"Code repo for \\\"WebArena: A Realistic Web Environment for Building Autonomous Agents\\\"\",\"full_name\":\"jiaeenie/webarena\",\"html_url\":\"https://github.com/jiaeenie/webarena\"}\n{\"description\":\"WorkArena: How Capable are Web Agents at Solving Common Knowledge Work Tasks?\",\"full_name\":\"jiaeenie/WorkArena\",\"html_url\":\"https://github.com/jiaeenie/WorkArena\"}\n",
+      "stderr": ""
+    }
+  ],
+  "model_calls": 0,
+  "paper_source_inventory": "results/paper-source-manifest.json",
+  "paper_source_inventory_sha256": "a6d167e48156d0a51f1b76c5c1a75bb965b4979e4195c47548b07b8304b92910"
+}

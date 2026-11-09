@@ -419,6 +419,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "pointwise-induction-v3":
+        from .pointwise import check as check_pointwise
+
+        return check_pointwise(directory, lean=lean, timeout=timeout)
     required = {
         "Main.lean",
         "kernel.cu",
