@@ -1,9 +1,17 @@
-# Preparing offline model experiments
+# Offline local-model experiments
 
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real-model
 proof results have not yet been recorded here. Client integration tests use an
 explicit stub and are not model evidence.
+
+GLM-5.3-Flash is now running on MI350X GPUs 6/7. Its 62 weight files and nine
+supporting files passed pinned-content checks; the loopback endpoint passed
+health/model checks. [Runtime records](results/runtime-20261109/) include one
+real warmup request/response: 28 prompt tokens and 64 reasoning tokens, ending
+at the 64-token cap with no final answer. This is inference evidence, not a proof
+success. A separate three-case proof pilot is in progress. Hosted API spending
+is zero; no original paper pass rate is claimed.
 
 Three named model families have official ungated weights. Metadata was checked
 on 2026-11-09; revisions are pinned in `checkpoint.py`:
