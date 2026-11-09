@@ -12,18 +12,19 @@ or hosted-model outcomes. No real-model proof results are recorded yet.
 Paper: [LARK, arXiv:2611.02028v1](https://arxiv.org/abs/2611.02028v1).
 Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 [full-length pointwise induction](pointwise/RESULTS.md),
-[full-size GEMV/counting-loop induction](reduction/RESULTS.md).
+[full-size GEMV/counting-loop induction](reduction/RESULTS.md),
+[full-size GEMM/BMM induction](matrix/RESULTS.md).
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
-| Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; full-size ReLU/SiLU/GELU/GEMV induction proofs | Authors' pinned kernels/registry and harness, original model endpoints/runs, PTX and broader instruction support |
+| Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; full-size ReLU/SiLU/GELU/GEMV/GEMM/BMM induction proofs | Authors' pinned kernels/registry and harness, original model endpoints/runs, PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP numerical checks | Original PTX kernels/GQA export; scalable multi-stage/attention proofs and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six new full-length arithmetic mutants checked directly in Lean | Original mutants/harness, PTX, model-based diagnosis and second opinions. Independent sets are not the original 42 |
 | Nine accepted production kernels (§5.3, Table 5) | No full production-kernel correctness certificates | Original adapted files, revisions, signatures/departures; in-place buffers, packed/collective operations and scalable reductions |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics and failed proof artifacts | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
-| Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV induction concluding existing machine `Correct`; same-source pointwise flat/induction timing comparison | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
-| Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1 and GEMV reduction through K=1,048,576 with small certificates | Original kernels, tiled reduction/GEMM/attention induction, original token/time measurements |
+| Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise flat/induction timing comparison | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
+| Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 and BMM output footprints through 2^30 | Original kernels, tiled/attention induction, original token/time measurements |
 | Model size versus pass rates/tokens (A.4.6) | None; zero model calls | Original model versions, harness, token accounting and runs |
 | Stage token costs (A.4.3) | None; zero model calls | Original stage traces and endpoints; replacement local models would be a separate experiment |
 | Refusal census and hard Level-1 tasks (A.4.2/A.4.5) | Strict refusals; reduced independent BatchMatmul/DepthwiseConv certificates | Original failed runs/statements; smaller proofs do not contradict the paper's model outcomes |

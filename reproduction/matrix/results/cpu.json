@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "experiment": "matrix-induction-v5",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-09T22:09:10.679423+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c"
+  },
+  "runner_sha256": "532bce6b9fa9eeba547edc9e21b879069fd325e961458adf0b7a7b38d9fdb2a3",
+  "baselines": [
+    {
+      "key": "baselines/hip/gemm",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        1,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 12.688702166022267,
+      "main_bytes": 108809,
+      "source_sha256": "cac86c6c522819fd2881c011236fea3758acafc73c7d6a262b924d97f1658da3",
+      "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+      "task_sha256": "34d8a3d8bfd6f41633f12beac8a12359f24d7064cc5a685a11e946244a2fa84c",
+      "theorem_sha256": "1e577020e297c398ce59dbe8839f030d35a8a1825e67f50475a28c6538124af5"
+    },
+    {
+      "key": "baselines/hip/bmm",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        32,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 14.080479916010518,
+      "main_bytes": 108985,
+      "source_sha256": "487a5940b252f416f09d2b99e412fae4187a513133e08d77e493abd927ab5c3d",
+      "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+      "task_sha256": "a35ef6d45d59c3e9c7122e1eff984f6102b14cb96bd74b4aa5c2f9ef03de76ae",
+      "theorem_sha256": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba"
+    },
+    {
+      "key": "baselines/cuda/gemm",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        1,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 12.675351994985249,
+      "main_bytes": 108809,
+      "source_sha256": "13a289961a7d3429e603b4b9038e5bddb299be80d5e68c5f6fce574e830137ba",
+      "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+      "task_sha256": "2a2eb23fa4daf7b7a97bb7024e2e53648952698b0f6747e5609e89f3b4309f41",
+      "theorem_sha256": "e00ef5a87785fbfd80413692b9317df842cbe01a087c2f128002505a95d73f51"
+    },
+    {
+      "key": "baselines/cuda/bmm",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        32,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 14.084832724009175,
+      "main_bytes": 108985,
+      "source_sha256": "fb3ffb27ab145895f9f4edad97008915dec79ec44fafbf0cbd3cf99abb725bd4",
+      "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+      "task_sha256": "babf31898308958c10e664b63bfb2b03ad13bb1736e259fd857d40640d98fadc",
+      "theorem_sha256": "ef5617486e0a21964262567b2159c370b2d6de39d121dc75115f26fdc1d0ee54"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/gemm-1-1-1-1",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "verify_seconds": 14.972904007998295,
+      "main_bytes": 108794,
+      "source_sha256": "89386a732802cd0a5f5a61bcc5ccb3865491fa2f81cdc692fff29016296b9604",
+      "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+      "task_sha256": "500ba7e17f475727dc222e709faf290a1d9b1bc064bac85bd24a7284dfc80a1e",
+      "theorem_sha256": "3ba51bc8675c6af319bc132fa0a4d2a2cb537713db99efb23ff7cc3795377e85"
+    },
+    {
+      "key": "scaling/gemm-1-64-256-512",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        1,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 13.035037011024542,
+      "main_bytes": 108809,
+      "source_sha256": "cac86c6c522819fd2881c011236fea3758acafc73c7d6a262b924d97f1658da3",
+      "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+      "task_sha256": "34d8a3d8bfd6f41633f12beac8a12359f24d7064cc5a685a11e946244a2fa84c",
+      "theorem_sha256": "1e577020e297c398ce59dbe8839f030d35a8a1825e67f50475a28c6538124af5"
+    },
+    {
+      "key": "scaling/gemm-1-64-1048576-512",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        1,
+        64,
+        1048576,
+        512
+      ],
+      "verify_seconds": 13.074641637969762,
+      "main_bytes": 108821,
+      "source_sha256": "7eeb3dcba4dd29e2f1a346162f46ecfa59186c6007d52ff8cf69ed89ef9bbf78",
+      "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+      "task_sha256": "07f363666a033fc70f28bb53c0ce643f3ae3afebf33e606df243a6a476ce2cc5",
+      "theorem_sha256": "71134fb99f8a4c7ba300841cde5ad114a17a65ab5e9b6d15dfa233fc30db4637"
+    },
+    {
+      "key": "scaling/bmm-32-64-256-512",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        32,
+        64,
+        256,
+        512
+      ],
+      "verify_seconds": 13.501429491036106,
+      "main_bytes": 108985,
+      "source_sha256": "487a5940b252f416f09d2b99e412fae4187a513133e08d77e493abd927ab5c3d",
+      "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+      "task_sha256": "a35ef6d45d59c3e9c7122e1eff984f6102b14cb96bd74b4aa5c2f9ef03de76ae",
+      "theorem_sha256": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba"
+    },
+    {
+      "key": "scaling/bmm-256-4096-16-1024",
+      "status": "verified",
+      "rechecked": true,
+      "matrix_dimensions": [
+        256,
+        4096,
+        16,
+        1024
+      ],
+      "verify_seconds": 12.83423317503184,
+      "main_bytes": 108994,
+      "source_sha256": "c736c0cd75557826fa5eb10ed5f31e5a450f0e67a0f6385ea42ce0ac5902145d",
+      "reference_sha256": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+      "task_sha256": "c04fff848c2589ade099bb740e8d27e1ba77bae3e45b98ce2cb4f5601fdbc2d3",
+      "theorem_sha256": "6a23e32944b4a979daaa6f93c47d198a545100bc6436bdd737f00ed5ecb5fbae"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "arithmetic",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 13.365734896040522,
+      "source_sha256": "d2484655619c6fc1c719b7cf38ad4c3a6421f4b662fbedbe5ba5572889036028",
+      "theorem_sha256": "c854adab041414033be12bdcbf4cf71340bbefe57937f4637842216c3608f02c"
+    },
+    {
+      "name": "batch-address",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 13.038416575989686,
+      "source_sha256": "94c9121d65e0d7f9565c035ab5e8e26f9520ba6436818b06df8a9fca805a88dd",
+      "theorem_sha256": "8ef03cfbb361bdb4a80989ccc12f3f4d413d8eaf17cbc1ff8b7c4f1e71369e6c"
+    },
+    {
+      "name": "loop",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 13.467574665963184,
+      "source_sha256": "f1ae32bc1421feb3596839e58960358fb4ede4b64b0fe9be45ae156306a0f77d",
+      "theorem_sha256": "dc0fe36ffcd9a19743a8d142040fc79dc2d055b575645b044f6fd7f5ce2ad669"
+    }
+  ],
+  "status": "passed"
+}

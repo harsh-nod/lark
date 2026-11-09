@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "experiment": "matrix-induction-v5-exact-source",
+  "timestamp_utc": "2026-11-09T22:13:31.830964+00:00",
+  "device": "AMD Instinct MI350X",
+  "architecture": "gfx950",
+  "compiler": "HIP version: 7.2.53150-b958ce88c2\nAMD clang version 22.0.0git (https://github.com/ROCm/llvm-project  25496 9b0f9aa3067a907226b0ebb8bee1fe51d1f0fca5)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.3.0/lib/llvm/bin\nBuild config: +assertions\nConfiguration file: /opt/rocm-7.3.0/lib/llvm/bin/clang++.cfg\n",
+  "runner_sha256": "a1f09cf311bcd462de2b8b9bcd7d9e5f10d1cf9410f58553d05f634f56835614",
+  "dataset_sha256": "cae265e6dc3421a733e39f027077ef8a5d4d62c857375d53b868e51469d4b064",
+  "tensor_data_sha256": "9945cdc305a9433daae8c6f473766fa895e679bbe360eb8c8f8c295b3658d102",
+  "certificate_index_sha256": "5c4fd59c01f548042c5aa1ed9c37dfb2c0aec4e28e67b64c342e00b7a4843550",
+  "wrapper_sha256": "824562859399581d259aa256d32c7a8996d9f66eeca67930152eb9a27fa223a6",
+  "library_sha256": "36bc9a4264ee80142b506227bbdacc473ce477c4e7993745646a1b990370bae0",
+  "compile_command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "/tmp/lark-matrix-device-20261109/certified.hip",
+    "-o",
+    "/tmp/lark-matrix-device-20261109/results/certified.so"
+  ],
+  "model_calls": 0,
+  "reference": "CPU PyTorch 2.11.0+cu130",
+  "cases": [
+    {
+      "key": "gemm",
+      "certificate": {
+        "status": "verified",
+        "profile": "matrix-induction-v5",
+        "matrix_dimensions": [
+          1,
+          64,
+          256,
+          512
+        ],
+        "model_hashes": {
+          "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+          "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+          "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+          "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+          "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c"
+        },
+        "theorem_sha256": "1e577020e297c398ce59dbe8839f030d35a8a1825e67f50475a28c6538124af5",
+        "source_sha256": "cac86c6c522819fd2881c011236fea3758acafc73c7d6a262b924d97f1658da3",
+        "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "task_sha256": "34d8a3d8bfd6f41633f12beac8a12359f24d7064cc5a685a11e946244a2fa84c"
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.0009765625,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.0001220703125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 32768
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "key": "bmm",
+      "certificate": {
+        "status": "verified",
+        "profile": "matrix-induction-v5",
+        "matrix_dimensions": [
+          32,
+          64,
+          256,
+          512
+        ],
+        "model_hashes": {
+          "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+          "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+          "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+          "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+          "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c"
+        },
+        "theorem_sha256": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba",
+        "source_sha256": "487a5940b252f416f09d2b99e412fae4187a513133e08d77e493abd927ab5c3d",
+        "reference_sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "task_sha256": "a35ef6d45d59c3e9c7122e1eff984f6102b14cb96bd74b4aa5c2f9ef03de76ae"
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 1,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 2,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 3,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 4,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 5,
+          "max_abs_error": 0.001953125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 6,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 7,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 8,
+          "max_abs_error": 0.0,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        },
+        {
+          "trial": 9,
+          "max_abs_error": 0.00048828125,
+          "inputs_unchanged": true,
+          "guard_zones_unchanged": true,
+          "output_comparisons": 1048576
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "scope": "Full GEMM/BMM, exact certified source, one thread per output. Abstract operation proof plus separate finite numerical checks; not the paper's optimized source or launch."
+}

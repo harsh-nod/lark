@@ -1,0 +1,48 @@
+{
+  "name": "induction_bmm_cuda_32_64_256_512",
+  "entry": "induction_bmm_cuda_32_64_256_512",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        32,
+        64,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        32,
+        256,
+        512
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        32,
+        64,
+        512
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1048576,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    1030,
+    1,
+    1,
+    1
+  ]
+}

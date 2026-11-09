@@ -5,6 +5,7 @@ This page records the original scalar-v1 study. The later
 proof support; its reduced certificates and measurements have a separate report.
 Later [pointwise](pointwise/README.md) and [GEMV](reduction/README.md) studies add
 full-size induction certificates and exact-source validation on two MI350X hosts.
+The [matrix study](matrix/README.md) extends that evidence to full GEMM and BMM.
 The [coverage ledger](COVERAGE.md) tracks all paper results across these studies.
 
 This is an **independent, partial reproduction** of

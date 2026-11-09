@@ -427,6 +427,10 @@ def check(directory, *, lean=None, timeout=120):
         from .gemv import check as check_gemv
 
         return check_gemv(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "matrix-induction-v5":
+        from .matrix import check as check_matrix
+
+        return check_matrix(directory, lean=lean, timeout=timeout)
     required = {
         "Main.lean",
         "kernel.cu",

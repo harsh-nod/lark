@@ -33,6 +33,13 @@ ledger](reproduction/COVERAGE.md) for remaining work and unavailable dependencie
 hosts. Its generic loop/grid proof covers arbitrary valid dimensions; proof-only
 scaling reaches reduction length 1,048,576 without allocating the matrix.
 
+[The matrix extension](reproduction/matrix/README.md) adds paper-size GEMM and
+batched GEMM certificates. Each MI350X host passed 20 exact-source trials checking
+10,813,440 outputs. Symbolic scaling includes a billion-output footprint, without
+allocating those proof-only arrays. Six full-size families now have independent
+scalar induction certificates; the coverage ledger separates them from the
+paper's original kernels, pass rates and performance results.
+
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
 segmentation, and proves the result equals the reference. Python preflight

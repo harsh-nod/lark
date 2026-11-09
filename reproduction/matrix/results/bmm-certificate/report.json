@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "model_profile": "matrix-induction-v5",
+  "model_hashes": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c"
+  },
+  "source_readback": true,
+  "model_calls": 0,
+  "files": {
+    "Main.lean": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba",
+    "kernel.cu": "487a5940b252f416f09d2b99e412fae4187a513133e08d77e493abd927ab5c3d",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "reference.py": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+    "task.json": "a35ef6d45d59c3e9c7122e1eff984f6102b14cb96bd74b4aa5c2f9ef03de76ae",
+    "translation.json": "ac77d9c6ee2ac865449d4de7c8221d78748c6b90814bb764126128f69cba9e44"
+  },
+  "axiom_audit": "'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "matrix_dimensions": [
+    32,
+    64,
+    256,
+    512
+  ],
+  "trusted_assumptions": [
+    "Lean 4.19.0 kernel and printed standard axioms; pinned Nonlinear machine",
+    "Strict CUDA/HIP lowering and the closed matrix-multiplication Torch AST formalization",
+    "Host launch, contiguous FP16 buffers, aligned disjoint named allocations",
+    "Abstract scalar/half operations; hardware correspondence and floating-point error outside theorem",
+    "External reduction from race-free phases to GPU interleavings"
+  ],
+  "scope": "Full counted loop and grid in existing runLaunch: completion, race freedom, every output, all inputs and arbitrary outside memory. One thread per output; independent scalar GEMM/BMM, not the optimized original paper kernel."
+}

@@ -16,12 +16,12 @@ from .spec import read_spec
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="lark", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("verify", "inspect", "verify-pointwise", "verify-gemv"):
+    for command in ("verify", "inspect", "verify-pointwise", "verify-gemv", "verify-matrix"):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
         p.add_argument("--reference", required=True, type=Path)
         p.add_argument("--task", required=True, type=Path)
-        if command in {"verify", "verify-pointwise", "verify-gemv"}:
+        if command in {"verify", "verify-pointwise", "verify-gemv", "verify-matrix"}:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
             p.add_argument("--timeout", type=float, default=120)
@@ -56,11 +56,13 @@ def main(argv=None):
                     indent=2,
                 )
             )
-        elif args.command in {"verify-pointwise", "verify-gemv"}:
+        elif args.command in {"verify-pointwise", "verify-gemv", "verify-matrix"}:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
-            else:
+            elif args.command == "verify-gemv":
                 from .gemv import verify as verify_inductive
+            else:
+                from .matrix import verify as verify_inductive
 
             if args.provider or args.proposal or args.attempts != 1:
                 raise Refusal("configuration", "inductive profiles use their pinned proofs")
