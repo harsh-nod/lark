@@ -52,10 +52,11 @@ The [native RMSNorm development study](reproduction/production_rmsnorm/RESULTS.m
 adds partial-cohort shuffle and reduction proof components plus native
 1,024-thread comparisons at width 16,384. Both MI350X hosts passed numerical
 tolerance checks, with signed-zero and one-half-ULP differences recorded.
-The intended value has a canonical-real proof. The actual first block phase is
-proved through all 16 native waves to the first barrier, with the intended shared
-partials and a race-free access trace. Barrier resumes, scale reduction and
-output execution remain pending, so this adds zero certificates.
+The intended value has a canonical-real proof. The first two block phases now
+have execution proofs through all 16 physical waves and both barrier resumes,
+with the intended shared partials and scale and a race-free access trace.
+Output execution and the whole-launch theorem remain pending, so this adds
+zero certificates.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

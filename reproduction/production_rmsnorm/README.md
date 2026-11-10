@@ -71,13 +71,23 @@ outside memory within the declared shape contract.
 one. The scale-entry and mixed-cohort modules then prove that sixteen lanes load
 the shared partials, the other physical lanes park at the second barrier, and
 the scheduler selects the logical-16 cohort. Intermediate logical stages retain
-the physical wave64 fold and preserve inactive lanes. The final scale store,
-second barrier, output phase and whole launch remain to be composed. These
-phase theorems add no complete kernel certificate.
+the physical wave64 fold and preserve inactive lanes.
+
+`Lark.NativeRmsNormScaleWave` composes all four logical stages, the source's
+thread-zero scale store and the actual physical-wave second barrier cut.
+`Lark.NativeRmsNormScaleBlock` then composes that wave with the other fifteen
+physical waves in the original scheduler order. Every native thread reaches
+PC 55; the scale slot equals the intended `scale`, read-only inputs remain
+intact, and every recorded access satisfies the race-freedom classification.
+`Lark.NativeRmsNormOutBarrier` proves the actual second barrier resume to PC 56
+and current block epoch two, retaining prior recorded access epochs. It also
+composes the first two actual block phases from the initial state for every
+allowed row, input and outside memory. Output execution and the whole-launch
+theorem remain pending. These phase theorems add no complete kernel certificate.
 
 ```bash
 cd lean
-lake build Lark.NativeRmsNormMixedStage
+lake build Lark.NativeRmsNormOutBarrier
 ```
 
 The [HIP shuffle documentation](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_cpp_language_extensions.html#warp-shuffle-functions)

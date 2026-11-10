@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "claim": "native RMSNorm actual complete middle block phase, stored scale value and second barrier resume",
+  "certificates": 0,
+  "whole_launch_proved": false,
+  "whole_scale_phase_proved": true,
+  "source_files": 112,
+  "fresh_build_outside_checkout": true,
+  "lean_version": "4.19.0",
+  "command": "lake build Lark.NativeRmsNormOutBarrier",
+  "base_commit": "498857efbc1b9056ac9fb7324c62ba2abbb8ff07",
+  "physical_wave_width": 64,
+  "physical_waves": 16,
+  "native_threads": 1024,
+  "active_logical_lanes": 16,
+  "properties": [
+    "actual four logical-16 source stages within the original physical wave64",
+    "actual thread-zero shared scale store, with the intended scale expression",
+    "actual source-ordered execution of the fifteen inactive physical waves",
+    "every native thread converges at the second block barrier, PC55",
+    "read-only inputs, native indices and current epochs preserved during the scale phase",
+    "classification of all actual scale-phase accesses in block epoch one",
+    "actual second barrier resume to PC56 and current block epoch two",
+    "prior recorded access epochs remain unchanged by the barrier resume",
+    "composition of both actual block phases from the initial state for every allowed row, input and outside memory"
+  ],
+  "pending": [
+    "output phase",
+    "whole-launch correctness and access classification",
+    "RMSNorm certificate export and standalone recheck"
+  ],
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_binding_controls": {
+    "claim": "program identity only",
+    "baseline_accepted": true,
+    "changed_programs_rejected": 4
+  },
+  "earlier_mid_ci": {
+    "run_id": 42871977380,
+    "head_sha": "498857efbc1b9056ac9fb7324c62ba2abbb8ff07",
+    "conclusion": "success",
+    "tests": 149,
+    "optional_skips": 5,
+    "test_seconds": 401.726,
+    "covers_this_new_scale_checkpoint": false
+  }
+}

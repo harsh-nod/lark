@@ -99,6 +99,19 @@ lane-fold order and unchanged inactive lanes. `results/execution-mid-v1/` freeze
 these component checks. The final scale store, second barrier, output phase and
 whole-launch theorem remain pending, with zero certificates.
 
+The [complete middle block phase](../../lean/Lark/NativeRmsNormScaleBlock.lean)
+now executes all four logical-16 stages inside the original physical wave64,
+the exact source scale expression and the thread-zero shared store. It composes
+the fifteen remaining physical waves, each taking its inactive source branch,
+and proves all 1,024 threads converge at PC 55. The stored scale equals the
+intended `scale`; global inputs, native indices and current epochs are preserved,
+and the actual phase trace satisfies the race-freedom classification. The
+[second barrier resume](../../lean/Lark/NativeRmsNormOutBarrier.lean) then advances
+all participating threads to PC 56 and block epoch two. Both source block phases
+compose from the initial state for every allowed row, input and outside memory.
+`results/execution-scale-v1/` freezes this checkpoint. Output execution and
+whole-launch correctness remain pending, with zero RMSNorm certificates.
+
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside
 the checkout. Extract `gpu-input.tar.gz` and either host archive into separate
