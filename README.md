@@ -65,7 +65,9 @@ unchanged upstream FP32 kernel. This adds no source certificate: actual launch
 and race-freedom proofs, and the paper's FP16 adaptation, remain open.
 The later [native FP16 development](reproduction/online_attention/NATIVE.md)
 adds the full tiled source, checked address/ownership components and paired
-both-host numerical evidence. Its source execution proof remains unfinished.
+both-host numerical evidence. Its [lane-prefix proof](reproduction/online_attention/PREFIX.md)
+checks actual setup, output zeroing and first K/V copies through the first block
+barrier. Whole-launch execution and source-reference equality remain unfinished.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

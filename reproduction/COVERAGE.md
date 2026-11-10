@@ -84,9 +84,12 @@ The later [native FP16 online source](online_attention/NATIVE.md) retains the
 32-thread tiled algorithm and private running-state arrays. It has checked
 source/layout identity, address ownership and conditional footprint lemmas,
 a finite value-erased access preflight, and 3,145,728 paired CPU-reference
-comparisons across both hosts with zero tolerance failures. Actual source
-execution, universal trace membership and source-reference equality remain
-unproved. It contributes zero accepted source certificates.
+comparisons across both hosts with zero tolerance failures. The later
+[lane-prefix proof](online_attention/PREFIX.md) checks actual execution through
+5,405 instructions to the first block barrier, all lane-owned zero outputs,
+the first K/V row copies, input preservation and prefix-trace race freedom.
+Whole-launch execution, complete trace membership and source-reference equality
+remain unproved. It contributes zero accepted source certificates.
 
 The separate [full-wave reduction study](wave_reduction/RESULTS.md) now supplies
 those proofs for one independent native wave64 XOR butterfly. One source-bound
