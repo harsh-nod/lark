@@ -1,0 +1,58 @@
+{
+  "name": "native-online-attention-128x256",
+  "entry": "online_attention",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "query",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "key",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "value",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 32,
+    "warp": 64
+  },
+  "fuel": [
+    1000000,
+    1,
+    9,
+    1
+  ]
+}

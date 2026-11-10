@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "native-fp16-online-attention-audited",
+  "hosts": [
+    {
+      "device": "AMD Instinct MI350X",
+      "trials": 12,
+      "paired_output_values": 786432,
+      "cpu_reference_comparisons": 1572864,
+      "max_abs_error": {
+        "adapted": 0.0015283703669408677,
+        "upstream": 2.0183673658247248e-05
+      },
+      "adapted_vs_rounded_upstream_bit_differences": 260402,
+      "compiler_input_files": 320,
+      "report_sha256": "f29f878deec8a745b6865b94632f4b9a718bcea4475c9eade13ac0686cce79e0"
+    },
+    {
+      "device": "AMD Instinct MI350X",
+      "trials": 12,
+      "paired_output_values": 786432,
+      "cpu_reference_comparisons": 1572864,
+      "max_abs_error": {
+        "adapted": 0.0015283703669408677,
+        "upstream": 2.0183673658247248e-05
+      },
+      "adapted_vs_rounded_upstream_bit_differences": 260402,
+      "compiler_input_files": 315,
+      "report_sha256": "866a3767244e79a6159848e60d4eca3b6354058d2917023dab565529889f6ee3"
+    }
+  ],
+  "fresh_cpu_reference_cases": 12,
+  "paired_output_values": 1572864,
+  "cpu_reference_comparisons": 3145728,
+  "numerical_failures": 0,
+  "max_abs_error": {
+    "adapted": 0.0015283703669408677,
+    "upstream": 2.0183673658247248e-05
+  },
+  "output_sha256": {
+    "adapted": [
+      "d7174914c811b21d7e20854e9217bb56ee1dbf03d8937c59726d2a6028bc7561",
+      "d7174914c811b21d7e20854e9217bb56ee1dbf03d8937c59726d2a6028bc7561"
+    ],
+    "upstream": [
+      "7dc29f2200338938e1fd5ca1e868333aefdb2a87010739ac9aaa9945858d9546",
+      "7dc29f2200338938e1fd5ca1e868333aefdb2a87010739ac9aaa9945858d9546"
+    ]
+  },
+  "cross_host_streams_identical": {
+    "adapted": true,
+    "upstream": true
+  },
+  "native_source_sha256": "6504b91255ed0a59d072376b9e071e76c154655986e8c1bad566258a19e19c1e",
+  "input_manifest_sha256": "5023caa6ce72e61c9f43034716139e1ac238a2ef51b058ff89310253cbfca287",
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_classification_proved": false,
+  "ieee_equivalence_proved": false,
+  "runtime_guard_and_upstream_final_accumulator_checks_reported": true,
+  "accumulator_streams_independently_rechecked": false,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}

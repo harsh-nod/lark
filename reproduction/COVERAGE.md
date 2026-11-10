@@ -80,6 +80,13 @@ Separate native checks of the unchanged upstream FP32 online kernel passed
 and large common score shifts. Every CPU float64 reference was recomputed in an
 offline audit. This is not the paper's FP16 adaptation or an additional source
 certificate; the original production and Level-2 rows below remain incomplete.
+The later [native FP16 online source](online_attention/NATIVE.md) retains the
+32-thread tiled algorithm and private running-state arrays. It has checked
+source/layout identity, address ownership and conditional footprint lemmas,
+a finite value-erased access preflight, and 3,145,728 paired CPU-reference
+comparisons across both hosts with zero tolerance failures. Actual source
+execution, universal trace membership and source-reference equality remain
+unproved. It contributes zero accepted source certificates.
 
 The separate [full-wave reduction study](wave_reduction/RESULTS.md) now supplies
 those proofs for one independent native wave64 XOR butterfly. One source-bound

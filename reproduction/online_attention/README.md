@@ -6,6 +6,11 @@ This closes an algebra gap between the existing dense SDPA reference and a tiled
 online algorithm. **It is not a whole-kernel certificate.** GPU execution,
 source lowering, memory footprints and race freedom remain to be proved.
 
+The later [native FP16 development](NATIVE.md) now supplies a complete tiled
+source, source/array-layout binding, address lemmas and a conditional footprint
+theorem, plus both-host numerical checks. Its actual whole-launch proof remains
+open; it adds no accepted source certificate.
+
 `LarkReal.OnlineSoftmax.run_reference` covers arbitrary real scores and signed
 value vectors, arbitrary finite tile lengths and every output column. The first
 tile must be nonempty; subsequent tiles may be empty. It proves equality to the

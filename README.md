@@ -63,6 +63,9 @@ proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the
 unchanged upstream FP32 kernel. This adds no source certificate: actual launch
 and race-freedom proofs, and the paper's FP16 adaptation, remain open.
+The later [native FP16 development](reproduction/online_attention/NATIVE.md)
+adds the full tiled source, checked address/ownership components and paired
+both-host numerical evidence. Its source execution proof remains unfinished.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

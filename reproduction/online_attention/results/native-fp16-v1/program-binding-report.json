@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "scope": "fixed IR/layout identity and conditional footprint lemmas only",
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_classification_proved": false,
+  "direct_lean_identity_rejections": 5,
+  "footprint_witnesses_checked": true,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false,
+  "cases": [
+    {
+      "name": "baseline",
+      "accepted": true,
+      "instructions": 91,
+      "seconds": 1.1120850230217911,
+      "timed_out": false
+    },
+    {
+      "name": "removed-load-barrier",
+      "accepted": false,
+      "instructions": 90,
+      "seconds": 0.6395523539977148,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-tile-store-owner",
+      "accepted": false,
+      "instructions": 91,
+      "seconds": 0.7181022699805908,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-running-state",
+      "accepted": false,
+      "instructions": 91,
+      "seconds": 0.7357892110012472,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-old-mass",
+      "accepted": false,
+      "instructions": 91,
+      "seconds": 0.7877155719907023,
+      "timed_out": false
+    },
+    {
+      "name": "shrunken-private-array",
+      "accepted": false,
+      "instructions": 91,
+      "seconds": 0.8210282200016081,
+      "timed_out": false
+    }
+  ]
+}

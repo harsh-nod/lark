@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "upstream": {
+    "repository": "https://github.com/tspeterkim/flash-attention-minimal",
+    "commit": "00f8f46712d493665c900c32fa3a261c8ef3e20c",
+    "path": "flash.cu",
+    "source_sha256": "c4b466beb6030b2fd1eeb2d4a606c81235fe0275b6831a1ac728a82f093c4110",
+    "git_blob_sha1": "64f13faa3a6290e80f940c669ba142d094011484"
+  },
+  "native_source_sha256": "6504b91255ed0a59d072376b9e071e76c154655986e8c1bad566258a19e19c1e",
+  "fixed_shape": [
+    128,
+    256
+  ],
+  "tile": [
+    32,
+    32
+  ],
+  "native_block": 32,
+  "native_warp": 64,
+  "storage": {
+    "inputs": "FP16",
+    "outputs": "FP16 after every key tile",
+    "shared": "FP32",
+    "running_max_denominator": "private FP32 arrays[4]"
+  },
+  "adaptations": [
+    {
+      "change": "Specialize N128, D256, Bc=Br32, noncausal dense attention; flatten batch/head grid to one index",
+      "kind": "fixed interface and index rewrite"
+    },
+    {
+      "change": "FP32 input/output storage becomes FP16; use explicit half-to-float loads and half stores at every key-tile output update",
+      "kind": "semantic departure from upstream"
+    },
+    {
+      "change": "Global running m/l become two per-thread arrays of four FP32 values",
+      "kind": "state localization; general source-rewrite theorem not proved"
+    },
+    {
+      "change": "Zero every output element inside the kernel before any old-output read",
+      "kind": "host initialization materialized in source"
+    },
+    {
+      "change": "Initialize a tile maximum from its first finite score; on the first key tile set old_m=row_m and old_l=0 without reading uninitialized local arrays",
+      "kind": "finite-sentinel rewrite; no IEEE equivalence claim"
+    },
+    {
+      "change": "Use expf in place of __expf and fmaxf in place of the finite scalar comparison/update",
+      "kind": "exact-real adaptation; no IEEE equivalence claim"
+    },
+    {
+      "change": "Replace one dynamic SRAM alias region with four static FP32 arrays, retain both block barriers per key tile",
+      "kind": "memory layout rewrite"
+    },
+    {
+      "change": "One extern C entry, unique local names, while loops, explicit multiply/add and literal scale1/16",
+      "kind": "closed reader syntax; original arithmetic traversal retained"
+    }
+  ],
+  "license": "Apache-2.0; see upstream/LICENSE",
+  "proof_status": {
+    "fixed_ir_and_array_layout_bound_in_lean": true,
+    "conditional_footprint_lemma": true,
+    "whole_kernel_execution_proved": false,
+    "actual_trace_classification_proved": false,
+    "ieee_equivalence_proved": false,
+    "source_certificates": 0,
+    "address_bounds_ownership_and_inverse_coordinates_proved": true
+  },
+  "original_adapted_source_recovered": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "groups": {
+    "minimum": 1,
+    "maximum": 65535
+  }
+}

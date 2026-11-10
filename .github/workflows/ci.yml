@@ -98,6 +98,11 @@ jobs:
       - name: Check native RMSNorm execution components
         run: lake build Lark.NativeRmsNormCorrect
         working-directory: lean
+      - name: Check native tiled attention address and footprint components
+        run: lake build Lark.NativeAttentionAddress
+        working-directory: lean
+      - name: Check native attention source identity and footprint witnesses
+        run: python3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Check two-launch FFN composition

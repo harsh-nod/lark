@@ -60,6 +60,9 @@ def tokenize(source: str):
 
 
 class Reader:
+    memory_spaces = frozenset({"global", "shared"})
+    shared_limit = 4096
+
     def __init__(self, source: str, task: Task):
         self.tokens, self.trailing = tokenize(source)
         self.i, self.task = 0, task
@@ -174,7 +177,7 @@ class Reader:
             lhs = node("un", opname, value)
         elif s in self.symbols:
             kind, id, _ = self.symbols[s]
-            if kind in {"global", "shared"} and mode == "scalar":
+            if kind in self.memory_spaces and mode == "scalar":
                 self.pop("[")
                 ix = self.expr("index")
                 self.pop("]")
@@ -264,8 +267,8 @@ class Reader:
             name = self.name()
             self.pop("[")
             size = self.pop()
-            if not size.isdecimal() or not 0 < int(size) <= 4096:
-                raise Refusal("shape", "shared buffers require a literal size in 1..4096")
+            if not size.isdecimal() or not 0 < int(size) <= self.shared_limit:
+                raise Refusal("shape", f"shared buffers require a literal size in 1..{self.shared_limit}")
             self.pop("]")
             self.pop(";")
             self.declare(name, "shared", len(self.shared))
@@ -307,7 +310,7 @@ class Reader:
         elif s in self.symbols:
             name = self.pop()
             kind, id, constant = self.symbols[name]
-            if kind in {"global", "shared"}:
+            if kind in self.memory_spaces:
                 if constant:
                     raise Refusal("type", f"write through const pointer {name}")
                 self.pop("[")
