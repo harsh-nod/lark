@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "model_profile": "silu-multiwave-v15",
+  "model_hashes": {
+    "Nonlinear.lean": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "Pointwise.lean": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "Reduction.lean": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "DotLoop.lean": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "Matrix.lean": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "ScalarLaunch.lean": "41021d8e2b0a64626eff2c036c82662ed9052bfc8435d44c8e4fd6a852853856",
+    "Silu.lean": "f3cfe816128ebc70908562b6a974fd9f93b9ef4f1034ac71813bd60128a2070e"
+  },
+  "source_readback": true,
+  "files": {
+    "Main.lean": "f7f80fc4ad3e59bd53a9061639cada59e32fc7bcc9e9c99ae6045465cf6aa344",
+    "kernel.cu": "824a906b013374a55a8ad90551d1c533e915b29f47c0893b4c209fb693311490",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "reference.py": "653dd2f57d19fd369d19aadcfa98d5a93a55d12ac2724bb2abbe3a84702720e6",
+    "task.json": "e4d523c3139556f6cd453236ababd1707ed64a5c45d1b0a412135dd242ca7c1b",
+    "translation.json": "77164cce97c1558b6a43f9870a7bc8c680893e40ebc82d4c102d53d76380cb17"
+  },
+  "rows": 33,
+  "hidden": 1031,
+  "output_elements": 34023,
+  "input_elements": 68046,
+  "block": 1024,
+  "warp": 32,
+  "axiom_audit": "'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]\n'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]\n'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]\n'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segmentation_data' does not depend on any axioms\n'LarkCertificate.segmentation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "trusted_assumptions": [
+    "Lean 4.19.0 and the printed standard axioms",
+    "Pinned nonlinear machine and operation-to-hardware correspondence",
+    "CUDA/HIP reader, lowering, lossless read-back and closed reference AST interpretation",
+    "Host honors the declared native scalar launch and separated contiguous FP16 regions",
+    "Abstract operations and half conversions; no IEEE theorem or numerical error bound",
+    "Race-free phase reduction to hardware interleavings remains external metatheory"
+  ],
+  "scope": "Independent scalar SiLU-and-mul adaptation: every actual lane, warp, block, strided iteration and output in the declared launch. Supports the pinned upstream scalar branch and a closed packed-row reference AST. Not original paper sources/runs, packed vector kernels, IEEE behavior or NVIDIA execution."
+}

@@ -80,6 +80,17 @@ load/matrix/store program has a whole-launch certificate and exact-source
 hardware checks on both hosts. It does not combine shuffles with MFMA, certify
 the original production kernels or establish IEEE accumulation semantics.
 
+The [multiwave scalar SiLU profile](../reproduction/production_silu/README.md)
+proves a generic simulation of the unchanged lane/warp/block/grid folds and
+discharges its lane and invariant contracts for the public upstream-style
+scalar strided loop. It retains native blocks of up to 1,024 threads, handles
+partial final waves and unequal iteration counts, and proves the independent
+closed-reference expression for every output. Eight HIP/CUDA certificates were
+rechecked, including two symbolic-only billion-cell extremes; three smaller
+device-test shapes passed exact-source/upstream comparisons on both hosts.
+This is one independently adapted function family, not the authors' original
+production registry or packed vector fast path.
+
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
 condition within its narrower interface. This does not eliminate the need to

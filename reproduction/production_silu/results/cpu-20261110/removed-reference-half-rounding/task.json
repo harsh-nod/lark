@@ -1,0 +1,36 @@
+{
+  "name": "vllm_silu_multiwave_full",
+  "entry": "vllm_silu_multiwave_full",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        64,
+        4097
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        64,
+        8194
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 64,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    28683,
+    1,
+    1,
+    1
+  ]
+}

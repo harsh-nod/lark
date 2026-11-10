@@ -1,0 +1,36 @@
+{
+  "name": "symbolic-width",
+  "entry": "vllm_silu_and_mul_adapted",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        1073741823
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        1,
+        2147483646
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    7516192765,
+    1,
+    1,
+    1
+  ]
+}

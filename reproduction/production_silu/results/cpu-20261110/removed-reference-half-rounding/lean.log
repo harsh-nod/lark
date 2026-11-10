@@ -1,0 +1,35 @@
+'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]
+'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]
+'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]
+'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+Main.lean:3222:86: error: tactic 'rfl' failed, the left-hand side
+  referenceResult ops input row col
+is not definitionally equal to the right-hand side
+  LarkSilu.result shape ops input row col
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+row col : Nat
+⊢ referenceResult ops input row col = LarkSilu.result shape ops input row col
+'LarkCertificate.segmentation_data' does not depend on any axioms
+'LarkCertificate.segmentation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkCertificate.race_free' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

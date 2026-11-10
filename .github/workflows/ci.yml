@@ -38,6 +38,9 @@ jobs:
       - name: Check matrix address and dot-loop proofs
         run: lake env lean Lark/Matrix.lean
         working-directory: lean
+      - name: Check multiwave scalar SiLU strided-loop proof
+        run: lake env lean Lark/Silu.lean
+        working-directory: lean
       - name: Check bias epilogue and Linear proof
         run: lake env lean Lark/Bias.lean
         working-directory: lean

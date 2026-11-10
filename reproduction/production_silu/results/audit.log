@@ -1,0 +1,46 @@
+{
+  "status": "frozen-statements-inputs-and-raw-two-host-evidence-audited",
+  "certificates": 8,
+  "device_test_shape_certificates": 6,
+  "symbolic_only_certificates": 2,
+  "recorded_independent_lean_rechecks": 8,
+  "regenerated_positive_statements": 8,
+  "regenerated_negative_statements": 5,
+  "direct_lean_rejections": 5,
+  "mutant_timeouts": 0,
+  "ast_reference_comparisons": 2966860,
+  "outputs_changed_without_intermediate_rounding": 529104,
+  "hardware": [
+    {
+      "host": "mi350",
+      "physical_gpu": 2,
+      "trials": 30,
+      "kernel_launches": 60,
+      "adapted_outputs": 2966860,
+      "upstream_outputs": 2966860,
+      "bit_differences": 0,
+      "cpu_reference_comparisons": 5933720,
+      "numerical_failures": 0,
+      "max_abs_error": 0.0,
+      "recorded_inputs_and_guards_unchanged": true
+    },
+    {
+      "host": "mi350-2",
+      "physical_gpu": 0,
+      "trials": 30,
+      "kernel_launches": 60,
+      "adapted_outputs": 2966860,
+      "upstream_outputs": 2966860,
+      "bit_differences": 0,
+      "cpu_reference_comparisons": 5933720,
+      "numerical_failures": 0,
+      "max_abs_error": 0.0,
+      "recorded_inputs_and_guards_unchanged": true
+    }
+  ],
+  "fresh_lean_checks": 0,
+  "fresh_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Independent upstream-derived scalar FP16 SiLU-and-mul, retaining native multiwave blocks and the strided loop. Six HIP/CUDA certificates at selected device-test shapes and two symbolic-only billion-cell extremes; all are abstract-operation proofs. Original authors' production sources/runs, packed vector paths, IEEE theorems and NVIDIA execution remain absent. Five direct controls fail fixed-program/reference equality, not an original-paper diagnosis channel."
+}

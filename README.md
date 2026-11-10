@@ -34,6 +34,12 @@ intermediate half rounding retained. Both MI350X hosts match an extracted
 upstream scalar specialization and CPU PyTorch on the finite test set. The
 paper's original production sources and results remain unavailable.
 
+The [multiwave scalar SiLU extension](reproduction/production_silu/RESULTS.md)
+retains the native 1,024-thread blocks and strided loop, with whole-launch proofs
+at three device-test shapes and two symbolic-only billion-cell extremes.
+Eight HIP/CUDA certificates were independently rechecked. Both MI350X hosts
+matched the extracted upstream path bit for bit across 2,966,860 outputs each.
+
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP

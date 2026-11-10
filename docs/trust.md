@@ -52,6 +52,15 @@ reference expression. Hardware basis-pair and exactly representable random-tile
 checks provide finite evidence for the same source; they do not prove the
 instruction's IEEE rounding or internal accumulation order.
 
+The `silu-multiwave-v15` profile proves the actual scalar scheduler and strided
+SiLU-and-mul loop with native blocks, including partial final waves. Its lane
+contract, output invariant and unique-writer trace property are proved in Lean.
+The reference accepts a closed packed-row AST preserving intermediate half
+rounding, then lifts that expression to every output. The parser, this closed
+AST interpretation and the documented upstream-source rewrite remain outside
+the proof kernel. The theorem adds no arithmetic laws or kernel-specific
+assumptions; it retains the same abstract-operation and host-interface boundary.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom

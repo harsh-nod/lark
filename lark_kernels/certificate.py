@@ -436,6 +436,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "silu-multiwave-v15":
+        from .silu import check as check_silu
+
+        return check_silu(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "wave-mfma-v14":
         from .mfma import check as check_mfma
 

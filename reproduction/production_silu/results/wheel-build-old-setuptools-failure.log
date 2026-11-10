@@ -1,0 +1,107 @@
+Processing /tmp/lark-production-silu-induction-20261110
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [89 lines of output]
+      configuration error: `project.license` must be valid exactly by one definition (2 matches found):
+      
+          - keys:
+              'file': {type: string}
+            required: ['file']
+          - keys:
+              'text': {type: string}
+            required: ['text']
+      
+      DESCRIPTION:
+          `Project license <https://peps.python.org/pep-0621/#license>`_.
+      
+      GIVEN VALUE:
+          "MIT"
+      
+      OFFENDING RULE: 'oneOf'
+      
+      DEFINITION:
+          {
+              "oneOf": [
+                  {
+                      "properties": {
+                          "file": {
+                              "type": "string",
+                              "$$description": [
+                                  "Relative path to the file (UTF-8) which contains the license for the",
+                                  "project."
+                              ]
+                          }
+                      },
+                      "required": [
+                          "file"
+                      ]
+                  },
+                  {
+                      "properties": {
+                          "text": {
+                              "type": "string",
+                              "$$description": [
+                                  "The license of the project whose meaning is that of the",
+                                  "`License field from the core metadata",
+                                  "<https://packaging.python.org/specifications/core-metadata/#license>`_."
+                              ]
+                          }
+                      },
+                      "required": [
+                          "text"
+                      ]
+                  }
+              ]
+          }
+      Traceback (most recent call last):
+        File "/usr/lib/python3/dist-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 353, in <module>
+          main()
+        File "/usr/lib/python3/dist-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 335, in main
+          json_out['return_val'] = hook(**hook_input['kwargs'])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/usr/lib/python3/dist-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 149, in prepare_metadata_for_build_wheel
+          return hook(metadata_directory, config_settings)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/usr/lib/python3/dist-packages/setuptools/build_meta.py", line 396, in prepare_metadata_for_build_wheel
+          self.run_setup()
+        File "/usr/lib/python3/dist-packages/setuptools/build_meta.py", line 341, in run_setup
+          exec(code, locals())
+        File "<string>", line 1, in <module>
+        File "/usr/lib/python3/dist-packages/setuptools/__init__.py", line 107, in setup
+          return distutils.core.setup(**attrs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/usr/lib/python3/dist-packages/setuptools/_distutils/core.py", line 159, in setup
+          dist.parse_config_files()
+        File "/usr/lib/python3/dist-packages/setuptools/dist.py", line 899, in parse_config_files
+          pyprojecttoml.apply_configuration(self, filename, ignore_option_errors)
+        File "/usr/lib/python3/dist-packages/setuptools/config/pyprojecttoml.py", line 66, in apply_configuration
+          config = read_configuration(filepath, True, ignore_option_errors, dist)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/usr/lib/python3/dist-packages/setuptools/config/pyprojecttoml.py", line 127, in read_configuration
+          validate(subset, filepath)
+        File "/usr/lib/python3/dist-packages/setuptools/config/pyprojecttoml.py", line 55, in validate
+          raise ValueError(f"{error}\n{summary}") from None
+      ValueError: invalid pyproject.toml config: `project.license`.
+      configuration error: `project.license` must be valid exactly by one definition (2 matches found):
+      
+          - keys:
+              'file': {type: string}
+            required: ['file']
+          - keys:
+              'text': {type: string}
+            required: ['text']
+      
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.

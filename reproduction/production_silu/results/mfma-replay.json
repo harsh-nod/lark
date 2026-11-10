@@ -1,0 +1,31 @@
+{
+  "status": "source-bound-proof-mutations-regenerated-dataset-and-gpu-evidence-audited",
+  "original_paper_fully_reproduced": false,
+  "certificates": 1,
+  "independent_lean_rechecks_recorded": 1,
+  "direct_lean_rejections": 4,
+  "mutant_timeouts": 0,
+  "independent_ast_reference_checks": 304,
+  "hardware": [
+    {
+      "host": "mi350",
+      "trials": 65824,
+      "comparisons": 16850944,
+      "mismatches": 0,
+      "same_source_as_certificate": true,
+      "per_tile_inputs_and_guards_unchanged": true,
+      "native_mfma_assembly_present": true
+    },
+    {
+      "host": "mi350-2",
+      "trials": 65824,
+      "comparisons": 16850944,
+      "mismatches": 0,
+      "same_source_as_certificate": true,
+      "per_tile_inputs_and_guards_unchanged": true,
+      "native_mfma_assembly_present": true
+    }
+  ],
+  "fresh_lean_rechecks_by_this_summary": 0,
+  "scope": "Independent one-wave 16x16 half-input/float-output native MFMA kernel with modifiers (0,0,0). Whole-launch completion, race freedom and all 256 outputs for arbitrary inputs/outside memory, under exact abstract scalar/half operations and the snapshot-register instruction definition. Four controls bypass Python preflight; three fail fixed-program equality and one fails reference equality. Not original kernels/mutants, partial masks, other shapes/modifiers, IEEE accumulation semantics or NVIDIA results."
+}

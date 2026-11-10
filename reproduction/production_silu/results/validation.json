@@ -1,0 +1,64 @@
+{
+  "recorded_utc": "2026-11-10T10:14:14.287846+00:00",
+  "status": "passed",
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "full_suite_tests": 131,
+  "full_suite_seconds": 924.598,
+  "full_suite_status": "passed",
+  "silu_unit_tests": 7,
+  "silu_unit_seconds": 100.239,
+  "archives": {
+    "gpu-input.tar.gz": "82f43e67c66c3fcc77015d943d60bee32d98e29f9da2a2f949b82a40475cf2e3",
+    "mi350-2-artifacts.tar.gz": "83e4d57385bafbfb2b09724e6bb17db73f444092e3636b6fd3830927fbd0cacf",
+    "mi350-artifacts.tar.gz": "c00a488b7d50f542bd94a3d6d2b37bce9f781617deeff88d8317aacdb59724b3",
+    "source.tar.gz": "f768a913fae586eaf2adb458f6e3b261c5580cabdc8192ec3340cd24184b3d30"
+  },
+  "source_manifest_sha256": "a52153a1f8281b55b063efd4a7b25c663c7cf369de43dcf466ebb58ec721fe57",
+  "hardware": {
+    "mi350": {
+      "physical_gpu": 2,
+      "status": "passed"
+    },
+    "mi350-2": {
+      "physical_gpu": 0,
+      "status": "passed"
+    }
+  },
+  "completed_utc": "2026-11-10T10:23:29.053535+00:00",
+  "lean_library_build": "passed (31 modules)",
+  "frozen_experiment_source_members": 106,
+  "current_experiment_sources_match_frozen_manifest": true,
+  "evidence_audit": "passed; all 8 positive and 5 negative statements regenerated, every GPU input file regenerated, both raw streams checked",
+  "fully_rehashed_divergent_stream_control": "rejected at actual raw-stream comparison",
+  "installed_wheel_check": {
+    "status": "passed",
+    "outside_repository": true,
+    "runtime_dependencies": [],
+    "all_package_python_and_seven_lean_library_hashes_match_frozen_experiment": true,
+    "wheel_sha256": "644772e75eec8b935c2c4730448d5c93c13e015171b92ada8f564b2e6e04c92c",
+    "initial_build_failure": "Host setuptools predates the project-declared setuptools>=77 requirement; isolated build using declared requirements passed"
+  },
+  "prior_evidence_replays": {
+    "ptx": "passed",
+    "shuffle": "passed",
+    "mfma": "passed",
+    "paper_results": "passed at historical audit commit 904b0e729625e3f072e417adcfa440a9318b3b4e"
+  },
+  "new_source_lint_and_format": "passed",
+  "raw_evidence_whitespace_policy": "Exact captured logs/source bytes retained. Only wheel-build-old-setuptools-failure.log lines 5,10,17,20,23,25,90,97,99 contain trailing whitespace; this is the unmodified pip error log. All newly authored files pass git diff --check. No upstream license bytes changed.",
+  "validation_files": {
+    "wheel-build-old-setuptools-failure.log": "ff712c1e1c86fb70ea0a4a789015e5b7787ebabe9f0efb297db731099ec82568",
+    "wheel-build.log": "3dd9ecbb5abaec094e4e6472fb7144b2f841848b7431889c48b3ad0725a4c737",
+    "wheel-install.log": "778a3346576919709bcae0efb27cd5d34748d6bd01b73a736110119ca04bb65a",
+    "wheel-check.log": "8b2692c563a805ac103bc45f845186ae94d526afc6705aa285c4b10c004c3264",
+    "ptx-replay.json": "9392b84da887df44218ca25209a8cac0ceddff63bb72c7fd282ffe27e81dc360",
+    "ptx-replay.log": "295825eac8ad4878526f6d464748e2f9674daecd23cd59771b0bf37afccef41f",
+    "shuffle-replay.json": "4a4a76deecefc0ca336835154791923c819696411c46461ec96c7977b796b4a5",
+    "shuffle-replay.log": "8aea22f8cfa15afeabc3a264698b3faf5bf22463685e9e50122080090b92c588",
+    "mfma-replay.json": "2f72e5b1d99bc8ce18d675c8fc5c012aef819c0353c05a1fac577bf29fec21e1",
+    "mfma-replay.log": "9cba5ae3a86f48390a02e4bd40015400bda340f8ce8ea38466fc84607d22bd6e",
+    "paper-snapshot-replay.log": "46a13b1b3d3dd43276e5f51fb0c95f3e5f7c27a4d988f049c953d8ec348e5e9f",
+    "lark_kernels-0.1.0-py3-none-any.whl": "644772e75eec8b935c2c4730448d5c93c13e015171b92ada8f564b2e6e04c92c"
+  }
+}

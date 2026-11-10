@@ -28,6 +28,7 @@ def main(argv=None):
         "verify-rotary",
         "verify-convolution",
         "verify-normalization",
+        "verify-silu",
     ):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
@@ -44,6 +45,7 @@ def main(argv=None):
             "verify-rotary",
             "verify-convolution",
             "verify-normalization",
+            "verify-silu",
         }:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
@@ -164,6 +166,7 @@ def main(argv=None):
             "verify-rotary",
             "verify-convolution",
             "verify-normalization",
+            "verify-silu",
         }:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
@@ -177,6 +180,8 @@ def main(argv=None):
                 from .rotary import verify as verify_inductive
             elif args.command == "verify-convolution":
                 from .convolution import verify as verify_inductive
+            elif args.command == "verify-silu":
+                from .silu import verify as verify_inductive
             else:
                 from .normalization import verify as verify_inductive
 

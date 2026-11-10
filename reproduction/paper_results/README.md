@@ -14,6 +14,17 @@ commit `b5fb165`. Later independent studies, including the
 are tracked in the [current coverage ledger](../COVERAGE.md). The snapshot is not
 retroactively relabeled as original-paper reproduction.
 
+The check below must run from audit commit
+`904b0e729625e3f072e417adcfa440a9318b3b4e` because it binds the documentation
+and evidence files at that historical snapshot. Later coverage updates change
+some of those bytes. Create a separate checkout before checking the snapshot:
+
+```bash
+git worktree add --detach /tmp/lark-paper-audit-snapshot \
+  904b0e729625e3f072e417adcfa440a9318b3b4e
+cd /tmp/lark-paper-audit-snapshot
+```
+
 The archive hash, its 47 member-file hashes, the preprint input order, every
 float's source label/location, and the selected published evidence hashes are
 recorded. The target interpretations and missing-input assessments are authored

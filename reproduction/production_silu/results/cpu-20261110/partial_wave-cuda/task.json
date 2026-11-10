@@ -1,0 +1,36 @@
+{
+  "name": "vllm_silu_multiwave_partial_wave",
+  "entry": "vllm_silu_multiwave_partial_wave",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        7,
+        65
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        7,
+        130
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 7,
+    "block": 65,
+    "warp": 32
+  },
+  "fuel": [
+    459,
+    1,
+    1,
+    1
+  ]
+}

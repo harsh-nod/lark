@@ -1,0 +1,36 @@
+{
+  "name": "vllm_silu_multiwave_tail",
+  "entry": "vllm_silu_multiwave_tail",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        33,
+        1031
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        33,
+        2062
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 33,
+    "block": 1024,
+    "warp": 32
+  },
+  "fuel": [
+    7221,
+    1,
+    1,
+    1
+  ]
+}

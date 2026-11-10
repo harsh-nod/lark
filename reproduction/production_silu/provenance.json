@@ -1,0 +1,68 @@
+{
+  "repository": "https://github.com/vllm-project/vllm",
+  "commit": "83f5de466a889c29ac5fbfbe342d6fe4c09811e8",
+  "path": "csrc/activation_kernels.cu",
+  "source_sha256": "27ba079b069fab4fa633b0ed23aad7fee6428c2a31330013dc98a1e2a6ef1e08",
+  "original_paper_registry_revision_available": false,
+  "comparison_scalar_carrier": {
+    "type": "torch::headeronly::Half",
+    "source": "Installed official PyTorch wheel headers, no PyTorch runtime dependency on GPU hosts",
+    "torch_version": "2.11.0+cu130",
+    "torch_git_commit": "70d99e998b4955e0049d13a98d77ae1b14db1f45",
+    "header_sha256": {
+      "torch/headeronly/cpu/vec/intrinsics.h": "3d5dbf5308e68da5532807353e33deac849e3f32674cb29fe62ca750d1669c73",
+      "torch/headeronly/cpu/vec/vec_half.h": "9176b69ded637b5b969f079cdbbdf6671f2357580d16545aef2c359365f90fda",
+      "torch/headeronly/macros/Export.h": "6c2dbf6f93ebce560141d9260617b6307da710e003b1c1ea74bba205505070ef",
+      "torch/headeronly/macros/Macros.h": "173be638ae15cd9b6d4d69fce525b9f2c8434fbb6b1060f952db3d9db777a491",
+      "torch/headeronly/macros/cmake_macros.h": "6fe4adb1aeb6181ff6903ff6ca6f585baca3093bd7a17e66d65889ff8637a6df",
+      "torch/headeronly/util/Half.h": "af6fc3270b3f6f33e01cad633738fcbfc4f64995d4f6c12c8a4f7b3cf0b684ba",
+      "torch/headeronly/util/bit_cast.h": "f9804d63b3d269d63222817723207efd1bd8d7d7af188561f99b7d562f25893f",
+      "torch/headeronly/util/floating_point_utils.h": "a37e889c098bcd4b783acad36cd78cd9d370093d316e39a43aa6307b04d9d61d"
+    }
+  },
+  "cases": [
+    {
+      "key": "full",
+      "tokens": 64,
+      "hidden": 4097,
+      "block": 1024,
+      "grid": 64,
+      "scalar_branch_selected": true
+    },
+    {
+      "key": "tail",
+      "tokens": 33,
+      "hidden": 1031,
+      "block": 1024,
+      "grid": 33,
+      "scalar_branch_selected": true
+    },
+    {
+      "key": "partial_wave",
+      "tokens": 7,
+      "hidden": 65,
+      "block": 65,
+      "grid": 7,
+      "scalar_branch_selected": true
+    }
+  ],
+  "rewrites": [
+    {
+      "change": "Specialize scalar_t to FP16, act_first=true, use_vec=false, HAS_CLAMP=false, alpha=1, beta=0, and d to each declared hidden width",
+      "status": "The public host selects scalar fallback for these widths and launches grid=tokens/block=min(hidden,1024)"
+    },
+    {
+      "change": "Inline compute and SiLU helpers, retaining activation half rounding before the gate multiply; spell casts as explicit half conversion intrinsics",
+      "status": "Adapted source is proved; the source rewrite itself has no equivalence theorem"
+    },
+    {
+      "change": "Flatten local pointer aliases into row-major offsets, replace VLLM_LDG with ordinary scalar loads, and spell for as while in one extern C kernel",
+      "status": "Recorded syntax/cache-policy rewrite"
+    },
+    {
+      "change": "Use int32 token and loop indices instead of upstream int64",
+      "status": "Semantic departure, bounded by the proved input span <2^31 and positive native launch geometry"
+    }
+  ],
+  "scope": "Independent scalable scalar SiLU-and-mul adaptation from a public November 10 revision, not the authors' missing registry source or production pass rates. Retains the native multiwave launch and strided loop. Packed vector branches, general upstream/source-rewrite equivalence, IEEE guarantees and NVIDIA execution are not claimed."
+}

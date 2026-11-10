@@ -1,0 +1,36 @@
+{
+  "name": "symbolic-grid",
+  "entry": "vllm_silu_and_mul_adapted",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1073741823,
+        1
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        1073741823,
+        2
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1073741823,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    11,
+    1,
+    1,
+    1
+  ]
+}
