@@ -34,9 +34,11 @@ jobs:
         working-directory: lean-real
       - name: Check source-bound real wave reduction and tamper controls
         run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
+      - name: Check source-bound native RMSNorm certificates and tamper controls
+        run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_native_rmsnorm.py -v
       - name: Check real interpretation, machine specializations and algebra controls
         run: python3 reproduction/exact_real/run.py --output /tmp/lark-exact-real
-      - name: Check native RMSNorm algebra components
+      - name: Check native RMSNorm canonical-real whole launch
         run: lake build LarkReal.NativeRmsNorm
         working-directory: lean-real
   proof-tests:
@@ -91,7 +93,7 @@ jobs:
         run: lake env lean Lark/MFMATile.lean
         working-directory: lean
       - name: Check native RMSNorm execution components
-        run: lake build Lark.NativeRmsNormOutBarrier
+        run: lake build Lark.NativeRmsNormCorrect
         working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v

@@ -1,8 +1,8 @@
-import Lark.NativeRmsNormValue
+import Lark.NativeRmsNormCorrect
 import LarkReal.Ops
 
-/-! Canonical real RMSNorm for the development expression-tree target.
-This is an algebraic component theorem, not an actual-launch certificate.
+/-! Canonical real RMSNorm and its connection to the complete actual native
+launch. The exact-real interpretation does not assert IEEE error bounds.
 -/
 namespace LarkReal.NativeRmsNorm
 open LarkDownReduction LarkNativeRmsNorm
@@ -111,7 +111,27 @@ theorem result_eq_canonical (input : Nat → Nat → ℝ) (row col : Nat) :
   rewrite [hterm]
   norm_num only [ops, canonical, id_eq]
 
+noncomputable def canonical_spec (p : Shape) (input : Nat → Nat → ℝ) : List ℝ :=
+  (List.range (p.rows * 16384)).map fun offset => canonical input (offset / 16384) (offset % 16384)
+
+theorem spec_eq (p : Shape) (input : Nat → Nat → ℝ) : spec p ops input = canonical_spec p input := by
+  apply List.map_congr_left
+  intro offset ho
+  exact result_eq_canonical input (offset / 16384) (offset % 16384)
+
+/-- Whole actual native launch, actual-trace race freedom and the canonical real
+weighted RMSNorm reference, for all inputs and arbitrary initial outside memory.
+The source's fixed shape, aligned host contract and explicit reduction rewrite
+remain the scope of this theorem.
+-/
+theorem correct (p : Shape) :
+    LarkPartitionCollective.Correct ops (layout p) (geometry p) fuel program (canonical_spec p) := by
+  intro input outside
+  obtain ⟨final, he, hr, hv⟩ := LarkNativeRmsNorm.correct p ops input outside
+  exact ⟨final, he, hr, hv.trans (congrArg some (spec_eq p input))⟩
+
 #print axioms balanced_sum
 #print axioms block_sum
 #print axioms result_eq_canonical
+#print axioms correct
 end LarkReal.NativeRmsNorm

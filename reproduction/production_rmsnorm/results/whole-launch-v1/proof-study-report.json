@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "model_profile": "native-rmsnorm-real-v17",
+  "certificates": 4,
+  "fresh_rechecks": 4,
+  "whole_launch_proved": true,
+  "canonical_real_reference_proved": true,
+  "formal_shape_domain": {
+    "rows_min": 1,
+    "rows_max": 255,
+    "width": 16384,
+    "block": 1024,
+    "physical_warp": 64,
+    "vector": 8
+  },
+  "cases": [
+    {
+      "rows": 1,
+      "certificate": "certificates/rows-1",
+      "status": "verified",
+      "fresh_recheck": true,
+      "output_elements": 16384
+    },
+    {
+      "rows": 3,
+      "certificate": "certificates/rows-3",
+      "status": "verified",
+      "fresh_recheck": true,
+      "output_elements": 49152
+    },
+    {
+      "rows": 64,
+      "certificate": "certificates/rows-64",
+      "status": "verified",
+      "fresh_recheck": true,
+      "output_elements": 1048576
+    },
+    {
+      "rows": 255,
+      "certificate": "certificates/rows-255",
+      "status": "verified",
+      "fresh_recheck": true,
+      "output_elements": 4177920
+    }
+  ],
+  "source_identity_controls": [
+    {
+      "name": "wrong-final-offset",
+      "accepted": false,
+      "claim": "IR identity only"
+    },
+    {
+      "name": "removed-first-barrier",
+      "accepted": false,
+      "claim": "IR identity only"
+    },
+    {
+      "name": "wrong-weight-index",
+      "accepted": false,
+      "claim": "IR identity only"
+    },
+    {
+      "name": "unguarded-partial-store",
+      "accepted": false,
+      "claim": "IR identity only"
+    }
+  ],
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "ieee_equivalence_or_error_bound": false,
+  "full_upstream_api": false,
+  "scope": "Independent weighted FP16 RMSNorm adaptation at width 16384, 1<=rows<256, native block1024/wave64, vector8, epsilon1e-5 and fuel[256,8,3,1]. Actual complete launch, actual-trace race freedom and every canonical-real reference output for every real input and initial outside memory. No IEEE equivalence/error bound, full upstream API or original-paper result."
+}

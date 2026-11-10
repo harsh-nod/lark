@@ -136,8 +136,10 @@ def valid_cache(path, sources, key):
         return False
 
 
-def prepare(libraries, lean, timeout):
+def prepare(libraries, lean, timeout, *, target="LarkReal.WaveSum"):
     """Compile pinned own libraries once, then return a source-checked import environment."""
+    if target.replace(".", "/") + ".lean" not in libraries:
+        raise Refusal("configuration", "optional proof target must be in the pinned source set")
     project, seeds = dependencies()
     lake = Path(lean).with_name("lake")
     if not lake.is_file():
@@ -147,7 +149,10 @@ def prepare(libraries, lean, timeout):
         raise Refusal("toolchain", "Lake must use Lean 4.19.0")
     sources = {**libraries, **configuration()}
     source_hashes = {name: digest(content) for name, content in sorted(sources.items())}
-    key = digest(json.dumps({"sources": source_hashes, "lake": version}, sort_keys=True).encode())
+    identity = {"sources": source_hashes, "lake": version}
+    if target != "LarkReal.WaveSum":
+        identity["target"] = target
+    key = digest(json.dumps(identity, sort_keys=True).encode())
     cache_root = project / ".lake/lark-real-proofs"
     cache_root.mkdir(parents=True, exist_ok=True)
     cache = cache_root / key
@@ -161,15 +166,15 @@ def prepare(libraries, lean, timeout):
         with tempfile.TemporaryDirectory(prefix=key[:12] + "-", dir=cache_root) as temporary:
             build = Path(temporary)
             for name, content in sources.items():
-                target = build / name
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(content)
+                source_path = build / name
+                source_path.parent.mkdir(parents=True, exist_ok=True)
+                source_path.write_bytes(content)
             packages = build / ".lake/packages"
             packages.mkdir(parents=True)
-            for name, target in seeds.items():
-                (packages / name).symlink_to(target, target_is_directory=True)
+            for name, dependency_path in seeds.items():
+                (packages / name).symlink_to(dependency_path, target_is_directory=True)
             log = owned_build(
-                [str(lake), "-f", "lakefile.toml", "build", "+LarkReal.WaveSum"],
+                [str(lake), "-f", "lakefile.toml", "build", "+" + target],
                 build,
                 task_env,
                 timeout,

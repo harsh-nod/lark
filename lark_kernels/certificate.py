@@ -441,6 +441,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "native-rmsnorm-real-v17":
+        from .native_rmsnorm_certificate import check as check_native_rmsnorm
+
+        return check_native_rmsnorm(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "silu-multiwave-v15":
         from .silu import check as check_silu
 

@@ -1,9 +1,11 @@
-# Native RMSNorm work in progress
+# Native weighted RMSNorm
 
-**No RMSNorm certificate has been exported by this extension.** The complete
-source-to-launch and source-trace Lean proofs are still pending. The intended
-phase value has a proved canonical-real bridge, and finite native GPU comparisons
-have passed. Neither result certifies execution of the complete source program.
+The fixed profile now has complete source-bound canonical-real certificates.
+Lean proves the actual whole launch, actual-trace race freedom and every output
+for every input and initial outside memory, at all `1 <= rows < 256`. Four
+exports at 1, 3, 64 and 255 rows have passed fresh rechecks. The separate native
+GPU comparisons passed their numerical tolerance. IEEE equivalence, a numerical
+error bound and the complete upstream API remain outside the formal claim.
 
 The current target is a weighted FP16 row of 16,384 elements, with eight-element
 vector ownership and the native 1,024-thread/wave64 launch. It is an independent
@@ -41,14 +43,14 @@ The following proof foundations have been checked:
   coordinates, unique output ownership and signed-int32 address bounds.
 - `Lark.ReductionFootprint` derives race freedom from local conditions on
   read-only global inputs, unique output writers, shared partial stores and
-  barrier-separated reads/broadcasts. The kernel still has to prove those
-  conditions for every actual access.
+  barrier-separated reads/broadcasts. The native proof discharges these
+  conditions for every actual access in the whole launch.
 - `Lark.PartitionCollective` adds an opt-in scheduler for complete aligned
   logical partitions inside a physical wave64. It preserves memory, index
   registers, access traces and synchronization epochs across a shuffle. It
   rejects incomplete, duplicated, mixed-instruction or cross-wave cohorts.
-  Earlier pinned machines are unchanged. Native RMSNorm trials exercise this
-  logical-16 pattern, while the complete kernel simulation proof is pending.
+  Earlier pinned machines are unchanged. The complete native proof composes
+  these logical-16 stages with the original physical-wave lane folds.
 - `Lark.NativeRmsNormProgram` fixes all 71 frontend instructions, the native
   geometry and the actual two block barriers. A source-binding check accepts
   the baseline and directly rejects four modified IR statements in Lean.
@@ -58,7 +60,9 @@ The following proof foundations have been checked:
 - `Lark.NativeRmsNormValue` states the intended per-thread accumulation,
   wave/block reduction and weighted output expression. `LarkReal.NativeRmsNorm`
   proves that this value equals the canonical real sum-of-squares RMSNorm.
-  **Equating actual execution to this value remains an open proof obligation.**
+- `Lark.NativeRmsNormCorrect` proves the original partition machine's complete
+  `Correct` relation, including execution, race freedom and output extraction.
+  `LarkReal.NativeRmsNorm.correct` joins it to the canonical real reference.
 
 The execution modules prove the actual setup, two-by-eight traversal, six native
 shuffle stages and shared partial stores. `Lark.NativeRmsNormFirstBlock` composes
@@ -82,12 +86,19 @@ intact, and every recorded access satisfies the race-freedom classification.
 `Lark.NativeRmsNormOutBarrier` proves the actual second barrier resume to PC 56
 and current block epoch two, retaining prior recorded access epochs. It also
 composes the first two actual block phases from the initial state for every
-allowed row, input and outside memory. Output execution and the whole-launch
-theorem remain pending. These phase theorems add no complete kernel certificate.
+allowed row, input and outside memory. These phase theorems are components of
+the completed whole-launch proof.
+
+The output modules execute the shared-scale load, both eight-component vector
+iterations, final false guard and halt. The source-ordered lane and wave folds
+prove every stored value and unique writer. The block and row modules compose
+all three block phases and all grid rows, preserving other rows' outputs and
+the entry conditions needed by later blocks. The final proof extracts the full
+output list and proves actual-trace race freedom under the declared fuel.
 
 ```bash
 cd lean
-lake build Lark.NativeRmsNormOutBarrier
+lake build Lark.NativeRmsNormCorrect
 ```
 
 The [HIP shuffle documentation](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_cpp_language_extensions.html#warp-shuffle-functions)
@@ -102,6 +113,28 @@ square of each input in the reduction, and checks all output expression wiring.
 Four source changes are refused by that preflight. Those preflight results are
 separate from the four direct Lean program-identity rejections; neither is a
 complete semantic mutant study or an original-paper mutant result.
+
+The explicit certificate profile preserves the ordinary verifier's size limits.
+It requires the closed native task and reference contract, then checks the
+actual lowered IR against the proved source program in Lean. Export and recheck
+the fixture with the pinned optional Mathlib dependencies initialized:
+
+```bash
+python3 -m lark_kernels verify-native-rmsnorm \
+  reproduction/production_rmsnorm/cases/weighted_16384/kernel.hip \
+  --reference reproduction/production_rmsnorm/cases/weighted_16384/reference.py \
+  --task reproduction/production_rmsnorm/cases/weighted_16384/task.json \
+  --output /tmp/lark-native-rmsnorm --timeout 600
+python3 -m lark_kernels check /tmp/lark-native-rmsnorm --timeout 600
+python3 reproduction/production_rmsnorm/run_proofs.py \
+  --output /tmp/lark-native-rmsnorm-study --timeout 600
+```
+
+`LARK_REAL_PROJECT` may select an existing initialized checkout of `lean-real`.
+The checker verifies all nine locked dependency source revisions and rebuilds
+its own pinned proof modules in a managed cache. It regenerates the source,
+reference and task statement on every check. Refreshed hashes cannot authorize
+a changed proof, model, reference, task or claim of original-paper completion.
 
 ```bash
 python3 reproduction/production_rmsnorm/run_symbolic.py --output /tmp/lark-rms-preflight

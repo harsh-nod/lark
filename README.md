@@ -48,15 +48,15 @@ sum. Both hosts matched the source expression tree on 17,408 outputs each;
 cancellation disagreements with CPU Torch are reported separately. These
 independent additions do not reproduce the original paper's experiments.
 
-The [native RMSNorm development study](reproduction/production_rmsnorm/RESULTS.md)
-adds partial-cohort shuffle and reduction proof components plus native
-1,024-thread comparisons at width 16,384. Both MI350X hosts passed numerical
-tolerance checks, with signed-zero and one-half-ULP differences recorded.
-The intended value has a canonical-real proof. The first two block phases now
-have execution proofs through all 16 physical waves and both barrier resumes,
-with the intended shared partials and scale and a race-free access trace.
-Output execution and the whole-launch theorem remain pending, so this adds
-zero certificates.
+The [native weighted RMSNorm study](reproduction/production_rmsnorm/RESULTS.md)
+adds whole-launch canonical-real certificates at width 16,384 and native
+1,024-thread/wave64 geometry. Four exports cover 1, 3, 64 and 255 rows; the
+underlying theorem quantifies over every input and initial outside memory for
+all `1 <= rows < 256`. It proves actual execution, actual-trace race freedom
+and every reference output, including both block barriers and the logical-16
+scale reduction inside physical wave64. Both MI350X hosts passed numerical
+tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
+the certificate does not assert IEEE equivalence or a floating-point error bound.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

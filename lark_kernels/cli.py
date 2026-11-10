@@ -30,6 +30,7 @@ def main(argv=None):
         "verify-normalization",
         "verify-silu",
         "verify-wave-sum",
+        "verify-native-rmsnorm",
     ):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
@@ -48,15 +49,16 @@ def main(argv=None):
             "verify-normalization",
             "verify-silu",
             "verify-wave-sum",
+            "verify-native-rmsnorm",
         }:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
             p.add_argument(
                 "--timeout",
                 type=float,
-                default=300
-                if command in {"verify-shuffle", "verify-mfma", "verify-wave-sum"}
-                else 120,
+                default=600 if command == "verify-native-rmsnorm" else (
+                    300 if command in {"verify-shuffle", "verify-mfma", "verify-wave-sum"} else 120
+                ),
             )
             p.add_argument("--proposal", type=Path)
             p.add_argument(
@@ -172,6 +174,7 @@ def main(argv=None):
             "verify-normalization",
             "verify-silu",
             "verify-wave-sum",
+            "verify-native-rmsnorm",
         }:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
@@ -187,6 +190,8 @@ def main(argv=None):
                 from .convolution import verify as verify_inductive
             elif args.command == "verify-wave-sum":
                 from .wave_sum import verify as verify_inductive
+            elif args.command == "verify-native-rmsnorm":
+                from .native_rmsnorm_certificate import verify as verify_inductive
             elif args.command == "verify-silu":
                 from .silu import verify as verify_inductive
             else:

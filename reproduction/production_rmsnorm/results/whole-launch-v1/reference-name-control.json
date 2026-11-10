@@ -1,0 +1,8 @@
+{
+  "control": "weight parameter x collides with local reference temporary",
+  "before_fix_unsafe_reference_accepted": true,
+  "unsafe_reference": "import torch\n\n\ndef reference(input, x):\n    x = input.float()\n    return (x * torch.rsqrt((x * x).mean(dim=1, keepdim=True) + 1e-5) * x.float()).half()\n",
+  "after_fix_unsafe_reference_rejected": true,
+  "safe_renamed_reference_accepted": true,
+  "renamed_source_ir_matches_baseline": true
+}

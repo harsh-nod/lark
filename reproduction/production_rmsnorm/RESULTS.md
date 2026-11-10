@@ -1,6 +1,6 @@
-# Native RMSNorm development validation
+# Native weighted RMSNorm validation
 
-**Zero RMSNorm certificates. The complete source execution and trace proofs are pending.**
+**Four source-bound canonical-real RMSNorm certificates, each freshly rechecked.**
 These are independent measurements of the development adaptation, not recovered
 paper experiments or a certificate for the complete upstream API.
 
@@ -43,8 +43,10 @@ order and conversion behavior are not asserted to be bit-equivalent.
 The Lean components prove vector ownership/bounds, race freedom from a local
 access classification, complete-partition shuffle properties, the fixed IR
 binding, guarded reduction tree coverage and the intended value's canonical-real
-formula. The actual source must still be proved to complete, satisfy that access
-classification and produce that value for every input and allowed outside state.
+formula. The subsequent whole-launch proof establishes actual source completion,
+that access classification and the canonical-real output for every input and
+allowed outside state. The following component checkpoints record its development;
+their pending-work notes describe the corresponding earlier checkpoint.
 The four direct Lean controls reject program identity changes, not entire
 semantic kernel correctness statements.
 
@@ -111,6 +113,26 @@ all participating threads to PC 56 and block epoch two. Both source block phases
 compose from the initial state for every allowed row, input and outside memory.
 `results/execution-scale-v1/` freezes this checkpoint. Output execution and
 whole-launch correctness remain pending, with zero RMSNorm certificates.
+
+The [whole native launch](../../lean/Lark/NativeRmsNormCorrect.lean) now proves
+the original partition machine's complete `Correct` relation. The output phase
+executes both original vector iterations, all stores and the final halt. The
+source-ordered physical-wave and row folds preserve earlier outputs and later
+blocks' entry conditions. Every output equals the source-tree specification;
+the [canonical-real theorem](../../lean-real/LarkReal/NativeRmsNorm.lean) joins
+this execution to weighted sum-of-squares RMSNorm. Both the actual source trace
+and all outputs are proved for every input and initial outside memory across
+all `1 <= rows < 256`, width 16,384 and native block1,024/wave64 geometry.
+
+The explicit `verify-native-rmsnorm` profile exports the actual source, closed
+reference, task, translation, all 70 transitive proof modules and the locked
+optional dependency configuration. Four exports at 1, 3, 64 and 255 rows pass
+fresh checks. Four changed source programs are rejected directly by Lean's IR
+identity theorem. Tests also reject rehashed changes to the theorem, proof model,
+reference, task and reported scope. These remain IR identity controls, rather
+than the paper's original semantic mutant study. `results/whole-launch-v1/`
+freezes the complete proof and certificate checkpoint. The exact-real proof
+does not assert IEEE equivalence, an error bound or the authors' original result.
 
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside

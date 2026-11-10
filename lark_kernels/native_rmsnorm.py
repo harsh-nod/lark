@@ -1,7 +1,7 @@
-"""Development contract for the native weighted 16,384-column RMSNorm fixture.
+"""Closed contract for the native weighted 16,384-column RMSNorm profile.
 
-The complete source-to-launch proof is pending. Parsing this contract is not
-certificate acceptance; no verify/check CLI profile is registered here.
+The explicit verify-native-rmsnorm profile checks complete actual-launch proofs.
+Parsing this contract alone is not certificate acceptance.
 """
 
 import ast
@@ -14,12 +14,23 @@ from .ir import Buffer, Refusal, Task
 
 
 def canonical_reference(input_name="input", weight_name="weight"):
-    return f"""import torch
+    occupied = {input_name, weight_name}
+
+    def fresh(preferred):
+        while preferred in occupied:
+            preferred += "_"
+        occupied.add(preferred)
+        return preferred
+
+    module = fresh("torch")
+    temporary = fresh("x")
+    imported = "torch" if module == "torch" else f"torch as {module}"
+    return f"""import {imported}
 
 
 def reference({input_name}, {weight_name}):
-    x = {input_name}.float()
-    return (x * torch.rsqrt((x * x).mean(dim=1, keepdim=True) + 1e-5) * {weight_name}.float()).half()
+    {temporary} = {input_name}.float()
+    return ({temporary} * {module}.rsqrt(({temporary} * {temporary}).mean(dim=1, keepdim=True) + 1e-5) * {weight_name}.float()).half()
 """
 
 
