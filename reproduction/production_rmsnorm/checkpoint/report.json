@@ -1,0 +1,194 @@
+{
+  "status": "proved-foundations-checkpoint; complete native RMSNorm proof pending",
+  "base_code_commit": "6360b9b60ad5563c8d5dbe5e589e499cfcb9dc45",
+  "source_archive_sha256": "1d6f80aff93d3905e3a026e0cbbd5d7a4a3a8000727c2cbcb9e0c753c1f2c416",
+  "source_members": 121,
+  "printed_component_axiom_audits": {
+    "LarkVectorStride.coverage": [
+      "propext",
+      "Quot.sound"
+    ],
+    "LarkVectorStride.address_writer": [
+      "propext",
+      "Quot.sound"
+    ],
+    "LarkVectorStride.int32_address": [
+      "propext",
+      "Quot.sound"
+    ],
+    "LarkReductionFootprint.partial_threads_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "LarkReductionFootprint.race_free": [
+      "propext",
+      "Quot.sound"
+    ],
+    "LarkPartitionCollective.runShuffle_preserves": [
+      "propext"
+    ],
+    "LarkPartitionCollective.nextCohort_subset": [
+      "propext"
+    ],
+    "LarkPartitionCollective.nextCohort_nonempty": [
+      "propext",
+      "Quot.sound"
+    ],
+    "PartitionChecks.snapshot": [
+      "propext"
+    ],
+    "PartitionChecks.cohort": [],
+    "PartitionChecks.warp": [
+      "propext"
+    ],
+    "PartitionChecks.incomplete": [
+      "propext"
+    ],
+    "PartitionChecks.fullWidthRejected": [
+      "propext"
+    ],
+    "PartitionChecks.duplicated": [
+      "propext"
+    ],
+    "PartitionChecks.mixedPc": [
+      "propext"
+    ],
+    "ReductionFootprintChecks.classified": [
+      "propext"
+    ],
+    "ReductionFootprintChecks.safe_trace": [
+      "propext",
+      "Quot.sound"
+    ],
+    "ReductionFootprintChecks.missing_barrier_conflicts": [
+      "propext"
+    ],
+    "ReductionFootprintChecks.duplicate_partial_writer_conflicts": [
+      "propext"
+    ],
+    "ReductionFootprintChecks.wrong_output_owner_conflicts": [
+      "propext"
+    ],
+    "ReductionFootprintChecks.last_vector_cell": [
+      "propext"
+    ]
+  },
+  "unit_tests": {
+    "count": 10,
+    "seconds": 8.499,
+    "status": "passed, no skips"
+  },
+  "symbolic_preflight": {
+    "status": "untrusted-preflight-passed",
+    "baseline": {
+      "instructions": 71,
+      "accesses": 66593,
+      "output_expressions_checked": 16384,
+      "squared_input_cells_checked": 16384,
+      "categories": {
+        "input": 49152,
+        "partial-store": 16,
+        "partial-load": 16,
+        "scale-store": 1,
+        "scale-load": 1024,
+        "output": 16384
+      },
+      "source_readback": true
+    },
+    "controls": [
+      {
+        "name": "duplicated-last-reduction-offset",
+        "rejected": true,
+        "gate": "square-sum coverage differs",
+        "proof": false
+      },
+      {
+        "name": "wrong-weight-index",
+        "rejected": true,
+        "gate": "output expression differs",
+        "proof": false
+      },
+      {
+        "name": "unguarded-partial-store",
+        "rejected": true,
+        "gate": "access classification failed",
+        "proof": false
+      },
+      {
+        "name": "missing-first-block-barrier",
+        "rejected": true,
+        "gate": "uninitialized",
+        "proof": false
+      }
+    ],
+    "seconds": 6.3426205510040745,
+    "full_kernel_proof": false,
+    "source_trace_goodness_proved": false,
+    "certificates": 0,
+    "fresh_lean_checks": 0,
+    "gpu_trials": 0,
+    "model_calls": 0,
+    "original_paper_fully_reproduced": false,
+    "scope": "Development preflight of the actual 1,024-thread weighted 16,384-column adaptation. Polynomial counting assumes intended real ring laws and is untrusted. Source execution, trace classification and output equivalence still require Lean proofs. These controls are not direct Lean rejections or original-paper mutants."
+  },
+  "certificates": 0,
+  "full_kernel_launch_theorems": 0,
+  "source_trace_classification_proved": false,
+  "independent_reference_equivalence_proved": false,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "remaining": [
+    "Prove the actual vector-strided source loop execution and footprint invariants",
+    "Prove both reduction phases and logical-16 cohort execution from the actual translated program",
+    "Derive trace classification from actual execution, then apply the proved RF lemma",
+    "Prove complete native block/grid launch and canonical-real independent reference equivalence",
+    "Implement standalone certificate export and fresh source-bound rechecking",
+    "Complete compiled upstream header closure and two-host exact-source/upstream/CPU validation"
+  ],
+  "development_failures": "Raw initial elaboration/arithmetic/case-split failures are retained separately; they are not accepted proofs or counted certificates.",
+  "frozen_replay": {
+    "source_members": 121,
+    "fresh_component_unit_tests": 10,
+    "unit_seconds": 20.574,
+    "status": "passed, no skips",
+    "preflight_baseline_and_all_four_controls_match": true,
+    "current_sources_match_frozen_manifest": true,
+    "certificates": 0,
+    "whole_kernel_proof": false
+  },
+  "captured_source_whitespace_policy": {
+    "note": "Captured upstream sources and raw development logs remain byte-identical. Whitespace exceptions below apply only to these captured records; authored source files pass git diff --check.",
+    "trailing": {
+      "checkpoint/frozen-replay-symbolic/missing-first-block-barrier.hip": [
+        35
+      ],
+      "checkpoint/symbolic/missing-first-block-barrier.hip": [
+        35
+      ],
+      "checkpoint/development/initial-partition-elaboration.log": [
+        9,
+        11,
+        13,
+        15,
+        17,
+        19,
+        22,
+        24,
+        28,
+        30,
+        44,
+        46,
+        50,
+        52,
+        60,
+        62,
+        68,
+        70,
+        72,
+        74
+      ]
+    },
+    "ending_blank_lines": {}
+  }
+}

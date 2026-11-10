@@ -1,0 +1,37 @@
+info: lark: no previous manifest, creating one from scratch
+info: toolchain not updated; already up-to-date
+✔ [2/6] Built Lark.Nonlinear
+ℹ [3/6] Built Lark.ScalarLaunch
+info: ././././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+ℹ [4/6] Built Lark.Pointwise
+info: ././././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [5/6] Built Lark.Reduction
+info: ././././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+✖ [6/6] Building Lark.VectorStride
+trace: .> LEAN_PATH=././.lake/build/lib/lean /tmp/lean-4.19.0-linux/bin/lean ././././Lark/VectorStride.lean -R ./././. -o ././.lake/build/lib/lean/Lark/VectorStride.olean -i ././.lake/build/lib/lean/Lark/VectorStride.ilean -c ././.lake/build/ir/Lark/VectorStride.c --json
+error: ././././Lark/VectorStride.lean:66:19: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  e ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≤ 0
+  a ≥ 0
+  a - b ≤ 0
+  a - b + e ≤ -1
+where
+ a := ↑(col / p.vec) % ↑p.block
+ b := ↑col / ↑p.vec
+ c := ↑col % ↑p.vec
+ d := ↑col
+ e := ↑(col / p.vec / p.block) * ↑p.block
+info: ././././Lark/VectorStride.lean:123:0: 'LarkVectorStride.coverage' depends on axioms: [propext, sorryAx, Quot.sound]
+info: ././././Lark/VectorStride.lean:124:0: 'LarkVectorStride.address_writer' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/VectorStride.lean:125:0: 'LarkVectorStride.int32_address' depends on axioms: [propext, Quot.sound]
+error: Lean exited with code 1
+Some required builds logged failures:
+- Lark.VectorStride
+error: build failed

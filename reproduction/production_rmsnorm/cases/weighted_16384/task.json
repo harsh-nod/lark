@@ -1,0 +1,44 @@
+{
+  "name": "native_weighted_rmsnorm_1_16384",
+  "language": "hip",
+  "entry": "rmsnorm",
+  "buffers": [
+    {
+      "name": "output",
+      "role": "output",
+      "dtype": "float16",
+      "shape": [
+        1,
+        16384
+      ]
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "dtype": "float16",
+      "shape": [
+        1,
+        16384
+      ]
+    },
+    {
+      "name": "weight",
+      "role": "input",
+      "dtype": "float16",
+      "shape": [
+        16384
+      ]
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    8,
+    3,
+    1
+  ]
+}

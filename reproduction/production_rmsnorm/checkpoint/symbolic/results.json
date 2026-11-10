@@ -1,0 +1,53 @@
+{
+  "status": "untrusted-preflight-passed",
+  "baseline": {
+    "instructions": 71,
+    "accesses": 66593,
+    "output_expressions_checked": 16384,
+    "squared_input_cells_checked": 16384,
+    "categories": {
+      "input": 49152,
+      "partial-store": 16,
+      "partial-load": 16,
+      "scale-store": 1,
+      "scale-load": 1024,
+      "output": 16384
+    },
+    "source_readback": true
+  },
+  "controls": [
+    {
+      "name": "duplicated-last-reduction-offset",
+      "rejected": true,
+      "gate": "square-sum coverage differs",
+      "proof": false
+    },
+    {
+      "name": "wrong-weight-index",
+      "rejected": true,
+      "gate": "output expression differs",
+      "proof": false
+    },
+    {
+      "name": "unguarded-partial-store",
+      "rejected": true,
+      "gate": "access classification failed",
+      "proof": false
+    },
+    {
+      "name": "missing-first-block-barrier",
+      "rejected": true,
+      "gate": "uninitialized",
+      "proof": false
+    }
+  ],
+  "seconds": 6.3426205510040745,
+  "full_kernel_proof": false,
+  "source_trace_goodness_proved": false,
+  "certificates": 0,
+  "fresh_lean_checks": 0,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Development preflight of the actual 1,024-thread weighted 16,384-column adaptation. Polynomial counting assumes intended real ring laws and is untrusted. Source execution, trace classification and output equivalence still require Lean proofs. These controls are not direct Lean rejections or original-paper mutants."
+}

@@ -1,0 +1,130 @@
+ℹ [3/7] Replayed Lark.Pointwise
+info: ././././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [4/7] Replayed Lark.Reduction
+info: ././././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ././././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+ℹ [5/7] Replayed Lark.ScalarLaunch
+info: ././././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+ℹ [6/7] Built Lark.VectorStride
+info: ././././Lark/VectorStride.lean:123:0: 'LarkVectorStride.coverage' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/VectorStride.lean:124:0: 'LarkVectorStride.address_writer' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/VectorStride.lean:125:0: 'LarkVectorStride.int32_address' depends on axioms: [propext, Quot.sound]
+✖ [7/7] Building Lark.ReductionFootprint
+trace: .> LEAN_PATH=././.lake/build/lib/lean /tmp/lean-4.19.0-linux/bin/lean ././././Lark/ReductionFootprint.lean -R ./././. -o ././.lake/build/lib/lean/Lark/ReductionFootprint.olean -i ././.lake/build/lib/lean/Lark/ReductionFootprint.ilean -c ././.lake/build/ir/Lark/ReductionFootprint.c --json
+error: ././././Lark/ReductionFootprint.lean:66:99: unsolved goals
+case partialStore.partialStore
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+offset✝¹ : b.thread % p.block / 64 = a.thread % p.block / 64
+lane✝¹ : a.thread % p.block % 64 = 0
+epoch✝¹ : a.epoch.block = 0
+write✝¹ : a.write = true
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 0
+offset✝ : b.location.offset = a.thread % p.block / 64
+lane✝ : b.thread % p.block % 64 = 0
+epoch✝ : b.epoch.block = 0
+write✝ : b.write = true
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+
+case partialStore.partialLoad
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+offset✝ : b.location.offset = a.thread % p.block / 64
+lane✝ : a.thread % p.block % 64 = 0
+epoch✝¹ : a.epoch.block = 0
+write✝ : a.write = true
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 0
+epoch✝ : b.epoch.block = 1
+read✝ : b.write = false
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+
+case partialLoad.partialStore
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+epoch✝¹ : a.epoch.block = 1
+read✝ : a.write = false
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 0
+offset✝ : b.location.offset = b.thread % p.block / 64
+lane✝ : b.thread % p.block % 64 = 0
+epoch✝ : b.epoch.block = 0
+write✝ : b.write = true
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+
+case scaleStore.scaleStore
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+thread✝¹ : a.thread % p.block = 0
+epoch✝¹ : a.epoch.block = 1
+write✝¹ : a.write = true
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 1
+offset✝ : b.location.offset = 0
+thread✝ : b.thread % p.block = 0
+epoch✝ : b.epoch.block = 1
+write✝ : b.write = true
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+
+case scaleStore.scaleLoad
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+thread✝ : a.thread % p.block = 0
+epoch✝¹ : a.epoch.block = 1
+write✝ : a.write = true
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 1
+offset✝ : b.location.offset = 0
+epoch✝ : b.epoch.block = 2
+read✝ : b.write = false
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+
+case scaleLoad.scaleStore
+p : LarkVectorStride.Shape
+a b : Access
+same : a.location = b.location
+owner✝¹ : b.thread / p.block = a.thread / p.block
+epoch✝¹ : a.epoch.block = 2
+read✝ : a.write = false
+space✝ : b.location.space = Space.shared
+owner✝ : b.location.owner = a.thread / p.block
+buffer✝ : b.location.buffer = 1
+offset✝ : b.location.offset = 0
+thread✝ : b.thread % p.block = 0
+epoch✝ : b.epoch.block = 1
+write✝ : b.write = true
+⊢ a.thread = b.thread ∨ ordered (geometry p) a b = true
+error: ././././Lark/ReductionFootprint.lean:76:40: unknown constant 'Nat.beq_eq_true'
+error: ././././Lark/ReductionFootprint.lean:73:84: unsolved goals
+case mk.mk
+space✝¹ : Space
+owner✝¹ buffer✝¹ offset✝¹ : Nat
+space✝ : Space
+owner✝ buffer✝ offset✝ : Nat
+⊢ ((space✝¹ = space✝ ∧ owner✝¹ = owner✝) ∧ buffer✝¹ = buffer✝) ∧ offset✝¹ = offset✝ ↔
+    space✝¹ = space✝ ∧ owner✝¹ = owner✝ ∧ buffer✝¹ = buffer✝ ∧ offset✝¹ = offset✝
+info: ././././Lark/ReductionFootprint.lean:100:0: 'LarkReductionFootprint.partial_threads_eq' depends on axioms: [propext, Quot.sound]
+info: ././././Lark/ReductionFootprint.lean:101:0: 'LarkReductionFootprint.race_free' depends on axioms: [propext, sorryAx, Quot.sound]
+error: Lean exited with code 1
+Some required builds logged failures:
+- Lark.ReductionFootprint
+error: build failed

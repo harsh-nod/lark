@@ -1,0 +1,81 @@
+ℹ [3/5] Built Lark.Collective
+info: ././././Lark/Collective.lean:214:0: 'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms
+info: ././././Lark/Collective.lean:215:0: 'LarkCollective.runShuffle_preserves' depends on axioms: [propext]
+info: ././././Lark/Collective.lean:216:0: 'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]
+ℹ [4/5] Built Lark.CollectiveGather
+info: ././././Lark/CollectiveGather.lean:34:0: 'LarkCollective.Gather.values_eq' depends on axioms: [propext, Quot.sound]
+✖ [5/5] Building Lark.PartitionCollective
+trace: .> LEAN_PATH=././.lake/build/lib/lean /tmp/lean-4.19.0-linux/bin/lean ././././Lark/PartitionCollective.lean -R ./././. -o ././.lake/build/lib/lean/Lark/PartitionCollective.olean -i ././.lake/build/lib/lean/Lark/PartitionCollective.ilean -c ././.lake/build/ir/Lark/PartitionCollective.c --json
+error: ././././Lark/PartitionCollective.lean:27:43: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:45:40: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:50:54: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+warning: ././././Lark/PartitionCollective.lean:55:12: declaration uses 'sorry'
+error: ././././Lark/PartitionCollective.lean:61:25: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:62:55: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.1780 t
+error: ././././Lark/PartitionCollective.lean:65:36: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:68:54: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.2432 t
+error: ././././Lark/PartitionCollective.lean:69:9: unsolved goals
+case none
+α : Type
+p : List sorry
+ts cohort : List Nat
+s : State α
+h : sorry p ts s = some cohort
+hh : (List.filter (fun t => sorry == some ?m.2395) ts).head? = none
+⊢ ∀ (t : Nat), t ∈ cohort → t ∈ ts
+error: ././././Lark/PartitionCollective.lean:71:6: simp made no progress
+error: ././././Lark/PartitionCollective.lean:77:14: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:87:17: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.2926 n s✝ s
+error: ././././Lark/PartitionCollective.lean:91:14: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:99:15: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.4091 n s✝ s
+error: ././././Lark/PartitionCollective.lean:100:17: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.4091 n s✝ s
+error: ././././Lark/PartitionCollective.lean:100:31: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.4091 n s✝ s
+error: ././././Lark/PartitionCollective.lean:103:14: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:110:15: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.5416 n s✝ s
+error: ././././Lark/PartitionCollective.lean:111:17: invalid dotted identifier notation, expected type is not of the form (... → C ...) where C is a constant
+  ?m.5416 n s✝ s
+error: ././././Lark/PartitionCollective.lean:114:14: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+error: ././././Lark/PartitionCollective.lean:119:14: ambiguous, possible interpretations 
+  LarkCollective.Instr : Type
+  
+  LarkNonlinear.Instr : Type
+info: ././././Lark/PartitionCollective.lean:124:0: 'LarkPartitionCollective.runShuffle_preserves' depends on axioms: [propext, sorryAx]
+info: ././././Lark/PartitionCollective.lean:125:0: 'LarkPartitionCollective.nextCohort_subset' depends on axioms: [sorryAx]
+error: Lean exited with code 1
+Some required builds logged failures:
+- Lark.PartitionCollective
+error: build failed

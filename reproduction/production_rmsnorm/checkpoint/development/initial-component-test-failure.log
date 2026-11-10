@@ -1,0 +1,35 @@
+test_lean_symbolic_cohort_and_guard_checks (test_partition_collective.PartitionLeanTests.test_lean_symbolic_cohort_and_guard_checks) ... FAIL
+test_duplicate_and_cross_wave_cohorts_are_refused (test_partition_collective.PartitionMachineTests.test_duplicate_and_cross_wave_cohorts_are_refused) ... ok
+test_existing_uniform_wave_has_identical_state_and_trace (test_partition_collective.PartitionMachineTests.test_existing_uniform_wave_has_identical_state_and_trace) ... ok
+test_explicit_half_storage_conversions_are_retained (test_partition_collective.PartitionMachineTests.test_explicit_half_storage_conversions_are_retained) ... ok
+test_failed_gather_performs_no_partial_register_or_pc_updates (test_partition_collective.PartitionMachineTests.test_failed_gather_performs_no_partial_register_or_pc_updates) ... ok
+test_incomplete_partitions_are_refused (test_partition_collective.PartitionMachineTests.test_incomplete_partitions_are_refused) ... ok
+test_native_contract_keeps_default_bounded_capacity (test_partition_collective.PartitionMachineTests.test_native_contract_keeps_default_bounded_capacity) ... ok
+test_native_contract_rejects_launch_and_boolean_aliases (test_partition_collective.PartitionMachineTests.test_native_contract_rejects_launch_and_boolean_aliases) ... ok
+test_partial_partition_snapshot_and_inactive_lanes (test_partition_collective.PartitionMachineTests.test_partial_partition_snapshot_and_inactive_lanes) ... ok
+test_two_distinct_logical_partitions_at_different_instructions (test_partition_collective.PartitionMachineTests.test_two_distinct_logical_partitions_at_different_instructions) ... ok
+
+======================================================================
+FAIL: test_lean_symbolic_cohort_and_guard_checks (test_partition_collective.PartitionLeanTests.test_lean_symbolic_cohort_and_guard_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/lark-production-rmsnorm-20261110/tests/test_partition_collective.py", line 179, in test_lean_symbolic_cohort_and_guard_checks
+    self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+AssertionError: 1 != 0 : /tmp/lark-production-rmsnorm-20261110/tests/lean/ReductionFootprintChecks.lean:19:47: error: tactic 'subst' failed, invalid equality proof, it is not of the form (x = t) or (t = x)
+  a = outputWrite ∨ a ∈ []
+case inr.inr.inr.inr.inr
+a : Access
+h✝ : a = outputWrite ∨ a ∈ []
+⊢ Good shape 0 a
+'ReductionFootprintChecks.classified' depends on axioms: [propext, sorryAx]
+'ReductionFootprintChecks.safe_trace' depends on axioms: [propext, sorryAx, Quot.sound]
+'ReductionFootprintChecks.missing_barrier_conflicts' depends on axioms: [propext]
+'ReductionFootprintChecks.duplicate_partial_writer_conflicts' depends on axioms: [propext]
+'ReductionFootprintChecks.wrong_output_owner_conflicts' depends on axioms: [propext]
+'ReductionFootprintChecks.last_vector_cell' depends on axioms: [propext]
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 8.523s
+
+FAILED (failures=1)
