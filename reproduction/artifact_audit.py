@@ -63,12 +63,29 @@ def main():
             "--jq",
             ".[] | {full_name,description,html_url}",
         ],
+        [
+            "gh",
+            "api",
+            "search/repositories?q=LARK+org:DeepWok&per_page=100",
+        ],
+        ["gh", "api", "repos/jiaeenie/gpu_optim_bench"],
+        ["gh", "api", "repos/jiaeenie/gpu_optim_bench/commits/main"],
+        [
+            "gh",
+            "api",
+            "repos/jiaeenie/gpu_optim_bench/git/trees/fd0fffb69f59d695bf6dd2d8fc81c9fdfb7998fd?recursive=1",
+        ],
+        [
+            "gh",
+            "api",
+            "repos/jiaeenie/gpu_optim_bench/contents/README.md?ref=fd0fffb69f59d695bf6dd2d8fc81c9fdfb7998fd",
+        ],
     ]
     report = {
         "schema": 1,
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "paper": "https://arxiv.org/abs/2611.02028v1",
-        "scope": "GitHub repository search, the AICrossSim organization and author jiaeenie. Not an exhaustive search of all authors or private/unindexed/supplemental releases.",
+        "scope": "GitHub repository search, the AICrossSim organization, a DeepWok LARK-name search and author jiaeenie, including the public gpu_optim_bench tree and README at an explicitly recorded revision. Not an exhaustive search of all authors or private/unindexed/supplemental releases. The fixed tree query is a historical observation, not an assertion that the default branch can never change.",
         "queries": [],
         "model_calls": 0,
         "paper_source_inventory": "results/paper-source-manifest.json",

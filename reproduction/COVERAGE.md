@@ -5,6 +5,12 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
+The [source-bound result-by-result audit](paper_results/results/RESULTS.md)
+enumerates all 17 tables, seven outer figure groups and 16 additional narrative
+anchors in the published preprint. It distinguishes measurements from setup and
+method descriptions, binds the published evidence files by hash, and lists the
+exact missing inputs. These overlapping items do not define a completion percentage.
+
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
 independent adaptations, not completeness of the original paper.
@@ -75,6 +81,11 @@ GitHub queries and the empty `AICrossSim/KernelCraft` metadata. The [arXiv sourc
 inventory](results/paper-source-manifest.json) has manuscript files/figures and no
 implementation. These bounded searches do not prove that artifacts cannot exist
 elsewhere or be released later.
+The [expanded author-repository check](results/artifact-expanded-20261110.json)
+also records the public `gpu_optim_bench` repository: its inspected revision
+identifies itself as FlashInfer-Bench and has no LARK/Lean/KernelCraft-named
+path or Lean/PTX/HIP file in its complete tree. This bounded tree/README check
+does not exclude relevant material elsewhere.
 
 All 17 workload shapes now have independent full-size contracts and exact-source
 HIP checks. Dense SDPA covers the attention workload, not FlashAttention's online
