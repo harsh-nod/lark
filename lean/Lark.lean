@@ -6,3 +6,6 @@ import Lark.Matrix
 import Lark.Bias
 import Lark.Rotary
 import Lark.Convolution
+import Lark.UnaryMap
+import Lark.FoldPhase
+import Lark.Normalization

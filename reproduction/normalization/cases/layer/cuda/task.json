@@ -1,0 +1,34 @@
+{
+  "name": "induction_layer_cuda_16384",
+  "entry": "induction_layer_cuda_16384",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        16384
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        16384
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 16384,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    163853,
+    1,
+    1,
+    1
+  ]
+}

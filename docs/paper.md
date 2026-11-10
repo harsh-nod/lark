@@ -21,8 +21,10 @@ serial dot-product loop and actual grid fold for full-size GEMV. The
 profiles add GEMM, BMM and bias epilogues. [RoPE](../reproduction/rotary/README.md)
 adds output-parity branches and interleaved input pairing.
 [Valid convolutions](../reproduction/convolution/README.md) add dense/depthwise
-NCHW address proofs. These six induction profiles cover ten paper-size families
-with independent scalar programs and
+NCHW address proofs. [Normalization](../reproduction/normalization/README.md)
+adds RMSNorm/LayerNorm/Softmax reduction phases. These seven induction profiles
+cover thirteen paper-size families (all twelve Level-1 families plus RoPE) with
+independent scalar programs and
 exact-source HIP checks on both MI350X hosts.
 
 | Paper component | Implementation | Extent and differences |
@@ -33,7 +35,7 @@ exact-source HIP checks on both MI350X hosts.
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
 | Source translation and read-back | `lark_kernels/frontend.py` | Lossless token stream plus strict CUDA/HIP lowering; both parser and lowering remain trusted |
-| Segmentation, Obligation 2 | `Segment`, `flatten`; induction libraries under `lean/Lark/` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds, counted GEMV/GEMM/BMM/Linear/convolution loops and RoPE branches by induction. No general loop/tile recovery |
+| Segmentation, Obligation 2 | `Segment`, `flatten`; induction libraries under `lean/Lark/` | Bounded profile checks syntactic grouping; separate profiles prove pointwise grid folds, counted GEMV/GEMM/BMM/Linear/convolution/normalization loops and RoPE branches by induction. No general loop/tile recovery |
 | Tensor reference formalization | `lark_kernels/spec.py` | Independent PyTorch AST reader for a closed set of fixed-shape operations; does not execute reference code |
 | Equivalence, Obligation 3 | `segment_equivalence` | Completion, race freedom, and output equality for every scalar interpretation, input, and outside-memory function |
 | End-to-end assembly | `assemble`, `kernel_eq_spec`, `kernel_eq_spec_pre` | Immutable statements; reference-independent kernel lowering; satisfiable standard precondition |
@@ -41,7 +43,7 @@ exact-source HIP checks on both MI350X hosts.
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
 | Mutation evaluation, §5.2 | Study runners under `reproduction/` | Independent reduced/full-length arithmetic mutants checked directly in Lean; GEMV changes fail fixed-program structural equality; not the original 42 mutants |
 | Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
-| Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced, full-size pointwise/GEMV/GEMM/BMM certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
+| Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced and thirteen full-size families with certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
 
 The [reproduction study](../reproduction/README.md) records exactly which experiments
 were run. KernelCraft model pass rates/token costs, the original production-kernel

@@ -25,6 +25,7 @@ def main(argv=None):
         "verify-linear",
         "verify-rotary",
         "verify-convolution",
+        "verify-normalization",
     ):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
@@ -38,6 +39,7 @@ def main(argv=None):
             "verify-linear",
             "verify-rotary",
             "verify-convolution",
+            "verify-normalization",
         }:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
@@ -80,6 +82,7 @@ def main(argv=None):
             "verify-linear",
             "verify-rotary",
             "verify-convolution",
+            "verify-normalization",
         }:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
@@ -91,8 +94,10 @@ def main(argv=None):
                 from .linear import verify as verify_inductive
             elif args.command == "verify-rotary":
                 from .rotary import verify as verify_inductive
-            else:
+            elif args.command == "verify-convolution":
                 from .convolution import verify as verify_inductive
+            else:
+                from .normalization import verify as verify_inductive
 
             if args.provider or args.proposal or args.attempts != 1:
                 raise Refusal("configuration", "inductive profiles use their pinned proofs")
