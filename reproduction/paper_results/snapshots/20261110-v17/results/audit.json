@@ -1,0 +1,1235 @@
+{
+  "schema": 1,
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "scope": "Every table and outer figure in the submitted preprint input graph, plus explicit non-tabulated result/method anchors. Source enumeration is mechanical; interpretation, evidence mapping and dependency assessments are authored. Rows overlap and are not a completion-percentage denominator. This audit executes no Lean, models or GPUs. It binds selected already published evidence, including the complete independent native weighted RMSNorm study at experiment-code commit 489b836. It changes no original result to reproduced and freezes its evidence for replay without a historical checkout.",
+  "original_paper_fully_reproduced": false,
+  "completion_percentage": null,
+  "evidence_commit": "489b836cea7c4675d42a926c291df903a6cfde35",
+  "source_archive_sha256": "095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2",
+  "source_files_sha256": {
+    "00README.json": "5585daf0f1b0e6586a8edcf2580a9cef01e3bfd8758a422515547090cc3db4c2",
+    "algorithm.sty": "93fd0eb31c112eb405833db8f1d7f5d238c7e691b1c05680d7276e68f36d564a",
+    "algorithmic.sty": "48d18794a5d97c0479a588cc2eac0917992feb9da83acc4631b8f55757d80f9b",
+    "fancyhdr.sty": "b56ec4434b9f4607529a4b23dc68ad8d4b94f1f631c8cddaf7da78140d53a5ea",
+    "figures/comparison.drawio.pdf": "4b26c0e5f25c823ce8279b9e9e45651e9ec3c56485dca1399a917162b3e7d358",
+    "figures/failure_l1_by_isa.pdf": "defd15a8c68edc1044120db8ae489515126e7d06dbfc549fef9ea0cb66269904",
+    "figures/failure_l1_by_model.pdf": "5d83771ef58ff01bebdf4c25dd3588a4a91067a94c8d6cc2c80ef2349374c8ce",
+    "figures/failure_l2_by_model.pdf": "fcc7748bdcbe465d888906c457062c98b42447f03228c02487b9e5cb19954bf8",
+    "figures/failure_library.pdf": "9baa730a5229043b979fcbf7035e07a0abd054e3295dc527750c4e71dc6670b0",
+    "figures/flowchart.drawio.pdf": "d751828757bdadabbab2d6ba75b35ed0d31b241944caa78046c2f03205200189",
+    "figures/latency.pdf": "416c0107413ffbbbf574a5182e88d5730612140ddb6318da7245a9a9c6345bd3",
+    "figures/model_size_pass_rate.pdf": "733cee85a178cef004c75ef14d6ae2e4fae7047fa2848d51aef171ba93ce0310",
+    "figures/model_size_tokens_per_kernel.pdf": "50bb5e9a8fe08e2e53fd89df0a731479bd6e9c9bae50ed03623e65af57dfe8a8",
+    "figures/model_size_tokens_per_proof.pdf": "87681db675a82107c00e32f6935a299d74f62044bde37e3295a432bc213bd811",
+    "figures/scaling.pdf": "22cebdfdda72285577ad6c47d067646e1be23a88b3001654964ed0f012e6ee6b",
+    "latexmkrc": "b6977a670a8739ddad7b488a4e7e448146b65b05b83b5091641b95cb2d237e2e",
+    "lstlean.tex": "0f5c5a918ff9fe9af0900685b3a4eb2de381ba14cc70f1cb76a70ca54494fd04",
+    "main_mlsys.tex": "da706b8074055e06ee9a3aaa2311da8d91d240d13fd02bfe56bc4dce4c09cf77",
+    "mlsys2025.bst": "c9c9f1b83e32512b93f6208e28ba2989fc691b6f70763ad0657a77d44bc067a7",
+    "mlsys2025.sty": "05a9842992b7ef71851fd2380a1058f83b0faafc106602cabc4c169d372ad8e2",
+    "preprint_mlsys.tex": "fceaae45e52528dc2a9c05125e637ba3413a86ed36e396bee2760f214a7f5c51",
+    "references.bib": "6af26eafce4ca29455d856e3cbbe4ad5710b6e5b554f920433127d8b1d0dcb11",
+    "sections/appendix.tex": "82ce6e7528f050aa3c47cc809a0a8d8d07cc4671caf3892b5297ef0a82d3a8ab",
+    "sections/conclusion.tex": "1cf387c74cb188d148820cfdb67e73fa179a96f49b71fce7988db4ff1ea26048",
+    "sections/example.tex": "cfa9b0563cae405321ada4245b146842df543aeff7800af96c44123b3f981c0c",
+    "sections/experiments.tex": "5d3f081aecb87e28042a2375a3b56442793a869a4828c94df9d79a77f5478dc0",
+    "sections/introduction.tex": "2c1cb7c620778d5bbcd72f09c47450940789ac1e1d58e3b3d1741addf4fcfa61",
+    "sections/limitations.tex": "88f8a97d620d4f04dd05fc42e55698e97220b4942ea7f86173953d9bb3e3138c",
+    "sections/method.tex": "dbc16e2bb599d23839142922abc368fbbdaca14d4e6e41067177f59cda8829a8",
+    "sections/problem.tex": "5f7c0a386f65809cfb3dea6b1eaeaa08356ea5a250925b45a1388fa941623c64",
+    "sections/related.tex": "d969b90b485f1b675bbb9577a2f8d9c428a4efe15dbfb79ccb49c6992f4c0a11",
+    "sections/related_appendix.tex": "08902ffb8a91cddcd412261a01ae760f779a67f44a704b4796f4a05163dd37d7",
+    "tables/analyst_cost.tex": "f2fd7bf77e75a01e5aa315ce390a047230c777417ee5e5695ba3a5c86eff5dfc",
+    "tables/auto_veri.tex": "b86f345c8b613e1aa60eaa4596593ac9abccd69ba8eb735c0dd995ee322048f1",
+    "tables/experiment_one_var.tex": "0f222c7cb4052910dc72f0c115794877b7642932834c91f6c1026c642dff57b7",
+    "tables/instr_cats.tex": "7284b30450cbace5787939a37fcd12ae90d9de4b654874af2c85ac62f70d11b4",
+    "tables/latency.tex": "f0daa2009a804e59471c83f0bdadeac10c11746364c52bc7f601db387f1c5346",
+    "tables/lib_veri.tex": "0de41e000d3dd9962b511ad0912bfd67f65a592944c4b62e217a4745f3b5e009",
+    "tables/main_results.tex": "51548a8e6e938187928c3bbe282dafea1dcdc2dffd24825358ce0e9713e830dd",
+    "tables/mutation_results.tex": "dec74201d10cbbd9891c3f0b284ea6663230430032d8165fc29ecc9a15957033",
+    "tables/mutation_rules.tex": "566cd34599f7a78679457c3af7739e8bcd99444d98bd0ba3e283b3d87a6ebe5a",
+    "tables/opus_veri.tex": "3d5135a796af430e059f8e4ff8acb99fdd967d0867aa9e7c5ca2512eb506a6b5",
+    "tables/retarget.tex": "fef775fc931d9295a19f9d561a0d920950a35c4ccd62a77e6251b48bb20d38b4",
+    "tables/stage_cost.tex": "90699adddb033638877f3786ab47e2244978380f514da6c803fc88131b596f76",
+    "tables/task_configs.tex": "0a208b78f5b59d34ce643af49966128c3378f38b59acb49752928e1d2cc86e5b",
+    "tables/task_definition.tex": "8b530efc4dcf932d262c7890fd96b2276ab8103a08264f49411a9eae6f3ecb7b",
+    "tables/trust_boundary.tex": "fe6fdc48f80528c6115f235d6f66fbcc56fca14864f0570f0ce9bd0ae279aedf"
+  },
+  "preprint_input_order": [
+    "preprint_mlsys.tex",
+    "main_mlsys.tex",
+    "sections/introduction.tex",
+    "sections/example.tex",
+    "sections/problem.tex",
+    "sections/method.tex",
+    "tables/instr_cats.tex",
+    "sections/experiments.tex",
+    "tables/main_results.tex",
+    "tables/opus_veri.tex",
+    "tables/mutation_rules.tex",
+    "tables/lib_veri.tex",
+    "sections/related.tex",
+    "sections/conclusion.tex",
+    "sections/limitations.tex",
+    "sections/appendix.tex",
+    "sections/related_appendix.tex",
+    "tables/task_definition.tex",
+    "tables/task_configs.tex",
+    "tables/experiment_one_var.tex",
+    "tables/auto_veri.tex",
+    "tables/stage_cost.tex",
+    "tables/analyst_cost.tex",
+    "tables/latency.tex",
+    "tables/mutation_results.tex",
+    "tables/retarget.tex",
+    "tables/trust_boundary.tex"
+  ],
+  "counts": {
+    "tables": 17,
+    "outer_figure_groups": 7,
+    "narrative_anchors": 16
+  },
+  "floats": [
+    {
+      "label": "fig:flowchart-compare",
+      "kind": "figure",
+      "number": 1,
+      "path": "sections/introduction.tex",
+      "line": 4,
+      "subpanels": [],
+      "title": "Trust comparison diagram",
+      "role": "method",
+      "evidence_groups": [
+        "design"
+      ],
+      "dependencies": [
+        "registry",
+        "specification"
+      ],
+      "available_evidence": "An independently implemented trust boundary is documented. Re-drawing the diagram would not add empirical reproduction evidence.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "label": "fig:running",
+      "kind": "figure",
+      "number": 2,
+      "path": "sections/example.tex",
+      "line": 3,
+      "subpanels": [
+        "fig:running:torch",
+        "fig:running:thm",
+        "fig:running:ptx"
+      ],
+      "title": "GEMM running example and missing-barrier race",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "mutants",
+        "operations"
+      ],
+      "dependencies": [
+        "registry",
+        "semantics"
+      ],
+      "available_evidence": "Independent GEMM, barrier negative controls and an MFMA instruction tile exist; the condensed original PTX example is not a complete compilable kernel.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "fig:flowchart-detail",
+      "kind": "figure",
+      "number": 3,
+      "path": "sections/method.tex",
+      "line": 3,
+      "subpanels": [],
+      "title": "Verification workflow diagram",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "models"
+      ],
+      "dependencies": [
+        "harness"
+      ],
+      "available_evidence": "The restricted workflow has real standalone proofs and local proposals; the original agent loop and exact workflow implementation are unavailable.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "label": "tab:instr-cats",
+      "kind": "table",
+      "number": 1,
+      "path": "tables/instr_cats.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Operation schemas",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "real_semantics",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "semantics"
+      ],
+      "available_evidence": "Restricted scalar/memory/control/barrier definitions, full-wave shuffle, one native MFMA shape, and an exact-real six-stage XOR reduction with whole-launch proofs. These do not cover the full original instruction table. A complete native RMSNorm launch now composes aligned logical-16 shuffles inside physical wave64 with both block barriers; this does not cover arbitrary sparse masks or the whole original instruction table.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "label": "tab:main-results",
+      "kind": "table",
+      "number": 2,
+      "path": "tables/main_results.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Level-1 model pass rates and token means",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "All twelve workload families have independent full-shape CUDA/HIP contracts; local models saw reduced HIP fixtures, not these original cells.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:verify-model",
+      "kind": "table",
+      "number": 3,
+      "path": "tables/opus_veri.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Five Level-2 PTX model results",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "Independent HIP/CUDA contracts cover the five shapes; attention is dense SDPA, not online FlashAttention, and original Level-2 PTX proofs are absent.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:mutation-rules",
+      "kind": "table",
+      "number": 4,
+      "path": "tables/mutation_rules.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "42 mutants by rule and language",
+      "role": "experiment",
+      "evidence_groups": [
+        "mutants"
+      ],
+      "dependencies": [
+        "registry",
+        "mutants",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "Several independent direct-Lean mutation studies exist; none is relabeled as the original 42 mutants or their diagnoses.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:lib-kernels",
+      "kind": "table",
+      "number": 5,
+      "path": "tables/lib_veri.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Ten production kernels: nine certificates and one race",
+      "role": "experiment",
+      "evidence_groups": [
+        "production",
+        "production_race",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "production",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "One independent upstream-derived SiLU-and-mul family has whole native multiwave launch proofs: eight HIP/CUDA certificates/rechecks at three device shapes and two symbolic-only extremes, plus earlier small fixtures. The llm.c access-pair witness is proved. The original nine adapted certificates and rejected-kernel trace remain absent. An additional independent weighted FP16 RMSNorm adaptation has four canonical-real native certificates/rechecks and 127,008,768 earlier CPU-reference comparisons on two MI350X hosts. It is not an original production proof or the full upstream API.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:kernelcraft-levels",
+      "kind": "table",
+      "number": 6,
+      "path": "tables/task_definition.tex",
+      "line": 3,
+      "subpanels": [],
+      "title": "Task names and Level-1/Level-2 grouping",
+      "role": "configuration",
+      "evidence_groups": [
+        "full_shapes"
+      ],
+      "dependencies": [
+        "registry"
+      ],
+      "available_evidence": "The published twelve/five workload-family grouping is recorded and all seventeen shapes have independent contracts.",
+      "original_result_reproduced": null,
+      "assessment": "published setup recorded; independent execution differs"
+    },
+    {
+      "label": "tab:kernelcraft-model-budgets",
+      "kind": "table",
+      "number": 7,
+      "path": "tables/task_definition.tex",
+      "line": 27,
+      "subpanels": [],
+      "title": "Round and spending budgets; pilot-derived setup",
+      "role": "configuration",
+      "evidence_groups": [
+        "models"
+      ],
+      "dependencies": [
+        "harness",
+        "runs",
+        "history"
+      ],
+      "available_evidence": "Original settings are manuscript metadata. Free local runs used explicitly different attempt/token budgets; no dollar ceiling was simulated.",
+      "original_result_reproduced": null,
+      "assessment": "published setup recorded; independent execution differs"
+    },
+    {
+      "label": "tab:kernel-levels",
+      "kind": "table",
+      "number": 8,
+      "path": "tables/task_definition.tex",
+      "line": 66,
+      "subpanels": [],
+      "title": "Highest cut level of original kernels",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "full_shapes",
+        "production",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "production",
+        "semantics"
+      ],
+      "available_evidence": "Independent multiwave strided activation and a six-stage wave64 butterfly now have actual launch proofs; their shapes and phase structure do not establish the original kernels' highest-cut classification. The independent native RMSNorm proof includes the actual 1024-thread block phases and grid halt; the original kernels and their cut-level census remain missing.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "label": "tab:task-configs",
+      "kind": "table",
+      "number": 9,
+      "path": "tables/task_configs.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Largest FP16 configurations for seventeen workloads",
+      "role": "configuration",
+      "evidence_groups": [
+        "full_shapes",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "specification"
+      ],
+      "available_evidence": "All seventeen published workload dimensions are exercised independently. References, precision boundaries and algorithms retain their stated differences. The separate weighted FP16 native RMSNorm profile proves width16384, block1024/wave64 and all 1<=rows<256. Its weight input and source adaptation differ from the original unweighted task.",
+      "original_result_reproduced": null,
+      "assessment": "published setup recorded; independent execution differs"
+    },
+    {
+      "label": "tab:final-experiment-parameters",
+      "kind": "table",
+      "number": 10,
+      "path": "tables/experiment_one_var.tex",
+      "line": 5,
+      "subpanels": [],
+      "title": "Original model/harness flags",
+      "role": "configuration",
+      "evidence_groups": [
+        "models"
+      ],
+      "dependencies": [
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "The table records the original settings, but the original harness is unavailable and local calls use a different proof-proposal protocol.",
+      "original_result_reproduced": null,
+      "assessment": "published setup recorded; independent execution differs"
+    },
+    {
+      "label": "tab:eval-main-res",
+      "kind": "table",
+      "number": 11,
+      "path": "tables/auto_veri.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "144 Level-1 task/model/language cells",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "The completed local comparison has seventeen reduced HIP fixtures per open checkpoint, not the four-model, three-language original matrix.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:stage-cost",
+      "kind": "table",
+      "number": 12,
+      "path": "tables/stage_cost.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Tokens per segmentation, equivalence and diagnosis stage",
+      "role": "experiment",
+      "evidence_groups": [
+        "models"
+      ],
+      "dependencies": [
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Local prompt/completion usage is audited; its stages and cached-dialogue accounting do not match the original stage traces.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "fig:scaling",
+      "kind": "figure",
+      "number": 4,
+      "path": "sections/appendix.tex",
+      "line": 41,
+      "subpanels": [],
+      "title": "Program length versus verification-token scaling",
+      "role": "experiment",
+      "evidence_groups": [
+        "ablation",
+        "full_shapes",
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Symbolic shape scaling and flat/induction checks are separate adaptations. They do not recover the original per-run length/token/cost correlations or fitted slopes.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "fig:model-size",
+      "kind": "figure",
+      "number": 5,
+      "path": "sections/appendix.tex",
+      "line": 51,
+      "subpanels": [
+        "fig:model-size-pass",
+        "fig:model-size-cost-proof",
+        "fig:model-size-cost-kernel"
+      ],
+      "title": "Active parameters versus pass rate and tokens (three panels)",
+      "role": "experiment",
+      "evidence_groups": [
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "A completed categorical three-model comparison is published. Different tokenizers/templates/precision and reduced fixtures prevent an isolated model-size conclusion.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:analyst-cost",
+      "kind": "table",
+      "number": 13,
+      "path": "tables/analyst_cost.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Diagnosis calls, cost shares and second opinions",
+      "role": "experiment",
+      "evidence_groups": [
+        "models",
+        "replay"
+      ],
+      "dependencies": [
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Local failed proofs and a comments-only replay are archived. They do not implement or reproduce the original analyst/probe/second-opinion census.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "fig:analyst-ratios",
+      "kind": "figure",
+      "number": 6,
+      "path": "sections/appendix.tex",
+      "line": 83,
+      "subpanels": [
+        "fig:analyst-l1-isa",
+        "fig:analyst-l1-model",
+        "fig:analyst-l2-model",
+        "fig:analyst-library"
+      ],
+      "title": "Failure-verdict distributions (four panels)",
+      "role": "experiment",
+      "evidence_groups": [
+        "models",
+        "replay"
+      ],
+      "dependencies": [
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Failed local attempts are retained, but original language/model/level/library analyst verdict distributions are not reproduced.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:latency",
+      "kind": "table",
+      "number": 14,
+      "path": "tables/latency.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "H100 and MI300X latency/speedup cells",
+      "role": "experiment",
+      "evidence_groups": [
+        "hardware",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "production",
+        "hardware",
+        "specification"
+      ],
+      "available_evidence": "Independent AMD numerical checks and timings are published, with no substitution into original hardware/kernel/vendor cells. The additional native RMSNorm study contains numerical MI350X comparisons, with signed-zero and one-half-ULP differences; these supply no H100 latency cell.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "fig:latency",
+      "kind": "figure",
+      "number": 7,
+      "path": "sections/appendix.tex",
+      "line": 115,
+      "subpanels": [],
+      "title": "Original hardware/vendor latency ratios",
+      "role": "experiment",
+      "evidence_groups": [
+        "hardware"
+      ],
+      "dependencies": [
+        "registry",
+        "production",
+        "hardware",
+        "specification"
+      ],
+      "available_evidence": "The independently measured AMD results are not the paper's H100/MI300X ratio plot.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:mutation-channels",
+      "kind": "table",
+      "number": 15,
+      "path": "tables/mutation_results.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "42 mutants by final rejection channel",
+      "role": "experiment",
+      "evidence_groups": [
+        "mutants"
+      ],
+      "dependencies": [
+        "registry",
+        "mutants",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Independent Lean rejection is distinct from original static/race/diagnosis/premise classifications and their original counts.",
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "label": "tab:retarget",
+      "kind": "table",
+      "number": 16,
+      "path": "tables/retarget.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Shared and language-specific architecture",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "operations",
+        "real_semantics",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "semantics",
+        "history"
+      ],
+      "available_evidence": "Shared machine plus restricted CUDA/HIP/PTX readers and separate collective extensions implement an independent architectural analogue. The independent native RMSNorm profile reuses the pinned nonlinear machine and adds an aligned-partition scheduler and complete source proof; original effort and sharing measurements are not recovered.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "label": "tab:trust",
+      "kind": "table",
+      "number": 17,
+      "path": "tables/trust_boundary.tex",
+      "line": 1,
+      "subpanels": [],
+      "title": "Acceptance basis and trust boundary",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "validation",
+        "production",
+        "wave_reduction",
+        "real_semantics",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "specification",
+        "semantics"
+      ],
+      "available_evidence": "Fixed source/reference statements, actual launch/RF theorems, standard-axiom audits, isolated rechecks and a pinned exact-real interpretation are implemented. Floating-point cancellation probes demonstrate the limit of interpreting real equality as IEEE equivalence. The independent native RMSNorm exports bind all 70 proof modules, closed source/reference/task statements and optional dependency pins; installed-wheel and standalone rebuild checks pass. Hardware correspondence and IEEE error bounds remain outside the proof.",
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    }
+  ],
+  "narrative": [
+    {
+      "id": "pilots",
+      "anchor": "app:setup",
+      "title": "Pilot closures and budget derivation",
+      "role": "experiment",
+      "evidence_groups": [
+        "models"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "history"
+      ],
+      "available_evidence": "The original pilot dialogues and last-closing-round measurements are missing.",
+      "path": "sections/appendix.tex",
+      "line": 9,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "refusals",
+      "anchor": "app:refusals",
+      "title": "Refusal and outcome census over original runs",
+      "role": "experiment",
+      "evidence_groups": [
+        "models",
+        "design"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "Strict refusals and completed local cohorts are available, but cannot establish zero scope refusals on the original registry.",
+      "path": "sections/appendix.tex",
+      "line": 34,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "hard_tasks",
+      "anchor": "app:hard",
+      "title": "Shared failure point in BatchMatmul/DepthwiseConv",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "models",
+        "operations"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "Independent full-shape scalar proofs and a native MFMA tile do not reproduce the multi-warp collective proof stalls or original model verdicts.",
+      "path": "sections/appendix.tex",
+      "line": 48,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "race_fallback",
+      "anchor": "app:fallback",
+      "title": "Generated race proofs and five agent fallbacks",
+      "role": "experiment",
+      "evidence_groups": [
+        "production_race",
+        "design"
+      ],
+      "dependencies": [
+        "registry",
+        "production",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "The llm.c access-pair witness and ownership lemmas are checked; original fallback dialogues, turn counts and reuse costs are unavailable.",
+      "path": "sections/appendix.tex",
+      "line": 76,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "flat_ablation",
+      "anchor": "app:flat",
+      "title": "Flat/segmented agent ablation on three kernels",
+      "role": "experiment",
+      "evidence_groups": [
+        "ablation"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "Same-source induction/flat Lean timing experiments are independent. The original three model runs and FlashAttention token/cost comparison are absent.",
+      "path": "sections/appendix.tex",
+      "line": 78,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "analyst_ablation",
+      "anchor": "sec:eval-discussion",
+      "title": "Failure-analysis early stopping and second opinions",
+      "role": "experiment",
+      "evidence_groups": [
+        "models",
+        "replay"
+      ],
+      "dependencies": [
+        "registry",
+        "harness",
+        "runs"
+      ],
+      "available_evidence": "A comments-only replay performs no analyst intervention and is not the original diagnosis-enabled/disabled or second-opinion study.",
+      "path": "sections/experiments.tex",
+      "line": 47,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "operation_sweep",
+      "anchor": "app:non-ctx-sem-fuzzing",
+      "title": "Per-operation GPU semantics conformance",
+      "role": "experiment",
+      "evidence_groups": [
+        "operations",
+        "wave_reduction"
+      ],
+      "dependencies": [
+        "registry",
+        "semantics",
+        "hardware"
+      ],
+      "available_evidence": "Scalar/conversion, shuffle and one MFMA shape have finite AMD evidence. Each host also matches a real-certified XOR reduction's source tree on 17,408 outputs; 128/512 cancellation outputs disagree with CPU Torch and are kept separate. Original full per-language tables/sweeps remain unavailable.",
+      "path": "sections/appendix.tex",
+      "line": 131,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "retarget_effort",
+      "anchor": "app:retarget",
+      "title": "Historical effort, LOC and language sharing",
+      "role": "history",
+      "evidence_groups": [
+        "design"
+      ],
+      "dependencies": [
+        "history"
+      ],
+      "available_evidence": "Independent source counts would measure this implementation, not regenerate the authors' historical effort and original line-sharing metrics.",
+      "path": "sections/appendix.tex",
+      "line": 137,
+      "original_result_reproduced": false,
+      "assessment": "historical original measurement unavailable"
+    },
+    {
+      "id": "readback_counts",
+      "anchor": "app:readback",
+      "title": "Read-back validation and formatter/reader sizes",
+      "role": "history",
+      "evidence_groups": [
+        "design",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "history"
+      ],
+      "available_evidence": "Lossless source binding is implemented independently; original formatter/code-size measurements need the authors' tree. The new native RMSNorm profile regenerates its complete source/reference/task statement; tests reject refreshed-hash changes and a reference-name capture error. Original reader sizes are not reproduced.",
+      "path": "sections/appendix.tex",
+      "line": 165,
+      "original_result_reproduced": false,
+      "assessment": "historical original measurement unavailable"
+    },
+    {
+      "id": "supplement",
+      "anchor": "app:export",
+      "title": "Supplementary GQA standalone certificate",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "artifacts"
+      ],
+      "dependencies": [
+        "gqa_export",
+        "registry",
+        "specification"
+      ],
+      "available_evidence": "Independent GQA exports exist; the specific supplementary original project was not found in the inspected archive/endpoints.",
+      "path": "sections/appendix.tex",
+      "line": 214,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "reference_checks",
+      "anchor": "app:trusted-base",
+      "title": "Original Lean-to-Torch specification tests",
+      "role": "experiment",
+      "evidence_groups": [
+        "full_shapes",
+        "operations",
+        "production",
+        "real_semantics",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "specification"
+      ],
+      "available_evidence": "Independent reference/AST checks include retained intermediate SiLU half rounding and a canonical-real sum. Wave-study numerical comparisons execute CPU Torch; serial FP32 reference-AST evaluation differs bitwise in 3,840 outputs. No IEEE theorem or original metaprogram-test reproduction is claimed. The new native RMSNorm profile joins actual launch correctness to a canonical-real weighted reference. This does not recover the authors' specification tests.",
+      "path": "sections/appendix.tex",
+      "line": 219,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "production_details",
+      "anchor": "app:library",
+      "title": "Production adaptations, departures and llm.c race/repair",
+      "role": "experiment",
+      "evidence_groups": [
+        "production",
+        "production_race",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "production",
+        "harness",
+        "runs",
+        "semantics"
+      ],
+      "available_evidence": "A pinned independent scalar vLLM SiLU adaptation has source-bound native multiwave proofs and extracted-upstream comparisons. This is one family, with its source-half rounding retained. Original adapted files/revisions/departures and the full llm.c repair proof remain unavailable. The additional native weighted RMSNorm study proves the actual whole launch and canonical-real outputs, with both-host numerical validation. Its source departures are recorded independently and do not recreate the authors' rewrites.",
+      "path": "sections/appendix.tex",
+      "line": 225,
+      "original_result_reproduced": false,
+      "assessment": "independent analogue only; original result not reproduced"
+    },
+    {
+      "id": "premises",
+      "anchor": "app:schemas",
+      "title": "Signature-derived premises, extraction and non-vacuity",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "full_shapes",
+        "production",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "specification",
+        "semantics"
+      ],
+      "available_evidence": "Actual native scalar launches include partial final waves, and one full wave64 reduction has complete execution/RF proofs under its fixed disjoint-buffer interface. Original in-place, stride, packed/vector and general signature coverage is incomplete. The native RMSNorm proof quantifies over all inputs/outside memory and all 1<=rows<256 at the fixed native shape; host alignment and disjointness remain explicit assumptions.",
+      "path": "sections/appendix.tex",
+      "line": 176,
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "id": "refusal_scope",
+      "anchor": "app:unsupported",
+      "title": "Named refusal boundary and exact-operation idealizations",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "operations",
+        "real_semantics",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "semantics"
+      ],
+      "available_evidence": "Restricted profiles refuse more forms than the paper. Real sum equality is proved for one closed program; finite cancellation disagreements explicitly prevent a floating-point-equivalence claim. Broader operations and original refusal outcomes remain unverified. Complete aligned logical-16 cohorts within physical wave64 and a complete native RMSNorm reduction are now supported. Arbitrary sparse masks, other optimized kernels and IEEE error theorems remain unsupported.",
+      "path": "sections/appendix.tex",
+      "line": 194,
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "id": "race_obligations",
+      "anchor": "app:racefree",
+      "title": "Race-freedom obligations and scheduling assumption",
+      "role": "method",
+      "evidence_groups": [
+        "design",
+        "production_race",
+        "operations",
+        "production",
+        "wave_reduction",
+        "native_rmsnorm"
+      ],
+      "dependencies": [
+        "registry",
+        "semantics"
+      ],
+      "available_evidence": "Per-program obligations are Lean checked; the scheduling reduction remains a declared trusted passage, not a proved hardware scheduler theorem. The complete native RMSNorm proof classifies every actual input, shared partial/scale and output access through both block epochs and derives race freedom.",
+      "path": "sections/appendix.tex",
+      "line": 199,
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    },
+    {
+      "id": "generator_hints",
+      "anchor": "app:hints",
+      "title": "Hints and their reported/verified status",
+      "role": "method",
+      "evidence_groups": [
+        "design"
+      ],
+      "dependencies": [
+        "registry",
+        "harness"
+      ],
+      "available_evidence": "Source/signature binding and trusted inputs are reported independently; the original generator/hint interface is unavailable.",
+      "path": "sections/appendix.tex",
+      "line": 209,
+      "original_result_reproduced": null,
+      "assessment": "independent restricted implementation; broader coverage remains"
+    }
+  ],
+  "dependencies": {
+    "registry": "Authors' original task/language registry: exact kernel bytes, signatures, launches, reference modules, pinned operation tables, and exported proofs. Independent programs at equal shapes cannot replace these inputs.",
+    "harness": "Original proof-agent harness and prompts, segmentation/scaffolding, tool protocol, retries, stopping rules, context compaction, model settings and usage accounting.",
+    "runs": "Original request/response and checker traces, model revisions and original hosted-model outcomes. Offline/free inference does not recover historical paid or closed-model runs.",
+    "mutants": "All 42 original mutant source files, baseline bindings, rule assignments, final-run traces and rejection-channel decisions, including independent second opinions.",
+    "production": "The ten exact adapted production sources, upstream commits, ordered rewrites/departures, argument signatures and launch metadata; nine accepted full-kernel proof projects and the rejected kernel trace.",
+    "hardware": "Original optimized kernels and numerical contracts, complete fastest-vendor baselines, H100 execution for PTX/CUDA and same-device MI300X HIP measurements. MI350X measurements cannot fill H100 cells.",
+    "semantics": "Broader readers and scalable packed/tiled, arbitrary sparse-subgroup, online and combined collective proofs remain software work. Complete native multiwave activation and weighted RMSNorm profiles, aligned logical-16 cohorts inside physical wave64, single-shape MFMA and exact-real wave-sum profiles do not cover the authors' original optimized registry.",
+    "history": "Authors' source tree and development records. An independent implementation cannot recreate historical person-days, original source-line totals or original code-sharing percentages.",
+    "gqa_export": "Authors' supplementary standalone GQA proof project and its pinned toolchain/dependencies; it was not present in the inspected manuscript archive or bounded release endpoints.",
+    "specification": "Authors' elaborated Lean module formalizations, metaprogram/reference tests, accepted shape/precision contracts and associated trusted-assumption reports."
+  },
+  "evidence_groups": {
+    "full_shapes": [
+      "reproduction/full-shape-status.json",
+      "reproduction/FULL_SHAPE.md"
+    ],
+    "models": [
+      "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-audit/comparison.json",
+      "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-validation.json",
+      "reproduction/local_models/results/model-comparison-20261109/reports/completed-three-model-comparison/RESULTS.md"
+    ],
+    "mutants": [
+      "reproduction/nonlinear/results/cpu.json",
+      "reproduction/pointwise/results/cpu.json",
+      "reproduction/reduction/results/cpu.json",
+      "reproduction/ptx/results/summary.json",
+      "reproduction/shuffle/results/summary.json",
+      "reproduction/mfma/results/summary.json",
+      "reproduction/production_silu/results/summary.json",
+      "reproduction/wave_reduction/results/summary.json"
+    ],
+    "production_race": [
+      "reproduction/results/production-race/results.json",
+      "reproduction/results/production-race/witness.lean"
+    ],
+    "ablation": [
+      "reproduction/dot_ablation/results/cpu.json",
+      "reproduction/dot_ablation/RESULTS.md",
+      "reproduction/pointwise/RESULTS.md"
+    ],
+    "hardware": [
+      "reproduction/results/mi300x.json",
+      "reproduction/nonlinear/results/mi350-large.json",
+      "reproduction/full-shape-status.json"
+    ],
+    "operations": [
+      "reproduction/nonlinear/results/validation.json",
+      "reproduction/collective_conformance/results/validation.json",
+      "reproduction/shuffle/results/summary.json",
+      "reproduction/mfma/results/summary.json"
+    ],
+    "design": [
+      "docs/paper.md",
+      "docs/trust.md",
+      "docs/input.md",
+      "lean/Lark/Model.lean"
+    ],
+    "replay": [
+      "reproduction/local_models/results/comment-replay-deepseek-20261109-validation.json"
+    ],
+    "artifacts": [
+      "reproduction/paper_results/snapshots/20261110-v16/artifact-release-recheck.json",
+      "reproduction/paper_results/snapshots/20261110-v16/lead-author-repos.json",
+      "reproduction/paper_results/snapshots/20261110-v16/lead-author-gpu-tree.json",
+      "reproduction/results/paper-source-manifest.json",
+      "reproduction/results/artifact-expanded-20261110.json",
+      "reproduction/paper_results/snapshots/20261110-v17/release-refresh.json"
+    ],
+    "validation": [
+      "reproduction/wave_reduction/results/validation.json",
+      "reproduction/wave_reduction/results/full-tests.log",
+      "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383-run.json",
+      "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383.log",
+      "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-run.json",
+      "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-jobs.json",
+      "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-proof-tests.log",
+      "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-exact-real.log"
+    ],
+    "production": [
+      "reproduction/production_silu/RESULTS.md",
+      "reproduction/production_silu/results/summary.json",
+      "reproduction/production_silu/results/validation.json",
+      "reproduction/production_silu/results/manifest.json",
+      "reproduction/production_activation/RESULTS.md",
+      "reproduction/production_activation/results/summary.json",
+      "reproduction/production_activation/results/validation.json"
+    ],
+    "real_semantics": [
+      "lean-real/README.md",
+      "reproduction/exact_real/results/results.json",
+      "reproduction/exact_real/results/validation.json",
+      "reproduction/exact_real/results/manifest.json"
+    ],
+    "wave_reduction": [
+      "reproduction/wave_reduction/RESULTS.md",
+      "reproduction/wave_reduction/results/summary.json",
+      "reproduction/wave_reduction/results/validation.json",
+      "reproduction/wave_reduction/results/manifest.json"
+    ],
+    "native_rmsnorm": [
+      "reproduction/production_rmsnorm/RESULTS.md",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/report.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study-report.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/manifest.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/portability.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/native-tests.log",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/fresh-standalone-build.log",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/source-manifest.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/source.tar.gz",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study.tar.gz",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/prior-gpu-report.json",
+      "reproduction/production_rmsnorm/results/whole-launch-v1/reference-name-control.json"
+    ]
+  },
+  "evidence_links": {
+    "docs/input.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/docs/input.md",
+    "docs/paper.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/docs/paper.md",
+    "docs/trust.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/docs/trust.md",
+    "lean-real/README.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/lean-real/README.md",
+    "lean/Lark/Model.lean": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/lean/Lark/Model.lean",
+    "reproduction/FULL_SHAPE.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/FULL_SHAPE.md",
+    "reproduction/collective_conformance/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/collective_conformance/results/validation.json",
+    "reproduction/dot_ablation/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/dot_ablation/RESULTS.md",
+    "reproduction/dot_ablation/results/cpu.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/dot_ablation/results/cpu.json",
+    "reproduction/exact_real/results/manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/exact_real/results/manifest.json",
+    "reproduction/exact_real/results/results.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/exact_real/results/results.json",
+    "reproduction/exact_real/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/exact_real/results/validation.json",
+    "reproduction/full-shape-status.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/full-shape-status.json",
+    "reproduction/local_models/results/comment-replay-deepseek-20261109-validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/local_models/results/comment-replay-deepseek-20261109-validation.json",
+    "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-audit/comparison.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-audit/comparison.json",
+    "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-validation.json",
+    "reproduction/local_models/results/model-comparison-20261109/reports/completed-three-model-comparison/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/local_models/results/model-comparison-20261109/reports/completed-three-model-comparison/RESULTS.md",
+    "reproduction/mfma/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/mfma/results/summary.json",
+    "reproduction/nonlinear/results/cpu.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/nonlinear/results/cpu.json",
+    "reproduction/nonlinear/results/mi350-large.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/nonlinear/results/mi350-large.json",
+    "reproduction/nonlinear/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/nonlinear/results/validation.json",
+    "reproduction/paper_results/snapshots/20261110-v16/artifact-release-recheck.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/paper_results/snapshots/20261110-v16/artifact-release-recheck.json",
+    "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383-run.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/paper_results/snapshots/20261110-v16/ci-35a6383-run.json",
+    "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383.log": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/paper_results/snapshots/20261110-v16/ci-35a6383.log",
+    "reproduction/paper_results/snapshots/20261110-v16/lead-author-gpu-tree.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/paper_results/snapshots/20261110-v16/lead-author-gpu-tree.json",
+    "reproduction/paper_results/snapshots/20261110-v16/lead-author-repos.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/paper_results/snapshots/20261110-v16/lead-author-repos.json",
+    "reproduction/pointwise/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/pointwise/RESULTS.md",
+    "reproduction/pointwise/results/cpu.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/pointwise/results/cpu.json",
+    "reproduction/production_activation/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_activation/RESULTS.md",
+    "reproduction/production_activation/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_activation/results/summary.json",
+    "reproduction/production_activation/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_activation/results/validation.json",
+    "reproduction/production_rmsnorm/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/RESULTS.md",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/fresh-standalone-build.log": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/fresh-standalone-build.log",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/manifest.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/native-tests.log": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/native-tests.log",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/portability.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/portability.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/prior-gpu-report.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/prior-gpu-report.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study-report.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/proof-study-report.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study.tar.gz": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/proof-study.tar.gz",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/reference-name-control.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/reference-name-control.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/report.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/report.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/source-manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/source-manifest.json",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/source.tar.gz": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_rmsnorm/results/whole-launch-v1/source.tar.gz",
+    "reproduction/production_silu/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_silu/RESULTS.md",
+    "reproduction/production_silu/results/manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_silu/results/manifest.json",
+    "reproduction/production_silu/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_silu/results/summary.json",
+    "reproduction/production_silu/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/production_silu/results/validation.json",
+    "reproduction/ptx/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/ptx/results/summary.json",
+    "reproduction/reduction/results/cpu.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/reduction/results/cpu.json",
+    "reproduction/results/artifact-expanded-20261110.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/results/artifact-expanded-20261110.json",
+    "reproduction/results/mi300x.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/results/mi300x.json",
+    "reproduction/results/paper-source-manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/results/paper-source-manifest.json",
+    "reproduction/results/production-race/results.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/results/production-race/results.json",
+    "reproduction/results/production-race/witness.lean": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/results/production-race/witness.lean",
+    "reproduction/shuffle/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/shuffle/results/summary.json",
+    "reproduction/wave_reduction/RESULTS.md": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/wave_reduction/RESULTS.md",
+    "reproduction/wave_reduction/results/full-tests.log": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/wave_reduction/results/full-tests.log",
+    "reproduction/wave_reduction/results/manifest.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/wave_reduction/results/manifest.json",
+    "reproduction/wave_reduction/results/summary.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/wave_reduction/results/summary.json",
+    "reproduction/wave_reduction/results/validation.json": "https://github.com/harsh-nod/lark/blob/489b836cea7c4675d42a926c291df903a6cfde35/reproduction/wave_reduction/results/validation.json",
+    "reproduction/paper_results/snapshots/20261110-v17/release-refresh.json": "../release-refresh.json",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-run.json": "../ci-489b836-run.json",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-jobs.json": "../ci-489b836-jobs.json",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-proof-tests.log": "../ci-489b836-proof-tests.log",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-exact-real.log": "../ci-489b836-exact-real.log"
+  },
+  "dependency_kinds": {
+    "registry": "original artifacts",
+    "harness": "original artifacts / software reconstruction",
+    "runs": "original traces; closed-model regeneration conflicts with offline/free calls",
+    "mutants": "original artifacts",
+    "production": "original artifacts and proof engineering",
+    "hardware": "original artifacts and unavailable NVIDIA hardware; original MI300X protocol also required",
+    "semantics": "remaining software work",
+    "history": "original historical records",
+    "gqa_export": "original artifact",
+    "specification": "original artifacts and trusted-reference validation"
+  },
+  "evidence_sha256": {
+    "docs/input.md": "d282fec3e32b78ea3dbb91ad6d7911a2c378c89eecb7f177f7ec3484b8256957",
+    "docs/paper.md": "28a3cd15c0b8e3dc4b399cd1797b74b2f19abace326ffb95618c098ad2691c82",
+    "docs/trust.md": "6d01cdf85d82f29f3d132345551faec02d418bddc18d07592cbc220f589b707f",
+    "lean-real/README.md": "182fb5f25eb0ee74acc93ae179312e908ead1e1db846b3984a1442861e21680f",
+    "lean/Lark/Model.lean": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+    "reproduction/FULL_SHAPE.md": "3867c9094c84fd6d32b1631f23af0f68c5a2ee051b9b5ee139ff23e56d283f66",
+    "reproduction/collective_conformance/results/validation.json": "2b17490b25b09f7f404d939c7b8b3db7d595f660bbac8c17acb9ae1b53e695a7",
+    "reproduction/dot_ablation/RESULTS.md": "5207bb8eb93b461245b269b92de3e31236b30571252ba204ed6642be7f21a14f",
+    "reproduction/dot_ablation/results/cpu.json": "ced063ca261a67dd93ad8cefb178de881124b24ca0b22aa331b733d122c15168",
+    "reproduction/exact_real/results/manifest.json": "905f62ec87433ae4a9ad5561906cb5260d0f79fcb3ec7f83ab8879c92edce668",
+    "reproduction/exact_real/results/results.json": "683b90b27142ed2e33b0b88e49bc8962df18933528652229eb54a0db2ba567b1",
+    "reproduction/exact_real/results/validation.json": "cb7a55a03878e9a01039e09127f3a6990e8cad934698badd32035953d54506ce",
+    "reproduction/full-shape-status.json": "7e1db626b83ad22a47c089862a68f56b4236da53e887053d444e5fb3a488addf",
+    "reproduction/local_models/results/comment-replay-deepseek-20261109-validation.json": "0f36334619a91602fa0541ba2a08de13ee93a1f051f90ccd917b84f33315c750",
+    "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-audit/comparison.json": "cc756eb48a7896b15d42c2a66459f6d0a792ab3e3449f5ca1d7f25d9b0694aaf",
+    "reproduction/local_models/results/model-comparison-20261109/progress/completed-three-model-validation.json": "7f2844a0aaf223c11e26fb2de5226800cfd4f50781f8a2044fcfba97d333648c",
+    "reproduction/local_models/results/model-comparison-20261109/reports/completed-three-model-comparison/RESULTS.md": "29b40e8d83795259d82d038f78f035e2320202a233c633b15ba72198b7cf917d",
+    "reproduction/mfma/results/summary.json": "2f72e5b1d99bc8ce18d675c8fc5c012aef819c0353c05a1fac577bf29fec21e1",
+    "reproduction/nonlinear/results/cpu.json": "1187b1eca96de60586b0fb123d979cd4a30689469507934337e6be7b47eccb07",
+    "reproduction/nonlinear/results/mi350-large.json": "9be0110b120a4cee2e9b1fd8b28c41cd86bc543310bc489d0bd2a05fc244d856",
+    "reproduction/nonlinear/results/validation.json": "843c1533a0e7b57b1d0330bc9bcf4a23d68bacaf73002ecac4cc56aa3e0a82c1",
+    "reproduction/paper_results/snapshots/20261110-v16/artifact-release-recheck.json": "b58930f5bd9a046151e67e6f065335a705c92d08ec22b25401ec9b2c9215ebb3",
+    "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383-run.json": "b44df9d45b8670327f08e16729f51eb888752ffb7576e91de5e1a62a27511cb9",
+    "reproduction/paper_results/snapshots/20261110-v16/ci-35a6383.log": "de884248c98feb96274075149b960d458daf0c6efe3535e238c98f618ea812a6",
+    "reproduction/paper_results/snapshots/20261110-v16/lead-author-gpu-tree.json": "fb994edd472376739445780200a36599fe8b27febdef41e67260effbdd3c0b98",
+    "reproduction/paper_results/snapshots/20261110-v16/lead-author-repos.json": "c85ceb2439c340f7c9e0939dd747bfcbe725bd279a7ab17927b64bb5f388488e",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-exact-real.log": "86cb1fd999774e1bf40f9d49b47ab6371249d89640dce8c50e0083f5c8080f43",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-jobs.json": "aa5a3549e3ccb54c9c456824961fcf4cce035c59cdc7087df2b17ae4967747c2",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-proof-tests.log": "9902a553d0086ad83eccec0ac8e54740f7b699b8fd4b6cb04fb5bfa75a74d931",
+    "reproduction/paper_results/snapshots/20261110-v17/ci-489b836-run.json": "3ec5bc3cb86095d54136fe13af9377cda407028ae0811ea80a90f3f6c51b16f4",
+    "reproduction/paper_results/snapshots/20261110-v17/release-refresh.json": "97f7b6c0574f7f4ba08c636e5da05c68797cbb39bf4dc20d0b1fb6e3e24659dd",
+    "reproduction/pointwise/RESULTS.md": "a83306f75d2441428470b4a95690ff5694e57838447e6811bd7a6cb42a6f993a",
+    "reproduction/pointwise/results/cpu.json": "0d976cd991153fb03dc38071e88cf2edc5ef9721fa1741cf86f52c38f0f04ac3",
+    "reproduction/production_activation/RESULTS.md": "86c77a25caba5be1390e3cfaca0345d42e57858c491d547dcdb86a65f8a6762f",
+    "reproduction/production_activation/results/summary.json": "628e6198fff850d64881d9aa6281e91b7c70fedbc6d3adbf2a218a466a5c8fc0",
+    "reproduction/production_activation/results/validation.json": "f560b73be9b50bbaa73c838c5e40f2cde2066310bcb52b98fc9525f48f8f7680",
+    "reproduction/production_rmsnorm/RESULTS.md": "96ade1c40edbbcc50657dab04408b2aa461ac96c1d945f702cce928a66497446",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/fresh-standalone-build.log": "85e027421c8000a9983adbbac4bb3297f764769934430733768d0fbe7addaa5c",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/manifest.json": "03ad7cc8830f635ef4447e1d7736307ee8b4f3de613a46106d6deaf9dea769a5",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/native-tests.log": "fc150d715743b9f1e462afa58557eb98ce7ee7814cc5067430050c9bc6c1e2b5",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/portability.json": "12a073f31d058996eb35ec80bc5abf67c5a327cdca804e34b82ae0c124de93d2",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/prior-gpu-report.json": "a8cd3d28bda34af5763895190e44a5da114903cf7571ef90c73985e74d2446f5",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study-report.json": "773455703aec6a82f69547bda5de9c013b206cd115b1eae6275e1ff69ac0d704",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/proof-study.tar.gz": "288efbea507fcdb796ce3d1261c9971ec1e2cc7eb78d1e053f2ac6175d4d79e9",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/reference-name-control.json": "42b15d17976cac714831fb5f00d0d2ad8415f836b6f67e0e390d45eccf5e604b",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/report.json": "78ee3dd90fa3ba74fc35f3c1be81684249e2ecc136725c101be49327318d9358",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/source-manifest.json": "40a444b062a43522f26023f4b6ac61a1377ca3974948e2b26ea68300fd832979",
+    "reproduction/production_rmsnorm/results/whole-launch-v1/source.tar.gz": "9852d29eb2a28a8624c289b7dbd1ea14b440a14f06ac3e673515a025bc0139e4",
+    "reproduction/production_silu/RESULTS.md": "36bcfb55921d20519b452848a8ec171e40d4e423e195fa598bab57633823f22a",
+    "reproduction/production_silu/results/manifest.json": "b0dfb835c587e6a4b72b75e391e50c0e0aea10d6c29b3e438c3e4ad49001c986",
+    "reproduction/production_silu/results/summary.json": "bea09047c8d3bd8f1ffdbe918d2432d042098262736d53be5feae37abc0394d1",
+    "reproduction/production_silu/results/validation.json": "dfd1efd2fd3fcee43b4ca2043c233367796cb8c9a1fedd456b17ee6f0516fb16",
+    "reproduction/ptx/results/summary.json": "9392b84da887df44218ca25209a8cac0ceddff63bb72c7fd282ffe27e81dc360",
+    "reproduction/reduction/results/cpu.json": "dad86accf8edea32fed4e69ecc116fd4deb3c8a5ad8aa576111bcb9a19fa42f5",
+    "reproduction/results/artifact-expanded-20261110.json": "07547ab91747da41c4221f922bc55c37bf72f28ff70dbf136dc2e3d68e0541a1",
+    "reproduction/results/mi300x.json": "14db1e366e0858c9d665a095e7141e00e83aae8ecb107b445c129521aa443e39",
+    "reproduction/results/paper-source-manifest.json": "a6d167e48156d0a51f1b76c5c1a75bb965b4979e4195c47548b07b8304b92910",
+    "reproduction/results/production-race/results.json": "3f851e68afc34864d54d1fe6a1c6712fcb25e90934e3131e2ef5712eaaf68c04",
+    "reproduction/results/production-race/witness.lean": "7fd4afea4ebe07d6bf1f260dfcf3e88f8113e7b2d8a5641943ee30f7b1dd6a11",
+    "reproduction/shuffle/results/summary.json": "4a4a76deecefc0ca336835154791923c819696411c46461ec96c7977b796b4a5",
+    "reproduction/wave_reduction/RESULTS.md": "6e2030203ff9ed15282cac6714b379d10d7b33a7b6ccf2fe4e63839a064e78cf",
+    "reproduction/wave_reduction/results/full-tests.log": "93114cf492db02c58be48f6da14a48b9ef6c0c3974b34f64780c200d58621453",
+    "reproduction/wave_reduction/results/manifest.json": "ffebc2612c946f4e347dcc4025b6c883abbca54f11bac519cc0af81189a83d11",
+    "reproduction/wave_reduction/results/summary.json": "d988706bf8e9825fed30a04428c0a1a117f90a4d212138d577ab8f94587b1244",
+    "reproduction/wave_reduction/results/validation.json": "9fa87e7cfbfcc5b03101b9e0eb90d0b763e0fb25c95598b1aef61da09e479e99"
+  },
+  "targets_sha256": "75d11529feb616734a2864f05e1c464531b0df5426e6ccf23d1e1a95c39d1775",
+  "auditor_sha256": "0ed320d08a1df0398eba39ca2bf2e1a5936ba832c90938f5d7ac238ff95bb731",
+  "fresh_lean_checks": 0,
+  "fresh_gpu_trials": 0,
+  "model_calls": 0
+}
