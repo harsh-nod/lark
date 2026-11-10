@@ -22,7 +22,8 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 [full-length RMSNorm/LayerNorm/Softmax](normalization/RESULTS.md),
 [full-size two-launch FFN](feedforward/RESULTS.md),
 [full-size SwiGLU with FP32 projections](swiglu/RESULTS.md),
-[full-size dense SDPA/GQA](attention/RESULTS.md).
+[full-size dense SDPA/GQA](attention/RESULTS.md),
+[same-source dot-product proof ablation](dot_ablation/RESULTS.md).
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
@@ -32,7 +33,7 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 | Nine accepted production kernels (§5.3, Table 5) | No full production-kernel correctness certificates | Original adapted files, revisions, signatures/departures; in-place buffers, packed/collective operations and scalable reductions |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics and failed proof artifacts | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
-| Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise flat/induction timing comparison | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
+| Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
 | Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, and connected attention through 4,096-token rows / 1,048,576-wide projections | Original kernels, tiled/online attention, original token/time measurements |
 | Model size versus pass rates/tokens (A.4.6) | Three official checkpoints identified; two locally served, completed DeepSeek reduced pilot and GLM-5.3-Flash pilot underway | Original model versions, harness, token accounting and runs; local adaptation is separate |
 | Stage token costs (A.4.3) | Local warmup receipts and nine completed DeepSeek proof-pilot receipts (231,816 total tokens; reasoning only); bounded-reasoning variant records actual Lean checks | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |

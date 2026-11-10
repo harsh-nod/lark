@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "experiment": "same-source-gemv-flat-versus-induction",
+  "timestamp_utc": "2026-11-10T03:31:40.648916+00:00",
+  "python": "3.12.3",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "model_calls": 0,
+  "runner_sha256": "b10ac965665a99c8033c8452d4d99177d63dda83fd1bb83f52652062816dbd3b",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa"
+  },
+  "flat_timeout_seconds": 30,
+  "pairs": [
+    {
+      "rows": 2,
+      "reduction": 1,
+      "source_hashes": {
+        "kernel.hip": "6debcb4e927c6d8804d4bf504513871bb905ccc0a0900df0c70586183b1c09a3",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "bad5120566a605f3b5cf5686416976c84471a5e572e4f5f34d808ae68dc1bcfb"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 7.160985213005915,
+          "timed_out": false,
+          "main_bytes": 18594,
+          "theorem_sha256": "6947c4b4472f5f0c9737b61e3c5d99419ecd29ab0eb1bb03bd6696ecdcbfc71f"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.650967877998482,
+          "timed_out": false,
+          "main_bytes": 67123,
+          "theorem_sha256": "19e6c62fa4199ea6c484d3823ba67c532acb963b14f24ea7cf1d7d1a18fee474"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 2,
+      "source_hashes": {
+        "kernel.hip": "b652805c5984be6ac74f1e450483be0cb8a594175142318c5c1452af0852613a",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "0217a3fd80f5d86dc520f6adc92d5fe1b55b76a56be10fc29bc7e65d99b4df59"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 4.990242562023923,
+          "timed_out": false,
+          "main_bytes": 18962,
+          "theorem_sha256": "8d2077a07a8f0b95e0ef70ac8f16e4a4418c20784c9eb45d670f7308a1c99350"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 9.022016342030838,
+          "timed_out": false,
+          "main_bytes": 67123,
+          "theorem_sha256": "9a5c809d827eddb04b28f158b55330e82e6fabeceb9ed5ef09f72fe084fa685c"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 4,
+      "source_hashes": {
+        "kernel.hip": "aa5671026ab9793c8244938b9afdb93ad4dee97048113bf94e1a012924307283",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "f4495522a9828e6b02024bd90d598cc1f3cbd71abb02a3aa43b91fb365af3087"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 5.961495692026801,
+          "timed_out": false,
+          "main_bytes": 19698,
+          "theorem_sha256": "2ccf6a6fdd410e82dcdd76a9595714f2e7642c1e8e0368d573c6a9953e5d97bf"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.8594558800105,
+          "timed_out": false,
+          "main_bytes": 67123,
+          "theorem_sha256": "b71cc06f60b95072c6618d9e955dc8dc218674efa9bdac3109c9f5a573488344"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 8,
+      "source_hashes": {
+        "kernel.hip": "16123517520a2b8784030882e3abc78912140accc7b89cfacd5d8dd660e46d91",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "0bcf0ccd499644f23ea369dba70d5b15cfcc873dbcfd039c645eba27c8a73786"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 9.5723426839686,
+          "timed_out": false,
+          "main_bytes": 21183,
+          "theorem_sha256": "098fdb0857574dca0a695dc5c9817eadf3c23603e6323af125b3f7f86a57d9de"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.857316600042395,
+          "timed_out": false,
+          "main_bytes": 67123,
+          "theorem_sha256": "cace583c9a517e83efc18d5e2205d4ffe54f2375c91c1aef54b86b63874472f0"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 16,
+      "source_hashes": {
+        "kernel.hip": "0d09942cc87806798afcb38fb484dc39388357b338d823933e1a8075911f4f19",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "89fff8b6e606da674a101af82cc15c654df00149e3a4c9fca66bc239d55480cf"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 20.35975954402238,
+          "timed_out": false,
+          "main_bytes": 24188,
+          "theorem_sha256": "3d4be9f966de359c01cc9b87319ad8a76f7e1fb257b374624fd773504d45f45f"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 9.32487354503246,
+          "timed_out": false,
+          "main_bytes": 67133,
+          "theorem_sha256": "9dd829e576972a63523c7e96be6521cf1b4740cddcf305154d78404a52272e1b"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 32,
+      "source_hashes": {
+        "kernel.hip": "eb804c68773a8b8237807bcc59c5d1e78b039d6d80939b97595f9d1aaab9aa1d",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "1944760d7886f938e7c7feff55ff9ac5dae0d978848f9e1402571efa5313c319"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "unproved",
+          "rechecked": false,
+          "verify_seconds": 30.12839669501409,
+          "timed_out": true,
+          "main_bytes": 30205,
+          "theorem_sha256": "4382d612a8f8b96ef3ee2f3fc03901b1665bea54fdd8cf89f15bf16de22d6358"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.98306934197899,
+          "timed_out": false,
+          "main_bytes": 67133,
+          "theorem_sha256": "773a1ed5f92d28901ac5081d66022cd62afac45be457d6f5faa8eb98439eac7d"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 64,
+      "source_hashes": {
+        "kernel.hip": "6843e9634f44774dbd098f13fc539dbe6b5d0df3beaa482c4adbc9961f2a5494",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "33f735f763e6a6b4e17666096ebd45c99e9f6a051c9b76931caf918202716ae8"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "unproved",
+          "rechecked": false,
+          "verify_seconds": 30.132093193999026,
+          "timed_out": true,
+          "main_bytes": 42294,
+          "theorem_sha256": "5b471be734f047de4394a82a9c242f67d2721e0af0de48bf932960a3e2e5fcd7"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.901227729977109,
+          "timed_out": false,
+          "main_bytes": 67133,
+          "theorem_sha256": "416506b9291caa6478cfc88208392b115e3364095bf9e43a6c6add0f0e257701"
+        }
+      ]
+    },
+    {
+      "rows": 2,
+      "reduction": 128,
+      "source_hashes": {
+        "kernel.hip": "d0cfa51fec371d77ff26f378fbc3f0d27f28e9808afcb80fc5332dccd086f14c",
+        "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "task.json": "2b6d74f6d0da0a92b64881221877a3ebf0e1f7f10599b496f32cd7df5b6c4806"
+      },
+      "methods": [
+        {
+          "method": "flat",
+          "status": "unproved",
+          "rechecked": false,
+          "verify_seconds": 30.140910074987914,
+          "timed_out": true,
+          "main_bytes": 66731,
+          "theorem_sha256": "14cb0c21c0eec005219e91fc17fabe18ad7bac3f99d073aea34a1131357ba1fc"
+        },
+        {
+          "method": "induction",
+          "status": "verified",
+          "rechecked": true,
+          "verify_seconds": 8.642640739039052,
+          "timed_out": false,
+          "main_bytes": 67143,
+          "theorem_sha256": "0e6abb16b5ca6c7dc024aeea835b28aef85c9a326ebe9418109edc5d1b1602ed"
+        }
+      ]
+    }
+  ],
+  "scope": "Independent same-source bounded FP16 GEMV. Timing includes Python/Lean elaboration. Flat means concrete symbolic execution/default proof slots; induction means pinned counted-loop/grid lemmas. Not the authors segmentation prompt ablation or original token/timing results.",
+  "status": "passed"
+}

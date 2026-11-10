@@ -40,7 +40,8 @@ paper's optimized programs and launches.
 
 Symbolic scaling includes million-term dot products and billion-cell output
 footprints with small standalone certificates. Those largest arrays were not
-allocated or executed. See the [paper coverage ledger](reproduction/COVERAGE.md)
+allocated or executed. A [same-source dot-product ablation](reproduction/dot_ablation/RESULTS.md)
+compares flat proof execution with loop induction. See the [paper coverage ledger](reproduction/COVERAGE.md)
 for original pass rates, kernels, timings and other results that remain missing.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
