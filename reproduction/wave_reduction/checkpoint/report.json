@@ -1,0 +1,43 @@
+{
+  "status": "proved-library-checkpoint; source-bound export and hardware evidence pending",
+  "recorded_utc": "2026-11-10T11:47:42.535821+00:00",
+  "lean": "Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)",
+  "mathlib_commit": "c44e0c8ee63ca166450922a373c7409c5d26b00b",
+  "sources": {
+    "lean/Lark/CollectiveGather.lean": "19d7be4ec82cf06f19db351caa62c183dc58151dfe829f10fca6247f1e85b143",
+    "lean/Lark/RegisterPhase.lean": "5e049fdb4efcf4ee5edc7555029891f3c9990eef0baf56e497db4ae0529b037a",
+    "lean/Lark/WaveReduce.lean": "f34ba7aa8f28ab7e33df5b71004fddde3fcf56798281d6108f628145cb91cc24",
+    "lean/Lark/WaveReduceArithmetic.lean": "4debb217f768e045c93736356d11b54a752fbf54123eb9a468b43ea651cc35e1",
+    "lean/Lark/WaveReduceStore.lean": "bc232555983762ddab58681865e144ea743c95460e29ce9a293b9bc1d09aba8b",
+    "lean/Lark/WaveSum.lean": "ea55c676488844577aeea0d375408a53b1d99a1d624bffb175899d5ecd89088f",
+    "lean-real/LarkReal/WaveSum.lean": "18da92ae3c8b9ef4f2150e5b0c10122e0e3e70ef6b7d210bf4a551cd436d3188",
+    "reproduction/wave_reduction/cases/sum64/kernel.hip": "4974312268353491788867f49e2964e2b0d812931fb67112662e02e4bbe2eb34",
+    "reproduction/wave_reduction/cases/sum64/reference.py": "74c638eef61468d2108d13a97b0da9baa15f094149ca8d74b655dbbcab73d7e7",
+    "reproduction/wave_reduction/cases/sum64/task.json": "3c90409879cad7edac38d4420fab66f232da14fb67eae1d60ce79a51f96d1c1f"
+  },
+  "geometry": {
+    "grid": 1,
+    "block": 64,
+    "warp": 64
+  },
+  "instructions": 16,
+  "memory_accesses": 128,
+  "scope": "Actual complete six-stage XOR butterfly launch, all input/outside states, RF and expression-tree result for arbitrary operations; separate canonical-real sum theorem with proved leaf coverage. Closed Torch AST fixture parsed to all 64 cells, but a source-bound certificate has not yet been exported.",
+  "axioms_allowed": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "new_source_certificates": 0,
+  "new_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "pending": [
+    "strict source/task/reference binding",
+    "standalone export and global recheck",
+    "meaningful negative controls",
+    "fresh source verification, packaging and integration checks",
+    "two-host exact-source GPU validation",
+    "evidence audit and publication"
+  ]
+}
