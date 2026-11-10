@@ -1,0 +1,45 @@
+{
+  "name": "swiglu_up_cuda_64_256_1024_256",
+  "entry": "swiglu_up_cuda_64_256_1024_256",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        64,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "wup",
+      "role": "input",
+      "shape": [
+        256,
+        1024
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "up",
+      "role": "output",
+      "shape": [
+        64,
+        1024
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 65536,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    1030,
+    1,
+    1,
+    1
+  ]
+}

@@ -22,14 +22,15 @@ and explicit FP16 storage conversions in a separately pinned Lean model, with
 reduced fixtures for all 17 families. These abstract-operation certificates are
 distinct from numerical tests of the large FP16 benchmarks and from IEEE proofs.
 
-Induction extensions certify **fourteen full-size FP16 task families** in the same
+Induction extensions certify **fifteen full-size FP16 task families** in the same
 machine: [ReLU/SiLU/GELU](reproduction/pointwise/README.md),
 [GEMV](reproduction/reduction/README.md), [GEMM/batched GEMM](reproduction/matrix/README.md),
 [Linear with bias](reproduction/linear/README.md), [interleaved RoPE](reproduction/rotary/README.md),
 [Conv2D/depthwise convolution](reproduction/convolution/README.md),
-[RMSNorm/LayerNorm/Softmax](reproduction/normalization/README.md), and
-[two-launch FFN](reproduction/feedforward/README.md).
-These cover all twelve Level-1 families plus RoPE and FFN with independent programs.
+[RMSNorm/LayerNorm/Softmax](reproduction/normalization/README.md),
+[two-launch FFN](reproduction/feedforward/README.md), and
+[FP32-projection SwiGLU](reproduction/swiglu/README.md).
+These cover all twelve Level-1 families plus RoPE, FFN and SwiGLU with independent programs.
 Every profile has separate CUDA/HIP certificates and exact-source HIP checks on
 both MI350X hosts. The scalar programs and one-thread blocks differ from the
 paper's optimized programs and launches.

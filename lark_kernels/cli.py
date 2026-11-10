@@ -54,6 +54,11 @@ def main(argv=None):
     p.add_argument("--output", required=True, type=Path)
     p.add_argument("--lean")
     p.add_argument("--timeout", type=float, default=120)
+    p = sub.add_parser("verify-swiglu")
+    p.add_argument("directory", type=Path)
+    p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--lean")
+    p.add_argument("--timeout", type=float, default=120)
     p = sub.add_parser("check")
     p.add_argument("directory", type=Path)
     p.add_argument("--lean")
@@ -63,6 +68,12 @@ def main(argv=None):
         if args.command == "check":
             print(check(args.directory, lean=args.lean, timeout=args.timeout).strip())
             print("VERIFIED: source binding, model, proofs, and axiom audit rechecked")
+        elif args.command == "verify-swiglu":
+            from .swiglu import verify as verify_swiglu
+
+            report = verify_swiglu(args.directory, args.output, lean=args.lean, timeout=args.timeout)
+            print(f"{report['status'].upper()}: {args.output / 'report.json'}")
+            return 0 if report["status"] == "verified" else 1
         elif args.command == "verify-ffn":
             from .feedforward import verify as verify_ffn
 

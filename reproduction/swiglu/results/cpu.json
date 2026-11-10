@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "experiment": "swiglu-pipeline-v11",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-10T02:21:34.769477+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "dotmap": "69a3c94dd3a0aaf818facb9527d89e8da736ca0d2b2d0df77b76c86319b18170",
+    "pipeline": "fc49f7f8379024217932003b2cc5a85f5728d2b6dc6524bbad1df5414dc26eec",
+    "feedforward": "09b69694792366450fa31220b669b0ee923655db832e0ba61b1f64ff5a84c1c5",
+    "pairmap": "4f8fcabfe9e3df6ef88f7456135f4cb938163da8bcd40230d3201587a7f75a9a",
+    "swipointwise": "c5a25f181754bdbc3eb82346f3c9018f18c35c25ff4ad0833126332b36bb11c3",
+    "swiglu": "29819da0f8b0bc23d0b0ab7c6c86e42f4a8fb3de07ea4ad26d08afc9819f5db3"
+  },
+  "runner_sha256": "469381862c1ea7a9ae5c9a40f76b8d81001637cc11769470c62d15ffd9ecc9d1",
+  "baselines": [
+    {
+      "key": "baselines/hip",
+      "status": "verified",
+      "rechecked": true,
+      "swiglu_dimensions": [
+        64,
+        256,
+        1024,
+        256
+      ],
+      "verify_seconds": 23.548711862997152,
+      "main_bytes": 173488,
+      "source_hashes": {
+        "gate.cu": "fd65e07e3fb18e27f40a8d974d55302617ed9224bbcd4b9750932fc604c3162d",
+        "gate-task.json": "4ed4d0ed5ac51029d35d49ac7b673ffbd3c6fa21be82475dfcff94af2beb084c",
+        "up.cu": "b86b66149bc2ebe9405d09cc37efeab3f248c31e3e28586ec9669c14bd07bbaf",
+        "up-task.json": "74288c75455536f359c425709d7bed3eed36e2ec6dd42fd201a83f6c0d8eeaf6",
+        "combine.cu": "c2686732ec070077c0e0ed7b77998e6c06977aa80b37faa6c91c259636626920",
+        "combine-task.json": "c6d99232a90b3e82d45e07b29681fb231862108d87b20ab91014789ab39b3a6b",
+        "down.cu": "77fb91a9c1002732ec89faab7e63c44c95f1fb3a5ce924aeb03bd2573a0e466d",
+        "down-task.json": "b08a8592ea13f4ed62147b51b34e4fe4139ec21c9b59370ed11421d035543f22",
+        "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f"
+      },
+      "theorem_sha256": "cd65fa8f5225e7bc765d8cf0df7e29eb0ffbf50ae6c0ae80d0de3cfa1d6f59fc"
+    },
+    {
+      "key": "baselines/cuda",
+      "status": "verified",
+      "rechecked": true,
+      "swiglu_dimensions": [
+        64,
+        256,
+        1024,
+        256
+      ],
+      "verify_seconds": 20.609583599027246,
+      "main_bytes": 173488,
+      "source_hashes": {
+        "gate.cu": "1ff6bcf3f8f0f968f8b6fe7416ee08345a73d0e40e36dbf76754d7e830527c76",
+        "gate-task.json": "64b3dc1a68cf1b22408e717c19dc6331bdc8d927668d2b3659f4b1a6f18b8313",
+        "up.cu": "cb19f916bd5e6da4f5555e24ddf61476c8fc7321bc1f2dc2272826f7972c748a",
+        "up-task.json": "061b28e9b6dcde8abe3aa1460f6ff8eb467647691c3563f7055873f3a25b0c4d",
+        "combine.cu": "bcb3ac90b2f8614e2efbfdfaaea15aee1abf521c952f20f6a9a4994c732d0eea",
+        "combine-task.json": "1de7e49d19166a602ea36a28d62b604e48702808729dc16c9bf7deb44a5d3311",
+        "down.cu": "72636a230c9b7d7be0ce405d0f8dd252a5a5257955c20cede9fc35d479a0abf5",
+        "down-task.json": "ffd8059aa1cc9300709aed0703f6c3960a297c3a4dc7ee7af0daab3d370f01f4",
+        "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f"
+      },
+      "theorem_sha256": "6e32e39d550d811ac8c3da53835dcc45533a04ea79b0fe366fa417af5f6db8df"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/1-1-1-1",
+      "status": "verified",
+      "rechecked": true,
+      "swiglu_dimensions": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "verify_seconds": 19.641605809039902,
+      "main_bytes": 173418,
+      "source_hashes": {
+        "gate.cu": "dc5a52cdcbedc5852ecbdc37d4d8ca2dd9424016c0ee7d5543be8b567afd8e06",
+        "gate-task.json": "3df855789e6089122f1cc017e16639ade2fdea4400933fb65993d85eea7e8ed1",
+        "up.cu": "467fa35f3d45be818e9367267ebaf73e7b70f7786b66785d43d1610264207abd",
+        "up-task.json": "a726080b08af87f38e2b02c4cf0079c04c07fdef786696d7c5d69504039c0167",
+        "combine.cu": "ce568c65d990fc744f1865071a3882c2a9eb6e61f160e31a70f38fccf212d2fc",
+        "combine-task.json": "51f91ee21b1023c344faef969b5a89f7c69aebb010cf9ac7390f8a353e0b8cc1",
+        "down.cu": "5a561314ee0d658934f919f598118285c69797064a4125886ed75be5b1bb4f35",
+        "down-task.json": "de725b8f2effe01add25cf4ba820cd2560b7c97f75d8656b2f705f00a2fe4eb0",
+        "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f"
+      },
+      "theorem_sha256": "f5ea9583f625fddeaf5420d3ce4094b73408c54fda720b6c34d1d332d9534ef4"
+    },
+    {
+      "key": "scaling/64-1048576-16-256",
+      "status": "verified",
+      "rechecked": true,
+      "swiglu_dimensions": [
+        64,
+        1048576,
+        16,
+        256
+      ],
+      "verify_seconds": 21.0951756350114,
+      "main_bytes": 173485,
+      "source_hashes": {
+        "gate.cu": "25d5b271054a608969fccf594c86c15c3d573e57221c00958d8ce1d6a683ac5e",
+        "gate-task.json": "57266c1e9493204d6397dfaa39b6de07ef5bb59f0ca42f4ecbd470c94aca46b7",
+        "up.cu": "7c8f95f533b3b8fc095b8939483360d16a1f0a65c6fe1d942a87cf25b0f50a9e",
+        "up-task.json": "016a3a4807ec197c002fab392fb779891a8ab98648cc3bfff06d4589a8c7c425",
+        "combine.cu": "c6a74f1db66756496c214cb9095c7d070ac06c9dedf2903b624565f1033fe132",
+        "combine-task.json": "29eb084e1e693ba5a269a009e6b523fcf46aa5e8f00cac19f7f0a9f77a63ffd9",
+        "down.cu": "63c973bdeaf117a918794a0eae8bd233396ed9be67549cd653a4ff0a8aee9912",
+        "down-task.json": "7f78fc642b69ffe620dfdd9a7bb5411a59c3a9e1368f41731fa8d864bcc22907",
+        "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f"
+      },
+      "theorem_sha256": "6ce66e5c7ac3af024f67b49c8b2b5d34b16a21ebeb8efebaf1f97d7a137fc101"
+    },
+    {
+      "key": "scaling/1024-256-1024-1024",
+      "status": "verified",
+      "rechecked": true,
+      "swiglu_dimensions": [
+        1024,
+        256,
+        1024,
+        1024
+      ],
+      "verify_seconds": 19.189161579997744,
+      "main_bytes": 173506,
+      "source_hashes": {
+        "gate.cu": "63debc76c1cf68a70b11e2760808d539390626f8d9c06723b43a73cc06656965",
+        "gate-task.json": "fe567ea514e6efab5fce0fbc43eea503ee22bc80b78f86995a6d483abd0fec6d",
+        "up.cu": "a3814ceeed4bf89919d6c9d7552360c7c6889759068cadb7e63e10ba654a308a",
+        "up-task.json": "d322e9c5d2e49b23619a058736cd81ea5986055eeb85725ec718ffd5e1fea337",
+        "combine.cu": "6902f38cdfc8b3c977f15c4e6376bf32487625bd54114d7c44ba03b8192a5274",
+        "combine-task.json": "2e1a2fe143e49fc1081e194fdbf232179fab2d63ffde67eb527134740521d6cd",
+        "down.cu": "2a5c2d2f91ea24712a4716083b5be1503d6bccb11855b381223180dffe4069ce",
+        "down-task.json": "aa8497c57244c34f16c005822d64a3af704bd89c9b1e112c45977b40e4d6af3f",
+        "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f"
+      },
+      "theorem_sha256": "cb197dfb1aa9ba188845fbbff7f498306d39d5fac979eb26d223b2c7eeae8787"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "early-half",
+      "stage": 0,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 20.889583744981792,
+      "source_sha256": "7dd7cf5084937a6e2731162c74393a4f165eaf88483fac8144624b4dde4840d9",
+      "theorem_sha256": "eabdc4ae018e6e330ff94507c949d186604601af9b18b528e18a66a105e1544d",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "wrong-silu",
+      "stage": 2,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 19.728740710997954,
+      "source_sha256": "70c3c17fc0827d4d765ef75e71fb7d66eb7c233892842e96bd0b401d69368d0e",
+      "theorem_sha256": "2ab7cc065223f79dd5c5ea9303abb000d2dcfda3a7adf262712b241d7055f752",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "down-address",
+      "stage": 3,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 20.562047048006207,
+      "source_sha256": "aae1d3d27bf79e8633e670b5a59e5940e546c43076f914dbcba7e61fcfe12414",
+      "theorem_sha256": "909f877ab41af8c5bad5ef2c72344523d850e5239cbf14d89e09b7499e064a8d",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    }
+  ],
+  "status": "passed"
+}

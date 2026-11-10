@@ -19,12 +19,13 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 [full-size interleaved RoPE](rotary/RESULTS.md),
 [full-size valid Conv2D/depthwise](convolution/RESULTS.md),
 [full-length RMSNorm/LayerNorm/Softmax](normalization/RESULTS.md),
-[full-size two-launch FFN](feedforward/RESULTS.md).
+[full-size two-launch FFN](feedforward/RESULTS.md),
+[full-size SwiGLU with FP32 projections](swiglu/RESULTS.md).
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, PTX and broader instruction support |
-| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE and two-launch FFN certificates, with exact-source HIP checks | Original PTX kernels/GQA export; scalable multi-stage/attention proofs and collectives |
+| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN and four-launch SwiGLU certificates, with exact-source HIP checks | Original PTX kernels/GQA export; scalable multi-stage/attention proofs and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six new full-length arithmetic mutants checked directly in Lean | Original mutants/harness, PTX, model-based diagnosis and second opinions. Independent sets are not the original 42 |
 | Nine accepted production kernels (§5.3, Table 5) | No full production-kernel correctness certificates | Original adapted files, revisions, signatures/departures; in-place buffers, packed/collective operations and scalable reductions |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
@@ -46,7 +47,7 @@ inventory](results/paper-source-manifest.json) has manuscript files/figures and 
 implementation. These bounded searches do not prove that artifacts cannot exist
 elsewhere or be released later.
 
-Software work remains: full-size SwiGLU/attention proofs, tiled matrix kernels, PTX and
+Software work remains: full-size attention proofs, tiled matrix kernels, PTX and
 collective semantics, actual adapted production sources, and corresponding
 hardware validation. It cannot recover missing original model outcomes, source
 revisions, historical development effort or H100 measurements. AMD adaptations

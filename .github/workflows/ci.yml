@@ -57,6 +57,9 @@ jobs:
         working-directory: lean
       - name: Export example certificates
         run: python tools/verify_examples.py certificates
+      - name: Check FP32-projection SwiGLU composition
+        run: lake env lean Lark/SwiGLU.lean
+        working-directory: lean
       - name: Recheck standalone export
         run: lake build
         working-directory: certificates/vector_add

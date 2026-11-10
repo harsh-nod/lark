@@ -20,7 +20,7 @@ packages = ["lark_kernels"]
 
 [tool.setuptools.data-files]
 "share/lark/lean" = ["lean/lean-toolchain", "lean/lakefile.toml"]
-"share/lark/lean/Lark" = ["lean/Lark/Model.lean", "lean/Lark/Nonlinear.lean", "lean/Lark/Pointwise.lean", "lean/Lark/Reduction.lean", "lean/Lark/DotLoop.lean", "lean/Lark/Matrix.lean", "lean/Lark/Bias.lean", "lean/Lark/Rotary.lean", "lean/Lark/Convolution.lean", "lean/Lark/UnaryMap.lean", "lean/Lark/FoldPhase.lean", "lean/Lark/Normalization.lean", "lean/Lark/DotMap.lean", "lean/Lark/Pipeline.lean", "lean/Lark/FeedForward.lean"]
+"share/lark/lean/Lark" = ["lean/Lark/Model.lean", "lean/Lark/Nonlinear.lean", "lean/Lark/Pointwise.lean", "lean/Lark/Reduction.lean", "lean/Lark/DotLoop.lean", "lean/Lark/Matrix.lean", "lean/Lark/Bias.lean", "lean/Lark/Rotary.lean", "lean/Lark/Convolution.lean", "lean/Lark/UnaryMap.lean", "lean/Lark/FoldPhase.lean", "lean/Lark/Normalization.lean", "lean/Lark/DotMap.lean", "lean/Lark/Pipeline.lean", "lean/Lark/FeedForward.lean", "lean/Lark/PairMap.lean", "lean/Lark/SwiPointwise.lean", "lean/Lark/SwiGLU.lean"]
 
 [tool.ruff]
 line-length = 100
@@ -41,3 +41,5 @@ line-length = 100
 "reproduction/normalization/cases/*/*/reference.py" = ["F401"]
 
 "reproduction/feedforward/cases/*/reference.py" = ["F401"]
+
+"reproduction/swiglu/cases/*/reference.py" = ["F401"]

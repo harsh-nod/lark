@@ -12,3 +12,6 @@ import Lark.Normalization
 import Lark.DotMap
 import Lark.Pipeline
 import Lark.FeedForward
+import Lark.PairMap
+import Lark.SwiPointwise
+import Lark.SwiGLU

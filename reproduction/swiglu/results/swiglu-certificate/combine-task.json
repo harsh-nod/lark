@@ -1,0 +1,45 @@
+{
+  "name": "swiglu_combine_hip_64_256_1024_256",
+  "entry": "swiglu_combine_hip_64_256_1024_256",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "gate",
+      "role": "input",
+      "shape": [
+        64,
+        1024
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "up",
+      "role": "input",
+      "shape": [
+        64,
+        1024
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "hidden",
+      "role": "output",
+      "shape": [
+        64,
+        1024
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 65536,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    5,
+    1,
+    1,
+    1
+  ]
+}

@@ -439,6 +439,10 @@ def check(directory, *, lean=None, timeout=120):
         from .rotary import check as check_rotary
 
         return check_rotary(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "swiglu-pipeline-v11":
+        from .swiglu import check as check_swiglu
+
+        return check_swiglu(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "feedforward-pipeline-v10":
         from .feedforward import check as check_ffn
 

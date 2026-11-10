@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "model_profile": "swiglu-pipeline-v11",
+  "model_hashes": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "dotmap": "69a3c94dd3a0aaf818facb9527d89e8da736ca0d2b2d0df77b76c86319b18170",
+    "pipeline": "fc49f7f8379024217932003b2cc5a85f5728d2b6dc6524bbad1df5414dc26eec",
+    "feedforward": "09b69694792366450fa31220b669b0ee923655db832e0ba61b1f64ff5a84c1c5",
+    "pairmap": "4f8fcabfe9e3df6ef88f7456135f4cb938163da8bcd40230d3201587a7f75a9a",
+    "swipointwise": "c5a25f181754bdbc3eb82346f3c9018f18c35c25ff4ad0833126332b36bb11c3",
+    "swiglu": "29819da0f8b0bc23d0b0ab7c6c86e42f4a8fb3de07ea4ad26d08afc9819f5db3"
+  },
+  "source_readback": true,
+  "model_calls": 0,
+  "files": {
+    "Main.lean": "cd65fa8f5225e7bc765d8cf0df7e29eb0ffbf50ae6c0ae80d0de3cfa1d6f59fc",
+    "combine-task.json": "c6d99232a90b3e82d45e07b29681fb231862108d87b20ab91014789ab39b3a6b",
+    "combine.cu": "c2686732ec070077c0e0ed7b77998e6c06977aa80b37faa6c91c259636626920",
+    "down-task.json": "b08a8592ea13f4ed62147b51b34e4fe4139ec21c9b59370ed11421d035543f22",
+    "down.cu": "77fb91a9c1002732ec89faab7e63c44c95f1fb3a5ce924aeb03bd2573a0e466d",
+    "gate-task.json": "4ed4d0ed5ac51029d35d49ac7b673ffbd3c6fa21be82475dfcff94af2beb084c",
+    "gate.cu": "fd65e07e3fb18e27f40a8d974d55302617ed9224bbcd4b9750932fc604c3162d",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f",
+    "translation.json": "63af62055cbbcb11205618dba2d9189276355d7c8f1ade8c204716401192f385",
+    "up-task.json": "74288c75455536f359c425709d7bed3eed36e2ec6dd42fd201a83f6c0d8eeaf6",
+    "up.cu": "b86b66149bc2ebe9405d09cc37efeab3f248c31e3e28586ec9669c14bd07bbaf"
+  },
+  "axiom_audit": "'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]\n'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]\n'LarkDotMap.loop_step' depends on axioms: [propext, Quot.sound]\n'LarkDotMap.loop_eq' depends on axioms: [propext, Quot.sound]\n'LarkDotMap.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkDotMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkDotMap.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkPipeline.wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkPipeline.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkPipeline.correct_pre' does not depend on any axioms\n'LarkFeedForward.hidden_eq' depends on axioms: [propext, Quot.sound]\n'LarkFeedForward.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkPairMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkSwiPointwise.lane_eq' depends on axioms: [propext, Quot.sound]\n'LarkSwiPointwise.after_owned' depends on axioms: [propext]\n'LarkSwiGLU.pair_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkSwiGLU.down_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkSwiGLU.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "swiglu_dimensions": [
+    64,
+    256,
+    1024,
+    256
+  ],
+  "kernel_launches": 4,
+  "trusted_assumptions": [
+    "Lean 4.19.0 kernel and printed standard axioms; pinned nonlinear machine",
+    "Strict CUDA/HIP lowering and closed SwiGLU Torch AST formalization",
+    "Host layouts/disjoint allocations and ordered launches wiring the same intermediate buffers",
+    "Abstract scalar/half operations; hardware correspondence and numerical error outside theorem",
+    "External race-free-phase/GPU-interleaving correspondence"
+  ],
+  "scope": "Four actual scalar launches: completion, race freedom, FP32 projections, FP16 intermediate rounding, every valid intermediate read from earlier final memory and every final output for all inputs/outside memories. Independent four-launch adaptation; not the original optimized two-launch kernel or PTX proof."
+}
