@@ -1,0 +1,45 @@
+{
+  "timestamp_utc": "2026-11-10T01:30:22.309562+00:00",
+  "pid": 2734144,
+  "argv": [
+    "python3",
+    "reproduction/local_models/run.py",
+    "--url",
+    "http://127.0.0.1:19081/v1/chat/completions",
+    "--model",
+    "zai-org/GLM-5.3-Flash",
+    "--server-record",
+    "/tmp/lark-local-models-20261109/server.json",
+    "--case",
+    "reproduction/nonlinear/cases/float16/relu",
+    "--case",
+    "reproduction/nonlinear/cases/float16/silu",
+    "--case",
+    "reproduction/nonlinear/cases/float16/softmax",
+    "--output",
+    "/tmp/lark-local-models-20261109/pilot-low-remote-8ad91bc",
+    "--lean",
+    "/dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean",
+    "--model-timeout",
+    "1800",
+    "--reasoning-effort",
+    "low"
+  ],
+  "cwd": "/dev/shm/lark-proof-controller-20261109/source",
+  "log": "/tmp/lark-local-models-20261109/pilot-low-remote-8ad91bc.log",
+  "source_commit": "8ad91bcb14e4ac7d03c423ecb5d2b458472464fe",
+  "runtime_record": {
+    "source_commit": "8ad91bcb14e4ac7d03c423ecb5d2b458472464fe",
+    "archives": {
+      "lean419-runtime.tar.gz": "9f29627d123e0be46ff70a2712cf7fdac0aa80ef5943b2ea81f6e22c9033c50b",
+      "proof-source-8ad91bc.tar.gz": "0cd5e523442e98a707f8700c728c8b1fc94d577a4e6da43d91711ce864803d64"
+    },
+    "lean_version": "Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)\n",
+    "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+    "source_root": "/dev/shm/lark-proof-controller-20261109/source",
+    "lean": "/dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean"
+  },
+  "server_record_sha256": "fc92f174f95cf8e79827dfb2e42d9dcb2b9137848065cdf1bc2f6abb00b9e525",
+  "smoke_status": "verified",
+  "external_api_spend_usd": 0
+}

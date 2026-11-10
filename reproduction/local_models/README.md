@@ -37,37 +37,43 @@ completed one request per case: one Lean rejection and two invalid proposals,
 with 50,976 reported tokens and no certificates. Its request budget differs
 from the DeepSeek three-request cohort; these are not matched pass-rate cells.
 
-The GLM-5.3 full checkpoint has downloaded into two owned RAM-backed directories;
-all 141 weight shards and eight supporting files passed independent validation.
-The storage plan reserves at least 32 GiB on each filesystem.
-`download_ranges.py` verifies range extents and whole-file SHA-256 before publishing each shard; `checkpoint.py`
-independently validates the completed snapshot before serving. `serve_glm.py` is
-a prepared four-GPU launcher. The sequence waits for the original Flash pilot
-to finish, archives all completed runs, stops only the two exact owned container
-IDs and then launches the full checkpoint. Full-model runtime/proof results are
-not yet available.
+[Full GLM-5.3 is now healthy](results/runtime-glm53-20261109/summary.json) on GPUs
+0/1/6/7, TP=4, using the pinned native FP8 checkpoint. All 141 weight shards and
+eight supporting files passed independent validation. Its successful protocol
+warmup used 22 prompt and five completion tokens; this is not proof evidence.
+The three-case pilot and two additional seven-case batches will cover all 17
+reduced fixtures, with at most two active sequences. These studies are running;
+no completed full-model cohort result is claimed here.
 
-GLM-5.3-Flash is now running on MI350X GPUs 6/7. Its 62 weight files and nine
-supporting files passed pinned-content checks; the loopback endpoint passed
-health/model checks. [Runtime records](results/runtime-20261109/) include one
-real warmup request/response: 28 prompt tokens and 64 reasoning tokens, ending
-at the 64-token cap with no final answer. This is inference evidence, not a proof
-success. A separate three-case proof pilot is in progress. Hosted API spending
-is zero; no original paper pass rate is claimed.
+The checkpoint lives in two owned RAM-backed directories, with at least 32 GiB
+reserved on each filesystem. `download_ranges.py` checks ranges and whole-file
+SHA-256; `checkpoint.py` independently validates the snapshot. `serve_glm.py`
+matches the successfully executed four-GPU launcher. The sequence archived
+completed runs and stopped only the exact owned DeepSeek/old Flash container IDs
+before launching full GLM. No other services were stopped.
+
+The [completed low-effort Flash pilot](GLM_FLASH_RESULTS.md) has nine responses:
+eight reasoning-only and one unproved Lean check, with 231,592 reported tokens.
+The three first requests exactly match the reasoning-budget variant after
+removing its added budget field; the audit preserves their distinct retry counts.
+The original runtime on GPUs 6/7 is stopped. A separate owned Flash runtime on
+GPUs 2/3 is checking the additional 14 reduced fixtures, one request each, for
+a common 17-fixture first-attempt comparison. Earlier [runtime records](results/runtime-20261109/)
+remain historical inference evidence, not a proof success. Hosted API spending
+is zero; original paper pass rates are not claimed.
 
 The [initial 600-second pilot](results/pilot-600s-20261109/summary.json) was
 interrupted after its first request timed out and a retry had started. Both
 attempts and the intervention are archived, with unknown token usage; neither
 returned a proof or reached Lean. This is transport/incomplete-run evidence,
-with zero proof rejections. All three pilot cases are being rerun with an
-explicit 1,800-second request timeout; the original failure is retained.
+with zero proof rejections. All three pilot cases were rerun with an explicit 1,800-second request timeout;
+the completed rerun and original failure are both retained.
 
 The [max-effort follow-up](results/pilot-max-20261109/summary.json) returned one
 complete response: 7,719 prompt tokens plus 16,384 reasoning tokens, with no
 final proof content. It never reached Lean. Its identical-budget retry was
-interrupted and preserved. A separate `--reasoning-effort low` pilot is now
-running at the same seed and 16,384-token cap; its first ReLU messages match the
-max-effort request exactly. This effort variant differs from the paper's GLM
+interrupted and preserved. The completed `--reasoning-effort low` pilot used the same seed and 16,384-token
+cap; its first ReLU messages match the max-effort request exactly. This effort variant differs from the paper's GLM
 settings and is not an original pass-rate result.
 
 Three named model families have official ungated weights. Metadata was checked

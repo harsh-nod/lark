@@ -1,0 +1,44 @@
+{
+  "timestamp_utc": "2026-11-10T03:23:14.157993+00:00",
+  "model": "zai-org/GLM-5.3",
+  "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+  "script_sha256": "e7e762296f152479d8c1ef52ccaffdfb1aecd36cce310c3df745c23f87fa7b95",
+  "processes": [
+    {
+      "pid": 3107945,
+      "args": [
+        "/tmp/lark-local-model-tools-20261109/bin/python",
+        "/tmp/lark-local-models-20261109/scripts/download_ranges.py",
+        "--model",
+        "zai-org/GLM-5.3",
+        "--cache",
+        "/dev/shm/lark-models-20261109/hub",
+        "--spillover",
+        "/run/user/9661/lark-glm53-20261109/blobs",
+        "--output",
+        "/tmp/lark-local-models-20261109/glm53-download-forward.json"
+      ]
+    },
+    {
+      "pid": 3107946,
+      "args": [
+        "/tmp/lark-local-model-tools-20261109/bin/python",
+        "/tmp/lark-local-models-20261109/scripts/download_ranges.py",
+        "--model",
+        "zai-org/GLM-5.3",
+        "--cache",
+        "/dev/shm/lark-models-20261109/hub",
+        "--spillover",
+        "/run/user/9661/lark-glm53-20261109/blobs",
+        "--output",
+        "/tmp/lark-local-models-20261109/glm53-download-reverse.json",
+        "--reverse"
+      ]
+    },
+    {
+      "pid": 3107947,
+      "script_sha256": "ed09b8a0f9961645774548599dd9c94803f21ab7a5d2b0cbe2eab85541308ba3",
+      "script": "/tmp/lark-local-models-20261109/scripts/glm53-download-support.py"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 **The paper has not been fully reproduced.** Independent experiments are separate
 from the authors' reported results. Kernel studies used zero model calls. Free
-local GLM and DeepSeek inference is now running as a separate adapted experiment; no paid
+local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
@@ -42,8 +42,8 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics and failed proof artifacts | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
 | Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, and connected attention through 4,096-token rows / 1,048,576-wide projections | Original kernels, tiled/online attention, original token/time measurements |
-| Model size versus pass rates/tokens (A.4.6) | Three official checkpoints identified; two locally served, DeepSeek 17-fixture cohort (one verified) and Flash budget variant completed; full GLM checkpoint hash-validated and queued | Original model versions, harness, token accounting and runs; local adaptation is separate |
-| Stage token costs (A.4.3) | Local warmup receipts, reasoning-only runs, and complete bounded-reasoning DeepSeek (821,063 tokens) / Flash (50,976 tokens) cohorts; 37 / 1 actual Lean checks | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
+| Model size versus pass rates/tokens (A.4.6) | Three official checkpoints identified; all three locally served; DeepSeek 17-fixture cohort (one verified), completed Flash pilots, full GLM / additional Flash cohorts running | Original model versions, harness, token accounting and runs; local adaptation is separate |
+| Stage token costs (A.4.3) | Local warmup receipts, reasoning-only runs, and completed DeepSeek (821,063 tokens), Flash baseline (231,592) and Flash budget variant (50,976); 37 / 1 / 1 actual Lean checks | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
 | Refusal census and hard Level-1 tasks (A.4.2/A.4.5) | Strict refusals; full-size independent BatchMatmul/DepthwiseConv certificates and device checks | Original failed runs/statements; smaller proofs do not contradict the paper's model outcomes |
 | Race-freedom fallback (A.4.7) | llm.c conflict witness and generic pointwise ownership proof | Original fallback conversations, second opinions and token costs |
 | Latencies/speedups (A.4.10, Table 14/Figure 7) | Independent 17-workload FP16 numerical checks and eager/compiled timings on MI300X/MI350X | Authors' optimized kernels/reference contracts, fastest vendor baselines, H100 for original PTX/CUDA cells |
