@@ -8,6 +8,12 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
+This is a coverage snapshot of the evidence associated with experiment-code
+commit `b5fb165`. Later independent studies, including the
+[small upstream-derived activation adaptation](../production_activation/RESULTS.md),
+are tracked in the [current coverage ledger](../COVERAGE.md). The snapshot is not
+retroactively relabeled as original-paper reproduction.
+
 The archive hash, its 47 member-file hashes, the preprint input order, every
 float's source label/location, and the selected published evidence hashes are
 recorded. The target interpretations and missing-input assessments are authored

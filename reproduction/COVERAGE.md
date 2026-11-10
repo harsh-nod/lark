@@ -55,13 +55,18 @@ the earlier MFMA probes remain hardware-only evidence. A separate
 [native MFMA tile study](mfma/RESULTS.md) now adds one whole-launch certificate,
 four direct Lean controls and 16,850,944 exact-source output-bit comparisons
 per host for one AMD matrix-instruction shape with default modifiers.
+The [small upstream-derived vLLM SiLU-and-mul study](production_activation/RESULTS.md)
+adds HIP/CUDA certificates at two tokens and hidden width five, four direct Lean
+controls and exact-source comparisons against an extracted upstream scalar path
+on both hosts. Its intermediate FP16 rounding is retained. It does not recover
+the original production adaptations or their model outcomes.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates, with exact-source HIP checks | Original PTX kernels/GQA project, FlashAttention online algorithm, optimized launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | No full production-kernel correctness certificates | Original adapted files, revisions, signatures/departures; in-place buffers, packed/collective operations and scalable reductions |
+| Nine accepted production kernels (§5.3, Table 5) | One small independent upstream-derived SiLU-and-mul adaptation with HIP/CUDA certificates, four direct Lean controls and bit-identical comparisons against an extracted scalar upstream path on both MI350X hosts | All original adapted files, revisions, signatures/departures and production proofs; small shapes do not establish scalable coverage. In-place buffers, packed/collective operations and scalable reductions remain |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |

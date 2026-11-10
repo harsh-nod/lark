@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "paper": "https://arxiv.org/abs/2611.02028",
+  "implementation": "independent bounded scalar profile",
+  "task": {
+    "name": "vllm_silu_and_mul_adapted",
+    "entry": "vllm_silu_and_mul_adapted",
+    "language": "hip",
+    "buffers": [
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          2,
+          5
+        ],
+        "dtype": "float16"
+      },
+      {
+        "name": "input",
+        "role": "input",
+        "shape": [
+          2,
+          10
+        ],
+        "dtype": "float16"
+      }
+    ],
+    "grid": 2,
+    "block": 5,
+    "warp": 64,
+    "fuel": [
+      128,
+      4,
+      4,
+      4
+    ]
+  },
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned scalar GPU machine and its per-operation definitions",
+    "Python CUDA/HIP parser, fixed lowering, and token read-back formatter",
+    "Python PyTorch AST formalization of the independent reference module",
+    "Host launch, declared float16/float32 storage, aligned disjoint buffers; explicit half conversions",
+    "Abstract div/exp/tanh/rsqrt/fromHalf/toHalf operations, not an IEEE implementation or error bound",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)"
+  ],
+  "scope": [
+    "Bounded, concrete shapes and one-dimensional launches; all input scalar values",
+    "Float32 arithmetic with explicit float16 storage conversions; +, -, *, max, /, exp, tanh, rsqrt",
+    "Warp/block/grid folds; CUDA/HIP frontend exposes block barriers, full warp barriers, and halt",
+    "No PTX, tensor-core collectives, async operations, atomics, data-dependent control, or numerical guarantee",
+    "Operation-to-hardware correspondence remains trusted; numerical samples are separate evidence",
+    "Syntactic segment grouping and repetition; no general induction-based loop segmentation",
+    "Only computations with the same scalar expression structure currently prove automatically"
+  ],
+  "source_readback": true,
+  "model_sha256": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+  "model_profile": "nonlinear-v2",
+  "files": {
+    "Main.lean": "8afc8955e7c70efc443e852014f4592fdb5846efb7bd05769f303c39b314b856",
+    "kernel.cu": "58beac91ee4d7c0270bf1fb1b43c2397a18259d23a198f839f3b48a4c6d99fa7",
+    "reference.py": "eea4939ecd4a97878a4ba29fe06bf96e6b3fea79f82d946fa4accb485b3b6862",
+    "task.json": "1399023f27124652a11310aa007b9987e24aa3a6e46ad431735fdf68f01a49e6",
+    "translation.json": "0c1692a7581e05c94e1d8c007259701b37a81a84ba429ab5bdf83e9f3cd58458",
+    "proposal.json": "c39003ee0ca6a6e94eef955921c01ef9948d683925799161b8b049f5c9d82906",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1"
+  },
+  "axiom_audit": "'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' does not depend on any axioms\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Quot.sound]\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "accepted": true
+    }
+  ],
+  "accesses": 30,
+  "numerical_testing": "not performed; proof concerns exact operations",
+  "recheck": "lake build (or lean Main.lean); lark check also validates source and artifact binding"
+}

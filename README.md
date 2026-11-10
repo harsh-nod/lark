@@ -28,6 +28,12 @@ It covers one AMD half-input/float-output matrix instruction with default
 modifiers. Other matrix forms and original optimized kernels remain outside
 that profile.
 
+The [small upstream-derived vLLM activation study](reproduction/production_activation/RESULTS.md)
+adds HIP/CUDA certificates for one scalar FP16 SiLU-and-mul adaptation, with its
+intermediate half rounding retained. Both MI350X hosts match an extracted
+upstream scalar specialization and CPU PyTorch on the finite test set. The
+paper's original production sources and results remain unavailable.
+
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP

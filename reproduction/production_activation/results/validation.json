@@ -1,0 +1,37 @@
+{
+  "recorded_utc": "2026-11-10T08:54:41.664156+00:00",
+  "status": "passed",
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "archives": {
+    "source.tar.gz": "ab448eca0ddb2f8f1b1b2b5ca3f02e6c3606aaf8b5d7256cf0b1ab1bc1548688",
+    "gpu-input.tar.gz": "ad9195c85acd0caa1bada7037454667b6cd86a338916bee1949c0a02ab23fe52",
+    "mi350-failed-native-half-build.tar.gz": "cba5b7ed4cde0047bcef5ab0748c4d369fea073e1785279fb5a4937fe48def85",
+    "mi350-2-failed-native-half-build.tar.gz": "89e8ca62cff3288aa411f9bf56698a5f1a6a88906de67bbab2c37f4f26e659c9",
+    "gpu-source.tar.gz": "8a560ba3470b02bb93b97c6c892704116f36de76df431cbdd6fabf0049f728a2",
+    "failed-native-half-input.tar.gz": "6614ce90aef3fb4e5bc064ff71de6f1d0aea6d728f5fb0588b38d9e7b950ba3b",
+    "mi350-2-artifacts.tar.gz": "2616a25c3173ac53a32a7f5547e7f805cfa982ae29f4f6e1e26c1c561dab461f",
+    "mi350-artifacts.tar.gz": "8f19416febfeb0ea0beeeadc6214751b548ed61b34ef6b0e9ed387dd5cc742a7"
+  },
+  "note": "CPU and GPU generator/runtime source snapshots are separate. The GPU comparison was corrected from native HIP half to the actual PyTorch Half carrier; the certified kernel, reference, task and proof library did not change. Both earlier attempts stopped at compilation before any GPU trial. Their raw inputs and build failures are retained.",
+  "completed_utc": "2026-11-10T08:57:07.091517+00:00",
+  "checks": [
+    "Two HIP/CUDA certificates verified and freshly rechecked in frozen source",
+    "Four direct Lean negative controls rejected without timeouts; all fail output equivalence",
+    "10240 independent AST versus CPU PyTorch reference comparisons",
+    "Both GPU hosts: 1024 trials each, two launches per trial, outputs bit-identical between methods and zero CPU error",
+    "All input bytes and allocation guards preserved",
+    "Frozen GPU generator reconstructed every input file byte for byte",
+    "Fully rehashed divergent output stream rejected by raw-output comparison",
+    "Ruff check (E402 bootstrap exception), Ruff format --check and Python compilation passed"
+  ],
+  "summary_sha256": "628e6198fff850d64881d9aa6281e91b7c70fedbc6d3adbf2a218a466a5c8fc0",
+  "auditor_sha256": "74df07c4a1b0e1d19cbe8518d33cb5ace62528e55b60b4855fdca9b532a05279",
+  "tamper_control_log_sha256": "80a5fd09237321b7a508069d71d30dd2e5c78ec521712305b81d8a13c0952f89",
+  "whitespace_exceptions": {
+    "reason": "Preserve exact third-party PyTorch distribution license bytes, including original trailing spaces on two lines.",
+    "paths": [
+      "reproduction/production_activation/upstream/PYTORCH_LICENSE"
+    ]
+  }
+}

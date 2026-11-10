@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "recorded_utc": "2026-11-10T08:45:57.941199+00:00",
+  "baselines": [
+    {
+      "language": "hip",
+      "status": "verified",
+      "rechecked": true,
+      "wall_seconds": 94.53490231197793,
+      "source_sha256": "58beac91ee4d7c0270bf1fb1b43c2397a18259d23a198f839f3b48a4c6d99fa7",
+      "reference_sha256": "eea4939ecd4a97878a4ba29fe06bf96e6b3fea79f82d946fa4accb485b3b6862",
+      "theorem_sha256": "8afc8955e7c70efc443e852014f4592fdb5846efb7bd05769f303c39b314b856",
+      "report_sha256": "6c6174837705bb6c6a887b710b5302ebd0a0791cee3d348621639f656ca8b468"
+    },
+    {
+      "language": "cuda",
+      "status": "verified",
+      "rechecked": true,
+      "wall_seconds": 94.993626082025,
+      "source_sha256": "58beac91ee4d7c0270bf1fb1b43c2397a18259d23a198f839f3b48a4c6d99fa7",
+      "reference_sha256": "eea4939ecd4a97878a4ba29fe06bf96e6b3fea79f82d946fa4accb485b3b6862",
+      "theorem_sha256": "23be49dcad1e7035e17129f1e9312b41f424bdf0cd566777d9d960411895ddb2",
+      "report_sha256": "8e5334472fdc0ea4a668b3fc98909a3fcc8407cfb7427b4baa454953a212debb"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "drop-intermediate-half-rounding",
+      "accepted": false,
+      "timed_out": false,
+      "python_preflight_bypassed": true,
+      "wall_seconds": 128.2117243100074,
+      "source_sha256": "d385f7b4b381c65755eaebbc4d56912a832a1c411c2107be28347af1e0b62d77",
+      "theorem_sha256": "c628390263f4d21046fee5f143e18542a1536d24522a0118b202e16d7a7bfe35",
+      "log_sha256": "fa7592244ead9e0e6ce1fe5b2d939bbd831d95d3511a4d2c68fa050b99daa5bc"
+    },
+    {
+      "name": "wrong-token-stride",
+      "accepted": false,
+      "timed_out": false,
+      "python_preflight_bypassed": true,
+      "wall_seconds": 127.6733152330271,
+      "source_sha256": "1e02734bd259f5f8136f647efeb28cab8a87b95095c3be0575013e25399262c5",
+      "theorem_sha256": "5f288a354446f36cb600571e0032e2c37a21c6e86d0941a357851290aa9285d3",
+      "log_sha256": "31dacc1d6a30f4ed50f137184b3bdba5eba55bdbefaa3b4f8d0b24939698b1aa"
+    },
+    {
+      "name": "wrong-gating-half",
+      "accepted": false,
+      "timed_out": false,
+      "python_preflight_bypassed": true,
+      "wall_seconds": 106.43404549302068,
+      "source_sha256": "27296002d5e4765082ca290a6c65dfad07ef43b7d20a63b15be7847bbcb00029",
+      "theorem_sha256": "f0c26411ff7084f682751f8fc281ce7adc4f74030d3df3d3a8fe57afd6af70dc",
+      "log_sha256": "e465173794b7497a0e37dc697ee426544079ace289d2537ad751ad4fdf4e2c2f"
+    },
+    {
+      "name": "omit-last-output",
+      "accepted": false,
+      "timed_out": false,
+      "python_preflight_bypassed": true,
+      "wall_seconds": 47.351263287011534,
+      "source_sha256": "1162552048451407f81761a39b8ecb00b51e179150797d116e717d3603d6d6ea",
+      "theorem_sha256": "c08291670cd46618fb3211f99efd49edf2ceefadcb9a49fd998a942125e58ff8",
+      "log_sha256": "7adfaa49425e031eb268ed91589b59ccf10d28231994cc803230a539cc9a9709"
+    }
+  ],
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Whole-launch certificates for an independently adapted scalar vLLM SiLU-and-mul at two tokens, hidden width five. Original paper registry/revision unavailable; no general upstream equivalence or IEEE proof. Four independent controls are direct Lean checks, not the original paper mutants."
+}

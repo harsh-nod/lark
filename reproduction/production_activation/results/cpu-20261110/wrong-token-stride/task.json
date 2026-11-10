@@ -1,0 +1,36 @@
+{
+  "name": "vllm_silu_and_mul_adapted",
+  "entry": "vllm_silu_and_mul_adapted",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        2,
+        5
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        2,
+        10
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 2,
+    "block": 5,
+    "warp": 64
+  },
+  "fuel": [
+    128,
+    4,
+    4,
+    4
+  ]
+}
