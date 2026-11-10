@@ -1,0 +1,52 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        },
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  simp [flatten, flattenSegment, segments, program]",
+    "race_free": "by\n  refine ⟨finalState unitOps (fun _ _ => ()) (fun _ => some ()), ?_, ?_⟩\n  · rfl\n  · decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine ⟨finalState ops input outside, ?_, ?_, ?_⟩\n  · rw [segmentation_data]\n    rfl\n  · have h : (finalState ops input outside).trace = traceData := by\n      rfl\n    rw [h]\n    decide\n  · rfl"
+  }
+}

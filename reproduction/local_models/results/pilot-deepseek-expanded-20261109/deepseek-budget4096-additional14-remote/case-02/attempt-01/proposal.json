@@ -1,0 +1,52 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        },
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  rfl",
+    "race_free": "by\n  refine \u27e8finalState unitOps (fun _ _ => ()) (fun _ => some ()), ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8finalState ops input outside, ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 decide\n  \u00b7 rfl"
+  }
+}

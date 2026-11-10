@@ -22,15 +22,30 @@ Two successful `LARK_READY` warmups are protocol checks, not proof successes.
 A separate `--thinking-token-budget 4096` variant reserves output room for final
 answers. It is explicitly recorded in requests/reports and differs from the
 baseline. Its [completed DeepSeek pilot](results/pilot-deepseek-budget4096-20261109/summary.json)
-returned actual candidates: eight Lean
-checks were unproved and one proposal was rejected by the proof-slot validator;
-no certificates verified. The corresponding GLM-5.3-Flash variant is still running.
+returned actual candidates: eight Lean checks were unproved and one proposal was rejected by the proof-slot validator;
+no certificates verified in those first three cases.
 
-The GLM-5.3 full checkpoint is downloading into two owned RAM-backed directories,
-with at least 32 GiB reserved on each filesystem. `download_ranges.py` verifies
-range extents and whole-file SHA-256 before publishing each shard; `checkpoint.py`
+The [expanded DeepSeek cohort](DEEPSEEK_RESULTS.md) has now completed all 17
+reduced families at the same settings: **one depthwise-convolution certificate
+verified**, 37 actual Lean checks, 14 proposal-validation rejections, and 821,063
+reported tokens across 51 requests. Its successful exported tactics match the
+model response and passed another independent workspace recheck. This is a
+reduced-fixture result, not the paper's original pass rate or full-size kernel.
+
+The [GLM-5.3-Flash budget variant](results/pilot-glm-flash-budget4096-20261109/summary.json)
+completed one request per case: one Lean rejection and two invalid proposals,
+with 50,976 reported tokens and no certificates. Its request budget differs
+from the DeepSeek three-request cohort; these are not matched pass-rate cells.
+
+The GLM-5.3 full checkpoint has downloaded into two owned RAM-backed directories;
+all 141 weight shards and eight supporting files passed independent validation.
+The storage plan reserves at least 32 GiB on each filesystem.
+`download_ranges.py` verifies range extents and whole-file SHA-256 before publishing each shard; `checkpoint.py`
 independently validates the completed snapshot before serving. `serve_glm.py` is
-a prepared four-GPU launcher; the full model has not yet passed runtime checks.
+a prepared four-GPU launcher. The sequence waits for the original Flash pilot
+to finish, archives all completed runs, stops only the two exact owned container
+IDs and then launches the full checkpoint. Full-model runtime/proof results are
+not yet available.
 
 GLM-5.3-Flash is now running on MI350X GPUs 6/7. Its 62 weight files and nine
 supporting files passed pinned-content checks; the loopback endpoint passed
@@ -112,8 +127,11 @@ against its pinned Hugging Face LFS metadata. `serve.py` requires this completed
 record and checks selected GPUs/port before launching. `ready.py` checks the
 owned container, health endpoint and served model identity without model calls.
 
-After copying the readiness record locally, open an SSH forward in a separate
-terminal and run the experiment from the repository root:
+Run the proof controller directly on the GPU host from a checkout/source snapshot
+that includes `lark_kernels`, the Lean model and fixtures. This avoids an SSH
+forward becoming the transport dependency for a long request. Lean 4.19.0 must
+be available on that host. For an interactive local controller, a separately
+maintained SSH forward is an alternative:
 
 ```bash
 ssh -N -L 127.0.0.1:19081:127.0.0.1:19081 mi350
@@ -123,7 +141,8 @@ python reproduction/local_models/run.py \
   --case reproduction/nonlinear/cases/float16/relu \
   --case reproduction/nonlinear/cases/float16/silu \
   --case reproduction/nonlinear/cases/float16/softmax \
-  --output /tmp/lark-local-proof-study --lean /path/to/lean-4.19.0/bin/lean
+  --output /tmp/lark-local-proof-study --lean /path/to/lean-4.19.0/bin/lean \
+  --model-timeout 1800 --reasoning-effort low --thinking-token-budget 4096
 ```
 
 ## Experiment boundary

@@ -1,0 +1,34 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by rfl",
+    "race_free": "by\n  have hmem : \u2200 l : Location,\n      (initial layout (fun _ _ => ()) (fun _ => some ())).memory l = some () := by\n    intro l\n    simp only [initial]\n    by_cases hg : l.space = Space.global \u2227 l.owner = 0\n    \u00b7 obtain \u27e8_, _\u27e9 := hg\n      rcases h : layout.global[l.buffer]? with _ | b\n      \u00b7 simp [h]\n      \u00b7 rcases hr : b.role with _ | _ | _\n        \u00b7 simp [h, hr, initial]\n        \u00b7 simp [h, hr]\n        \u00b7 simp [h, hr]\n    \u00b7 simp [hg]\n  have hrun : runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ())) = some finalUnit := by\n    rfl\n  obtain \u27e8final, hsome, htrace\u27e9 := race_free\n  refine \u27e8final, hsome, ?_\u27e9\n  rw [htrace]\n  decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8finalState ops input outside, ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 rw [finalState, Option.getD_some]\n    exact race_free_of_run\n  \u00b7 rw [finalState, Option.getD_some]\n    exact extract_final ops input outside\n"
+  }
+}

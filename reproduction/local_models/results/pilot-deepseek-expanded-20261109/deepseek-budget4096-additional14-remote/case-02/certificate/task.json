@@ -1,0 +1,51 @@
+{
+  "name": "depthwise_conv_float16",
+  "entry": "nonlinear_depthwise_conv_float16",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "x",
+      "role": "input",
+      "shape": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "w",
+      "role": "input",
+      "shape": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 2,
+    "warp": 64
+  },
+  "fuel": [
+    1024,
+    16,
+    16,
+    16
+  ]
+}

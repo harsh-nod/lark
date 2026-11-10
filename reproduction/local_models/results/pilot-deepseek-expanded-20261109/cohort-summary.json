@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "status": "audited-independent-17-case-cohort",
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "cases": [
+    {
+      "case": "reproduction/nonlinear/cases/float16/batchmatmul",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/conv2d",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/depthwise_conv",
+      "outcome": "verified",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/ffn",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/flash_attn",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/gelu",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/gemm",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/gemv",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/gqa",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/layernorm",
+      "outcome": "invalid-proposals",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/linear",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/relu",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/rmsnorm",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/rope",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/silu",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/softmax",
+      "outcome": "unproved",
+      "requests": 3
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/swiglu",
+      "outcome": "unproved",
+      "requests": 3
+    }
+  ],
+  "case_outcomes": {
+    "unproved": 15,
+    "verified": 1,
+    "invalid-proposals": 1
+  },
+  "verified_certificates": [
+    {
+      "case": "reproduction/nonlinear/cases/float16/depthwise_conv",
+      "certificate": "results/pilot-deepseek-expanded-20261109/deepseek-budget4096-additional14-remote/case-02/certificate",
+      "model_response_matches_exported_proposal": true,
+      "independently_rechecked": true,
+      "recheck_log_sha256": "bb27016317cc3b558c2cd5cda56d89cc51988d8822d2124f18e82f3772a265f0"
+    }
+  ],
+  "call_outcomes": {
+    "unproved": 36,
+    "invalid-proposal": 14,
+    "proved": 1
+  },
+  "requests": 51,
+  "responses": 51,
+  "lean_checks": 37,
+  "usage_incomplete": false,
+  "reported_usage": {
+    "prompt_tokens": 602341,
+    "completion_tokens": 218722,
+    "total_tokens": 821063
+  },
+  "reported_reasoning_tokens": 208896,
+  "attempts_per_case": 3,
+  "max_tokens": 16384,
+  "thinking_token_budget": 4096,
+  "seed": 261102028,
+  "temperature": 0,
+  "external_api_spend_usd": 0,
+  "source_runs": [
+    "results/pilot-deepseek-budget4096-20261109/deepseek-budget4096-remote",
+    "results/pilot-deepseek-expanded-20261109/deepseek-budget4096-additional14-remote"
+  ],
+  "scope": "Independent reduced HIP fixtures and immutable three-proof-slot harness; two disjoint case batches with matching settings. Not original registry/kernels, forty-check agent harness, endpoints, failure diagnosis, pass rates or stage costs. Unproved is not a kernel-bug verdict."
+}

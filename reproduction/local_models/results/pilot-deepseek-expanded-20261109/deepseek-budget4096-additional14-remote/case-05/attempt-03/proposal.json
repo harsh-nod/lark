@@ -1,0 +1,25 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  rfl",
+    "race_free": "by\n  refine \u27e8(runLaunch unitOps layout geometry fuel program\n    (initial layout (fun _ _ => ()) (fun _ => some ()))).getD\n    (initial layout (fun _ _ => ()) (fun _ => some ())), ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8(runLaunch ops layout geometry fuel (flatten segments)\n    (initial layout input outside)).getD (initial layout input outside), ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 decide\n  \u00b7 rfl"
+  }
+}

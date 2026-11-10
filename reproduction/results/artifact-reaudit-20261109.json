@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-11-10T03:55:22.565589+00:00",
+  "scope": "Repeated bounded public GitHub searches and the previously linked KernelCraft repository; not an exhaustive search or evidence of global unavailability. Our independent repository is excluded from original-artifact claims.",
+  "model_calls": 0,
+  "queries": [
+    {
+      "command": [
+        "gh",
+        "search",
+        "repos",
+        "LARK Lean GPU",
+        "--limit",
+        "100",
+        "--json",
+        "fullName,description,url"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "search",
+        "repos",
+        "\"Lean-Assisted Reasoning\"",
+        "--limit",
+        "100",
+        "--json",
+        "fullName,description,url"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft",
+        "--jq",
+        "{full_name,size,default_branch,pushed_at,html_url}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"default_branch\":\"main\",\"full_name\":\"AICrossSim/KernelCraft\",\"html_url\":\"https://github.com/AICrossSim/KernelCraft\",\"pushed_at\":\"2026-05-28T14:28:08Z\",\"size\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft/contents"
+      ],
+      "exit_code": 1,
+      "stdout": "{\"message\":\"This repository is empty.\",\"documentation_url\":\"https://docs.github.com/v3/repos/contents/#get-contents\",\"status\":\"404\"}",
+      "stderr": "gh: This repository is empty. (HTTP 404)\n"
+    }
+  ],
+  "primary_web_checks": [
+    {
+      "url": "https://arxiv.org/abs/2611.02028",
+      "observation": "Only v1 (2026-11-01) listed in the submission history."
+    },
+    {
+      "url": "https://kernelcraft-cam.github.io/",
+      "observation": "The code entry is marked Coming Soon."
+    },
+    {
+      "url": "https://github.com/AICrossSim/KernelCraft",
+      "observation": "The repository page reports an empty repository; independently confirmed by the GitHub API records."
+    },
+    {
+      "url": "https://jiaeenie.github.io/",
+      "observation": "The visible LARK publication entry links arXiv; it does not expose an implementation link."
+    }
+  ]
+}
