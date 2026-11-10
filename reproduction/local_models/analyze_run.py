@@ -78,7 +78,7 @@ def analyze(root):
         "usage_incomplete": report["usage_incomplete"],
         "reported_usage": usage,
         "reported_reasoning_tokens": sum(
-            r.get("usage", {}).get("completion_tokens_details", {}).get("reasoning_tokens", 0)
+            (r.get("usage", {}).get("completion_tokens_details") or {}).get("reasoning_tokens", 0)
             for r in receipts
             if isinstance(r.get("usage"), dict)
         ),

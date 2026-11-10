@@ -5,6 +5,10 @@ harness, kernels, model endpoints or reported pass rates/token costs. Real model
 responses, including unsuccessful attempts, are archived separately from client
 integration tests that use an explicit stub.
 
+The [17-fixture comparison audit](COMPARISON_METHOD.md) reconstructs complete
+request histories, separates first attempts from retries, and reruns every
+model-generated certificate. Its combined result is pending the running cohorts.
+
 [DeepSeek-V4.1-Flash-1017 runtime and completed pilot](results/runtime-deepseek-20261109/)
 now include 48 hash-checked weight shards, 31 supporting files, a healthy TP=4
 MI350X endpoint and real requests/responses. Nine baseline requests across ReLU,
