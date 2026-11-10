@@ -176,7 +176,7 @@ example : nonassociativeOps.add (nonassociativeOps.add 1 2) 3 =
             "WaveSum",
         )
     ]
-    names += ["lean-real/LarkReal/WaveSum.lean"]
+    names += ["lean-real/LarkReal/WaveSum.lean", "lean-real/LarkReal/OnlineSoftmax.lean"]
     names += ["lean/lean-toolchain", "lean/lakefile.toml", "LICENSE"]
     for name in names:
         dest = source / name
