@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "claim": "actual per-thread scalar prefix through PC 18, before native shuffle execution",
+  "whole_launch_proved": false,
+  "certificates": 0,
+  "scalar_instructions_per_thread": 115,
+  "lane_fuel": 256,
+  "quantification": "every allowed thread, input and initial outside state",
+  "properties": [
+    "execution to the first shuffle",
+    "ordered 16-term accumulator",
+    "native row/lane/warp indices",
+    "input-read access classification",
+    "unchanged memory and epochs",
+    "other-thread preservation"
+  ],
+  "lean_version": "4.19.0",
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_binding_controls": "baseline accepted; four changed programs rejected; program identity only",
+  "base_commit": "0a41b48795dab56b9bb381951345b293b9b39a9f",
+  "command": "lake build Lark.NativeRmsNormPrefix"
+}

@@ -48,6 +48,16 @@ classification and produce that value for every input and allowed outside state.
 The four direct Lean controls reject program identity changes, not entire
 semantic kernel correctness statements.
 
+The subsequent [execution prefix](../../lean/Lark/NativeRmsNormPrefix.lean)
+proves that the actual scalar source instructions execute for every allowed
+thread, input and initial outside state, stopping at the first shuffle (PC 18)
+within the declared lane fuel. It proves the ordered 16-term value in register
+0, native row/lane/warp indices, unchanged memory and synchronization epochs,
+preservation of other threads, and classification of every prefix access as an
+input read. The proof uses the original two vector iterations and eight-component
+inner loop, with 115 scalar instructions per thread. This is a component of the
+pending whole-launch proof and adds no RMSNorm certificate.
+
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside
 the checkout. Extract `gpu-input.tar.gz` and either host archive into separate

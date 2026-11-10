@@ -52,8 +52,10 @@ The [native RMSNorm development study](reproduction/production_rmsnorm/RESULTS.m
 adds partial-cohort shuffle and reduction proof components plus native
 1,024-thread comparisons at width 16,384. Both MI350X hosts passed numerical
 tolerance checks, with signed-zero and one-half-ULP differences recorded.
-The intended value has a canonical-real proof; the complete source execution
-and access-classification proofs remain pending, so this adds zero certificates.
+The intended value has a canonical-real proof. The actual per-thread prefix is
+proved through the first shuffle, including its ordered 16-term accumulation
+and input-read classification. The remaining reduction and output execution
+proofs are pending, so this adds zero certificates.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

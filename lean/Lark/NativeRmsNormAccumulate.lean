@@ -224,6 +224,61 @@ theorem components_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
       apply ih
       exact component_good p ops input row vector component t acc s good
 
+theorem component_index_other (ops : Ops α) (input : Nat → Nat → α)
+    (row vector component t reg : Nat) (acc : α) (s : State α) (hr : reg ≠ 6) :
+    (componentAfter ops input row vector component t acc s).indices t reg = s.indices t reg := by
+  simp [componentAfter, setIndex, setReg, record, advance, hr]
+
+theorem components_pc (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining : Nat) (acc : α) (s : State α) :
+    (componentsRun ops input row vector t component remaining acc s).pc t = 16 := by
+  induction remaining generalizing component acc s with
+  | zero => simp [componentsRun, advance]
+  | succ remaining ih => exact ih _ _ _
+
+theorem components_index_other (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining reg : Nat) (acc : α) (s : State α) (hr : reg ≠ 6) :
+    (componentsRun ops input row vector t component remaining acc s).indices t reg = s.indices t reg := by
+  induction remaining generalizing component acc s with
+  | zero => rfl
+  | succ remaining ih =>
+      exact (ih _ _ _).trans (component_index_other ops input row vector component t reg acc s hr)
+
+theorem components_counter (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining : Nat) (acc : α) (s : State α)
+    (hi : s.indices t 6 = some (component : Int)) :
+    (componentsRun ops input row vector t component remaining acc s).indices t 6 =
+      some ((component + remaining : Nat) : Int) := by
+  induction remaining generalizing component acc s with
+  | zero => exact hi
+  | succ remaining ih =>
+      have h := ih (component + 1) (ops.add acc (termAt ops input row vector component))
+        (componentAfter ops input row vector component t acc s)
+        (component_fields ops input row vector component t acc s).2.2.2.1
+      simpa only [Nat.add_assoc, Nat.add_comm 1 remaining] using h
+
+theorem components_other (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining u : Nat) (acc : α) (s : State α) (hu : u ≠ t) :
+    (componentsRun ops input row vector t component remaining acc s).pc u = s.pc u ∧
+    (componentsRun ops input row vector t component remaining acc s).indices u = s.indices u ∧
+    (componentsRun ops input row vector t component remaining acc s).regs u = s.regs u := by
+  induction remaining generalizing component acc s with
+  | zero => simp [componentsRun, advance, hu]
+  | succ remaining ih =>
+      have h := ih (component + 1) (ops.add acc (termAt ops input row vector component))
+        (componentAfter ops input row vector component t acc s)
+      have hs := component_other ops input row vector component t u acc s hu
+      exact ⟨h.1.trans hs.1, h.2.1.trans hs.2.1, h.2.2.trans hs.2.2⟩
+
+theorem componentFold_foldl (ops : Ops α) (input : Nat → Nat → α)
+    (row vector component remaining : Nat) (acc : α) :
+    componentFold ops input row vector component remaining acc =
+      (List.range' component remaining).foldl
+        (fun value j => ops.add value (termAt ops input row vector j)) acc := by
+  induction remaining generalizing component acc with
+  | zero => rfl
+  | succ remaining ih => simp only [componentFold, List.range'_succ, List.foldl_cons, ih, Nat.add_comm 1]
+
 #print axioms component_cycle
 #print axioms component_fields
 #print axioms component_good
