@@ -1,0 +1,19 @@
+Main.lean:425:5: error: tactic 'rfl' failed, the left-hand side
+  flatten segments
+is not definitionally equal to the right-hand side
+  program
+⊢ flatten segments = program
+Main.lean:443:21: error: tactic 'introN' failed, insufficient number of binders
+α : Type
+ops✝ : Ops α
+ops : Nat → Nat → α
+input : Location → Option α
+⊢ ∃ final,
+    runLaunch ops✝ layout geometry fuel (flatten segments) (initial layout ops input) = some final ∧
+      raceFree geometry final.trace = true ∧ extract layout final = some (spec ops✝ ops)
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' does not depend on any axioms
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

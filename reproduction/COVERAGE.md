@@ -20,7 +20,9 @@ The [completed Flash cohort and two-model audit](local_models/results/model-comp
 cover the same 17 first requests as DeepSeek: zero first-attempt certificates
 for either model; Flash used 312,772 tokens and reached Lean seven times.
 Full GLM's initial three-case batch finished with one SiLU certificate, five
-Lean checks and 124,057 tokens; its remaining 14 fixtures are still running. A separate
+Lean checks and 124,057 tokens. Its first additional seven-case batch finished
+with zero certificates, 11 unproved Lean checks, ten invalid proposals and
+385,120 tokens; the second seven-case batch is still running. A separate
 [comments-only replay](local_models/COMMENT_REPLAY_RESULTS.md) produced no new
 certificates and did not alter the raw model results.
 

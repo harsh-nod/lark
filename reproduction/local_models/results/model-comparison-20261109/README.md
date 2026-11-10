@@ -25,7 +25,11 @@ complete: seven requests, 124,057 reported tokens, five actual Lean checks,
 one verified SiLU certificate and two unproved cases. The
 [completed-batch audit](progress/glm53-first3-completed-audit.json) reconstructs
 all histories, matches these three first requests against the completed models,
-and freshly rechecks SiLU. Both additional seven-case batches remain live.
+and freshly rechecks SiLU. The first additional seven-case batch is now
+[complete](glm53-budget4096-half-a-remote/results.json): 21 requests/responses,
+385,120 reported tokens, 11 unproved Lean checks and ten invalid proposals, with
+zero certificates. Its [raw-history and statement audit](progress/glm53-half-a-completed-audit.json)
+passes. The second seven-case batch remains live.
 This is a three-case batch, not a completed 17-fixture full-model rate.
 
 The first-attempt SiLU proof's [completed case](glm53-budget4096-remote/case-01/result.json), exact
