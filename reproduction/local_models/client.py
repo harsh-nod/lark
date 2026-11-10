@@ -37,6 +37,20 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         raise urllib.error.HTTPError(req.full_url, code, "Redirects are refused", headers, fp)
 
 
+def check_health(url, model, timeout=10):
+    endpoint(url)
+    base = url.removesuffix("/v1/chat/completions")
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
+    with opener.open(base + "/health", timeout=timeout) as response:
+        if response.status != 200:
+            raise ValueError("Model endpoint is not healthy")
+    with opener.open(base + "/v1/models", timeout=timeout) as response:
+        models = json.load(response)
+    if model not in {item["id"] for item in models["data"]}:
+        raise ValueError("Live endpoint serves a different model family")
+    return models
+
+
 def call(
     url,
     model,

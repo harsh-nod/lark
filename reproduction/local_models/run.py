@@ -105,9 +105,17 @@ def run_case(case, output, args, server):
             )
             if no_content:
                 feedback = "The previous response returned no final proof content. Submit concise JSON tactic candidates; Lean will check them."
+            else:
+                try:
+                    client.check_health(args.url, args.model)
+                except Exception as health_error:
+                    result["status"] = "runtime-unavailable"
+                    row["runtime_health_error"] = str(health_error)
             result["calls"].append(row)
             write(output / "result.json", result)
             print(json.dumps({"case": case.name, **row}), flush=True)
+            if result["status"] == "runtime-unavailable":
+                return result
             continue
         try:
             candidate = client.proposal(content)
@@ -208,11 +216,24 @@ def main():
         "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",
     }
     for i, case in enumerate(args.case):
+        try:
+            report["live_models"] = client.check_health(args.url, args.model)
+        except Exception as error:
+            report.update(status="runtime-unavailable", health_error=str(error))
+            write(args.output / "results.json", report)
+            print(json.dumps({"status": "runtime-unavailable", "error": str(error)}), flush=True)
+            return
         report["cases"].append(
             run_case(case.resolve(), args.output / f"case-{i:02d}", args, server)
         )
         write(args.output / "results.json", report)
-    report["status"] = "finished"
+        if report["cases"][-1]["status"] == "runtime-unavailable":
+            break
+    report["status"] = (
+        "runtime-unavailable"
+        if any(r["status"] == "runtime-unavailable" for r in report["cases"])
+        else "finished"
+    )
     receipts = [
         json.loads(path.read_text()) for path in args.output.glob("case-*/attempt-*/receipt.json")
     ]

@@ -10,6 +10,7 @@ import tempfile
 import threading
 import unittest
 import urllib.error
+import sys
 from unittest.mock import patch
 
 from reproduction.local_models import client
@@ -41,6 +42,11 @@ class LocalClientTests(unittest.TestCase):
             redirect = False
             empty = False
             seen = None
+
+            def do_GET(self):
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(json.dumps({"data": [{"id": "zai-org/GLM-5.3-Flash"}]}).encode())
 
             def do_POST(self):
                 request = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
@@ -76,6 +82,12 @@ class LocalClientTests(unittest.TestCase):
         try:
             with tempfile.TemporaryDirectory() as tmp:
                 url = f"http://127.0.0.1:{server.server_port}/v1/chat/completions"
+                self.assertEqual(
+                    client.check_health(url, "zai-org/GLM-5.3-Flash")["data"][0]["id"],
+                    "zai-org/GLM-5.3-Flash",
+                )
+                with self.assertRaises(ValueError):
+                    client.check_health(url, "zai-org/GLM-5.3")
                 target = Path(tmp) / "success"
                 self.assertEqual(
                     client.call(url, "zai-org/GLM-5.3-Flash", [], target, reasoning_effort="low"),
@@ -141,6 +153,45 @@ class LocalClientTests(unittest.TestCase):
             self.assertEqual(result["status"], "no-proof-content")
             self.assertEqual(result["calls"][0]["status"], "no-proof-content")
             checked.assert_not_called()
+
+    def test_dead_runtime_stops_before_any_model_request(self):
+        from reproduction.local_models.run import main
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            server = root / "server.json"
+            server.write_text(
+                json.dumps(
+                    {"model": "zai-org/GLM-5.3-Flash", "revision": "fixture", "status": "ready"}
+                )
+            )
+            dest = root / "result"
+            argv = [
+                "run.py",
+                "--url",
+                "http://127.0.0.1:1/v1/chat/completions",
+                "--model",
+                "zai-org/GLM-5.3-Flash",
+                "--server-record",
+                str(server),
+                "--case",
+                "unused",
+                "--output",
+                str(dest),
+                "--lean",
+                "/unused/lean",
+            ]
+            with (
+                patch.object(sys, "argv", argv),
+                patch.object(client, "check_health", side_effect=ConnectionRefusedError("fixture")),
+                patch.object(client, "call") as model_call,
+                contextlib.redirect_stdout(io.StringIO()),
+            ):
+                main()
+            result = json.loads((dest / "results.json").read_text())
+            self.assertEqual(result["status"], "runtime-unavailable")
+            self.assertEqual(result["cases"], [])
+            model_call.assert_not_called()
 
     @unittest.skipUnless(LEAN, "Lean is needed")
     def test_stub_proposal_gets_an_independently_checked_certificate(self):
