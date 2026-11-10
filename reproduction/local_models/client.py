@@ -62,12 +62,19 @@ def call(
     max_tokens=16384,
     timeout=600,
     reasoning_effort="max",
+    thinking_token_budget=None,
 ):
     endpoint(url)
     if model not in MODELS:
         raise ValueError("Only the original paper's named open-weight model families are allowed")
     if reasoning_effort not in {"low", "high", "max"}:
         raise ValueError("GLM reasoning effort must be low, high or max")
+    if thinking_token_budget is not None and (
+        type(thinking_token_budget) is not int
+        or thinking_token_budget < 0
+        or thinking_token_budget >= max_tokens
+    ):
+        raise ValueError("Thinking budget must be a nonnegative integer smaller than max_tokens")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     body = {
@@ -80,6 +87,8 @@ def call(
     }
     if model.startswith("zai-org/"):
         body["reasoning_effort"] = reasoning_effort
+    if thinking_token_budget is not None:
+        body["thinking_token_budget"] = thinking_token_budget
     encoded = json.dumps(body, ensure_ascii=False).encode("utf-8")
     (output / "request.json").write_bytes(encoded)
     record = {

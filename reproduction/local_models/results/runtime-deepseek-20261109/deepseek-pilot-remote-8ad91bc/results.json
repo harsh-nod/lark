@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "experiment": "independent-local-model-proof-proposals",
+  "timestamp_utc": "2026-11-10T02:55:31.893624+00:00",
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "server_record_sha256": "ce7049c8887d8a556a15c9a4c6d85221e5931211667c8463a5915c308298fcbd",
+  "runner_sha256": "36e02b42317eedaec52f2f5337102cd2b23b674e5f66f876b2bad62b276cc3de",
+  "client_sha256": "8746b6c1c7b264492729b1236c242c3f097c5526577d59e30c30a19bb525114d",
+  "seed": 261102028,
+  "temperature": 0,
+  "max_tokens": 16384,
+  "attempts_per_case": 3,
+  "model_timeout_seconds": 1800.0,
+  "lean_timeout_seconds": 150,
+  "reasoning_effort": null,
+  "external_api_spend_usd": 0,
+  "cases": [
+    {
+      "case": "reproduction/nonlinear/cases/float16/relu",
+      "status": "no-proof-content",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 130.49384141201153
+        },
+        {
+          "attempt": 2,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 133.56654373602942
+        },
+        {
+          "attempt": 3,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 124.24260953627527
+        }
+      ],
+      "source_sha256": "9f58742a646cc9334dbda5ccfe500d46f1273732ea5f319dc354eb23e1de2739",
+      "reference_sha256": "ee476cd5f50f3d304369c3522eb7dc31a0d0faa34ccf9e3d1aed28ea085265c3",
+      "task_sha256": "9b9ca28996ca2b79ce3a49ff9d8d8fc99aa3a48c8c689484a85d6d26bc21992f",
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/silu",
+      "status": "no-proof-content",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 120.93022212432697
+        },
+        {
+          "attempt": 2,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 118.94260196061805
+        },
+        {
+          "attempt": 3,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 120.51757404673845
+        }
+      ],
+      "source_sha256": "cbac42b1967eba8ac96ca3fdbb808cbfc1f2e385efaf5d27582f4295ca5e61fc",
+      "reference_sha256": "6b045b63f73bf3ca2ffb3f0f7410163d76eb0f6d8d9fa7d4dc968f972c92912d",
+      "task_sha256": "99d887c2ff3838507aa5e5989ee0667f34bdc4abd19ea111d22fdfa30029d492",
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/softmax",
+      "status": "no-proof-content",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 128.74974477104843
+        },
+        {
+          "attempt": 2,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 126.36448193108663
+        },
+        {
+          "attempt": 3,
+          "status": "no-proof-content",
+          "error": "Model produced no proof content",
+          "elapsed_seconds": 131.2119421157986
+        }
+      ],
+      "source_sha256": "0478c3e7f4fc1a552c890d6f5634ed0a0fff663ffc7d0631049670dc92b281f6",
+      "reference_sha256": "b79fed2a9ac20899cf22e835527f846140bda25964f94a288135062d64af31e2",
+      "task_sha256": "5a08ee20bbd426e8f7b4e68a04d0b7f960cab69bff2789f59674c662c30f96ef",
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170"
+    }
+  ],
+  "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",
+  "live_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+        "object": "model",
+        "created": 1794280080,
+        "owned_by": "vllm",
+        "root": "/model-cache/models--deepseek-ai--DeepSeek-V4.1-Flash-1017/snapshots/1bae0e1088993b9b82de08f59de5be5a34e42170",
+        "parent": null,
+        "max_model_len": 65536,
+        "permission": [
+          {
+            "id": "modelperm-a69a971238eaaf60",
+            "object": "model_permission",
+            "created": 1794280080,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "status": "finished",
+  "request_attempts": 9,
+  "inference_responses": 9,
+  "usage_incomplete": false,
+  "reported_usage": {
+    "prompt_tokens": 84360,
+    "completion_tokens": 147456,
+    "total_tokens": 231816
+  }
+}

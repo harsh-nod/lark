@@ -1,0 +1,31 @@
+{
+  "pid": 3066536,
+  "args": [
+    "python3",
+    "-m",
+    "reproduction.local_models.run",
+    "--url",
+    "http://127.0.0.1:19083/v1/chat/completions",
+    "--model",
+    "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "--server-record",
+    "/tmp/lark-local-models-20261109/deepseek-server-v2.json",
+    "--case",
+    "reproduction/nonlinear/cases/float16/relu",
+    "--output",
+    "/tmp/lark-local-models-20261109/deepseek-relu-32768-remote-8ad91bc",
+    "--lean",
+    "/dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean",
+    "--attempts",
+    "1",
+    "--max-tokens",
+    "32768",
+    "--model-timeout",
+    "1800",
+    "--lean-timeout",
+    "150"
+  ],
+  "cwd": "/dev/shm/lark-proof-controller-20261109/source",
+  "started_utc": "2026-11-10T03:11:17.655557+00:00",
+  "scope": "Separate higher-output-budget single-case variant, not baseline pass rate. Frozen 8ad91bc controller."
+}

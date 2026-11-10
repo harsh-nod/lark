@@ -2,13 +2,14 @@
 
 **The paper has not been fully reproduced.** Independent experiments are separate
 from the authors' reported results. Kernel studies used zero model calls. Free
-local GLM inference is now running as a separate adapted experiment; no paid
+local GLM and DeepSeek inference is now running as a separate adapted experiment; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
 [Offline model experiment preparation](local_models/README.md) now identifies
 official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
 This makes local adaptations possible; it does not recover the original harness
-or hosted-model outcomes. No real-model proof results are published yet.
+or hosted-model outcomes. A completed DeepSeek pilot and token receipts are published; no model-generated
+certificate has verified.
 
 Paper: [LARK, arXiv:2611.02028v1](https://arxiv.org/abs/2611.02028v1).
 Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
@@ -33,8 +34,8 @@ Studies: [CPU/MI300X](RESULTS.md), [nonlinear/MI350X](nonlinear/RESULTS.md),
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics and failed proof artifacts | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise flat/induction timing comparison | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
 | Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, and connected attention through 4,096-token rows / 1,048,576-wide projections | Original kernels, tiled/online attention, original token/time measurements |
-| Model size versus pass rates/tokens (A.4.6) | Three official checkpoints identified; one free local GLM-5.3-Flash proof pilot underway | Original model versions, harness, token accounting and runs; local adaptation is separate |
-| Stage token costs (A.4.3) | Local warmup token receipt; adapted proof-pilot receipts being recorded | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
+| Model size versus pass rates/tokens (A.4.6) | Three official checkpoints identified; two locally served, completed DeepSeek reduced pilot and GLM-5.3-Flash pilot underway | Original model versions, harness, token accounting and runs; local adaptation is separate |
+| Stage token costs (A.4.3) | Local warmup receipts and nine completed DeepSeek proof-pilot receipts (231,816 total tokens; reasoning only); bounded-reasoning variant records actual Lean checks | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
 | Refusal census and hard Level-1 tasks (A.4.2/A.4.5) | Strict refusals; full-size independent BatchMatmul/DepthwiseConv certificates and device checks | Original failed runs/statements; smaller proofs do not contradict the paper's model outcomes |
 | Race-freedom fallback (A.4.7) | llm.c conflict witness and generic pointwise ownership proof | Original fallback conversations, second opinions and token costs |
 | Latencies/speedups (A.4.10, Table 14/Figure 7) | Independent 17-workload FP16 numerical checks and eager/compiled timings on MI300X/MI350X | Authors' optimized kernels/reference contracts, fastest vendor baselines, H100 for original PTX/CUDA cells |

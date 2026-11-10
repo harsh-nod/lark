@@ -92,6 +92,7 @@ def run_case(case, output, args, server):
                 max_tokens=args.max_tokens,
                 timeout=args.model_timeout,
                 reasoning_effort=getattr(args, "reasoning_effort", "max"),
+                thinking_token_budget=getattr(args, "thinking_token_budget", None),
             )
         except Exception as error:
             no_content = (
@@ -181,10 +182,19 @@ def main():
     p.add_argument("--model-timeout", type=float, default=600)
     p.add_argument("--lean-timeout", type=float, default=150)
     p.add_argument("--reasoning-effort", choices=("low", "high", "max"), default="max")
+    p.add_argument(
+        "--thinking-token-budget",
+        type=int,
+        help="Optional vLLM reasoning-token limit; recorded as a separate experiment setting",
+    )
     args = p.parse_args()
     client.endpoint(args.url)
     if not 1 <= args.attempts <= 16:
         p.error("attempts must be 1..16")
+    if args.thinking_token_budget is not None and (
+        args.thinking_token_budget < 0 or args.thinking_token_budget >= args.max_tokens
+    ):
+        p.error("thinking-token-budget must be nonnegative and smaller than max-tokens")
     server = json.loads(args.server_record.read_text())
     if (
         server["model"] != args.model
@@ -211,6 +221,7 @@ def main():
         "model_timeout_seconds": args.model_timeout,
         "lean_timeout_seconds": args.lean_timeout,
         "reasoning_effort": args.reasoning_effort if args.model.startswith("zai-org/") else None,
+        "thinking_token_budget": args.thinking_token_budget,
         "external_api_spend_usd": 0,
         "cases": [],
         "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",

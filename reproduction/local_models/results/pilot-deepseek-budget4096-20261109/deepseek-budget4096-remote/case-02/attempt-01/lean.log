@@ -1,0 +1,83 @@
+Main.lean:425:5: error: tactic 'rfl' failed, the left-hand side
+  flatten segments
+is not definitionally equal to the right-hand side
+  program
+⊢ flatten segments = program
+Main.lean:440:9: error: don't know how to synthesize implicit argument 'b'
+  @And.intro
+    (runLaunch unitOps layout geometry fuel program (initial layout (fun x x => ()) fun x => some ()) = some ?m.77155)
+    (raceFree geometry (State.trace ?m.77155) = true) ?m.77167 ?m.77168
+context:
+⊢ Prop
+Main.lean:440:9: error: don't know how to synthesize implicit argument 'a'
+  @And.intro
+    (runLaunch unitOps layout geometry fuel program (initial layout (fun x x => ()) fun x => some ()) = some ?m.77155)
+    (raceFree geometry (State.trace ?m.77155) = true) ?m.77167 ?m.77168
+context:
+⊢ Prop
+Main.lean:440:10: error: don't know how to synthesize placeholder for argument 'w'
+context:
+⊢ State Unit
+Main.lean:439:2: error: unsolved goals
+⊢ ∃ final,
+    runLaunch unitOps layout geometry fuel program (initial layout (fun x x => ()) fun x => some ()) = some final ∧
+      raceFree geometry final.trace = true
+Main.lean:448:9: error: don't know how to synthesize implicit argument 'b'
+  @And.intro (runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) = some ?m.77188)
+    (raceFree geometry (State.trace ?m.77188) = true ∧ extract layout ?m.77188 = some (spec ops input)) ?m.77200
+    ⟨?m.77209, ?m.77210⟩
+context:
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ Prop
+Main.lean:448:9: error: don't know how to synthesize implicit argument 'a'
+  @And.intro (runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) = some ?m.77188)
+    (raceFree geometry (State.trace ?m.77188) = true ∧ extract layout ?m.77188 = some (spec ops input)) ?m.77200
+    ⟨?m.77209, ?m.77210⟩
+context:
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ Prop
+Main.lean:448:9: error: don't know how to synthesize implicit argument 'b'
+  @And.intro (raceFree geometry (State.trace ?m.77188) = true) (extract layout ?m.77188 = some (spec ops input))
+    ?m.77209 ?m.77210
+context:
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ Prop
+Main.lean:448:9: error: don't know how to synthesize implicit argument 'a'
+  @And.intro (raceFree geometry (State.trace ?m.77188) = true) (extract layout ?m.77188 = some (spec ops input))
+    ?m.77209 ?m.77210
+context:
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ Prop
+Main.lean:448:10: error: don't know how to synthesize placeholder for argument 'w'
+context:
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ State α
+Main.lean:446:2: error: unsolved goals
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ ∃ final,
+    runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) = some final ∧
+      raceFree geometry final.trace = true ∧ extract layout final = some (spec ops input)
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' depends on axioms: [sorryAx]
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

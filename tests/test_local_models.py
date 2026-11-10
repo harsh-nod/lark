@@ -90,10 +90,18 @@ class LocalClientTests(unittest.TestCase):
                     client.check_health(url, "zai-org/GLM-5.3")
                 target = Path(tmp) / "success"
                 self.assertEqual(
-                    client.call(url, "zai-org/GLM-5.3-Flash", [], target, reasoning_effort="low"),
+                    client.call(
+                        url,
+                        "zai-org/GLM-5.3-Flash",
+                        [],
+                        target,
+                        reasoning_effort="low",
+                        thinking_token_budget=128,
+                    ),
                     "{}",
                 )
                 self.assertEqual(Handler.seen["reasoning_effort"], "low")
+                self.assertEqual(Handler.seen["thinking_token_budget"], 128)
                 record = json.loads((target / "receipt.json").read_text())
                 self.assertEqual(record["usage"]["completion_tokens"], 3)
                 self.assertEqual(record["external_api_spend_usd"], 0)

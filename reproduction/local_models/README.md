@@ -1,9 +1,36 @@
 # Offline local-model experiments
 
 This is an **independent proof-slot experiment**, not the paper's original agent
-harness, kernels, model endpoints or reported pass rates/token costs. Real-model
-proof results have not yet been recorded here. Client integration tests use an
-explicit stub and are not model evidence.
+harness, kernels, model endpoints or reported pass rates/token costs. Real model
+responses, including unsuccessful attempts, are archived separately from client
+integration tests that use an explicit stub.
+
+[DeepSeek-V4.1-Flash-1017 runtime and completed pilot](results/runtime-deepseek-20261109/)
+now include 48 hash-checked weight shards, 31 supporting files, a healthy TP=4
+MI350X endpoint and real requests/responses. Nine baseline requests across ReLU,
+SiLU and Softmax used 84,360 prompt and 147,456 completion tokens. All completion
+tokens were reported as reasoning: **zero final proofs and zero Lean checks**.
+A separate 32,768-token ReLU probe also returned no final proof. These are
+reasoning-only outcomes, not Lean proof rejections or the paper's pass rates.
+
+The first owned DeepSeek container failed before inference because an optional
+INT4 QuickAllReduce implementation lacked its expected `compile` method. The
+archived v2 launcher uses standard RCCL collectives; checkpoint/image pins remain
+the same. `serve_deepseek.py` matches that successfully executed v2 launcher.
+Two successful `LARK_READY` warmups are protocol checks, not proof successes.
+
+A separate `--thinking-token-budget 4096` variant reserves output room for final
+answers. It is explicitly recorded in requests/reports and differs from the
+baseline. Its [completed DeepSeek pilot](results/pilot-deepseek-budget4096-20261109/summary.json)
+returned actual candidates: eight Lean
+checks were unproved and one proposal was rejected by the proof-slot validator;
+no certificates verified. The corresponding GLM-5.3-Flash variant is still running.
+
+The GLM-5.3 full checkpoint is downloading into two owned RAM-backed directories,
+with at least 32 GiB reserved on each filesystem. `download_ranges.py` verifies
+range extents and whole-file SHA-256 before publishing each shard; `checkpoint.py`
+independently validates the completed snapshot before serving. `serve_glm.py` is
+a prepared four-GPU launcher; the full model has not yet passed runtime checks.
 
 GLM-5.3-Flash is now running on MI350X GPUs 6/7. Its 62 weight files and nine
 supporting files passed pinned-content checks; the loopback endpoint passed

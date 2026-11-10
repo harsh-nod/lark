@@ -1,0 +1,25 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  simp [flatten, flattenSegment, segments, program]",
+    "race_free": "by\n  refine \u27e8_, rfl, ?_\u27e9\n  decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8_, rfl, ?_, ?_\u27e9\n  \u00b7 decide\n  \u00b7 simp [extract, spec, layout, program, segments, flatten, flattenSegment, runLaunch, runGrid, runBlock, runWarp, runLane, converged, parked, resume, bumpEpoch, warpThreads, blockThreads, initial, location, evalIndex, evalExpr, evalPredicate, execute, advance, record, applyBinary, applyUnary, int32, geometry, fuel, sameLocation, conflict, ordered, raceFree, traceData]\n    decide"
+  }
+}
