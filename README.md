@@ -34,6 +34,8 @@ machine: [ReLU/SiLU/GELU](reproduction/pointwise/README.md),
 These are independent programs at all twelve Level-1 and five Level-2 workload
 shapes. The dense SDPA adaptation does not implement FlashAttention's online
 algorithm or the original optimized PTX kernel.
+The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
+certificates and 170 exact-source trials per host.
 Every profile has separate CUDA/HIP certificates and exact-source HIP checks on
 both MI350X hosts. The scalar programs and one-thread blocks differ from the
 paper's optimized programs and launches.

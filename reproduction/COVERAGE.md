@@ -5,6 +5,10 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is now running as a separate adapted experiment; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
+[Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
+trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
+independent adaptations, not completeness of the original paper.
+
 [Offline model experiment preparation](local_models/README.md) now identifies
 official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
 This makes local adaptations possible; it does not recover the original harness

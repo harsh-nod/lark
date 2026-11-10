@@ -1,0 +1,426 @@
+{
+  "schema": 1,
+  "scope": "Independent scalar CUDA/HIP contracts at all 17 paper workload shapes. Algorithms, launch layouts, references and proof harness differ from the original registry. Dense SDPA is not the FlashAttention online algorithm. Abstract-operation proofs and finite numerical checks remain separate.",
+  "original_paper_fully_reproduced": false,
+  "kernel_study_model_calls": 0,
+  "full_shape_certificates": 34,
+  "families": [
+    {
+      "family": "ReLU",
+      "study": "pointwise",
+      "evidence": "pointwise/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "2c785f41ea2b85982c2a039dc76a85bc88ad14af80329f29dbecaad15ad6b3fb"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "2c785f41ea2b85982c2a039dc76a85bc88ad14af80329f29dbecaad15ad6b3fb"
+        }
+      }
+    },
+    {
+      "family": "SiLU",
+      "study": "pointwise",
+      "evidence": "pointwise/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "8982185d83b72cdb2a04133c20a027ede60a867398812ab20d9fc68107c957d3"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "8982185d83b72cdb2a04133c20a027ede60a867398812ab20d9fc68107c957d3"
+        }
+      }
+    },
+    {
+      "family": "GELU (tanh)",
+      "study": "pointwise",
+      "evidence": "pointwise/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "453c4e314ce0d51453d46527381bf0a3bf6387aaca25f427c6ed3195ea914986"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "453c4e314ce0d51453d46527381bf0a3bf6387aaca25f427c6ed3195ea914986"
+        }
+      }
+    },
+    {
+      "family": "GEMV",
+      "study": "reduction",
+      "evidence": "reduction/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 5120,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "6a5d6edd6891250dcadcabd2bb402ac82b8264dc06a522efea373effb4fdb66d"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 5120,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "6a5d6edd6891250dcadcabd2bb402ac82b8264dc06a522efea373effb4fdb66d"
+        }
+      }
+    },
+    {
+      "family": "GEMM",
+      "study": "matrix",
+      "evidence": "matrix/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "1e577020e297c398ce59dbe8839f030d35a8a1825e67f50475a28c6538124af5"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "1e577020e297c398ce59dbe8839f030d35a8a1825e67f50475a28c6538124af5"
+        }
+      }
+    },
+    {
+      "family": "Batched GEMM",
+      "study": "matrix",
+      "evidence": "matrix/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 10485760,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 10485760,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "c3e01a5ba07b746fa8fb0a9de93221350f0291bba228ee4d89572fa8d3c57eba"
+        }
+      }
+    },
+    {
+      "family": "Linear with bias",
+      "study": "linear",
+      "evidence": "linear/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "2c5fb5acf04ae45366defd0399fc027c3bc8e0e4eb43c29ae23699cb86955e9a"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "2c5fb5acf04ae45366defd0399fc027c3bc8e0e4eb43c29ae23699cb86955e9a"
+        }
+      }
+    },
+    {
+      "family": "Interleaved RoPE",
+      "study": "rotary",
+      "evidence": "rotary/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "d0d74630db0a65eaded8541913d25529b2d562e39f46ac49301b1a430c8bfb33"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "d0d74630db0a65eaded8541913d25529b2d562e39f46ac49301b1a430c8bfb33"
+        }
+      }
+    },
+    {
+      "family": "Valid Conv2D",
+      "study": "convolution",
+      "evidence": "convolution/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 2880,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "d3abe42fbd48db3204c063ba888c0d8496099023c68036b0df587483099f9931"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 2880,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "d3abe42fbd48db3204c063ba888c0d8496099023c68036b0df587483099f9931"
+        }
+      }
+    },
+    {
+      "family": "Depthwise Conv2D",
+      "study": "convolution",
+      "evidence": "convolution/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 46080,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "471683db59ffec0f6583e482fc519720a0870d96f064d9593ffe2e9ad367d125"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 46080,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "471683db59ffec0f6583e482fc519720a0870d96f064d9593ffe2e9ad367d125"
+        }
+      }
+    },
+    {
+      "family": "RMSNorm",
+      "study": "normalization",
+      "evidence": "normalization/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "4418d6a988706048b754aeb8b3aea4fdeb69484df99178c702b792a6ff707c73"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "4418d6a988706048b754aeb8b3aea4fdeb69484df99178c702b792a6ff707c73"
+        }
+      }
+    },
+    {
+      "family": "LayerNorm (no affine)",
+      "study": "normalization",
+      "evidence": "normalization/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "cfd824dc8b6f644ece02ca1c0a980e398f0048f6208922cf02ab8e41cdb1bb57"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "cfd824dc8b6f644ece02ca1c0a980e398f0048f6208922cf02ab8e41cdb1bb57"
+        }
+      }
+    },
+    {
+      "family": "Softmax",
+      "study": "normalization",
+      "evidence": "normalization/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "e818782e370c4867a14f72007eb12f399ef0889340759654271a7c751fc8d37f"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 0,
+          "theorem_sha256": "e818782e370c4867a14f72007eb12f399ef0889340759654271a7c751fc8d37f"
+        }
+      }
+    },
+    {
+      "family": "Two-launch FFN",
+      "study": "feedforward",
+      "evidence": "feedforward/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 655360,
+          "theorem_sha256": "b4441b311e9840e7b203cab2592a98c1634ae75254beb3a7e0f3389d7fc5e52a"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 655360,
+          "theorem_sha256": "b4441b311e9840e7b203cab2592a98c1634ae75254beb3a7e0f3389d7fc5e52a"
+        }
+      }
+    },
+    {
+      "family": "Four-launch SwiGLU",
+      "study": "swiglu",
+      "evidence": "swiglu/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 1966080,
+          "theorem_sha256": "cd65fa8f5225e7bc765d8cf0df7e29eb0ffbf50ae6c0ae80d0de3cfa1d6f59fc"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 163840,
+          "intermediate_comparisons": 1966080,
+          "theorem_sha256": "cd65fa8f5225e7bc765d8cf0df7e29eb0ffbf50ae6c0ae80d0de3cfa1d6f59fc"
+        }
+      }
+    },
+    {
+      "family": "Dense SDPA (attention workload)",
+      "study": "attention",
+      "evidence": "attention/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 327680,
+          "theorem_sha256": "fc6464d2c7044588617b3ab0461ee54ac452cf91c34c32fc46611e74b36d6c15"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 327680,
+          "intermediate_comparisons": 327680,
+          "theorem_sha256": "fc6464d2c7044588617b3ab0461ee54ac452cf91c34c32fc46611e74b36d6c15"
+        }
+      }
+    },
+    {
+      "family": "Three-launch GQA",
+      "study": "attention",
+      "evidence": "attention/RESULTS.md",
+      "cuda_and_hip_certificates": 2,
+      "hosts": {
+        "mi350": {
+          "trials": 10,
+          "final_comparisons": 655360,
+          "intermediate_comparisons": 2621440,
+          "theorem_sha256": "c1073fe8b819cae30e3e3dbe0a1bf4a962844ce023662083002345a950702d62"
+        },
+        "mi350-2": {
+          "trials": 10,
+          "final_comparisons": 655360,
+          "intermediate_comparisons": 2621440,
+          "theorem_sha256": "c1073fe8b819cae30e3e3dbe0a1bf4a962844ce023662083002345a950702d62"
+        }
+      }
+    }
+  ],
+  "hosts": {
+    "mi350": {
+      "device": "AMD Instinct MI350X",
+      "trials": 170,
+      "final_comparisons": 13816640,
+      "intermediate_comparisons": 5570560,
+      "scalar_comparisons": 19387200
+    },
+    "mi350-2": {
+      "device": "AMD Instinct MI350X",
+      "trials": 170,
+      "final_comparisons": 13816640,
+      "intermediate_comparisons": 5570560,
+      "scalar_comparisons": 19387200
+    }
+  },
+  "evidence_sha256": {
+    "pointwise/results/mi350.json": "4163a0548cf7efcd7d3a60c8eede719aa7d98b71111e24159088dc6e99a59fa0",
+    "pointwise/results/mi350-2.json": "2bda9fb487eb29f56143ce99cf4027e3c22e816899a0bcdb95894e141908d370",
+    "pointwise/results/cpu.json": "0d976cd991153fb03dc38071e88cf2edc5ef9721fa1741cf86f52c38f0f04ac3",
+    "pointwise/results/validation.json": "a34d0eb25971f1ff6b429ac11168844c177d833ba141f5a3e278aca2f9b830aa",
+    "pointwise/results/manifest.json": "6e9bfa0357ed52155b03b0a2010ee11f2e0fec5997758e5b11b7d74a1d8387d6",
+    "reduction/results/mi350.json": "3166933d10051ed1741cfa2d3fc15d67fb9bfcbc3ef4964c968541ac12a9dbea",
+    "reduction/results/mi350-2.json": "749073ecc2b4ee98b4649b371263ba63b5c3afdda4e8eb7470dcf33a5e534098",
+    "reduction/results/cpu.json": "dad86accf8edea32fed4e69ecc116fd4deb3c8a5ad8aa576111bcb9a19fa42f5",
+    "reduction/results/validation.json": "8f2b0f828877c91cf30c4c38d6044e23703d1fd9222b9555777f0acf786096c9",
+    "reduction/results/manifest.json": "ac0e941ad744d3e43f3e6227e659ea427ed74aa1cd66823d2410bbfc6293da38",
+    "matrix/results/mi350.json": "10b17c64322b63666bfd3fae66dec0edbf3235a934b06d58b95579239cc797d5",
+    "matrix/results/mi350-2.json": "90cccbff44e3b7d8d99ee8c8b32a52befbfe67cee6e21defdbf9674afccc9dd7",
+    "matrix/results/cpu.json": "89d04e7c861ce5f7091adcbf9e0155daee4f9c2050f616a190a3215941085b22",
+    "matrix/results/validation.json": "f44aa88a5b8001796b6e3d9b2afe4e85b5414cb343ad269870bbce70fd24ec3f",
+    "matrix/results/manifest.json": "f92b7247ab85cd2d19909b5c63861a3326aaf4a625ae6f4095638ab766f460f0",
+    "linear/results/mi350.json": "95488007264402b99daf720c63c1189fe2d4a7c0b3b16c3c87d117130cae6c67",
+    "linear/results/mi350-2.json": "f3344c5535358a6fee7760e2a9684801c77071d9ded10c6010619de1467b47b2",
+    "linear/results/cpu.json": "00814174c971f00222fadf035f5343947579eaa3ea297afe54c2f758fb12f7d5",
+    "linear/results/validation.json": "d72c47286481bff810dddc2c315d481943262be74998d78de9a5860150bc650b",
+    "linear/results/manifest.json": "af89b60c5976d75fff0100e01933b168b9e7b5afc16a6862caad4bea461f290f",
+    "rotary/results/mi350.json": "a79a942b61d54c9eae7dfce69047370845838e870bc3e9f7ada1bd0c22ad7748",
+    "rotary/results/mi350-2.json": "291091ce15dd8a34d2f92c8c8952cbfe579f625436a9be77bb161e8155f60674",
+    "rotary/results/cpu.json": "2064ab97f5c89bf38e82b28eda65e0624bfd19a01c2c7a25b5f5c06517473bbc",
+    "rotary/results/validation.json": "a3208cd67e8907b1517f99602289ef6ff3d861ba10f6a0022ff4cd7e058b7ddd",
+    "rotary/results/manifest.json": "e9c9920b9cd10098019535c775aec88020ee6923ad247e9295afe3bad22e8483",
+    "convolution/results/mi350.json": "6ef2cb9cea603e059750c6837c51fca008c4b4d15d5ffb4592800ae30ae62d59",
+    "convolution/results/mi350-2.json": "ce2aca7daa8d246356d4f6c5b095351ae3047eb87fc3c1dd3896e8d69f945b9b",
+    "convolution/results/cpu.json": "3b218312b8792d0243435785f6f2a5e5c716405b71fcc5a2942e0555c8b229d1",
+    "convolution/results/validation.json": "7cc32b06b0661af7652629720a3bd4f2c177923195820419793f24788347a29f",
+    "convolution/results/manifest.json": "97f88c175ed291f6f20137e1a48e39e2e540acc8e224ae5fa6e82b91bcbc9c5e",
+    "normalization/results/mi350.json": "7cf305332ef4b668184cd0321cf692b560801e69ade690cbf429512f7f46e8e3",
+    "normalization/results/mi350-2.json": "33734cdf175afa59c6264f5e79cd5bb8d9cfe2b86069130eeaf091454c13b03a",
+    "normalization/results/cpu.json": "76213f1789baa5d7ccd589a34cb84c6bb23d039ade8b6e0b1d49ec25d6302ca0",
+    "normalization/results/validation.json": "1187ad2da3133c522dbc4e8246dcf504cbb4c5564d1973b6d65254f5fcaf28a0",
+    "normalization/results/manifest.json": "b71064ce2258841d9050082f9c99e84124df86cb64e534c8fc30f7564a23bf06",
+    "feedforward/results/mi350.json": "e98b6974236b2e12761a6691d59f5fce76ddc7aa3bac1651b97557fa4c46d8c0",
+    "feedforward/results/mi350-2.json": "649e656102436cba8316c0ff67d7675b8f567eea4bb6ab4dfb99f283d1b50066",
+    "feedforward/results/cpu.json": "61b9882e47fcd33c02892351972d4b34afc4510cea9eea11fb2ce597c9b83061",
+    "feedforward/results/validation.json": "94ad4ab5df92b7df59a56ee7c3aef65656d389bee01a0feac8bc6237071491c2",
+    "feedforward/results/manifest.json": "134fc4d99d9bac62027bfeaf6e864dcceb6a7fa56d0cb6a68be7bedfbd635acb",
+    "swiglu/results/mi350.json": "3467efaf9e5842ef9d23bd7845282de4a0b06f363d0faabbb404038586771faf",
+    "swiglu/results/mi350-2.json": "9c4be5fc9914c705d504b9aaf1e22690bd3cdeae2265c5574a45eae110e7d8a9",
+    "swiglu/results/cpu.json": "2179a9478f04a8514921bfee50a6f0e53d0ab12361765d9e78754b0582245126",
+    "swiglu/results/validation.json": "ea5325a6e3f92e4c015666d4446d4a1b5a230d10de7bd20ebda997ae5a702be3",
+    "swiglu/results/manifest.json": "0ecab2cb21aab1648aa042a3fe8ddfc0eddf6c8161ec815de933b39d910b9280",
+    "attention/results/mi350.json": "01fe9b7c5909813d302a4569f6885406529d78c355e43f27a0ac8e1b6704f756",
+    "attention/results/mi350-2.json": "99056aa9cfb2d77fe2f27b6457b89616cdb644706a5cb325fcf32951f5679981",
+    "attention/results/cpu.json": "0d7d7fd2136298f2f52290f881ba3688192b3d1d4700e775c6495fbc90b2ed47",
+    "attention/results/validation.json": "8b7d652987caa118a28dbde3d0a84938386122246c36d7e4fbf7486205c463ba",
+    "attention/results/manifest.json": "45a60ecfccb6762647dacb204191b31b2ade62ae2dd7c5fbbab108c4a93ff1ca"
+  },
+  "original_dependencies": [
+    "Authors' pinned registry, adapted source revisions, reference contracts and proof/agent harness; bounded public artifact searches have not located them",
+    "Original 42 mutants, failure channels, fallback/second-opinion and stage token traces",
+    "Original nine accepted production kernels and full adapted llm.c kernel",
+    "Original PTX/optimized tiled and online-attention kernels, NVIDIA operations and H100 timings",
+    "Original closed-model endpoints/outcomes under the offline/free constraint; local open-model experiments are adaptations",
+    "Authors' historical development/person-day records"
+  ],
+  "status": "audited-independent-full-shape-coverage"
+}
