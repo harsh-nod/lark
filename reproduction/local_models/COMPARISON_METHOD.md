@@ -57,3 +57,21 @@ the comparison counts.
 The comparison JSON binds the audited source files and independent recheck logs.
 It always retains `original_paper_fully_reproduced:false`. The [coverage ledger](../COVERAGE.md)
 separates original dependencies from these adaptations.
+
+Once all three cohorts pass the audit, the report/figure command is:
+
+```bash
+# Requires optional matplotlib, in addition to the standard-library auditor:
+python3 reproduction/local_models/render_comparison.py \
+  --audit /tmp/three-model-comparison --output /tmp/three-model-report \
+  --lean /path/to/lean-4.19.0/bin/lean
+```
+
+The renderer refuses a partial cohort before creating its output. It rebuilds
+the complete audit from raw requests/responses and freshly rechecks positive
+certificates before accepting the summary's counts. The figure compares only
+common first attempts; a separate table retains the different retry budgets.
+Unknown token usage is labeled incomplete and omitted from token bars.
+The output manifest binds the Markdown, SVG, new recheck logs, input audit and
+renderer source. No combined result or figure is currently claimed from the
+unfinished cohorts.
