@@ -1,7 +1,8 @@
-"""Rebuild the native attention lane prefix outside Git, without model/GPU calls.
+"""Rebuild a native attention execution prefix outside Git, without model/GPU calls.
 
-This checks source identity and actual runLane execution through the first block
-barrier. It is not a whole-launch or source-reference certificate.
+The lane stage checks runLane through the first barrier; the first-block stage
+also checks native scheduling and barrier resumption. Neither is a whole-launch
+or source-reference certificate.
 """
 
 import argparse
@@ -23,9 +24,13 @@ from lark_kernels.ir import lean_node  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_fp16"
-TARGET = "Lark.NativeAttentionFirstLane"
-AUDITS = ("first_lane_eq", "first_lane_run", "first_lane_output", "first_lane_tile", "first_lane_reads",
-          "first_lane_good", "first_lane_race_free")
+TARGETS = {"lane": "Lark.NativeAttentionFirstLane", "first-block": "Lark.NativeAttentionFirstResume"}
+LANE_AUDITS = ("first_lane_eq", "first_lane_run", "first_lane_output", "first_lane_tile", "first_lane_reads",
+               "first_lane_good", "first_lane_race_free")
+BLOCK_AUDITS = LANE_AUDITS + (
+    "first_block_from_initial", "first_block_step", "first_resumed_pc", "first_resumed_epoch",
+    "first_resumed_native", "first_resumed_reads", "first_resumed_output", "first_resumed_tile", "first_resumed_good",
+)
 
 
 def require(ok, message):
@@ -77,8 +82,14 @@ def check(cwd, command, dest, expected=True, timeout=300):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
+    block_stage = args.stage == "first-block"
+    target = TARGETS[args.stage]
+    names = BLOCK_AUDITS if block_stage else LANE_AUDITS
     out = args.output.resolve()
+    require(not any((p / ".git").exists() for p in (out, *out.parents)),
+            "Choose --output outside a Git checkout for the standalone check")
     out.mkdir(parents=True, exist_ok=False)
     standalone = out / "source"
     standalone.mkdir()
@@ -88,7 +99,7 @@ def main():
     provenance = json.loads((HERE / "native-provenance.json").read_text())
     require(sha(CASE / "kernel.hip") == provenance["native_source_sha256"], "Native source changed")
     translated = native.translate(source, task)
-    modules = sorted(closure(TARGET))
+    modules = sorted(closure(target))
     for module in modules:
         name = module.replace(".", "/") + ".lean"
         dest = standalone / name
@@ -97,8 +108,8 @@ def main():
     shutil.copyfile(ROOT / "lean/lean-toolchain", standalone / "lean-toolchain")
     (standalone / "lakefile.toml").write_text(
         'name = "native_attention_prefix"\nversion = "0.1.0"\n'
-        'defaultTargets = ["Lark.NativeAttentionFirstLane"]\n\n[[lean_lib]]\nname = "Lark"\n')
-    header = f"import {TARGET}\nopen LarkNonlinear LarkNativeAttention\n"
+        f'defaultTargets = ["{target}"]\n\n[[lean_lib]]\nname = "Lark"\n')
+    header = f"import {target}\nopen LarkNonlinear LarkNativeAttention\n"
     binding = header + """set_option maxRecDepth 100000
 set_option maxHeartbeats 20000000
 def sourceProgram : List Instr := [
@@ -112,7 +123,7 @@ theorem source_binding (p : Shape) : sourceProgram = program ∧
 theorem source_geometry (p : Shape) : geometry p = ⟨p.groups, {task.block}, {task.warp}⟩ := rfl
 theorem source_fuel : fuel = ⟨{', '.join(str(x) for x in native.FUEL)}⟩ := by decide
 #print axioms source_binding
-""" + "\n".join("#print axioms " + n for n in AUDITS) + "\n"
+""" + "\n".join("#print axioms " + n for n in names) + "\n"
     (standalone / "Main.lean").write_text(binding)
     controls = {
         "wrong-barrier-pc": """
@@ -136,6 +147,30 @@ example (ops : Ops Nat) (input : Nat → Nat → Nat) (t : Nat) (s : State Nat)
   decide
 """,
     }
+    if block_stage:
+        controls.update({
+            "wrong-resumed-pc": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (b t : Nat) (s : State α)
+    (ht : t ∈ blockThreads (geometry p) b) : (firstResumed p ops input b s).pc t = 20 := by
+  rw [first_resumed_pc p ops input b t s ht]
+  decide
+""",
+            "missing-block-epoch-bump": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α)
+    (b t : Nat) (ht : t ∈ blockThreads (geometry p) b) :
+    ((firstResumed p ops input b (initial (layout p) input outside)).epochs t).block = 0 := by
+  rw [first_resumed_epoch p ops input b t (initial (layout p) input outside) ht]
+  change 1 = 0
+  decide
+""",
+            "wrong-block-key-value": """
+example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s : State Nat)
+    (ht : t ∈ blockThreads (geometry p) b) (hv : ops.fromHalf (input 2 (globalAddress t 0 0)) = 0) :
+    (firstResumed p ops input b s).memory (sharedCell t 1 (sharedAddress t 0)) = some 1 := by
+  rw [first_resumed_tile p ops input b t 1 0 s ht (Or.inl rfl) (by decide), hv]
+  decide
+""",
+        })
     for name, content in controls.items():
         (standalone / (name + ".lean")).write_text(header + content)
     frozen = standalone / "native-source"
@@ -147,12 +182,15 @@ example (ops : Ops Nat) (input : Nat → Nat → Nat) (t : Nat) (s : State Nat)
     shutil.copyfile(HERE / "upstream/LICENSE", frozen / "UPSTREAM-LICENSE")
     shutil.copyfile(ROOT / "LICENSE", standalone / "LICENSE")
     shutil.copyfile(Path(__file__), out / "checker.py")
+    scope = ("actual first runBlock phase, including 32 native lanes, block convergence and resume to PC 21"
+             if block_stage else "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20")
     (standalone / "README.md").write_text(
-        "# Native attention lane-prefix proof\n\n"
+        f"# Native attention {args.stage} prefix proof\n\n"
         "Run `lake build`, then `lake env lean Main.lean` with Lean 4.19.0.\n"
-        "The three other top-level Lean files intentionally fail at false postconditions.\n"
-        "This proves each lane reaches PC 20. It does not compose the launch, resume\n"
-        "the barrier, execute attention computation, or prove dense-reference equality.\n")
+        f"The {len(controls)} other top-level Lean files intentionally fail at false postconditions.\n"
+        f"Scope: {scope}.\n"
+        "It does not execute attention computation or later block phases, compose\n"
+        "the whole launch, or prove dense-reference equality.\n")
     source_paths = sorted(p for p in standalone.rglob("*") if p.is_file())
     write(out / "source-manifest.json", {str(p.relative_to(standalone)): sha(p) for p in source_paths})
     with tarfile.open(out / "source.tar.gz", "w:gz") as archive:
@@ -168,7 +206,7 @@ example (ops : Ops Nat) (input : Nat → Nat → Nat) (t : Nat) (s : State Nat)
         records.append(check(standalone, ["lake", "env", "lean", name + ".lean"], out / (name + ".log"), False))
     log = (out / "main.log").read_text()
     audits = {}
-    for name in AUDITS:
+    for name in names:
         entries = re.findall(r"^'LarkNativeAttention\." + name +
                              r"' depends on axioms: \[([^]]*)\]$", log, re.M)
         require(len(entries) == 1, "Missing or ambiguous axiom audit: " + name)
@@ -176,13 +214,20 @@ example (ops : Ops Nat) (input : Nat → Nat → Nat) (t : Nat) (s : State Nat)
         require(set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, "Extra axiom: " + name)
         audits[name] = axioms
     report = {
-        "schema": 1, "status": "native-lane-prefix-checked",
+        "schema": 1, "status": "native-block-prefix-checked" if block_stage else "native-lane-prefix-checked",
+        "stage": args.stage,
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
-        "scope": "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20",
+        "scope": scope,
         "groups": {"min": 1, "max": 65535}, "block": 32, "warp": 64,
         "prefix_instructions_per_lane": 5405, "barrier_pc": 20,
         "input_preservation_proved": True, "output_initialization_proved": True,
         "first_kv_row_copy_proved": True, "prefix_actual_trace_race_freedom_proved": True,
+        "first_block_phase_and_resume_proved": block_stage,
+        "all_block_outputs_initialized_proved": block_stage,
+        "first_kv_tile_loaded_proved": block_stage,
+        "barrier_resumption_proved": block_stage,
+        "resumed_pc": 21 if block_stage else None,
+        "block_epoch_increment": 1 if block_stage else 0,
         "arbitrary_scalar_operations": True, "axioms": audits,
         "fresh_standalone_build": True, "local_lean_modules": len(modules),
         "source_sha256": sha(CASE / "kernel.hip"),

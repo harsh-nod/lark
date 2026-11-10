@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "status": "native-lane-prefix-checked",
+  "stage": "lane",
+  "checked_at_utc": "2026-11-10T23:55:19.472832+00:00",
+  "scope": "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20",
+  "groups": {
+    "min": 1,
+    "max": 65535
+  },
+  "block": 32,
+  "warp": 64,
+  "prefix_instructions_per_lane": 5405,
+  "barrier_pc": 20,
+  "input_preservation_proved": true,
+  "output_initialization_proved": true,
+  "first_kv_row_copy_proved": true,
+  "prefix_actual_trace_race_freedom_proved": true,
+  "first_block_phase_and_resume_proved": false,
+  "all_block_outputs_initialized_proved": false,
+  "first_kv_tile_loaded_proved": false,
+  "barrier_resumption_proved": false,
+  "resumed_pc": null,
+  "block_epoch_increment": 0,
+  "arbitrary_scalar_operations": true,
+  "axioms": {
+    "first_lane_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_race_free": [
+      "propext",
+      "Quot.sound"
+    ]
+  },
+  "fresh_standalone_build": true,
+  "local_lean_modules": 21,
+  "source_sha256": "6504b91255ed0a59d072376b9e071e76c154655986e8c1bad566258a19e19c1e",
+  "source_archive_sha256": "f2e3a5bf1c77e5e74858b86826b7322e1bd792097e471c041db6e0731b3dad23",
+  "checks": [
+    {
+      "name": "build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 29.83775536500616
+    },
+    {
+      "name": "main",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 1.1718878929968923
+    },
+    {
+      "name": "wrong-barrier-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.384299581986852
+    },
+    {
+      "name": "nonzero-initialized-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.32232764502987266
+    },
+    {
+      "name": "wrong-copied-key-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.41082871897378936
+    }
+  ],
+  "false_prefix_claims_rejected": 3,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "whole_kernel_race_freedom_proved": false,
+  "source_reference_equality_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "gpu_trials": 0,
+  "model_calls": 0
+}

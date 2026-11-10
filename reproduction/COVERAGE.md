@@ -85,9 +85,11 @@ The later [native FP16 online source](online_attention/NATIVE.md) retains the
 source/layout identity, address ownership and conditional footprint lemmas,
 a finite value-erased access preflight, and 3,145,728 paired CPU-reference
 comparisons across both hosts with zero tolerance failures. The later
-[lane-prefix proof](online_attention/PREFIX.md) checks actual execution through
-5,405 instructions to the first block barrier, all lane-owned zero outputs,
-the first K/V row copies, input preservation and prefix-trace race freedom.
+[first-block proof](online_attention/BLOCK.md) composes all 32 lane prefixes,
+checks actual native scheduling, barrier convergence and resumption, all
+block-owned zero outputs, the first full K/V tile, input preservation and
+prefix-trace race freedom. Each lane executes 5,405 scalar instructions
+before the barrier.
 Whole-launch execution, complete trace membership and source-reference equality
 remain unproved. It contributes zero accepted source certificates.
 

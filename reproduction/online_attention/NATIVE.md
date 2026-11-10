@@ -8,7 +8,7 @@ use FP32. The group index flattens batch and attention head.
 
 **This source has no whole-launch Lean certificate yet.** The accepted facts
 below are source identity, address/ownership theorems, a sufficient footprint
-condition and actual lane execution through the first block barrier. Whole-launch
+condition and actual first-block execution through barrier resumption. Whole-launch
 execution, complete actual-trace membership and canonical-reference equality
 must still be joined before this becomes an accepted source certificate.
 It does not reproduce the authors' missing production adaptation or model run.
@@ -39,8 +39,13 @@ bound is asserted.
   group count and arbitrary scalar operations. Every lane zeroes its 1,024 output
   elements, copies its first K/V rows, preserves inputs and produces a trace
   satisfying the footprint condition, assuming it starts with a good trace and
-  an even block epoch. The [prefix checkpoint](PREFIX.md) does not yet compose
-  the 32 lanes, resume the barrier or execute the attention compute stages.
+  an even block epoch. The [lane checkpoint](PREFIX.md) covers this lane prefix.
+- `NativeAttentionFirstBlock.lean` and `NativeAttentionFirstResume.lean` now
+  compose all 32 lanes in the unchanged native scheduler, prove convergence at
+  PC 20 and the actual block-barrier resume to PC 21. They cover all block-owned
+  zero outputs, the complete first K/V shared tile, input preservation and
+  prefix-trace race freedom. The [block checkpoint](BLOCK.md) leaves attention
+  computation and later block phases open.
 
 Fresh checks accept the full source's IR and array layout and reject five
 changes directly in Lean: a missing load barrier, a wrong tile-store owner,
@@ -59,6 +64,7 @@ outside the checkout using Lean 4.19.0; no Mathlib or model endpoint is needed.
 lake -d lean build Lark.NativeAttentionAddress
 python3 reproduction/online_attention/check_native_program.py --output /tmp/native-binding
 python3 reproduction/online_attention/check_native_prefix.py --output /tmp/native-prefix
+python3 reproduction/online_attention/check_native_prefix.py --stage first-block --output /tmp/native-block
 python3 -m unittest discover -s tests -p test_native_attention.py -v
 ```
 

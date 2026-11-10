@@ -23,7 +23,8 @@ Given a trace already satisfying the local access conditions and an even block
 epoch, every access added by this prefix satisfies those conditions. The actual
 machine's race check therefore accepts the resulting prefix trace. Empty launch
 traces and epoch zero meet these premises. Scheduling all 32 lanes together and
-resuming their barrier remain separate proof obligations.
+resuming their barrier are outside this lane-only checkpoint. The later
+[block checkpoint](BLOCK.md) now supplies those composition and resumption proofs.
 
 The public statements are:
 
