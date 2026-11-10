@@ -61,6 +61,14 @@ AST interpretation and the documented upstream-source rewrite remain outside
 the proof kernel. The theorem adds no arithmetic laws or kernel-specific
 assumptions; it retains the same abstract-operation and host-interface boundary.
 
+The separate [exact-real package](../lean-real/README.md) specializes those
+universal theorems to a concrete Mathlib interpretation. Half conversions are
+identities there; the remaining operations have their real mathematical meanings.
+Algebraic laws are proved from that construction, not added as axioms to `Ops`.
+The dependency-free profiles keep their stronger unrestricted quantification.
+Reordered reduction trees still need an actual GPU execution/RF proof, and the
+real algebra gives no floating-point equality or error bound.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom

@@ -61,6 +61,11 @@ controls and exact-source comparisons against an extracted upstream scalar path
 on both hosts. Its intermediate FP16 rounding is retained. It does not recover
 the original production adaptations or their model outcomes.
 
+The [optional exact-real semantics check](exact_real/README.md) specializes
+existing machine proofs and proves reduction-tree/chunk algebra using pinned
+Mathlib. It adds no source certificate, GPU trial or original experimental cell.
+Optimized reductions still require complete machine-execution and RF proofs.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |

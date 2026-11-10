@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "recorded_utc": "2026-11-10T10:36:25.819164+00:00",
+  "build_seconds": 23.848681364033837,
+  "fresh_check_seconds": 4.106125808029901,
+  "axiom_audits": {
+    "silu_result": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "silu_correct": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "dot_correct": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "tree_permutation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "chunk_sum": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "universal_reassociation_impossible": [
+      "propext"
+    ]
+  },
+  "algebra_controls": [
+    {
+      "name": "reversed-leaves-positive",
+      "accepted": true,
+      "timed_out": false,
+      "seconds": 2.4083619459997863
+    },
+    {
+      "name": "duplicated-leaf",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 2.3407259449595585
+    },
+    {
+      "name": "omitted-leaf",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 2.5565426659886725
+    },
+    {
+      "name": "unrestricted-associativity",
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 2.3619267999893054
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "mathlib",
+      "url": "https://github.com/leanprover-community/mathlib4.git",
+      "commit": "c44e0c8ee63ca166450922a373c7409c5d26b00b"
+    },
+    {
+      "name": "plausible",
+      "url": "https://github.com/leanprover-community/plausible",
+      "commit": "77e08eddc486491d7b9e470926b3dbe50319451a"
+    },
+    {
+      "name": "LeanSearchClient",
+      "url": "https://github.com/leanprover-community/LeanSearchClient",
+      "commit": "25078369972d295301f5a1e53c3e5850cf6d9d4c"
+    },
+    {
+      "name": "importGraph",
+      "url": "https://github.com/leanprover-community/import-graph",
+      "commit": "e6a9f0f5ee3ccf7443a0070f92b62f8db12ae82b"
+    },
+    {
+      "name": "proofwidgets",
+      "url": "https://github.com/leanprover-community/ProofWidgets4",
+      "commit": "c4919189477c3221e6a204008998b0d724f49904"
+    },
+    {
+      "name": "aesop",
+      "url": "https://github.com/leanprover-community/aesop",
+      "commit": "5d50b08dedd7d69b3d9b3176e0d58a23af228884"
+    },
+    {
+      "name": "Qq",
+      "url": "https://github.com/leanprover-community/quote4",
+      "commit": "fa4f7f15d97591a9cf3aa7724ba371c7fc6dda02"
+    },
+    {
+      "name": "batteries",
+      "url": "https://github.com/leanprover-community/batteries",
+      "commit": "f5d04a9c4973d401c8c92500711518f7c656f034"
+    },
+    {
+      "name": "Cli",
+      "url": "https://github.com/leanprover/lean4-cli",
+      "commit": "02dbd02bc00ec4916e99b04b2245b30200e200d0"
+    }
+  ],
+  "cpu_binary32_scope_witness": {
+    "inputs": [
+      33554432.0,
+      -33554432.0,
+      1.0
+    ],
+    "left_associated": 1.0,
+    "right_associated": 0.0,
+    "method": "explicit binary32 rounding with Python struct after each addition"
+  },
+  "new_source_certificates": 0,
+  "new_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Optional exact-real interpretation, canonical specifications for existing SiLU and dot-product machine proofs, and reduction-tree/chunk algebra. This adds no optimized GPU-program proof and does not reproduce original experiments. Half conversions are identities in this idealization; no IEEE or numerical-error theorem."
+}

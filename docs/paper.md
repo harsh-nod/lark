@@ -91,6 +91,13 @@ device-test shapes passed exact-source/upstream comparisons on both hosts.
 This is one independently adapted function family, not the authors' original
 production registry or packed vector fast path.
 
+The optional [exact-real interpretation](../lean-real/README.md) constructs the
+nonlinear operations over Mathlib's reals, proves canonical SiLU/dot reference
+equalities and supplies reduction-tree/permutation and chunking lemmas. It
+removes the need to assume algebraic laws for unrestricted operations. This is
+mathematical preparation for optimized reductions; it does not add a new
+optimized program or reproduce an original model/hardware experiment.
+
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
 condition within its narrower interface. This does not eliminate the need to

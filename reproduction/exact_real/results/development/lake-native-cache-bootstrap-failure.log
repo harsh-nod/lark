@@ -1,0 +1,74 @@
+info: lark_real: no previous manifest, creating one from scratch
+info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+info: mathlib: checking out revision 'c44e0c8ee63ca166450922a373c7409c5d26b00b'
+info: toolchain not updated; already up-to-date
+warning: lark: ignoring missing manifest './././../lean/lake-manifest.json'
+info: plausible: cloning https://github.com/leanprover-community/plausible
+info: plausible: checking out revision '77e08eddc486491d7b9e470926b3dbe50319451a'
+info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+info: LeanSearchClient: checking out revision '25078369972d295301f5a1e53c3e5850cf6d9d4c'
+info: importGraph: cloning https://github.com/leanprover-community/import-graph
+info: importGraph: checking out revision 'e6a9f0f5ee3ccf7443a0070f92b62f8db12ae82b'
+info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+info: proofwidgets: checking out revision 'c4919189477c3221e6a204008998b0d724f49904'
+info: aesop: cloning https://github.com/leanprover-community/aesop
+info: aesop: checking out revision '5d50b08dedd7d69b3d9b3176e0d58a23af228884'
+info: Qq: cloning https://github.com/leanprover-community/quote4
+info: Qq: checking out revision 'fa4f7f15d97591a9cf3aa7724ba371c7fc6dda02'
+info: batteries: cloning https://github.com/leanprover-community/batteries
+info: batteries: checking out revision 'f5d04a9c4973d401c8c92500711518f7c656f034'
+info: Cli: cloning https://github.com/leanprover/lean4-cli
+info: Cli: checking out revision '02dbd02bc00ec4916e99b04b2245b30200e200d0'
+info: mathlib: running post-update hooks
+✔ [2/12] Built Cache.Lean
+✖ [3/12] Building Cache.Lean:c.o
+trace: .> cc -c -o ././.lake/packages/mathlib/.lake/build/ir/Cache/Lean.c.o.export ././.lake/packages/mathlib/.lake/build/ir/Cache/Lean.c -I /tmp/lean-4.19.0-linux/include -fstack-clash-protection -fwrapv -fPIC -fvisibility=hidden -Wno-unused-command-line-argument -O3 -DNDEBUG -DLEAN_EXPORTING
+info: stderr:
+././.lake/packages/mathlib/.lake/build/ir/Cache/Lean.c:4:10: fatal error: lean/lean.h: No such file or directory
+    4 | #include <lean/lean.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+error: external command 'cc' exited with code 1
+✔ [4/12] Built Cache.IO
+✖ [5/12] Building Cache.IO:c.o
+trace: .> cc -c -o ././.lake/packages/mathlib/.lake/build/ir/Cache/IO.c.o.export ././.lake/packages/mathlib/.lake/build/ir/Cache/IO.c -I /tmp/lean-4.19.0-linux/include -fstack-clash-protection -fwrapv -fPIC -fvisibility=hidden -Wno-unused-command-line-argument -O3 -DNDEBUG -DLEAN_EXPORTING
+info: stderr:
+././.lake/packages/mathlib/.lake/build/ir/Cache/IO.c:4:10: fatal error: lean/lean.h: No such file or directory
+    4 | #include <lean/lean.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+error: external command 'cc' exited with code 1
+✔ [6/12] Built Cache.Hashing
+✖ [7/12] Building Cache.Hashing:c.o
+trace: .> cc -c -o ././.lake/packages/mathlib/.lake/build/ir/Cache/Hashing.c.o.export ././.lake/packages/mathlib/.lake/build/ir/Cache/Hashing.c -I /tmp/lean-4.19.0-linux/include -fstack-clash-protection -fwrapv -fPIC -fvisibility=hidden -Wno-unused-command-line-argument -O3 -DNDEBUG -DLEAN_EXPORTING
+info: stderr:
+././.lake/packages/mathlib/.lake/build/ir/Cache/Hashing.c:4:10: fatal error: lean/lean.h: No such file or directory
+    4 | #include <lean/lean.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+error: external command 'cc' exited with code 1
+✔ [8/12] Built Cache.Requests
+✖ [9/12] Building Cache.Requests:c.o
+trace: .> cc -c -o ././.lake/packages/mathlib/.lake/build/ir/Cache/Requests.c.o.export ././.lake/packages/mathlib/.lake/build/ir/Cache/Requests.c -I /tmp/lean-4.19.0-linux/include -fstack-clash-protection -fwrapv -fPIC -fvisibility=hidden -Wno-unused-command-line-argument -O3 -DNDEBUG -DLEAN_EXPORTING
+info: stderr:
+././.lake/packages/mathlib/.lake/build/ir/Cache/Requests.c:4:10: fatal error: lean/lean.h: No such file or directory
+    4 | #include <lean/lean.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+error: external command 'cc' exited with code 1
+✔ [10/12] Built Cache.Main
+✖ [11/12] Building Cache.Main:c.o
+trace: .> cc -c -o ././.lake/packages/mathlib/.lake/build/ir/Cache/Main.c.o.export ././.lake/packages/mathlib/.lake/build/ir/Cache/Main.c -I /tmp/lean-4.19.0-linux/include -fstack-clash-protection -fwrapv -fPIC -fvisibility=hidden -Wno-unused-command-line-argument -O3 -DNDEBUG -DLEAN_EXPORTING
+info: stderr:
+././.lake/packages/mathlib/.lake/build/ir/Cache/Main.c:4:10: fatal error: lean/lean.h: No such file or directory
+    4 | #include <lean/lean.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+error: external command 'cc' exited with code 1
+Some required builds logged failures:
+- Cache.Lean:c.o
+- Cache.IO:c.o
+- Cache.Hashing:c.o
+- Cache.Requests:c.o
+- Cache.Main:c.o
+error: build failed
