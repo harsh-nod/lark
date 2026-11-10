@@ -1,0 +1,77 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        }
+      ]
+    },
+    {
+      "seq": [
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        },
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        },
+        {
+          "op": 13
+        },
+        {
+          "op": 14
+        },
+        {
+          "op": 15
+        },
+        {
+          "op": 16
+        },
+        {
+          "op": 17
+        },
+        {
+          "op": 18
+        },
+        {
+          "op": 19
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  rfl",
+    "race_free": "by\n  let final := finalState unitOps (fun _ _ => ()) (fun _ => some ())\n  refine \u27e8final, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 have htrace : final.trace = traceData := by\n      rfl\n    rw [htrace]\n    decide",
+    "segment_equivalence": "by\n  intro input outside\n  let final := finalState ops input outside\n  refine \u27e8final, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 constructor\n    \u00b7 -- raceFree geometry final.trace = true\n      -- The trace is independent of scalar operations; it is the same as the unit trace.\n      -- We can reuse the concrete race-freedom check on traceData.\n      have htrace : final.trace = traceData := by\n        -- The control flow and memory locations depend only on indices, not on ops.\n        -- For the fixed program, the trace is exactly traceData for every ops and input.\n        -- This is a definitional computation over the concrete program.\n        rfl\n      rw [htrace]\n      decide\n    \u00b7 -- extract layout final = some (spec ops input)\n      -- The final memory at output locations is computed by the program.\n      -- This is a definitional equality for the fixed program and arbitrary ops.\n      rfl"
+  }
+}

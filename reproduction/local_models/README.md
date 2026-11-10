@@ -37,9 +37,12 @@ model response and passed another independent workspace recheck. This is a
 reduced-fixture result, not the paper's original pass rate or full-size kernel.
 
 The [GLM-5.3-Flash budget variant](results/pilot-glm-flash-budget4096-20261109/summary.json)
-completed one request per case: one Lean rejection and two invalid proposals,
-with 50,976 reported tokens and no certificates. Its request budget differs
-from the DeepSeek three-request cohort; these are not matched pass-rate cells.
+initially completed three cases. Its [expanded 17-fixture cohort](results/model-comparison-20261109/README.md)
+is now complete: 17 requests, seven unproved Lean checks, ten invalid proposals,
+312,772 reported tokens and no certificates. A fresh two-model audit confirms
+the same first-request messages as DeepSeek on every fixture. Both models have
+zero first-attempt certificates; DeepSeek's later success remains separate from
+the one-request Flash budget.
 
 [Full GLM-5.3 is now healthy](results/runtime-glm53-20261109/summary.json) on GPUs
 0/1/6/7, TP=4, using the pinned native FP8 checkpoint. All 141 weight shards and
@@ -52,8 +55,10 @@ no completed full-model cohort result is claimed here.
 Its first [completed SiLU case](results/model-comparison-20261109/README.md)
 contains a real model-generated proof whose exact tactics, immutable first
 request and fixture bytes were checked before another successful local Lean
-recheck. The archived additional Flash batch has seven completed cases and
-no certificates. These are partial evidence, not finished 17-case model rates.
+recheck. Full GLM's remaining cases are still running; this successful case is
+partial evidence, not a finished full-model rate. The separate
+[comments-only DeepSeek replay](COMMENT_REPLAY_RESULTS.md) made no model calls;
+both transformed candidates remained unproved and the raw counts are unchanged.
 
 The checkpoint lives in two owned RAM-backed directories, with at least 32 GiB
 reserved on each filesystem. `download_ranges.py` checks ranges and whole-file
@@ -67,8 +72,9 @@ eight reasoning-only and one unproved Lean check, with 231,592 reported tokens.
 The three first requests exactly match the reasoning-budget variant after
 removing its added budget field; the audit preserves their distinct retry counts.
 The original runtime on GPUs 6/7 is stopped. A separate owned Flash runtime on
-GPUs 2/3 is checking the additional 14 reduced fixtures, one request each, for
-a common 17-fixture first-attempt comparison. Earlier [runtime records](results/runtime-20261109/)
+GPUs 2/3 completed the additional 14 reduced fixtures, one request each. It was
+stopped after both controllers exited and active/waiting request gauges reached
+zero; its exact identity and clean exit are archived. Earlier [runtime records](results/runtime-20261109/)
 remain historical inference evidence, not a proof success. Hosted API spending
 is zero; original paper pass rates are not claimed.
 

@@ -1,6 +1,6 @@
 # Independent 17-fixture comparison audit
 
-The completed DeepSeek cohort and the running GLM/Flash cohorts use the same
+The completed DeepSeek/Flash cohorts and the running full GLM cohort use the same
 17 reduced HIP fixtures, seed 261102028, temperature zero, 16,384 output-token
 cap and 4,096 reasoning-token limit. These are independent experiments, not
 the original paper's registry, kernels, agents, budgets or pass rates.
@@ -53,6 +53,11 @@ completed DeepSeek data, 12 of 14 invalid proposals contain `native_decide` and
 two contain comment markers; these lexical restrictions are part of our harness.
 Raw responses remain unchanged, and no posthoc tactic repair is included in
 the comparison counts.
+
+A separate [comments-only replay](COMMENT_REPLAY_RESULTS.md) tests two refused
+DeepSeek candidates without model calls. Both remained unproved in Lean. Its
+transformed candidates and outcomes are separate from this matched comparison;
+neither raw tactics nor baseline counts are replaced.
 
 The comparison JSON binds the audited source files and independent recheck logs.
 It always retains `original_paper_fully_reproduced:false`. The [coverage ledger](../COVERAGE.md)

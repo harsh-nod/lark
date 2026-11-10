@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "status": "unproved",
+  "paper": "https://arxiv.org/abs/2611.02028",
+  "implementation": "independent bounded scalar profile",
+  "task": {
+    "name": "layernorm_float16",
+    "entry": "nonlinear_layernorm_float16",
+    "language": "hip",
+    "buffers": [
+      {
+        "name": "x",
+        "role": "input",
+        "shape": [
+          4
+        ],
+        "dtype": "float16"
+      },
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          4
+        ],
+        "dtype": "float16"
+      }
+    ],
+    "grid": 1,
+    "block": 4,
+    "warp": 64,
+    "fuel": [
+      1024,
+      16,
+      16,
+      16
+    ]
+  },
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned scalar GPU machine and its per-operation definitions",
+    "Python CUDA/HIP parser, fixed lowering, and token read-back formatter",
+    "Python PyTorch AST formalization of the independent reference module",
+    "Host launch, declared float16/float32 storage, aligned disjoint buffers; explicit half conversions",
+    "Abstract div/exp/tanh/rsqrt/fromHalf/toHalf operations, not an IEEE implementation or error bound",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)"
+  ],
+  "scope": [
+    "Bounded, concrete shapes and one-dimensional launches; all input scalar values",
+    "Float32 arithmetic with explicit float16 storage conversions; +, -, *, max, /, exp, tanh, rsqrt",
+    "Warp/block/grid folds; CUDA/HIP frontend exposes block barriers, full warp barriers, and halt",
+    "No PTX, tensor-core collectives, async operations, atomics, data-dependent control, or numerical guarantee",
+    "Operation-to-hardware correspondence remains trusted; numerical samples are separate evidence",
+    "Syntactic segment grouping and repetition; no general induction-based loop segmentation",
+    "Only computations with the same scalar expression structure currently prove automatically"
+  ],
+  "source_readback": true,
+  "model_sha256": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+  "model_profile": "nonlinear-v2",
+  "files": {
+    "Main.lean": "f807a3fc1e4963a26ed0af8b73b81f0270f44b3a703d59171c39c9895fc5c45b",
+    "kernel.cu": "a36122f74779252e0d4dc90f5c8f759f1ccad94bb2f60a342458c3789fdd22c5",
+    "reference.py": "6da9063743eb3058ed9244142e6994258ec6a06134f6cb5c7fc0084993289a9b",
+    "task.json": "017b686575411e2510de357014148fb7ff08dc1dd903ba77455d28759d97e304",
+    "translation.json": "9b9951766907beb8a956891cc6922d6cd1acd5252ca6f50a7568aef07af2ef22",
+    "proposal.json": "641f70696e10b8d2d764da89cae71845a62754c8e35fe269a87dde1ca27072e9",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1"
+  },
+  "axiom_audit": "Main.lean:426:2: error: tactic 'rfl' failed, the left-hand side\n  flatten segments\nis not definitionally equal to the right-hand side\n  program\n⊢ flatten segments = program\nMain.lean:455:4: error: tactic 'rfl' failed, the left-hand side\n  runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside)\nis not definitionally equal to the right-hand side\n  some final\ncase refine_1\nα : Type\nops : Ops α\ninput : Nat → Nat → α\noutside : Location → Option α\nfinal : State α := finalState ops input outside\n⊢ runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) = some final\n'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]\n'LarkCertificate.race_free' does not depend on any axioms\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "accepted": false
+    }
+  ],
+  "accesses": 48,
+  "numerical_testing": "not performed; proof concerns exact operations",
+  "recheck": "lake build (or lean Main.lean); lark check also validates source and artifact binding"
+}
