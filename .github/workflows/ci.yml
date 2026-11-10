@@ -52,6 +52,9 @@ jobs:
         working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
+      - name: Check two-launch FFN composition
+        run: lake env lean Lark/FeedForward.lean
+        working-directory: lean
       - name: Export example certificates
         run: python tools/verify_examples.py certificates
       - name: Recheck standalone export

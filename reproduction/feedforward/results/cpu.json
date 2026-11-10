@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "experiment": "feedforward-pipeline-v10",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-10T01:59:42.456947+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "dotmap": "69a3c94dd3a0aaf818facb9527d89e8da736ca0d2b2d0df77b76c86319b18170",
+    "pipeline": "fc49f7f8379024217932003b2cc5a85f5728d2b6dc6524bbad1df5414dc26eec",
+    "feedforward": "09b69694792366450fa31220b669b0ee923655db832e0ba61b1f64ff5a84c1c5"
+  },
+  "runner_sha256": "5774e0aea72ebe7ad8149c489926cb40436cfe698fac8a6494d3c17b3b69cae3",
+  "baselines": [
+    {
+      "key": "baselines/hip",
+      "status": "verified",
+      "rechecked": true,
+      "ffn_dimensions": [
+        64,
+        256,
+        1024,
+        256
+      ],
+      "verify_seconds": 17.66831508395262,
+      "main_bytes": 147766,
+      "source_hashes": {
+        "up.cu": "05ae7ebe15c900f3f33fe5e9f462d739722b512c15c06d576871f9e91d5df81e",
+        "down.cu": "317a6557810f9ed2e71c0a4e81132b2ded87ba5b5e654b57c08f058cac3e0a77",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up-task.json": "2f1704e4a55693b3b5854482ee58030ad49a3ba43f901b40625f54f47667a03e",
+        "down-task.json": "43271d82f6a6213576a59da0766a97bd46436a8c61b13f348ac9f5ca04d7e260"
+      },
+      "theorem_sha256": "b4441b311e9840e7b203cab2592a98c1634ae75254beb3a7e0f3389d7fc5e52a"
+    },
+    {
+      "key": "baselines/cuda",
+      "status": "verified",
+      "rechecked": true,
+      "ffn_dimensions": [
+        64,
+        256,
+        1024,
+        256
+      ],
+      "verify_seconds": 18.174959130992647,
+      "main_bytes": 147766,
+      "source_hashes": {
+        "up.cu": "70c69ec5a19c264e7d0bff2517fd8e8e3144698f5bc14d318e28944d117a2207",
+        "down.cu": "1e921e5c27d7a95c8e0c1b9f6fb1387fc7a10b2d41a49548e579273591bcfc91",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up-task.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "down-task.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+      },
+      "theorem_sha256": "1353555ed31ade97ec2e7c8a2ef2d4eca8bbed009e162d551d07b21a49c3557a"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/1-1-1-1",
+      "status": "verified",
+      "rechecked": true,
+      "ffn_dimensions": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "verify_seconds": 19.655366717022844,
+      "main_bytes": 147733,
+      "source_hashes": {
+        "up.cu": "412ae66522c0bc8d5fc0d269661a79cc1456731fe467ea6914776eb51b87d772",
+        "down.cu": "c1f0134ec9cc22e9c79c823ac06066e259530fd6dc9730c37a7faa595383ea75",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up-task.json": "783077f18854f104d34f533af920aeec51ecf5d9988599526734046d379a7f04",
+        "down-task.json": "1cc826e4d5d58ef534682e40feef0b930ecbc3187489afdfa653e815193042fe"
+      },
+      "theorem_sha256": "dc976990bc4c85c33ec9b2454a427165b544ead2932eff4a59f43418d56155c1"
+    },
+    {
+      "key": "scaling/64-1048576-16-256",
+      "status": "verified",
+      "rechecked": true,
+      "ffn_dimensions": [
+        64,
+        1048576,
+        16,
+        256
+      ],
+      "verify_seconds": 20.90947336598765,
+      "main_bytes": 147766,
+      "source_hashes": {
+        "up.cu": "398e7725afccbad4b3fc3d197cbf316f45a523d7cb56a295daa3985195b31378",
+        "down.cu": "29b8352e0febb27e64a86b85ce75621258d30ff66a6e05d96213ab1b652358c6",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up-task.json": "60990a821efbc08b5a8fd20f596c1621d8a016e756e3f8cf6d2d37b328f577fa",
+        "down-task.json": "98d71b0414601f486462dac427b839ec4d6a3ed5a1bf0d484947121511652c17"
+      },
+      "theorem_sha256": "53fd0f277674c4df4234484cbd78f29714c89c75eec22a6feb770f8575fb72ed"
+    },
+    {
+      "key": "scaling/1024-256-1024-1024",
+      "status": "verified",
+      "rechecked": true,
+      "ffn_dimensions": [
+        1024,
+        256,
+        1024,
+        1024
+      ],
+      "verify_seconds": 17.73164752300363,
+      "main_bytes": 147772,
+      "source_hashes": {
+        "up.cu": "d9495e125f2db03bb543dd605c120f063d464806eef9519f352a9a9dabe66d4e",
+        "down.cu": "d705797eedcb5e5fd5380d4d49e3e4744afc2470c38003bf074d0924f97dd067",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up-task.json": "d9c2b2b69e0f901895592d18223cc65a8fde240965c77de015ec094475c917f5",
+        "down-task.json": "5468224b30f5991198b32fc863943008453a8717440ee65125fadd9e15ea2d96"
+      },
+      "theorem_sha256": "07f89b9a35e745e0257b826635190a61f107f7f3b6427904c975b634d5d92246"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "missing-relu",
+      "stage": 0,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 17.407854139979463,
+      "source_sha256": "02f81b1322621badc21e80a8547b7be04161ae5ca7a7682a1cced02d69785b2b",
+      "theorem_sha256": "a7705bb14fe94d8a712948402c936b4fb8a117c7e8c25ee2961ae68d8ff41b4d",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "up-arithmetic",
+      "stage": 0,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 19.31351435300894,
+      "source_sha256": "74d0eed4749b66aa31bcecccb86e49e094744a0ff52fa16888493e77ecf7bb90",
+      "theorem_sha256": "276f1bcc4777a022bd66ba4dc064e3633f7b8677674b7545411a8d27fa12f789",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "down-address",
+      "stage": 1,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 17.149362106982153,
+      "source_sha256": "d9d91aa52e9911af47ffade06d46eec7ec502c19fb44da5c2e7ed01542803360",
+      "theorem_sha256": "fb203618558ba779342ef715b92da8bcbc6ac24fcac3417e8e0ac7ccc811a241",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    }
+  ],
+  "status": "passed"
+}

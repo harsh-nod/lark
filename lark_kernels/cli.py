@@ -49,6 +49,11 @@ def main(argv=None):
                 "--provider", help="explicit local proof-provider command; JSON stdin/stdout"
             )
             p.add_argument("--attempts", type=int, default=1)
+    p = sub.add_parser("verify-ffn")
+    p.add_argument("directory", type=Path)
+    p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--lean")
+    p.add_argument("--timeout", type=float, default=120)
     p = sub.add_parser("check")
     p.add_argument("directory", type=Path)
     p.add_argument("--lean")
@@ -58,6 +63,12 @@ def main(argv=None):
         if args.command == "check":
             print(check(args.directory, lean=args.lean, timeout=args.timeout).strip())
             print("VERIFIED: source binding, model, proofs, and axiom audit rechecked")
+        elif args.command == "verify-ffn":
+            from .feedforward import verify as verify_ffn
+
+            report = verify_ffn(args.directory, args.output, lean=args.lean, timeout=args.timeout)
+            print(f"{report['status'].upper()}: {args.output / 'report.json'}")
+            return 0 if report["status"] == "verified" else 1
         elif args.command == "inspect":
             task = Task.read(args.task)
             tr = translate(args.kernel.read_bytes().decode("utf-8"), task)

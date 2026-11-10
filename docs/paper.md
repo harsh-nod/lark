@@ -22,8 +22,10 @@ profiles add GEMM, BMM and bias epilogues. [RoPE](../reproduction/rotary/README.
 adds output-parity branches and interleaved input pairing.
 [Valid convolutions](../reproduction/convolution/README.md) add dense/depthwise
 NCHW address proofs. [Normalization](../reproduction/normalization/README.md)
-adds RMSNorm/LayerNorm/Softmax reduction phases. These seven induction profiles
-cover thirteen paper-size families (all twelve Level-1 families plus RoPE) with
+adds RMSNorm/LayerNorm/Softmax reduction phases. The
+[two-launch FFN](../reproduction/feedforward/README.md) connects both certified
+matrix products through the actual first final memory. These eight profiles
+cover fourteen paper-size families (all twelve Level-1 families plus RoPE/FFN) with
 independent scalar programs and
 exact-source HIP checks on both MI350X hosts.
 
@@ -43,7 +45,7 @@ exact-source HIP checks on both MI350X hosts.
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
 | Mutation evaluation, §5.2 | Study runners under `reproduction/` | Independent reduced/full-length arithmetic mutants checked directly in Lean; GEMV changes fail fixed-program structural equality; not the original 42 mutants |
 | Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
-| Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced and thirteen full-size families with certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
+| Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced and fourteen full-size families with certified-source checks on both MI350X hosts; separate scalar and binary16 probes |
 
 The [reproduction study](../reproduction/README.md) records exactly which experiments
 were run. KernelCraft model pass rates/token costs, the original production-kernel

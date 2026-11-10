@@ -9,3 +9,6 @@ import Lark.Convolution
 import Lark.UnaryMap
 import Lark.FoldPhase
 import Lark.Normalization
+import Lark.DotMap
+import Lark.Pipeline
+import Lark.FeedForward

@@ -439,6 +439,10 @@ def check(directory, *, lean=None, timeout=120):
         from .rotary import check as check_rotary
 
         return check_rotary(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "feedforward-pipeline-v10":
+        from .feedforward import check as check_ffn
+
+        return check_ffn(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "normalization-induction-v9":
         from .normalization import check as check_normalization
 
