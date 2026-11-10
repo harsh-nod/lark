@@ -64,10 +64,19 @@ shuffle and guarded scalar fold. Further components prove source-bound snapshot
 transport for complete 64-lane and logical-16 cohorts, the intermediate source
 stages (five native-wave stages and three logical-16 stages), their exact guarded
 value recurrence, and preservation of inactive threads, memory, indices, epochs
-and traces. The physical wave64 geometry remains fixed. These components still
-leave the final shared-store steps, barriers, output phase and full scheduler
-composition pending. `results/execution-stage-v1/` records their local checks;
+and traces. The physical wave64 geometry remains fixed. At that checkpoint the
+final shared-store steps, barriers, output phase and full scheduler composition
+remained pending. `results/execution-stage-v1/` records their local checks;
 its prefix CI receipt refers specifically to the earlier prefix commit.
+
+The [native-wave tail](../../lean/Lark/NativeRmsNormLastWave.lean) now executes
+the sixth source shuffle and the actual 64-lane final fold, including the guarded
+addition, lane-zero shared store and scheduler convergence at the first block
+barrier. It proves the exact stored partial, preservation of read-only inputs
+and synchronization epochs, and classification of the new store in block epoch
+zero. The full six-stage wave, 16-wave block, barrier-resume and output phases
+still need composition. `results/execution-tail-v1/` freezes these checks and a
+source archive rebuilt outside the checkout. This remains zero certificates.
 
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside

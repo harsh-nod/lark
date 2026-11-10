@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "claim": "actual native RMSNorm final wave-stage execution and scheduler convergence at the first block barrier",
+  "certificates": 0,
+  "whole_launch_proved": false,
+  "source_files": 89,
+  "fresh_build_outside_checkout": true,
+  "lean_version": "4.19.0",
+  "command": "lake build Lark.NativeRmsNormLastWave",
+  "base_commit": "7185b75b140037c22d723ea8c339d9f32cc6c608",
+  "properties": [
+    "actual final native shuffle transport",
+    "actual sequential 64-lane final fold",
+    "guarded addition and lane-zero shared partial store",
+    "exact stored partial value",
+    "actual first block-cut detection in runWarp",
+    "preservation of read-only inputs and synchronization epochs",
+    "classification of new stores in block epoch zero"
+  ],
+  "pending": [
+    "full six-stage wave composition",
+    "16-wave block composition",
+    "barrier resume and logical-16 scale phase",
+    "output phase",
+    "whole-launch correctness and access classification"
+  ],
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_binding_controls": {
+    "claim": "program identity only",
+    "baseline_accepted": true,
+    "changed_programs_rejected": 4
+  },
+  "earlier_stage_ci": {
+    "run_id": 42862477629,
+    "head_sha": "7185b75b140037c22d723ea8c339d9f32cc6c608",
+    "conclusion": "success",
+    "tests": 149,
+    "optional_skips": 5,
+    "test_seconds": 483.424,
+    "covers_this_new_tail_checkpoint": false
+  }
+}
