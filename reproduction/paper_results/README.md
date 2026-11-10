@@ -1,12 +1,35 @@
 # Audit of every paper table and figure
 
-[Result-by-result ledger](results/RESULTS.md) · [machine-readable audit](results/audit.json)
+[Updated frozen ledger](snapshots/20261110-v16/results/RESULTS.md) ·
+[historical ledger](results/RESULTS.md) · [historical audit](results/audit.json)
 
 The original paper is **not fully reproduced**. This audit inventories all 17
 tables and seven outer figure groups in the arXiv v1 preprint, plus 16 narrative
 anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
+
+The [updated snapshot](snapshots/20261110-v16/README.md) includes the later
+production SiLU, exact-real and full-wave reduction studies at experiment-code
+commit `35a6383`. Its evidence and auditor are frozen for replay without a
+historical checkout, and its existing-study links target that exact Git commit:
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --source-archive /path/to/2611.02028v1.tar
+```
+
+The [validation records](snapshot-v16-validation/results.json) include replay
+outside the checkout with Git unavailable, two fully rehashed false-completion
+claims, a fully rehashed traversal entry and a wrong-manuscript control. Repeat
+them with a fresh output directory:
+
+```bash
+python3 reproduction/paper_results/check_snapshot_controls.py \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-snapshot-controls
+```
+
+The remainder of this page documents the original historical snapshot.
 
 This is a coverage snapshot of the evidence associated with experiment-code
 commit `b5fb165`. Later independent studies, including the

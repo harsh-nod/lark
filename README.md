@@ -85,7 +85,7 @@ footprints with small standalone certificates. Those largest arrays were not
 allocated or executed. A [same-source dot-product ablation](reproduction/dot_ablation/RESULTS.md)
 compares flat proof execution with loop induction. See the [paper coverage ledger](reproduction/COVERAGE.md)
 for original pass rates, kernels, timings and other results that remain missing.
-The [result-by-result source audit](reproduction/paper_results/results/RESULTS.md)
+The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261110-v16/results/RESULTS.md)
 maps every paper table and figure to published evidence and concrete dependencies;
 all original paper results have not been reproduced.
 

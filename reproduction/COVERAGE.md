@@ -5,11 +5,14 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [source-bound result-by-result audit](paper_results/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261110-v16/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
 exact missing inputs. These overlapping items do not define a completion percentage.
+It includes the production SiLU and wave-reduction studies, binds evidence at
+experiment-code commit `35a6383`, and can be replayed after later documentation
+changes. The [historical snapshot](paper_results/README.md) is preserved.
 
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
