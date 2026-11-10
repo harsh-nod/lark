@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "model_profile": "wave-shuffle-v13",
+  "status": "verified",
+  "task": {
+    "name": "full_wave_down8",
+    "entry": "down_subgroup",
+    "language": "hip",
+    "buffers": [
+      {
+        "name": "x",
+        "role": "input",
+        "shape": [
+          64
+        ],
+        "dtype": "float32"
+      },
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          64
+        ],
+        "dtype": "float32"
+      }
+    ],
+    "grid": 1,
+    "block": 64,
+    "warp": 64,
+    "fuel": [
+      32,
+      8,
+      8,
+      8
+    ]
+  },
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "collective": "681f4b513eed9bbbe21f8e700a127ce862f98aa56d23a74d1107e7ff3c890b82",
+    "transfer": "5a1e020e95d0430023b8f22164260362bc546ce23ccaac1ffb69b549a770238e"
+  },
+  "files": {
+    "Main.lean": "3e10781bbe060d0ea135e36d24e66c22b42707e7388d8ceea7ef17b39bf6bccd",
+    "kernel.hip": "8d7a0ed2d459b1a722d3862dfbc41ef30ab6a6b4ae643da0ea8d8eeb868bcfc8",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "proposal.json": "276ed224f29db16031ff4facbba34e34edfcc1909ec4f81b9d29744eca91c411",
+    "reference.py": "57f077a4f772a66e2a98b1b13d69f225760adee450a9d06512dc08c3f5b0be21",
+    "task.json": "dabcb5bc8965b377a03831c0c53e419763241a6bb25bec8f6b6e5d642dcb267a",
+    "translation.json": "1e4474299fca421bf8e4cf3f326b26dc37ddb6681dac7d46d08381f25aa5fd2c"
+  },
+  "axiom_audit": "'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms\n'LarkCollective.runShuffle_preserves' depends on axioms: [propext]\n'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]\n'LarkCollective.Transfer.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\nMain.lean:1129:10: warning: unused variable `ops`\nnote: this linter can be disabled with `set_option linter.unusedVariables false`\n'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "accesses": 128,
+  "source_readback": true,
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned scalar GPU machine and its per-operation definitions",
+    "The opt-in HIP reader and scalar/shuffle lowering, with lossless token readback",
+    "The independent PyTorch AST formalization",
+    "Declared aligned disjoint float32 buffers, matching full-wave64 host geometry and subgroup widths",
+    "The inherited abstract scalar operations; no IEEE numerical-error guarantee",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)",
+    "HIP shuffle-to-snapshot-register correspondence; finite hardware evidence is separate"
+  ],
+  "scope": "Independent bounded full-wave64 float32 HIP shuffle profile; snapshot register transport, all input/outside values, inherited scalar operations, no memory fence from a shuffle. No partial masks, tensor cores or original production-kernel claim. Operation correspondence and source lowering remain trusted; hardware checks are separate."
+}

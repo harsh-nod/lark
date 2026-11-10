@@ -1,0 +1,11 @@
+{
+  "name": "full_wave_down8",
+  "entry": "down_subgroup",
+  "language": "hip",
+  "buffers": [
+    {"name": "x", "role": "input", "shape": [64], "dtype": "float32"},
+    {"name": "out", "role": "output", "shape": [64], "dtype": "float32"}
+  ],
+  "launch": {"grid": 1, "block": 64, "warp": 64},
+  "fuel": [32, 8, 8, 8]
+}

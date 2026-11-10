@@ -54,6 +54,10 @@ immutable Lean statement, proposal, logs and hash manifest. They use the existin
 unmodified `Model.lean` and universal scalar `Correct` theorem. CUDA/HIP exports
 retain their existing format.
 
+The recorded-study summary replays its hash-pinned source bundle in a temporary
+subprocess. This preserves strict source/hash checks when newer profiles change
+the current package; it never substitutes a changed reader for the archived run.
+
 There are no NVIDIA execution or timing results. Assembly checks establish that
 the fixtures compile, not hardware conformance or correctness of generated SASS.
 Tensor cores, shuffles, shared memory, general pointer arithmetic/aliasing,

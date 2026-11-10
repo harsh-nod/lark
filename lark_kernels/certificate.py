@@ -436,6 +436,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "wave-shuffle-v13":
+        from .collective import check as check_shuffle
+
+        return check_shuffle(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "pointwise-induction-v3":
         from .pointwise import check as check_pointwise
 

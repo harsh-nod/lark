@@ -5,7 +5,11 @@ from dataclasses import replace
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import subprocess
 import sys
+import tarfile
+import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from lark_kernels import certificate
@@ -16,6 +20,7 @@ from reproduction.ptx.run import MUTANTS
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[1]
+SOURCE_SHA256 = "6aa57faa2a3987a5a0aefd25610f0ec30e547e43ee493a6c9f586831269d67fb"
 
 
 def sha(path):
@@ -116,9 +121,32 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=Path, default=ROOT / "results/cpu-20261109")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--frozen-source-worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.output.exists() or args.output.resolve().is_relative_to(args.run.resolve()):
         parser.error("fresh output outside the immutable study required")
+    if not args.frozen_source_worker:
+        bundle = ROOT / "results/source-20261109.tar.gz"
+        require(sha(bundle) == SOURCE_SHA256, "Frozen PTX source bundle changed")
+        with tempfile.TemporaryDirectory(prefix="lark-ptx-audit-") as tmp:
+            with tarfile.open(bundle) as archive:
+                archive.extractall(tmp, filter="data")
+            script = Path(tmp) / "source/reproduction/ptx/summarize.py"
+            shutil.copyfile(Path(__file__), script)
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(script),
+                    "--run",
+                    str(args.run.resolve()),
+                    "--output",
+                    str(args.output.resolve()),
+                    "--frozen-source-worker",
+                ],
+                cwd=Path(tmp) / "source",
+                check=True,
+            )
+        return
     summary = audit(args.run)
     args.output.write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary))

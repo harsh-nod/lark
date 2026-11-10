@@ -1,0 +1,28 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by simp [LarkCollective.flatten, LarkCollective.flattenSegment, segments, program]",
+    "race_free": "by\n  obtain ⟨final, hr, hrf, hout⟩ :=\n    (LarkCollective.Transfer.correct unitOps .index 1 (.const (1)) 8 (fun t => (([1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 17, 17, 17, 17, 17, 17, 17, 17, 25, 25, 25, 25, 25, 25, 25, 25, 33, 33, 33, 33, 33, 33, 33, 33, 41, 41, 41, 41, 41, 41, 41, 41, 49, 49, 49, 49, 49, 49, 49, 49, 57, 57, 57, 57, 57, 57, 57, 57] : List Nat)[t]?).getD 0) (by unfold LarkCollective.Transfer.Valid; decide)) (fun _ _ => ()) (fun _ => some ())\n  exact ⟨final, hr, hrf⟩",
+    "segment_equivalence": "by\n  rw [segmentation_data]\n  exact LarkCollective.Transfer.correct ops .index 1 (.const (1)) 8 (fun t => (([1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 17, 17, 17, 17, 17, 17, 17, 17, 25, 25, 25, 25, 25, 25, 25, 25, 33, 33, 33, 33, 33, 33, 33, 33, 41, 41, 41, 41, 41, 41, 41, 41, 49, 49, 49, 49, 49, 49, 49, 49, 57, 57, 57, 57, 57, 57, 57, 57] : List Nat)[t]?).getD 0) (by unfold LarkCollective.Transfer.Valid; decide)"
+  }
+}

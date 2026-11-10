@@ -36,6 +36,14 @@ types; rechecking derives it again and validates the selected model hash.
 See the [MI350X validation](../reproduction/nonlinear/README.md) for separate
 finite numerical and bit-conversion evidence. No GPU test discharges a Lean goal.
 
+The opt-in `wave-shuffle-v13` profile embeds that unchanged nonlinear model and
+adds full-wave64 snapshot register transport. Its correctness theorem still
+covers actual launch completion, RF and output equality for every input and
+outside-memory state. A Lean preservation lemma establishes that shuffles
+change neither memory, access traces nor memory-order epochs. Source-to-HIP
+operation correspondence remains trusted; the separate finite bit-copy checks
+include special float32 payloads but do not establish complete hardware semantics.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom
@@ -76,6 +84,9 @@ to make the finite conflict check efficient. Lean first checks that this list
 is definitionally equal to the trace of the actual execution, including in the
 proof over arbitrary input scalars. The fixed theorem therefore covers the
 actual successful trace and execution, not just a caller-supplied footprint.
+The reusable induction profiles instead prove the actual execution and its
+trace invariants directly; a diagnostic `traceData` list is not a premise of
+their correctness theorem.
 Segmentation must flatten to the entire original program. A provider cannot
 change the specification or add a kernel-specific assumption.
 

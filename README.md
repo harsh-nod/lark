@@ -4,7 +4,7 @@ An independent implementation of the verification workflow in
 [LARK: Lean-Assisted Reasoning for LLM-Generated GPU Kernels](https://arxiv.org/abs/2611.02028)
 (Zhang et al., 2026).
 
-**This repository implements restricted scalar CUDA/HIP/PTX profiles of the method.**
+**This repository implements restricted CUDA/HIP/PTX profiles of the method.**
 It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
 paper's broader PTX, tensor-core, and production-kernel coverage
@@ -15,6 +15,12 @@ The [bounded PTX extension](reproduction/ptx/README.md) certifies four independe
 tiny float32 programs in the same machine. It has CPU-only NVIDIA assembly
 checks and no NVIDIA execution evidence; optimized PTX and collectives remain
 outside its supported subset.
+
+The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
+adds snapshot register transport to the Lean machine. Five independent 64-lane
+kernels have whole-launch certificates and exact-source checks on both MI350X
+hosts. Shuffles add no memory ordering; partial masks and tensor cores remain
+unsupported.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

@@ -28,12 +28,17 @@ matrix products through the actual first final memory. [SwiGLU](../reproduction/
 checked SiLU/product grid and four-stage dataflow. These nine profiles cover
 fifteen paper-size families (all twelve Level-1 families plus RoPE/FFN/SwiGLU) with
 independent scalar programs and
-exact-source HIP checks on both MI350X hosts.
+exact-source HIP checks on both MI350X hosts. The
+[dense attention profile](../reproduction/attention/README.md) connects three
+launches for full-size dense SDPA and grouped-query attention, bringing the
+independent full-size coverage to all seventeen families. It does not implement
+FlashAttention's online algorithm.
 
 | Paper component | Implementation | Extent and differences |
 | --- | --- | --- |
 | Machine state, §4.1 | `lean/Lark/Model.lean`, `Nonlinear.lean` | Separate pinned profiles with thread PCs, index/scalar registers, scoped memories, geometry and access traces |
 | Per-operation semantics, §4.1 | `execute`, `evalExpr`, `evalIndex` | Closed scalar operation sets; separate index/scalar types; nonlinear-v2 adds explicit FP16 storage conversions |
+| Register collectives | `Collective.lean`, `ShuffleTransfer.lean`, `lark_kernels/collective.py` | Opt-in full-wave64 HIP shuffle snapshots, four forms, no memory fence; five independent whole-launch certificates. No partial masks or tensor-core integration |
 | Exact arithmetic | `Ops α` | Universally quantified operations support an exact real interpretation; no Mathlib or IEEE formalization |
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
@@ -57,11 +62,18 @@ in the arXiv source bundle; NVIDIA hardware is only one of the missing requireme
 The [PTX reader](../reproduction/ptx/README.md) covers four independent tiny
 float32 programs, not the original optimized kernels or NVIDIA execution.
 The source frontends remain smaller: no packed/vector arithmetic,
-tensor-core fragment layouts, shuffles, cooperative grid-sync
+tensor-core fragment layouts, masked/partial-wave shuffles, cooperative grid-sync
 templates, asynchronous instructions, arbitrary layouts, dynamic shapes,
 in-place arguments, or general aliasing. The machine has a grid cut, but the
 source frontend refuses grid synchronization until a host contract and pinned
 hardware template are provided.
+
+The separate [full-wave shuffle profile](../reproduction/shuffle/README.md)
+adds register-snapshot semantics for four HIP shuffle forms. A reusable Lean
+phase proof certifies five complete 64-lane transport kernels; exact-source
+bit-copy checks passed on both MI350X hosts. Shuffles preserve memory-order
+epochs. Tensor-core semantics and original optimized collective kernels are
+still absent.
 
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
