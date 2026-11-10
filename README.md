@@ -22,6 +22,12 @@ kernels have whole-launch certificates and exact-source checks on both MI350X
 hosts. Shuffles add no memory ordering; partial masks and tensor cores remain
 unsupported.
 
+The opt-in [native MFMA profile](reproduction/mfma/README.md) certifies a complete
+64-lane 16×16 instruction tile and checks the exact source on both MI350X hosts.
+It covers one AMD half-input/float-output matrix instruction with default
+modifiers. Other matrix forms and original optimized kernels remain outside
+that profile.
+
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP

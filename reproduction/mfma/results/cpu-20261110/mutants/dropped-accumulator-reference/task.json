@@ -1,0 +1,54 @@
+{
+  "name": "native_mfma_tile",
+  "entry": "mfma_tile",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        16,
+        16
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        16,
+        16
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "c",
+      "role": "input",
+      "shape": [
+        16,
+        16
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        16,
+        16
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 64,
+    "warp": 64
+  },
+  "fuel": [
+    64,
+    8,
+    8,
+    8
+  ]
+}

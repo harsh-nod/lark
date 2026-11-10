@@ -21,3 +21,5 @@ import Lark.AttentionAddress
 import Lark.AttentionPipeline
 import Lark.Collective
 import Lark.ShuffleTransfer
+import Lark.MFMA
+import Lark.MFMATile

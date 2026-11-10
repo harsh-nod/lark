@@ -44,6 +44,14 @@ change neither memory, access traces nor memory-order epochs. Source-to-HIP
 operation correspondence remains trusted; the separate finite bit-copy checks
 include special float32 payloads but do not establish complete hardware semantics.
 
+The separate `wave-mfma-v14` profile adds one native AMD 16×16 half-input/float-output
+matrix instruction with default modifiers. Its four logical register components
+per operand and exact dot-plus-C definition remain part of the operation trust
+boundary. Lean proves the actual complete tile launch against every independent
+reference expression. Hardware basis-pair and exactly representable random-tile
+checks provide finite evidence for the same source; they do not prove the
+instruction's IEEE rounding or internal accumulation order.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom
@@ -71,7 +79,7 @@ include special float32 payloads but do not establish complete hardware semantic
    reduction theory. This repository does not mechanize that theorem.
 
 Register/index namespaces enforce the accepted subset's type separation.
-Memory addresses are element-indexed; vector alignment and reinterpret casts
+Memory addresses are element-indexed; vector memory accesses and reinterpret casts
 are not modeled and are refused at the source boundary. Integer arithmetic is
 restricted to nonnegative signed-int32 values at every intermediate step,
 avoiding signed overflow and unsigned-coordinate underflow discrepancies.

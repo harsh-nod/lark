@@ -19,6 +19,7 @@ def main(argv=None):
     for command in (
         "verify",
         "verify-shuffle",
+        "verify-mfma",
         "inspect",
         "verify-pointwise",
         "verify-gemv",
@@ -35,6 +36,7 @@ def main(argv=None):
         if command in {
             "verify",
             "verify-shuffle",
+            "verify-mfma",
             "verify-pointwise",
             "verify-gemv",
             "verify-matrix",
@@ -46,7 +48,9 @@ def main(argv=None):
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
             p.add_argument(
-                "--timeout", type=float, default=300 if command == "verify-shuffle" else 120
+                "--timeout",
+                type=float,
+                default=300 if command in {"verify-shuffle", "verify-mfma"} else 120,
             )
             p.add_argument("--proposal", type=Path)
             p.add_argument(
@@ -77,6 +81,24 @@ def main(argv=None):
         if args.command == "check":
             print(check(args.directory, lean=args.lean, timeout=args.timeout).strip())
             print("VERIFIED: source binding, model, proofs, and axiom audit rechecked")
+        elif args.command == "verify-mfma":
+            from .mfma import verify as verify_mfma
+
+            if args.provider or args.attempts != 1:
+                raise Refusal(
+                    "configuration", "MFMA verification checks one explicit proof proposal"
+                )
+            report = verify_mfma(
+                args.kernel,
+                args.reference,
+                args.task,
+                args.output,
+                lean=args.lean,
+                timeout=args.timeout,
+                proposal_path=args.proposal,
+            )
+            print(f"{report['status'].upper()}: {args.output / 'report.json'}")
+            return 0 if report["status"] == "verified" else 1
         elif args.command == "verify-shuffle":
             from .collective import verify as verify_shuffle
 

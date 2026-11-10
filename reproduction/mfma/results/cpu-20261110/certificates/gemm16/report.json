@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "model_profile": "wave-mfma-v14",
+  "status": "verified",
+  "task": {
+    "name": "native_mfma_tile",
+    "entry": "mfma_tile",
+    "language": "hip",
+    "buffers": [
+      {
+        "name": "a",
+        "role": "input",
+        "shape": [
+          16,
+          16
+        ],
+        "dtype": "float16"
+      },
+      {
+        "name": "b",
+        "role": "input",
+        "shape": [
+          16,
+          16
+        ],
+        "dtype": "float16"
+      },
+      {
+        "name": "c",
+        "role": "input",
+        "shape": [
+          16,
+          16
+        ],
+        "dtype": "float32"
+      },
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          16,
+          16
+        ],
+        "dtype": "float32"
+      }
+    ],
+    "grid": 1,
+    "block": 64,
+    "warp": 64,
+    "fuel": [
+      64,
+      8,
+      8,
+      8
+    ]
+  },
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "mfma": "5250670cdbfa11f7709a1e643f371fcd688c2e18a0c77edda4602b82902d64bb",
+    "tile": "9c0a2c4dc9c91dcd8669ab4c91339815657196093c99b32caddadbb7a9c1ef30"
+  },
+  "files": {
+    "Main.lean": "8ead12d69c0e0c322380f21225e3a8e7c3f627fbc8b0b7bf0547515c063b1eca",
+    "kernel.hip": "9286be8dff9ea7e5ee6715db745433eba228c1739d6caab3a5edc41b3ba20e2d",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "proposal.json": "3cdab0b8bacc3d16d03fa85960a6a1c9e22f86c9e9c5e47b0dcbdf12c1da70d3",
+    "reference.py": "d4261ee8e78d1acf8266fc47a69b19be7129ccdff2df934d53c5a0d0bb107d71",
+    "task.json": "2189e46afe0f0230b73a2be909e77fe259c0b9cbbff5ea4f6fe2cae8b8adba8a",
+    "translation.json": "91daeac25009632f7f1f60409cc680281cf30745f8ccb2309e93d76b67d47b82"
+  },
+  "axiom_audit": "'LarkMFMA.mfmaUpdates_preserves' does not depend on any axioms\n'LarkMFMA.runMFMA_preserves' depends on axioms: [propext]\nMain.lean:695:34: warning: unused variable `ht`\nnote: this linter can be disabled with `set_option linter.unusedVariables false`\n'LarkMFMA.Tile.load_fold' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMFMA.Tile.mfma_element' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMFMA.Tile.matrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMFMA.Tile.safe_raceFree' depends on axioms: [propext, Quot.sound]\n'LarkMFMA.Tile.store_fold' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkMFMA.Tile.correct' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Classical.choice, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "accesses": 1024,
+  "source_readback": true,
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned nonlinear scalar and full-wave64 MFMA machine definitions",
+    "The opt-in HIP reader, four-component half/float vector lowering and lossless token readback",
+    "The independent PyTorch AST formalization",
+    "Declared aligned disjoint buffers and matching full-wave64 host geometry",
+    "MFMA f32_16x16x16f16 with literal modifiers (0,0,0), logical operand layout and exact dot-plus-C correspondence",
+    "Abstract scalar/half-conversion operations, not IEEE rounding or hardware accumulation-order semantics",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)"
+  ],
+  "scope": "Independent full-wave64 HIP MFMA profile. The automatic theorem covers one 16x16 half-input/float-output tile, all input/outside values, actual launch completion and race freedom. Matrix operands are read from a register snapshot; no memory fence is added. Operation correspondence, source lowering and host contracts remain trusted. No partial masks, other shapes/modifiers, IEEE guarantee, original production kernel or model pass-rate claim."
+}

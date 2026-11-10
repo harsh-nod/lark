@@ -1,0 +1,28 @@
+{
+  "status": "proof-statements-manifests-and-exact-source-gpu-evidence-audited",
+  "original_paper_fully_reproduced": false,
+  "certificates": 5,
+  "independent_lean_rechecks_recorded": 5,
+  "direct_lean_rejections": 4,
+  "mutant_timeouts": 0,
+  "hardware": [
+    {
+      "host": "mi350",
+      "trials": 50,
+      "comparisons": 3200,
+      "mismatches": 0,
+      "source_files_identical_to_certificates": true,
+      "input_and_guard_bytes_unchanged": true
+    },
+    {
+      "host": "mi350-2",
+      "trials": 50,
+      "comparisons": 3200,
+      "mismatches": 0,
+      "source_files_identical_to_certificates": true,
+      "input_and_guard_bytes_unchanged": true
+    }
+  ],
+  "fresh_lean_rechecks_by_this_summary": 0,
+  "scope": "Five independent full-wave64 float32 HIP transport kernels, four direct Lean controls. Universal input/outside-state launch completion, RF and output equality under the opt-in snapshot-register machine. Shuffles add no memory ordering. Source/operation correspondence and phase-reduction metatheory remain trusted. Not original kernels, partial participation, tensor cores, NVIDIA execution or paper pass-rate results."
+}

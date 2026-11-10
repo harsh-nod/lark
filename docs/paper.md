@@ -61,10 +61,10 @@ in the arXiv source bundle; NVIDIA hardware is only one of the missing requireme
 
 The [PTX reader](../reproduction/ptx/README.md) covers four independent tiny
 float32 programs, not the original optimized kernels or NVIDIA execution.
-The source frontends remain smaller: no packed/vector arithmetic,
-tensor-core fragment layouts, masked/partial-wave shuffles, cooperative grid-sync
+The source frontends remain smaller: general packed/vector arithmetic,
+other matrix-instruction layouts, masked/partial-wave shuffles, cooperative grid-sync
 templates, asynchronous instructions, arbitrary layouts, dynamic shapes,
-in-place arguments, or general aliasing. The machine has a grid cut, but the
+in-place arguments, and general aliasing remain unsupported. The machine has a grid cut, but the
 source frontend refuses grid synchronization until a host contract and pinned
 hardware template are provided.
 
@@ -72,8 +72,13 @@ The separate [full-wave shuffle profile](../reproduction/shuffle/README.md)
 adds register-snapshot semantics for four HIP shuffle forms. A reusable Lean
 phase proof certifies five complete 64-lane transport kernels; exact-source
 bit-copy checks passed on both MI350X hosts. Shuffles preserve memory-order
-epochs. Tensor-core semantics and original optimized collective kernels are
-still absent.
+epochs. That shuffle profile excludes tensor-core instructions.
+
+The [native MFMA profile](../reproduction/mfma/README.md) separately models one
+full-wave64 f32_16x16x16f16 instruction with default modifiers. Its complete
+load/matrix/store program has a whole-launch certificate and exact-source
+hardware checks on both hosts. It does not combine shuffles with MFMA, certify
+the original production kernels or establish IEEE accumulation semantics.
 
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
