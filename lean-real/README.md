@@ -35,6 +35,13 @@ cannot justify associativity silently: `universal_reassociation_impossible`
 proves a concrete counterexample. This package supplies a real interpretation
 without changing that original statement or adding an arithmetic axiom.
 
+The [online-attention algebra study](../reproduction/online_attention/README.md)
+proves the normalized tiled softmax recurrence equals dense softmax-weighted
+values for arbitrary real scores, signed value columns and finite tile lengths.
+It proves positive update denominators and checks four false algebra assertions
+and their counterexamples. Finite first-tile initialization is explicit; GPU
+execution, source lowering, race freedom and IEEE behavior remain separate work.
+
 Mathlib is pinned to v4.19.0 commit
 `c44e0c8ee63ca166450922a373c7409c5d26b00b`; [lake-manifest.json](lake-manifest.json)
 also pins its transitive dependencies. Lean remains 4.19.0. Only `propext`,
@@ -49,7 +56,8 @@ cd lean-real
 MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
 lake exe cache get Mathlib.Data.Complex.Trigonometric \
   Mathlib.Analysis.SpecialFunctions.Sqrt \
-  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise
+  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+  Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
 lake build
 lake env lean LarkReal/Ops.lean
 cd ..
@@ -62,7 +70,8 @@ cache tool through the interpreter after `lake build +Cache.Main:olean`:
 ```bash
 lake env lean --run .lake/packages/mathlib/Cache/Main.lean get \
   Mathlib.Data.Complex.Trigonometric Mathlib.Analysis.SpecialFunctions.Sqrt \
-  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise
+  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+  Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
 ```
 
 The [recorded study](../reproduction/exact_real/README.md) separately checks a

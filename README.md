@@ -58,6 +58,12 @@ scale reduction inside physical wave64. Both MI350X hosts passed numerical
 tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
+The separate [online-attention study](reproduction/online_attention/README.md)
+proves the tiled normalized value recurrence equals dense softmax over reals.
+Both MI350X hosts also passed 749,568 combined numerical comparisons for the
+unchanged upstream FP32 kernel. This adds no source certificate: actual launch
+and race-freedom proofs, and the paper's FP16 adaptation, remain open.
+
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP

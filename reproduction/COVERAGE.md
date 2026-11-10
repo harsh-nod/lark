@@ -70,6 +70,17 @@ Mathlib. It adds no source certificate, GPU trial or original experimental cell.
 The separate native studies connect those components to source-bound complete
 launches. Floating-point error theorems remain outside their claims.
 
+The [online-attention value proof](online_attention/README.md) separately proves
+the normalized tiled recurrence equals dense softmax over exact reals, with
+positive denominators and four checked false-update counterexamples. It is
+algorithm algebra only: native source execution, race freedom, the upstream
+infinity sentinel and the original paper's attention certificate remain open.
+Separate native checks of the unchanged upstream FP32 online kernel passed
+749,568 output comparisons on both MI350X hosts, including the 128×256 workload
+and large common score shifts. Every CPU float64 reference was recomputed in an
+offline audit. This is not the paper's FP16 adaptation or an additional source
+certificate; the original production and Level-2 rows below remain incomplete.
+
 The separate [full-wave reduction study](wave_reduction/RESULTS.md) now supplies
 those proofs for one independent native wave64 XOR butterfly. One source-bound
 exact-real certificate and fresh recheck pass; four direct Lean controls are

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/tspeterkim/flash-attention-minimal",
+  "commit": "00f8f46712d493665c900c32fa3a261c8ef3e20c",
+  "path": "flash.cu",
+  "source_sha256": "c4b466beb6030b2fd1eeb2d4a606c81235fe0275b6831a1ac728a82f093c4110",
+  "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+  "paper_reference": "2611.02028v1 references.bib flashattnmin; Table 5 fam-flash-attn; Appendix A.14",
+  "relation": "Independent algebra of the normalized tile update in forward_kernel, not the missing original adapted source.",
+  "formal_scope": {
+    "values": "exact reals; arbitrary scores and signed value columns",
+    "initialization": "Finite nonempty first tile; the upstream -INFINITY sentinel is not modeled.",
+    "tile_updates": "Source-order running max, rescaled denominator and normalized-output recurrence.",
+    "not_proved": [
+      "GPU launch execution",
+      "source-to-algorithm translation",
+      "memory footprints and race freedom",
+      "IEEE behavior or numerical error",
+      "full upstream API",
+      "original model outcomes or timings"
+    ]
+  },
+  "source_certificates": 0,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "git_blob_sha1": "64f13faa3a6290e80f940c669ba142d094011484",
+  "counts_scope": "Algebra checkpoint only. Separate native numerical trials are recorded in results/native-v1."
+}

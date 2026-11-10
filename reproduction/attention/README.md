@@ -5,6 +5,11 @@ dense scaled-dot-product attention and grouped-query attention. It does not
 implement FlashAttention's online softmax algorithm or the authors' optimized
 PTX kernels. [Measured results](RESULTS.md), [paper coverage](../COVERAGE.md).
 
+The separate [online-attention study](../online_attention/README.md) proves the
+tiled value recurrence and numerically checks an unchanged upstream FP32 kernel
+on both MI350X hosts. Its actual launch and race-freedom proofs remain open;
+it adds no certificate to this dense three-launch family.
+
 Scores are FP32 dot products of promoted FP16 Q/K, divided by the exact integer
 square root of the head dimension. Row softmax stays FP32; the last product with
 FP16 V rounds only the final output to FP16. Query head `h` reads KV head

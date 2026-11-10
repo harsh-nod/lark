@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "status": "native-online-attention-audited",
+  "hosts": [
+    {
+      "device": "AMD Instinct MI350X",
+      "trials": 24,
+      "forward_kernel_launches": 24,
+      "initialization_kernel_launches": 24,
+      "output_comparisons": 374784,
+      "numerical_failures": 0,
+      "max_abs_error": 1.5769493966671932e-05,
+      "compiler_input_files": 316,
+      "results_sha256": "6b1b6280591b3a7e60f63ccc11907181cbf61f581ee61c411f58a8d4fb67c2d4"
+    },
+    {
+      "device": "AMD Instinct MI350X",
+      "trials": 24,
+      "forward_kernel_launches": 24,
+      "initialization_kernel_launches": 24,
+      "output_comparisons": 374784,
+      "numerical_failures": 0,
+      "max_abs_error": 1.5769493966671932e-05,
+      "compiler_input_files": 311,
+      "results_sha256": "2c62bc66cba0d01137a1dcf106cacdf6b5344ede6a48b7ffbf5e208ae0513934"
+    }
+  ],
+  "fresh_cpu_reference_cases": 24,
+  "output_comparisons": 749568,
+  "numerical_failures": 0,
+  "max_abs_error": 1.5769493966671932e-05,
+  "host_output_sha256": [
+    "a067b6f5bf426c00a3367f26074bb562d1bbfeccf108e9f0010342587fbb664a",
+    "a067b6f5bf426c00a3367f26074bb562d1bbfeccf108e9f0010342587fbb664a"
+  ],
+  "host_outputs_byte_identical": true,
+  "upstream_definition_sha256": "a4969a11f7372149e4262f1a017ac319c9bd0ef49331be647c67edf57055841a",
+  "input_manifest_sha256": "f80547a0780dd02bbeb66b6319df06cadda789ce9c98a516ff3138d232be786e",
+  "atol": 0.0001,
+  "rtol": 0.0002,
+  "runtime_guard_and_accumulator_checks_reported": true,
+  "accumulator_streams_independently_rechecked": false,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "race_freedom_proved": false,
+  "ieee_equivalence_proved": false,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "forward_kernel_launches": 48,
+  "explicit_initialization_kernel_launches": 48,
+  "native_source": "Unchanged extracted FP32 forward_kernel; half-representable inputs in FP32 storage.",
+  "host_wrapper_departures": [
+    "Torch host launcher replaced by HIP runtime calls",
+    "dynamic shared-memory capacity explicitly enabled; tile32 retained"
+  ],
+  "not_reproduced": [
+    "authors original adapted FP16 source",
+    "source-to-algorithm relation",
+    "actual machine launch correctness and RF theorem",
+    "IEEE equivalence/error bound",
+    "original model outcome",
+    "H100 timings"
+  ],
+  "input_provenance_note": "The frozen input provenance counters describe the earlier algebra-only checkpoint, before GPU execution. Completed native counts are in each host report and this report.",
+  "timings_measured": false
+}

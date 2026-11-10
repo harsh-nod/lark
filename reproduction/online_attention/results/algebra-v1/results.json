@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "status": "online-recurrence-algebra-checked",
+  "checked_at_utc": "2026-11-10T20:34:57.040507+00:00",
+  "seconds": 24.939378524024505,
+  "axioms": {
+    "exp_rescale": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "weight_shift": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "numerator_shift": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "weight_pos": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "update_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "valid_reference": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "process_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "process_reference": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "run_reference": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "checks": [
+    {
+      "name": "fresh-check",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 6.5653883930062875
+    },
+    {
+      "name": "correct-update",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 1.888819468964357
+    },
+    {
+      "name": "omitted-old-mass",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 2.087414582958445
+    },
+    {
+      "name": "omitted-old-mass-counterexample",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 2.0280725000193343
+    },
+    {
+      "name": "omitted-tile-mass",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 1.9986032990273088
+    },
+    {
+      "name": "omitted-tile-mass-counterexample",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 1.968738367955666
+    },
+    {
+      "name": "doubled-tile-value",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 2.174681561999023
+    },
+    {
+      "name": "doubled-tile-value-counterexample",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 2.0898008799995296
+    },
+    {
+      "name": "reversed-rescale-sign",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 1.8649384459713474
+    },
+    {
+      "name": "reversed-rescale-sign-counterexample",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 2.000920912018046
+    }
+  ],
+  "negative_algebra_controls": 4,
+  "proved_counterexamples": 4,
+  "source_sha256": "6aa5d8af73c658d6c3630264a70f860354727ca6a0b0e404299ac70ddff9e6be",
+  "upstream": {
+    "schema": 1,
+    "repository": "https://github.com/tspeterkim/flash-attention-minimal",
+    "commit": "00f8f46712d493665c900c32fa3a261c8ef3e20c",
+    "path": "flash.cu",
+    "source_sha256": "c4b466beb6030b2fd1eeb2d4a606c81235fe0275b6831a1ac728a82f093c4110",
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "paper_reference": "2611.02028v1 references.bib flashattnmin; Table 5 fam-flash-attn; Appendix A.14",
+    "relation": "Independent algebra of the normalized tile update in forward_kernel, not the missing original adapted source.",
+    "formal_scope": {
+      "values": "exact reals; arbitrary scores and signed value columns",
+      "initialization": "Finite nonempty first tile; the upstream -INFINITY sentinel is not modeled.",
+      "tile_updates": "Source-order running max, rescaled denominator and normalized-output recurrence.",
+      "not_proved": [
+        "GPU launch execution",
+        "source-to-algorithm translation",
+        "memory footprints and race freedom",
+        "IEEE behavior or numerical error",
+        "full upstream API",
+        "original model outcomes or timings"
+      ]
+    },
+    "source_certificates": 0,
+    "gpu_trials": 0,
+    "model_calls": 0,
+    "original_paper_fully_reproduced": false,
+    "git_blob_sha1": "64f13faa3a6290e80f940c669ba142d094011484",
+    "counts_scope": "Algebra checkpoint only. Separate native numerical trials are recorded in results/native-v1."
+  },
+  "source_certificates": 0,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "whole_kernel_execution_proved": false,
+  "race_freedom_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false
+}

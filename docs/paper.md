@@ -106,6 +106,14 @@ the source addition tree bit for bit; fixed cancellation probes disagree with
 CPU Torch and are reported separately. Original production reductions and
 NVIDIA results remain unavailable.
 
+The [online-attention study](../reproduction/online_attention/README.md) proves
+the normalized tiled value recurrence equals a dense real softmax-weighted sum.
+It separately validates the unchanged upstream FP32 kernel on both MI350X hosts,
+including the 128×256 workload. Its mathematical initialization uses a finite
+first tile; the hardware run executes the upstream infinity sentinel. Source
+lowering, actual tiled launch completion and race freedom remain to be proved.
+This algebra and finite evidence add no online-attention source certificate.
+
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
 condition within its narrower interface. This does not eliminate the need to

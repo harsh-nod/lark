@@ -30,7 +30,8 @@ jobs:
         run: |
           lake exe cache get Mathlib.Data.Complex.Trigonometric \
             Mathlib.Analysis.SpecialFunctions.Sqrt \
-            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
         working-directory: lean-real
       - name: Check source-bound real wave reduction and tamper controls
         run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
@@ -41,6 +42,8 @@ jobs:
       - name: Check native RMSNorm canonical-real whole launch
         run: lake build LarkReal.NativeRmsNorm
         working-directory: lean-real
+      - name: Check online-attention algebra and false-update counterexamples
+        run: python3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra
   proof-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
