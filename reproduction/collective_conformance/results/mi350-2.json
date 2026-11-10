@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "experiment": "gfx950-shuffle-and-mfma-layout-conformance",
+  "timestamp_utc": "2026-11-10T03:39:38.170577+00:00",
+  "device": "AMD Instinct MI350X",
+  "architecture": "gfx950",
+  "warp": 64,
+  "inputs_unchanged": true,
+  "guard_zones_unchanged": true,
+  "model_calls": 0,
+  "runner_sha256": "c2f372d42044fd3737243fb7a4f8d80d81bdec2d5f46e3d718797035fddb3439",
+  "source_sha256": "b0dd5d6452fb27b5ebf123061c5f13a9fb622838dee32bab1506ead1d0166bd3",
+  "dataset_sha256": "2a70a882273adf55446f669e96d5b3f0a7bc471de2f23e61cb26a0839fd4c01a",
+  "binary_sha256": "7bd9cdad4577aacde42b6eaf97563297444a1d0810258800dd6e8ecf601c1e9b",
+  "compile_command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "--save-temps",
+    "/tmp/lark-collective-device-20261109/probes.hip",
+    "-o",
+    "/tmp/lark-collective-device-20261109/output/probes"
+  ],
+  "compiler": "HIP version: 7.2.53150-b958ce88c2\nAMD clang version 22.0.0git (https://github.com/ROCm/llvm-project  25496 9b0f9aa3067a907226b0ebb8bee1fe51d1f0fca5)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.3.0/lib/llvm/bin\nBuild config: +assertions\nConfiguration file: /opt/rocm-7.3.0/lib/llvm/bin/clang++.cfg\n",
+  "compiler_mfma_assembly_present": true,
+  "compiler_assembly_hashes": {
+    "probes-hip-amdgcn-amd-amdhsa-gfx950.s": "ec98c6d92a982849a7518dc771d093cde59c2986860a535da83f0b37efbac26b"
+  },
+  "results": [
+    {
+      "probe": "shuffle",
+      "comparisons": 133632,
+      "mismatches": 0,
+      "first_mismatch": null,
+      "bit_identical": true,
+      "actual_sha256": "9f3101488052fdf3b67505c9f4f9d3da6b0f9be3ceb779791fa5edd04c0959dd",
+      "expected_sha256": "9f3101488052fdf3b67505c9f4f9d3da6b0f9be3ceb779791fa5edd04c0959dd"
+    },
+    {
+      "probe": "mfma",
+      "comparisons": 16850944,
+      "mismatches": 0,
+      "first_mismatch": null,
+      "bit_identical": true,
+      "actual_sha256": "422457596ecaad4c197f0835ec455de8b9c43729d80c8255fbbf032cd8b9b301",
+      "expected_sha256": "422457596ecaad4c197f0835ec455de8b9c43729d80c8255fbbf032cd8b9b301"
+    }
+  ],
+  "scope": "Finite hardware conformance only. Full-partition uint32/float32 bit-copy shuffles and one MFMA shape with default modifiers. Exhaustive FP16 input basis pairs/accumulator basis plus exactly representable random operands. Not complete IEEE semantics, formal collective integration, NVIDIA layouts, other MFMA shapes or the authors instruction table."
+}
