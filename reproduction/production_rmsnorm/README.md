@@ -60,14 +60,25 @@ The following proof foundations have been checked:
   proves that this value equals the canonical real sum-of-squares RMSNorm.
   **Equating actual execution to this value remains an open proof obligation.**
 
-The execution branch additionally proves the actual eight-instruction setup
-(`Lark.NativeRmsNormInit`), signed-int32 evaluation of both vector-loop addresses
-and FP16 input/weight loads (`Lark.NativeRmsNormAddress`), and the actual
-six-instruction square-and-accumulate cycle and entire eight-component inner
-loop (`Lark.NativeRmsNormAccumulate`). It proves the accumulated value and access
-classification, with memory and synchronization epochs preserved. The complete two-by-eight traversal,
-collective phases, stores and whole launch remain to be composed. These phase
-theorems add no complete kernel certificate.
+The execution modules prove the actual setup, two-by-eight traversal, six native
+shuffle stages and shared partial stores. `Lark.NativeRmsNormFirstBlock` composes
+all sixteen physical waves: every thread reaches the first block barrier with
+native indices, all sixteen partials have their intended values, and the actual
+phase trace is race-free. These theorems quantify over every input and initial
+outside memory within the declared shape contract.
+
+`Lark.NativeRmsNormBarrier` proves the actual first barrier resume into block epoch
+one. The scale-entry and mixed-cohort modules then prove that sixteen lanes load
+the shared partials, the other physical lanes park at the second barrier, and
+the scheduler selects the logical-16 cohort. Intermediate logical stages retain
+the physical wave64 fold and preserve inactive lanes. The final scale store,
+second barrier, output phase and whole launch remain to be composed. These
+phase theorems add no complete kernel certificate.
+
+```bash
+cd lean
+lake build Lark.NativeRmsNormMixedStage
+```
 
 The [HIP shuffle documentation](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_cpp_language_extensions.html#warp-shuffle-functions)
 describes power-of-two logical subgroups and out-of-range up/down sources

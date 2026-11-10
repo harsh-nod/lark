@@ -89,6 +89,16 @@ freedom of its complete actual trace. Earlier waves' partials remain intact.
 logical-16 scale reduction, output phase and whole-launch theorem are still
 pending; the certificate count remains zero.
 
+The subsequent [scale-entry components](../../lean/Lark/NativeRmsNormMixedStage.lean)
+prove the actual first barrier resume, current block epochs advancing from zero
+to one, and the sequential physical-wave entry fold. Exactly sixteen threads
+load the proved shared partials; all other threads park at the actual second
+barrier. The scheduler selects the complete logical-16 cohort from the physical
+wave64, and the intermediate logical stages execute with their original physical
+lane-fold order and unchanged inactive lanes. `results/execution-mid-v1/` freezes
+these component checks. The final scale store, second barrier, output phase and
+whole-launch theorem remain pending, with zero certificates.
+
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside
 the checkout. Extract `gpu-input.tar.gz` and either host archive into separate

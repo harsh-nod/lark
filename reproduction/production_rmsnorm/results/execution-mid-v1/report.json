@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "claim": "native RMSNorm actual first barrier resume, scale-entry lane folds and intermediate logical-16 execution inside physical wave64",
+  "certificates": 0,
+  "whole_launch_proved": false,
+  "whole_scale_phase_proved": false,
+  "source_files": 103,
+  "fresh_build_outside_checkout": true,
+  "lean_version": "4.19.0",
+  "command": "lake build Lark.NativeRmsNormMixedStage",
+  "base_commit": "099bae169fb2c1491c883e8b53b721d539ca7bbc",
+  "physical_wave_width": 64,
+  "active_logical_lanes": 16,
+  "inactive_lanes_in_first_physical_wave": 48,
+  "properties": [
+    "actual first block barrier resume",
+    "current participating block epochs advance from zero to one",
+    "all native indices and proved shared partials available at PC39",
+    "actual sequential scale-entry lane calls",
+    "active lanes load shared partials; inactive lanes stop at the second barrier",
+    "actual scheduler selects exactly the complete logical-16 cohort",
+    "original physical lane-fold order retained through intermediate logical stages",
+    "inactive lanes remain parked without memory fences from shuffles",
+    "classification of the new shared reads in block epoch one"
+  ],
+  "pending": [
+    "final logical stage and scale store",
+    "second block barrier resume",
+    "output phase",
+    "whole-launch correctness and access classification"
+  ],
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_binding_controls": {
+    "claim": "program identity only",
+    "baseline_accepted": true,
+    "changed_programs_rejected": 4
+  },
+  "earlier_block_ci": {
+    "run_id": 42868128434,
+    "head_sha": "099bae169fb2c1491c883e8b53b721d539ca7bbc",
+    "conclusion": "success",
+    "tests": 149,
+    "optional_skips": 5,
+    "test_seconds": 689.044,
+    "covers_this_new_mid_checkpoint": false
+  }
+}
