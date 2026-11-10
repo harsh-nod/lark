@@ -131,7 +131,103 @@ theorem component_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     exact input_access_good p s t 1 _ (by decide)
   · exact good a ht
 
+theorem component_exit (p : Shape) (ops : Ops α) (t extra : Nat) (s : State α)
+    (hi : s.indices t 6 = some 8) (hp : s.pc t = 10) :
+    LarkCollective.runLane ops (layout p) (geometry p) program t (extra + 1) s =
+      LarkCollective.runLane ops (layout p) (geometry p) program t extra (advance s t 16) := by
+  have hg := LarkReduction.predicate_nlt_of (geometry p) t s (.ivar 6) (.const 8)
+    8 8 hi (by rfl) (by omega)
+  have he : execute ops (layout p) (geometry p) t
+      (.branch (.lt (.ivar 6) (.const 8)) 16) s = some (advance s t 16) := by
+    simp only [execute, hg, bind, pure, Option.bind]
+    rfl
+  exact scalar_step ops _ _ _ _ _ _ _ _
+    (by simp [LarkCollective.parked, program, hp]) (by simp [program, hp]) he
+
+def componentsRun (ops : Ops α) (input : Nat → Nat → α) (row vector t : Nat) :
+    Nat → Nat → α → State α → State α
+  | _, 0, _, s => advance s t 16
+  | component, remaining + 1, acc, s =>
+      componentsRun ops input row vector t (component + 1) remaining
+        (ops.add acc (termAt ops input row vector component))
+        (componentAfter ops input row vector component t acc s)
+
+def componentFold (ops : Ops α) (input : Nat → Nat → α) (row vector : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | component, remaining + 1, acc => componentFold ops input row vector (component + 1) remaining
+      (ops.add acc (termAt ops input row vector component))
+
+/-- The complete inner loop, including its final false guard, in the actual program. -/
+theorem components_run_eq (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row vector component remaining t extra : Nat) (acc : α) (s : State α)
+    (stop : component + remaining = 8) (reads : Reads p input s)
+    (hr : row < p.rows) (hv : vector < 2048)
+    (hi0 : s.indices t 0 = some (row : Int)) (hi5 : s.indices t 5 = some (vector : Int))
+    (hi6 : s.indices t 6 = some (component : Int)) (ha : s.regs t 0 = some acc) (hp : s.pc t = 10) :
+    LarkCollective.runLane ops (layout p) (geometry p) program t (extra + 6 * remaining + 1) s =
+      LarkCollective.runLane ops (layout p) (geometry p) program t extra
+        (componentsRun ops input row vector t component remaining acc s) := by
+  induction remaining generalizing component acc s with
+  | zero =>
+      have hj : component = 8 := by omega
+      subst component
+      simpa only [Nat.mul_zero, Nat.add_zero, componentsRun] using component_exit p ops t extra s hi6 hp
+  | succ remaining ih =>
+      have hc : component < 8 := by omega
+      have hf : extra + 6 * (remaining + 1) + 1 = (extra + 6 * remaining + 1) + 6 := by omega
+      rewrite [hf, component_cycle p ops input row vector component t _ acc s reads hr hv hc hi0 hi5 hi6 ha hp]
+      change LarkCollective.runLane _ _ _ _ _ _ _ =
+        LarkCollective.runLane _ _ _ _ _ _
+          (componentsRun ops input row vector t (component + 1) remaining
+            (ops.add acc (termAt ops input row vector component))
+            (componentAfter ops input row vector component t acc s))
+      rcases component_fields ops input row vector component t acc s with ⟨hpc, hrow, hvec, hcomp, hacc⟩
+      apply ih
+      · omega
+      · exact reads_of_memory p input s _ reads (component_preserves ops input row vector component t acc s).1
+      · exact hrow.trans hi0
+      · exact hvec.trans hi5
+      · exact hcomp
+      · exact hacc
+      · exact hpc
+
+theorem components_preserves (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining : Nat) (acc : α) (s : State α) :
+    (componentsRun ops input row vector t component remaining acc s).memory = s.memory ∧
+    (componentsRun ops input row vector t component remaining acc s).epochs = s.epochs := by
+  induction remaining generalizing component acc s with
+  | zero => exact ⟨rfl, rfl⟩
+  | succ remaining ih =>
+      have h := ih (component + 1) (ops.add acc (termAt ops input row vector component))
+        (componentAfter ops input row vector component t acc s)
+      have hs := component_preserves ops input row vector component t acc s
+      exact ⟨h.1.trans hs.1, h.2.trans hs.2⟩
+
+theorem components_acc (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining : Nat) (acc : α) (s : State α) (ha : s.regs t 0 = some acc) :
+    (componentsRun ops input row vector t component remaining acc s).regs t 0 =
+      some (componentFold ops input row vector component remaining acc) := by
+  induction remaining generalizing component acc s with
+  | zero => exact ha
+  | succ remaining ih =>
+      apply ih
+      exact (component_fields ops input row vector component t acc s).2.2.2.2
+
+theorem components_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row vector t component remaining : Nat) (acc : α) (s : State α)
+    (good : ∀ a ∈ s.trace, LarkReductionFootprint.Good (traversal p) 0 a) :
+    ∀ a ∈ (componentsRun ops input row vector t component remaining acc s).trace,
+      LarkReductionFootprint.Good (traversal p) 0 a := by
+  induction remaining generalizing component acc s with
+  | zero => exact good
+  | succ remaining ih =>
+      apply ih
+      exact component_good p ops input row vector component t acc s good
+
 #print axioms component_cycle
 #print axioms component_fields
 #print axioms component_good
+#print axioms components_run_eq
+#print axioms components_acc
+#print axioms components_good
 end LarkNativeRmsNorm

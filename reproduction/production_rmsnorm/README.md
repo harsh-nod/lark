@@ -63,9 +63,9 @@ The following proof foundations have been checked:
 The execution branch additionally proves the actual eight-instruction setup
 (`Lark.NativeRmsNormInit`), signed-int32 evaluation of both vector-loop addresses
 and FP16 input/weight loads (`Lark.NativeRmsNormAddress`), and the actual
-six-instruction square-and-accumulate cycle (`Lark.NativeRmsNormAccumulate`).
-It proves the cycle's access classification and preservation of memory,
-synchronization epochs and other threads. The complete two-by-eight traversal,
+six-instruction square-and-accumulate cycle and entire eight-component inner
+loop (`Lark.NativeRmsNormAccumulate`). It proves the accumulated value and access
+classification, with memory and synchronization epochs preserved. The complete two-by-eight traversal,
 collective phases, stores and whole launch remain to be composed. These phase
 theorems add no complete kernel certificate.
 
