@@ -91,7 +91,7 @@ jobs:
         run: lake env lean Lark/MFMATile.lean
         working-directory: lean
       - name: Check native RMSNorm execution components
-        run: lake build Lark.NativeRmsNormPrefix
+        run: lake build Lark.NativeRmsNormFirstStage
         working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v

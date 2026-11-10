@@ -58,6 +58,17 @@ input read. The proof uses the original two vector iterations and eight-componen
 inner loop, with 115 scalar instructions per thread. This is a component of the
 pending whole-launch proof and adds no RMSNorm certificate.
 
+The [cohort execution components](../../lean/Lark/NativeRmsNormFirstStage.lean)
+then compose the sequential prefix lane fold with the first actual native-wave
+shuffle and guarded scalar fold. Further components prove source-bound snapshot
+transport for complete 64-lane and logical-16 cohorts, the intermediate source
+stages (five native-wave stages and three logical-16 stages), their exact guarded
+value recurrence, and preservation of inactive threads, memory, indices, epochs
+and traces. The physical wave64 geometry remains fixed. These components still
+leave the final shared-store steps, barriers, output phase and full scheduler
+composition pending. `results/execution-stage-v1/` records their local checks;
+its prefix CI receipt refers specifically to the earlier prefix commit.
+
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside
 the checkout. Extract `gpu-input.tar.gz` and either host archive into separate
