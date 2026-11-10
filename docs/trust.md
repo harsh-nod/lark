@@ -69,6 +69,19 @@ The dependency-free profiles keep their stronger unrestricted quantification.
 Reordered reduction trees still need an actual GPU execution/RF proof, and the
 real algebra gives no floating-point equality or error bound.
 
+The `wave-sum-real-v16` profile proves a full six-stage wave64 butterfly using
+the unchanged machines, then proves its source tree is the canonical real sum.
+Its final theorem is specialized to Mathlib's `ℝ`; the intermediate machine
+proof still preserves expression order for arbitrary `Ops`. The closed reader
+binds the exact sixteen-instruction program, launch and all 64 independent
+reference cells. `lark check` regenerates the statement in a fresh directory
+using a managed proof cache derived from pinned installed source bytes. It
+ignores certificate-supplied build files and compiled imports. The locked
+dependency sources and dependency compiled import cache remain trusted, as do
+the earlier frontend, host and opcode correspondence boundaries. The recorded
+cancellation discrepancies on both AMD hosts demonstrate why the real theorem
+must not be presented as floating-point equivalence.
+
 ## Trusted components
 
 1. **Lean 4.19.0 and its kernel.** Each exported theorem's actual axiom

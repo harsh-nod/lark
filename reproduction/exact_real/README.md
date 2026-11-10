@@ -38,6 +38,12 @@ source archive, including the unchanged core libraries and the dependency lock.
 source and compiled cache artifacts are obtained separately at the pinned
 revision; they are not vendored in that small source archive.
 
+The current runner also freezes the dependencies of the later
+[wave-reduction bridge](../wave_reduction/README.md), producing a 25-file source
+archive on new runs. The published original 16-file archive and counts above
+remain unchanged; wave-reduction certificates and hardware trials have their
+own study.
+
 The first setup attempt reached a cache-tool native build and failed because
 the local runtime-only Lean distribution has no C headers. Interpreter cache
 bootstrap succeeded. The first library draft used an overly broad `simp` in

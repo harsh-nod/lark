@@ -30,8 +30,10 @@ jobs:
         run: |
           lake exe cache get Mathlib.Data.Complex.Trigonometric \
             Mathlib.Analysis.SpecialFunctions.Sqrt \
-            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise
         working-directory: lean-real
+      - name: Check source-bound real wave reduction and tamper controls
+        run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
       - name: Check real interpretation, machine specializations and algebra controls
         run: python3 reproduction/exact_real/run.py --output /tmp/lark-exact-real
   proof-tests:

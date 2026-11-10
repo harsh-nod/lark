@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "origin": "Independent HIP full-wave64 XOR butterfly fixture, authored in this repository; no authors' original production source is claimed",
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "profile": "wave-sum-real-v16",
+  "launch": {
+    "grid": 1,
+    "block": 64,
+    "warp": 64
+  },
+  "storage": "two disjoint contiguous float32[64] regions",
+  "shuffle_distances": [
+    32,
+    16,
+    8,
+    4,
+    2,
+    1
+  ],
+  "proof_scope": "Complete actual launch, RF and source expression tree for all scalar interpretations; canonical sum for the pinned exact-real interpretation, including every input/outside state",
+  "numerical_scope": "Ordinary finite CPU reference checks and exact source-AST comparison; fixed cancellation stress kept separately because real equality supplies no IEEE bound",
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}

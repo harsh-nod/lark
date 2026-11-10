@@ -25,3 +25,5 @@ import Lark.Collective
 import Lark.ShuffleTransfer
 import Lark.MFMA
 import Lark.MFMATile
+
+import Lark.WaveSum

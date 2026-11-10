@@ -39,7 +39,7 @@ FlashAttention's online algorithm.
 | Machine state, §4.1 | `lean/Lark/Model.lean`, `Nonlinear.lean` | Separate pinned profiles with thread PCs, index/scalar registers, scoped memories, geometry and access traces |
 | Per-operation semantics, §4.1 | `execute`, `evalExpr`, `evalIndex` | Closed scalar operation sets; separate index/scalar types; nonlinear-v2 adds explicit FP16 storage conversions |
 | Register collectives | `Collective.lean`, `ShuffleTransfer.lean`, `lark_kernels/collective.py` | Opt-in full-wave64 HIP shuffle snapshots, four forms, no memory fence; five independent whole-launch certificates. No partial masks or tensor-core integration |
-| Exact arithmetic | `Ops α` | Universally quantified operations support an exact real interpretation; no Mathlib or IEEE formalization |
+| Exact arithmetic | `Ops α`, optional `lean-real/` | Default proofs quantify over abstract operations; pinned Mathlib real interpretation and source-bound wave sum are optional; no IEEE theorem |
 | Hierarchical phase folds, Eq. 2 | `runLane`, `runWarp`, `runBlock`, `runGrid` | Warp, block, grid, halt cuts; separate fuel for each level; convergence checks |
 | Race freedom, Obligation 1 | `raceFree`, `conflict`, `ordered` | All access pairs in a successful symbolic execution; scope-aware epoch ordering; checked again for arbitrary scalar inputs in the final theorem |
 | Source translation and read-back | `lark_kernels/frontend.py`, `ptx.py` | Lossless token stream plus strict CUDA/HIP and bounded scalar PTX lowering; parser and lowering remain trusted |
@@ -97,6 +97,14 @@ equalities and supplies reduction-tree/permutation and chunking lemmas. It
 removes the need to assume algebraic laws for unrestricted operations. This is
 mathematical preparation for optimized reductions; it does not add a new
 optimized program or reproduce an original model/hardware experiment.
+
+The [full-wave reduction extension](../reproduction/wave_reduction/README.md)
+combines that algebra with actual execution, footprint and race-freedom proofs
+for one independent native wave64 XOR butterfly. Its source-bound theorem
+equates every output to an independent canonical real sum. Both AMD hosts match
+the source addition tree bit for bit; fixed cancellation probes disagree with
+CPU Torch and are reported separately. Original production reductions and
+NVIDIA results remain unavailable.
 
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger

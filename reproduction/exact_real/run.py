@@ -163,6 +163,20 @@ example : nonassociativeOps.add (nonassociativeOps.add 1 2) 3 =
             "Silu.lean",
         )
     ]
+    names += [
+        "lean/Lark/" + n + ".lean"
+        for n in (
+            "Collective",
+            "ShuffleTransfer",
+            "CollectiveGather",
+            "RegisterPhase",
+            "WaveReduce",
+            "WaveReduceArithmetic",
+            "WaveReduceStore",
+            "WaveSum",
+        )
+    ]
+    names += ["lean-real/LarkReal/WaveSum.lean"]
     names += ["lean/lean-toolchain", "lean/lakefile.toml", "LICENSE"]
     for name in names:
         dest = source / name

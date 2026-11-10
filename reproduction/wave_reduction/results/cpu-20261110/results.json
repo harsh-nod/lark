@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "recorded_utc": "2026-11-10T12:10:15.581304+00:00",
+  "profile": "wave-sum-real-v16",
+  "baseline": {
+    "status": "verified",
+    "rechecked": true,
+    "wall_seconds": 25.904232005996164,
+    "theorem_sha256": "174a1665b64047fe52978d87f03f1386bf0f60a9a8c9841acf7fe5a098e292a3",
+    "report_sha256": "cde90728b3a09b56ee2e83ab7c3165777add6aa82a81d5d9cae55eef29331d7e"
+  },
+  "controls": [
+    {
+      "name": "wrong-last-shuffle",
+      "accepted": false,
+      "timed_out": false,
+      "failed_gate": "fixed-program equality",
+      "python_profile_preflight_bypassed": true,
+      "wall_seconds": 12.571920988033526,
+      "source_sha256": "b37b435310f458290b4fc583a1a1e9789de529736452526860caf6f0b827a9ee",
+      "theorem_sha256": "9c903f689b2ce8aaac8d831d7c8150640338e5e7200f79180c55ca65a4d314b2",
+      "log_sha256": "3ebf2a6776d0dd1119da82db2c7d0f58c995b2970e9f3e7af4d44ac7bad31067"
+    },
+    {
+      "name": "last-reference-cell",
+      "accepted": false,
+      "timed_out": false,
+      "failed_gate": "reference-cell equality",
+      "python_profile_preflight_bypassed": true,
+      "wall_seconds": 12.406024433032144,
+      "source_sha256": "4974312268353491788867f49e2964e2b0d812931fb67112662e02e4bbe2eb34",
+      "theorem_sha256": "9698ebf2c233270654f7f87e437ae8130a181f54e7c14be1c405412b952ec457",
+      "log_sha256": "d9fb6d9873493140db51b349d9716a6f16fa757b1abb2bcac2eb1b8bbeb86d49"
+    },
+    {
+      "name": "all-reference-cells-plus-one",
+      "accepted": false,
+      "timed_out": false,
+      "failed_gate": "canonical-reference equality",
+      "python_profile_preflight_bypassed": true,
+      "wall_seconds": 12.126351940038148,
+      "source_sha256": "4974312268353491788867f49e2964e2b0d812931fb67112662e02e4bbe2eb34",
+      "theorem_sha256": "4fac091a0b9122b09903dd8cf9c678b53fdd9c8c9dd048d57a0cbbdb68028610",
+      "log_sha256": "be763caa63bc865b5281cd70976a870ab8723786012b61d3c555cbb1415a922a"
+    },
+    {
+      "name": "wrong-launch",
+      "accepted": false,
+      "timed_out": false,
+      "failed_gate": "actual-launch interface",
+      "python_profile_preflight_bypassed": true,
+      "wall_seconds": 12.114998483972158,
+      "source_sha256": "4974312268353491788867f49e2964e2b0d812931fb67112662e02e4bbe2eb34",
+      "theorem_sha256": "f78ab26a9f8f107095645d3f3abf452cc11131aa0c3e7db0383c3fb04ac09784",
+      "log_sha256": "5b6f70c85cf920c275ffc5b705c44465e0fec08ea108385a0528ef6892063cbf"
+    }
+  ],
+  "certificates": 1,
+  "recorded_independent_rechecks": 1,
+  "direct_lean_rejections": 4,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Independent full-wave64 six-stage XOR butterfly. Actual complete launch, RF and all 64 independent-reference outputs for every real input and initial outside memory. No original production-kernel result, packed/tiled kernel, other subgroup shape or floating-point error bound.",
+  "negative_reference_note": "Formal reference-nodes sidecars are mutated; canonical Python reference source is retained for the direct reference controls. These are equality/interface gates, not original paper diagnosis channels."
+}

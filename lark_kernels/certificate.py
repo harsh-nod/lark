@@ -255,10 +255,15 @@ end LarkCertificate
     )
 
 
-def run_lean(directory, binary, timeout):
+def run_lean(directory, binary, timeout, *, env=None):
     try:
         result = subprocess.run(
-            [binary, "Main.lean"], cwd=directory, text=True, capture_output=True, timeout=timeout
+            [binary, "Main.lean"],
+            cwd=directory,
+            text=True,
+            capture_output=True,
+            timeout=timeout,
+            env=env,
         )
     except subprocess.TimeoutExpired as e:
         stdout = e.stdout.decode() if isinstance(e.stdout, bytes) else e.stdout or ""
@@ -444,6 +449,10 @@ def check(directory, *, lean=None, timeout=120):
         from .mfma import check as check_mfma
 
         return check_mfma(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "wave-sum-real-v16":
+        from .wave_sum import check as check_wave_sum
+
+        return check_wave_sum(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "wave-shuffle-v13":
         from .collective import check as check_shuffle
 

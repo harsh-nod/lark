@@ -66,6 +66,14 @@ existing machine proofs and proves reduction-tree/chunk algebra using pinned
 Mathlib. It adds no source certificate, GPU trial or original experimental cell.
 Optimized reductions still require complete machine-execution and RF proofs.
 
+The separate [full-wave reduction study](wave_reduction/RESULTS.md) now supplies
+those proofs for one independent native wave64 XOR butterfly. One source-bound
+exact-real certificate and fresh recheck pass; four direct Lean controls are
+rejected. Each AMD host matches the source tree bit for bit on 17,408 outputs.
+Ordinary Torch comparisons pass, while cancellation disagreements remain
+separate scope evidence. This does not recover an original production source,
+floating-point theorem, model outcome or NVIDIA timing.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |

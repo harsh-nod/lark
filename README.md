@@ -42,8 +42,11 @@ matched the extracted upstream path bit for bit across 2,966,860 outputs each.
 
 An [optional Mathlib real interpretation](lean-real/README.md) connects the
 existing SiLU/dot-product launch proofs to canonical formulas and proves
-reduction-tree and chunking algebra. It prepares rearranged reduction proofs;
-it adds no optimized GPU certificate or original-paper result.
+reduction-tree and chunking algebra. The [full-wave reduction extension](reproduction/wave_reduction/RESULTS.md)
+uses it to prove a complete native wave64 butterfly against an independent real
+sum. Both hosts matched the source expression tree on 17,408 outputs each;
+cancellation disagreements with CPU Torch are reported separately. These
+independent additions do not reproduce the original paper's experiments.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

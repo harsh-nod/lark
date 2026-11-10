@@ -1,0 +1,49 @@
+{
+  "status": "frozen-statements-inputs-and-raw-two-host-evidence-audited",
+  "certificates": 1,
+  "recorded_independent_lean_rechecks": 1,
+  "regenerated_positive_statements": 1,
+  "regenerated_negative_statements": 4,
+  "direct_lean_rejections": 4,
+  "mutant_timeouts": 0,
+  "hardware": [
+    {
+      "host": "mi350",
+      "physical_gpu": 2,
+      "ordinary_trials": 264,
+      "stress_trials": 8,
+      "kernel_launches": 272,
+      "output_values": 17408,
+      "source_tree_bit_differences": 0,
+      "ordinary_reference_comparisons": 16896,
+      "ordinary_reference_numerical_failures": 0,
+      "stress_reference_disagreements": 128,
+      "model_calls": 0,
+      "ordinary_max_abs_reference_error": 2.384185791015625e-07,
+      "stress_max_abs_reference_error": 1.0,
+      "recorded_inputs_and_guards_unchanged": true
+    },
+    {
+      "host": "mi350-2",
+      "physical_gpu": 0,
+      "ordinary_trials": 264,
+      "stress_trials": 8,
+      "kernel_launches": 272,
+      "output_values": 17408,
+      "source_tree_bit_differences": 0,
+      "ordinary_reference_comparisons": 16896,
+      "ordinary_reference_numerical_failures": 0,
+      "stress_reference_disagreements": 128,
+      "model_calls": 0,
+      "ordinary_max_abs_reference_error": 2.384185791015625e-07,
+      "stress_max_abs_reference_error": 1.0,
+      "recorded_inputs_and_guards_unchanged": true
+    }
+  ],
+  "fresh_lean_checks": 0,
+  "fresh_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Independent full-wave64 six-stage XOR butterfly. Actual complete launch, RF and all 64 independent-reference outputs for every real input and initial outside memory. No original production-kernel result, packed/tiled kernel, other subgroup shape or floating-point error bound.",
+  "floating_point_scope": "Exact-real equality is proved. FP32 ordinary trials meet tolerance; fixed cancellation probes disagree with Torch in 128/512 outputs per host and remain separately reported. No IEEE equality/error theorem."
+}
