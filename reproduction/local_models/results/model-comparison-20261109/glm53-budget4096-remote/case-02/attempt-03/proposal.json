@@ -1,0 +1,78 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        }
+      ]
+    },
+    {
+      "seq": [
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        }
+      ]
+    },
+    {
+      "seq": [
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        },
+        {
+          "op": 13
+        },
+        {
+          "op": 14
+        },
+        {
+          "op": 15
+        },
+        {
+          "op": 16
+        },
+        {
+          "op": 17
+        },
+        {
+          "op": 18
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by rfl",
+    "race_free": "by\n  have h : (runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ()))).map\n      (fun s => raceFree geometry s.trace) = some true := by decide\n  cases hr : runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ())) with\n  | none =>\n      rw [hr] at h\n      exact absurd h (by simp [Option.map])\n  | some s =>\n      refine \u27e8s, hr, ?_\u27e9\n      rw [hr] at h\n      simpa [Option.map_some] using h",
+    "segment_equivalence": "by fail"
+  }
+}

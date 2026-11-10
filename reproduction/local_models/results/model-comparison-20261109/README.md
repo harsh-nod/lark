@@ -20,14 +20,22 @@ Flash's 17 requests reached Lean seven times; ten proposals were refused before
 Lean. Different retry budgets remain separate. Usage is complete for these
 completed cohorts; hosted API spending is zero.
 
-Full GLM-5.3 produced a first-attempt SiLU proof on the independent reduced HIP
-fixture. Its [completed case](glm53-budget4096-remote/case-01/result.json), exact
+Full GLM's [ReLU/SiLU/Softmax batch](glm53-budget4096-remote/results.json) is
+complete: seven requests, 124,057 reported tokens, five actual Lean checks,
+one verified SiLU certificate and two unproved cases. The
+[completed-batch audit](progress/glm53-first3-completed-audit.json) reconstructs
+all histories, matches these three first requests against the completed models,
+and freshly rechecks SiLU. Both additional seven-case batches remain live.
+This is a three-case batch, not a completed 17-fixture full-model rate.
+
+The first-attempt SiLU proof's [completed case](glm53-budget4096-remote/case-01/result.json), exact
 request/response, proposed tactics and exported certificate are preserved.
 The [partial-case audit](progress/glm53-silu-partial-audit.json) records matching
 model/export tactics, reconstruction of the complete immutable first request,
 fixture-byte checks and another successful local Lean recheck. Its request used
 7,868 prompt and 4,264 completion tokens, including 4,096 reported reasoning
-tokens. This is one completed case within a running cohort, not a 17-case rate.
+tokens. All 18 previously published files in the SiLU case and its server record
+were preserved byte for byte when the full three-case batch arrived.
 
 Both additional Flash batches are complete:
 [first seven](flash17-budget4096-half-a-remote/results.json) and

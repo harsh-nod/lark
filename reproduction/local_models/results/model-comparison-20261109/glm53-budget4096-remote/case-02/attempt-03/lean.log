@@ -1,0 +1,23 @@
+Main.lean:425:5: error: tactic 'rfl' failed, the left-hand side
+  flatten segments
+is not definitionally equal to the right-hand side
+  program
+⊢ flatten segments = program
+Main.lean:449:17: error: application type mismatch
+  And.intro hr
+argument
+  hr
+has type
+  runLaunch unitOps layout geometry fuel program (initial layout (fun x x => ()) fun x => some ()) = some s : Prop
+but is expected to have type
+  some s = some s : Prop
+Main.lean:455:5: error: tactic 'fail' failed
+α : Type
+ops : Ops α
+⊢ Correct ops layout geometry fuel (flatten segments) (spec ops)
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' depends on axioms: [propext, sorryAx]
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

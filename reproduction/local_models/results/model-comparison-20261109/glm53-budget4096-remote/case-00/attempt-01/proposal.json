@@ -1,0 +1,34 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by rfl",
+    "race_free": "by\n  refine \u27e8finalState unitOps (fun _ _ => ()) (fun _ => some ()), ?_, ?_\u27e9\n  \u00b7 show runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ())) =\n      some ((runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ()))).getD\n      (initial layout (fun _ _ => ()) (fun _ => some ())))\n    have h : runLaunch unitOps layout geometry fuel program\n      (initial layout (fun _ _ => ()) (fun _ => some ())) =\n      some (finalState unitOps (fun _ _ => ()) (fun _ => some ())) := by rfl\n    rw [h]\n    rfl\n  \u00b7 have h : (finalState unitOps (fun _ _ => ()) (fun _ => some ())).trace\n      = traceData := by rfl\n    rw [h]\n    decide",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8finalState ops input outside, ?_, ?_, ?_\u27e9\n  \u00b7 show runLaunch ops layout geometry fuel program (initial layout input outside) =\n      some ((runLaunch ops layout geometry fuel program (initial layout input outside)).getD\n      (initial layout input outside))\n    have h : runLaunch ops layout geometry fuel program (initial layout input outside) =\n      some (finalState ops input outside) := by rfl\n    rw [h]\n    rfl\n  \u00b7 have h : (finalState ops input outside).trace = traceData := by rfl\n    rw [h]\n    decide\n  \u00b7 show extract layout (finalState ops input outside) = some (spec ops input)\n    have h : extract layout (finalState ops input outside) =\n      extract layout (finalState ops input outside) := rfl\n    rw [h]\n    have hex : extract layout (finalState ops input outside) =\n      some (spec ops input) := by rfl\n    exact hex"
+  }
+}

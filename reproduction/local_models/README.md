@@ -48,9 +48,11 @@ the one-request Flash budget.
 0/1/6/7, TP=4, using the pinned native FP8 checkpoint. All 141 weight shards and
 eight supporting files passed independent validation. Its successful protocol
 warmup used 22 prompt and five completion tokens; this is not proof evidence.
-The three-case pilot and two additional seven-case batches will cover all 17
-reduced fixtures, with at most two active sequences. These studies are running;
-no completed full-model cohort result is claimed here.
+The [completed three-case batch](results/model-comparison-20261109/glm53-budget4096-remote/results.json)
+used seven requests and 124,057 reported tokens, with one SiLU certificate and
+five actual Lean checks. ReLU and Softmax remained unproved within their
+recorded budgets. Both additional seven-case batches are now running, with at
+most two active sequences; no completed 17-fixture full-model result is claimed.
 
 Its first [completed SiLU case](results/model-comparison-20261109/README.md)
 contains a real model-generated proof whose exact tactics, immutable first

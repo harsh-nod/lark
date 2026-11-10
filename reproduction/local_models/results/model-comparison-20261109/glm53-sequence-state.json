@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "status": "glm53-proof-pilot-finished",
+  "runner_sha256": "d6db3f0bab7f1758197bf09275eaab5e35c9ff694b11a6f87b3737405e1cf98d",
+  "events": [
+    {
+      "status": "waiting",
+      "utc": "2026-11-10T03:52:31.698587+00:00"
+    },
+    {
+      "status": "completed-pilots-archived",
+      "utc": "2026-11-10T04:11:12.143741+00:00"
+    },
+    {
+      "status": "completed-owned-runtimes-stopped",
+      "utc": "2026-11-10T04:11:28.432437+00:00"
+    },
+    {
+      "status": "glm53-started",
+      "utc": "2026-11-10T04:11:38.729955+00:00"
+    },
+    {
+      "status": "glm53-ready",
+      "utc": "2026-11-10T04:13:59.075695+00:00"
+    },
+    {
+      "status": "glm53-warmup-passed",
+      "utc": "2026-11-10T04:14:00.546338+00:00"
+    },
+    {
+      "status": "glm53-proof-pilot-running",
+      "utc": "2026-11-10T04:14:00.547019+00:00"
+    },
+    {
+      "status": "glm53-proof-pilot-finished",
+      "utc": "2026-11-10T05:40:57.421045+00:00"
+    }
+  ],
+  "scope": "Authorized sequential free model experiments. Only completed owned runtimes stop; original readiness records remain historical evidence.",
+  "pilot_archive_sha256": "9a4ce4b8cdab4412110d5e0362e1d984b4035b29ea06c9eec87e51de89e4ebae",
+  "stopped": [
+    {
+      "container_id": "09808420b738afb3305e2f57f7c06546ea2ecc79e792698db1e68562e75b7bad",
+      "ready_record_sha256": "ce7049c8887d8a556a15c9a4c6d85221e5931211667c8463a5915c308298fcbd",
+      "stopped_utc": "2026-11-10T04:11:20.593747+00:00",
+      "docker_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-10T02:44:03.699738562Z",
+        "FinishedAt": "2026-11-10T04:11:20.263286644Z"
+      }
+    },
+    {
+      "container_id": "7753fabe6905c3fa242fe45c597f9545f770e38bbc8f4df69358ea1f7afd871e",
+      "ready_record_sha256": "fc92f174f95cf8e79827dfb2e42d9dcb2b9137848065cdf1bc2f6abb00b9e525",
+      "stopped_utc": "2026-11-10T04:11:28.416318+00:00",
+      "docker_state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-09T22:36:20.126521422Z",
+        "FinishedAt": "2026-11-10T04:11:28.141770228Z"
+      }
+    }
+  ],
+  "launch_args": [
+    "python3",
+    "/tmp/lark-local-models-20261109/scripts/serve-glm53.py",
+    "--checkpoint",
+    "/tmp/lark-local-models-20261109/glm53-checkpoint-verified.json",
+    "--cache",
+    "/dev/shm/lark-models-20261109/hub",
+    "--spillover",
+    "/run/user/9661/lark-glm53-20261109/blobs",
+    "--runtime-cache",
+    "/dev/shm/lark-glm53-vllm-cache-20261109",
+    "--output",
+    "/tmp/lark-local-models-20261109/glm53-server.json",
+    "--launch"
+  ],
+  "launch_script_sha256": "d33057f30f17168a913015f45e479b11431ff1928030264d9afeb6c2262934c8",
+  "pilot_pid": 3278758
+}
