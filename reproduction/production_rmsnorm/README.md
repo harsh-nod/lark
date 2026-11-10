@@ -60,6 +60,15 @@ The following proof foundations have been checked:
   proves that this value equals the canonical real sum-of-squares RMSNorm.
   **Equating actual execution to this value remains an open proof obligation.**
 
+The execution branch additionally proves the actual eight-instruction setup
+(`Lark.NativeRmsNormInit`), signed-int32 evaluation of both vector-loop addresses
+and FP16 input/weight loads (`Lark.NativeRmsNormAddress`), and the actual
+six-instruction square-and-accumulate cycle (`Lark.NativeRmsNormAccumulate`).
+It proves the cycle's access classification and preservation of memory,
+synchronization epochs and other threads. The complete two-by-eight traversal,
+collective phases, stores and whole launch remain to be composed. These phase
+theorems add no complete kernel certificate.
+
 The [HIP shuffle documentation](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_cpp_language_extensions.html#warp-shuffle-functions)
 describes power-of-two logical subgroups and out-of-range up/down sources
 returning the caller's value. The development model conservatively requires

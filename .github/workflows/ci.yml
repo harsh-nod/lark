@@ -90,6 +90,9 @@ jobs:
       - name: Check full-wave64 MFMA machine and tile proof
         run: lake env lean Lark/MFMATile.lean
         working-directory: lean
+      - name: Check native RMSNorm execution components
+        run: lake build Lark.NativeRmsNormAccumulate
+        working-directory: lean
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Check two-launch FFN composition
