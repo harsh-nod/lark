@@ -1,0 +1,15 @@
+Main.lean:425:5: error: tactic 'decide' failed for proposition
+  flatten segments = program
+since its 'Decidable' instance
+  instDecidableEqList (flatten segments) program
+did not reduce to 'isTrue' or 'isFalse'.
+
+After unfolding the instance 'instDecidableEqList', reduction got stuck at the 'Decidable' instance
+  (flatten segments).hasDecEq program
+Main.lean:443:33: error: invalid constructor ⟨...⟩, expected type must be known
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' does not depend on any axioms
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

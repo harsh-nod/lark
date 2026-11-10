@@ -1,20 +1,20 @@
 # Independent 17-fixture comparison audit
 
-The completed DeepSeek/Flash cohorts and the running full GLM cohort use the same
+The completed DeepSeek, Flash and full GLM cohorts use the same
 17 reduced HIP fixtures, seed 261102028, temperature zero, 16,384 output-token
 cap and 4,096 reasoning-token limit. These are independent experiments, not
 the original paper's registry, kernels, agents, budgets or pass rates.
 
 `compare_models.py` audits recorded data without making model calls. The
-combined three-model result remains incomplete until all required batches
-have finished and their evidence is archived locally.
+combined three-model result is now [complete](results/model-comparison-20261109/README.md),
+with all required batches archived and audited locally.
 
 ```bash
 # The completed DeepSeek data can already be audited independently:
 python3 reproduction/local_models/compare_models.py --model deepseek \
   --output /tmp/deepseek-comparison-audit --lean /path/to/lean-4.19.0/bin/lean
 
-# After all additional cohort archives arrive, omit --model to audit all three:
+# Omit --model to audit all three completed cohorts:
 python3 reproduction/local_models/compare_models.py \
   --output /tmp/three-model-comparison --lean /path/to/lean-4.19.0/bin/lean
 ```
@@ -63,7 +63,7 @@ The comparison JSON binds the audited source files and independent recheck logs.
 It always retains `original_paper_fully_reproduced:false`. The [coverage ledger](../COVERAGE.md)
 separates original dependencies from these adaptations.
 
-Once all three cohorts pass the audit, the report/figure command is:
+The report/figure command is:
 
 ```bash
 # Requires optional matplotlib, in addition to the standard-library auditor:
@@ -78,5 +78,5 @@ certificates before accepting the summary's counts. The figure compares only
 common first attempts; a separate table retains the different retry budgets.
 Unknown token usage is labeled incomplete and omitted from token bars.
 The output manifest binds the Markdown, SVG, new recheck logs, input audit and
-renderer source. No combined result or figure is currently claimed from the
-unfinished cohorts.
+renderer source. The [published report](results/model-comparison-20261109/reports/completed-three-model-comparison/RESULTS.md)
+contains the completed comparison and the separate retry-budget table.

@@ -7,7 +7,9 @@ integration tests that use an explicit stub.
 
 The [17-fixture comparison audit](COMPARISON_METHOD.md) reconstructs complete
 request histories, separates first attempts from retries, and reruns every
-model-generated certificate. Its combined result is pending the running cohorts.
+model-generated certificate. Its [completed three-model result](results/model-comparison-20261109/README.md)
+records one first-attempt certificate for GLM and zero for Flash/DeepSeek;
+DeepSeek's later-retry certificate remains separate.
 
 [DeepSeek-V4.1-Flash-1017 runtime and completed pilot](results/runtime-deepseek-20261109/)
 now include 48 hash-checked weight shards, 31 supporting files, a healthy TP=4
@@ -44,21 +46,23 @@ the same first-request messages as DeepSeek on every fixture. Both models have
 zero first-attempt certificates; DeepSeek's later success remains separate from
 the one-request Flash budget.
 
-[Full GLM-5.3 is now healthy](results/runtime-glm53-20261109/summary.json) on GPUs
+[Full GLM-5.3 ran successfully](results/runtime-glm53-20261109/summary.json) on GPUs
 0/1/6/7, TP=4, using the pinned native FP8 checkpoint. All 141 weight shards and
 eight supporting files passed independent validation. Its successful protocol
 warmup used 22 prompt and five completion tokens; this is not proof evidence.
 The [completed three-case batch](results/model-comparison-20261109/glm53-budget4096-remote/results.json)
 used seven requests and 124,057 reported tokens, with one SiLU certificate and
 five actual Lean checks. ReLU and Softmax remained unproved within their
-recorded budgets. Both additional seven-case batches are now running, with at
-most two active sequences; no completed 17-fixture full-model result is claimed.
+recorded budgets. Both additional seven-case batches have finished. Across all
+17 fixtures, GLM used 49 requests, 832,937 reported tokens and 36 Lean checks,
+with one first-attempt SiLU certificate and no additional certificates after retries.
 
 Its first [completed SiLU case](results/model-comparison-20261109/README.md)
 contains a real model-generated proof whose exact tactics, immutable first
 request and fixture bytes were checked before another successful local Lean
-recheck. Full GLM's remaining cases are still running; this successful case is
-partial evidence, not a finished full-model rate. The separate
+recheck. The complete cohort audit now includes every unsuccessful case as well.
+Its [lifecycle record](results/model-comparison-20261109/progress/glm53-lifecycle-stopped.json)
+records a clean stop of the owned service after all work completed. The separate
 [comments-only DeepSeek replay](COMMENT_REPLAY_RESULTS.md) made no model calls;
 both transformed candidates remained unproved and the raw counts are unchanged.
 

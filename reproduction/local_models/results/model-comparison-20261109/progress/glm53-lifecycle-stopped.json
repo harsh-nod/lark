@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "stopped-after-completed-audited-cohort",
+  "container_id": "f9473948e849d86d807271c792cc5ec120100843c57924bd49f6d587bd5a34c2",
+  "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd",
+  "server_record_sha256": "515eea00db67eebccaa30639635f51bf91757fedce31914cf8c6ce81920c9757",
+  "stop_started_utc": "2026-11-10T08:10:13.936732+00:00",
+  "recorded_utc": "2026-11-10T08:10:21.269443+00:00",
+  "controllers_absent": [
+    3278758,
+    3295175,
+    3558003
+  ],
+  "runs": [
+    {
+      "run": "glm53-budget4096-remote",
+      "status": "finished",
+      "cases": 3,
+      "requests": 7,
+      "results_sha256": "4125dc2e3a1ada050ad59be750906d5891df148f01b58b8d9024c564de62f1f1"
+    },
+    {
+      "run": "glm53-budget4096-half-a-remote",
+      "status": "finished",
+      "cases": 7,
+      "requests": 21,
+      "results_sha256": "1314732ef61a63d93f4850d063120dabe0c59df291aecb2a164ed84d17680b3c"
+    },
+    {
+      "run": "glm53-budget4096-half-b-remote",
+      "status": "finished",
+      "cases": 7,
+      "requests": 21,
+      "results_sha256": "c789d567370354bcc48a0c4e15446d6aad0a1d30c29ff7808f04a0914430d49f"
+    }
+  ],
+  "unique_completed_fixtures": 17,
+  "total_requests": 49,
+  "active_requests_before_stop": 0,
+  "waiting_requests_before_stop": 0,
+  "after": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-11-10T04:11:38.604811664Z",
+    "FinishedAt": "2026-11-10T08:10:20.958035787Z"
+  },
+  "scope": "Owned full-GLM proof service stopped after all 17 fixtures finished, raw records were copied and the local three-model audit succeeded. Readiness record is retained unchanged as historical evidence."
+}

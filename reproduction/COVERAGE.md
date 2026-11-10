@@ -16,13 +16,12 @@ or hosted-model outcomes. The [expanded DeepSeek cohort](local_models/DEEPSEEK_R
 reduced families with one model-generated depthwise-convolution certificate,
 independently exported/rechecked. Its 51 requests used 821,063 reported tokens.
 This does not reproduce the original model experiment.
-The [completed Flash cohort and two-model audit](local_models/results/model-comparison-20261109/README.md)
-cover the same 17 first requests as DeepSeek: zero first-attempt certificates
-for either model; Flash used 312,772 tokens and reached Lean seven times.
-Full GLM's initial three-case batch finished with one SiLU certificate, five
-Lean checks and 124,057 tokens. Its first additional seven-case batch finished
-with zero certificates, 11 unproved Lean checks, ten invalid proposals and
-385,120 tokens; the second seven-case batch is still running. A separate
+The [completed three-model comparison](local_models/results/model-comparison-20261109/README.md)
+audits the same 17 first-request messages for every checkpoint. GLM produced
+one first-attempt SiLU certificate; Flash and DeepSeek produced zero first-attempt
+certificates. GLM used 832,937 tokens across 49 requests, Flash 312,772 across
+17, and DeepSeek 821,063 across 51. Retry budgets remain separate; these are
+independent reduced-fixture results, not the original paper's rates. A separate
 [comments-only replay](local_models/COMMENT_REPLAY_RESULTS.md) produced no new
 certificates and did not alter the raw model results.
 
@@ -61,8 +60,8 @@ per host for one AMD matrix-instruction shape with default modifiers.
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
 | Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, and connected attention through 4,096-token rows / 1,048,576-wide projections | Original kernels, tiled/online attention, original token/time measurements |
-| Model size versus pass rates/tokens (A.4.6) | Three checkpoints locally served; completed DeepSeek and Flash 17-fixture cohorts with identical first-request messages, zero first-attempt certificates each; DeepSeek has one later-retry certificate; full GLM's three-case batch has one SiLU certificate, with its remaining 14 fixtures running | Original model versions, harness, token accounting and runs; tokenizers/precision/TP differ, so no isolated model-size conclusion |
-| Stage token costs (A.4.3) | Local warmups, reasoning-only runs, completed DeepSeek (821,063 tokens), Flash baseline (231,592), matched Flash (312,772), and full GLM three-case batch (124,057); 37 / 1 / 7 / 5 actual Lean checks | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
+| Model size versus pass rates/tokens (A.4.6) | Completed 17-fixture cohorts for GLM, Flash and DeepSeek with identical decoded first requests; first certificates 1 / 0 / 0, separate retry results 1 / 0 / 1, audited table and SVG | Original model versions, harness, token accounting and runs; tokenizers/precision/TP differ, so no isolated model-size conclusion |
+| Stage token costs (A.4.3) | Completed matched cohorts: GLM 832,937 tokens / 36 Lean checks, Flash 312,772 / 7, DeepSeek 821,063 / 37; earlier pilots and reasoning-only runs archived separately | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
 | Refusal census and hard Level-1 tasks (A.4.2/A.4.5) | Strict refusals; full-size independent BatchMatmul/DepthwiseConv certificates and device checks | Original failed runs/statements; smaller proofs do not contradict the paper's model outcomes |
 | Race-freedom fallback (A.4.7) | llm.c conflict witness and generic pointwise ownership proof | Original fallback conversations, second opinions and token costs |
 | Latencies/speedups (A.4.10, Table 14/Figure 7) | Independent 17-workload FP16 numerical checks and eager/compiled timings on MI300X/MI350X | Authors' optimized kernels/reference contracts, fastest vendor baselines, H100 for original PTX/CUDA cells |
@@ -71,7 +70,7 @@ per host for one AMD matrix-instruction shape with default modifiers.
 | Supplementary GQA project (A.12) | Full-size three-launch GQA certificate, source-bound FP32 intermediates and exact-source checks on both MI350X hosts | Authors' actual supplementary project not found in the manuscript source archive or searched release endpoints |
 
 The [artifact audit](pointwise/results/artifact-audit.json) and
-[repeated public checks](results/artifact-reaudit-20261109.json) record specific public
+[repeated public checks](results/artifact-reaudit-20261110.json) record specific public
 GitHub queries and the empty `AICrossSim/KernelCraft` metadata. The [arXiv source
 inventory](results/paper-source-manifest.json) has manuscript files/figures and no
 implementation. These bounded searches do not prove that artifacts cannot exist

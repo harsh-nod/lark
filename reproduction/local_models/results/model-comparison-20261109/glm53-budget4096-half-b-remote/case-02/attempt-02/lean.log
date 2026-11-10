@@ -1,0 +1,35 @@
+Main.lean:426:2: error: tactic 'decide' failed for proposition
+  flatten segments = program
+since its 'Decidable' instance
+  instDecidableEqList (flatten segments) program
+did not reduce to 'isTrue' or 'isFalse'.
+
+After unfolding the instance 'instDecidableEqList', reduction got stuck at the 'Decidable' instance
+  (flatten segments).hasDecEq program
+Main.lean:450:4: error: tactic 'rfl' failed, the left-hand side
+  runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside)
+is not definitionally equal to the right-hand side
+  some (finalState ops input outside)
+case refine_1
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) =
+    some (finalState ops input outside)
+Main.lean:451:4: error: tactic 'rfl' failed, the left-hand side
+  raceFree geometry (finalState ops input outside).trace
+is not definitionally equal to the right-hand side
+  true
+case refine_2
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ raceFree geometry (finalState ops input outside).trace = true
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' does not depend on any axioms
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

@@ -1,0 +1,34 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by\n  simp only [flatten, flattenSegment, segments, program]\n  rfl",
+    "race_free": "by\n  refine \u27e8finalState unitOps (fun _ _ => ()) (fun _ => some ()), ?_, ?_\u27e9 <;> rfl",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8finalState ops input outside, ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 rfl\n  \u00b7 rfl"
+  }
+}

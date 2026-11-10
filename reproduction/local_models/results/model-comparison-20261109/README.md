@@ -1,74 +1,66 @@
-# Completed Flash/DeepSeek cohorts; full GLM pending
+# Completed independent three-model comparison
 
-**This is not a completed three-model comparison.** DeepSeek and Flash have
-finished all 17 reduced HIP fixtures. The all-model audit still refuses the
-unfinished full GLM cohort. These are independent experiments, not the paper's
-original pass rates, harness or token costs.
+**The original paper is not fully reproduced.** All three local cohorts have
+finished the same 17 reduced HIP fixtures under our bounded proof-slot harness.
+The [complete audit](progress/completed-three-model-audit/comparison.json)
+reconstructs every request history and verifies identical decoded first-request
+messages across models. Both successful model-generated certificates passed
+fresh source-bound Lean rechecks.
 
-The [completed two-model audit](progress/completed-deepseek-flash-audit/comparison.json)
-reconstructs identical first-request messages for all 17 fixtures and freshly
-rechecks DeepSeek's successful exported proof.
+The [complete tables, SVG and scope](reports/completed-three-model-comparison/RESULTS.md)
+are generated from that audit. The renderer independently rebuilt the audit
+from raw records and rechecked the successful certificates again.
 
-| Completed local cohort | First-attempt certificates | First requests | Reported first-attempt tokens | Certificates within its recorded budget |
-| --- | ---: | ---: | ---: | ---: |
-| DeepSeek-V4.1-Flash-1017 | 0 / 17 | 17 | 267,821 | 1 / 17, up to 3 requests/case |
-| GLM-5.3-Flash | 0 / 17 | 17 | 312,772 | 0 / 17, 1 request/case |
+![Audited first-attempt certificates and reported tokens](reports/completed-three-model-comparison/comparison.svg)
 
-DeepSeek's later-retry depthwise-convolution certificate is not a first-attempt
-success. All 51 DeepSeek requests used 821,063 tokens and reached Lean 37 times.
-Flash's 17 requests reached Lean seven times; ten proposals were refused before
-Lean. Different retry budgets remain separate. Usage is complete for these
-completed cohorts; hosted API spending is zero.
+| Local checkpoint | First-attempt certificates | Reported first-attempt tokens | Certificates within recorded budget | All requests | All reported tokens |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| GLM-5.3 | 1 / 17 | 301,608 | 1 / 17, up to 3 requests/case | 49 | 832,937 |
+| GLM-5.3-Flash | 0 / 17 | 312,772 | 0 / 17, 1 request/case | 17 | 312,772 |
+| DeepSeek-V4.1-Flash-1017 | 0 / 17 | 267,821 | 1 / 17, up to 3 requests/case | 51 | 821,063 |
 
-Full GLM's [ReLU/SiLU/Softmax batch](glm53-budget4096-remote/results.json) is
-complete: seven requests, 124,057 reported tokens, five actual Lean checks,
-one verified SiLU certificate and two unproved cases. The
-[completed-batch audit](progress/glm53-first3-completed-audit.json) reconstructs
-all histories, matches these three first requests against the completed models,
-and freshly rechecks SiLU. The first additional seven-case batch is now
-[complete](glm53-budget4096-half-a-remote/results.json): 21 requests/responses,
-385,120 reported tokens, 11 unproved Lean checks and ten invalid proposals, with
-zero certificates. Its [raw-history and statement audit](progress/glm53-half-a-completed-audit.json)
-passes. The second seven-case batch remains live.
-This is a three-case batch, not a completed 17-fixture full-model rate.
+Only first requests are matched across models. Different retry budgets remain
+separate. GLM proved SiLU on its first request; DeepSeek proved depthwise
+convolution on its third request. No posthoc tactic repair is counted.
+GLM reached Lean 36 times, Flash seven times and DeepSeek 37 times. Proposal
+refusals remain distinct from unproved Lean checks and are not kernel-bug
+diagnoses. Usage is complete for these cohorts. Hosted API spending is zero;
+tokenizers, templates, precision and parallelism differ, so this does not
+isolate a model-size effect or reproduce billed costs.
 
-The first-attempt SiLU proof's [completed case](glm53-budget4096-remote/case-01/result.json), exact
-request/response, proposed tactics and exported certificate are preserved.
-The [partial-case audit](progress/glm53-silu-partial-audit.json) records matching
-model/export tactics, reconstruction of the complete immutable first request,
-fixture-byte checks and another successful local Lean recheck. Its request used
-7,868 prompt and 4,264 completion tokens, including 4,096 reported reasoning
-tokens. All 18 previously published files in the SiLU case and its server record
-were preserved byte for byte when the full three-case batch arrived.
+Full GLM's raw records are split into the completed
+[initial three cases](glm53-budget4096-remote/results.json),
+[first additional seven](glm53-budget4096-half-a-remote/results.json) and
+[final seven](glm53-budget4096-half-b-remote/results.json).
+Their individual audits are retained under [progress](progress/).
+All previously published case bytes and launch records were preserved.
+The earlier partial SiLU audit remains historical evidence; the complete
+comparison now covers the whole cohort.
 
-Both additional Flash batches are complete:
-[first seven](flash17-budget4096-half-a-remote/results.json) and
-[second seven](flash17-budget4096-half-b-remote/results.json).
-Together with the [earlier three cases](../pilot-glm-flash-budget4096-20261109/),
-they cover each fixture exactly once. The older
-[second-batch audit](progress/flash17-half-b-audit.json) remains a historical
-snapshot; the completed two-model audit covers all 17.
+Flash's [first additional seven](flash17-budget4096-half-a-remote/results.json)
+and [final seven](flash17-budget4096-half-b-remote/results.json), together with
+its [earlier three cases](../pilot-glm-flash-budget4096-20261109/), cover all
+17 fixtures once. DeepSeek's [complete cohort](../../DEEPSEEK_RESULTS.md)
+combines its initial three cases with the additional fourteen. The earlier
+[two-model audit](progress/completed-deepseek-flash-audit/comparison.json)
+remains a historical snapshot rather than a replacement for the complete audit.
 
-The [new Flash runtime](flash17-runtime/flash17-server.json) uses the same pinned
-checkpoint/image, native precision, TP=2 and nominal request settings as its
-already archived three-case budget variant. It uses a separate owned container
-on GPUs 2/3 and port 19085; the earlier three cases used GPUs 6/7 and port 19081.
-Readiness, warmup and exact launcher sources are archived here. The
-[lifecycle record](progress/flash17-lifecycle-stopped.json) confirms that this
-exact owned Flash container was stopped after both controllers exited, both
-cohorts finished and active/waiting request gauges reached zero. Its readiness
-record remains historical evidence. A warmup is protocol evidence only.
-Full GLM's [runtime evidence](../runtime-glm53-20261109/) is separate; its proof
-studies continue.
+The [full GLM lifecycle record](progress/glm53-lifecycle-stopped.json) confirms
+that its exact owned container stopped with exit code zero after all 17 cases
+finished, all controllers exited, raw records were copied/audited and active
+and waiting requests reached zero. [Final runtime evidence](glm53-final-runtime/)
+retains its unchanged historical readiness record, final logs and metrics.
+Both earlier DeepSeek and Flash services were also stopped after their work.
+Weights and source snapshots remain available for offline reruns.
 
-The executed proof controller is the existing
-[budget source snapshot](../pilot-deepseek-budget4096-20261109/budget-controller-source.tar.gz),
+The executed proof controller is the hash-pinned
+[budget snapshot](../pilot-deepseek-budget4096-20261109/budget-controller-source.tar.gz),
 extended with the disjoint [additional fixture snapshot](../pilot-deepseek-expanded-20261109/additional-cases-source.tar.gz).
-Their hashes are retained in the launch records. No running controller or
-fixture was edited. Model calls stayed on loopback with zero hosted API spend.
+Running controllers and fixtures were never edited. Earlier reasoning-only,
+low-effort and incomplete transport pilots remain separate. The
+[comments-only replay](../../COMMENT_REPLAY_RESULTS.md) changed no raw counts;
+both transformed DeepSeek candidates remained unproved.
 
-The [comparison method](../../COMPARISON_METHOD.md) requires all 17 fixtures once
-per completed cohort. Full GLM archives will be added without modifying these
-raw case bytes. The separate [comments-only replay](../../COMMENT_REPLAY_RESULTS.md)
-does not alter any response or comparison count: both transformed DeepSeek
-candidates remained unproved in Lean.
+The [comparison method](../../COMPARISON_METHOD.md) records all integrity checks.
+This is an independent reduced-fixture result, not the original KernelCraft
+registry, agent, kernels, model outcomes, stage costs or paper pass rates.
