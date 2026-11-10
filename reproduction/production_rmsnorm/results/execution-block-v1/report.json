@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "claim": "actual native RMSNorm first block phase: all 16 wave64 groups, intended partials, native indices and race-free actual trace at the first block barrier",
+  "certificates": 0,
+  "whole_launch_proved": false,
+  "first_block_phase_proved": true,
+  "source_files": 96,
+  "fresh_build_outside_checkout": true,
+  "lean_version": "4.19.0",
+  "command": "lake build Lark.NativeRmsNormFirstBlock",
+  "base_commit": "3b78b97432cb69720ab3bf8155b83594fb314650",
+  "native_threads": 1024,
+  "physical_wave_width": 64,
+  "waves": 16,
+  "partial_slots": 16,
+  "quantification": "every allowed row, input and initial outside memory",
+  "properties": [
+    "actual sequential prefix and six-shuffle execution for every physical wave",
+    "exact first runBlock warp fold",
+    "all threads at PC 38 and actual block convergence",
+    "all shared partials equal the intended warpSum values",
+    "preservation of earlier partials and other waves",
+    "native row/thread/lane/warp indices",
+    "preservation of read-only inputs and synchronization epochs",
+    "race freedom of the complete actual first-phase access trace"
+  ],
+  "pending": [
+    "barrier resume and logical-16 scale phase",
+    "output phase",
+    "whole-launch correctness and access classification"
+  ],
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_binding_controls": {
+    "claim": "program identity only",
+    "baseline_accepted": true,
+    "changed_programs_rejected": 4
+  },
+  "earlier_tail_ci": {
+    "run_id": 42864828754,
+    "head_sha": "3b78b97432cb69720ab3bf8155b83594fb314650",
+    "conclusion": "success",
+    "tests": 149,
+    "optional_skips": 5,
+    "test_seconds": 478.086,
+    "covers_this_new_block_checkpoint": false
+  }
+}

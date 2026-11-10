@@ -78,6 +78,17 @@ zero. The full six-stage wave, 16-wave block, barrier-resume and output phases
 still need composition. `results/execution-tail-v1/` freezes these checks and a
 source archive rebuilt outside the checkout. This remains zero certificates.
 
+The [first-block composition](../../lean/Lark/NativeRmsNormFirstBlock.lean)
+now proves the actual first warp fold in the block scheduler for every input and
+initial outside memory. All 16 physical wave64 groups execute the prefix and
+six shuffle stages within the declared fuel. All 1,024 threads reach PC 38 with
+their native indices, and every shared partial equals the intended `warpSum`.
+The phase preserves read-only inputs and synchronization epochs and proves race
+freedom of its complete actual trace. Earlier waves' partials remain intact.
+`results/execution-block-v1/` freezes this checkpoint. The barrier resumes,
+logical-16 scale reduction, output phase and whole-launch theorem are still
+pending; the certificate count remains zero.
+
 `results/v2/` freezes the sources, generated data, host archives, raw audits,
 component proof logs and controls. Its source archive can be extracted outside
 the checkout. Extract `gpu-input.tar.gz` and either host archive into separate
