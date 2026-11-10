@@ -36,6 +36,9 @@ jobs:
         run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
       - name: Check real interpretation, machine specializations and algebra controls
         run: python3 reproduction/exact_real/run.py --output /tmp/lark-exact-real
+      - name: Check native RMSNorm algebra components
+        run: lake build LarkReal.NativeRmsNorm
+        working-directory: lean-real
   proof-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30

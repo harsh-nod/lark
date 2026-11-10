@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "development; complete RMSNorm proof and GPU validation pending",
+  "status": "development; algebra components and finite native validation passed; complete RMSNorm proof pending",
   "paper": "https://arxiv.org/abs/2611.02028v1",
   "paper_adaptation_anchor": "sections/appendix.tex app:library",
   "repository": "https://github.com/vllm-project/vllm",
@@ -98,9 +98,24 @@
   "full_source_execution_proved": false,
   "source_trace_classification_proved": false,
   "independent_reference_equivalence_proved": false,
+  "phase_value_real_reference_equivalence_proved": true,
   "standalone_certificate_exported": false,
   "certificates": 0,
-  "gpu_trials": 0,
+  "gpu_trials": 48,
+  "native_comparison": {
+    "hosts": ["mi350", "mi350-2"],
+    "rows": [1, 3, 64, 255],
+    "trials_per_host": 24,
+    "launches_per_host": 48,
+    "output_pairs_per_host": 31752192,
+    "cpu_reference_comparisons_per_host": 63504384,
+    "numerical_failures": 0,
+    "bit_identity": false,
+    "upstream_context": "Unchanged selected template, vec_n_t and vector reader definitions; unrelated translation-unit context omitted; actual installed hipCUB/rocPRIM compiled",
+    "comparison_storage": "torch::headeronly::Half from pinned official PyTorch headers",
+    "compiler_reported_inputs_captured": {"mi350": 620, "mi350-2": 616},
+    "complete_upstream_API_validated": false
+  },
   "model_calls": 0,
   "original_paper_fully_reproduced": false
 }

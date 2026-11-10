@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import tempfile
 import unittest
 
 from lark_kernels import collective, native_rmsnorm, partition_collective
@@ -159,6 +160,25 @@ class PartitionMachineTests(unittest.TestCase):
 
 @unittest.skipUnless(shutil.which("lean") and shutil.which("lake"), "Lean 4.19.0 required")
 class PartitionLeanTests(unittest.TestCase):
+    def test_native_rmsnorm_source_binding_and_direct_controls(self):
+        with tempfile.TemporaryDirectory(prefix="lark-rms-binding-test-") as temporary:
+            checked = subprocess.run(
+                [
+                    "python3",
+                    str(ROOT / "reproduction/production_rmsnorm/check_program.py"),
+                    "--output",
+                    str(Path(temporary) / "binding"),
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                timeout=300,
+            )
+            self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+            report = json.loads((Path(temporary) / "binding/results.json").read_text())
+            self.assertEqual(report["direct_lean_binding_rejections"], 4)
+            self.assertEqual(report["certificates"], 0)
+
     def test_lean_symbolic_cohort_and_guard_checks(self):
         built = subprocess.run(
             ["lake", "build", "+Lark.PartitionCollective", "+Lark.ReductionFootprint"],

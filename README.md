@@ -48,6 +48,13 @@ sum. Both hosts matched the source expression tree on 17,408 outputs each;
 cancellation disagreements with CPU Torch are reported separately. These
 independent additions do not reproduce the original paper's experiments.
 
+The [native RMSNorm development study](reproduction/production_rmsnorm/RESULTS.md)
+adds partial-cohort shuffle and reduction proof components plus native
+1,024-thread comparisons at width 16,384. Both MI350X hosts passed numerical
+tolerance checks, with signed-zero and one-half-ULP differences recorded.
+The intended value has a canonical-real proof; the complete source execution
+and access-classification proofs remain pending, so this adds zero certificates.
+
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
 17 workload dimensions. All model calls remain offline/free. The large FP16 HIP
