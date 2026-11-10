@@ -1,0 +1,12 @@
+{
+  "name": "ptx_gemv",
+  "entry": "gemv",
+  "language": "ptx",
+  "buffers": [
+    {"name": "a", "role": "input", "shape": [2, 2], "dtype": "float32"},
+    {"name": "b", "role": "input", "shape": [2, 1], "dtype": "float32"},
+    {"name": "out", "role": "output", "shape": [2, 1], "dtype": "float32"}
+  ],
+  "launch": {"grid": 1, "block": 2},
+  "fuel": [128, 16, 16, 16]
+}

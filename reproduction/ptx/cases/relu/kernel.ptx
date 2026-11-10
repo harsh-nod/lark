@@ -1,0 +1,21 @@
+.version 8.0
+.target sm_80
+.address_size 64
+.visible .entry relu(
+  .param .u64 x,
+  .param .u64 out
+) {
+  .reg .u32 %r<2>;
+  .reg .u64 %rd<5>;
+  .reg .f32 %f<2>;
+  ld.param.u64 %rd0, [x];
+  ld.param.u64 %rd1, [out];
+  mov.u32 %r0, %tid.x;
+  mul.wide.u32 %rd2, %r0, 4;
+  add.u64 %rd3, %rd0, %rd2;
+  add.u64 %rd4, %rd1, %rd2;
+  ld.global.f32 %f0, [%rd3];
+  max.f32 %f1, %f0, 0f00000000;
+  st.global.f32 [%rd4], %f1;
+  ret;
+}

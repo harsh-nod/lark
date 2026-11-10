@@ -1,0 +1,32 @@
+.version 8.0
+.target sm_80
+.address_size 64
+.visible .entry gemv(
+  .param .u64 a,
+  .param .u64 b,
+  .param .u64 out
+) {
+  .reg .b32 %r<2>;
+  .reg .b64 %rd<12>;
+  .reg .f32 %f<9>;
+  ld.param.u64 %rd0, [a];
+  ld.param.u64 %rd1, [b];
+  ld.param.u64 %rd2, [out];
+  mov.u32 %r0, %tid.x;
+  mul.wide.u32 %rd3, %r0, 8;
+  mul.wide.u32 %rd4, %r0, 4;
+  add.u64 %rd5, %rd0, %rd3;
+  add.u64 %rd6, %rd5, 4;
+  add.u64 %rd7, %rd1, 4;
+  add.u64 %rd8, %rd2, %rd4;
+  ld.global.f32 %f0, [%rd5];
+  ld.global.f32 %f1, [%rd1];
+  mul.rn.f32 %f2, %f0, %f1;
+  add.rn.f32 %f3, 0f00000000, %f2;
+  ld.global.f32 %f4, [%rd6];
+  ld.global.f32 %f5, [%rd7];
+  mul.rn.f32 %f6, %f4, %f5;
+  add.rn.f32 %f7, %f3, %f6;
+  st.global.f32 [%rd8], %f7;
+  ret;
+}

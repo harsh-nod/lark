@@ -330,7 +330,8 @@ def verify(
     if proposal_path:
         proposal = json.loads(proposal_path.read_text())
     output.mkdir(parents=True)
-    (output / "kernel.cu").write_bytes(source_bytes)
+    source_name = "kernel.ptx" if task.language == "ptx" else "kernel.cu"
+    (output / source_name).write_bytes(source_bytes)
     (output / "reference.py").write_bytes(reference_bytes)
     (output / "task.json").write_bytes(task_bytes)
     (output / "lean-toolchain").write_text(TOOLCHAIN)
@@ -372,7 +373,7 @@ def verify(
     write_json(output / "proposal.json", proposal)
     files = [
         "Main.lean",
-        "kernel.cu",
+        source_name,
         "reference.py",
         "task.json",
         "translation.json",
@@ -413,6 +414,22 @@ def verify(
         "numerical_testing": "not performed; proof concerns exact operations",
         "recheck": "lake build (or lean Main.lean); lark check also validates source and artifact binding",
     }
+    if task.language == "ptx":
+        report["trusted_assumptions"] = [
+            *TRUST[:2],
+            "Python bounded PTX reader, fixed lowering and lossless token readback",
+            *TRUST[3:],
+            "PTX parameter addresses designate the declared aligned disjoint buffers without 64-bit address wrap",
+        ]
+        report["scope"] = [
+            SCOPE[0],
+            "PTX 8.0/sm_80 scalar float32 subset; abstract exact add/sub/mul/max, not IEEE rounding",
+            "SSA integer/pointer/scalar registers; nonnegative int32 offsets without wrap; forward control only",
+            "Byte alignment guards are checked by the Lean machine before global float32 loads/stores",
+            "Full CTA bar.sync 0; one terminal ret; no shared memory, warp collectives, atomics or async operations",
+            "No NVIDIA compilation, execution, hardware conformance or timing evidence",
+            *SCOPE[5:],
+        ]
     write_json(output / "report.json", report)
     return report
 
@@ -459,9 +476,11 @@ def check(directory, *, lean=None, timeout=120):
         from .convolution import check as check_convolution
 
         return check_convolution(directory, lean=lean, timeout=timeout)
+    task = Task.read(directory / "task.json")
+    source_name = "kernel.ptx" if task.language == "ptx" else "kernel.cu"
     required = {
         "Main.lean",
-        "kernel.cu",
+        source_name,
         "reference.py",
         "task.json",
         "translation.json",
@@ -478,8 +497,7 @@ def check(directory, *, lean=None, timeout=120):
         directory / "lakefile.toml"
     ).read_text() != LAKEFILE:
         raise Refusal("integrity", "unexpected standalone project configuration")
-    task = Task.read(directory / "task.json")
-    tr = translate((directory / "kernel.cu").read_bytes().decode("utf-8"), task)
+    tr = translate((directory / source_name).read_bytes().decode("utf-8"), task)
     spec = read_spec((directory / "reference.py").read_text(), task)
     if report["model_sha256"] != digest(model_path(extended_model(task, tr, spec)).read_bytes()):
         raise Refusal("integrity", "certificate was produced with a different model version")

@@ -380,7 +380,12 @@ class Reader:
 
 
 def translate(source: str, task: Task) -> Translation:
-    result = Reader(source, task).read()
+    if task.language == "ptx":
+        from .ptx import Reader as PTXReader
+
+        result = PTXReader(source, task).read()
+    else:
+        result = Reader(source, task).read()
     if result.readback().encode("utf-8") != source.encode("utf-8"):
         raise Refusal("readback", "token data does not reconstruct the original source bytes")
     return result

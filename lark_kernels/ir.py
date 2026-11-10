@@ -85,16 +85,16 @@ class Task:
             raise Refusal("signature", "duplicate buffer names")
         launch = d["launch"]
         language = d.get("language", "cuda")
-        if language not in {"cuda", "hip"}:
-            raise Refusal("language", "implemented frontends: cuda, hip")
+        if language not in {"cuda", "hip", "ptx"}:
+            raise Refusal("language", "implemented frontends: cuda, hip, bounded scalar PTX")
         if set(launch) - {"grid", "block", "warp"}:
             raise Refusal("geometry", "only one-dimensional launches are supported")
         grid, block = launch["grid"], launch["block"]
-        warp = launch.get("warp", 32 if language == "cuda" else 64)
+        warp = launch.get("warp", 64 if language == "hip" else 32)
         if any(type(x) is not int or x <= 0 for x in (grid, block, warp)):
             raise Refusal("geometry", "launch dimensions must be positive integers")
-        if warp not in {32, 64} or (language == "cuda" and warp != 32):
-            raise Refusal("geometry", "CUDA requires warp=32; HIP supports 32 or 64")
+        if warp not in {32, 64} or (language in {"cuda", "ptx"} and warp != 32):
+            raise Refusal("geometry", "CUDA/PTX require warp=32; HIP supports 32 or 64")
         fuel = tuple(d.get("fuel", [256, 64, 64, 64]))
         if len(fuel) != 4 or any(type(x) is not int or x <= 0 for x in fuel):
             raise Refusal("fuel", "expected four positive lane/warp/block/grid bounds")

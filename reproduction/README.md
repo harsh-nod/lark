@@ -44,7 +44,9 @@ The seven proof families are **7/12 task families, not 7/12 original paper
 programs**. SiLU, GELU, Softmax, LayerNorm, and RMSNorm lack formal support in our
 small scalar machine. Neither the large FP16 programs nor any Level-2 program
 has a Lean certificate here. CUDA profiles are checked on CPU; only HIP is run
-on hardware. There is no PTX implementation.
+on hardware. These statements describe the original v1 study; the later
+[bounded PTX extension](ptx/README.md) adds four independent tiny float32
+certificates and CPU-only NVIDIA assembly checks.
 
 ## Run on CPU
 
@@ -150,8 +152,10 @@ moving the load inside its bounds guard removes that pair; it does not prove
 whole-kernel correctness or the absence of every other race. The tiny fixed
 reproducer has its own full certificate.
 
-The main remaining requirements are the authors' registry/proof artifacts and
-frontends for PTX, FP16, transcendentals, collectives and induction-based loop
-proofs. NVIDIA hardware would enable H100 execution and timing, but its absence
-does not itself prevent CPU Lean checking of a provided PTX certificate. Model
-pass-rate, token-cost and LLM ablation studies are outside the offline/free run.
+The main remaining requirements are the authors' registry/proof artifacts,
+optimized PTX/production kernels, collectives and broader loop/tile proofs.
+Later extensions add FP16 storage, nonlinear operations, induction, bounded PTX
+and free local-model experiments; each has a separate recorded scope. NVIDIA
+hardware is still needed for the original H100 execution and timing cells.
+The current [coverage ledger](COVERAGE.md) separates these adaptations from
+the unavailable original model pass rates, token costs and LLM ablations.

@@ -4,12 +4,17 @@ An independent implementation of the verification workflow in
 [LARK: Lean-Assisted Reasoning for LLM-Generated GPU Kernels](https://arxiv.org/abs/2611.02028)
 (Zhang et al., 2026).
 
-**This repository implements restricted scalar CUDA/HIP profiles of the method.**
+**This repository implements restricted scalar CUDA/HIP/PTX profiles of the method.**
 It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
 paper's broader PTX, tensor-core, and production-kernel coverage
 is outside this implementation. [The implementation map](docs/paper.md)
 records the correspondence and differences.
+
+The [bounded PTX extension](reproduction/ptx/README.md) certifies four independent
+tiny float32 programs in the same machine. It has CPU-only NVIDIA assembly
+checks and no NVIDIA execution evidence; optimized PTX and collectives remain
+outside its supported subset.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's
@@ -55,7 +60,7 @@ and all initial contents of memory outside the input regions.
 
 ```mermaid
 flowchart LR
-  K[CUDA / HIP source] --> T[Strict reader + fixed lowering]
+  K[CUDA / HIP / bounded PTX source] --> T[Strict reader + fixed lowering]
   T --> F[Flat instruction program]
   R[PyTorch reference AST] --> S[Tensor specification]
   F --> P[Proof proposals and segments]
@@ -156,8 +161,9 @@ and four fuel bounds. See [the task format](docs/input.md).
 Unsupported operations, overflow, missing initialization, invalid bounds,
 exhausted fuel, and divergent synchronization cause refusal. Even same-value
 conflicting writes count as races. A block barrier never orders different
-blocks. Atomics, asynchronous operations, PTX, pointer arithmetic, float-based
-control flow, and tensor-core collectives are refused.
+blocks. Atomics, asynchronous operations, general pointer arithmetic, float-based
+control flow, and tensor-core collectives are refused. PTX has its separate,
+narrower [instruction and addressing subset](reproduction/ptx/README.md).
 
 Arithmetic is interpreted through universally quantified scalar operations.
 This establishes equivalence for an exact real interpretation, without

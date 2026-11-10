@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "paper": "https://arxiv.org/abs/2611.02028",
+  "implementation": "independent bounded scalar profile",
+  "task": {
+    "name": "ptx_gemv",
+    "entry": "gemv",
+    "language": "ptx",
+    "buffers": [
+      {
+        "name": "a",
+        "role": "input",
+        "shape": [
+          2,
+          2
+        ],
+        "dtype": "float32"
+      },
+      {
+        "name": "b",
+        "role": "input",
+        "shape": [
+          2,
+          1
+        ],
+        "dtype": "float32"
+      },
+      {
+        "name": "out",
+        "role": "output",
+        "shape": [
+          2,
+          1
+        ],
+        "dtype": "float32"
+      }
+    ],
+    "grid": 1,
+    "block": 2,
+    "warp": 32,
+    "fuel": [
+      128,
+      16,
+      16,
+      16
+    ]
+  },
+  "trusted_assumptions": [
+    "Lean 4.19.0, its kernel and standard axioms (actual dependencies printed below)",
+    "The pinned scalar GPU machine and its per-operation definitions",
+    "Python bounded PTX reader, fixed lowering and lossless token readback",
+    "Python PyTorch AST formalization of the independent reference module",
+    "Host launch geometry, contiguous float32 layouts, aligned and disjoint named buffers",
+    "Exact arithmetic interpretation: floating-point rounding and numerical error are outside the theorem",
+    "Race-free phase reduction from the sequential folds to GPU interleavings (external metatheory)",
+    "PTX parameter addresses designate the declared aligned disjoint buffers without 64-bit address wrap"
+  ],
+  "scope": [
+    "Bounded, concrete shapes and one-dimensional launches; all input scalar values",
+    "PTX 8.0/sm_80 scalar float32 subset; abstract exact add/sub/mul/max, not IEEE rounding",
+    "SSA integer/pointer/scalar registers; nonnegative int32 offsets without wrap; forward control only",
+    "Byte alignment guards are checked by the Lean machine before global float32 loads/stores",
+    "Full CTA bar.sync 0; one terminal ret; no shared memory, warp collectives, atomics or async operations",
+    "No NVIDIA compilation, execution, hardware conformance or timing evidence",
+    "Syntactic segment grouping and repetition; no general induction-based loop segmentation",
+    "Only computations with the same scalar expression structure currently prove automatically"
+  ],
+  "source_readback": true,
+  "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+  "model_profile": "scalar-v1",
+  "files": {
+    "Main.lean": "7607e3534868495f748858297e4bee10817c0bb5b02d846de801762692676c23",
+    "kernel.ptx": "55cf1f5cb5847e1ccbb6c0dfaf1bacab8cf4678bff8d67effa0812e367318b05",
+    "reference.py": "92550afbfbe3c7d31d45a9ccb71cac01d57aac076866163f40a63d20c239d882",
+    "task.json": "e5d3c828e4d2833eea7c0e272d5ac00d183b201d7aeb48bdce946b7642063161",
+    "translation.json": "d6f384ae34ae127400f7a98c0727b1b943dfe7e7c2e8cbb3547370b73e6c1e65",
+    "proposal.json": "dc39e8df7625d0e75437536365ea0e6ca6b5a50fef40db938d6decf66d56af20",
+    "lean-toolchain": "55e97be96000b5e9e290c9e74482e5e317861499a5540353ce845471bded8cea",
+    "lakefile.toml": "a3026ce1c2248600aa213c68023e6c54895e2a1a1200617947d1c115646df0c1"
+  },
+  "axiom_audit": "'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.race_free' does not depend on any axioms\n'LarkCertificate.segment_equivalence' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Quot.sound]\n'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Quot.sound]\n",
+  "attempts": [
+    {
+      "attempt": 1,
+      "accepted": true
+    }
+  ],
+  "accesses": 10,
+  "numerical_testing": "not performed; proof concerns exact operations",
+  "recheck": "lake build (or lean Main.lean); lark check also validates source and artifact binding"
+}

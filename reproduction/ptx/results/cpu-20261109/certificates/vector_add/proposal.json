@@ -1,0 +1,88 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        },
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        },
+        {
+          "op": 13
+        },
+        {
+          "op": 14
+        },
+        {
+          "op": 15
+        },
+        {
+          "op": 16
+        },
+        {
+          "op": 17
+        },
+        {
+          "op": 18
+        },
+        {
+          "op": 19
+        },
+        {
+          "op": 20
+        },
+        {
+          "op": 21
+        },
+        {
+          "op": 22
+        },
+        {
+          "op": 23
+        },
+        {
+          "op": 24
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by simp [flatten, flattenSegment, segments, program]",
+    "race_free": "by\n  refine ⟨finalState unitOps (fun _ _ => ()) (fun _ => some ()), rfl, ?_⟩\n  have htrace : (finalState unitOps (fun _ _ => ()) (fun _ => some ())).trace = traceData := by rfl\n  rw [htrace]\n  decide",
+    "segment_equivalence": "by\n  intro input outside\n  rw [segmentation_data]\n  refine ⟨finalState ops input outside, rfl, ?_, rfl⟩\n  have htrace : (finalState ops input outside).trace = traceData := by rfl\n  rw [htrace]\n  decide"
+  }
+}

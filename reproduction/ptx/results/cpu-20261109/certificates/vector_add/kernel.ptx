@@ -1,0 +1,34 @@
+// Independent scalar PTX fixture, including one inactive padded thread.
+.version 8.0
+.target sm_80
+.address_size 64
+.visible .entry vector_add(
+  .param .u64 x,
+  .param .u64 y,
+  .param .u64 out
+) {
+  .reg .b32 %r<8>;
+  .reg .b64 %rd<8>;
+  .reg .f32 %f<4>;
+  .reg .pred %p<2>;
+  ld.param.u64 %rd0, [x];
+  ld.param.u64 %rd1, [y];
+  ld.param.u64 %rd2, [out];
+  mov.u32 %r0, %tid.x;
+  mov.u32 %r1, %ctaid.x;
+  mov.u32 %r2, %ntid.x;
+  mul.lo.u32 %r3, %r1, %r2;
+  add.u32 %r4, %r3, %r0;
+  setp.ge.u32 %p0, %r4, 3;
+  @%p0 bra done;
+  mul.wide.u32 %rd3, %r4, 4;
+  add.u64 %rd4, %rd0, %rd3;
+  add.u64 %rd5, %rd1, %rd3;
+  add.u64 %rd6, %rd2, %rd3;
+  ld.global.f32 %f0, [%rd4];
+  ld.global.f32 %f1, [%rd5];
+  add.rn.f32 %f2, %f0, %f1;
+  st.global.f32 [%rd6], %f2;
+done:
+  ret;
+}

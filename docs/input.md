@@ -32,11 +32,14 @@ Roles are `input`, `output`, or `scratch`. Input writes are refused. Output and
 scratch cells begin with arbitrary contents; scratch is not extracted and the
 reference cannot read it. In-place and aliased buffers are not supported.
 
-Languages are `cuda` and `hip`. The default warp width is 32 for CUDA and 64
-for HIP; HIP can select 32 explicitly. The host must select the same width.
+Languages are `cuda`, `hip` and the [bounded scalar `ptx` subset](../reproduction/ptx/README.md).
+The default warp width is 32 for CUDA/PTX and 64 for HIP; HIP can select 32
+explicitly. CUDA/PTX require 32. The host must select the same width.
 The concrete launch is one-dimensional and must have at most 256 threads.
 Each global or shared buffer has at most 4096 cells. These are admission
-limits, not a promise that every admitted size proves quickly.
+limits, not a promise that every admitted size proves quickly. PTX additionally
+requires float32 buffers and has its own closed instruction/register/addressing
+grammar. Its source is retained as `kernel.ptx` in standalone exports.
 
 Fuel is ordered `[lane, warp, block, grid]`. Each bound is a positive integer.
 The semantics faults at zero fuel; increasing fuel does not become an
