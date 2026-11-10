@@ -1,0 +1,40 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by rfl",
+    "race_free": "by\n  refine \u27e8\u27e8fun t => if t = 0 then 8 else if t = 1 then 8 else 0,\n    fun t => match t with\n      | 0 => fun r => if r = 0 then some 0 else if r = 1 then some 2 else none\n      | 1 => fun r => if r = 0 then some 1 else if r = 1 then some 2 else none\n      | _ => fun _ => none,\n    fun t => match t with\n      | 0 => fun r => if r = 0 then some (ops.literal 0 1) else none\n      | 1 => fun r => if r = 0 then some (ops.literal 0 1) else none\n      | _ => fun _ => none,\n    fun l =>\n      if l = \u27e8.global, 0, 2, 0\u27e9 then some (ops.toHalf (ops.literal 0 1)) else\n      if l = \u27e8.global, 0, 2, 1\u27e9 then some (ops.toHalf (ops.literal 0 1)) else\n      (initial layout (fun _ _ => ()) (fun _ => some ())).memory l,\n    fun _ => {}, traceData\u27e9, rfl\u27e9\n  refine \u27e8?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 rfl\n  \u00b7 rfl",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8\u27e8fun t => if t = 0 then 8 else if t = 1 then 8 else 0,\n    fun t => match t with\n      | 0 => fun r => if r = 0 then some 0 else if r = 1 then some 2 else none\n      | 1 => fun r => if r = 0 then some 1 else if r = 1 then some 2 else none\n      | _ => fun _ => none,\n    fun t => match t with\n      | 0 => fun r => if r = 0 then some (ops.add (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0)))) (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1)))) (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2)))) else none\n      | 1 => fun r => if r = 0 then some (ops.add (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0)))) (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1)))) (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2)))) else none\n      | _ => fun _ => none,\n    fun l =>\n      if l = \u27e8.global, 0, 2, 0\u27e9 then\n        some (ops.toHalf (ops.add (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0)))) (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1)))) (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2)))))\n      else if l = \u27e8.global, 0, 2, 1\u27e9 then\n        some (ops.toHalf (ops.add (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0)))) (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1)))) (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2)))))\n      else (initial layout input outside).memory l,\n    fun _ => {}, traceData\u27e9, ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 rfl\n  \u00b7 rfl"
+  }
+}

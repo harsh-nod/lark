@@ -1,0 +1,88 @@
+{
+  "segments": [
+    {
+      "seq": [
+        {
+          "op": 0
+        },
+        {
+          "op": 1
+        },
+        {
+          "op": 2
+        },
+        {
+          "op": 3
+        },
+        {
+          "op": 4
+        },
+        {
+          "op": 5
+        },
+        {
+          "op": 6
+        },
+        {
+          "op": 7
+        },
+        {
+          "op": 8
+        },
+        {
+          "op": 9
+        },
+        {
+          "op": 10
+        },
+        {
+          "op": 11
+        },
+        {
+          "op": 12
+        },
+        {
+          "op": 13
+        },
+        {
+          "op": 14
+        },
+        {
+          "op": 15
+        },
+        {
+          "op": 16
+        },
+        {
+          "op": 17
+        },
+        {
+          "op": 18
+        },
+        {
+          "op": 19
+        },
+        {
+          "op": 20
+        },
+        {
+          "op": 21
+        },
+        {
+          "op": 22
+        },
+        {
+          "op": 23
+        },
+        {
+          "op": 24
+        }
+      ]
+    }
+  ],
+  "proofs": {
+    "segmentation_data": "by rfl",
+    "race_free": "by\n  refine \u27e8finalState unitOps (fun _ _ => ()) (fun _ => some ()), ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 rfl",
+    "segment_equivalence": "by\n  intro input outside\n  refine \u27e8finalState ops input outside, ?_, ?_, ?_\u27e9\n  \u00b7 rfl\n  \u00b7 have htrace : (finalState ops input outside).trace = traceData := by\n      simp [finalState]\n      rfl\n    rw [htrace]\n    rfl\n  \u00b7 have htrace : (finalState ops input outside).trace = traceData := by\n      simp [finalState]\n      rfl\n    have hmem : \u2200 (b i : Nat), (finalState ops input outside).memory\n        \u27e8.global, 0, 3, i\u27e9 = some (input 3 i) := by\n      intro b i; cases i <;> simp [finalState, initial, layout] <;> rfl\n    have hrun : runLaunch ops layout geometry fuel program\n        (initial layout input outside) = some (finalState ops input outside) := rfl\n    simp [extract, layout, hrun, finalState]\n    refine List.mapM_congr ?_ |>.trans (by\n      simp [hmem]\n      exact rfl)\n    intro p\n    cases p with\n    | mk b i =>\n      simp [hmem]\n      exact rfl"
+  }
+}

@@ -1,0 +1,160 @@
+Main.lean:425:5: error: tactic 'rfl' failed, the left-hand side
+  flatten segments
+is not definitionally equal to the right-hand side
+  program
+⊢ flatten segments = program
+Main.lean:449:4: error: tactic 'rfl' failed, the left-hand side
+  runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside)
+is not definitionally equal to the right-hand side
+  some (finalState ops input outside)
+case refine_1
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) =
+    some (finalState ops input outside)
+Main.lean:460:68: error: tactic 'rfl' failed, the left-hand side
+  ((runLaunch ops
+            {
+              global :=
+                [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                  { role := Role.input, size := 2 }, { role := Role.output, size := 4 }] }
+            geometry fuel program
+            { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+              memory := fun l =>
+                if l.space = Space.global ∧ l.owner = 0 then
+                  match
+                    [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                        { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                  | some b =>
+                    if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                  | none => outside l
+                else outside l,
+              epochs := fun x => { }, trace := [] }).getD
+        { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+          memory := fun l =>
+            if l.space = Space.global ∧ l.owner = 0 then
+              match
+                [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                    { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+              | some b => if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+              | none => outside l
+            else outside l,
+          epochs := fun x => { }, trace := [] }).memory
+    { space := Space.global, owner := 0, buffer := 3, offset := 0 }
+is not definitionally equal to the right-hand side
+  some (input 3 0)
+case zero
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+htrace : (finalState ops input outside).trace = traceData
+b : Nat
+⊢ ((runLaunch ops
+              {
+                global :=
+                  [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                    { role := Role.input, size := 2 }, { role := Role.output, size := 4 }] }
+              geometry fuel program
+              { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+                memory := fun l =>
+                  if l.space = Space.global ∧ l.owner = 0 then
+                    match
+                      [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                          { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                    | some b =>
+                      if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                    | none => outside l
+                  else outside l,
+                epochs := fun x => { }, trace := [] }).getD
+          { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+            memory := fun l =>
+              if l.space = Space.global ∧ l.owner = 0 then
+                match
+                  [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                      { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                | some b =>
+                  if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                | none => outside l
+              else outside l,
+            epochs := fun x => { }, trace := [] }).memory
+      { space := Space.global, owner := 0, buffer := 3, offset := 0 } =
+    some (input 3 0)
+Main.lean:460:68: error: tactic 'rfl' failed, the left-hand side
+  ((runLaunch ops
+            {
+              global :=
+                [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                  { role := Role.input, size := 2 }, { role := Role.output, size := 4 }] }
+            geometry fuel program
+            { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+              memory := fun l =>
+                if l.space = Space.global ∧ l.owner = 0 then
+                  match
+                    [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                        { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                  | some b =>
+                    if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                  | none => outside l
+                else outside l,
+              epochs := fun x => { }, trace := [] }).getD
+        { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+          memory := fun l =>
+            if l.space = Space.global ∧ l.owner = 0 then
+              match
+                [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                    { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+              | some b => if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+              | none => outside l
+            else outside l,
+          epochs := fun x => { }, trace := [] }).memory
+    { space := Space.global, owner := 0, buffer := 3, offset := n✝ + 1 }
+is not definitionally equal to the right-hand side
+  some (input 3 (n✝ + 1))
+case succ
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+htrace : (finalState ops input outside).trace = traceData
+b n✝ : Nat
+⊢ ((runLaunch ops
+              {
+                global :=
+                  [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                    { role := Role.input, size := 2 }, { role := Role.output, size := 4 }] }
+              geometry fuel program
+              { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+                memory := fun l =>
+                  if l.space = Space.global ∧ l.owner = 0 then
+                    match
+                      [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                          { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                    | some b =>
+                      if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                    | none => outside l
+                  else outside l,
+                epochs := fun x => { }, trace := [] }).getD
+          { pc := fun x => 0, indices := fun x x => none, regs := fun x x => none,
+            memory := fun l =>
+              if l.space = Space.global ∧ l.owner = 0 then
+                match
+                  [{ role := Role.input, size := 4 }, { role := Role.input, size := 2 },
+                      { role := Role.input, size := 2 }, { role := Role.output, size := 4 }][l.buffer]? with
+                | some b =>
+                  if b.role = Role.input ∧ l.offset < b.size then some (input l.buffer l.offset) else outside l
+                | none => outside l
+              else outside l,
+            epochs := fun x => { }, trace := [] }).memory
+      { space := Space.global, owner := 0, buffer := 3, offset := n✝ + 1 } =
+    some (input 3 (n✝ + 1))
+Main.lean:464:11: error: unknown constant 'List.mapM_congr'
+Main.lean:467:4: error: no goals to be solved
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' does not depend on any axioms
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

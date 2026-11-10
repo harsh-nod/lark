@@ -49,6 +49,12 @@ The three-case pilot and two additional seven-case batches will cover all 17
 reduced fixtures, with at most two active sequences. These studies are running;
 no completed full-model cohort result is claimed here.
 
+Its first [completed SiLU case](results/model-comparison-20261109/README.md)
+contains a real model-generated proof whose exact tactics, immutable first
+request and fixture bytes were checked before another successful local Lean
+recheck. The archived additional Flash batch has seven completed cases and
+no certificates. These are partial evidence, not finished 17-case model rates.
+
 The checkpoint lives in two owned RAM-backed directories, with at least 32 GiB
 reserved on each filesystem. `download_ranges.py` checks ranges and whole-file
 SHA-256; `checkpoint.py` independently validates the snapshot. `serve_glm.py`

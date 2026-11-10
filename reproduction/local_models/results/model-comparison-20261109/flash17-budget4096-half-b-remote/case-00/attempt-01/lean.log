@@ -1,0 +1,113 @@
+Main.lean:425:5: error: tactic 'rfl' failed, the left-hand side
+  flatten segments
+is not definitionally equal to the right-hand side
+  program
+⊢ flatten segments = program
+Main.lean:446:42: error: unknown identifier 'ops.literal'
+Main.lean:447:42: error: unknown identifier 'ops.literal'
+Main.lean:450:43: error: unknown identifier 'ops.toHalf'
+Main.lean:451:43: error: unknown identifier 'ops.toHalf'
+Main.lean:454:2: error: no goals to be solved
+Main.lean:479:4: error: tactic 'rfl' failed, the left-hand side
+  runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside)
+is not definitionally equal to the right-hand side
+  some
+    { pc := fun t => if t = 0 then 8 else if t = 1 then 8 else 0,
+      indices := fun t =>
+        match (motive := Nat → Nat → Option Int) t with
+        | 0 => fun r => if r = 0 then some 0 else if r = 1 then some 2 else none
+        | 1 => fun r => if r = 0 then some 1 else if r = 1 then some 2 else none
+        | x => fun x => none,
+      regs := fun t =>
+        match (motive := Nat → Nat → Option α) t with
+        | 0 => fun r =>
+          if r = 0 then
+            some
+              (ops.add
+                (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0))))
+                  (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1))))
+                (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2))))
+          else none
+        | 1 => fun r =>
+          if r = 0 then
+            some
+              (ops.add
+                (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0))))
+                  (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1))))
+                (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2))))
+          else none
+        | x => fun x => none,
+      memory := fun l =>
+        if l = { space := Space.global, owner := 0, buffer := 2, offset := 0 } then
+          some
+            (ops.toHalf
+              (ops.add
+                (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0))))
+                  (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1))))
+                (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2)))))
+        else
+          if l = { space := Space.global, owner := 0, buffer := 2, offset := 1 } then
+            some
+              (ops.toHalf
+                (ops.add
+                  (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0))))
+                    (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1))))
+                  (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2)))))
+          else (initial layout input outside).memory l,
+      epochs := fun x => { }, trace := traceData }
+case refine_1
+α : Type
+ops : Ops α
+input : Nat → Nat → α
+outside : Location → Option α
+⊢ runLaunch ops layout geometry fuel (flatten segments) (initial layout input outside) =
+    some
+      { pc := fun t => if t = 0 then 8 else if t = 1 then 8 else 0,
+        indices := fun t =>
+          match (motive := Nat → Nat → Option Int) t with
+          | 0 => fun r => if r = 0 then some 0 else if r = 1 then some 2 else none
+          | 1 => fun r => if r = 0 then some 1 else if r = 1 then some 2 else none
+          | x => fun x => none,
+        regs := fun t =>
+          match (motive := Nat → Nat → Option α) t with
+          | 0 => fun r =>
+            if r = 0 then
+              some
+                (ops.add
+                  (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0))))
+                    (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1))))
+                  (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2))))
+            else none
+          | 1 => fun r =>
+            if r = 0 then
+              some
+                (ops.add
+                  (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0))))
+                    (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1))))
+                  (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2))))
+            else none
+          | x => fun x => none,
+        memory := fun l =>
+          if l = { space := Space.global, owner := 0, buffer := 2, offset := 0 } then
+            some
+              (ops.toHalf
+                (ops.add
+                  (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 0)) (ops.fromHalf (input 1 0))))
+                    (ops.mul (ops.fromHalf (input 0 1)) (ops.fromHalf (input 1 1))))
+                  (ops.mul (ops.fromHalf (input 0 2)) (ops.fromHalf (input 1 2)))))
+          else
+            if l = { space := Space.global, owner := 0, buffer := 2, offset := 1 } then
+              some
+                (ops.toHalf
+                  (ops.add
+                    (ops.add (ops.add (ops.literal 0 1) (ops.mul (ops.fromHalf (input 0 3)) (ops.fromHalf (input 1 0))))
+                      (ops.mul (ops.fromHalf (input 0 4)) (ops.fromHalf (input 1 1))))
+                    (ops.mul (ops.fromHalf (input 0 5)) (ops.fromHalf (input 1 2)))))
+            else (initial layout input outside).memory l,
+        epochs := fun x => { }, trace := traceData }
+'LarkCertificate.segmentation_data' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.segmentation' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.race_free' depends on axioms: [sorryAx]
+'LarkCertificate.segment_equivalence' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, sorryAx, Quot.sound]

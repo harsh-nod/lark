@@ -1,0 +1,173 @@
+{
+  "recorded_utc": "2026-11-10T05:18:00.577987+00:00",
+  "process_observation": "    PID     ELAPSED S COMMAND\n3278758    01:04:00 S python3 -m reproduction.local_models.run --url http://127.0.0.1:19084/v1/chat/completions --model zai-org/GLM-5.3 --server-record /tmp/lark-local-models-20261109/glm53-server.json --output /tmp/lark-local-models-20261109/glm53-budget4096-remote --lean /dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean --attempts 3 --max-tokens 16384 --thinking-token-budget 4096 --reasoning-effort low --model-timeout 1800 --lean-timeout 150 --case reproduction/nonlinear/cases/float16/relu --case reproduction/nonlinear/cases/float16/silu --case reproduction/nonlinear/cases/float16/softmax\n3295173       58:52 S python3 /tmp/lark-local-models-20261109/scripts/expand-local-models.py full-late\n3295175       58:52 S python3 -m reproduction.local_models.run --url http://127.0.0.1:19084/v1/chat/completions --model zai-org/GLM-5.3 --server-record /tmp/lark-local-models-20261109/glm53-server.json --output /tmp/lark-local-models-20261109/glm53-budget4096-half-a-remote --lean /dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean --attempts 3 --max-tokens 16384 --thinking-token-budget 4096 --reasoning-effort low --model-timeout 1800 --lean-timeout 150 --case reproduction/nonlinear/cases/float16/batchmatmul --case reproduction/nonlinear/cases/float16/conv2d --case reproduction/nonlinear/cases/float16/depthwise_conv --case reproduction/nonlinear/cases/float16/ffn --case reproduction/nonlinear/cases/float16/flash_attn --case reproduction/nonlinear/cases/float16/gelu --case reproduction/nonlinear/cases/float16/gemm\n3316213       53:30 S python3 -m reproduction.local_models.run --url http://127.0.0.1:19085/v1/chat/completions --model zai-org/GLM-5.3-Flash --server-record /tmp/lark-local-models-20261109/flash17-server.json --output /tmp/lark-local-models-20261109/flash17-budget4096-half-a-remote --lean /dev/shm/lark-proof-controller-20261109/runtime/lean-4.19.0-linux/bin/lean --attempts 1 --max-tokens 16384 --thinking-token-budget 4096 --reasoning-effort low --model-timeout 1800 --lean-timeout 150 --case reproduction/nonlinear/cases/float16/batchmatmul --case reproduction/nonlinear/cases/float16/conv2d --case reproduction/nonlinear/cases/float16/depthwise_conv --case reproduction/nonlinear/cases/float16/ffn --case reproduction/nonlinear/cases/float16/flash_attn --case reproduction/nonlinear/cases/float16/gelu --case reproduction/nonlinear/cases/float16/gemm\n",
+  "controller_sources": {
+    "run.py": "5835c2d759b1d1db176f20dddd0a14ae57345c0598947ded83a22fb5196d6a1c",
+    "client.py": "866637873ab84c2fe5ad2f0dd74e21de6dfee21e6ce34e26259727ce304d35fe"
+  },
+  "runs": {
+    "glm53-budget4096-remote": {
+      "report_status": null,
+      "cases": [
+        {
+          "case": "reproduction/nonlinear/cases/float16/relu",
+          "status": "unproved",
+          "calls": [
+            "unproved",
+            "unproved",
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/silu",
+          "status": "verified",
+          "calls": [
+            "proved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/softmax",
+          "status": "unproved",
+          "calls": [
+            "invalid-proposal"
+          ]
+        }
+      ]
+    },
+    "glm53-budget4096-half-a-remote": {
+      "report_status": null,
+      "cases": [
+        {
+          "case": "reproduction/nonlinear/cases/float16/batchmatmul",
+          "status": "unproved",
+          "calls": [
+            "invalid-proposal",
+            "invalid-proposal",
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/conv2d",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal",
+            "invalid-proposal",
+            "invalid-proposal"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/depthwise_conv",
+          "status": "unproved",
+          "calls": [
+            "unproved"
+          ]
+        }
+      ]
+    },
+    "glm53-budget4096-half-b-remote": {
+      "report_status": null,
+      "cases": []
+    },
+    "flash17-budget4096-half-a-remote": {
+      "report_status": null,
+      "cases": [
+        {
+          "case": "reproduction/nonlinear/cases/float16/batchmatmul",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/conv2d",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/depthwise_conv",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        },
+        {
+          "directory": "case-03",
+          "status": "active"
+        }
+      ]
+    },
+    "flash17-budget4096-half-b-remote": {
+      "report_status": "finished",
+      "cases": [
+        {
+          "case": "reproduction/nonlinear/cases/float16/gemv",
+          "status": "unproved",
+          "calls": [
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/gqa",
+          "status": "unproved",
+          "calls": [
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/layernorm",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/linear",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/rmsnorm",
+          "status": "unproved",
+          "calls": [
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/rope",
+          "status": "unproved",
+          "calls": [
+            "unproved"
+          ]
+        },
+        {
+          "case": "reproduction/nonlinear/cases/float16/swiglu",
+          "status": "invalid-proposals",
+          "calls": [
+            "invalid-proposal"
+          ]
+        }
+      ]
+    }
+  },
+  "containers": [
+    {
+      "name": "lark-glm53-20261109",
+      "id": "f9473948e849d86d807271c792cc5ec120100843c57924bd49f6d587bd5a34c2",
+      "running": true,
+      "pid": 3266218,
+      "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd"
+    },
+    {
+      "name": "lark-glm53-flash-eval17-20261109",
+      "id": "afaf7dacbf1d7d135d5bf71375f3fac2e6ae5837b70032db7354cebd8b3f9394",
+      "running": true,
+      "pid": 3295248,
+      "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd"
+    }
+  ],
+  "scope": "Historical live observation; unfinished cohorts are not completed results."
+}

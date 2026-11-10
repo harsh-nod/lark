@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "experiment": "independent-local-model-proof-proposals",
+  "timestamp_utc": "2026-11-10T04:24:29.702756+00:00",
+  "model": "zai-org/GLM-5.3-Flash",
+  "server_record_sha256": "f272ea7393aa85bb2aa428b27ea6363ffbb0adac7cc01576561af66bba51c31b",
+  "runner_sha256": "5835c2d759b1d1db176f20dddd0a14ae57345c0598947ded83a22fb5196d6a1c",
+  "client_sha256": "866637873ab84c2fe5ad2f0dd74e21de6dfee21e6ce34e26259727ce304d35fe",
+  "seed": 261102028,
+  "temperature": 0,
+  "max_tokens": 16384,
+  "attempts_per_case": 1,
+  "model_timeout_seconds": 1800.0,
+  "lean_timeout_seconds": 150.0,
+  "reasoning_effort": "low",
+  "thinking_token_budget": 4096,
+  "external_api_spend_usd": 0,
+  "cases": [
+    {
+      "case": "reproduction/nonlinear/cases/float16/gemv",
+      "status": "unproved",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "unproved",
+          "lean_timeout": false,
+          "elapsed_seconds": 338.9914509267546
+        }
+      ],
+      "source_sha256": "e41d8ff4870419aaed4fb924da9b9b2c7c6e8df0ad718bebdd2fa177da524e91",
+      "reference_sha256": "68af6ee787e82408a745817c7b9d40095dbb1039fbce622f8f99a37bd32b24b2",
+      "task_sha256": "72aeadac0ab2bf41a4455248abe5ecbf0883084a1f31da9ee6a05028240fc80e",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/gqa",
+      "status": "unproved",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "unproved",
+          "lean_timeout": false,
+          "elapsed_seconds": 292.6036043711938
+        }
+      ],
+      "source_sha256": "f50a1a63b2d3d18addd6ec1680db075dfd6b2d0ab17e982340ab1c0fdf77289e",
+      "reference_sha256": "6646777b9ebf8461adf1d3d7f0bc8f778d072d4552d00a2f5582b97b6c1ff66d",
+      "task_sha256": "15b534978bcdcace4adf191fb682dfc20118539577162c803fcfa3b803c8fc87",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/layernorm",
+      "status": "invalid-proposals",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "invalid-proposal",
+          "error": "Invalid control character at: line 1 column 1584 (char 1583)",
+          "elapsed_seconds": 313.18218702822924
+        }
+      ],
+      "source_sha256": "a36122f74779252e0d4dc90f5c8f759f1ccad94bb2f60a342458c3789fdd22c5",
+      "reference_sha256": "6da9063743eb3058ed9244142e6994258ec6a06134f6cb5c7fc0084993289a9b",
+      "task_sha256": "017b686575411e2510de357014148fb7ff08dc1dd903ba77455d28759d97e304",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/linear",
+      "status": "invalid-proposals",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "invalid-proposal",
+          "error": "proposal: segmentation_data: expected a bounded tactic proof beginning with 'by'",
+          "elapsed_seconds": 271.44581238599494
+        }
+      ],
+      "source_sha256": "42d9ec0ee89635acd29470e926a03c21b23dc01649bac6721d31eb445f6c370f",
+      "reference_sha256": "a3bba76d3be3d7ab23e5b0f993ddcb12e8179120ed56e8a1c87750396cecbfd7",
+      "task_sha256": "2237049371e43ca9339c0776e3a4b9b3d14eab30a60801ade523975fa0ee49a6",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/rmsnorm",
+      "status": "unproved",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "unproved",
+          "lean_timeout": false,
+          "elapsed_seconds": 275.10401673289016
+        }
+      ],
+      "source_sha256": "6c76394373d044bfefaf1c2388d46b366ad785c9f6194dbddb83d13705639cd1",
+      "reference_sha256": "4f5063887b34c81d475dfa68c381701301f088ffcf3c3505a2e2e65d0b240c63",
+      "task_sha256": "367d244127c0d1f098c329e3399ca737953ea35b1f827a0140a8369cf83d183e",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/rope",
+      "status": "unproved",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "unproved",
+          "lean_timeout": false,
+          "elapsed_seconds": 273.4711732119322
+        }
+      ],
+      "source_sha256": "4676194216831f1faf5b8c54dfc60f115dae580ec103f84a1f36eb7677f87fca",
+      "reference_sha256": "9d4c8b409d03cc96fc0cd9d1156f4b429e1a53b815c873c5ceed9159fee863bb",
+      "task_sha256": "dac73e9dc29044f4ee30cc9a74727a3b2630490307b2cd57cd439c62a19bd163",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    },
+    {
+      "case": "reproduction/nonlinear/cases/float16/swiglu",
+      "status": "invalid-proposals",
+      "calls": [
+        {
+          "attempt": 1,
+          "status": "invalid-proposal",
+          "error": "Invalid control character at: line 1 column 1211 (char 1210)",
+          "elapsed_seconds": 298.0683119990863
+        }
+      ],
+      "source_sha256": "3469c79335d6b855508a1c99af3905618528b73e1deaff63e17ace4c8412d881",
+      "reference_sha256": "24b8c440d48d3c5ebc5dabe6615fa4e5d574528f9a95a97affe473fb4636c117",
+      "task_sha256": "f8af6ae67d5d5f5651b47e11030028c17609ded9ff96edd63c39b868ee05d0f4",
+      "model": "zai-org/GLM-5.3-Flash",
+      "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c"
+    }
+  ],
+  "scope": "Our reduced HIP programs and bounded proof-slot harness. Not the authors' registry, harness, endpoint, pass rates, token costs, failure-analysis or segmentation ablations.",
+  "live_models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "zai-org/GLM-5.3-Flash",
+        "object": "model",
+        "created": 1794286434,
+        "owned_by": "vllm",
+        "root": "/model-cache/models--zai-org--GLM-5.3-Flash/snapshots/46a050bec13002ad29ee795c16e61cf4fa3c4a9c",
+        "parent": null,
+        "max_model_len": 131072,
+        "permission": [
+          {
+            "id": "modelperm-bd90b075a4fb4310",
+            "object": "model_permission",
+            "created": 1794286434,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "status": "finished",
+  "request_attempts": 7,
+  "inference_responses": 7,
+  "usage_incomplete": false,
+  "reported_usage": {
+    "prompt_tokens": 76871,
+    "completion_tokens": 31930,
+    "total_tokens": 108801
+  }
+}
