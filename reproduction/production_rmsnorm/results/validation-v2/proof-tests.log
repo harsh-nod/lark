@@ -1,0 +1,770 @@
+proof-tests	Set up job	﻿2026-11-10T14:30:19.7409593Z Current runner version: '2.338.2'
+proof-tests	Set up job	2026-11-10T14:30:19.7436672Z ##[group]Runner Image Provisioner
+proof-tests	Set up job	2026-11-10T14:30:19.7437565Z Hosted Compute Agent
+proof-tests	Set up job	2026-11-10T14:30:19.7438235Z Version: 20261028.624
+proof-tests	Set up job	2026-11-10T14:30:19.7438932Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+proof-tests	Set up job	2026-11-10T14:30:19.7439680Z Build Date: 2026-10-28T21:51:42Z
+proof-tests	Set up job	2026-11-10T14:30:19.7440442Z Worker ID: {a3aa1f33-f925-4228-9fbd-f7aaa8e57fb9}
+proof-tests	Set up job	2026-11-10T14:30:19.7441176Z Region: westus
+proof-tests	Set up job	2026-11-10T14:30:19.7441756Z Cloud: Azure
+proof-tests	Set up job	2026-11-10T14:30:19.7442592Z ##[endgroup]
+proof-tests	Set up job	2026-11-10T14:30:19.7444235Z ##[group]Operating System
+proof-tests	Set up job	2026-11-10T14:30:19.7444988Z Ubuntu
+proof-tests	Set up job	2026-11-10T14:30:19.7445522Z 24.04.5
+proof-tests	Set up job	2026-11-10T14:30:19.7446025Z LTS
+proof-tests	Set up job	2026-11-10T14:30:19.7446660Z ##[endgroup]
+proof-tests	Set up job	2026-11-10T14:30:19.7447246Z ##[group]Runner Image
+proof-tests	Set up job	2026-11-10T14:30:19.7447900Z Image: ubuntu-24.04
+proof-tests	Set up job	2026-11-10T14:30:19.7448486Z Version: 20261101.360.1
+proof-tests	Set up job	2026-11-10T14:30:19.7449527Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+proof-tests	Set up job	2026-11-10T14:30:19.7451444Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+proof-tests	Set up job	2026-11-10T14:30:19.7452712Z ##[endgroup]
+proof-tests	Set up job	2026-11-10T14:30:19.7453815Z ##[group]GITHUB_TOKEN Permissions
+proof-tests	Set up job	2026-11-10T14:30:19.7455812Z Contents: read
+proof-tests	Set up job	2026-11-10T14:30:19.7456485Z Metadata: read
+proof-tests	Set up job	2026-11-10T14:30:19.7457093Z ##[endgroup]
+proof-tests	Set up job	2026-11-10T14:30:19.7459465Z Secret source: Actions
+proof-tests	Set up job	2026-11-10T14:30:19.7460426Z Cache mode: write
+proof-tests	Set up job	2026-11-10T14:30:19.7461229Z Prepare workflow directory
+proof-tests	Set up job	2026-11-10T14:30:19.7808619Z Prepare all required actions
+proof-tests	Set up job	2026-11-10T14:30:19.7858940Z Getting action download info
+proof-tests	Set up job	2026-11-10T14:30:20.1388330Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+proof-tests	Set up job	2026-11-10T14:30:20.2639845Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+proof-tests	Set up job	2026-11-10T14:30:20.4867772Z Complete job name: proof-tests
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-10T14:30:20.5900701Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5902398Z with:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5902902Z   repository: harsh-nod/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5906903Z   token: ***
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5907350Z   ssh-strict: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5907788Z   ssh-user: git
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5908232Z   persist-credentials: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5908720Z   clean: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5909162Z   sparse-checkout-cone-mode: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5909678Z   fetch-depth: 1
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5910106Z   fetch-tags: false
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5910545Z   show-progress: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5910989Z   lfs: false
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5911397Z   submodules: false
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5911847Z   set-safe-directory: true
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5912543Z   allow-unsafe-pr-checkout: false
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.5913405Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9038401Z Syncing repository: harsh-nod/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9041132Z ##[group]Getting Git version info
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9042532Z Working directory is '/home/runner/work/lark/lark'
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9044578Z [command]/usr/bin/git version
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9145650Z git version 2.56.0
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9170225Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9186415Z Temporarily overriding HOME='/home/runner/work/_temp/583f46f2-f325-4c81-91df-4796b18fe9b2' before making global git config changes
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9189170Z Adding repository directory to the temporary git global config as a safe directory
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9192440Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9266575Z Deleting the contents of '/home/runner/work/lark/lark'
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9293990Z ##[group]Initializing the repository
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9295179Z [command]/usr/bin/git init /home/runner/work/lark/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9401660Z hint: Using 'master' as the name for the initial branch. This default branch name
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9403788Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9405761Z hint: to use in all of your new repositories, which will suppress this warning,
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9406969Z hint: call:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9407581Z hint:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9408563Z hint: 	git config --global init.defaultBranch <name>
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9409627Z hint:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9410675Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9412502Z hint: 'development'. The just-created branch can be renamed via this command:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9413782Z hint:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9414465Z hint: 	git branch -m <name>
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9415251Z hint:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9416291Z hint: Disable this message with "git config set advice.defaultBranchName false"
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9417915Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9430338Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9489364Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9490934Z ##[group]Disabling automatic garbage collection
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9493965Z [command]/usr/bin/git config --local gc.auto 0
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9532514Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9534009Z ##[group]Setting up auth
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9541343Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:20.9595556Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0065739Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0110844Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0355031Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0399721Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0647445Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0706199Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0707948Z ##[group]Fetching the repository
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:21.0719609Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +344ebdce028f08d4bea4074180be3332e44942a1:refs/remotes/origin/reproduction/production-rmsnorm
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2483017Z From https://github.com/harsh-nod/lark
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2484519Z  * [new ref]         344ebdce028f08d4bea4074180be3332e44942a1 -> origin/reproduction/production-rmsnorm
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2488636Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2492705Z ##[group]Determining the checkout info
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2493905Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2500747Z [command]/usr/bin/git sparse-checkout disable
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2564075Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2603713Z ##[group]Checking out the ref
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.2608426Z [command]/usr/bin/git checkout --progress --force -B reproduction/production-rmsnorm refs/remotes/origin/reproduction/production-rmsnorm
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.7776532Z Switched to a new branch 'reproduction/production-rmsnorm'
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.7782984Z branch 'reproduction/production-rmsnorm' set up to track 'origin/reproduction/production-rmsnorm'.
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.7857109Z ##[endgroup]
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.7918988Z [command]/usr/bin/git log -1 --format=%H
+proof-tests	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:30:32.7953760Z 344ebdce028f08d4bea4074180be3332e44942a1
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	﻿2026-11-10T14:30:32.8261201Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8261769Z with:
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8262379Z   python-version: 3.12
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8262951Z   check-latest: false
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8265779Z   token: ***
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8266055Z   update-environment: true
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8266355Z   allow-prereleases: false
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8266645Z   freethreaded: false
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.8266906Z ##[endgroup]
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.9671845Z ##[group]Installed versions
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.9772522Z (node:2247) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.9773504Z (Use `node --trace-deprecation ...` to show where the warning was created)
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.9774298Z Successfully set up CPython (3.12.16)
+proof-tests	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:30:32.9775273Z ##[endgroup]
+proof-tests	Install pinned Lean toolchain	﻿2026-11-10T14:30:32.9981375Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:32.9983051Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:32.9984016Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:32.9984522Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0020507Z shell: /usr/bin/bash -e {0}
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0020893Z env:
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0021233Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0021749Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0022482Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0023240Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0024319Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0025429Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.0026101Z ##[endgroup]
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.1467213Z info: downloading installer
+proof-tests	Install pinned Lean toolchain	2026-11-10T14:30:33.4000880Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+proof-tests	Install package	﻿2026-11-10T14:30:33.4108751Z ##[group]Run python -m pip install -e .
+proof-tests	Install package	2026-11-10T14:30:33.4109159Z [36;1mpython -m pip install -e .[0m
+proof-tests	Install package	2026-11-10T14:30:33.4130805Z shell: /usr/bin/bash -e {0}
+proof-tests	Install package	2026-11-10T14:30:33.4131083Z env:
+proof-tests	Install package	2026-11-10T14:30:33.4131365Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install package	2026-11-10T14:30:33.4131832Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Install package	2026-11-10T14:30:33.4132700Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install package	2026-11-10T14:30:33.4133129Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install package	2026-11-10T14:30:33.4133534Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Install package	2026-11-10T14:30:33.4133932Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Install package	2026-11-10T14:30:33.4134272Z ##[endgroup]
+proof-tests	Install package	2026-11-10T14:30:34.3355808Z Obtaining file:///home/runner/work/lark/lark
+proof-tests	Install package	2026-11-10T14:30:34.3374772Z   Installing build dependencies: started
+proof-tests	Install package	2026-11-10T14:30:35.0682449Z   Installing build dependencies: finished with status 'done'
+proof-tests	Install package	2026-11-10T14:30:35.0688898Z   Checking if build backend supports build_editable: started
+proof-tests	Install package	2026-11-10T14:30:35.3945933Z   Checking if build backend supports build_editable: finished with status 'done'
+proof-tests	Install package	2026-11-10T14:30:35.3954398Z   Getting requirements to build editable: started
+proof-tests	Install package	2026-11-10T14:30:35.7401920Z   Getting requirements to build editable: finished with status 'done'
+proof-tests	Install package	2026-11-10T14:30:35.7412974Z   Preparing editable metadata (pyproject.toml): started
+proof-tests	Install package	2026-11-10T14:30:35.9434771Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+proof-tests	Install package	2026-11-10T14:30:35.9472829Z Building wheels for collected packages: lark-kernels
+proof-tests	Install package	2026-11-10T14:30:35.9480294Z   Building editable for lark-kernels (pyproject.toml): started
+proof-tests	Install package	2026-11-10T14:30:36.1755628Z   Building editable for lark-kernels (pyproject.toml): finished with status 'done'
+proof-tests	Install package	2026-11-10T14:30:36.1763200Z   Created wheel for lark-kernels: filename=lark_kernels-0.1.0-0.editable-py3-none-any.whl size=9591 sha256=0da17252ae8e9e8e9f80eaa341f74b772ce5ccdaa88705ab0ef826a06c54b1ee
+proof-tests	Install package	2026-11-10T14:30:36.1766128Z   Stored in directory: /tmp/pip-ephem-wheel-cache-i27059c0/wheels/75/d2/9b/1bad504aeef32aae0df1b8c7dbc973feff47d4c2fa79e95297
+proof-tests	Install package	2026-11-10T14:30:36.1795064Z Successfully built lark-kernels
+proof-tests	Install package	2026-11-10T14:30:36.1934154Z Installing collected packages: lark-kernels
+proof-tests	Install package	2026-11-10T14:30:36.2027736Z Successfully installed lark-kernels-0.1.0
+proof-tests	Install package	2026-11-10T14:30:36.2037173Z 
+proof-tests	Install package	2026-11-10T14:30:36.2037578Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+proof-tests	Install package	2026-11-10T14:30:36.2038146Z [notice] To update, run: pip install --upgrade pip
+proof-tests	Check machine model	﻿2026-11-10T14:30:36.2665402Z ##[group]Run lake build
+proof-tests	Check machine model	2026-11-10T14:30:36.2665741Z [36;1mlake build[0m
+proof-tests	Check machine model	2026-11-10T14:30:36.2687230Z shell: /usr/bin/bash -e {0}
+proof-tests	Check machine model	2026-11-10T14:30:36.2687511Z env:
+proof-tests	Check machine model	2026-11-10T14:30:36.2687786Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check machine model	2026-11-10T14:30:36.2688246Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check machine model	2026-11-10T14:30:36.2688723Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check machine model	2026-11-10T14:30:36.2689136Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check machine model	2026-11-10T14:30:36.2689527Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check machine model	2026-11-10T14:30:36.2689946Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check machine model	2026-11-10T14:30:36.2690279Z ##[endgroup]
+proof-tests	Check machine model	2026-11-10T14:30:37.0784018Z info: downloading https://releases.lean-lang.org/lean4/v4.19.0/lean-4.19.0-linux.tar.zst
+proof-tests	Check machine model	2026-11-10T14:30:40.3461367Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.19.0
+proof-tests	Check machine model	2026-11-10T14:30:44.0845963Z info: lark: no previous manifest, creating one from scratch
+proof-tests	Check machine model	2026-11-10T14:30:44.0846795Z info: toolchain not updated; already up-to-date
+proof-tests	Check machine model	2026-11-10T14:30:47.0896275Z ✔ [2/37] Built Lark.Model
+proof-tests	Check machine model	2026-11-10T14:30:47.2916653Z ✔ [3/37] Built Lark.Nonlinear
+proof-tests	Check machine model	2026-11-10T14:30:49.0993655Z ℹ [4/37] Built Lark.ScalarLaunch
+proof-tests	Check machine model	2026-11-10T14:30:49.1043583Z info: ././././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:49.3994192Z ℹ [5/37] Built Lark.Collective
+proof-tests	Check machine model	2026-11-10T14:30:49.4057376Z info: ././././Lark/Collective.lean:214:0: 'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms
+proof-tests	Check machine model	2026-11-10T14:30:49.4083275Z info: ././././Lark/Collective.lean:215:0: 'LarkCollective.runShuffle_preserves' depends on axioms: [propext]
+proof-tests	Check machine model	2026-11-10T14:30:49.4113255Z info: ././././Lark/Collective.lean:216:0: 'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:49.4173075Z ℹ [6/37] Built Lark.MFMA
+proof-tests	Check machine model	2026-11-10T14:30:49.4179315Z info: ././././Lark/MFMA.lean:254:0: 'LarkMFMA.mfmaUpdates_preserves' does not depend on any axioms
+proof-tests	Check machine model	2026-11-10T14:30:49.4233188Z info: ././././Lark/MFMA.lean:255:0: 'LarkMFMA.runMFMA_preserves' depends on axioms: [propext]
+proof-tests	Check machine model	2026-11-10T14:30:50.2047349Z ℹ [7/37] Built Lark.CollectiveGather
+proof-tests	Check machine model	2026-11-10T14:30:50.2066925Z info: ././././Lark/CollectiveGather.lean:34:0: 'LarkCollective.Gather.values_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:50.6153651Z ℹ [8/37] Built Lark.RegisterPhase
+proof-tests	Check machine model	2026-11-10T14:30:50.6182550Z info: ././././Lark/RegisterPhase.lean:76:0: 'LarkCollective.RegisterPhase.partial_preserves' depends on axioms: [Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:50.6233348Z info: ././././Lark/RegisterPhase.lean:77:0: 'LarkCollective.RegisterPhase.lane_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:52.1243560Z ℹ [9/37] Built Lark.Pointwise
+proof-tests	Check machine model	2026-11-10T14:30:52.1334322Z info: ././././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:54.9333536Z ℹ [10/37] Built Lark.UnaryMap
+proof-tests	Check machine model	2026-11-10T14:30:54.9388052Z info: ././././Lark/UnaryMap.lean:214:0: 'LarkUnaryMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:57.7354003Z ℹ [11/37] Built Lark.Reduction
+proof-tests	Check machine model	2026-11-10T14:30:57.7384284Z info: ././././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:57.7412954Z info: ././././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:57.7414079Z info: ././././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:57.7415327Z info: ././././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:30:57.7416670Z info: ././././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:00.2603992Z ℹ [12/37] Built Lark.ShuffleTransfer
+proof-tests	Check machine model	2026-11-10T14:31:00.2606156Z info: ././././Lark/ShuffleTransfer.lean:489:0: 'LarkCollective.Transfer.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:01.5697593Z ℹ [13/37] Built Lark.FoldPhase
+proof-tests	Check machine model	2026-11-10T14:31:01.5753310Z info: ././././Lark/FoldPhase.lean:260:0: 'LarkFoldPhase.cycle' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:01.5783082Z info: ././././Lark/FoldPhase.lean:261:0: 'LarkFoldPhase.run_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:03.2723147Z ℹ [14/37] Built Lark.DotLoop
+proof-tests	Check machine model	2026-11-10T14:31:03.2782928Z info: ././././Lark/DotLoop.lean:620:0: 'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:03.2863070Z info: ././././Lark/DotLoop.lean:621:0: 'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:03.2905190Z info: ././././Lark/DotLoop.lean:622:0: 'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:03.2973087Z info: ././././Lark/DotLoop.lean:623:0: 'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:03.3033243Z info: ././././Lark/DotLoop.lean:624:0: 'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.0733702Z ⚠ [15/37] Built Lark.MFMATile
+proof-tests	Check machine model	2026-11-10T14:31:04.0783176Z warning: ././././Lark/MFMATile.lean:37:34: unused variable `ht`
+proof-tests	Check machine model	2026-11-10T14:31:04.0822964Z note: this linter can be disabled with `set_option linter.unusedVariables false`
+proof-tests	Check machine model	2026-11-10T14:31:04.0883465Z info: ././././Lark/MFMATile.lean:820:0: 'LarkMFMA.Tile.load_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.0933423Z info: ././././Lark/MFMATile.lean:821:0: 'LarkMFMA.Tile.mfma_element' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.0980046Z info: ././././Lark/MFMATile.lean:822:0: 'LarkMFMA.Tile.matrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.0981526Z info: ././././Lark/MFMATile.lean:823:0: 'LarkMFMA.Tile.safe_raceFree' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.1083500Z info: ././././Lark/MFMATile.lean:824:0: 'LarkMFMA.Tile.store_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.1174109Z info: ././././Lark/MFMATile.lean:825:0: 'LarkMFMA.Tile.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:04.1203611Z ✔ [16/37] Built Lark.WaveReduce
+proof-tests	Check machine model	2026-11-10T14:31:05.7823424Z ℹ [17/37] Built Lark.RowPhase
+proof-tests	Check machine model	2026-11-10T14:31:05.7882975Z info: ././././Lark/RowPhase.lean:229:0: 'LarkRowPhase.cycle' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:05.7913169Z info: ././././Lark/RowPhase.lean:230:0: 'LarkRowPhase.run_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:06.6840523Z ℹ [18/37] Built Lark.WaveReduceArithmetic
+proof-tests	Check machine model	2026-11-10T14:31:06.6842224Z info: ././././Lark/WaveReduceArithmetic.lean:124:0: 'LarkCollective.WaveSum.add_complete' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:06.6865692Z info: ././././Lark/WaveReduceArithmetic.lean:125:0: 'LarkCollective.WaveSum.add_fold' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:06.9873653Z ℹ [19/37] Built Lark.Matrix
+proof-tests	Check machine model	2026-11-10T14:31:06.9890972Z info: ././././Lark/Matrix.lean:190:0: 'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:06.9943048Z info: ././././Lark/Matrix.lean:191:0: 'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:06.9983473Z info: ././././Lark/Matrix.lean:192:0: 'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:07.0003039Z info: ././././Lark/Matrix.lean:193:0: 'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:07.0033081Z info: ././././Lark/Matrix.lean:194:0: 'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:09.8951186Z ℹ [20/37] Built Lark.WaveReduceStore
+proof-tests	Check machine model	2026-11-10T14:31:09.9043578Z info: ././././Lark/WaveReduceStore.lean:145:0: 'LarkCollective.WaveSum.last_fold' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:09.9193821Z info: ././././Lark/WaveReduceStore.lean:146:0: 'LarkCollective.WaveSum.final_owned' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.4043308Z ℹ [21/37] Built Lark.Convolution
+proof-tests	Check machine model	2026-11-10T14:31:12.4073061Z info: ././././Lark/Convolution.lean:125:0: 'LarkConvolution.input_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.4103149Z info: ././././Lark/Convolution.lean:126:0: 'LarkConvolution.denseProfile' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.4123441Z info: ././././Lark/Convolution.lean:127:0: 'LarkConvolution.depthProfile' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.8023600Z ℹ [22/37] Built Lark.DotMap
+proof-tests	Check machine model	2026-11-10T14:31:12.8063295Z info: ././././Lark/DotMap.lean:612:0: 'LarkDotMap.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.8103347Z info: ././././Lark/DotMap.lean:613:0: 'LarkDotMap.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.8153221Z info: ././././Lark/DotMap.lean:614:0: 'LarkDotMap.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.8193178Z info: ././././Lark/DotMap.lean:615:0: 'LarkDotMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:12.8223325Z info: ././././Lark/DotMap.lean:616:0: 'LarkDotMap.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:13.0023421Z ℹ [23/37] Built Lark.Normalization
+proof-tests	Check machine model	2026-11-10T14:31:13.0080381Z info: ././././Lark/Normalization.lean:367:0: 'LarkNormalization.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:13.0113466Z info: ././././Lark/Normalization.lean:368:0: 'LarkNormalization.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:14.7135008Z ℹ [24/37] Built Lark.RowSoftmax
+proof-tests	Check machine model	2026-11-10T14:31:14.7223480Z info: ././././Lark/RowSoftmax.lean:346:0: 'LarkRowSoftmax.address_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:14.7283175Z info: ././././Lark/RowSoftmax.lean:347:0: 'LarkRowSoftmax.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:14.7373299Z info: ././././Lark/RowSoftmax.lean:348:0: 'LarkRowSoftmax.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:17.4196028Z ℹ [25/37] Built Lark.PairMap
+proof-tests	Check machine model	2026-11-10T14:31:17.4205564Z info: ././././Lark/PairMap.lean:197:0: 'LarkPairMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.2194082Z ℹ [26/37] Built Lark.Pipeline
+proof-tests	Check machine model	2026-11-10T14:31:18.2223173Z info: ././././Lark/Pipeline.lean:106:0: 'LarkPipeline.wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.2283216Z info: ././././Lark/Pipeline.lean:107:0: 'LarkPipeline.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.2313038Z info: ././././Lark/Pipeline.lean:108:0: 'LarkPipeline.correct_pre' does not depend on any axioms
+proof-tests	Check machine model	2026-11-10T14:31:18.6205610Z ℹ [27/37] Built Lark.Bias
+proof-tests	Check machine model	2026-11-10T14:31:18.6207143Z info: ././././Lark/Bias.lean:683:0: 'LarkBias.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.6209505Z info: ././././Lark/Bias.lean:684:0: 'LarkBias.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.6289203Z info: ././././Lark/Bias.lean:685:0: 'LarkBias.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.6297659Z info: ././././Lark/Bias.lean:686:0: 'LarkBias.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:18.6323117Z info: ././././Lark/Bias.lean:687:0: 'LarkBias.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:19.5274633Z ℹ [28/37] Built Lark.AttentionAddress
+proof-tests	Check machine model	2026-11-10T14:31:19.5304918Z info: ././././Lark/AttentionAddress.lean:149:0: 'LarkAttention.kv_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.2223334Z ℹ [29/37] Built Lark.FeedForward
+proof-tests	Check machine model	2026-11-10T14:31:20.2263333Z info: ././././Lark/FeedForward.lean:59:0: 'LarkFeedForward.hidden_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.2303250Z info: ././././Lark/FeedForward.lean:60:0: 'LarkFeedForward.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.6213275Z ℹ [30/37] Built Lark.Silu
+proof-tests	Check machine model	2026-11-10T14:31:20.6249573Z info: ././././Lark/Silu.lean:692:0: 'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.6293194Z info: ././././Lark/Silu.lean:693:0: 'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.6294868Z info: ././././Lark/Silu.lean:694:0: 'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.8233566Z ℹ [31/37] Built Lark.SwiPointwise
+proof-tests	Check machine model	2026-11-10T14:31:20.8263261Z info: ././././Lark/SwiPointwise.lean:113:0: 'LarkSwiPointwise.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:20.8323399Z info: ././././Lark/SwiPointwise.lean:114:0: 'LarkSwiPointwise.after_owned' depends on axioms: [propext]
+proof-tests	Check machine model	2026-11-10T14:31:22.1313313Z ℹ [32/37] Built Lark.AttentionPipeline
+proof-tests	Check machine model	2026-11-10T14:31:22.1343371Z info: ././././Lark/AttentionPipeline.lean:124:0: 'LarkAttention.soft_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:22.1345069Z info: ././././Lark/AttentionPipeline.lean:125:0: 'LarkAttention.value_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:22.1346706Z info: ././././Lark/AttentionPipeline.lean:126:0: 'LarkAttention.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:22.2313254Z ℹ [33/37] Built Lark.SwiGLU
+proof-tests	Check machine model	2026-11-10T14:31:22.2343170Z info: ././././Lark/SwiGLU.lean:148:0: 'LarkSwiGLU.pair_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:22.2373068Z info: ././././Lark/SwiGLU.lean:149:0: 'LarkSwiGLU.down_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:22.2403073Z info: ././././Lark/SwiGLU.lean:150:0: 'LarkSwiGLU.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8353626Z ℹ [34/37] Built Lark.Rotary
+proof-tests	Check machine model	2026-11-10T14:31:24.8354771Z info: ././././Lark/Rotary.lean:447:0: 'LarkRotary.header_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8356043Z info: ././././Lark/Rotary.lean:448:0: 'LarkRotary.body_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8357331Z info: ././././Lark/Rotary.lean:449:0: 'LarkRotary.store_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8358541Z info: ././././Lark/Rotary.lean:450:0: 'LarkRotary.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8359654Z info: ././././Lark/Rotary.lean:451:0: 'LarkRotary.partialState_owned' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:24.8360599Z info: ././././Lark/Rotary.lean:452:0: 'LarkRotary.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:36.5475884Z ℹ [35/37] Built Lark.WaveSum
+proof-tests	Check machine model	2026-11-10T14:31:36.5476878Z info: ././././Lark/WaveSum.lean:94:0: 'LarkCollective.WaveSum.warp_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:36.5478198Z info: ././././Lark/WaveSum.lean:95:0: 'LarkCollective.WaveSum.launch_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:36.5479608Z info: ././././Lark/WaveSum.lean:96:0: 'LarkCollective.WaveSum.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check machine model	2026-11-10T14:31:36.7478980Z ✔ [36/37] Built Lark
+proof-tests	Check machine model	2026-11-10T14:31:36.7485178Z Build completed successfully.
+proof-tests	Check nonlinear machine model	﻿2026-11-10T14:31:36.7576595Z ##[group]Run lean Lark/Nonlinear.lean
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7576981Z [36;1mlean Lark/Nonlinear.lean[0m
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7598416Z shell: /usr/bin/bash -e {0}
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7598676Z env:
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7598957Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7599415Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7599852Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7600244Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7600650Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7601042Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check nonlinear machine model	2026-11-10T14:31:36.7601385Z ##[endgroup]
+proof-tests	Check pointwise induction proof	﻿2026-11-10T14:31:39.0978151Z ##[group]Run lake env lean Lark/Pointwise.lean
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.0978552Z [36;1mlake env lean Lark/Pointwise.lean[0m
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.0999561Z shell: /usr/bin/bash -e {0}
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.0999828Z env:
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1000105Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1000555Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1001005Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1001403Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1001797Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1002491Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:39.1002826Z ##[endgroup]
+proof-tests	Check pointwise induction proof	2026-11-10T14:31:40.9140728Z 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check counted-loop induction proof	﻿2026-11-10T14:31:40.9381775Z ##[group]Run lake env lean Lark/Reduction.lean
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9383083Z [36;1mlake env lean Lark/Reduction.lean[0m
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9404100Z shell: /usr/bin/bash -e {0}
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9404363Z env:
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9404632Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9405085Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9405525Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9405927Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9406311Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9406701Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:40.9407030Z ##[endgroup]
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:43.2877885Z 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:43.2880229Z 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:43.2881243Z 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:43.2882641Z 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check counted-loop induction proof	2026-11-10T14:31:43.2884039Z 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check matrix address and dot-loop proofs	﻿2026-11-10T14:31:43.3154764Z ##[group]Run lake env lean Lark/Matrix.lean
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3155439Z [36;1mlake env lean Lark/Matrix.lean[0m
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3185896Z shell: /usr/bin/bash -e {0}
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3186349Z env:
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3186813Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3187614Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3188412Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3189129Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3189874Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3190622Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:43.3191549Z ##[endgroup]
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:44.2524602Z 'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:44.2525664Z 'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:44.2526723Z 'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:44.2528104Z 'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check matrix address and dot-loop proofs	2026-11-10T14:31:44.2529289Z 'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check multiwave scalar SiLU strided-loop proof	﻿2026-11-10T14:31:44.2767673Z ##[group]Run lake env lean Lark/Silu.lean
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2768303Z [36;1mlake env lean Lark/Silu.lean[0m
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2798477Z shell: /usr/bin/bash -e {0}
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2798923Z env:
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2799399Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2800213Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2801014Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2801461Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2801894Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2802630Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:44.2802968Z ##[endgroup]
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:47.4978467Z 'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:47.4979191Z 'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+proof-tests	Check multiwave scalar SiLU strided-loop proof	2026-11-10T14:31:47.4979812Z 'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check bias epilogue and Linear proof	﻿2026-11-10T14:31:47.5263353Z ##[group]Run lake env lean Lark/Bias.lean
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5263742Z [36;1mlake env lean Lark/Bias.lean[0m
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5284500Z shell: /usr/bin/bash -e {0}
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5284770Z env:
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5285048Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5285510Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5285966Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5286362Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5286749Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5287138Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:47.5287465Z ##[endgroup]
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:49.8479497Z 'LarkBias.loop_step' depends on axioms: [propext, Quot.sound]
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:49.8480675Z 'LarkBias.loop_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:49.8482852Z 'LarkBias.lane_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:49.8483847Z 'LarkBias.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check bias epilogue and Linear proof	2026-11-10T14:31:49.8484866Z 'LarkBias.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check interleaved rotary proof	﻿2026-11-10T14:31:49.8730032Z ##[group]Run lake env lean Lark/Rotary.lean
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8730453Z [36;1mlake env lean Lark/Rotary.lean[0m
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8750990Z shell: /usr/bin/bash -e {0}
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8751253Z env:
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8751527Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8752250Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8752850Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8753261Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8753664Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8754065Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:49.8754406Z ##[endgroup]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1013455Z 'LarkRotary.header_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1014854Z 'LarkRotary.body_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1016366Z 'LarkRotary.store_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1018177Z 'LarkRotary.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1019533Z 'LarkRotary.partialState_owned' depends on axioms: [propext, Quot.sound]
+proof-tests	Check interleaved rotary proof	2026-11-10T14:31:53.1020677Z 'LarkRotary.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check convolution address proofs	﻿2026-11-10T14:31:53.1290893Z ##[group]Run lake env lean Lark/Convolution.lean
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1291322Z [36;1mlake env lean Lark/Convolution.lean[0m
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1311864Z shell: /usr/bin/bash -e {0}
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1312489Z env:
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1313009Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1313659Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1314250Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1314855Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1315364Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1315867Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.1327228Z ##[endgroup]
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.9881411Z 'LarkConvolution.input_eval' depends on axioms: [propext, Quot.sound]
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.9883203Z 'LarkConvolution.denseProfile' depends on axioms: [propext, Quot.sound]
+proof-tests	Check convolution address proofs	2026-11-10T14:31:53.9884465Z 'LarkConvolution.depthProfile' depends on axioms: [propext, Quot.sound]
+proof-tests	Check normalization loop and grid proofs	﻿2026-11-10T14:31:54.0113869Z ##[group]Run lake env lean Lark/Normalization.lean
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0114302Z [36;1mlake env lean Lark/Normalization.lean[0m
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0135025Z shell: /usr/bin/bash -e {0}
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0135293Z env:
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0135572Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0136043Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0136486Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0136914Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0137331Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0137728Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:54.0138054Z ##[endgroup]
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:58.0732399Z 'LarkNormalization.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check normalization loop and grid proofs	2026-11-10T14:31:58.0733633Z 'LarkNormalization.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 shuffle machine and transfer proof	﻿2026-11-10T14:31:58.0996385Z ##[group]Run lake env lean Lark/ShuffleTransfer.lean
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.0996830Z [36;1mlake env lean Lark/ShuffleTransfer.lean[0m
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1017608Z shell: /usr/bin/bash -e {0}
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1017871Z env:
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1018142Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1018594Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1019039Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1019458Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1019859Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1020252Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:31:58.1020584Z ##[endgroup]
+proof-tests	Check full-wave64 shuffle machine and transfer proof	2026-11-10T14:32:02.1147359Z 'LarkCollective.Transfer.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	﻿2026-11-10T14:32:02.1523428Z ##[group]Run lake env lean Lark/MFMATile.lean
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1523833Z [36;1mlake env lean Lark/MFMATile.lean[0m
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1544648Z shell: /usr/bin/bash -e {0}
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1544916Z env:
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1545193Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1545645Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1546095Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1546492Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1547095Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1547492Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:02.1547821Z ##[endgroup]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1066752Z Lark/MFMATile.lean:37:34: warning: unused variable `ht`
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1068540Z note: this linter can be disabled with `set_option linter.unusedVariables false`
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1083116Z 'LarkMFMA.Tile.load_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1084143Z 'LarkMFMA.Tile.mfma_element' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1085165Z 'LarkMFMA.Tile.matrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1086067Z 'LarkMFMA.Tile.safe_raceFree' depends on axioms: [propext, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1086959Z 'LarkMFMA.Tile.store_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check full-wave64 MFMA machine and tile proof	2026-11-10T14:32:08.1087967Z 'LarkMFMA.Tile.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Run tests, including Lean integration and mutants	﻿2026-11-10T14:32:08.1525554Z ##[group]Run python -m unittest discover -s tests -v
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1526204Z [36;1mpython -m unittest discover -s tests -v[0m
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1547641Z shell: /usr/bin/bash -e {0}
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1547900Z env:
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1548176Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1548634Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1549082Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1549494Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1549890Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1550281Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.1550606Z ##[endgroup]
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:08.6443271Z test_composed_ir_matches_independent_tensor_reader (test_attention.AttentionTests.test_composed_ir_matches_independent_tensor_reader) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:46.2465993Z test_full_gqa_export_recheck_and_rehashed_forgery (test_attention.AttentionTests.test_full_gqa_export_recheck_and_rehashed_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:46.2594144Z test_source_scale_group_row_and_reference_mutations_refused (test_attention.AttentionTests.test_source_scale_group_row_and_reference_mutations_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:46.2628768Z test_corrupted_weight_or_configuration_never_finishes_validation (test_checkpoints.CheckpointTests.test_corrupted_weight_or_configuration_never_finishes_validation) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:32:46.2648067Z test_weights_and_supporting_git_blobs_are_checked_offline (test_checkpoints.CheckpointTests.test_weights_and_supporting_git_blobs_are_checked_offline) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:04.0352827Z test_whole_wave_proof_recheck_and_rehashed_statement_forgery (test_collective.CollectiveLeanTests.test_whole_wave_proof_recheck_and_rehashed_statement_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.1807212Z test_wrong_shuffle_rejected_by_lean_without_preflight (test_collective.CollectiveLeanTests.test_wrong_shuffle_rejected_by_lean_without_preflight) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.1855491Z test_a_shuffle_cannot_read_another_wave (test_collective.CollectiveTests.test_a_shuffle_cannot_read_another_wave) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.1957869Z test_all_forms_match_independent_tensor_references (test_collective.CollectiveTests.test_all_forms_match_independent_tensor_references) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.1977519Z test_in_place_shuffle_reads_the_old_wave_snapshot (test_collective.CollectiveTests.test_in_place_shuffle_reads_the_old_wave_snapshot) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.1993313Z test_invalid_selector_and_uninitialized_source_are_refused (test_collective.CollectiveTests.test_invalid_selector_and_uninitialized_source_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2010696Z test_partial_participation_and_nonliteral_width_are_refused (test_collective.CollectiveTests.test_partial_participation_and_nonliteral_width_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2080655Z test_shuffles_do_not_repair_memory_races (test_collective.CollectiveTests.test_shuffles_do_not_repair_memory_races) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2082853Z test_ambiguous_line_or_column_forms_are_refused (test_comment_replay.CommentReplayTests.test_ambiguous_line_or_column_forms_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2089686Z test_comments_cannot_hide_outside_declarations_or_admission (test_comment_replay.CommentReplayTests.test_comments_cannot_hide_outside_declarations_or_admission) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2092355Z test_documentation_tokens_are_not_removed_as_whitespace (test_comment_replay.CommentReplayTests.test_documentation_tokens_are_not_removed_as_whitespace) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2094429Z test_identifier_apostrophes_are_preserved (test_comment_replay.CommentReplayTests.test_identifier_apostrophes_are_preserved) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2096442Z test_nested_and_line_comments_preserve_code_and_line_structure (test_comment_replay.CommentReplayTests.test_nested_and_line_comments_preserve_code_and_line_structure) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2098826Z test_quoted_forms_are_refused_instead_of_reinterpreted_as_comments (test_comment_replay.CommentReplayTests.test_quoted_forms_are_refused_instead_of_reinterpreted_as_comments) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:12.2101304Z test_unterminated_block_comment_is_refused (test_comment_replay.CommentReplayTests.test_unterminated_block_comment_is_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:32.8346232Z test_full_depthwise_export_recheck_and_rehashed_group_forgery (test_convolution.ConvolutionTests.test_full_depthwise_export_recheck_and_rehashed_group_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:32.8378963Z test_full_profiles_and_group_contracts_preserve_bounded_limits (test_convolution.ConvolutionTests.test_full_profiles_and_group_contracts_preserve_bounded_limits) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:32.8414462Z test_wrong_group_padding_and_kernel_offset_are_refused (test_convolution.ConvolutionTests.test_wrong_group_padding_and_kernel_offset_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8527802Z test_full_export_recheck_and_rehashed_wire_forgery (test_feedforward.FeedForwardTests.test_full_export_recheck_and_rehashed_wire_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8552377Z test_full_pipeline_refuses_wrong_wire_alias_and_shape (test_feedforward.FeedForwardTests.test_full_pipeline_refuses_wrong_wire_alias_and_shape) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8601484Z test_missing_relu_and_wrong_rounding_boundary_are_refused (test_feedforward.FeedForwardTests.test_missing_relu_and_wrong_rounding_boundary_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8662572Z test_reduced_composition_matches_independent_tensor_formalization (test_feedforward.FeedForwardTests.test_reduced_composition_matches_independent_tensor_formalization) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8683325Z test_arithmetic_index_and_loop_mutations_cannot_use_the_induction_rule (test_gemv.GemvTests.test_arithmetic_index_and_loop_mutations_cannot_use_the_induction_rule) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8689543Z test_bad_geometry_shapes_json_types_and_fuel_are_refused (test_gemv.GemvTests.test_bad_geometry_shapes_json_types_and_fuel_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:33:56.8700360Z test_full_shape_uses_the_proved_profile_and_preserves_old_limits (test_gemv.GemvTests.test_full_shape_uses_the_proved_profile_and_preserves_old_limits) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2033748Z test_full_size_certificate_rechecks_and_forged_statement_is_refused (test_gemv.GemvTests.test_full_size_certificate_rechecks_and_forged_statement_is_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2060722Z test_reference_must_match_the_full_tensor_operator (test_gemv.GemvTests.test_reference_must_match_the_full_tensor_operator) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2114676Z test_all_examples_preflight (test_lark.FrontendTests.test_all_examples_preflight) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2166181Z test_arithmetic_address_register_and_loop_mutations (test_lark.FrontendTests.test_arithmetic_address_register_and_loop_mutations) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2178309Z test_axiom_diagnostics_cannot_spoof_the_final_audit (test_lark.FrontendTests.test_axiom_diagnostics_cannot_spoof_the_final_audit) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2187124Z test_benign_same_value_writes_are_races (test_lark.FrontendTests.test_benign_same_value_writes_are_races) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2195425Z test_block_barriers_do_not_order_distinct_blocks (test_lark.FrontendTests.test_block_barriers_do_not_order_distinct_blocks) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2203943Z test_fuel_is_an_obligation (test_lark.FrontendTests.test_fuel_is_an_obligation) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2213895Z test_integer_overflow_and_unsigned_underflow_refused (test_lark.FrontendTests.test_integer_overflow_and_unsigned_underflow_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2225508Z test_missing_output_uninitialized_local_and_divergence (test_lark.FrontendTests.test_missing_output_uninitialized_local_and_divergence) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2227345Z test_proof_escape_and_unchecked_evaluation_refused (test_lark.FrontendTests.test_proof_escape_and_unchecked_evaluation_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2238080Z test_reference_namespace_and_tensor_types_are_checked (test_lark.FrontendTests.test_reference_namespace_and_tensor_types_are_checked) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2246527Z test_reference_never_executes_code (test_lark.FrontendTests.test_reference_never_executes_code) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2255863Z test_roundtrip_preserves_crlf_and_comments (test_lark.FrontendTests.test_roundtrip_preserves_crlf_and_comments) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:34:10.2268367Z test_unknown_constructs_refused (test_lark.FrontendTests.test_unknown_constructs_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:09.8070773Z test_all_examples_certify_and_recheck (test_lark.LeanTests.test_all_examples_certify_and_recheck) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:09.8080729Z test_existing_certificate_not_overwritten (test_lark.LeanTests.test_existing_certificate_not_overwritten) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:13.0456971Z test_footprint_proposal_is_not_trusted (test_lark.LeanTests.test_footprint_proposal_is_not_trusted) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:15.4070006Z test_lean_rejects_exhausted_fuel_without_python_screen (test_lark.LeanTests.test_lean_rejects_exhausted_fuel_without_python_screen) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:18.7654482Z test_lean_rejects_race_without_python_screen (test_lark.LeanTests.test_lean_rejects_race_without_python_screen) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:22.9943553Z test_lean_rejects_wrong_kernel_without_python_screen (test_lark.LeanTests.test_lean_rejects_wrong_kernel_without_python_screen) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:29.7151370Z test_provider_can_repair_a_failed_proposal (test_lark.LeanTests.test_provider_can_repair_a_failed_proposal) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:33.2002630Z test_recheck_rejects_tampering_even_if_manifest_rehashed (test_lark.LeanTests.test_recheck_rejects_tampering_even_if_manifest_rehashed) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:36.5341762Z test_segmentation_is_not_trusted (test_lark.LeanTests.test_segmentation_is_not_trusted) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:35:36.5359694Z test_full_linear_checks_third_input_and_keeps_bounded_limits (test_linear.LinearTests.test_full_linear_checks_third_input_and_keeps_bounded_limits) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.0118494Z test_full_linear_export_recheck_and_rehashed_bias_forgery (test_linear.LinearTests.test_full_linear_export_recheck_and_rehashed_bias_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.0156702Z test_missing_or_wrongly_indexed_bias_is_refused (test_linear.LinearTests.test_missing_or_wrongly_indexed_bias_is_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.0180116Z test_dead_runtime_stops_before_any_model_request (test_local_models.LocalClientTests.test_dead_runtime_stops_before_any_model_request) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.0182448Z test_json_proposals_have_only_the_two_fixed_fields (test_local_models.LocalClientTests.test_json_proposals_have_only_the_two_fixed_fields) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.6218055Z test_local_request_and_usage_are_recorded_and_redirects_are_refused (test_local_models.LocalClientTests.test_local_request_and_usage_are_recorded_and_redirects_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.6243998Z {"case": "relu", "attempt": 1, "status": "no-proof-content", "error": "Model produced no proof content", "elapsed_seconds": 0.0006421279999813123}
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.6251041Z test_reasoning_only_response_is_not_a_transport_or_proof_rejection (test_local_models.LocalClientTests.test_reasoning_only_response_is_not_a_transport_or_proof_rejection) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:00.6253480Z test_remote_urls_credentials_and_unexpected_paths_are_refused (test_local_models.LocalClientTests.test_remote_urls_credentials_and_unexpected_paths_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:11.6976637Z test_stub_proposal_gets_an_independently_checked_certificate (test_local_models.LocalClientTests.test_stub_proposal_gets_an_independently_checked_certificate) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:11.6985602Z test_batch_broadcast_shape_launch_and_integer_aliases_are_refused (test_matrix.MatrixTests.test_batch_broadcast_shape_launch_and_integer_aliases_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:11.7001564Z test_binary_probe_tampering_and_extent_forgery_are_refused (test_matrix.MatrixTests.test_binary_probe_tampering_and_extent_forgery_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:11.7044409Z test_changed_index_and_shape_dependent_reference_cannot_use_the_rule (test_matrix.MatrixTests.test_changed_index_and_shape_dependent_reference_cannot_use_the_rule) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:30.8705221Z test_full_batched_certificate_and_forged_reference_binding (test_matrix.MatrixTests.test_full_batched_certificate_and_forged_reference_binding) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:36:30.8727870Z test_full_gemm_and_bmm_profiles_preserve_bounded_limits (test_matrix.MatrixTests.test_full_gemm_and_bmm_profiles_preserve_bounded_limits) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:39.8287954Z test_export_recheck_and_fully_rehashed_last_output_forgery (test_mfma.MFMALeanTests.test_export_recheck_and_fully_rehashed_last_output_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.0669666Z test_distinct_waves_use_their_own_operand_registers (test_mfma.MFMATests.test_distinct_waves_use_their_own_operand_registers) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.2347068Z test_input_layout_and_accumulator_mutations_are_detected (test_mfma.MFMATests.test_input_layout_and_accumulator_mutations_are_detected) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.3123360Z test_row_major_tile_matches_independent_matrix_reference (test_mfma.MFMATests.test_row_major_tile_matches_independent_matrix_reference) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.3374842Z test_uninitialized_accumulator_and_divergent_participation_are_refused (test_mfma.MFMATests.test_uninitialized_accumulator_and_divergent_participation_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.3434114Z test_unsupported_types_components_and_modifiers_fail_closed (test_mfma.MFMATests.test_unsupported_types_components_and_modifiers_fail_closed) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.3455632Z test_duplicate_cases_cannot_complete_a_cohort (test_model_comparison.ComparisonAuditTests.test_duplicate_cases_cannot_complete_a_cohort) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.4965638Z test_later_success_does_not_become_first_attempt_success (test_model_comparison.ComparisonAuditTests.test_later_success_does_not_become_first_attempt_success) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.5748595Z test_missing_reasoning_usage_remains_explicit (test_model_comparison.ComparisonAuditTests.test_missing_reasoning_usage_remains_explicit) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.5975155Z test_rehashed_weakened_request_is_refused (test_model_comparison.ComparisonAuditTests.test_rehashed_weakened_request_is_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:40.6116737Z test_transport_failure_is_not_a_lean_rejection (test_model_comparison.ComparisonAuditTests.test_transport_failure_is_not_a_lean_rejection) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:44.9956799Z test_valid_manual_proof_replacement_is_not_model_evidence (test_model_comparison.ComparisonAuditTests.test_valid_manual_proof_replacement_is_not_model_evidence) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:44.9968618Z test_allocations_and_comparison_protocol_are_fixed (test_nonlinear.DeviceBundleTests.test_allocations_and_comparison_protocol_are_fixed) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:44.9979288Z test_wrapper_is_reconstructed_from_certified_bytes (test_nonlinear.DeviceBundleTests.test_wrapper_is_reconstructed_from_certified_bytes) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:37:52.3651425Z test_half_silu_certificate_and_tamper_check (test_nonlinear.NonlinearLeanTests.test_half_silu_certificate_and_tamper_check) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2547283Z test_nonlinear_mutant_reaches_and_fails_lean (test_nonlinear.NonlinearLeanTests.test_nonlinear_mutant_reaches_and_fails_lean) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2863203Z test_all_extended_cases_match_the_independent_spec (test_nonlinear.NonlinearTests.test_all_extended_cases_match_the_independent_spec) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2871476Z test_half_operations_require_explicit_conversions (test_nonlinear.NonlinearTests.test_half_operations_require_explicit_conversions) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2874699Z test_half_view_preserves_the_conversion_boundary (test_nonlinear.NonlinearTests.test_half_view_preserves_the_conversion_boundary) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2910122Z test_model_choice_is_derived_from_program_and_spec (test_nonlinear.NonlinearTests.test_model_choice_is_derived_from_program_and_spec) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2911502Z test_original_machine_is_still_pinned (test_nonlinear.NonlinearTests.test_original_machine_is_still_pinned) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2920438Z test_unknown_functions_options_and_dtype_changes_are_refused (test_nonlinear.NonlinearTests.test_unknown_functions_options_and_dtype_changes_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:27.2952303Z test_full_profile_refuses_bad_shapes_launch_and_fuel (test_normalization.NormalizationTests.test_full_profile_refuses_bad_shapes_launch_and_fuel) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:52.6285656Z test_full_softmax_export_recheck_and_rehashed_forgery (test_normalization.NormalizationTests.test_full_softmax_export_recheck_and_rehashed_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:52.6444513Z test_reduced_actual_machine_matches_independent_tensor_formalization (test_normalization.NormalizationTests.test_reduced_actual_machine_matches_independent_tensor_formalization) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:52.6510670Z test_wrong_variance_seed_and_shape_dependent_references_cannot_lift (test_normalization.NormalizationTests.test_wrong_variance_seed_and_shape_dependent_references_cannot_lift) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:38:59.1690763Z test_lean_symbolic_cohort_and_guard_checks (test_partition_collective.PartitionLeanTests.test_lean_symbolic_cohort_and_guard_checks) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6204086Z test_native_rmsnorm_source_binding_and_direct_controls (test_partition_collective.PartitionLeanTests.test_native_rmsnorm_source_binding_and_direct_controls) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6225658Z test_duplicate_and_cross_wave_cohorts_are_refused (test_partition_collective.PartitionMachineTests.test_duplicate_and_cross_wave_cohorts_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6249408Z test_existing_uniform_wave_has_identical_state_and_trace (test_partition_collective.PartitionMachineTests.test_existing_uniform_wave_has_identical_state_and_trace) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6266641Z test_explicit_half_storage_conversions_are_retained (test_partition_collective.PartitionMachineTests.test_explicit_half_storage_conversions_are_retained) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6279910Z test_failed_gather_performs_no_partial_register_or_pc_updates (test_partition_collective.PartitionMachineTests.test_failed_gather_performs_no_partial_register_or_pc_updates) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6300551Z test_incomplete_partitions_are_refused (test_partition_collective.PartitionMachineTests.test_incomplete_partitions_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6305991Z test_native_contract_keeps_default_bounded_capacity (test_partition_collective.PartitionMachineTests.test_native_contract_keeps_default_bounded_capacity) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6311748Z test_native_contract_rejects_launch_and_boolean_aliases (test_partition_collective.PartitionMachineTests.test_native_contract_rejects_launch_and_boolean_aliases) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6339250Z test_partial_partition_snapshot_and_inactive_lanes (test_partition_collective.PartitionMachineTests.test_partial_partition_snapshot_and_inactive_lanes) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:02.6357515Z test_two_distinct_logical_partitions_at_different_instructions (test_partition_collective.PartitionMachineTests.test_two_distinct_logical_partitions_at_different_instructions) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:10.9699206Z test_full_length_certificate_rechecks_and_statement_tampering_is_rejected (test_pointwise.PointwiseTests.test_full_length_certificate_rechecks_and_statement_tampering_is_rejected) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:10.9706576Z test_full_length_profile_keeps_the_bounded_verifier_bounded (test_pointwise.PointwiseTests.test_full_length_profile_keeps_the_bounded_verifier_bounded) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:10.9720936Z test_rejects_unproved_launch_layout_and_source_changes (test_pointwise.PointwiseTests.test_rejects_unproved_launch_layout_and_source_changes) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:10.9728120Z test_scalar_disagreement_is_left_to_lean (test_pointwise.PointwiseTests.test_scalar_disagreement_is_left_to_lean) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:10.9748258Z test_shape_dependent_reference_cannot_be_lifted_from_a_single_cell (test_pointwise.PointwiseTests.test_shape_dependent_reference_cannot_be_lifted_from_a_single_cell) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:39:15.1457420Z test_wrong_full_length_scalar_program_receives_no_certificate (test_pointwise.PointwiseTests.test_wrong_full_length_scalar_program_receives_no_certificate) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:03.0422207Z test_all_ptx_certificates_export_and_recheck (test_ptx.PTXLeanTests.test_all_ptx_certificates_export_and_recheck) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8351043Z test_lean_rejects_mutants_without_python_preflight (test_ptx.PTXLeanTests.test_lean_rejects_mutants_without_python_preflight) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8399727Z test_arithmetic_register_and_byte_address_mutations (test_ptx.PTXTests.test_arithmetic_register_and_byte_address_mutations) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8418131Z test_bounds_guard_and_negated_predicate_agree (test_ptx.PTXTests.test_bounds_guard_and_negated_predicate_agree) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8456149Z test_independent_references_and_lossless_roundtrip (test_ptx.PTXTests.test_independent_references_and_lossless_roundtrip) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8473370Z test_runtime_integer_overflow_and_nonfinite_literals_are_refused (test_ptx.PTXTests.test_runtime_integer_overflow_and_nonfinite_literals_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8490743Z test_skipped_pointer_and_predicate_initialization_is_preserved (test_ptx.PTXTests.test_skipped_pointer_and_predicate_initialization_is_preserved) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:40:40.8558205Z test_unsupported_forms_cannot_be_silently_ignored (test_ptx.PTXTests.test_unsupported_forms_cannot_be_silently_ignored) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7733288Z test_new_reference_families_certify (test_reproduction.ReproductionLeanTests.test_new_reference_families_certify) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7741538Z test_benign_race_survives_symbolic_numerical_equivalence (test_reproduction.ReproductionTests.test_benign_race_survives_symbolic_numerical_equivalence) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7745954Z test_bmm_rejects_rank_two_inputs (test_reproduction.ReproductionTests.test_bmm_rejects_rank_two_inputs) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7751282Z test_convolution_rejects_incompatible_groups (test_reproduction.ReproductionTests.test_convolution_rejects_incompatible_groups) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7776598Z test_multiaxis_broadcast_uses_trailing_dimensions (test_reproduction.ReproductionTests.test_multiaxis_broadcast_uses_trailing_dimensions) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7850638Z test_mutants_are_nontrivial_and_preflight_rejects_each (test_reproduction.ReproductionTests.test_mutants_are_nontrivial_and_preflight_rejects_each) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7853049Z test_paper_shape_catalog_covers_seventeen_distinct_tasks (test_reproduction.ReproductionTests.test_paper_shape_catalog_covers_seventeen_distinct_tasks) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7857086Z test_pinned_upstream_matches_recorded_hash (test_reproduction.ReproductionTests.test_pinned_upstream_matches_recorded_hash) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:04.7935217Z test_reduced_cases_match_independent_specs (test_reproduction.ReproductionTests.test_reduced_cases_match_independent_specs) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:35.5733333Z test_full_export_recheck_and_rehashed_arithmetic_forgery (test_rotary.RotaryTests.test_full_export_recheck_and_rehashed_arithmetic_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:35.5761285Z test_full_profile_and_coefficient_shapes_preserve_bounded_limits (test_rotary.RotaryTests.test_full_profile_and_coefficient_shapes_preserve_bounded_limits) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:41:35.5794697Z test_wrong_parity_pairing_and_single_pair_reference_cannot_be_lifted (test_rotary.RotaryTests.test_wrong_parity_pairing_and_single_pair_reference_cannot_be_lifted) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:02.8973345Z test_billion_cell_symbolic_contract_without_enumeration (test_silu.SiluTests.test_billion_cell_symbolic_contract_without_enumeration) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:16.3243202Z test_direct_lean_rejects_removed_reference_rounding (test_silu.SiluTests.test_direct_lean_rejects_removed_reference_rounding) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:29.8925348Z test_large_launch_and_lossless_recheck (test_silu.SiluTests.test_large_launch_and_lossless_recheck) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:56.9584606Z test_partial_final_cuda_warp (test_silu.SiluTests.test_partial_final_cuda_warp) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:56.9638481Z test_reference_precision_and_output_coverage_refusals (test_silu.SiluTests.test_reference_precision_and_output_coverage_refusals) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:56.9683519Z test_rehashed_reference_tamper_fails_fixed_grammar (test_silu.SiluTests.test_rehashed_reference_tamper_fails_fixed_grammar) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:56.9713368Z test_source_launch_and_bounds_refusals (test_silu.SiluTests.test_source_launch_and_bounds_refusals) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:42:56.9828970Z test_early_half_wrong_silu_and_reordered_reference_are_refused (test_swiglu.SwiGLUTests.test_early_half_wrong_silu_and_reordered_reference_are_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6389402Z test_full_export_recheck_and_rehashed_dtype_forgery (test_swiglu.SwiGLUTests.test_full_export_recheck_and_rehashed_dtype_forgery) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6430054Z test_full_pipeline_requires_fp32_projections_and_exact_wiring (test_swiglu.SwiGLUTests.test_full_pipeline_requires_fp32_projections_and_exact_wiring) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6530799Z test_reduced_four_stage_ir_matches_independent_tensor_reader (test_swiglu.SwiGLUTests.test_reduced_four_stage_ir_matches_independent_tensor_reader) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6534229Z test_certificate_build_files_and_cached_objects_are_ignored (test_wave_sum.WaveSumProofTests.test_certificate_build_files_and_cached_objects_are_ignored) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6536714Z test_export_and_fresh_global_check (test_wave_sum.WaveSumProofTests.test_export_and_fresh_global_check) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6539067Z test_fully_rehashed_reference_change_fails_global_check (test_wave_sum.WaveSumProofTests.test_fully_rehashed_reference_change_fails_global_check) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6541514Z test_last_reference_cell_change_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_last_reference_cell_change_is_rejected_by_lean) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6544473Z test_wrong_shuffle_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_wrong_shuffle_is_rejected_by_lean) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6577170Z test_changed_reference_source_geometry_and_precision_refused (test_wave_sum.WaveSumReaderTests.test_changed_reference_source_geometry_and_precision_refused) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6611106Z test_full_program_and_all_reference_cells (test_wave_sum.WaveSumReaderTests.test_full_program_and_all_reference_cells) ... ok
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6612264Z 
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6612612Z ----------------------------------------------------------------------
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6613299Z Ran 149 tests in 677.056s
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6613599Z 
+proof-tests	Run tests, including Lean integration and mutants	2026-11-10T14:43:25.6613786Z OK (skipped=5)
+proof-tests	Check two-launch FFN composition	﻿2026-11-10T14:43:25.6877144Z ##[group]Run lake env lean Lark/FeedForward.lean
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6877748Z [36;1mlake env lean Lark/FeedForward.lean[0m
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6898074Z shell: /usr/bin/bash -e {0}
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6898330Z env:
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6898602Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6899053Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6899486Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6899868Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6900252Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6900637Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:25.6900963Z ##[endgroup]
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:26.0469045Z 'LarkFeedForward.hidden_eq' depends on axioms: [propext, Quot.sound]
+proof-tests	Check two-launch FFN composition	2026-11-10T14:43:26.0470364Z 'LarkFeedForward.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Export example certificates	﻿2026-11-10T14:43:26.0722843Z ##[group]Run python tools/verify_examples.py certificates
+proof-tests	Export example certificates	2026-11-10T14:43:26.0723379Z [36;1mpython tools/verify_examples.py certificates[0m
+proof-tests	Export example certificates	2026-11-10T14:43:26.0744395Z shell: /usr/bin/bash -e {0}
+proof-tests	Export example certificates	2026-11-10T14:43:26.0744656Z env:
+proof-tests	Export example certificates	2026-11-10T14:43:26.0744930Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Export example certificates	2026-11-10T14:43:26.0745387Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Export example certificates	2026-11-10T14:43:26.0745834Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Export example certificates	2026-11-10T14:43:26.0746258Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Export example certificates	2026-11-10T14:43:26.0746651Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Export example certificates	2026-11-10T14:43:26.0747047Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Export example certificates	2026-11-10T14:43:26.0747371Z ##[endgroup]
+proof-tests	Export example certificates	2026-11-10T14:43:30.3009328Z block_sum: verified
+proof-tests	Export example certificates	2026-11-10T14:43:34.2030489Z fused_relu: verified
+proof-tests	Export example certificates	2026-11-10T14:43:42.1340143Z matmul: verified
+proof-tests	Export example certificates	2026-11-10T14:43:45.3302949Z relu: verified
+proof-tests	Export example certificates	2026-11-10T14:43:49.6687499Z reverse: verified
+proof-tests	Export example certificates	2026-11-10T14:43:53.1538770Z saxpy: verified
+proof-tests	Export example certificates	2026-11-10T14:43:56.6408223Z vector_add: verified
+proof-tests	Check FP32-projection SwiGLU composition	﻿2026-11-10T14:43:56.6539190Z ##[group]Run lake env lean Lark/SwiGLU.lean
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6539600Z [36;1mlake env lean Lark/SwiGLU.lean[0m
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6559946Z shell: /usr/bin/bash -e {0}
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6560212Z env:
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6560494Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6560956Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6561400Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6561794Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6562348Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6562746Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:56.6563072Z ##[endgroup]
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:57.2341487Z 'LarkSwiGLU.pair_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:57.2343080Z 'LarkSwiGLU.down_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check FP32-projection SwiGLU composition	2026-11-10T14:43:57.2344305Z 'LarkSwiGLU.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check dense SDPA and grouped-query composition	﻿2026-11-10T14:43:57.2580936Z ##[group]Run lake env lean Lark/AttentionPipeline.lean
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2581733Z [36;1mlake env lean Lark/AttentionPipeline.lean[0m
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2611694Z shell: /usr/bin/bash -e {0}
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2612397Z env:
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2612848Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2613796Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2614582Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2615284Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2616013Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2616734Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.2617659Z ##[endgroup]
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.8156612Z 'LarkAttention.soft_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.8158008Z 'LarkAttention.value_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Check dense SDPA and grouped-query composition	2026-11-10T14:43:57.8159407Z 'LarkAttention.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+proof-tests	Recheck standalone export	﻿2026-11-10T14:43:57.8375106Z ##[group]Run lake build
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8375419Z [36;1mlake build[0m
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8395807Z shell: /usr/bin/bash -e {0}
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8396065Z env:
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8396335Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8396806Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8397257Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8397655Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8398045Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8398450Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8398774Z ##[endgroup]
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8913690Z info: lark_certificate: no previous manifest, creating one from scratch
+proof-tests	Recheck standalone export	2026-11-10T14:43:57.8914909Z info: toolchain not updated; already up-to-date
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5959417Z ℹ [2/3] Built Main
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5960705Z info: ././././Main.lean:444:0: 'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5962514Z info: ././././Main.lean:445:0: 'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5963804Z info: ././././Main.lean:446:0: 'LarkCertificate.race_free' does not depend on any axioms
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5965058Z info: ././././Main.lean:447:0: 'LarkCertificate.segment_equivalence' depends on axioms: [propext, Quot.sound]
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5966351Z info: ././././Main.lean:448:0: 'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Quot.sound]
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5967651Z info: ././././Main.lean:449:0: 'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Quot.sound]
+proof-tests	Recheck standalone export	2026-11-10T14:44:01.5968547Z Build completed successfully.
+proof-tests	Check production-race address witness	﻿2026-11-10T14:44:01.6029412Z ##[group]Run python reproduction/production_race.py --output /tmp/lark-production-race
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6030126Z [36;1mpython reproduction/production_race.py --output /tmp/lark-production-race[0m
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6050849Z shell: /usr/bin/bash -e {0}
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6051119Z env:
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6051390Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6051840Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6052667Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6053065Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6053460Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6053864Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+proof-tests	Check production-race address witness	2026-11-10T14:44:01.6054241Z ##[endgroup]
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9363490Z {
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9364053Z   "status": "proved",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9364452Z   "original_thread_reader": 0,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9364994Z   "original_thread_writer": 80,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9365385Z   "C": 50257,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9365709Z   "block_size": 1024,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9366052Z   "unroll": 8,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9366368Z   "reader_base": 49152,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9366701Z   "reader_slot": 2,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9367046Z   "reader_unclamped_index": 51200,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9367420Z   "conflicting_cell": 50256,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9367685Z   "writer_base": 49232,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9367908Z   "writer_slot": 1,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9368117Z   "provenance": {
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9368408Z     "repository": "https://github.com/karpathy/llm.c",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9368798Z     "commit": "f1e2ace651495b74ae22d45d1723443fd00ecd3a",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9369430Z     "path": "dev/cuda/softmax_forward.cu",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9369885Z     "full_source_sha256": "1cb4787d621236018e75cfb2c9412a5db919fe747bcbe425fc0dfc01ce908dba",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9370526Z     "excerpt_sha256": "8fde9528ae8f0a11fc96edfacedff3bdf07a9d69042e707904b6bb360699f485",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9371364Z     "url": "https://github.com/karpathy/llm.c/blob/f1e2ace651495b74ae22d45d1723443fd00ecd3a/dev/cuda/softmax_forward.cu#L389-L505",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9372303Z     "license": "MIT",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9372608Z     "paper_revision_available": false,
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9373343Z     "notes": "Public upstream revision pinned at reproduction time; not asserted to be the paper registry revision. FP32 source; paper adapted storage to FP16."
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9374050Z   },
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9374407Z   "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9375012Z   "lean_sha256": "7fd4afea4ebe07d6bf1f260dfcf3e88f8113e7b2d8a5641943ee30f7b1dd6a11",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9375930Z   "axioms": "'ProductionRace.original_address_witness' does not depend on any axioms\n'ProductionRace.guard_eliminates_clamped_read' does not depend on any axioms\n",
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9377219Z   "scope": "Arithmetic/access-pair counterexample for pinned upstream final-pass formula, not a full-kernel equivalence proof. Source-to-formula mapping is inspected and trusted."
+proof-tests	Check production-race address witness	2026-11-10T14:44:03.9378004Z }
+proof-tests	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	﻿2026-11-10T14:44:03.9537168Z Post job cleanup.
+proof-tests	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:44:04.0878695Z (node:6620) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+proof-tests	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-10T14:44:04.0879710Z (Use `node --trace-deprecation ...` to show where the warning was created)
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-10T14:44:04.1075092Z Post job cleanup.
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2049746Z [command]/usr/bin/git version
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2101179Z git version 2.56.0
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2143885Z Temporarily overriding HOME='/home/runner/work/_temp/cc3742bf-76f4-46f3-ae6e-5b5952e0014a' before making global git config changes
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2145524Z Adding repository directory to the temporary git global config as a safe directory
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2149748Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2197656Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2247481Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2581284Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2653473Z http.https://github.com/.extraheader
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2668569Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.2715332Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.3021399Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+proof-tests	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-10T14:44:04.3075299Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+proof-tests	Complete job	﻿2026-11-10T14:44:04.3507460Z Cleaning up orphan processes
+proof-tests	Complete job	2026-11-10T14:44:04.3988451Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
