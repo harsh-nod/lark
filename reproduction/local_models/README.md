@@ -20,6 +20,14 @@ returned a proof or reached Lean. This is transport/incomplete-run evidence,
 with zero proof rejections. All three pilot cases are being rerun with an
 explicit 1,800-second request timeout; the original failure is retained.
 
+The [max-effort follow-up](results/pilot-max-20261109/summary.json) returned one
+complete response: 7,719 prompt tokens plus 16,384 reasoning tokens, with no
+final proof content. It never reached Lean. Its identical-budget retry was
+interrupted and preserved. A separate `--reasoning-effort low` pilot is now
+running at the same seed and 16,384-token cap; its first ReLU messages match the
+max-effort request exactly. This effort variant differs from the paper's GLM
+settings and is not an original pass-rate result.
+
 Three named model families have official ungated weights. Metadata was checked
 on 2026-11-09; revisions are pinned in `checkpoint.py`:
 
