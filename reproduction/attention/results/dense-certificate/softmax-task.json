@@ -1,0 +1,38 @@
+{
+  "name": "attention_hip_1_1_128_256_softmax",
+  "entry": "attention_hip_1_1_128_256_softmax",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "scores",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "probabilities",
+      "role": "output",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 16384,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    1289,
+    1,
+    1,
+    1
+  ]
+}

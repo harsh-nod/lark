@@ -1,0 +1,38 @@
+{
+  "name": "attention_cuda_2_4_128_64_softmax",
+  "entry": "attention_cuda_2_4_128_64_softmax",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "scores",
+      "role": "input",
+      "shape": [
+        8,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "probabilities",
+      "role": "output",
+      "shape": [
+        8,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 131072,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    1289,
+    1,
+    1,
+    1
+  ]
+}

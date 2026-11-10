@@ -15,3 +15,7 @@ import Lark.FeedForward
 import Lark.PairMap
 import Lark.SwiPointwise
 import Lark.SwiGLU
+import Lark.RowPhase
+import Lark.RowSoftmax
+import Lark.AttentionAddress
+import Lark.AttentionPipeline

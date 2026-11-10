@@ -439,6 +439,10 @@ def check(directory, *, lean=None, timeout=120):
         from .rotary import check as check_rotary
 
         return check_rotary(directory, lean=lean, timeout=timeout)
+    if report.get("model_profile") == "attention-pipeline-v12":
+        from .attention import check as check_attention
+
+        return check_attention(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "swiglu-pipeline-v11":
         from .swiglu import check as check_swiglu
 

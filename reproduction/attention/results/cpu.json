@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "experiment": "attention-pipeline-v12",
+  "model_calls": 0,
+  "timestamp_utc": "2026-11-10T03:11:19.621474+00:00",
+  "models": {
+    "nonlinear": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+    "pointwise": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+    "reduction": "93c42222ca023e8db1d40d887b69e9ed8024dc0a64a9e94d0caef75ba965fcfa",
+    "dotloop": "a09d9a365a121e8e9879c4344914e264e2c635baad8e321b6e28cc7330ffc29f",
+    "matrix": "d223ba5ce640883b3fb42344ee130b0021e5a2c47f732b28204fb05b457a174c",
+    "dotmap": "69a3c94dd3a0aaf818facb9527d89e8da736ca0d2b2d0df77b76c86319b18170",
+    "unarymap": "963a7c6fe9ac1330dcb6229c23983b76f43f4d3c5fef51c8410ece41e38bbe06",
+    "foldphase": "b134ff3635d4e9a9c3b111a5694a8144bfb0cb6515bfec1626d80d1a6eeabe15",
+    "rowphase": "2c36ee5718e1130c0cff567bcf2a3035d2964fd239de5aecf73e5bd85fad6827",
+    "rowsoftmax": "da5ff1f3b2cdfd5450cf3c719a67817c1d00d2605ca562865695edf53833132c",
+    "attentionaddress": "9acbfcb68897063b3e867bdc0277a4842ac38c535a5a567388b499adfe40a093",
+    "attentionpipeline": "a311affd38ad62c63e3c33d4c10b98a27d54c00a0696338715bcf769cf9a20f1"
+  },
+  "runner_sha256": "7a011e1ae2b9e46a5b207d2fd4bbea49765fb4e713af32bd8b4b4037a5ba1150",
+  "baselines": [
+    {
+      "key": "baselines/dense/hip",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        1,
+        1,
+        128,
+        256
+      ],
+      "verify_seconds": 30.43323370203143,
+      "main_bytes": 212322,
+      "source_hashes": {
+        "score.cu": "a21880df61fa6d66748538f9801cb33491ed98490c5c439125d7ac079cb2ed5a",
+        "score-task.json": "3348fc54aa08fd8533611fb91d57b497ab52b15cab4c53206c465431e773aa9a",
+        "softmax.cu": "07150a7edbcf5636abd22265dcb5990f03b3fd576c707fce19ab3f0039fbd846",
+        "softmax-task.json": "899dac3052d8fb1d9fbe44738be2a4e10231c78c538fc4d554dd53e5f32c713f",
+        "value.cu": "9bc3f306b6b09c9e5ef751efda32a342c629beedd94ae4c8e60cd5aea7866742",
+        "value-task.json": "2369fba2e8d6f2e75db24087ebb7f9f468d17c11cd8f8652b43ce5b58b1557c8",
+        "reference.py": "5de6ce1537b90316e0b68639e0bc428e1078b11158b053113b4a0d4548229cf0"
+      },
+      "theorem_sha256": "fc6464d2c7044588617b3ab0461ee54ac452cf91c34c32fc46611e74b36d6c15"
+    },
+    {
+      "key": "baselines/dense/cuda",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        1,
+        1,
+        128,
+        256
+      ],
+      "verify_seconds": 26.418171994038858,
+      "main_bytes": 212322,
+      "source_hashes": {
+        "score.cu": "de671d2eb5cfe19d6616e6d2aae134c173f9d4370eb69ecc17b8d155264a14c3",
+        "score-task.json": "14f79f416dd31614c55fb88c5ab5a9c4908deb4f44f61c0aa2199c9d2727287c",
+        "softmax.cu": "1caaf068b73ea6f7d7e77e198a3a109cf91845852b0e1ee3c4ae656b0dc362e0",
+        "softmax-task.json": "ce297cc580ed32ff801c2615b4517233278ead1d6d3b3390dc202633f1e8fa0e",
+        "value.cu": "0d523be7156011996c8e870674f0ac0313a35c370306610bec1226593e8b5ce8",
+        "value-task.json": "49d31e24fce76cb6817b20d6c81db241d6a5ab1a8069a4fd543579fe0b7ac6ba",
+        "reference.py": "5de6ce1537b90316e0b68639e0bc428e1078b11158b053113b4a0d4548229cf0"
+      },
+      "theorem_sha256": "0f3c42d63aefb0cf817bdd68a020e1fb0003e3064effc93e29057dfeaff29fd3"
+    },
+    {
+      "key": "baselines/gqa/hip",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        8,
+        2,
+        128,
+        64
+      ],
+      "verify_seconds": 26.490841900988016,
+      "main_bytes": 212310,
+      "source_hashes": {
+        "score.cu": "2640c2710d275af8eb0e4069549be41a41b0ec65b318c017a9a2cb63245c2fab",
+        "score-task.json": "a6197a52f2634bc455d4963d687fa7fa4f61d01b024ae2ea1c40ab320464f18c",
+        "softmax.cu": "fc63dd5010d176f0bfb8bdde897a2ff00abf7d68995970b1cfc6e365963f5f6a",
+        "softmax-task.json": "7f55243f4c257c75277880848e9e83116be823c3f7668e1eab0e78b8b4509470",
+        "value.cu": "e9022342e8cfffba985c73b3e8076efea404a8678ded8d880ad8fc53fcaf415e",
+        "value-task.json": "3aba6bc31a292a826939b33cf6108ec75f86557fb084ef150cc5aaed627b5221",
+        "reference.py": "e7be760e1f7b118669c2fed1ed980ce042adb22c73459caf284e1a0604daa4df"
+      },
+      "theorem_sha256": "c1073fe8b819cae30e3e3dbe0a1bf4a962844ce023662083002345a950702d62"
+    },
+    {
+      "key": "baselines/gqa/cuda",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        8,
+        2,
+        128,
+        64
+      ],
+      "verify_seconds": 24.963059272966348,
+      "main_bytes": 212310,
+      "source_hashes": {
+        "score.cu": "9f3c0d3eb5ab820b8b840270f70735ea0b830f776e0357ee210703de90456b48",
+        "score-task.json": "bcaaedc0f006bf042c5f7a6a466add066c9102245d6df5ec77c1859d289ec94c",
+        "softmax.cu": "4a0b06b1d2cf62041c0537ec900fcc31c79a10bf30a87abcc990a4d4ec7daabb",
+        "softmax-task.json": "690c978d378b0d529a4ccd447e262c2d929e74a26cea17c0bfb32b4721b80cf9",
+        "value.cu": "5e53a065d1c7cdf3076da281e61a5fc0c8399e48fa7ecd0c819cc8de084cac50",
+        "value-task.json": "f31dbbd07817d18c5427cc2f57b576be37f60f5f2293df158af20f4fde4dff92",
+        "reference.py": "e7be760e1f7b118669c2fed1ed980ce042adb22c73459caf284e1a0604daa4df"
+      },
+      "theorem_sha256": "ac4aca140cac2558914d2b9290afcbb92c9ab2e2f6599c9c2ff54bcbec5057b5"
+    }
+  ],
+  "scaling": [
+    {
+      "key": "scaling/1-1-1-1",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "verify_seconds": 27.963027408986818,
+      "main_bytes": 212232,
+      "source_hashes": {
+        "score.cu": "241daf8a3da744b7843838051aee87872e12b576605de99b703779fe9abd88cd",
+        "score-task.json": "1a07049ba4277604a36f8d47e50f3190bf89851c04222bb96e8b919bcfbbbc3f",
+        "softmax.cu": "cf0e7a8a3d69df69345f053fbdbf4bf1335a73f5147176dd35455b502b38bdd2",
+        "softmax-task.json": "9ceb04c7502defa3e0106c30dceb0f1e88c1992a86c5fddffbf028d0b4efeca0",
+        "value.cu": "f222884f82bef22d202e0eabf554f7a4761753066ce6552d787e95757211f6e7",
+        "value-task.json": "afb73124f64324143b974b12917984022e5cb29f34bf44347b00c83a288479f0",
+        "reference.py": "c9b4482038c07a196046a34d5ec41ace97e1353874e7ad06ccef0fbebb276b9b"
+      },
+      "theorem_sha256": "a3a8a5a6a5b1781b633d46c20087dcca92f1eab473f0c612a6ef222761b388ed"
+    },
+    {
+      "key": "scaling/2-2-2-4",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        4,
+        2,
+        2,
+        4
+      ],
+      "verify_seconds": 25.490264841006137,
+      "main_bytes": 212235,
+      "source_hashes": {
+        "score.cu": "987de1cd6804424122a0318994f7e602f4c943a665d7a2a578e5cf099bfd735e",
+        "score-task.json": "8d287128bf28bae9bf2158c0e138554e382ba680e3171dcf7391e7b1ff292aa4",
+        "softmax.cu": "37edd42349305d059dbfcd3d68830c436264cbe9a3fbf5440ee872e109e9c290",
+        "softmax-task.json": "f31f8dc43d27a1f56b6755bcb874fad873983b99735a0bf951b5c0938c395566",
+        "value.cu": "93f4ce80ac50e57ff257d8b398c4ef48280a391083d2fd04f92b3b1408918e4d",
+        "value-task.json": "5cba82a9b96b7f768f876a14496b61258c396c5d1b1b6c5f6383a6af791aee19",
+        "reference.py": "9645d9c57324e75d16d3f9fad327cce93e93556b800bcc28693d8199885b97a3"
+      },
+      "theorem_sha256": "c0ab70f3ccfcad1ea65802319d26f975a9fcdcc8a9e2c7dd3d9d2795cc6a1b61"
+    },
+    {
+      "key": "scaling/1-1-4096-64",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        1,
+        1,
+        4096,
+        64
+      ],
+      "verify_seconds": 25.528104903991334,
+      "main_bytes": 212349,
+      "source_hashes": {
+        "score.cu": "870f89385351efd56f63c00038d69afa82b4ffa62aaa94a910498429a654e3fb",
+        "score-task.json": "1935ccbd97e4624dbde0da944778ad8f8a1e0945b63d0161269dc300e0f1db1b",
+        "softmax.cu": "8ef810ab65811a27b02915f7d38f1e3561aecae300a09341da0fa91ccf57346e",
+        "softmax-task.json": "2107a5f8aee858fec72910eff2a12d8eb2b6e3a05708d152fff1785437e59bc3",
+        "value.cu": "4f50505f046400d42e194c103fb1da82ff7ae175768fd29647284e0b51b6a55f",
+        "value-task.json": "eefe4ba60a47b74e80d8d18ce02f6f732a59338194bc622e3fba46723cbaec3c",
+        "reference.py": "1a825ce0a1b252bdb296c0819c98eebc464ea6b21ed3bc996145555eb712dd2e"
+      },
+      "theorem_sha256": "238a21814658928ddd7d162ccd0ec220c173a6fcded0af613d122ae9e5896e6c"
+    },
+    {
+      "key": "scaling/2-4-128-1048576",
+      "status": "verified",
+      "rechecked": true,
+      "attention_dimensions": [
+        8,
+        2,
+        128,
+        1048576
+      ],
+      "verify_seconds": 25.47083546599606,
+      "main_bytes": 212381,
+      "source_hashes": {
+        "score.cu": "032a6a5af90c0e38ef5200072e226c858139b17b1e14349a47de6066be848f04",
+        "score-task.json": "67320627c55e88a74b4cf91229090201bb556e404dfd5ce89b6cdf7628ff04d0",
+        "softmax.cu": "49f485cb6dc75e85a62b89b0b0548e16b2c0e4023d61cb28f04786dc4fcbacdd",
+        "softmax-task.json": "1d84d73b9bf3f3fa090cc90e009c4c1e93945a335949dfc8a830dbbb05b9e39c",
+        "value.cu": "487e405df37d1dbf57db4fb19ef573ab1c89cfa40bd7b895149d31f959bfdb9c",
+        "value-task.json": "ef09397b9476662a8b6455a58a97dd555d3f95ead541f20cafe3d7f6f2827b03",
+        "reference.py": "364c4c3cb35a70eda25da79b2feb09c02bb0628e37d431fd6e983747ffead7fa"
+      },
+      "theorem_sha256": "3bb726b59777d1e2bb593865f85522984fd196d4ac33196fd00a164cf390b2ec"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "wrong-group",
+      "stage": 0,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 25.748075866955332,
+      "source_sha256": "c3996825718a40499c4e1273362506f42989c109a3fd0b3789a26244f5a5b599",
+      "theorem_sha256": "008b788cf5a624c6406b92b9cbe314d68c3925bab1b28b5204d60f09f0311178",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "wrong-scale",
+      "stage": 0,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 28.890688512998167,
+      "source_sha256": "28e5a40aa77ef9d42b6291bfc4a4d7662a18a69afd549a01b21d7997c944896c",
+      "theorem_sha256": "f157d2d10ec8e1994b73a29093ee8cd2a51be3577c5d7d0440e2d78730b5c8b4",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "wrong-softmax-start",
+      "stage": 1,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 25.683837356977165,
+      "source_sha256": "ae4da6fdf90e195bed4e97f86290b332b3bb1aa1168c3132992d5bd105220765",
+      "theorem_sha256": "ffd198aab78d58f9ea0d89a146ce1ef310034a26f2af6cfff5eb7256367b6a7d",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    },
+    {
+      "name": "wrong-value-head",
+      "stage": 2,
+      "accepted": false,
+      "timed_out": false,
+      "seconds": 25.75010112801101,
+      "source_sha256": "395bb14180e577988855c5e2cae4d0cd9b2617de2fa7b8b3c7fa54038d26da54",
+      "theorem_sha256": "d0c080d1b595dbafae2acee333ef0c3a3b58c1e9745d9529e793998253f93f47",
+      "expected_failure": "fixed-program equality; not semantic diagnosis"
+    }
+  ],
+  "status": "passed"
+}

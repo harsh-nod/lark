@@ -1,0 +1,48 @@
+{
+  "name": "attention_hip_2_4_128_64_score",
+  "entry": "attention_hip_2_4_128_64_score",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "q",
+      "role": "input",
+      "shape": [
+        8,
+        128,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "k",
+      "role": "input",
+      "shape": [
+        2,
+        128,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "scores",
+      "role": "output",
+      "shape": [
+        8,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 131072,
+    "block": 1,
+    "warp": 64
+  },
+  "fuel": [
+    262,
+    1,
+    1,
+    1
+  ]
+}

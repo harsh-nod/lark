@@ -60,6 +60,9 @@ jobs:
       - name: Check FP32-projection SwiGLU composition
         run: lake env lean Lark/SwiGLU.lean
         working-directory: lean
+      - name: Check dense SDPA and grouped-query composition
+        run: lake env lean Lark/AttentionPipeline.lean
+        working-directory: lean
       - name: Recheck standalone export
         run: lake build
         working-directory: certificates/vector_add

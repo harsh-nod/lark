@@ -1,0 +1,48 @@
+{
+  "name": "attention_cuda_1_1_128_256_score",
+  "entry": "attention_cuda_1_1_128_256_score",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "q",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "k",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "scores",
+      "role": "output",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    }
+  ],
+  "launch": {
+    "grid": 16384,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    1030,
+    1,
+    1,
+    1
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "attention_cuda_1_1_128_256_value",
+  "entry": "attention_cuda_1_1_128_256_value",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "probabilities",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        128
+      ],
+      "dtype": "float32"
+    },
+    {
+      "name": "v",
+      "role": "input",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        128,
+        256
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 32768,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    518,
+    1,
+    1,
+    1
+  ]
+}
