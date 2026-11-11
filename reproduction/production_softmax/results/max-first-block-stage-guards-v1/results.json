@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "status": "ten-rehashed-false-first-block-stage-claims-rejected-before-extraction",
+  "checks": [
+    {
+      "name": "invented-certificate",
+      "exit_code": 1,
+      "expected_reason": "Invented source certificate",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "boolean-certificate",
+      "exit_code": 1,
+      "expected_reason": "Invented source certificate",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "invented-whole-launch",
+      "exit_code": 1,
+      "expected_reason": "Invented whole-source/reference claim",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "invented-reference-bridge",
+      "exit_code": 1,
+      "expected_reason": "Invented whole-source/reference claim",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "omitted-block-barrier-audit",
+      "exit_code": 1,
+      "expected_reason": "Principal first-block audits absent",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "earlier-wave-relabeled",
+      "exit_code": 1,
+      "expected_reason": "Principal first-block audits absent",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "invented-block-trace-count",
+      "exit_code": 1,
+      "expected_reason": "Wrong first-block endpoint/accesses/partials/fuel/checksum",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "changed-block-fuel",
+      "exit_code": 1,
+      "expected_reason": "Wrong first-block endpoint/accesses/partials/fuel/checksum",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "omitted-partial-writer",
+      "exit_code": 1,
+      "expected_reason": "Wrong first-block endpoint/accesses/partials/fuel/checksum",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    },
+    {
+      "name": "omitted-refusal-check",
+      "exit_code": 1,
+      "expected_reason": "Wrong first-block replay checks",
+      "packet_rehashed": true,
+      "rejected_before_extraction": true
+    }
+  ],
+  "first_block_packet_manifest_sha256": "488a044bc7f87a420bae823d8784101c680ea12585059c1c3d1c64843b118f15",
+  "earlier_packet_manifest_sha256": "b1be0c9cfd6606aac8cea782d7c7520d832ab1104b44635d7c38d32fba9050d2",
+  "replayer_sha256": "42f89192481ab3d9c7d0752e578470b4d8c7e4533f813e9f9a50abc3551d2486",
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "original_paper_fully_reproduced": false
+}

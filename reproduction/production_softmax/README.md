@@ -164,9 +164,39 @@ real-profile checks, and the general suite: 169 tests run, 160 passed and nine
 optional skips. All 93 selected implementation files match that source commit
 byte-for-byte. This run does not validate the later first-block extension.
 
-Block/grid composition, the serial reduction of 32 partial maxima, later
+The later [first-block proof](../../lean/Lark/NativeSoftmaxMaxFirstBlock.lean)
+composes all sixteen physical waves through the scheduler's actual sequential
+wave-fold. Every participating thread starts at the actual initializer and
+reaches PC32. All thirty-two source-ordered partial maxima survive later waves;
+the proof preserves their distinct shared slots and the controls of waves that
+have yet to execute. It covers both complete source variants and every valid
+row for every supported shape, with arbitrary operations, inputs and outside
+memory.
+
+The [first barrier proof](../../lean/Lark/NativeSoftmaxMaxBarrier.lean) resumes
+that actual block barrier, advancing all 1,024 participating PCs to 33 and their
+block epochs to 1. Memory and the historical trace stay unchanged. The full
+`runBlock` call decomposes into the same scheduler with four remaining block
+phases and that resumed state. The proof leaves those remaining phases explicit.
+The exact phase trace has 57,376 accesses: 57,344 input reads and thirty-two
+shared partial writes. Actual-trace classification derives phase race freedom.
+
+The [block source packet](results/max-first-block-v1/results.json) and
+[independent archive replay](results/max-first-block-validation-v1/results.json)
+freshly build 37 local Lean modules, audit 357 declarations and reject 41 false
+claims. They retain the full source/reader/IR/interface binding; the replay uses
+no Git or own compiled cache and compares both complete finite address traces.
+A separate witness interprets the maximum operation as `3*a+b` and checks the
+actual fold's final partial in logical slot 31 against its exact integer value.
+Ten [fully rehashed stage controls](results/max-first-block-stage-guards-v1/results.json)
+reject invented claims, changed counts/fuel, omitted principal audits/refusals
+and earlier wave evidence relabeled as a block, before extraction.
+The [wheel audit](results/max-first-block-packaging-v1/results.json) checks the
+complete 37-module closure and closed reader byte-for-byte.
+
+Whole-grid composition, the serial reduction of 32 partial maxima, later
 exponentiation/sum/normalization passes, conflict-state reachability and the
-canonical-real reference bridge remain open. This first-wave stage still issues
+canonical-real reference bridge remain open. This first-block stage still issues
 zero source certificates and does not reproduce the paper's original NVIDIA or
 historical model results.
 
@@ -215,6 +245,11 @@ python3 reproduction/production_softmax/replay_first_wave.py \
   --packet /tmp/softmax-max-first-wave \
   --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
   --output /tmp/softmax-max-first-wave-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_first_block.py --output /tmp/softmax-max-first-block
+python3 reproduction/production_softmax/replay_first_block.py \
+  --packet /tmp/softmax-max-first-block \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-max-first-block-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
