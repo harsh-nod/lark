@@ -48,6 +48,14 @@ An [independent archive replay](results/components-validation-v1/results.json)
 rebuilds from an empty directory with Git unavailable and no seeded own Lean
 objects, repeating the reader check and all nine refusals.
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42953296625) passed
+at experiment-source commit `d35cd2042d839fa07d29ee1f76bfa75f26c4893d`, including
+the new component checker and 165 ordinary tests (nine optional tests skipped).
+The [saved responses/logs](results/ci-v1/results.json) distinguish these component
+checks from a complete fused-kernel proof. The real-semantics job rechecks the
+earlier existing real-certified profiles; this new family has no real source
+certificate yet. Later evidence/replay metadata is validated separately.
+
 The sufficient footprint theorem proves race freedom **if** every actual access
 satisfies its classification. Deriving that classification and successful
 execution from the full source remains open. A separate finite value-erased run
