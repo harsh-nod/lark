@@ -544,6 +544,15 @@ rebuilds all 134 standard modules and repeats the 1,530 audits and 11 refusals
 without Git or any owned compiled cache. Its 20 checks also reproduce both
 complete finite source traces, including the original conflicting pair.
 
+All eight jobs in [CI run43084749870](https://github.com/harsh-nod/lark/actions/runs/43084749870)
+passed at source revision `817ef958bd8347e190e5229d993242561c4d8b7d`.
+The [saved CI packet](results/original-race-ci-v1/results.json) retains the raw
+logs and job receipts, including the independent race replay, 48 metadata
+guards and the earlier block, grid and canonical-real checks. General tests
+ran 169 cases: 160 passed and nine optional cases skipped. All 240 selected
+proof, reader, checker, packaging and workflow files match that exact CI
+revision. Subsequent changes contain documentation and frozen evidence.
+
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
 at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
 KernelCraft remains empty and the public benchmark head is unchanged. The
