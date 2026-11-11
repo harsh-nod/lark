@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "declared-torch-reference-comparisons-passed",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.4.4",
+  "input_manifest_sha256": "c2a3106e36da3d035e571ac1640d2f92c870a2799d73b12f57cdbf2945374cb2",
+  "atol": 5.960464477539063e-08,
+  "rtol": 0.002,
+  "unique_output_streams": {
+    "a50c79f104fe61ab9a6abd835dacbd108b022e3ecbeef20af89bfaf06f8b8a74": {
+      "streams": [
+        "mi350:racy-output",
+        "mi350:fixed-output",
+        "mi350-2:racy-output",
+        "mi350-2:fixed-output"
+      ],
+      "elements_compared": 411705344,
+      "failed": 0,
+      "nonfinite": 0,
+      "bit_differences": 31823579,
+      "max_abs_error": 0.00048828125
+    }
+  },
+  "reference_source_executed": false,
+  "closed_reference_ast_checked": true,
+  "source_certificates": 0,
+  "formal_reference_equivalence_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Every actual GPU output value is compared directly with the closed Torch FP32 softmax/FP16 output specification. Byte-identical streams are compared once per SHA256 and explicitly mapped to their four host/method names. This is finite numerical evidence."
+}

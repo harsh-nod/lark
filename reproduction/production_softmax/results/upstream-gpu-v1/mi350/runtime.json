@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "status": "runtime-checks-passed-pending-independent-numerical-audit",
+  "recorded_at_utc": "2026-11-11T09:44:03.778040+00:00",
+  "device": "AMD Instinct MI350X",
+  "architecture": "gfx950",
+  "warp": 64,
+  "block": 1024,
+  "shared_bytes": 256,
+  "trials": 1,
+  "launches": 2,
+  "output_elements_per_method": 411705344,
+  "cases": [
+    {
+      "rows": 8192,
+      "trial": 0,
+      "family": "pinned-upstream-srand0-three-outliers",
+      "offset_elements": 0,
+      "input_sha256": "fdb95d6fd2b0ceb548d9df6660482b0ef16f391239bbac186c898b6838ae5d83",
+      "expected_sha256": "7ee44f2c99cb1ffa4f104b23b81427077f46ed9532f703807eac781cc8e67cbc",
+      "elements_per_buffer": 411705344,
+      "all_allocation_guards_unchanged": true,
+      "input_unchanged": true
+    }
+  ],
+  "input_manifest_sha256": "c2a3106e36da3d035e571ac1640d2f92c870a2799d73b12f57cdbf2945374cb2",
+  "runner_sha256": "6662884165e3ce73b60072296d905ef5cf6fca716346cea1fa0f6fa05e67898e",
+  "binary_sha256": "a159ae6a208dd8de1fe1a31420f9dfa817b5e0a26ed660596a55bb67e2a8ba59",
+  "output_sha256": {
+    "racy-output": "a50c79f104fe61ab9a6abd835dacbd108b022e3ecbeef20af89bfaf06f8b8a74",
+    "fixed-output": "a50c79f104fe61ab9a6abd835dacbd108b022e3ecbeef20af89bfaf06f8b8a74"
+  },
+  "compiler": "HIP version: 7.2.53211-e1a6bc5663\nAMD clang version 22.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-7.2.1 26084 f58b06dce1f9c15707c5f808fd002e18c2accf7e)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.2.1/lib/llvm/bin\nConfiguration file: /opt/rocm-7.2.1/lib/llvm/bin/clang++.cfg\n",
+  "compiler_inputs": 319,
+  "compile_command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "-MD",
+    "-MF",
+    "/tmp/lark-native-softmax-upstream-gpu-output-v1-20261111/dependencies.d",
+    "/tmp/lark-native-softmax-upstream-gpu-input-v1-20261111/driver.hip",
+    "-o",
+    "/tmp/lark-native-softmax-upstream-gpu-output-v1-20261111/driver.so"
+  ],
+  "both_full_sources_included_verbatim": true,
+  "entry_symbols_renamed_only": true,
+  "race_free_hardware_execution_asserted_for_original": false,
+  "original_nvidia_kernel_executed": false,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_classification_proved": false,
+  "ieee_equivalence_proved": false,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}

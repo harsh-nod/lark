@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "status": "full-native-softmax-numerical-checks-passed",
+  "checked_at_utc": "2026-11-11T09:52:01.956284+00:00",
+  "device": "AMD Instinct MI350X",
+  "numpy": "2.4.4",
+  "trials": 1,
+  "launches": 2,
+  "atol": 5.960464477539063e-08,
+  "rtol": 0.002,
+  "reference": "CPU float64 stable softmax of exactly promoted FP16 inputs, rounded to FP16 once at the end",
+  "methods": {
+    "racy-output": {
+      "comparisons": 411705344,
+      "failed": 0,
+      "nonfinite": 0,
+      "max_abs_error": 0.00048828125,
+      "max_rel_error": 1.0
+    },
+    "fixed-output": {
+      "comparisons": 411705344,
+      "failed": 0,
+      "nonfinite": 0,
+      "max_abs_error": 0.00048828125,
+      "max_rel_error": 1.0
+    }
+  },
+  "paired_bit_differences": 0,
+  "methods_bit_identical_on_sample": true,
+  "source_sha256": {
+    "native_race": "c4c99c49db02315726e25d3c273379a1461fb5201c042204fea0c6f56c020019",
+    "native_fixed": "ff3f7c7887b85b507b35400424f5f9c321fd139cfcbe9abbb9ac67297175886a"
+  },
+  "input_manifest_sha256": "c2a3106e36da3d035e571ac1640d2f92c870a2799d73b12f57cdbf2945374cb2",
+  "device_manifest_sha256": "b29ded7861a3eba8e1b57766d806ad849171ead65a35471565c43bf1cc4f355d",
+  "compiler_input_hashes_sha256": "4230de621f692c545416ef50ff50be4abe3490432afc9495757f17b4ef3cbd9e",
+  "whole_kernel_lean_execution_proved": false,
+  "source_certificates": 0,
+  "original_source_race_free": false,
+  "repair_universal_race_freedom_proved": false,
+  "ieee_equivalence_proved": false,
+  "floating_point_error_bound_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "records": [
+    {
+      "rows": 8192,
+      "trial": 0,
+      "family": "pinned-upstream-srand0-three-outliers",
+      "elements": 411705344,
+      "methods": {
+        "racy-output": {
+          "comparisons": 411705344,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 411705344,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    }
+  ],
+  "scope": "Finite paired AMD numerical trials of independent full three-pass FP16 sources. Each method is compared independently with CPU-float64 stable softmax rounded to FP16 at the end. The original clamped-load source has a source-level race; agreement on this finite sample does not establish race freedom or a universal equality theorem. Historical models, original adapted text and NVIDIA timings are not reproduced."
+}

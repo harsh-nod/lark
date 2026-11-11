@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "seed": 0,
+  "numpy": "2.4.4",
+  "width": 50257,
+  "atol": 5.960464477539063e-08,
+  "rtol": 0.002,
+  "reference": "CPU float64 stable softmax of exactly promoted FP16 inputs, rounded to FP16 once at the end",
+  "source_intermediate_storage": "FP16 exponentials in out, FP32 unrounded sum accumulation, FP16 final output",
+  "upstream_benchmark": {
+    "B": 8,
+    "T": 1024,
+    "V": 50257,
+    "srand": 0,
+    "outliers_per_row": 3,
+    "outlier_operation": "multiply selected FP32 inputs by20 before FP16 conversion"
+  },
+  "generator_compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "generator_command": [
+    "cc",
+    "-O2",
+    "-std=c11",
+    "-ffp-contract=off",
+    "/tmp/lark-native-softmax-upstream-gpu-input-v1-20261111/input-generator.c",
+    "-o",
+    "/tmp/lark-native-softmax-upstream-gpu-input-v1-20261111/input-generator"
+  ],
+  "c_library": [
+    "glibc",
+    "2.39"
+  ],
+  "generator_sha256": "4cb59c2f850149bdd0336fe5834e87f6863160352c9375ae748efebb9fad1a4f",
+  "generator_binary_sha256": "4135d927c0a351014e910bb6960f57e029d7ca90ba7df70b9d839dae68e4af55",
+  "upstream_fp32_stream_sha256": "55492d0621b93fcaf98231434ca46f090c9a6021cd051c4e0c4eab169206e0f4",
+  "outlier_indices_sha256": "79fa3e89e5325d5fbbb01c58143b4be0faa04fa52dc32c122319e2104cfaabc3",
+  "cases": [
+    {
+      "rows": 8192,
+      "elements": 411705344,
+      "trials": [
+        {
+          "trial": 0,
+          "family": "pinned-upstream-srand0-three-outliers",
+          "offset_elements": 0,
+          "input_sha256": "fdb95d6fd2b0ceb548d9df6660482b0ef16f391239bbac186c898b6838ae5d83",
+          "expected_sha256": "7ee44f2c99cb1ffa4f104b23b81427077f46ed9532f703807eac781cc8e67cbc"
+        }
+      ]
+    }
+  ],
+  "original_paper_fully_reproduced": false,
+  "source_certificates": 0,
+  "model_calls": 0
+}
