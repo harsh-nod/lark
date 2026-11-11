@@ -88,6 +88,13 @@ checks the source hashes, dependency pins, fresh build, exports and controls.
 All proof dependencies are standard `propext`, `Classical.choice` and
 `Quot.sound`; no extra axioms or skipped kernel checks are used.
 
+Both jobs of [CI run 42947715508](https://github.com/harsh-nod/lark/actions/runs/42947715508)
+passed at experiment-code commit `3401f086976fcb267bd805dd6d7a80675036c601`.
+The [saved run/job responses and logs](results/native-whole-launch-ci-v1/results.json)
+record the terminal results, including 160 general tests (nine optional tests
+skipped) and the separate real-semantics job. Later ledger and CI-receipt commits
+only record evidence; they are not new experiment-code CI runs.
+
 ```bash
 # Lean 4.19.0; these output directories must be outside Git:
 python3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/native-whole-launch
