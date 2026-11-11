@@ -222,6 +222,13 @@ missing casts, wrong halt and missing trace accesses. All four earlier stage
 generators/proof closures remain byte-identical to their archived versions, as
 recorded in the [source comparison receipt](results/output-lane-compatibility-v1/results.json).
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42975198726) passed
+at output-lane source commit `b92a9414de5a7f6d188295c2044833fc56a5cf40`, including
+the fresh 53-module/407-audit/63-control check and 165 ordinary tests (nine
+optional skips). The [saved source-CI evidence](results/output-lane-ci-v1/results.json)
+records the exact head, raw logs and scope. The real job rechecks earlier
+certified profiles; it adds no fused canonical-real or complete source certificate.
+
 Composition of those final output lanes into native waves, blocks and the
 grid, full seeded-inout source correctness and canonical source/reference
 equivalence remain open. All older frozen component, GPU, scalar-prefix,
