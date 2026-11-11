@@ -361,10 +361,63 @@ files match the checked commit byte-for-byte. Later tracked changes contain
 only this study's documentation and frozen evidence. The run validates the
 constructive four-phase prefix through PC93/epoch4 and its preserved outputs.
 
-Normalization execution, whole-grid composition, conflict-state reachability
-and the canonical-real/IEEE reference bridges remain open in this packet.
-It issues zero source certificates and does not reproduce the paper's original
-NVIDIA timings or historical model experiments.
+The four-phase packet stops before normalization; the later whole-block
+milestone below supplies that execution. This prefix packet issues zero source
+certificates and does not reproduce the original NVIDIA timings or historical
+model experiments.
+
+The later [complete block proof](../../lean/Lark/NativeSoftmaxWholeBlock.lean)
+executes all five actual block phases from the source initializer, including
+all seven normalization rounds in every lane and all 16 native waves. Both full
+sources return `Some` from the unchanged `runBlock` under the original
+lane/warp/block fuel. All 1,024 threads halt at PC116 in the original or PC115
+in the repair, at block epoch4. Every one of the 50,257 output cells contains
+the explicit source-ordered division result, retaining every half conversion
+and the unrounded denominator. The original's unused clamp reads sample the
+current output cell, which may already have been normalized by another lane;
+the value proof does not assume those cells retain their old exponentials.
+The repaired complete actual trace is classified `Good` and proved race-free.
+
+The exact original trace contains 489,926 accesses; the repaired trace contains
+475,752. These match the complete finite value-erased source traces below.
+Normalization contributes 216,226 accesses in the original and 202,052 in the
+repair. For tids0..80 versus tids81..1023, the original normalization lane uses
+880/878 scalar steps and 213/211 accesses; the repair uses 862/857 steps and
+201/197 accesses. Reaching the halt instruction is an actual scheduler cut;
+the proof does not execute a fictitious scalar halt step or add a barrier.
+
+The [source packet](results/whole-block-v1/results.json) and
+[independent replay](results/whole-block-validation-v1/results.json) freshly
+build 120 Lean modules, audit 1,387 declarations and reject 129 false Lean
+claims. The replay runs without Git or an own compiled cache and compares both
+complete finite address traces. The integer projection diagnostic now checks
+actual final outputs 50 and 148 at columns0 and50256, using distinct input/output
+conversions and floor division by the proved row total. The inherited
+noncommuting wave witnesses and separate serial-phase checksum remain scoped
+as before. The new source and semantic controls reject changed normalization
+guards, private buffers, casts, denominator reads, division and stride, together
+with wrong final outputs, halt PCs, epochs, exact costs and invented `None` runs.
+The 78 [fully rehashed metadata guards](results/whole-block-stage-guards-v1/results.json)
+reject omitted principal proofs, changed counts or diagnostic scope, invented
+original race freedom or whole-grid claims, and earlier reduction-prefix evidence
+relabeled as a whole block, before extraction. The [wheel audit](results/whole-block-packaging-v1/results.json)
+matches the closed reader and all 120 required proof modules byte-for-byte.
+
+The [saved whole-block CI packet](results/whole-block-ci-v1/results.json)
+retains the API responses and raw logs for all five successful jobs in
+[run 43069093248](https://github.com/harsh-nod/lark/actions/runs/43069093248),
+at source commit `7a8c6f4963bb72e26db8ce3f882e0289db688a3f`.
+The dedicated block job repeats the fresh source export, independent replay
+and all 78 metadata guards. The general suite ran 169 tests: 160 passed and
+nine optional tests skipped. The byte audit matches 175 selected implementation,
+source and workflow files to that exact CI commit; subsequent changes in this
+milestone contain only study documentation and frozen evidence.
+
+This packet proves a complete block for either source at every supported row,
+not whole-grid composition. Original conflict-state reachability and the
+canonical-real/IEEE reference bridges remain open here. It issues zero source
+certificates and does not reproduce the paper's original NVIDIA timings or
+historical model experiments.
 
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
 at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
@@ -451,6 +504,15 @@ python3 reproduction/production_softmax/check_reduction_prefix_stages.py \
   --packet /tmp/softmax-reduction-prefix \
   --earlier-packet reproduction/production_softmax/results/exp-wave-v1 \
   --output /tmp/softmax-reduction-prefix-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_whole_block.py --output /tmp/softmax-whole-block
+python3 reproduction/production_softmax/replay_whole_block.py \
+  --packet /tmp/softmax-whole-block \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-whole-block-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_whole_block_stages.py \
+  --packet /tmp/softmax-whole-block \
+  --earlier-packet reproduction/production_softmax/results/reduction-prefix-v1 \
+  --output /tmp/softmax-whole-block-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
