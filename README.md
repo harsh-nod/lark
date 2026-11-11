@@ -71,8 +71,10 @@ under the native scheduler. A later [compute-prefix proof](reproduction/online_a
 extends each lane through its first query row's scores and exponential
 denominator. The [output-prefix proof](reproduction/online_attention/OUTPUT.md)
 joins those computations to all 256 output stores for the first query row and
-first key tile. Later tiles, whole-launch execution and source-reference
-equality remain unfinished.
+first key tile. The [first-key block proof](reproduction/online_attention/FIRST_KEY_BLOCK.md)
+then composes all four query rows and all 32 lanes through the second block
+barrier and resume. The three later key tiles, whole-launch execution and
+source-reference equality remain unfinished.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

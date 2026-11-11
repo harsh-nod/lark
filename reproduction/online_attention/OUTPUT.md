@@ -60,9 +60,11 @@ A [separate archive replay](results/native-output-validation-v1/results.json)
 rebuilds from an empty directory and rechecks source hashes, binding, axiom
 audits and controls. Earlier lane, block and weights packets remain unchanged.
 
-Private-state stores, later query rows, all later key tiles, complete block/grid
-scheduling and canonical dense-reference equality remain unfinished. The
-source remains byte-identical to the paired [MI350 numerical validation](NATIVE.md).
+At this frozen checkpoint, private-state stores, later query rows, all later
+key tiles, complete block/grid scheduling and canonical dense-reference
+equality remain unfinished. The subsequent [first-key block checkpoint](FIRST_KEY_BLOCK.md)
+joins all four query rows and all 32 lanes through the second barrier resume.
+The source remains byte-identical to the paired [MI350 numerical validation](NATIVE.md).
 This checkpoint adds no GPU trials or model calls and no original-paper
 completion claims. Original author artifacts, historical model pass rates and
 token costs, H100 timings and engineering-effort measurements remain unavailable.

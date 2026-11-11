@@ -59,7 +59,15 @@ bound is asserted.
   119,060-instruction continuation from PC 21 to PC 83, its source-ordered
   output values, input preservation and race-free prefix trace. It preserves
   the source's old-output half conversion, rescaling, division and half store.
-  Private-state stores, later query/key tiles and complete scheduling remain open.
+  Its frozen packet leaves private-state stores and later scheduling open.
+- `NativeAttentionFirstKeyBlock.lean` composes all four query rows per lane and
+  all 32 lanes in the actual scheduler, including the private-state stores and
+  the source's second block barrier and resume. The [first-key block checkpoint](FIRST_KEY_BLOCK.md)
+  joins two actual `runBlock` phases from arbitrary initial memory to PC 88,
+  with all 32,768 first-key output updates and all private maxima/masses.
+  The three later key tiles, whole-block/grid execution and reference equality
+  remain open. Generic row/block phase lemmas already support later key tiles
+  when their loaded K/V and previous online values are supplied.
 
 Fresh checks accept the full source's IR and array layout and reject five
 changes directly in Lean: a missing load barrier, a wrong tile-store owner,
@@ -81,6 +89,7 @@ python3 reproduction/online_attention/check_native_prefix.py --output /tmp/nativ
 python3 reproduction/online_attention/check_native_prefix.py --stage first-block --output /tmp/native-block
 python3 reproduction/online_attention/check_native_prefix.py --stage weights --output /tmp/native-weights
 python3 reproduction/online_attention/check_native_prefix.py --stage output --output /tmp/native-output
+python3 reproduction/online_attention/check_native_prefix.py --stage first-key-block --output /tmp/native-first-key-block
 python3 -m unittest discover -s tests -p test_native_attention.py -v
 ```
 
