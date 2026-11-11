@@ -113,6 +113,13 @@ repeats the build, axiom audits, positive witnesses and every rejection with Git
 unavailable and no cached own Lean objects. These theorems cover arbitrary inputs,
 operations and outside memory, rows1..255, and physical waves0..15.
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42964138741) passed
+at first-wave source commit `cd665d0a696f0367767cb2b217f010156f93ee38`.
+The fresh first-wave step and 165 ordinary tests (nine optional skips) passed;
+the [saved source-CI evidence](results/first-wave-ci-v1/results.json) records the
+exact head and scope. The real job checks earlier real-certified profiles;
+this fused family still has no canonical-real or whole-launch certificate.
+
 The updated replay tool also
 [rechecks the original scalar-prefix packet](results/scalar-prefix-compatibility-v1/results.json),
 repeating its 18-module build, 89 audits and ten refusals. Its default lane-stage

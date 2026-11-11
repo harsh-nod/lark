@@ -1,0 +1,661 @@
+exact-real	Set up job	﻿2026-11-11T05:11:51.7575738Z Current runner version: '2.338.2'
+exact-real	Set up job	2026-11-11T05:11:51.7600850Z ##[group]Runner Image Provisioner
+exact-real	Set up job	2026-11-11T05:11:51.7601756Z Hosted Compute Agent
+exact-real	Set up job	2026-11-11T05:11:51.7602417Z Version: 20261028.624
+exact-real	Set up job	2026-11-11T05:11:51.7603526Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+exact-real	Set up job	2026-11-11T05:11:51.7604275Z Build Date: 2026-10-28T21:51:42Z
+exact-real	Set up job	2026-11-11T05:11:51.7604991Z Worker ID: {2fe6654b-6c2d-4488-94be-4aae51695b4e}
+exact-real	Set up job	2026-11-11T05:11:51.7606000Z Region: westus2
+exact-real	Set up job	2026-11-11T05:11:51.7606558Z Cloud: Azure
+exact-real	Set up job	2026-11-11T05:11:51.7607133Z ##[endgroup]
+exact-real	Set up job	2026-11-11T05:11:51.7608585Z ##[group]Operating System
+exact-real	Set up job	2026-11-11T05:11:51.7609222Z Ubuntu
+exact-real	Set up job	2026-11-11T05:11:51.7609732Z 24.04.5
+exact-real	Set up job	2026-11-11T05:11:51.7610233Z LTS
+exact-real	Set up job	2026-11-11T05:11:51.7610739Z ##[endgroup]
+exact-real	Set up job	2026-11-11T05:11:51.7611294Z ##[group]Runner Image
+exact-real	Set up job	2026-11-11T05:11:51.7611877Z Image: ubuntu-24.04
+exact-real	Set up job	2026-11-11T05:11:51.7612417Z Version: 20261101.360.1
+exact-real	Set up job	2026-11-11T05:11:51.7614074Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+exact-real	Set up job	2026-11-11T05:11:51.7615964Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+exact-real	Set up job	2026-11-11T05:11:51.7616904Z ##[endgroup]
+exact-real	Set up job	2026-11-11T05:11:51.7617982Z ##[group]GITHUB_TOKEN Permissions
+exact-real	Set up job	2026-11-11T05:11:51.7620091Z Contents: read
+exact-real	Set up job	2026-11-11T05:11:51.7620715Z Metadata: read
+exact-real	Set up job	2026-11-11T05:11:51.7621310Z ##[endgroup]
+exact-real	Set up job	2026-11-11T05:11:51.7623695Z Secret source: Actions
+exact-real	Set up job	2026-11-11T05:11:51.7624559Z Cache mode: write
+exact-real	Set up job	2026-11-11T05:11:51.7625276Z Prepare workflow directory
+exact-real	Set up job	2026-11-11T05:11:51.7951868Z Prepare all required actions
+exact-real	Set up job	2026-11-11T05:11:51.8021484Z Getting action download info
+exact-real	Set up job	2026-11-11T05:11:52.1586626Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+exact-real	Set up job	2026-11-11T05:11:52.2688990Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+exact-real	Set up job	2026-11-11T05:11:52.4657567Z Complete job name: exact-real
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-11T05:11:52.5473788Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5474883Z with:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5475378Z   repository: harsh-nod/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5479300Z   token: ***
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5479786Z   ssh-strict: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5480312Z   ssh-user: git
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5480821Z   persist-credentials: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5481349Z   clean: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5481911Z   sparse-checkout-cone-mode: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5482481Z   fetch-depth: 1
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5483200Z   fetch-tags: false
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5483741Z   show-progress: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5484278Z   lfs: false
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5484818Z   submodules: false
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5485328Z   set-safe-directory: true
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5485895Z   allow-unsafe-pr-checkout: false
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.5486819Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8406981Z Syncing repository: harsh-nod/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8410042Z ##[group]Getting Git version info
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8411194Z Working directory is '/home/runner/work/lark/lark'
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8412492Z [command]/usr/bin/git version
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8533412Z git version 2.56.0
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8557547Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8574304Z Temporarily overriding HOME='/home/runner/work/_temp/f484938e-cbb9-4ad7-884c-04a11401621c' before making global git config changes
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8577004Z Adding repository directory to the temporary git global config as a safe directory
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8581494Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8660638Z Deleting the contents of '/home/runner/work/lark/lark'
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8665925Z ##[group]Initializing the repository
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8671989Z [command]/usr/bin/git init /home/runner/work/lark/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8806825Z hint: Using 'master' as the name for the initial branch. This default branch name
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8808387Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8810271Z hint: to use in all of your new repositories, which will suppress this warning,
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8811171Z hint: call:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8812059Z hint:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8812925Z hint: 	git config --global init.defaultBranch <name>
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8813774Z hint:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8814885Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8816382Z hint: 'development'. The just-created branch can be renamed via this command:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8817689Z hint:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8818794Z hint: 	git branch -m <name>
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8819441Z hint:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8820209Z hint: Disable this message with "git config set advice.defaultBranchName false"
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8821337Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8829560Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8880638Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8881641Z ##[group]Disabling automatic garbage collection
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8885139Z [command]/usr/bin/git config --local gc.auto 0
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8948626Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8949858Z ##[group]Setting up auth
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.8956470Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9047492Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9442703Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9481871Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9677759Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9711150Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9907767Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9951923Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9953712Z ##[group]Fetching the repository
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:11:52.9967251Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cd665d0a696f0367767cb2b217f010156f93ee38:refs/remotes/origin/reproduction/native-fused-rmsnorm-scheduler
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3568271Z From https://github.com/harsh-nod/lark
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3571886Z  * [new ref]         cd665d0a696f0367767cb2b217f010156f93ee38 -> origin/reproduction/native-fused-rmsnorm-scheduler
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3577704Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3580205Z ##[group]Determining the checkout info
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3582541Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3583876Z [command]/usr/bin/git sparse-checkout disable
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3740134Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3773377Z ##[group]Checking out the ref
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:08.3778093Z [command]/usr/bin/git checkout --progress --force -B reproduction/native-fused-rmsnorm-scheduler refs/remotes/origin/reproduction/native-fused-rmsnorm-scheduler
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.3885919Z Updating files:  85% (3085/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.3893118Z Updating files:  86% (3115/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.3901243Z Updating files:  87% (3152/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4033415Z Updating files:  88% (3188/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4099648Z Updating files:  89% (3224/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4134454Z Updating files:  90% (3260/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4142979Z Updating files:  91% (3297/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4151256Z Updating files:  92% (3333/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4190367Z Updating files:  93% (3369/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4341611Z Updating files:  94% (3405/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4381999Z Updating files:  95% (3441/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4433450Z Updating files:  96% (3478/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4469294Z Updating files:  97% (3514/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4485326Z Updating files:  98% (3550/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4501873Z Updating files:  99% (3586/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4504726Z Updating files: 100% (3622/3622)
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4505524Z Updating files: 100% (3622/3622), done.
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4561758Z Switched to a new branch 'reproduction/native-fused-rmsnorm-scheduler'
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4568171Z branch 'reproduction/native-fused-rmsnorm-scheduler' set up to track 'origin/reproduction/native-fused-rmsnorm-scheduler'.
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4631397Z ##[endgroup]
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4677428Z [command]/usr/bin/git log -1 --format=%H
+exact-real	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:12:09.4702909Z cd665d0a696f0367767cb2b217f010156f93ee38
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	﻿2026-11-11T05:12:09.4987534Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4988186Z with:
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4988544Z   python-version: 3.12
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4988919Z   check-latest: false
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4991490Z   token: ***
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4991857Z   update-environment: true
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4992329Z   allow-prereleases: false
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4992711Z   freethreaded: false
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.4993284Z ##[endgroup]
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.6381815Z ##[group]Installed versions
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.6487597Z (node:2336) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.6489093Z (Use `node --trace-deprecation ...` to show where the warning was created)
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.6489958Z Successfully set up CPython (3.12.16)
+exact-real	Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:12:09.6490920Z ##[endgroup]
+exact-real	Install pinned Lean toolchain	﻿2026-11-11T05:12:09.6651456Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6653191Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6654289Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6654875Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6690848Z shell: /usr/bin/bash -e {0}
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6691392Z env:
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6691834Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6692473Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6693352Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6693891Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6694496Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6695136Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.6695634Z ##[endgroup]
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:09.7399737Z info: downloading installer
+exact-real	Install pinned Lean toolchain	2026-11-11T05:12:10.3074834Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+exact-real	Fetch locked optional dependencies	﻿2026-11-11T05:12:10.3260018Z ##[group]Run MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3260548Z [36;1mMATHLIB_NO_CACHE_ON_UPDATE=1 lake update[0m
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3261015Z [36;1mgit diff --exit-code -- lake-manifest.json[0m
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3278100Z shell: /usr/bin/bash -e {0}
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3278509Z env:
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3278939Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3279471Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3280005Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3280459Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3280915Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3281400Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:10.3281980Z ##[endgroup]
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:11.0987005Z info: downloading https://releases.lean-lang.org/lean4/v4.19.0/lean-4.19.0-linux.tar.zst
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:16.6538870Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.19.0
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:54.0566660Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:54.0568173Z info: mathlib: checking out revision 'c44e0c8ee63ca166450922a373c7409c5d26b00b'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:54.0569137Z info: toolchain not updated; already up-to-date
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:54.8913999Z warning: lark: ignoring missing manifest './././../lean/lake-manifest.json'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:56.4302065Z info: plausible: cloning https://github.com/leanprover-community/plausible
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:56.4303732Z info: plausible: checking out revision '77e08eddc486491d7b9e470926b3dbe50319451a'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:57.4501928Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:57.4503171Z info: LeanSearchClient: checking out revision '25078369972d295301f5a1e53c3e5850cf6d9d4c'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:58.0426166Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:58.0427303Z info: importGraph: checking out revision 'e6a9f0f5ee3ccf7443a0070f92b62f8db12ae82b'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:58.6505170Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:58.6506397Z info: proofwidgets: checking out revision 'c4919189477c3221e6a204008998b0d724f49904'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:59.8863603Z info: aesop: cloning https://github.com/leanprover-community/aesop
+exact-real	Fetch locked optional dependencies	2026-11-11T05:12:59.8864700Z info: aesop: checking out revision '5d50b08dedd7d69b3d9b3176e0d58a23af228884'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:00.3081027Z info: Qq: cloning https://github.com/leanprover-community/quote4
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:00.3082032Z info: Qq: checking out revision 'fa4f7f15d97591a9cf3aa7724ba371c7fc6dda02'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:03.0476128Z info: batteries: cloning https://github.com/leanprover-community/batteries
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:03.0477428Z info: batteries: checking out revision 'f5d04a9c4973d401c8c92500711518f7c656f034'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:03.5116839Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:03.5117621Z info: Cli: checking out revision '02dbd02bc00ec4916e99b04b2245b30200e200d0'
+exact-real	Fetch locked optional dependencies	2026-11-11T05:13:03.5135559Z info: mathlib: running post-update hooks
+exact-real	Fetch selected Mathlib cache	﻿2026-11-11T05:13:04.1946727Z ##[group]Run lake exe cache get Mathlib.Data.Complex.Trigonometric \
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1947371Z [36;1mlake exe cache get Mathlib.Data.Complex.Trigonometric \[0m
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1947853Z [36;1m  Mathlib.Analysis.SpecialFunctions.Sqrt \[0m
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1948473Z [36;1m  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \[0m
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1949168Z [36;1m  Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring[0m
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1964384Z shell: /usr/bin/bash -e {0}
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1964742Z env:
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1965129Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1965686Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1966218Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1966706Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1967203Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1967781Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.1968219Z ##[endgroup]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.6934130Z ✔ [2/12] Built Cache.Lean
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:04.8937329Z ✔ [3/12] Built Cache.Lean:c.o
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:06.0951190Z ✔ [4/12] Built Cache.IO
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:06.8985053Z ✔ [5/12] Built Cache.Hashing
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:08.2001344Z ✔ [6/12] Built Cache.Requests
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:08.4030465Z ✔ [7/12] Built Cache.Hashing:c.o
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:09.0010820Z ✔ [8/12] Built Cache.IO:c.o
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:09.1012486Z ✔ [9/12] Built Cache.Main
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:09.5018023Z ✔ [10/12] Built Cache.Requests:c.o
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:09.8021651Z ✔ [11/12] Built Cache.Main:c.o
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:10.5029922Z ✔ [12/12] Built cache
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0340639Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0341477Z                                  Dload  Upload   Total   Spent    Left  Speed
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0341858Z 
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0342132Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0342954Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0343329Z 
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0343699Z 100 1075k  100 1075k    0     0  4721k      0 --:--:-- --:--:-- --:--:-- 4721k
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0344081Z 
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:12.0704610Z installing leantar 0.1.15
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:13.1676930Z Attempting to download 1798 file(s)
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.3801053Z 
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.4806798Z Downloaded: 1 file(s) [attempted 1/1798 = 0%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.5907464Z Downloaded: 78 file(s) [attempted 78/1798 = 4%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.6926303Z Downloaded: 200 file(s) [attempted 200/1798 = 11%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.7928162Z Downloaded: 323 file(s) [attempted 323/1798 = 17%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.8925424Z Downloaded: 435 file(s) [attempted 435/1798 = 24%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:14.9935410Z Downloaded: 555 file(s) [attempted 555/1798 = 30%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.0937879Z Downloaded: 681 file(s) [attempted 681/1798 = 37%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.1939196Z Downloaded: 786 file(s) [attempted 786/1798 = 43%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.2952235Z Downloaded: 911 file(s) [attempted 911/1798 = 50%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.3949933Z Downloaded: 1023 file(s) [attempted 1023/1798 = 56%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.4951103Z Downloaded: 1141 file(s) [attempted 1141/1798 = 63%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.5945095Z Downloaded: 1262 file(s) [attempted 1262/1798 = 70%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.6989376Z Downloaded: 1379 file(s) [attempted 1379/1798 = 76%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.7985657Z Downloaded: 1501 file(s) [attempted 1501/1798 = 83%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.9007476Z Downloaded: 1625 file(s) [attempted 1625/1798 = 90%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.9746607Z Downloaded: 1747 file(s) [attempted 1747/1798 = 97%]
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:15.9747372Z Downloaded: 1798 file(s) [attempted 1798/1798 = 100%] (100% success)
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:19.9614704Z Decompressing 1798 file(s)
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:19.9615298Z Unpacked in 3981 ms
+exact-real	Fetch selected Mathlib cache	2026-11-11T05:13:19.9615934Z Completed successfully!
+exact-real	Check source-bound real wave reduction and tamper controls	﻿2026-11-11T05:13:20.0493460Z ##[group]Run LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0494259Z [36;1mLARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v[0m
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0509270Z shell: /usr/bin/bash -e {0}
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0509610Z env:
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0510052Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0510590Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0511104Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0511591Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0512058Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0512552Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:13:20.0513081Z ##[endgroup]
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:10.3446395Z test_certificate_build_files_and_cached_objects_are_ignored (test_wave_sum.WaveSumProofTests.test_certificate_build_files_and_cached_objects_are_ignored) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:16.5778300Z test_export_and_fresh_global_check (test_wave_sum.WaveSumProofTests.test_export_and_fresh_global_check) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:16.5851282Z test_fully_rehashed_reference_change_fails_global_check (test_wave_sum.WaveSumProofTests.test_fully_rehashed_reference_change_fails_global_check) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:22.7020694Z test_last_reference_cell_change_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_last_reference_cell_change_is_rejected_by_lean) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8803262Z test_wrong_shuffle_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_wrong_shuffle_is_rejected_by_lean) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8897500Z test_changed_reference_source_geometry_and_precision_refused (test_wave_sum.WaveSumReaderTests.test_changed_reference_source_geometry_and_precision_refused) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8926559Z test_full_program_and_all_reference_cells (test_wave_sum.WaveSumReaderTests.test_full_program_and_all_reference_cells) ... ok
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8927255Z 
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8927505Z ----------------------------------------------------------------------
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8927932Z Ran 7 tests in 68.117s
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8928231Z 
+exact-real	Check source-bound real wave reduction and tamper controls	2026-11-11T05:14:28.8928345Z OK
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	﻿2026-11-11T05:14:28.9075565Z ##[group]Run LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_native_rmsnorm.py -v
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9076483Z [36;1mLARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_native_rmsnorm.py -v[0m
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9092330Z shell: /usr/bin/bash -e {0}
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9092911Z env:
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9093421Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9094104Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9094630Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9095111Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9095583Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9096141Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9096620Z ##[endgroup]
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9951042Z test_closed_reference_denies_changed_math (test_native_rmsnorm.NativeContractTests.test_closed_reference_denies_changed_math) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9955134Z test_large_profile_is_explicit_and_bounded (test_native_rmsnorm.NativeContractTests.test_large_profile_is_explicit_and_bounded) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:14:28.9958622Z test_wrong_launch_dtype_and_weight_contracts (test_native_rmsnorm.NativeContractTests.test_wrong_launch_dtype_and_weight_contracts) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:02.3731350Z test_certificate_and_recheck_at_all_validation_row_counts (test_native_rmsnorm.NativeProofTests.test_certificate_and_recheck_at_all_validation_row_counts) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.1272018Z test_modified_source_programs_are_rejected_directly_by_lean (test_native_rmsnorm.NativeProofTests.test_modified_source_programs_are_rejected_directly_by_lean) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.2262433Z test_rehashed_source_theorem_model_and_scope_tampering (test_native_rmsnorm.NativeProofTests.test_rehashed_source_theorem_model_and_scope_tampering) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.2441069Z test_rehashed_task_cannot_rebind_the_proved_shape (test_native_rmsnorm.NativeProofTests.test_rehashed_task_cannot_rebind_the_proved_shape) ... ok
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.3025712Z 
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.3026360Z ----------------------------------------------------------------------
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.3027016Z Ran 7 tests in 167.322s
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.3027401Z 
+exact-real	Check source-bound native RMSNorm certificates and tamper controls	2026-11-11T05:17:16.3027540Z OK
+exact-real	Check real interpretation, machine specializations and algebra controls	﻿2026-11-11T05:17:16.3172367Z ##[group]Run python3 reproduction/exact_real/run.py --output /tmp/lark-exact-real
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3173225Z [36;1mpython3 reproduction/exact_real/run.py --output /tmp/lark-exact-real[0m
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3189301Z shell: /usr/bin/bash -e {0}
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3189658Z env:
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3190003Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3190516Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3191067Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3191608Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3192063Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3192505Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:17:16.3193096Z ##[endgroup]
+exact-real	Check real interpretation, machine specializations and algebra controls	2026-11-11T05:18:03.6924090Z {"status": "passed", "axiom_audits": 6, "positive_control": 1, "negative_controls": 3, "new_source_certificates": 0, "new_gpu_trials": 0, "model_calls": 0}
+exact-real	Check native RMSNorm canonical-real whole launch	﻿2026-11-11T05:18:03.7043981Z ##[group]Run lake build LarkReal.NativeRmsNorm
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7044744Z [36;1mlake build LarkReal.NativeRmsNorm[0m
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7065278Z shell: /usr/bin/bash -e {0}
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7065795Z env:
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7066320Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7067183Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7068003Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7068734Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7069470Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7070309Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:03.7070989Z ##[endgroup]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.0864784Z ℹ [3/257] Replayed Lark.Collective
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.0924415Z info: ./././../lean/././Lark/Collective.lean:214:0: 'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.0954197Z info: ./././../lean/././Lark/Collective.lean:215:0: 'LarkCollective.runShuffle_preserves' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.0984035Z info: ./././../lean/././Lark/Collective.lean:216:0: 'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1044000Z ℹ [4/257] Replayed Lark.CollectiveGather
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1074065Z info: ./././../lean/././Lark/CollectiveGather.lean:34:0: 'LarkCollective.Gather.values_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1133678Z ℹ [5/257] Replayed Lark.Pointwise
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1163954Z info: ./././../lean/././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1221276Z ℹ [6/257] Replayed Lark.Reduction
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1253831Z info: ./././../lean/././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1313738Z info: ./././../lean/././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1404007Z info: ./././../lean/././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1434212Z info: ./././../lean/././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1493983Z info: ./././../lean/././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1553979Z ℹ [7/257] Replayed Lark.ScalarLaunch
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1604032Z info: ./././../lean/././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1643657Z ℹ [8/257] Replayed Lark.DotLoop
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1663864Z info: ./././../lean/././Lark/DotLoop.lean:620:0: 'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1723774Z info: ./././../lean/././Lark/DotLoop.lean:621:0: 'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1829035Z info: ./././../lean/././Lark/DotLoop.lean:622:0: 'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1873896Z info: ./././../lean/././Lark/DotLoop.lean:623:0: 'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1933892Z info: ./././../lean/././Lark/DotLoop.lean:624:0: 'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.1963720Z ℹ [9/257] Replayed Lark.Matrix
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2023909Z info: ./././../lean/././Lark/Matrix.lean:190:0: 'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2043982Z info: ./././../lean/././Lark/Matrix.lean:191:0: 'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2116800Z info: ./././../lean/././Lark/Matrix.lean:192:0: 'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2135527Z info: ./././../lean/././Lark/Matrix.lean:193:0: 'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2173917Z info: ./././../lean/././Lark/Matrix.lean:194:0: 'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2223782Z ℹ [10/257] Replayed Lark.Silu
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2294091Z info: ./././../lean/././Lark/Silu.lean:692:0: 'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2324324Z info: ./././../lean/././Lark/Silu.lean:693:0: 'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.2353847Z info: ./././../lean/././Lark/Silu.lean:694:0: 'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8887050Z ℹ [1544/1786] Built Lark.PartitionCollective
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8888360Z info: ./././../lean/././Lark/PartitionCollective.lean:145:0: 'LarkPartitionCollective.runShuffle_preserves' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8890091Z info: ./././../lean/././Lark/PartitionCollective.lean:146:0: 'LarkPartitionCollective.nextCohort_subset' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8891722Z info: ./././../lean/././Lark/PartitionCollective.lean:147:0: 'LarkPartitionCollective.nextCohort_nonempty' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8893015Z ℹ [1545/1786] Built Lark.DownReduction
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8893996Z info: ./././../lean/././Lark/DownReduction.lean:79:0: 'LarkDownReduction.source_down' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8895310Z info: ./././../lean/././Lark/DownReduction.lean:80:0: 'LarkDownReduction.complete_subtree' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.8897198Z info: ./././../lean/././Lark/DownReduction.lean:81:0: 'LarkDownReduction.leaves_range' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9894351Z ℹ [1728/1878] Built Lark.VectorStride
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9895550Z info: ./././../lean/././Lark/VectorStride.lean:138:0: 'LarkVectorStride.coverage' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9897153Z info: ./././../lean/././Lark/VectorStride.lean:139:0: 'LarkVectorStride.address_writer' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9898532Z info: ./././../lean/././Lark/VectorStride.lean:140:0: 'LarkVectorStride.int32_address' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9899564Z ℹ [1821/1878] Replayed LarkReal.Ops
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9900464Z info: ././././LarkReal/Ops.lean:133:0: 'LarkReal.silu_result' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9901713Z info: ././././LarkReal/Ops.lean:134:0: 'LarkReal.silu_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9903248Z info: ././././LarkReal/Ops.lean:135:0: 'LarkReal.dot_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9904540Z info: ././././LarkReal/Ops.lean:136:0: 'LarkReal.tree_permutation' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9905809Z info: ././././LarkReal/Ops.lean:137:0: 'LarkReal.chunk_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:04.9907010Z info: ././././LarkReal/Ops.lean:138:0: 'LarkReal.universal_reassociation_impossible' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:05.8904384Z ℹ [1822/1878] Built Lark.ReductionFootprint
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:05.8905704Z info: ./././../lean/././Lark/ReductionFootprint.lean:118:0: 'LarkReductionFootprint.partial_threads_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:05.8907475Z info: ./././../lean/././Lark/ReductionFootprint.lean:119:0: 'LarkReductionFootprint.race_free' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.3910863Z ℹ [1823/1878] Built Lark.NativeRmsNormProgram
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.3912735Z info: ./././../lean/././Lark/NativeRmsNormProgram.lean:92:0: 'LarkNativeRmsNorm.first_shuffle' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.3914468Z info: ./././../lean/././Lark/NativeRmsNormProgram.lean:93:0: 'LarkNativeRmsNorm.final_shuffle' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.7907050Z ℹ [1824/1878] Built Lark.NativeRmsNormValue
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.7908195Z info: ./././../lean/././Lark/NativeRmsNormValue.lean:61:0: 'LarkNativeRmsNorm.warp_sum_tree' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.7909760Z info: ./././../lean/././Lark/NativeRmsNormValue.lean:62:0: 'LarkNativeRmsNorm.block_sum_tree' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:06.7911022Z info: ./././../lean/././Lark/NativeRmsNormValue.lean:63:0: 'LarkNativeRmsNorm.thread_cells_bound' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8957478Z ℹ [1825/1878] Built Lark.NativeRmsNormInit
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8959196Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:172:0: 'LarkNativeRmsNorm.initialized_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8961335Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:173:0: 'LarkNativeRmsNorm.indexed_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8963238Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:174:0: 'LarkNativeRmsNorm.indexedAt_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8964946Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:175:0: 'LarkNativeRmsNorm.initialized_preserves' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8966648Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:176:0: 'LarkNativeRmsNorm.initialized_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8968246Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:177:0: 'LarkNativeRmsNorm.initialized_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:08.8970313Z info: ./././../lean/././Lark/NativeRmsNormInit.lean:178:0: 'LarkNativeRmsNorm.initialized_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1972514Z ℹ [1826/1878] Built Lark.NativeRmsNormAddress
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1973859Z info: ./././../lean/././Lark/NativeRmsNormAddress.lean:112:0: 'LarkNativeRmsNorm.initial_reads' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1975333Z info: ./././../lean/././Lark/NativeRmsNormAddress.lean:113:0: 'LarkNativeRmsNorm.eval_row_address' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1976617Z info: ./././../lean/././Lark/NativeRmsNormAddress.lean:114:0: 'LarkNativeRmsNorm.load_input' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1977579Z info: ./././../lean/././Lark/NativeRmsNormAddress.lean:115:0: 'LarkNativeRmsNorm.load_weight' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:11.1978598Z info: ./././../lean/././Lark/NativeRmsNormAddress.lean:116:0: 'LarkNativeRmsNorm.input_access_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5018603Z ℹ [1827/1878] Built Lark.NativeRmsNormAccumulate
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5019963Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:282:0: 'LarkNativeRmsNorm.component_cycle' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5021513Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:283:0: 'LarkNativeRmsNorm.component_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5022686Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:284:0: 'LarkNativeRmsNorm.component_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5023951Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:285:0: 'LarkNativeRmsNorm.components_run_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5024887Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:286:0: 'LarkNativeRmsNorm.components_acc' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:13.5025811Z info: ./././../lean/././Lark/NativeRmsNormAccumulate.lean:287:0: 'LarkNativeRmsNorm.components_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:25.6165305Z ℹ [1828/1878] Built Lark.NativeRmsNormVectors
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:25.6167427Z info: ./././../lean/././Lark/NativeRmsNormVectors.lean:251:0: 'LarkNativeRmsNorm.vector_cycle' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:25.6169189Z info: ./././../lean/././Lark/NativeRmsNormVectors.lean:252:0: 'LarkNativeRmsNorm.two_vectors_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:25.6170962Z info: ./././../lean/././Lark/NativeRmsNormVectors.lean:253:0: 'LarkNativeRmsNorm.two_vectors_sum' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:25.6172527Z info: ./././../lean/././Lark/NativeRmsNormVectors.lean:254:0: 'LarkNativeRmsNorm.two_vectors_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.0178627Z ℹ [1829/1878] Built Lark.NativeRmsNormPrefix
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.0180423Z info: ./././../lean/././Lark/NativeRmsNormPrefix.lean:107:0: 'LarkNativeRmsNorm.prefix_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.0182190Z info: ./././../lean/././Lark/NativeRmsNormPrefix.lean:108:0: 'LarkNativeRmsNorm.prefix_acc' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.0184077Z info: ./././../lean/././Lark/NativeRmsNormPrefix.lean:109:0: 'LarkNativeRmsNorm.prefix_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.0185810Z info: ./././../lean/././Lark/NativeRmsNormPrefix.lean:110:0: 'LarkNativeRmsNorm.prefix_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.5214706Z ℹ [1830/1878] Built Lark.NativeRmsNormPrefixFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.5237694Z info: ./././../lean/././Lark/NativeRmsNormPrefixFold.lean:94:0: 'LarkNativeRmsNorm.prefix_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.5256331Z info: ./././../lean/././Lark/NativeRmsNormPrefixFold.lean:95:0: 'LarkNativeRmsNorm.prefix_fold_member' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:26.5270918Z info: ./././../lean/././Lark/NativeRmsNormPrefixFold.lean:96:0: 'LarkNativeRmsNorm.prefix_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6250774Z ℹ [1831/1878] Built Lark.NativeRmsNormShuffle
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6252199Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:290:0: 'LarkNativeRmsNorm.cohort_complete' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6253928Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:291:0: 'LarkNativeRmsNorm.cohort_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6255413Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:292:0: 'LarkNativeRmsNorm.cohort_read' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6256933Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:293:0: 'LarkNativeRmsNorm.cohort_down_shuffle' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6258497Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:294:0: 'LarkNativeRmsNorm.cohort_shuffled_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6260027Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:295:0: 'LarkNativeRmsNorm.cohort_shuffled_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6261414Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:296:0: 'LarkNativeRmsNorm.cohort_next' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:31.6262917Z info: ./././../lean/././Lark/NativeRmsNormShuffle.lean:297:0: 'LarkNativeRmsNorm.cohort_native_threads' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.2260939Z ℹ [1832/1878] Built Lark.NativeRmsNormGuard
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.2261994Z info: ./././../lean/././Lark/NativeRmsNormGuard.lean:136:0: 'LarkNativeRmsNorm.guarded_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.2263051Z info: ./././../lean/././Lark/NativeRmsNormGuard.lean:137:0: 'LarkNativeRmsNorm.guarded_preserves' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.2263852Z info: ./././../lean/././Lark/NativeRmsNormGuard.lean:138:0: 'LarkNativeRmsNorm.guarded_acc' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.6268179Z ℹ [1833/1878] Built Lark.NativeRmsNormGuardFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.6270202Z info: ./././../lean/././Lark/NativeRmsNormGuardFold.lean:126:0: 'LarkNativeRmsNorm.guarded_lane' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.6272099Z info: ./././../lean/././Lark/NativeRmsNormGuardFold.lean:127:0: 'LarkNativeRmsNorm.guarded_fold_member' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:32.6273880Z info: ./././../lean/././Lark/NativeRmsNormGuardFold.lean:128:0: 'LarkNativeRmsNorm.guarded_fold_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3276913Z ℹ [1834/1878] Built Lark.NativeRmsNormStage
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3278389Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:191:0: 'LarkNativeRmsNorm.cohort_step_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3279812Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:192:0: 'LarkNativeRmsNorm.cohort_step_preserves' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3281228Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:193:0: 'LarkNativeRmsNorm.cohort_step_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3282616Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:194:0: 'LarkNativeRmsNorm.cohort_step_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3284302Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:195:0: 'LarkNativeRmsNorm.first_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:33.3285817Z info: ./././../lean/././Lark/NativeRmsNormStage.lean:196:0: 'LarkNativeRmsNorm.final_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.0291146Z ℹ [1835/1878] Built Lark.NativeRmsNormFirstStage
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.0292252Z info: ./././../lean/././Lark/NativeRmsNormFirstStage.lean:126:0: 'LarkNativeRmsNorm.prefix_cohort_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.0293650Z info: ./././../lean/././Lark/NativeRmsNormFirstStage.lean:127:0: 'LarkNativeRmsNorm.first_stage_from_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7301202Z ℹ [1836/1878] Built Lark.NativeRmsNormPartial
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7302982Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:218:0: 'LarkNativeRmsNorm.partial_store_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7305425Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:219:0: 'LarkNativeRmsNorm.partial_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7307062Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:220:0: 'LarkNativeRmsNorm.partial_reads' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7308938Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:221:0: 'LarkNativeRmsNorm.partial_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7310824Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:222:0: 'LarkNativeRmsNorm.first_last_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7313022Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:223:0: 'LarkNativeRmsNorm.first_last_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:34.7314724Z info: ./././../lean/././Lark/NativeRmsNormPartial.lean:224:0: 'LarkNativeRmsNorm.first_last_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3308006Z ℹ [1837/1878] Built Lark.NativeRmsNormLastFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3309147Z info: ./././../lean/././Lark/NativeRmsNormLastFold.lean:160:0: 'LarkNativeRmsNorm.first_last_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3310184Z info: ./././../lean/././Lark/NativeRmsNormLastFold.lean:161:0: 'LarkNativeRmsNorm.first_last_fold_member' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3311527Z info: ./././../lean/././Lark/NativeRmsNormLastFold.lean:162:0: 'LarkNativeRmsNorm.first_last_fold_reads' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3312544Z info: ./././../lean/././Lark/NativeRmsNormLastFold.lean:163:0: 'LarkNativeRmsNorm.first_last_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:35.3313737Z info: ./././../lean/././Lark/NativeRmsNormLastFold.lean:164:0: 'LarkNativeRmsNorm.last_cohort_partial' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2326071Z ℹ [1838/1878] Built Lark.NativeRmsNormLastWave
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2327804Z info: ./././../lean/././Lark/NativeRmsNormLastWave.lean:184:0: 'LarkNativeRmsNorm.last_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2329557Z info: ./././../lean/././Lark/NativeRmsNormLastWave.lean:185:0: 'LarkNativeRmsNorm.last_wave_partial' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2331026Z info: ./././../lean/././Lark/NativeRmsNormLastWave.lean:186:0: 'LarkNativeRmsNorm.last_wave_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2332849Z info: ./././../lean/././Lark/NativeRmsNormLastWave.lean:187:0: 'LarkNativeRmsNorm.cohort_first_barrier' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.2334501Z info: ./././../lean/././Lark/NativeRmsNormLastWave.lean:188:0: 'LarkNativeRmsNorm.last_wave_warp' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.5320196Z ℹ [1839/1878] Built Lark.NativeRmsNormSchedule
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.5321027Z info: ./././../lean/././Lark/NativeRmsNormSchedule.lean:64:0: 'LarkNativeRmsNorm.runWarp_continue' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:36.5321887Z info: ./././../lean/././Lark/NativeRmsNormSchedule.lean:65:0: 'LarkNativeRmsNorm.continue_fold' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8338307Z ℹ [1840/1878] Built Lark.NativeRmsNormFirstWave
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8340586Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:223:0: 'LarkNativeRmsNorm.first_ready_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8342466Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:224:0: 'LarkNativeRmsNorm.continue_wave_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8344402Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:225:0: 'LarkNativeRmsNorm.first_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8345533Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:226:0: 'LarkNativeRmsNorm.wave_tail_partial' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8346397Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:227:0: 'LarkNativeRmsNorm.wave_tail_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:37.8347376Z info: ./././../lean/././Lark/NativeRmsNormFirstWave.lean:228:0: 'LarkNativeRmsNorm.first_wave_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:39.3379191Z ℹ [1841/1878] Built Lark.NativeRmsNormWaveFrame
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:39.3380085Z info: ./././../lean/././Lark/NativeRmsNormWaveFrame.lean:144:0: 'LarkNativeRmsNorm.first_wave_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:39.3381087Z info: ./././../lean/././Lark/NativeRmsNormWaveFrame.lean:145:0: 'LarkNativeRmsNorm.first_wave_memory_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5409812Z ℹ [1842/1878] Built Lark.NativeRmsNormFirstBlock
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5411782Z info: ./././../lean/././Lark/NativeRmsNormFirstBlock.lean:222:0: 'LarkNativeRmsNorm.wave_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5413834Z info: ./././../lean/././Lark/NativeRmsNormFirstBlock.lean:223:0: 'LarkNativeRmsNorm.wave_fold_partial' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5415584Z info: ./././../lean/././Lark/NativeRmsNormFirstBlock.lean:224:0: 'LarkNativeRmsNorm.wave_fold_member' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5417734Z info: ./././../lean/././Lark/NativeRmsNormFirstBlock.lean:225:0: 'LarkNativeRmsNorm.wave_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:18:41.5419643Z info: ./././../lean/././Lark/NativeRmsNormFirstBlock.lean:226:0: 'LarkNativeRmsNorm.first_block_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.1669630Z ℹ [1843/1878] Built Lark.NativeRmsNormBarrier
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.1670863Z info: ./././../lean/././Lark/NativeRmsNormBarrier.lean:67:0: 'LarkNativeRmsNorm.block_first_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.1673253Z info: ./././../lean/././Lark/NativeRmsNormBarrier.lean:68:0: 'LarkNativeRmsNorm.mid_ready_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.7676879Z ℹ [1844/1878] Built Lark.NativeRmsNormMidEntry
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.7678014Z info: ./././../lean/././Lark/NativeRmsNormMidEntry.lean:135:0: 'LarkNativeRmsNorm.mid_enter_active' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.7678979Z info: ./././../lean/././Lark/NativeRmsNormMidEntry.lean:136:0: 'LarkNativeRmsNorm.mid_enter_inactive' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:08.7679946Z info: ./././../lean/././Lark/NativeRmsNormMidEntry.lean:137:0: 'LarkNativeRmsNorm.mid_entry_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.0680522Z ℹ [1845/1878] Built Lark.NativeRmsNormMidFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.0681550Z info: ./././../lean/././Lark/NativeRmsNormMidFold.lean:109:0: 'LarkNativeRmsNorm.mid_fold_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.0683044Z info: ./././../lean/././Lark/NativeRmsNormMidFold.lean:110:0: 'LarkNativeRmsNorm.mid_fold_acc' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.0684105Z info: ./././../lean/././Lark/NativeRmsNormMidFold.lean:111:0: 'LarkNativeRmsNorm.mid_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.8702402Z ℹ [1846/1878] Built Lark.NativeRmsNormMidNative
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.8703959Z info: ./././../lean/././Lark/NativeRmsNormMidNative.lean:109:0: 'LarkNativeRmsNorm.mid_native_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.8705794Z info: ./././../lean/././Lark/NativeRmsNormMidNative.lean:110:0: 'LarkNativeRmsNorm.mid_native_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.8707425Z info: ./././../lean/././Lark/NativeRmsNormMidNative.lean:111:0: 'LarkNativeRmsNorm.mid_native_inactive' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:09.8708980Z info: ./././../lean/././Lark/NativeRmsNormMidNative.lean:112:0: 'LarkNativeRmsNorm.mid_native_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.3710192Z ℹ [1847/1878] Built Lark.NativeRmsNormMixed
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.3711372Z info: ./././../lean/././Lark/NativeRmsNormMixed.lean:121:0: 'LarkNativeRmsNorm.mixed_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.3712372Z info: ./././../lean/././Lark/NativeRmsNormMixed.lean:122:0: 'LarkNativeRmsNorm.shuffle_physical_fold' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.3713619Z info: ./././../lean/././Lark/NativeRmsNormMixed.lean:123:0: 'LarkNativeRmsNorm.mid_mixed_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.6714534Z ℹ [1848/1878] Built Lark.NativeRmsNormMixedStage
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.6715617Z info: ./././../lean/././Lark/NativeRmsNormMixedStage.lean:48:0: 'LarkNativeRmsNorm.mixed_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:10.6716632Z info: ./././../lean/././Lark/NativeRmsNormMixedStage.lean:49:0: 'LarkNativeRmsNorm.mixed_step_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.2730083Z ℹ [1849/1878] Built Lark.NativeRmsNormScaleStore
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.2731348Z info: ./././../lean/././Lark/NativeRmsNormScaleStore.lean:125:0: 'LarkNativeRmsNorm.eval_scale' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.2735535Z info: ./././../lean/././Lark/NativeRmsNormScaleStore.lean:126:0: 'LarkNativeRmsNorm.scale_store_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.2736733Z info: ./././../lean/././Lark/NativeRmsNormScaleStore.lean:127:0: 'LarkNativeRmsNorm.scale_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.2737636Z info: ./././../lean/././Lark/NativeRmsNormScaleStore.lean:128:0: 'LarkNativeRmsNorm.scale_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.6734729Z ℹ [1850/1878] Built Lark.NativeRmsNormLogicalLast
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.6736212Z info: ./././../lean/././Lark/NativeRmsNormLogicalLast.lean:91:0: 'LarkNativeRmsNorm.logical_last_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.6737770Z info: ./././../lean/././Lark/NativeRmsNormLogicalLast.lean:92:0: 'LarkNativeRmsNorm.logical_last_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:11.6739170Z info: ./././../lean/././Lark/NativeRmsNormLogicalLast.lean:93:0: 'LarkNativeRmsNorm.logical_last_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:12.0741600Z ℹ [1851/1878] Built Lark.NativeRmsNormLogicalFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:12.0743198Z info: ./././../lean/././Lark/NativeRmsNormLogicalFold.lean:119:0: 'LarkNativeRmsNorm.logical_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:12.0744979Z info: ./././../lean/././Lark/NativeRmsNormLogicalFold.lean:120:0: 'LarkNativeRmsNorm.logical_fold_pc' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:12.0746492Z info: ./././../lean/././Lark/NativeRmsNormLogicalFold.lean:121:0: 'LarkNativeRmsNorm.logical_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0753641Z ℹ [1852/1878] Built Lark.NativeRmsNormLogicalFinish
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0755172Z info: ./././../lean/././Lark/NativeRmsNormLogicalFinish.lean:219:0: 'LarkNativeRmsNorm.logical_final_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0757172Z info: ./././../lean/././Lark/NativeRmsNormLogicalFinish.lean:220:0: 'LarkNativeRmsNorm.logical_final_active_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0758882Z info: ./././../lean/././Lark/NativeRmsNormLogicalFinish.lean:221:0: 'LarkNativeRmsNorm.logical_final_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0760460Z info: ./././../lean/././Lark/NativeRmsNormLogicalFinish.lean:222:0: 'LarkNativeRmsNorm.logical_final_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:13.0762147Z info: ./././../lean/././Lark/NativeRmsNormLogicalFinish.lean:223:0: 'LarkNativeRmsNorm.logical_final_warp' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4780881Z ℹ [1853/1878] Built Lark.NativeRmsNormScaleWave
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4782002Z info: ./././../lean/././Lark/NativeRmsNormScaleWave.lean:197:0: 'LarkNativeRmsNorm.scale_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4783407Z info: ./././../lean/././Lark/NativeRmsNormScaleWave.lean:198:0: 'LarkNativeRmsNorm.logical_tail_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4784381Z info: ./././../lean/././Lark/NativeRmsNormScaleWave.lean:199:0: 'LarkNativeRmsNorm.logical_tail_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4785288Z info: ./././../lean/././Lark/NativeRmsNormScaleWave.lean:200:0: 'LarkNativeRmsNorm.scale_wave_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.4786146Z info: ./././../lean/././Lark/NativeRmsNormScaleWave.lean:201:0: 'LarkNativeRmsNorm.scale_wave_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.8788039Z ℹ [1854/1878] Built Lark.NativeRmsNormSkipWave
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.8791003Z info: ./././../lean/././Lark/NativeRmsNormSkipWave.lean:86:0: 'LarkNativeRmsNorm.skip_lanes_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:14.8793405Z info: ./././../lean/././Lark/NativeRmsNormSkipWave.lean:87:0: 'LarkNativeRmsNorm.skip_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:15.3799393Z ℹ [1855/1878] Built Lark.NativeRmsNormSkipFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:15.3801494Z info: ./././../lean/././Lark/NativeRmsNormSkipFold.lean:70:0: 'LarkNativeRmsNorm.skip_waves_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:15.3803433Z info: ./././../lean/././Lark/NativeRmsNormSkipFold.lean:71:0: 'LarkNativeRmsNorm.skip_waves_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:15.3805401Z info: ./././../lean/././Lark/NativeRmsNormSkipFold.lean:72:0: 'LarkNativeRmsNorm.skip_waves_preserves' does not depend on any axioms
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:16.5814821Z ℹ [1856/1878] Built Lark.NativeRmsNormScaleBlock
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:16.5816090Z info: ./././../lean/././Lark/NativeRmsNormScaleBlock.lean:108:0: 'LarkNativeRmsNorm.scale_block_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:16.5817515Z info: ./././../lean/././Lark/NativeRmsNormScaleBlock.lean:109:0: 'LarkNativeRmsNorm.scale_block_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:16.5818607Z info: ./././../lean/././Lark/NativeRmsNormScaleBlock.lean:110:0: 'LarkNativeRmsNorm.scale_block_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:16.5819539Z info: ./././../lean/././Lark/NativeRmsNormScaleBlock.lean:111:0: 'LarkNativeRmsNorm.scale_block_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.1813351Z ℹ [1857/1878] Built Lark.NativeRmsNormOutBarrier
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.1814518Z info: ./././../lean/././Lark/NativeRmsNormOutBarrier.lean:82:0: 'LarkNativeRmsNorm.block_second_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.1815542Z info: ./././../lean/././Lark/NativeRmsNormOutBarrier.lean:83:0: 'LarkNativeRmsNorm.out_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.1816515Z info: ./././../lean/././Lark/NativeRmsNormOutBarrier.lean:84:0: 'LarkNativeRmsNorm.block_two_phases_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.5818610Z ℹ [1858/1878] Built Lark.NativeRmsNormOutputEntry
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.5819883Z info: ./././../lean/././Lark/NativeRmsNormOutputEntry.lean:71:0: 'LarkNativeRmsNorm.output_entry_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:17.5821726Z info: ./././../lean/././Lark/NativeRmsNormOutputEntry.lean:72:0: 'LarkNativeRmsNorm.output_entry_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:21.3867070Z ℹ [1859/1878] Built Lark.NativeRmsNormOutputStore
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:21.3868618Z info: ./././../lean/././Lark/NativeRmsNormOutputStore.lean:74:0: 'LarkNativeRmsNorm.output_store_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:21.3870060Z info: ./././../lean/././Lark/NativeRmsNormOutputStore.lean:75:0: 'LarkNativeRmsNorm.output_writer' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:21.3871541Z info: ./././../lean/././Lark/NativeRmsNormOutputStore.lean:76:0: 'LarkNativeRmsNorm.output_written_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:22.3907973Z ℹ [1860/1878] Built Lark.NativeRmsNormOutputComponent
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:22.3909100Z info: ./././../lean/././Lark/NativeRmsNormOutputComponent.lean:185:0: 'LarkNativeRmsNorm.output_component_cycle' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:22.3910336Z info: ./././../lean/././Lark/NativeRmsNormOutputComponent.lean:186:0: 'LarkNativeRmsNorm.output_component_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:22.3911374Z info: ./././../lean/././Lark/NativeRmsNormOutputComponent.lean:187:0: 'LarkNativeRmsNorm.output_component_reads' depends on axioms: [propext]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:22.3912498Z info: ./././../lean/././Lark/NativeRmsNormOutputComponent.lean:188:0: 'LarkNativeRmsNorm.output_component_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0911242Z ℹ [1861/1878] Built Lark.NativeRmsNormOutputLoop
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0912576Z info: ./././../lean/././Lark/NativeRmsNormOutputLoop.lean:131:0: 'LarkNativeRmsNorm.output_components_eq' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0914693Z info: ./././../lean/././Lark/NativeRmsNormOutputLoop.lean:132:0: 'LarkNativeRmsNorm.output_components_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0916519Z info: ./././../lean/././Lark/NativeRmsNormOutputLoop.lean:133:0: 'LarkNativeRmsNorm.output_components_memory_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0917930Z info: ./././../lean/././Lark/NativeRmsNormOutputLoop.lean:134:0: 'LarkNativeRmsNorm.output_components_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:23.0919556Z info: ./././../lean/././Lark/NativeRmsNormOutputLoop.lean:135:0: 'LarkNativeRmsNorm.output_components_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.0957413Z ℹ [1862/1878] Built Lark.NativeRmsNormOutputVectors
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.0959235Z info: ./././../lean/././Lark/NativeRmsNormOutputVectors.lean:105:0: 'LarkNativeRmsNorm.output_vector_cycle' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.0961113Z info: ./././../lean/././Lark/NativeRmsNormOutputVectors.lean:106:0: 'LarkNativeRmsNorm.output_vector_fields' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.0963193Z info: ./././../lean/././Lark/NativeRmsNormOutputVectors.lean:107:0: 'LarkNativeRmsNorm.output_vector_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.0965059Z info: ./././../lean/././Lark/NativeRmsNormOutputVectors.lean:108:0: 'LarkNativeRmsNorm.output_vector_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.7971090Z ℹ [1863/1878] Built Lark.NativeRmsNormOutputFrame
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.7971989Z info: ./././../lean/././Lark/NativeRmsNormOutputFrame.lean:64:0: 'LarkNativeRmsNorm.output_vector_index_frame' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.7973528Z info: ./././../lean/././Lark/NativeRmsNormOutputFrame.lean:65:0: 'LarkNativeRmsNorm.output_vector_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:27.7974618Z info: ./././../lean/././Lark/NativeRmsNormOutputFrame.lean:66:0: 'LarkNativeRmsNorm.output_vector_memory_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:29.0987053Z ℹ [1864/1878] Built Lark.NativeRmsNormOutputLane
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:29.0988059Z info: ./././../lean/././Lark/NativeRmsNormOutputLane.lean:87:0: 'LarkNativeRmsNorm.output_pair_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:29.0988975Z info: ./././../lean/././Lark/NativeRmsNormOutputLane.lean:88:0: 'LarkNativeRmsNorm.output_lane_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:29.0989921Z info: ./././../lean/././Lark/NativeRmsNormOutputLane.lean:89:0: 'LarkNativeRmsNorm.output_lane_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.1078596Z ℹ [1865/1878] Built Lark.NativeRmsNormOutputLaneFrame
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.1080033Z info: ./././../lean/././Lark/NativeRmsNormOutputLaneFrame.lean:111:0: 'LarkNativeRmsNorm.output_lane_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.1081729Z info: ./././../lean/././Lark/NativeRmsNormOutputLaneFrame.lean:112:0: 'LarkNativeRmsNorm.output_lane_memory_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.1083637Z info: ./././../lean/././Lark/NativeRmsNormOutputLaneFrame.lean:113:0: 'LarkNativeRmsNorm.output_lane_index_frame' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.1085361Z info: ./././../lean/././Lark/NativeRmsNormOutputLaneFrame.lean:114:0: 'LarkNativeRmsNorm.output_lane_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.4083189Z ℹ [1866/1878] Built Lark.NativeRmsNormOutputOwnership
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.4084991Z info: ./././../lean/././Lark/NativeRmsNormOutputOwnership.lean:56:0: 'LarkNativeRmsNorm.output_lane_memory_frame' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.4087242Z info: ./././../lean/././Lark/NativeRmsNormOutputOwnership.lean:57:0: 'LarkNativeRmsNorm.output_lane_native_indices' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.9098682Z ℹ [1867/1878] Built Lark.NativeRmsNormOutputColumn
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:37.9099698Z info: ./././../lean/././Lark/NativeRmsNormOutputColumn.lean:47:0: 'LarkNativeRmsNorm.output_lane_column_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.0100840Z ℹ [1868/1878] Built Lark.NativeRmsNormOutputFold
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.0102414Z info: ./././../lean/././Lark/NativeRmsNormOutputFold.lean:131:0: 'LarkNativeRmsNorm.output_fold_run' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.0104019Z info: ./././../lean/././Lark/NativeRmsNormOutputFold.lean:132:0: 'LarkNativeRmsNorm.output_fold_value' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.0105476Z info: ./././../lean/././Lark/NativeRmsNormOutputFold.lean:133:0: 'LarkNativeRmsNorm.output_fold_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.3116183Z ℹ [1869/1878] Built Lark.NativeRmsNormOutputWave
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.3117749Z info: ./././../lean/././Lark/NativeRmsNormOutputWave.lean:72:0: 'LarkNativeRmsNorm.cohort_halt' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:38.3119463Z info: ./././../lean/././Lark/NativeRmsNormOutputWave.lean:73:0: 'LarkNativeRmsNorm.output_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:39.4121912Z ℹ [1870/1878] Built Lark.NativeRmsNormOutputWaves
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:39.4123082Z info: ./././../lean/././Lark/NativeRmsNormOutputWaves.lean:65:0: 'LarkNativeRmsNorm.output_waves_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:39.4124273Z info: ./././../lean/././Lark/NativeRmsNormOutputWaves.lean:66:0: 'LarkNativeRmsNorm.all_output_threads' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:41.0143828Z ℹ [1871/1878] Built Lark.NativeRmsNormOutputBlock
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:41.0144928Z info: ./././../lean/././Lark/NativeRmsNormOutputBlock.lean:113:0: 'LarkNativeRmsNorm.output_block_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:41.0146029Z info: ./././../lean/././Lark/NativeRmsNormOutputBlock.lean:114:0: 'LarkNativeRmsNorm.output_block_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:41.0147066Z info: ./././../lean/././Lark/NativeRmsNormOutputBlock.lean:115:0: 'LarkNativeRmsNorm.output_block_good' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:42.8164835Z ℹ [1872/1878] Built Lark.NativeRmsNormBlock
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:42.8166337Z info: ./././../lean/././Lark/NativeRmsNormBlock.lean:91:0: 'LarkNativeRmsNorm.mid_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:42.8167354Z info: ./././../lean/././Lark/NativeRmsNormBlock.lean:92:0: 'LarkNativeRmsNorm.native_block_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:42.8168348Z info: ./././../lean/././Lark/NativeRmsNormBlock.lean:93:0: 'LarkNativeRmsNorm.native_block_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:45.4213165Z ℹ [1873/1878] Built Lark.NativeRmsNormBlockFrame
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:45.4214508Z info: ./././../lean/././Lark/NativeRmsNormBlockFrame.lean:98:0: 'LarkNativeRmsNorm.native_block_pc_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:45.4216441Z info: ./././../lean/././Lark/NativeRmsNormBlockFrame.lean:99:0: 'LarkNativeRmsNorm.native_block_epoch_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:45.4218027Z info: ./././../lean/././Lark/NativeRmsNormBlockFrame.lean:100:0: 'LarkNativeRmsNorm.native_block_entry_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:46.8229338Z ℹ [1874/1878] Built Lark.NativeRmsNormBlockMemory
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:46.8231553Z info: ./././../lean/././Lark/NativeRmsNormBlockMemory.lean:58:0: 'LarkNativeRmsNorm.native_block_value_other' depends on axioms: [propext, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.3249390Z ℹ [1875/1878] Built Lark.NativeRmsNormRows
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.3250862Z info: ./././../lean/././Lark/NativeRmsNormRows.lean:81:0: 'LarkNativeRmsNorm.native_rows_exec' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.3253228Z info: ./././../lean/././Lark/NativeRmsNormRows.lean:82:0: 'LarkNativeRmsNorm.native_rows_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.3254847Z info: ./././../lean/././Lark/NativeRmsNormRows.lean:83:0: 'LarkNativeRmsNorm.native_rows_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.9256314Z ℹ [1876/1878] Built Lark.NativeRmsNormGrid
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.9257820Z info: ./././../lean/././Lark/NativeRmsNormGrid.lean:63:0: 'LarkNativeRmsNorm.final_exec' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:49.9258777Z info: ./././../lean/././Lark/NativeRmsNormGrid.lean:64:0: 'LarkNativeRmsNorm.final_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:50.3260620Z ℹ [1877/1878] Built Lark.NativeRmsNormCorrect
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:50.3261650Z info: ./././../lean/././Lark/NativeRmsNormCorrect.lean:43:0: 'LarkNativeRmsNorm.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5306264Z ℹ [1878/1878] Built LarkReal.NativeRmsNorm
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5312163Z info: ././././LarkReal/NativeRmsNorm.lean:133:0: 'LarkReal.NativeRmsNorm.balanced_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5313886Z info: ././././LarkReal/NativeRmsNorm.lean:134:0: 'LarkReal.NativeRmsNorm.block_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5315596Z info: ././././LarkReal/NativeRmsNorm.lean:135:0: 'LarkReal.NativeRmsNorm.result_eq_canonical' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5317185Z info: ././././LarkReal/NativeRmsNorm.lean:136:0: 'LarkReal.NativeRmsNorm.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+exact-real	Check native RMSNorm canonical-real whole launch	2026-11-11T05:19:52.5318459Z Build completed successfully.
+exact-real	Check online-attention algebra and false-update counterexamples	﻿2026-11-11T05:19:52.5447646Z ##[group]Run python3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5448421Z [36;1mpython3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra[0m
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5465612Z shell: /usr/bin/bash -e {0}
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5466048Z env:
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5466427Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5466925Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5467468Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5467919Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5468359Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5468860Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:19:52.5469264Z ##[endgroup]
+exact-real	Check online-attention algebra and false-update counterexamples	2026-11-11T05:20:10.2255165Z {"status": "passed", "axiom_audits": 9, "negative_algebra_controls": 4, "proved_counterexamples": 4, "source_certificates": 0, "gpu_trials": 0, "model_calls": 0}
+exact-real	Check source-bound native attention canonical-real whole launch	﻿2026-11-11T05:20:10.2405065Z ##[group]Run python3 reproduction/online_attention/check_native_real.py --output /tmp/lark-native-attention-real
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2406373Z [36;1mpython3 reproduction/online_attention/check_native_real.py --output /tmp/lark-native-attention-real[0m
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2426688Z shell: /usr/bin/bash -e {0}
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2427736Z env:
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2428267Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2429092Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2430012Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2430738Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2431488Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2432198Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:20:10.2432984Z ##[endgroup]
+exact-real	Check source-bound native attention canonical-real whole launch	2026-11-11T05:21:44.6945612Z {"status": "native-canonical-real-whole-launch-checked", "local_lean_modules": 91, "source_certificates": 4, "false_claims_rejected": 4}
+exact-real	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	﻿2026-11-11T05:21:44.7154927Z Post job cleanup.
+exact-real	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:21:44.8442133Z (node:9524) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+exact-real	Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065	2026-11-11T05:21:44.8443099Z (Use `node --trace-deprecation ...` to show where the warning was created)
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-11T05:21:44.8630101Z Post job cleanup.
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9540424Z [command]/usr/bin/git version
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9582442Z git version 2.56.0
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9620410Z Temporarily overriding HOME='/home/runner/work/_temp/45975be2-49c9-4e4e-a279-9d6edfe69708' before making global git config changes
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9621759Z Adding repository directory to the temporary git global config as a safe directory
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9627319Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9670643Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9706200Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9950807Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9987374Z http.https://github.com/.extraheader
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:44.9998313Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:45.0037581Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:45.0283239Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+exact-real	Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-11T05:21:45.0321643Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+exact-real	Complete job	﻿2026-11-11T05:21:45.0717019Z Cleaning up orphan processes
+exact-real	Complete job	2026-11-11T05:21:45.1173763Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
