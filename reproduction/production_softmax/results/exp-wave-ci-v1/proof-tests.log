@@ -1,0 +1,1200 @@
+﻿2026-11-11T15:14:52.1920316Z Current runner version: '2.338.2'
+2026-11-11T15:14:52.1947397Z ##[group]Runner Image Provisioner
+2026-11-11T15:14:52.1948399Z Hosted Compute Agent
+2026-11-11T15:14:52.1949052Z Version: 20261028.624
+2026-11-11T15:14:52.1949704Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T15:14:52.1950598Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T15:14:52.1951379Z Worker ID: {96e72908-6607-4179-afd5-bd42ffe50a90}
+2026-11-11T15:14:52.1952180Z Region: westcentralus
+2026-11-11T15:14:52.1952901Z Cloud: Azure
+2026-11-11T15:14:52.1953476Z ##[endgroup]
+2026-11-11T15:14:52.1954944Z ##[group]Operating System
+2026-11-11T15:14:52.1955657Z Ubuntu
+2026-11-11T15:14:52.1956460Z 24.04.5
+2026-11-11T15:14:52.1957075Z LTS
+2026-11-11T15:14:52.1957781Z ##[endgroup]
+2026-11-11T15:14:52.1958642Z ##[group]Runner Image
+2026-11-11T15:14:52.1959650Z Image: ubuntu-24.04
+2026-11-11T15:14:52.1960432Z Version: 20261101.360.1
+2026-11-11T15:14:52.1961996Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-11T15:14:52.1963685Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-11T15:14:52.1964760Z ##[endgroup]
+2026-11-11T15:14:52.1966238Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T15:14:52.1968759Z Contents: read
+2026-11-11T15:14:52.1969589Z Metadata: read
+2026-11-11T15:14:52.1970361Z ##[endgroup]
+2026-11-11T15:14:52.1972790Z Secret source: Actions
+2026-11-11T15:14:52.1973896Z Cache mode: write
+2026-11-11T15:14:52.1974967Z Prepare workflow directory
+2026-11-11T15:14:52.2319415Z Prepare all required actions
+2026-11-11T15:14:52.2367981Z Getting action download info
+2026-11-11T15:14:52.5199289Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T15:14:52.6021347Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-11T15:14:52.7937243Z Complete job name: proof-tests
+2026-11-11T15:14:52.8922347Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-11T15:14:52.8923371Z with:
+2026-11-11T15:14:52.8923830Z   repository: harsh-nod/lark
+2026-11-11T15:14:52.8927806Z   token: ***
+2026-11-11T15:14:52.8928261Z   ssh-strict: true
+2026-11-11T15:14:52.8928715Z   ssh-user: git
+2026-11-11T15:14:52.8929179Z   persist-credentials: true
+2026-11-11T15:14:52.8929681Z   clean: true
+2026-11-11T15:14:52.8930138Z   sparse-checkout-cone-mode: true
+2026-11-11T15:14:52.8930666Z   fetch-depth: 1
+2026-11-11T15:14:52.8931110Z   fetch-tags: false
+2026-11-11T15:14:52.8931566Z   show-progress: true
+2026-11-11T15:14:52.8932023Z   lfs: false
+2026-11-11T15:14:52.8932454Z   submodules: false
+2026-11-11T15:14:52.8932916Z   set-safe-directory: true
+2026-11-11T15:14:52.8933425Z   allow-unsafe-pr-checkout: false
+2026-11-11T15:14:52.8934166Z ##[endgroup]
+2026-11-11T15:14:53.1036586Z Syncing repository: harsh-nod/lark
+2026-11-11T15:14:53.1039084Z ##[group]Getting Git version info
+2026-11-11T15:14:53.1039879Z Working directory is '/home/runner/work/lark/lark'
+2026-11-11T15:14:53.1040926Z [command]/usr/bin/git version
+2026-11-11T15:14:53.1090749Z git version 2.56.0
+2026-11-11T15:14:53.1113993Z ##[endgroup]
+2026-11-11T15:14:53.1129154Z Temporarily overriding HOME='/home/runner/work/_temp/066bfc5c-122c-4bab-957c-8f4c97aface1' before making global git config changes
+2026-11-11T15:14:53.1131450Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T15:14:53.1133927Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-11T15:14:53.1190870Z Deleting the contents of '/home/runner/work/lark/lark'
+2026-11-11T15:14:53.1197012Z ##[group]Initializing the repository
+2026-11-11T15:14:53.1202176Z [command]/usr/bin/git init /home/runner/work/lark/lark
+2026-11-11T15:14:53.1294690Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T15:14:53.1296787Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T15:14:53.1298665Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T15:14:53.1299792Z hint: call:
+2026-11-11T15:14:53.1300437Z hint:
+2026-11-11T15:14:53.1301224Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T15:14:53.1302144Z hint:
+2026-11-11T15:14:53.1302990Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T15:14:53.1304274Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T15:14:53.1305011Z hint:
+2026-11-11T15:14:53.1305436Z hint: 	git branch -m <name>
+2026-11-11T15:14:53.1305919Z hint:
+2026-11-11T15:14:53.1306783Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T15:14:53.1307735Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+2026-11-11T15:14:53.1323489Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+2026-11-11T15:14:53.1369342Z ##[endgroup]
+2026-11-11T15:14:53.1370241Z ##[group]Disabling automatic garbage collection
+2026-11-11T15:14:53.1375072Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T15:14:53.1422307Z ##[endgroup]
+2026-11-11T15:14:53.1423327Z ##[group]Setting up auth
+2026-11-11T15:14:53.1424088Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T15:14:53.1568991Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T15:14:53.1863147Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T15:14:53.1913100Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T15:14:53.2199391Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T15:14:53.2251459Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T15:14:53.2548355Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T15:14:53.2609767Z ##[endgroup]
+2026-11-11T15:14:53.2611059Z ##[group]Fetching the repository
+2026-11-11T15:14:53.2626243Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8ce41605022ec2b8bf4ac9db18b166c155e130d7:refs/remotes/origin/reproduction/native-softmax-exp-wave
+2026-11-11T15:15:04.9603068Z From https://github.com/harsh-nod/lark
+2026-11-11T15:15:04.9604120Z  * [new ref]         8ce41605022ec2b8bf4ac9db18b166c155e130d7 -> origin/reproduction/native-softmax-exp-wave
+2026-11-11T15:15:04.9608318Z ##[endgroup]
+2026-11-11T15:15:04.9609135Z ##[group]Determining the checkout info
+2026-11-11T15:15:04.9611225Z ##[endgroup]
+2026-11-11T15:15:04.9617625Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T15:15:04.9680735Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T15:15:04.9723547Z ##[group]Checking out the ref
+2026-11-11T15:15:04.9728758Z [command]/usr/bin/git checkout --progress --force -B reproduction/native-softmax-exp-wave refs/remotes/origin/reproduction/native-softmax-exp-wave
+2026-11-11T15:15:06.0093236Z Updating files:  67% (3554/5253)
+2026-11-11T15:15:06.0149816Z Updating files:  68% (3573/5253)
+2026-11-11T15:15:06.0183788Z Updating files:  69% (3625/5253)
+2026-11-11T15:15:06.0207440Z Updating files:  70% (3678/5253)
+2026-11-11T15:15:06.0231299Z Updating files:  71% (3730/5253)
+2026-11-11T15:15:06.0501288Z Updating files:  72% (3783/5253)
+2026-11-11T15:15:06.0534314Z Updating files:  73% (3835/5253)
+2026-11-11T15:15:06.0553382Z Updating files:  74% (3888/5253)
+2026-11-11T15:15:06.0578388Z Updating files:  75% (3940/5253)
+2026-11-11T15:15:06.0598224Z Updating files:  76% (3993/5253)
+2026-11-11T15:15:06.0622127Z Updating files:  77% (4045/5253)
+2026-11-11T15:15:06.0641335Z Updating files:  78% (4098/5253)
+2026-11-11T15:15:06.0932291Z Updating files:  79% (4150/5253)
+2026-11-11T15:15:06.0954277Z Updating files:  80% (4203/5253)
+2026-11-11T15:15:06.0984566Z Updating files:  81% (4255/5253)
+2026-11-11T15:15:06.1011448Z Updating files:  82% (4308/5253)
+2026-11-11T15:15:06.1029675Z Updating files:  83% (4360/5253)
+2026-11-11T15:15:06.1073607Z Updating files:  84% (4413/5253)
+2026-11-11T15:15:06.1097892Z Updating files:  85% (4466/5253)
+2026-11-11T15:15:06.1128686Z Updating files:  86% (4518/5253)
+2026-11-11T15:15:06.1153592Z Updating files:  87% (4571/5253)
+2026-11-11T15:15:06.1221666Z Updating files:  88% (4623/5253)
+2026-11-11T15:15:06.1289479Z Updating files:  89% (4676/5253)
+2026-11-11T15:15:06.1325001Z Updating files:  90% (4728/5253)
+2026-11-11T15:15:06.1358889Z Updating files:  91% (4781/5253)
+2026-11-11T15:15:06.1635005Z Updating files:  92% (4833/5253)
+2026-11-11T15:15:06.1699784Z Updating files:  93% (4886/5253)
+2026-11-11T15:15:06.1728407Z Updating files:  94% (4938/5253)
+2026-11-11T15:15:06.1793593Z Updating files:  95% (4991/5253)
+2026-11-11T15:15:06.1986521Z Updating files:  96% (5043/5253)
+2026-11-11T15:15:06.2085314Z Updating files:  97% (5096/5253)
+2026-11-11T15:15:06.2137580Z Updating files:  98% (5148/5253)
+2026-11-11T15:15:06.2166885Z Updating files:  99% (5201/5253)
+2026-11-11T15:15:06.2167846Z Updating files: 100% (5253/5253)
+2026-11-11T15:15:06.2168617Z Updating files: 100% (5253/5253), done.
+2026-11-11T15:15:06.2242727Z Switched to a new branch 'reproduction/native-softmax-exp-wave'
+2026-11-11T15:15:06.2248982Z branch 'reproduction/native-softmax-exp-wave' set up to track 'origin/reproduction/native-softmax-exp-wave'.
+2026-11-11T15:15:06.2368718Z ##[endgroup]
+2026-11-11T15:15:06.2428365Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T15:15:06.2468760Z 8ce41605022ec2b8bf4ac9db18b166c155e130d7
+2026-11-11T15:15:06.2766304Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-11-11T15:15:06.2766767Z with:
+2026-11-11T15:15:06.2766981Z   python-version: 3.12
+2026-11-11T15:15:06.2767234Z   check-latest: false
+2026-11-11T15:15:06.2769656Z   token: ***
+2026-11-11T15:15:06.2769880Z   update-environment: true
+2026-11-11T15:15:06.2770137Z   allow-prereleases: false
+2026-11-11T15:15:06.2770369Z   freethreaded: false
+2026-11-11T15:15:06.2770592Z ##[endgroup]
+2026-11-11T15:15:06.4253453Z ##[group]Installed versions
+2026-11-11T15:15:06.4361268Z (node:2381) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T15:15:06.4362554Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T15:15:06.4363157Z Successfully set up CPython (3.12.16)
+2026-11-11T15:15:06.4364060Z ##[endgroup]
+2026-11-11T15:15:06.4635164Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+2026-11-11T15:15:06.4637399Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+2026-11-11T15:15:06.4638735Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+2026-11-11T15:15:06.4639485Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+2026-11-11T15:15:06.4699385Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:15:06.4699852Z env:
+2026-11-11T15:15:06.4700310Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:06.4701098Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:15:06.4701829Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:06.4702485Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:06.4703234Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:06.4703873Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:15:06.4704743Z ##[endgroup]
+2026-11-11T15:15:06.6378317Z info: downloading installer
+2026-11-11T15:15:07.1601483Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+2026-11-11T15:15:07.1718464Z ##[group]Run python -m pip install -e .
+2026-11-11T15:15:07.1718848Z [36;1mpython -m pip install -e .[0m
+2026-11-11T15:15:07.1742293Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:15:07.1742557Z env:
+2026-11-11T15:15:07.1742847Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:07.1743299Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:15:07.1743737Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:07.1744140Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:07.1744526Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:07.1744916Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:15:07.1745254Z ##[endgroup]
+2026-11-11T15:15:07.8896490Z Obtaining file:///home/runner/work/lark/lark
+2026-11-11T15:15:07.8917277Z   Installing build dependencies: started
+2026-11-11T15:15:08.8059610Z   Installing build dependencies: finished with status 'done'
+2026-11-11T15:15:08.8065479Z   Checking if build backend supports build_editable: started
+2026-11-11T15:15:09.1974986Z   Checking if build backend supports build_editable: finished with status 'done'
+2026-11-11T15:15:09.1983008Z   Getting requirements to build editable: started
+2026-11-11T15:15:09.5741776Z   Getting requirements to build editable: finished with status 'done'
+2026-11-11T15:15:09.5750863Z   Preparing editable metadata (pyproject.toml): started
+2026-11-11T15:15:09.7911854Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2026-11-11T15:15:09.7949010Z Building wheels for collected packages: lark-kernels
+2026-11-11T15:15:09.7956698Z   Building editable for lark-kernels (pyproject.toml): started
+2026-11-11T15:15:10.0428534Z   Building editable for lark-kernels (pyproject.toml): finished with status 'done'
+2026-11-11T15:15:10.0436400Z   Created wheel for lark-kernels: filename=lark_kernels-0.1.0-0.editable-py3-none-any.whl size=10830 sha256=4405bce85dea58aaab3ff16043d4b0235659df307e45024072590f79d68c3767
+2026-11-11T15:15:10.0438564Z   Stored in directory: /tmp/pip-ephem-wheel-cache-4dxebipb/wheels/75/d2/9b/1bad504aeef32aae0df1b8c7dbc973feff47d4c2fa79e95297
+2026-11-11T15:15:10.0470003Z Successfully built lark-kernels
+2026-11-11T15:15:10.0605656Z Installing collected packages: lark-kernels
+2026-11-11T15:15:10.0685542Z Successfully installed lark-kernels-0.1.0
+2026-11-11T15:15:10.0695270Z 
+2026-11-11T15:15:10.0695557Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+2026-11-11T15:15:10.0696306Z [notice] To update, run: pip install --upgrade pip
+2026-11-11T15:15:10.1368624Z ##[group]Run lake build
+2026-11-11T15:15:10.1368918Z [36;1mlake build[0m
+2026-11-11T15:15:10.1392083Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:15:10.1392344Z env:
+2026-11-11T15:15:10.1392648Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:10.1393117Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:15:10.1393564Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:10.1393942Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:10.1394316Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:15:10.1394691Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:15:10.1395016Z ##[endgroup]
+2026-11-11T15:15:10.8483242Z info: downloading https://releases.lean-lang.org/lean4/v4.19.0/lean-4.19.0-linux.tar.zst
+2026-11-11T15:15:13.1911570Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.19.0
+2026-11-11T15:15:17.2633265Z info: lark: no previous manifest, creating one from scratch
+2026-11-11T15:15:17.2633948Z info: toolchain not updated; already up-to-date
+2026-11-11T15:15:20.1718359Z ✔ [2/37] Built Lark.Model
+2026-11-11T15:15:20.2747729Z ✔ [3/37] Built Lark.Nonlinear
+2026-11-11T15:15:21.8793175Z ℹ [4/37] Built Lark.ScalarLaunch
+2026-11-11T15:15:21.8794499Z info: ././././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:22.1799498Z ℹ [5/37] Built Lark.MFMA
+2026-11-11T15:15:22.1800521Z info: ././././Lark/MFMA.lean:254:0: 'LarkMFMA.mfmaUpdates_preserves' does not depend on any axioms
+2026-11-11T15:15:22.1801865Z info: ././././Lark/MFMA.lean:255:0: 'LarkMFMA.runMFMA_preserves' depends on axioms: [propext]
+2026-11-11T15:15:22.2811436Z ℹ [6/37] Built Lark.Collective
+2026-11-11T15:15:22.2829371Z info: ././././Lark/Collective.lean:214:0: 'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms
+2026-11-11T15:15:22.2867011Z info: ././././Lark/Collective.lean:215:0: 'LarkCollective.runShuffle_preserves' depends on axioms: [propext]
+2026-11-11T15:15:22.2883013Z info: ././././Lark/Collective.lean:216:0: 'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:23.2868452Z ℹ [7/37] Built Lark.CollectiveGather
+2026-11-11T15:15:23.2938867Z info: ././././Lark/CollectiveGather.lean:34:0: 'LarkCollective.Gather.values_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:23.4857390Z ℹ [8/37] Built Lark.RegisterPhase
+2026-11-11T15:15:23.4887143Z info: ././././Lark/RegisterPhase.lean:76:0: 'LarkCollective.RegisterPhase.partial_preserves' depends on axioms: [Quot.sound]
+2026-11-11T15:15:23.4917208Z info: ././././Lark/RegisterPhase.lean:77:0: 'LarkCollective.RegisterPhase.lane_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:24.4881601Z ℹ [9/37] Built Lark.Pointwise
+2026-11-11T15:15:24.4887927Z info: ././././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:26.9957764Z ℹ [10/37] Built Lark.UnaryMap
+2026-11-11T15:15:26.9960920Z info: ././././Lark/UnaryMap.lean:214:0: 'LarkUnaryMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:29.8034108Z ℹ [11/37] Built Lark.Reduction
+2026-11-11T15:15:29.8047248Z info: ././././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:29.8077029Z info: ././././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:29.8106867Z info: ././././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:29.8136797Z info: ././././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:29.8138129Z info: ././././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:32.7204554Z ℹ [12/37] Built Lark.ShuffleTransfer
+2026-11-11T15:15:32.7244128Z info: ././././Lark/ShuffleTransfer.lean:489:0: 'LarkCollective.Transfer.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:33.0237796Z ℹ [13/37] Built Lark.FoldPhase
+2026-11-11T15:15:33.0327641Z info: ././././Lark/FoldPhase.lean:260:0: 'LarkFoldPhase.cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:33.0356967Z info: ././././Lark/FoldPhase.lean:261:0: 'LarkFoldPhase.run_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:34.5201250Z ℹ [14/37] Built Lark.DotLoop
+2026-11-11T15:15:34.5226736Z info: ././././Lark/DotLoop.lean:620:0: 'LarkDot.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:34.5256727Z info: ././././Lark/DotLoop.lean:621:0: 'LarkDot.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:34.5258011Z info: ././././Lark/DotLoop.lean:622:0: 'LarkDot.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:34.5286929Z info: ././././Lark/DotLoop.lean:623:0: 'LarkDot.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:34.5316815Z info: ././././Lark/DotLoop.lean:624:0: 'LarkDot.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.0348088Z ℹ [15/37] Built Lark.RowPhase
+2026-11-11T15:15:36.0368385Z info: ././././Lark/RowPhase.lean:229:0: 'LarkRowPhase.cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:36.0405208Z info: ././././Lark/RowPhase.lean:230:0: 'LarkRowPhase.run_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:36.2407809Z ⚠ [16/37] Built Lark.MFMATile
+2026-11-11T15:15:36.2437160Z warning: ././././Lark/MFMATile.lean:37:34: unused variable `ht`
+2026-11-11T15:15:36.2467024Z note: this linter can be disabled with `set_option linter.unusedVariables false`
+2026-11-11T15:15:36.2468063Z info: ././././Lark/MFMATile.lean:820:0: 'LarkMFMA.Tile.load_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.2469282Z info: ././././Lark/MFMATile.lean:821:0: 'LarkMFMA.Tile.mfma_element' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.2470409Z info: ././././Lark/MFMATile.lean:822:0: 'LarkMFMA.Tile.matrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.2471488Z info: ././././Lark/MFMATile.lean:823:0: 'LarkMFMA.Tile.safe_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:36.2472526Z info: ././././Lark/MFMATile.lean:824:0: 'LarkMFMA.Tile.store_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.2473618Z info: ././././Lark/MFMATile.lean:825:0: 'LarkMFMA.Tile.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:36.3377190Z ✔ [17/37] Built Lark.WaveReduce
+2026-11-11T15:15:38.2404330Z ℹ [18/37] Built Lark.Matrix
+2026-11-11T15:15:38.2428487Z info: ././././Lark/Matrix.lean:190:0: 'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:38.2437354Z info: ././././Lark/Matrix.lean:191:0: 'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:38.2443039Z info: ././././Lark/Matrix.lean:192:0: 'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:38.2444439Z info: ././././Lark/Matrix.lean:193:0: 'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:38.2445819Z info: ././././Lark/Matrix.lean:194:0: 'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:38.3408221Z ℹ [19/37] Built Lark.WaveReduceArithmetic
+2026-11-11T15:15:38.3437258Z info: ././././Lark/WaveReduceArithmetic.lean:124:0: 'LarkCollective.WaveSum.add_complete' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:38.3448803Z info: ././././Lark/WaveReduceArithmetic.lean:125:0: 'LarkCollective.WaveSum.add_fold' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:41.3603246Z ℹ [20/37] Built Lark.Convolution
+2026-11-11T15:15:41.3627978Z info: ././././Lark/Convolution.lean:125:0: 'LarkConvolution.input_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:41.3647269Z info: ././././Lark/Convolution.lean:126:0: 'LarkConvolution.denseProfile' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:41.3648635Z info: ././././Lark/Convolution.lean:127:0: 'LarkConvolution.depthProfile' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:43.5567741Z ℹ [21/37] Built Lark.Normalization
+2026-11-11T15:15:43.5597331Z info: ././././Lark/Normalization.lean:367:0: 'LarkNormalization.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:43.5599277Z info: ././././Lark/Normalization.lean:368:0: 'LarkNormalization.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:43.7579213Z ℹ [22/37] Built Lark.DotMap
+2026-11-11T15:15:43.7632212Z info: ././././Lark/DotMap.lean:612:0: 'LarkDotMap.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:43.7657535Z info: ././././Lark/DotMap.lean:613:0: 'LarkDotMap.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:43.7687003Z info: ././././Lark/DotMap.lean:614:0: 'LarkDotMap.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:43.7688340Z info: ././././Lark/DotMap.lean:615:0: 'LarkDotMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:43.7690176Z info: ././././Lark/DotMap.lean:616:0: 'LarkDotMap.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:45.6727541Z ℹ [23/37] Built Lark.RowSoftmax
+2026-11-11T15:15:45.6757581Z info: ././././Lark/RowSoftmax.lean:346:0: 'LarkRowSoftmax.address_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:45.6787359Z info: ././././Lark/RowSoftmax.lean:347:0: 'LarkRowSoftmax.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:45.6808038Z info: ././././Lark/RowSoftmax.lean:348:0: 'LarkRowSoftmax.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:46.5739676Z ℹ [24/37] Built Lark.WaveReduceStore
+2026-11-11T15:15:46.5828081Z info: ././././Lark/WaveReduceStore.lean:145:0: 'LarkCollective.WaveSum.last_fold' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:46.5917640Z info: ././././Lark/WaveReduceStore.lean:146:0: 'LarkCollective.WaveSum.final_owned' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:46.8737647Z ℹ [25/37] Built Lark.Bias
+2026-11-11T15:15:46.8767404Z info: ././././Lark/Bias.lean:683:0: 'LarkBias.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:46.8771662Z info: ././././Lark/Bias.lean:684:0: 'LarkBias.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:46.8827329Z info: ././././Lark/Bias.lean:685:0: 'LarkBias.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:46.8887220Z info: ././././Lark/Bias.lean:686:0: 'LarkBias.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:46.8938309Z info: ././././Lark/Bias.lean:687:0: 'LarkBias.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:47.4726343Z ℹ [26/37] Built Lark.Pipeline
+2026-11-11T15:15:47.4765225Z info: ././././Lark/Pipeline.lean:106:0: 'LarkPipeline.wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:47.4778061Z info: ././././Lark/Pipeline.lean:107:0: 'LarkPipeline.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:47.4847108Z info: ././././Lark/Pipeline.lean:108:0: 'LarkPipeline.correct_pre' does not depend on any axioms
+2026-11-11T15:15:47.6767429Z ℹ [27/37] Built Lark.PairMap
+2026-11-11T15:15:47.6787330Z info: ././././Lark/PairMap.lean:197:0: 'LarkPairMap.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:48.1777454Z ℹ [28/37] Built Lark.AttentionAddress
+2026-11-11T15:15:48.1797399Z info: ././././Lark/AttentionAddress.lean:149:0: 'LarkAttention.kv_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:49.2864032Z ℹ [29/37] Built Lark.FeedForward
+2026-11-11T15:15:49.2927924Z info: ././././Lark/FeedForward.lean:59:0: 'LarkFeedForward.hidden_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:49.2957044Z info: ././././Lark/FeedForward.lean:60:0: 'LarkFeedForward.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:51.5997557Z ℹ [30/37] Built Lark.SwiPointwise
+2026-11-11T15:15:51.6007220Z info: ././././Lark/SwiPointwise.lean:113:0: 'LarkSwiPointwise.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:51.6056910Z info: ././././Lark/SwiPointwise.lean:114:0: 'LarkSwiPointwise.after_owned' depends on axioms: [propext]
+2026-11-11T15:15:51.7007506Z ℹ [31/37] Built Lark.Silu
+2026-11-11T15:15:51.7017297Z info: ././././Lark/Silu.lean:692:0: 'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:51.7047105Z info: ././././Lark/Silu.lean:693:0: 'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:51.7077099Z info: ././././Lark/Silu.lean:694:0: 'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.5037685Z ℹ [32/37] Built Lark.AttentionPipeline
+2026-11-11T15:15:52.5097322Z info: ././././Lark/AttentionPipeline.lean:124:0: 'LarkAttention.soft_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.5122771Z info: ././././Lark/AttentionPipeline.lean:125:0: 'LarkAttention.value_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.5172429Z info: ././././Lark/AttentionPipeline.lean:126:0: 'LarkAttention.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.7008006Z ℹ [33/37] Built Lark.SwiGLU
+2026-11-11T15:15:52.7014135Z info: ././././Lark/SwiGLU.lean:148:0: 'LarkSwiGLU.pair_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.7015737Z info: ././././Lark/SwiGLU.lean:149:0: 'LarkSwiGLU.down_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:52.7017653Z info: ././././Lark/SwiGLU.lean:150:0: 'LarkSwiGLU.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:53.4016385Z ℹ [34/37] Built Lark.Rotary
+2026-11-11T15:15:53.4017457Z info: ././././Lark/Rotary.lean:447:0: 'LarkRotary.header_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:53.4018732Z info: ././././Lark/Rotary.lean:448:0: 'LarkRotary.body_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:53.4019976Z info: ././././Lark/Rotary.lean:449:0: 'LarkRotary.store_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:53.4021168Z info: ././././Lark/Rotary.lean:450:0: 'LarkRotary.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:15:53.4022346Z info: ././././Lark/Rotary.lean:451:0: 'LarkRotary.partialState_owned' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:15:53.4023542Z info: ././././Lark/Rotary.lean:452:0: 'LarkRotary.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:09.1181835Z ℹ [35/37] Built Lark.WaveSum
+2026-11-11T15:16:09.1182801Z info: ././././Lark/WaveSum.lean:94:0: 'LarkCollective.WaveSum.warp_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:09.1184035Z info: ././././Lark/WaveSum.lean:95:0: 'LarkCollective.WaveSum.launch_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:09.1185328Z info: ././././Lark/WaveSum.lean:96:0: 'LarkCollective.WaveSum.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:09.3184323Z ✔ [36/37] Built Lark
+2026-11-11T15:16:09.3196782Z Build completed successfully.
+2026-11-11T15:16:09.3263610Z ##[group]Run lean Lark/Nonlinear.lean
+2026-11-11T15:16:09.3263958Z [36;1mlean Lark/Nonlinear.lean[0m
+2026-11-11T15:16:09.3292457Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:09.3292842Z env:
+2026-11-11T15:16:09.3293249Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:09.3293964Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:09.3294655Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:09.3295271Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:09.3295791Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:09.3296433Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:09.3296757Z ##[endgroup]
+2026-11-11T15:16:11.5840892Z ##[group]Run lake env lean Lark/Pointwise.lean
+2026-11-11T15:16:11.5841387Z [36;1mlake env lean Lark/Pointwise.lean[0m
+2026-11-11T15:16:11.5863736Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:11.5864005Z env:
+2026-11-11T15:16:11.5864291Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:11.5864752Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:11.5865181Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:11.5865561Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:11.5866423Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:11.5866916Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:11.5867263Z ##[endgroup]
+2026-11-11T15:16:13.3208786Z 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:13.3463370Z ##[group]Run lake env lean Lark/Reduction.lean
+2026-11-11T15:16:13.3463753Z [36;1mlake env lean Lark/Reduction.lean[0m
+2026-11-11T15:16:13.3486283Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:13.3486552Z env:
+2026-11-11T15:16:13.3486840Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:13.3487293Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:13.3487721Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:13.3488113Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:13.3488499Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:13.3488873Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:13.3489201Z ##[endgroup]
+2026-11-11T15:16:15.6304369Z 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:15.6305237Z 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:15.6306228Z 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:15.6307024Z 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:15.6307712Z 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:15.6578547Z ##[group]Run lake env lean Lark/Matrix.lean
+2026-11-11T15:16:15.6578950Z [36;1mlake env lean Lark/Matrix.lean[0m
+2026-11-11T15:16:15.6601565Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:15.6601839Z env:
+2026-11-11T15:16:15.6602119Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:15.6602576Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:15.6603036Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:15.6603425Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:15.6603824Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:15.6604204Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:15.6604523Z ##[endgroup]
+2026-11-11T15:16:16.5729520Z 'LarkMatrix.left_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:16.5730277Z 'LarkMatrix.right_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:16.5730921Z 'LarkMatrix.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:16.5731455Z 'LarkMatrix.batch_left_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:16.5731919Z 'LarkMatrix.batch_right_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:16.5973222Z ##[group]Run lake env lean Lark/Silu.lean
+2026-11-11T15:16:16.5973586Z [36;1mlake env lean Lark/Silu.lean[0m
+2026-11-11T15:16:16.5996300Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:16.5996561Z env:
+2026-11-11T15:16:16.5996838Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:16.5997314Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:16.5997749Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:16.5998135Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:16.5998517Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:16.5998899Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:16.5999225Z ##[endgroup]
+2026-11-11T15:16:19.6810079Z 'LarkSilu.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:19.6810955Z 'LarkSilu.owned_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:19.6811728Z 'LarkSilu.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:19.7114185Z ##[group]Run lake env lean Lark/Bias.lean
+2026-11-11T15:16:19.7114547Z [36;1mlake env lean Lark/Bias.lean[0m
+2026-11-11T15:16:19.7137180Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:19.7137631Z env:
+2026-11-11T15:16:19.7137910Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:19.7138360Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:19.7138786Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:19.7139175Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:19.7139551Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:19.7139925Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:19.7140258Z ##[endgroup]
+2026-11-11T15:16:21.9491176Z 'LarkBias.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:21.9492426Z 'LarkBias.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:21.9494306Z 'LarkBias.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:21.9495315Z 'LarkBias.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:21.9496431Z 'LarkBias.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:21.9783549Z ##[group]Run lake env lean Lark/Rotary.lean
+2026-11-11T15:16:21.9783921Z [36;1mlake env lean Lark/Rotary.lean[0m
+2026-11-11T15:16:21.9805796Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:21.9806266Z env:
+2026-11-11T15:16:21.9806564Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:21.9807024Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:21.9807449Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:21.9807857Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:21.9808244Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:21.9808621Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:21.9808944Z ##[endgroup]
+2026-11-11T15:16:25.0660917Z 'LarkRotary.header_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:25.0661886Z 'LarkRotary.body_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:25.0662502Z 'LarkRotary.store_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:25.0663066Z 'LarkRotary.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:25.0663617Z 'LarkRotary.partialState_owned' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:25.0664194Z 'LarkRotary.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:25.0934528Z ##[group]Run lake env lean Lark/Convolution.lean
+2026-11-11T15:16:25.0934938Z [36;1mlake env lean Lark/Convolution.lean[0m
+2026-11-11T15:16:25.0957852Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:25.0958111Z env:
+2026-11-11T15:16:25.0958390Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.0958837Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:25.0959275Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.0959696Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.0960082Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.0960496Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:25.0960823Z ##[endgroup]
+2026-11-11T15:16:25.9523436Z 'LarkConvolution.input_eval' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:25.9524113Z 'LarkConvolution.denseProfile' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:25.9524637Z 'LarkConvolution.depthProfile' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:25.9754911Z ##[group]Run lake env lean Lark/Normalization.lean
+2026-11-11T15:16:25.9755551Z [36;1mlake env lean Lark/Normalization.lean[0m
+2026-11-11T15:16:25.9778202Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:25.9778462Z env:
+2026-11-11T15:16:25.9778745Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.9779198Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:25.9779877Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.9780259Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.9780644Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:25.9781023Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:25.9781353Z ##[endgroup]
+2026-11-11T15:16:29.7729106Z 'LarkNormalization.lane_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:29.7730262Z 'LarkNormalization.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:29.8008468Z ##[group]Run lake env lean Lark/ShuffleTransfer.lean
+2026-11-11T15:16:29.8008893Z [36;1mlake env lean Lark/ShuffleTransfer.lean[0m
+2026-11-11T15:16:29.8030808Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:29.8031060Z env:
+2026-11-11T15:16:29.8031342Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:29.8031802Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:29.8032230Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:29.8032609Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:29.8033011Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:29.8033390Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:29.8033714Z ##[endgroup]
+2026-11-11T15:16:33.7544583Z 'LarkCollective.Transfer.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:33.7934723Z ##[group]Run lake env lean Lark/MFMATile.lean
+2026-11-11T15:16:33.7935106Z [36;1mlake env lean Lark/MFMATile.lean[0m
+2026-11-11T15:16:33.7957717Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:33.7957985Z env:
+2026-11-11T15:16:33.7958271Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:33.7958726Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:33.7959191Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:33.7959576Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:33.7959953Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:33.7960341Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:33.7960669Z ##[endgroup]
+2026-11-11T15:16:39.5747312Z Lark/MFMATile.lean:37:34: warning: unused variable `ht`
+2026-11-11T15:16:39.5748583Z note: this linter can be disabled with `set_option linter.unusedVariables false`
+2026-11-11T15:16:39.5749709Z 'LarkMFMA.Tile.load_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.5750765Z 'LarkMFMA.Tile.mfma_element' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.5751778Z 'LarkMFMA.Tile.matrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.5752731Z 'LarkMFMA.Tile.safe_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.5753747Z 'LarkMFMA.Tile.store_fold' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.5754376Z 'LarkMFMA.Tile.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.6207142Z ##[group]Run lake build Lark.NativeRmsNormCorrect
+2026-11-11T15:16:39.6207592Z [36;1mlake build Lark.NativeRmsNormCorrect[0m
+2026-11-11T15:16:39.6229719Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:16:39.6229981Z env:
+2026-11-11T15:16:39.6230273Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:39.6230754Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:16:39.6231207Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:39.6231620Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:39.6232016Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:16:39.6232423Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:16:39.6232969Z ##[endgroup]
+2026-11-11T15:16:39.7708074Z ℹ [3/66] Replayed Lark.Collective
+2026-11-11T15:16:39.7737435Z info: ././././Lark/Collective.lean:214:0: 'LarkCollective.shuffleUpdates_preserves' does not depend on any axioms
+2026-11-11T15:16:39.7746844Z info: ././././Lark/Collective.lean:215:0: 'LarkCollective.runShuffle_preserves' depends on axioms: [propext]
+2026-11-11T15:16:39.7766977Z info: ././././Lark/Collective.lean:216:0: 'LarkCollective.owned_raceFree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.7796839Z ℹ [4/66] Replayed Lark.CollectiveGather
+2026-11-11T15:16:39.7806821Z info: ././././Lark/CollectiveGather.lean:34:0: 'LarkCollective.Gather.values_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.7846747Z ℹ [5/66] Replayed Lark.Pointwise
+2026-11-11T15:16:39.7876782Z info: ././././Lark/Pointwise.lean:336:0: 'LarkPointwise.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.7886676Z ℹ [6/66] Replayed Lark.Reduction
+2026-11-11T15:16:39.7916798Z info: ././././Lark/Reduction.lean:717:0: 'LarkReduction.loop_step' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.7929553Z info: ././././Lark/Reduction.lean:718:0: 'LarkReduction.loop_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.7946782Z info: ././././Lark/Reduction.lean:719:0: 'LarkReduction.lane_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:39.7976871Z info: ././././Lark/Reduction.lean:720:0: 'LarkReduction.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.8007009Z info: ././././Lark/Reduction.lean:721:0: 'LarkReduction.matrix_correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:39.8016656Z ℹ [7/66] Replayed Lark.ScalarLaunch
+2026-11-11T15:16:39.8036946Z info: ././././Lark/ScalarLaunch.lean:223:0: 'LarkScalarLaunch.launch_simulation' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.4705729Z ℹ [8/66] Built Lark.PartitionCollective
+2026-11-11T15:16:40.4707640Z info: ././././Lark/PartitionCollective.lean:145:0: 'LarkPartitionCollective.runShuffle_preserves' depends on axioms: [propext]
+2026-11-11T15:16:40.4711105Z info: ././././Lark/PartitionCollective.lean:146:0: 'LarkPartitionCollective.nextCohort_subset' depends on axioms: [propext]
+2026-11-11T15:16:40.4712389Z info: ././././Lark/PartitionCollective.lean:147:0: 'LarkPartitionCollective.nextCohort_nonempty' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.4713470Z ℹ [9/66] Built Lark.VectorStride
+2026-11-11T15:16:40.4714168Z info: ././././Lark/VectorStride.lean:138:0: 'LarkVectorStride.coverage' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.4715110Z info: ././././Lark/VectorStride.lean:139:0: 'LarkVectorStride.address_writer' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.4716235Z info: ././././Lark/VectorStride.lean:140:0: 'LarkVectorStride.int32_address' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.5700234Z ℹ [10/66] Built Lark.DownReduction
+2026-11-11T15:16:40.5700968Z info: ././././Lark/DownReduction.lean:79:0: 'LarkDownReduction.source_down' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.5702249Z info: ././././Lark/DownReduction.lean:80:0: 'LarkDownReduction.complete_subtree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:40.5702981Z info: ././././Lark/DownReduction.lean:81:0: 'LarkDownReduction.leaves_range' depends on axioms: [propext]
+2026-11-11T15:16:41.3720085Z ℹ [11/66] Built Lark.ReductionFootprint
+2026-11-11T15:16:41.3721552Z info: ././././Lark/ReductionFootprint.lean:118:0: 'LarkReductionFootprint.partial_threads_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:41.3723309Z info: ././././Lark/ReductionFootprint.lean:119:0: 'LarkReductionFootprint.race_free' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:41.9720975Z ℹ [12/66] Built Lark.NativeRmsNormProgram
+2026-11-11T15:16:41.9722051Z info: ././././Lark/NativeRmsNormProgram.lean:92:0: 'LarkNativeRmsNorm.first_shuffle' does not depend on any axioms
+2026-11-11T15:16:41.9723852Z info: ././././Lark/NativeRmsNormProgram.lean:93:0: 'LarkNativeRmsNorm.final_shuffle' does not depend on any axioms
+2026-11-11T15:16:42.3727100Z ℹ [13/66] Built Lark.NativeRmsNormValue
+2026-11-11T15:16:42.3728371Z info: ././././Lark/NativeRmsNormValue.lean:61:0: 'LarkNativeRmsNorm.warp_sum_tree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:42.3729767Z info: ././././Lark/NativeRmsNormValue.lean:62:0: 'LarkNativeRmsNorm.block_sum_tree' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:42.3731106Z info: ././././Lark/NativeRmsNormValue.lean:63:0: 'LarkNativeRmsNorm.thread_cells_bound' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:44.6772671Z ℹ [14/66] Built Lark.NativeRmsNormInit
+2026-11-11T15:16:44.6773443Z info: ././././Lark/NativeRmsNormInit.lean:172:0: 'LarkNativeRmsNorm.initialized_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:44.6774391Z info: ././././Lark/NativeRmsNormInit.lean:173:0: 'LarkNativeRmsNorm.indexed_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:44.6775337Z info: ././././Lark/NativeRmsNormInit.lean:174:0: 'LarkNativeRmsNorm.indexedAt_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:44.6776473Z info: ././././Lark/NativeRmsNormInit.lean:175:0: 'LarkNativeRmsNorm.initialized_preserves' does not depend on any axioms
+2026-11-11T15:16:44.6777731Z info: ././././Lark/NativeRmsNormInit.lean:176:0: 'LarkNativeRmsNorm.initialized_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:44.6779073Z info: ././././Lark/NativeRmsNormInit.lean:177:0: 'LarkNativeRmsNorm.initialized_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:44.6780599Z info: ././././Lark/NativeRmsNormInit.lean:178:0: 'LarkNativeRmsNorm.initialized_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:16:46.9794186Z ℹ [15/66] Built Lark.NativeRmsNormAddress
+2026-11-11T15:16:46.9795596Z info: ././././Lark/NativeRmsNormAddress.lean:112:0: 'LarkNativeRmsNorm.initial_reads' depends on axioms: [propext]
+2026-11-11T15:16:46.9797536Z info: ././././Lark/NativeRmsNormAddress.lean:113:0: 'LarkNativeRmsNorm.eval_row_address' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:46.9799196Z info: ././././Lark/NativeRmsNormAddress.lean:114:0: 'LarkNativeRmsNorm.load_input' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:46.9800818Z info: ././././Lark/NativeRmsNormAddress.lean:115:0: 'LarkNativeRmsNorm.load_weight' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:46.9802466Z info: ././././Lark/NativeRmsNormAddress.lean:116:0: 'LarkNativeRmsNorm.input_access_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5827946Z ℹ [16/66] Built Lark.NativeRmsNormAccumulate
+2026-11-11T15:16:49.5829058Z info: ././././Lark/NativeRmsNormAccumulate.lean:282:0: 'LarkNativeRmsNorm.component_cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5830462Z info: ././././Lark/NativeRmsNormAccumulate.lean:283:0: 'LarkNativeRmsNorm.component_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5832266Z info: ././././Lark/NativeRmsNormAccumulate.lean:284:0: 'LarkNativeRmsNorm.component_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5833585Z info: ././././Lark/NativeRmsNormAccumulate.lean:285:0: 'LarkNativeRmsNorm.components_run_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5834930Z info: ././././Lark/NativeRmsNormAccumulate.lean:286:0: 'LarkNativeRmsNorm.components_acc' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:16:49.5836448Z info: ././././Lark/NativeRmsNormAccumulate.lean:287:0: 'LarkNativeRmsNorm.components_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.0989914Z ℹ [17/66] Built Lark.NativeRmsNormVectors
+2026-11-11T15:17:03.0992159Z info: ././././Lark/NativeRmsNormVectors.lean:251:0: 'LarkNativeRmsNorm.vector_cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.0993534Z info: ././././Lark/NativeRmsNormVectors.lean:252:0: 'LarkNativeRmsNorm.two_vectors_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.0994404Z info: ././././Lark/NativeRmsNormVectors.lean:253:0: 'LarkNativeRmsNorm.two_vectors_sum' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.0995206Z info: ././././Lark/NativeRmsNormVectors.lean:254:0: 'LarkNativeRmsNorm.two_vectors_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.5019601Z ℹ [18/66] Built Lark.NativeRmsNormPrefix
+2026-11-11T15:17:03.5020807Z info: ././././Lark/NativeRmsNormPrefix.lean:107:0: 'LarkNativeRmsNorm.prefix_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:03.5022312Z info: ././././Lark/NativeRmsNormPrefix.lean:108:0: 'LarkNativeRmsNorm.prefix_acc' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.5023725Z info: ././././Lark/NativeRmsNormPrefix.lean:109:0: 'LarkNativeRmsNorm.prefix_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:03.5025305Z info: ././././Lark/NativeRmsNormPrefix.lean:110:0: 'LarkNativeRmsNorm.prefix_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:04.1077793Z ℹ [19/66] Built Lark.NativeRmsNormPrefixFold
+2026-11-11T15:17:04.1097544Z info: ././././Lark/NativeRmsNormPrefixFold.lean:94:0: 'LarkNativeRmsNorm.prefix_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:04.1118768Z info: ././././Lark/NativeRmsNormPrefixFold.lean:95:0: 'LarkNativeRmsNorm.prefix_fold_member' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:04.1123201Z info: ././././Lark/NativeRmsNormPrefixFold.lean:96:0: 'LarkNativeRmsNorm.prefix_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4140300Z ℹ [20/66] Built Lark.NativeRmsNormShuffle
+2026-11-11T15:17:09.4141755Z info: ././././Lark/NativeRmsNormShuffle.lean:290:0: 'LarkNativeRmsNorm.cohort_complete' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4143581Z info: ././././Lark/NativeRmsNormShuffle.lean:291:0: 'LarkNativeRmsNorm.cohort_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:09.4145381Z info: ././././Lark/NativeRmsNormShuffle.lean:292:0: 'LarkNativeRmsNorm.cohort_read' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4147291Z info: ././././Lark/NativeRmsNormShuffle.lean:293:0: 'LarkNativeRmsNorm.cohort_down_shuffle' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:09.4149128Z info: ././././Lark/NativeRmsNormShuffle.lean:294:0: 'LarkNativeRmsNorm.cohort_shuffled_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4150873Z info: ././././Lark/NativeRmsNormShuffle.lean:295:0: 'LarkNativeRmsNorm.cohort_shuffled_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4152500Z info: ././././Lark/NativeRmsNormShuffle.lean:296:0: 'LarkNativeRmsNorm.cohort_next' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:09.4153961Z info: ././././Lark/NativeRmsNormShuffle.lean:297:0: 'LarkNativeRmsNorm.cohort_native_threads' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:10.1163747Z ℹ [21/66] Built Lark.NativeRmsNormGuard
+2026-11-11T15:17:10.1165266Z info: ././././Lark/NativeRmsNormGuard.lean:136:0: 'LarkNativeRmsNorm.guarded_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:10.1166650Z info: ././././Lark/NativeRmsNormGuard.lean:137:0: 'LarkNativeRmsNorm.guarded_preserves' does not depend on any axioms
+2026-11-11T15:17:10.1167816Z info: ././././Lark/NativeRmsNormGuard.lean:138:0: 'LarkNativeRmsNorm.guarded_acc' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:10.5159939Z ℹ [22/66] Built Lark.NativeRmsNormGuardFold
+2026-11-11T15:17:10.5161034Z info: ././././Lark/NativeRmsNormGuardFold.lean:126:0: 'LarkNativeRmsNorm.guarded_lane' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:10.5162501Z info: ././././Lark/NativeRmsNormGuardFold.lean:127:0: 'LarkNativeRmsNorm.guarded_fold_member' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:10.5163974Z info: ././././Lark/NativeRmsNormGuardFold.lean:128:0: 'LarkNativeRmsNorm.guarded_fold_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:11.3186314Z ℹ [23/66] Built Lark.NativeRmsNormStage
+2026-11-11T15:17:11.3187441Z info: ././././Lark/NativeRmsNormStage.lean:191:0: 'LarkNativeRmsNorm.cohort_step_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:11.3188741Z info: ././././Lark/NativeRmsNormStage.lean:192:0: 'LarkNativeRmsNorm.cohort_step_preserves' does not depend on any axioms
+2026-11-11T15:17:11.3190019Z info: ././././Lark/NativeRmsNormStage.lean:193:0: 'LarkNativeRmsNorm.cohort_step_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:11.3191413Z info: ././././Lark/NativeRmsNormStage.lean:194:0: 'LarkNativeRmsNorm.cohort_step_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:11.3192803Z info: ././././Lark/NativeRmsNormStage.lean:195:0: 'LarkNativeRmsNorm.first_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:11.3194187Z info: ././././Lark/NativeRmsNormStage.lean:196:0: 'LarkNativeRmsNorm.final_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:12.0204382Z ℹ [24/66] Built Lark.NativeRmsNormFirstStage
+2026-11-11T15:17:12.0205612Z info: ././././Lark/NativeRmsNormFirstStage.lean:126:0: 'LarkNativeRmsNorm.prefix_cohort_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:12.0207169Z info: ././././Lark/NativeRmsNormFirstStage.lean:127:0: 'LarkNativeRmsNorm.first_stage_from_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:12.8261724Z ℹ [25/66] Built Lark.NativeRmsNormPartial
+2026-11-11T15:17:12.8262750Z info: ././././Lark/NativeRmsNormPartial.lean:218:0: 'LarkNativeRmsNorm.partial_store_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:12.8264135Z info: ././././Lark/NativeRmsNormPartial.lean:219:0: 'LarkNativeRmsNorm.partial_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:12.8265541Z info: ././././Lark/NativeRmsNormPartial.lean:220:0: 'LarkNativeRmsNorm.partial_reads' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:12.8266952Z info: ././././Lark/NativeRmsNormPartial.lean:221:0: 'LarkNativeRmsNorm.partial_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:12.8268262Z info: ././././Lark/NativeRmsNormPartial.lean:222:0: 'LarkNativeRmsNorm.first_last_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:12.8269560Z info: ././././Lark/NativeRmsNormPartial.lean:223:0: 'LarkNativeRmsNorm.first_last_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:12.8270795Z info: ././././Lark/NativeRmsNormPartial.lean:224:0: 'LarkNativeRmsNorm.first_last_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:13.4243634Z ℹ [26/66] Built Lark.NativeRmsNormLastFold
+2026-11-11T15:17:13.4244546Z info: ././././Lark/NativeRmsNormLastFold.lean:160:0: 'LarkNativeRmsNorm.first_last_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:13.4245590Z info: ././././Lark/NativeRmsNormLastFold.lean:161:0: 'LarkNativeRmsNorm.first_last_fold_member' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:13.4247128Z info: ././././Lark/NativeRmsNormLastFold.lean:162:0: 'LarkNativeRmsNorm.first_last_fold_reads' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:13.4247995Z info: ././././Lark/NativeRmsNormLastFold.lean:163:0: 'LarkNativeRmsNorm.first_last_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:13.4248845Z info: ././././Lark/NativeRmsNormLastFold.lean:164:0: 'LarkNativeRmsNorm.last_cohort_partial' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:14.4257919Z ℹ [27/66] Built Lark.NativeRmsNormLastWave
+2026-11-11T15:17:14.4259069Z info: ././././Lark/NativeRmsNormLastWave.lean:184:0: 'LarkNativeRmsNorm.last_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:14.4260535Z info: ././././Lark/NativeRmsNormLastWave.lean:185:0: 'LarkNativeRmsNorm.last_wave_partial' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:14.4262484Z info: ././././Lark/NativeRmsNormLastWave.lean:186:0: 'LarkNativeRmsNorm.last_wave_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:14.4263916Z info: ././././Lark/NativeRmsNormLastWave.lean:187:0: 'LarkNativeRmsNorm.cohort_first_barrier' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:14.4265471Z info: ././././Lark/NativeRmsNormLastWave.lean:188:0: 'LarkNativeRmsNorm.last_wave_warp' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:14.7251834Z ℹ [28/66] Built Lark.NativeRmsNormSchedule
+2026-11-11T15:17:14.7252568Z info: ././././Lark/NativeRmsNormSchedule.lean:64:0: 'LarkNativeRmsNorm.runWarp_continue' depends on axioms: [propext]
+2026-11-11T15:17:14.7253437Z info: ././././Lark/NativeRmsNormSchedule.lean:65:0: 'LarkNativeRmsNorm.continue_fold' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:16.1273679Z ℹ [29/66] Built Lark.NativeRmsNormFirstWave
+2026-11-11T15:17:16.1274531Z info: ././././Lark/NativeRmsNormFirstWave.lean:223:0: 'LarkNativeRmsNorm.first_ready_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:16.1275536Z info: ././././Lark/NativeRmsNormFirstWave.lean:224:0: 'LarkNativeRmsNorm.continue_wave_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:16.1276717Z info: ././././Lark/NativeRmsNormFirstWave.lean:225:0: 'LarkNativeRmsNorm.first_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:16.1277625Z info: ././././Lark/NativeRmsNormFirstWave.lean:226:0: 'LarkNativeRmsNorm.wave_tail_partial' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:16.1278467Z info: ././././Lark/NativeRmsNormFirstWave.lean:227:0: 'LarkNativeRmsNorm.wave_tail_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:16.1279391Z info: ././././Lark/NativeRmsNormFirstWave.lean:228:0: 'LarkNativeRmsNorm.first_wave_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:17.5309657Z ℹ [30/66] Built Lark.NativeRmsNormWaveFrame
+2026-11-11T15:17:17.5310831Z info: ././././Lark/NativeRmsNormWaveFrame.lean:144:0: 'LarkNativeRmsNorm.first_wave_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:17.5312450Z info: ././././Lark/NativeRmsNormWaveFrame.lean:145:0: 'LarkNativeRmsNorm.first_wave_memory_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:19.9362819Z ℹ [31/66] Built Lark.NativeRmsNormFirstBlock
+2026-11-11T15:17:19.9364301Z info: ././././Lark/NativeRmsNormFirstBlock.lean:222:0: 'LarkNativeRmsNorm.wave_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:19.9366238Z info: ././././Lark/NativeRmsNormFirstBlock.lean:223:0: 'LarkNativeRmsNorm.wave_fold_partial' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:19.9368045Z info: ././././Lark/NativeRmsNormFirstBlock.lean:224:0: 'LarkNativeRmsNorm.wave_fold_member' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:19.9369855Z info: ././././Lark/NativeRmsNormFirstBlock.lean:225:0: 'LarkNativeRmsNorm.wave_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:19.9372188Z info: ././././Lark/NativeRmsNormFirstBlock.lean:226:0: 'LarkNativeRmsNorm.first_block_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:50.9681136Z ℹ [32/66] Built Lark.NativeRmsNormBarrier
+2026-11-11T15:17:50.9681966Z info: ././././Lark/NativeRmsNormBarrier.lean:67:0: 'LarkNativeRmsNorm.block_first_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:50.9683608Z info: ././././Lark/NativeRmsNormBarrier.lean:68:0: 'LarkNativeRmsNorm.mid_ready_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:51.5692264Z ℹ [33/66] Built Lark.NativeRmsNormMidEntry
+2026-11-11T15:17:51.5693363Z info: ././././Lark/NativeRmsNormMidEntry.lean:135:0: 'LarkNativeRmsNorm.mid_enter_active' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:51.5695383Z info: ././././Lark/NativeRmsNormMidEntry.lean:136:0: 'LarkNativeRmsNorm.mid_enter_inactive' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:51.5697077Z info: ././././Lark/NativeRmsNormMidEntry.lean:137:0: 'LarkNativeRmsNorm.mid_entry_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:51.9697228Z ℹ [34/66] Built Lark.NativeRmsNormMidFold
+2026-11-11T15:17:51.9698045Z info: ././././Lark/NativeRmsNormMidFold.lean:109:0: 'LarkNativeRmsNorm.mid_fold_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:51.9698881Z info: ././././Lark/NativeRmsNormMidFold.lean:110:0: 'LarkNativeRmsNorm.mid_fold_acc' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:51.9699670Z info: ././././Lark/NativeRmsNormMidFold.lean:111:0: 'LarkNativeRmsNorm.mid_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:52.7715540Z ℹ [35/66] Built Lark.NativeRmsNormMidNative
+2026-11-11T15:17:52.7716683Z info: ././././Lark/NativeRmsNormMidNative.lean:109:0: 'LarkNativeRmsNorm.mid_native_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:52.7717722Z info: ././././Lark/NativeRmsNormMidNative.lean:110:0: 'LarkNativeRmsNorm.mid_native_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:52.7718686Z info: ././././Lark/NativeRmsNormMidNative.lean:111:0: 'LarkNativeRmsNorm.mid_native_inactive' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:52.7719580Z info: ././././Lark/NativeRmsNormMidNative.lean:112:0: 'LarkNativeRmsNorm.mid_native_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:53.1720967Z ℹ [36/66] Built Lark.NativeRmsNormMixed
+2026-11-11T15:17:53.1722384Z info: ././././Lark/NativeRmsNormMixed.lean:121:0: 'LarkNativeRmsNorm.mixed_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:53.1724121Z info: ././././Lark/NativeRmsNormMixed.lean:122:0: 'LarkNativeRmsNorm.shuffle_physical_fold' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:53.1725897Z info: ././././Lark/NativeRmsNormMixed.lean:123:0: 'LarkNativeRmsNorm.mid_mixed_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:53.5725865Z ℹ [37/66] Built Lark.NativeRmsNormMixedStage
+2026-11-11T15:17:53.5726938Z info: ././././Lark/NativeRmsNormMixedStage.lean:48:0: 'LarkNativeRmsNorm.mixed_stage_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:53.5727932Z info: ././././Lark/NativeRmsNormMixedStage.lean:49:0: 'LarkNativeRmsNorm.mixed_step_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:54.1733266Z ℹ [38/66] Built Lark.NativeRmsNormScaleStore
+2026-11-11T15:17:54.1733992Z info: ././././Lark/NativeRmsNormScaleStore.lean:125:0: 'LarkNativeRmsNorm.eval_scale' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.1734841Z info: ././././Lark/NativeRmsNormScaleStore.lean:126:0: 'LarkNativeRmsNorm.scale_store_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.1735716Z info: ././././Lark/NativeRmsNormScaleStore.lean:127:0: 'LarkNativeRmsNorm.scale_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:54.1737241Z info: ././././Lark/NativeRmsNormScaleStore.lean:128:0: 'LarkNativeRmsNorm.scale_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.5741769Z ℹ [39/66] Built Lark.NativeRmsNormLogicalLast
+2026-11-11T15:17:54.5743034Z info: ././././Lark/NativeRmsNormLogicalLast.lean:91:0: 'LarkNativeRmsNorm.logical_last_lane' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:54.5744762Z info: ././././Lark/NativeRmsNormLogicalLast.lean:92:0: 'LarkNativeRmsNorm.logical_last_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.5746512Z info: ././././Lark/NativeRmsNormLogicalLast.lean:93:0: 'LarkNativeRmsNorm.logical_last_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.9746336Z ℹ [40/66] Built Lark.NativeRmsNormLogicalFold
+2026-11-11T15:17:54.9747558Z info: ././././Lark/NativeRmsNormLogicalFold.lean:119:0: 'LarkNativeRmsNorm.logical_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:54.9749699Z info: ././././Lark/NativeRmsNormLogicalFold.lean:120:0: 'LarkNativeRmsNorm.logical_fold_pc' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:54.9751186Z info: ././././Lark/NativeRmsNormLogicalFold.lean:121:0: 'LarkNativeRmsNorm.logical_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:56.0787852Z ℹ [41/66] Built Lark.NativeRmsNormLogicalFinish
+2026-11-11T15:17:56.0788674Z info: ././././Lark/NativeRmsNormLogicalFinish.lean:219:0: 'LarkNativeRmsNorm.logical_final_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:56.0789727Z info: ././././Lark/NativeRmsNormLogicalFinish.lean:220:0: 'LarkNativeRmsNorm.logical_final_active_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:56.0790698Z info: ././././Lark/NativeRmsNormLogicalFinish.lean:221:0: 'LarkNativeRmsNorm.logical_final_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:56.0791625Z info: ././././Lark/NativeRmsNormLogicalFinish.lean:222:0: 'LarkNativeRmsNorm.logical_final_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:56.0792577Z info: ././././Lark/NativeRmsNormLogicalFinish.lean:223:0: 'LarkNativeRmsNorm.logical_final_warp' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:57.5796365Z ℹ [42/66] Built Lark.NativeRmsNormScaleWave
+2026-11-11T15:17:57.5797608Z info: ././././Lark/NativeRmsNormScaleWave.lean:197:0: 'LarkNativeRmsNorm.scale_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:57.5799202Z info: ././././Lark/NativeRmsNormScaleWave.lean:198:0: 'LarkNativeRmsNorm.logical_tail_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:57.5800674Z info: ././././Lark/NativeRmsNormScaleWave.lean:199:0: 'LarkNativeRmsNorm.logical_tail_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:57.5802150Z info: ././././Lark/NativeRmsNormScaleWave.lean:200:0: 'LarkNativeRmsNorm.scale_wave_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:57.5803642Z info: ././././Lark/NativeRmsNormScaleWave.lean:201:0: 'LarkNativeRmsNorm.scale_wave_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:57.9800907Z ℹ [43/66] Built Lark.NativeRmsNormSkipWave
+2026-11-11T15:17:57.9801749Z info: ././././Lark/NativeRmsNormSkipWave.lean:86:0: 'LarkNativeRmsNorm.skip_lanes_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:57.9802647Z info: ././././Lark/NativeRmsNormSkipWave.lean:87:0: 'LarkNativeRmsNorm.skip_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:58.4812384Z ℹ [44/66] Built Lark.NativeRmsNormSkipFold
+2026-11-11T15:17:58.4813585Z info: ././././Lark/NativeRmsNormSkipFold.lean:70:0: 'LarkNativeRmsNorm.skip_waves_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:58.4815124Z info: ././././Lark/NativeRmsNormSkipFold.lean:71:0: 'LarkNativeRmsNorm.skip_waves_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:58.4816811Z info: ././././Lark/NativeRmsNormSkipFold.lean:72:0: 'LarkNativeRmsNorm.skip_waves_preserves' does not depend on any axioms
+2026-11-11T15:17:59.6829957Z ℹ [45/66] Built Lark.NativeRmsNormScaleBlock
+2026-11-11T15:17:59.6831247Z info: ././././Lark/NativeRmsNormScaleBlock.lean:108:0: 'LarkNativeRmsNorm.scale_block_fold_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:59.6832285Z info: ././././Lark/NativeRmsNormScaleBlock.lean:109:0: 'LarkNativeRmsNorm.scale_block_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:17:59.6833215Z info: ././././Lark/NativeRmsNormScaleBlock.lean:110:0: 'LarkNativeRmsNorm.scale_block_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:17:59.6834063Z info: ././././Lark/NativeRmsNormScaleBlock.lean:111:0: 'LarkNativeRmsNorm.scale_block_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:00.2842550Z ℹ [46/66] Built Lark.NativeRmsNormOutBarrier
+2026-11-11T15:18:00.2844580Z info: ././././Lark/NativeRmsNormOutBarrier.lean:82:0: 'LarkNativeRmsNorm.block_second_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:00.2846531Z info: ././././Lark/NativeRmsNormOutBarrier.lean:83:0: 'LarkNativeRmsNorm.out_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:00.2848340Z info: ././././Lark/NativeRmsNormOutBarrier.lean:84:0: 'LarkNativeRmsNorm.block_two_phases_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:00.7871930Z ℹ [47/66] Built Lark.NativeRmsNormOutputEntry
+2026-11-11T15:18:00.7873019Z info: ././././Lark/NativeRmsNormOutputEntry.lean:71:0: 'LarkNativeRmsNorm.output_entry_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:00.7874493Z info: ././././Lark/NativeRmsNormOutputEntry.lean:72:0: 'LarkNativeRmsNorm.output_entry_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:04.7937630Z ℹ [48/66] Built Lark.NativeRmsNormOutputStore
+2026-11-11T15:18:04.7938824Z info: ././././Lark/NativeRmsNormOutputStore.lean:74:0: 'LarkNativeRmsNorm.output_store_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:04.7940309Z info: ././././Lark/NativeRmsNormOutputStore.lean:75:0: 'LarkNativeRmsNorm.output_writer' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:04.7941758Z info: ././././Lark/NativeRmsNormOutputStore.lean:76:0: 'LarkNativeRmsNorm.output_written_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:05.8958187Z ℹ [49/66] Built Lark.NativeRmsNormOutputComponent
+2026-11-11T15:18:05.8959668Z info: ././././Lark/NativeRmsNormOutputComponent.lean:185:0: 'LarkNativeRmsNorm.output_component_cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:05.8961428Z info: ././././Lark/NativeRmsNormOutputComponent.lean:186:0: 'LarkNativeRmsNorm.output_component_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:05.8963095Z info: ././././Lark/NativeRmsNormOutputComponent.lean:187:0: 'LarkNativeRmsNorm.output_component_reads' depends on axioms: [propext]
+2026-11-11T15:18:05.8964745Z info: ././././Lark/NativeRmsNormOutputComponent.lean:188:0: 'LarkNativeRmsNorm.output_component_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:06.5965130Z ℹ [50/66] Built Lark.NativeRmsNormOutputLoop
+2026-11-11T15:18:06.5965941Z info: ././././Lark/NativeRmsNormOutputLoop.lean:131:0: 'LarkNativeRmsNorm.output_components_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:06.5967166Z info: ././././Lark/NativeRmsNormOutputLoop.lean:132:0: 'LarkNativeRmsNorm.output_components_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:06.5968154Z info: ././././Lark/NativeRmsNormOutputLoop.lean:133:0: 'LarkNativeRmsNorm.output_components_memory_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:06.5969161Z info: ././././Lark/NativeRmsNormOutputLoop.lean:134:0: 'LarkNativeRmsNorm.output_components_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:06.5970132Z info: ././././Lark/NativeRmsNormOutputLoop.lean:135:0: 'LarkNativeRmsNorm.output_components_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.2017709Z ℹ [51/66] Built Lark.NativeRmsNormOutputVectors
+2026-11-11T15:18:11.2020314Z info: ././././Lark/NativeRmsNormOutputVectors.lean:105:0: 'LarkNativeRmsNorm.output_vector_cycle' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.2021841Z info: ././././Lark/NativeRmsNormOutputVectors.lean:106:0: 'LarkNativeRmsNorm.output_vector_fields' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.2023348Z info: ././././Lark/NativeRmsNormOutputVectors.lean:107:0: 'LarkNativeRmsNorm.output_vector_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:11.2024845Z info: ././././Lark/NativeRmsNormOutputVectors.lean:108:0: 'LarkNativeRmsNorm.output_vector_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.9032870Z ℹ [52/66] Built Lark.NativeRmsNormOutputFrame
+2026-11-11T15:18:11.9033909Z info: ././././Lark/NativeRmsNormOutputFrame.lean:64:0: 'LarkNativeRmsNorm.output_vector_index_frame' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.9035234Z info: ././././Lark/NativeRmsNormOutputFrame.lean:65:0: 'LarkNativeRmsNorm.output_vector_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:11.9036462Z info: ././././Lark/NativeRmsNormOutputFrame.lean:66:0: 'LarkNativeRmsNorm.output_vector_memory_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:13.4051812Z ℹ [53/66] Built Lark.NativeRmsNormOutputLane
+2026-11-11T15:18:13.4052552Z info: ././././Lark/NativeRmsNormOutputLane.lean:87:0: 'LarkNativeRmsNorm.output_pair_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:13.4053428Z info: ././././Lark/NativeRmsNormOutputLane.lean:88:0: 'LarkNativeRmsNorm.output_lane_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:13.4054291Z info: ././././Lark/NativeRmsNormOutputLane.lean:89:0: 'LarkNativeRmsNorm.output_lane_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:22.3144452Z ℹ [54/66] Built Lark.NativeRmsNormOutputLaneFrame
+2026-11-11T15:18:22.3145231Z info: ././././Lark/NativeRmsNormOutputLaneFrame.lean:111:0: 'LarkNativeRmsNorm.output_lane_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:22.3146481Z info: ././././Lark/NativeRmsNormOutputLaneFrame.lean:112:0: 'LarkNativeRmsNorm.output_lane_memory_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:22.3147450Z info: ././././Lark/NativeRmsNormOutputLaneFrame.lean:113:0: 'LarkNativeRmsNorm.output_lane_index_frame' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:22.3148470Z info: ././././Lark/NativeRmsNormOutputLaneFrame.lean:114:0: 'LarkNativeRmsNorm.output_lane_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:22.6149045Z ℹ [55/66] Built Lark.NativeRmsNormOutputOwnership
+2026-11-11T15:18:22.6150523Z info: ././././Lark/NativeRmsNormOutputOwnership.lean:56:0: 'LarkNativeRmsNorm.output_lane_memory_frame' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:22.6152388Z info: ././././Lark/NativeRmsNormOutputOwnership.lean:57:0: 'LarkNativeRmsNorm.output_lane_native_indices' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:23.1200540Z ℹ [56/66] Built Lark.NativeRmsNormOutputColumn
+2026-11-11T15:18:23.1201410Z info: ././././Lark/NativeRmsNormOutputColumn.lean:47:0: 'LarkNativeRmsNorm.output_lane_column_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:23.2202229Z ℹ [57/66] Built Lark.NativeRmsNormOutputFold
+2026-11-11T15:18:23.2202976Z info: ././././Lark/NativeRmsNormOutputFold.lean:131:0: 'LarkNativeRmsNorm.output_fold_run' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:23.2203858Z info: ././././Lark/NativeRmsNormOutputFold.lean:132:0: 'LarkNativeRmsNorm.output_fold_value' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:23.2204727Z info: ././././Lark/NativeRmsNormOutputFold.lean:133:0: 'LarkNativeRmsNorm.output_fold_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:23.6207301Z ℹ [58/66] Built Lark.NativeRmsNormOutputWave
+2026-11-11T15:18:23.6208131Z info: ././././Lark/NativeRmsNormOutputWave.lean:72:0: 'LarkNativeRmsNorm.cohort_halt' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:23.6209562Z info: ././././Lark/NativeRmsNormOutputWave.lean:73:0: 'LarkNativeRmsNorm.output_wave_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:24.7219364Z ℹ [59/66] Built Lark.NativeRmsNormOutputWaves
+2026-11-11T15:18:24.7220181Z info: ././././Lark/NativeRmsNormOutputWaves.lean:65:0: 'LarkNativeRmsNorm.output_waves_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:24.7221143Z info: ././././Lark/NativeRmsNormOutputWaves.lean:66:0: 'LarkNativeRmsNorm.all_output_threads' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:26.3237826Z ℹ [60/66] Built Lark.NativeRmsNormOutputBlock
+2026-11-11T15:18:26.3239134Z info: ././././Lark/NativeRmsNormOutputBlock.lean:113:0: 'LarkNativeRmsNorm.output_block_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:26.3241561Z info: ././././Lark/NativeRmsNormOutputBlock.lean:114:0: 'LarkNativeRmsNorm.output_block_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:26.3243255Z info: ././././Lark/NativeRmsNormOutputBlock.lean:115:0: 'LarkNativeRmsNorm.output_block_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:28.2258480Z ℹ [61/66] Built Lark.NativeRmsNormBlock
+2026-11-11T15:18:28.2259287Z info: ././././Lark/NativeRmsNormBlock.lean:91:0: 'LarkNativeRmsNorm.mid_ready' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:28.2260236Z info: ././././Lark/NativeRmsNormBlock.lean:92:0: 'LarkNativeRmsNorm.native_block_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:28.2261175Z info: ././././Lark/NativeRmsNormBlock.lean:93:0: 'LarkNativeRmsNorm.native_block_from_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:30.9276771Z ℹ [62/66] Built Lark.NativeRmsNormBlockFrame
+2026-11-11T15:18:30.9278134Z info: ././././Lark/NativeRmsNormBlockFrame.lean:98:0: 'LarkNativeRmsNorm.native_block_pc_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:30.9279855Z info: ././././Lark/NativeRmsNormBlockFrame.lean:99:0: 'LarkNativeRmsNorm.native_block_epoch_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:30.9281523Z info: ././././Lark/NativeRmsNormBlockFrame.lean:100:0: 'LarkNativeRmsNorm.native_block_entry_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:32.4292110Z ℹ [63/66] Built Lark.NativeRmsNormBlockMemory
+2026-11-11T15:18:32.4293272Z info: ././././Lark/NativeRmsNormBlockMemory.lean:58:0: 'LarkNativeRmsNorm.native_block_value_other' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:18:35.1351621Z ℹ [64/66] Built Lark.NativeRmsNormRows
+2026-11-11T15:18:35.1352384Z info: ././././Lark/NativeRmsNormRows.lean:81:0: 'LarkNativeRmsNorm.native_rows_exec' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:35.1353377Z info: ././././Lark/NativeRmsNormRows.lean:82:0: 'LarkNativeRmsNorm.native_rows_pc' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:35.1354294Z info: ././././Lark/NativeRmsNormRows.lean:83:0: 'LarkNativeRmsNorm.native_rows_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:35.6356785Z ℹ [65/66] Built Lark.NativeRmsNormGrid
+2026-11-11T15:18:35.6357939Z info: ././././Lark/NativeRmsNormGrid.lean:63:0: 'LarkNativeRmsNorm.final_exec' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:35.6359488Z info: ././././Lark/NativeRmsNormGrid.lean:64:0: 'LarkNativeRmsNorm.final_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:36.1362604Z ℹ [66/66] Built Lark.NativeRmsNormCorrect
+2026-11-11T15:18:36.1364006Z info: ././././Lark/NativeRmsNormCorrect.lean:43:0: 'LarkNativeRmsNorm.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:18:36.1368860Z Build completed successfully.
+2026-11-11T15:18:36.1442731Z ##[group]Run python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
+2026-11-11T15:18:36.1443644Z [36;1mpython3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components[0m
+2026-11-11T15:18:36.1466972Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:18:36.1467230Z env:
+2026-11-11T15:18:36.1467515Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:36.1467951Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:18:36.1468377Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:36.1468754Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:36.1469131Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:36.1469504Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:18:36.1470045Z ##[endgroup]
+2026-11-11T15:18:50.7770871Z {"status": "native-inout-components-checked", "local_lean_modules": 11, "false_claims_rejected": 9, "source_certificates": 0}
+2026-11-11T15:18:50.7915158Z ##[group]Run python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
+2026-11-11T15:18:50.7916488Z [36;1mpython3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch[0m
+2026-11-11T15:18:50.7938426Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:18:50.7938684Z env:
+2026-11-11T15:18:50.7938964Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:50.7939399Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:18:50.7939824Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:50.7940206Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:50.7940595Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:18:50.7940974Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:18:50.7941329Z ##[endgroup]
+2026-11-11T15:23:32.0905692Z {"status": "native-inout-whole-launch-checked", "local_lean_modules": 66, "false_claims_rejected": 77, "source_certificates": 0}
+2026-11-11T15:23:32.1049783Z ##[group]Run python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
+2026-11-11T15:23:32.1050839Z [36;1mpython3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T15:23:32.1072982Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:23:32.1073241Z env:
+2026-11-11T15:23:32.1073520Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.1073958Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:23:32.1074401Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.1074786Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.1075159Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.1075538Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:23:32.1075892Z ##[endgroup]
+2026-11-11T15:23:32.2834483Z {"status": "whole-launch-stage-claim-guards-checked", "controls": 2}
+2026-11-11T15:23:32.2973830Z ##[group]Run lake build Lark.NativeAttentionAddress
+2026-11-11T15:23:32.2974507Z [36;1mlake build Lark.NativeAttentionAddress[0m
+2026-11-11T15:23:32.2999309Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:23:32.2999584Z env:
+2026-11-11T15:23:32.2999871Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.3000347Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:23:32.3000798Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.3001201Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.3001583Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:32.3001961Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:23:32.3002289Z ##[endgroup]
+2026-11-11T15:23:32.8484352Z ℹ [3/5] Built Lark.NativeAttentionProgram
+2026-11-11T15:23:32.8485560Z info: ././././Lark/NativeAttentionProgram.lean:126:0: 'LarkNativeAttention.program_length' does not depend on any axioms
+2026-11-11T15:23:32.8487269Z info: ././././Lark/NativeAttentionProgram.lean:127:0: 'LarkNativeAttention.global_span_int32' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:33.9497590Z ℹ [4/5] Built Lark.NativeAttentionFootprint
+2026-11-11T15:23:33.9498639Z info: ././././Lark/NativeAttentionFootprint.lean:91:0: 'LarkNativeAttention.collision' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:33.9500012Z info: ././././Lark/NativeAttentionFootprint.lean:92:0: 'LarkNativeAttention.race_free' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:33.9502055Z info: ././././Lark/NativeAttentionFootprint.lean:93:0: 'LarkNativeAttention.location_local' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2520254Z ℹ [5/5] Built Lark.NativeAttentionAddress
+2026-11-11T15:23:35.2521404Z info: ././././Lark/NativeAttentionAddress.lean:129:0: 'LarkNativeAttention.global_address_int32' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2523018Z info: ././././Lark/NativeAttentionAddress.lean:130:0: 'LarkNativeAttention.global_address_owner' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2524574Z info: ././././Lark/NativeAttentionAddress.lean:131:0: 'LarkNativeAttention.global_address_inverse' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2526313Z info: ././././Lark/NativeAttentionAddress.lean:132:0: 'LarkNativeAttention.output_location' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2527834Z info: ././././Lark/NativeAttentionAddress.lean:133:0: 'LarkNativeAttention.output_access_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2529399Z info: ././././Lark/NativeAttentionAddress.lean:134:0: 'LarkNativeAttention.tile_store_access_good' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:23:35.2530429Z Build completed successfully.
+2026-11-11T15:23:35.2593605Z ##[group]Run python3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding
+2026-11-11T15:23:35.2594500Z [36;1mpython3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding[0m
+2026-11-11T15:23:35.2617432Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:23:35.2617700Z env:
+2026-11-11T15:23:35.2617989Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:35.2618443Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:23:35.2618902Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:35.2619288Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:35.2619690Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:35.2620071Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:23:35.2620401Z ##[endgroup]
+2026-11-11T15:23:38.6107760Z {"status": "passed", "scope": "fixed IR/layout identity and conditional footprint lemmas only", "source_certificates": 0, "whole_kernel_execution_proved": false, "actual_trace_classification_proved": false, "direct_lean_identity_rejections": 5, "footprint_witnesses_checked": true, "model_calls": 0, "gpu_trials": 0, "original_paper_fully_reproduced": false, "cases": [{"name": "baseline", "accepted": true, "instructions": 91, "seconds": 0.5994263559999808, "timed_out": false}, {"name": "removed-load-barrier", "accepted": false, "instructions": 90, "seconds": 0.41230939499996566, "timed_out": false}, {"name": "wrong-tile-store-owner", "accepted": false, "instructions": 91, "seconds": 0.4050634440000067, "timed_out": false}, {"name": "wrong-running-state", "accepted": false, "instructions": 91, "seconds": 0.45638322000002063, "timed_out": false}, {"name": "omitted-old-mass", "accepted": false, "instructions": 91, "seconds": 0.4796565039999905, "timed_out": false}, {"name": "shrunken-private-array", "accepted": false, "instructions": 91, "seconds": 0.49717050700007803, "timed_out": false}]}
+2026-11-11T15:23:38.6235463Z ##[group]Run python3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/lark-native-attention-prefix
+2026-11-11T15:23:38.6236760Z [36;1mpython3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/lark-native-attention-prefix[0m
+2026-11-11T15:23:38.6259642Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:23:38.6259908Z env:
+2026-11-11T15:23:38.6260191Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:38.6260642Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:23:38.6261073Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:38.6261661Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:38.6262041Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:23:38.6262428Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:23:38.6262753Z ##[endgroup]
+2026-11-11T15:24:56.3868546Z {"status": "native-whole-launch-checked", "prefix_instructions_per_lane": 1914303, "local_lean_modules": 84, "false_prefix_claims_rejected": 29, "source_certificates": 0}
+2026-11-11T15:24:56.4007983Z ##[group]Run python -m unittest discover -s tests -v
+2026-11-11T15:24:56.4008390Z [36;1mpython -m unittest discover -s tests -v[0m
+2026-11-11T15:24:56.4029994Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:24:56.4030250Z env:
+2026-11-11T15:24:56.4030523Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:24:56.4030965Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:24:56.4031398Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:24:56.4031794Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:24:56.4032174Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:24:56.4032553Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:24:56.4032882Z ##[endgroup]
+2026-11-11T15:24:56.8934510Z test_composed_ir_matches_independent_tensor_reader (test_attention.AttentionTests.test_composed_ir_matches_independent_tensor_reader) ... ok
+2026-11-11T15:25:32.4251587Z test_full_gqa_export_recheck_and_rehashed_forgery (test_attention.AttentionTests.test_full_gqa_export_recheck_and_rehashed_forgery) ... ok
+2026-11-11T15:25:32.4369962Z test_source_scale_group_row_and_reference_mutations_refused (test_attention.AttentionTests.test_source_scale_group_row_and_reference_mutations_refused) ... ok
+2026-11-11T15:25:32.4403852Z test_corrupted_weight_or_configuration_never_finishes_validation (test_checkpoints.CheckpointTests.test_corrupted_weight_or_configuration_never_finishes_validation) ... ok
+2026-11-11T15:25:32.4423172Z test_weights_and_supporting_git_blobs_are_checked_offline (test_checkpoints.CheckpointTests.test_weights_and_supporting_git_blobs_are_checked_offline) ... ok
+2026-11-11T15:25:49.1674563Z test_whole_wave_proof_recheck_and_rehashed_statement_forgery (test_collective.CollectiveLeanTests.test_whole_wave_proof_recheck_and_rehashed_statement_forgery) ... ok
+2026-11-11T15:25:56.9519410Z test_wrong_shuffle_rejected_by_lean_without_preflight (test_collective.CollectiveLeanTests.test_wrong_shuffle_rejected_by_lean_without_preflight) ... ok
+2026-11-11T15:25:56.9568884Z test_a_shuffle_cannot_read_another_wave (test_collective.CollectiveTests.test_a_shuffle_cannot_read_another_wave) ... ok
+2026-11-11T15:25:56.9674231Z test_all_forms_match_independent_tensor_references (test_collective.CollectiveTests.test_all_forms_match_independent_tensor_references) ... ok
+2026-11-11T15:25:56.9693742Z test_in_place_shuffle_reads_the_old_wave_snapshot (test_collective.CollectiveTests.test_in_place_shuffle_reads_the_old_wave_snapshot) ... ok
+2026-11-11T15:25:56.9708706Z test_invalid_selector_and_uninitialized_source_are_refused (test_collective.CollectiveTests.test_invalid_selector_and_uninitialized_source_are_refused) ... ok
+2026-11-11T15:25:56.9724781Z test_partial_participation_and_nonliteral_width_are_refused (test_collective.CollectiveTests.test_partial_participation_and_nonliteral_width_are_refused) ... ok
+2026-11-11T15:25:56.9795714Z test_shuffles_do_not_repair_memory_races (test_collective.CollectiveTests.test_shuffles_do_not_repair_memory_races) ... ok
+2026-11-11T15:25:56.9801002Z test_ambiguous_line_or_column_forms_are_refused (test_comment_replay.CommentReplayTests.test_ambiguous_line_or_column_forms_are_refused) ... ok
+2026-11-11T15:25:56.9802847Z test_comments_cannot_hide_outside_declarations_or_admission (test_comment_replay.CommentReplayTests.test_comments_cannot_hide_outside_declarations_or_admission) ... ok
+2026-11-11T15:25:56.9805103Z test_documentation_tokens_are_not_removed_as_whitespace (test_comment_replay.CommentReplayTests.test_documentation_tokens_are_not_removed_as_whitespace) ... ok
+2026-11-11T15:25:56.9806526Z test_identifier_apostrophes_are_preserved (test_comment_replay.CommentReplayTests.test_identifier_apostrophes_are_preserved) ... ok
+2026-11-11T15:25:56.9807769Z test_nested_and_line_comments_preserve_code_and_line_structure (test_comment_replay.CommentReplayTests.test_nested_and_line_comments_preserve_code_and_line_structure) ... ok
+2026-11-11T15:25:56.9809537Z test_quoted_forms_are_refused_instead_of_reinterpreted_as_comments (test_comment_replay.CommentReplayTests.test_quoted_forms_are_refused_instead_of_reinterpreted_as_comments) ... ok
+2026-11-11T15:25:56.9810608Z test_unterminated_block_comment_is_refused (test_comment_replay.CommentReplayTests.test_unterminated_block_comment_is_refused) ... ok
+2026-11-11T15:26:16.5553853Z test_full_depthwise_export_recheck_and_rehashed_group_forgery (test_convolution.ConvolutionTests.test_full_depthwise_export_recheck_and_rehashed_group_forgery) ... ok
+2026-11-11T15:26:16.5585345Z test_full_profiles_and_group_contracts_preserve_bounded_limits (test_convolution.ConvolutionTests.test_full_profiles_and_group_contracts_preserve_bounded_limits) ... ok
+2026-11-11T15:26:16.5619151Z test_wrong_group_padding_and_kernel_offset_are_refused (test_convolution.ConvolutionTests.test_wrong_group_padding_and_kernel_offset_are_refused) ... ok
+2026-11-11T15:26:39.1363246Z test_full_export_recheck_and_rehashed_wire_forgery (test_feedforward.FeedForwardTests.test_full_export_recheck_and_rehashed_wire_forgery) ... ok
+2026-11-11T15:26:39.1385115Z test_full_pipeline_refuses_wrong_wire_alias_and_shape (test_feedforward.FeedForwardTests.test_full_pipeline_refuses_wrong_wire_alias_and_shape) ... ok
+2026-11-11T15:26:39.1429658Z test_missing_relu_and_wrong_rounding_boundary_are_refused (test_feedforward.FeedForwardTests.test_missing_relu_and_wrong_rounding_boundary_are_refused) ... ok
+2026-11-11T15:26:39.1486358Z test_reduced_composition_matches_independent_tensor_formalization (test_feedforward.FeedForwardTests.test_reduced_composition_matches_independent_tensor_formalization) ... ok
+2026-11-11T15:26:39.1505170Z test_arithmetic_index_and_loop_mutations_cannot_use_the_induction_rule (test_gemv.GemvTests.test_arithmetic_index_and_loop_mutations_cannot_use_the_induction_rule) ... ok
+2026-11-11T15:26:39.1510291Z test_bad_geometry_shapes_json_types_and_fuel_are_refused (test_gemv.GemvTests.test_bad_geometry_shapes_json_types_and_fuel_are_refused) ... ok
+2026-11-11T15:26:39.1519624Z test_full_shape_uses_the_proved_profile_and_preserves_old_limits (test_gemv.GemvTests.test_full_shape_uses_the_proved_profile_and_preserves_old_limits) ... ok
+2026-11-11T15:26:51.6550752Z test_full_size_certificate_rechecks_and_forged_statement_is_refused (test_gemv.GemvTests.test_full_size_certificate_rechecks_and_forged_statement_is_refused) ... ok
+2026-11-11T15:26:51.6575729Z test_reference_must_match_the_full_tensor_operator (test_gemv.GemvTests.test_reference_must_match_the_full_tensor_operator) ... ok
+2026-11-11T15:26:51.6624979Z test_all_examples_preflight (test_lark.FrontendTests.test_all_examples_preflight) ... ok
+2026-11-11T15:26:51.6672710Z test_arithmetic_address_register_and_loop_mutations (test_lark.FrontendTests.test_arithmetic_address_register_and_loop_mutations) ... ok
+2026-11-11T15:26:51.6684634Z test_axiom_diagnostics_cannot_spoof_the_final_audit (test_lark.FrontendTests.test_axiom_diagnostics_cannot_spoof_the_final_audit) ... ok
+2026-11-11T15:26:51.6693268Z test_benign_same_value_writes_are_races (test_lark.FrontendTests.test_benign_same_value_writes_are_races) ... ok
+2026-11-11T15:26:51.6701071Z test_block_barriers_do_not_order_distinct_blocks (test_lark.FrontendTests.test_block_barriers_do_not_order_distinct_blocks) ... ok
+2026-11-11T15:26:51.6709022Z test_fuel_is_an_obligation (test_lark.FrontendTests.test_fuel_is_an_obligation) ... ok
+2026-11-11T15:26:51.6718077Z test_integer_overflow_and_unsigned_underflow_refused (test_lark.FrontendTests.test_integer_overflow_and_unsigned_underflow_refused) ... ok
+2026-11-11T15:26:51.6728783Z test_missing_output_uninitialized_local_and_divergence (test_lark.FrontendTests.test_missing_output_uninitialized_local_and_divergence) ... ok
+2026-11-11T15:26:51.6730273Z test_proof_escape_and_unchecked_evaluation_refused (test_lark.FrontendTests.test_proof_escape_and_unchecked_evaluation_refused) ... ok
+2026-11-11T15:26:51.6739460Z test_reference_namespace_and_tensor_types_are_checked (test_lark.FrontendTests.test_reference_namespace_and_tensor_types_are_checked) ... ok
+2026-11-11T15:26:51.6745387Z test_reference_never_executes_code (test_lark.FrontendTests.test_reference_never_executes_code) ... ok
+2026-11-11T15:26:51.6752110Z test_roundtrip_preserves_crlf_and_comments (test_lark.FrontendTests.test_roundtrip_preserves_crlf_and_comments) ... ok
+2026-11-11T15:26:51.6764820Z test_unknown_constructs_refused (test_lark.FrontendTests.test_unknown_constructs_refused) ... ok
+2026-11-11T15:27:45.3914854Z test_all_examples_certify_and_recheck (test_lark.LeanTests.test_all_examples_certify_and_recheck) ... ok
+2026-11-11T15:27:45.3924582Z test_existing_certificate_not_overwritten (test_lark.LeanTests.test_existing_certificate_not_overwritten) ... ok
+2026-11-11T15:27:48.4103663Z test_footprint_proposal_is_not_trusted (test_lark.LeanTests.test_footprint_proposal_is_not_trusted) ... ok
+2026-11-11T15:27:50.6484180Z test_lean_rejects_exhausted_fuel_without_python_screen (test_lark.LeanTests.test_lean_rejects_exhausted_fuel_without_python_screen) ... ok
+2026-11-11T15:27:53.7525383Z test_lean_rejects_race_without_python_screen (test_lark.LeanTests.test_lean_rejects_race_without_python_screen) ... ok
+2026-11-11T15:27:57.5327163Z test_lean_rejects_wrong_kernel_without_python_screen (test_lark.LeanTests.test_lean_rejects_wrong_kernel_without_python_screen) ... ok
+2026-11-11T15:28:03.6802728Z test_provider_can_repair_a_failed_proposal (test_lark.LeanTests.test_provider_can_repair_a_failed_proposal) ... ok
+2026-11-11T15:28:06.7575697Z test_recheck_rejects_tampering_even_if_manifest_rehashed (test_lark.LeanTests.test_recheck_rejects_tampering_even_if_manifest_rehashed) ... ok
+2026-11-11T15:28:09.8044973Z test_segmentation_is_not_trusted (test_lark.LeanTests.test_segmentation_is_not_trusted) ... ok
+2026-11-11T15:28:09.8064213Z test_full_linear_checks_third_input_and_keeps_bounded_limits (test_linear.LinearTests.test_full_linear_checks_third_input_and_keeps_bounded_limits) ... ok
+2026-11-11T15:28:31.9074030Z test_full_linear_export_recheck_and_rehashed_bias_forgery (test_linear.LinearTests.test_full_linear_export_recheck_and_rehashed_bias_forgery) ... ok
+2026-11-11T15:28:31.9107721Z test_missing_or_wrongly_indexed_bias_is_refused (test_linear.LinearTests.test_missing_or_wrongly_indexed_bias_is_refused) ... ok
+2026-11-11T15:28:31.9126825Z test_dead_runtime_stops_before_any_model_request (test_local_models.LocalClientTests.test_dead_runtime_stops_before_any_model_request) ... ok
+2026-11-11T15:28:31.9128620Z test_json_proposals_have_only_the_two_fixed_fields (test_local_models.LocalClientTests.test_json_proposals_have_only_the_two_fixed_fields) ... ok
+2026-11-11T15:28:32.5077998Z test_local_request_and_usage_are_recorded_and_redirects_are_refused (test_local_models.LocalClientTests.test_local_request_and_usage_are_recorded_and_redirects_are_refused) ... ok
+2026-11-11T15:28:32.5103344Z {"case": "relu", "attempt": 1, "status": "no-proof-content", "error": "Model produced no proof content", "elapsed_seconds": 0.0006730119999929229}
+2026-11-11T15:28:32.5109736Z test_reasoning_only_response_is_not_a_transport_or_proof_rejection (test_local_models.LocalClientTests.test_reasoning_only_response_is_not_a_transport_or_proof_rejection) ... ok
+2026-11-11T15:28:32.5111771Z test_remote_urls_credentials_and_unexpected_paths_are_refused (test_local_models.LocalClientTests.test_remote_urls_credentials_and_unexpected_paths_are_refused) ... ok
+2026-11-11T15:28:42.5818592Z test_stub_proposal_gets_an_independently_checked_certificate (test_local_models.LocalClientTests.test_stub_proposal_gets_an_independently_checked_certificate) ... ok
+2026-11-11T15:28:42.5825573Z test_batch_broadcast_shape_launch_and_integer_aliases_are_refused (test_matrix.MatrixTests.test_batch_broadcast_shape_launch_and_integer_aliases_are_refused) ... ok
+2026-11-11T15:28:42.5840353Z test_binary_probe_tampering_and_extent_forgery_are_refused (test_matrix.MatrixTests.test_binary_probe_tampering_and_extent_forgery_are_refused) ... ok
+2026-11-11T15:28:42.5881694Z test_changed_index_and_shape_dependent_reference_cannot_use_the_rule (test_matrix.MatrixTests.test_changed_index_and_shape_dependent_reference_cannot_use_the_rule) ... ok
+2026-11-11T15:29:00.4181119Z test_full_batched_certificate_and_forged_reference_binding (test_matrix.MatrixTests.test_full_batched_certificate_and_forged_reference_binding) ... ok
+2026-11-11T15:29:00.4203545Z test_full_gemm_and_bmm_profiles_preserve_bounded_limits (test_matrix.MatrixTests.test_full_gemm_and_bmm_profiles_preserve_bounded_limits) ... ok
+2026-11-11T15:30:03.8917530Z test_export_recheck_and_fully_rehashed_last_output_forgery (test_mfma.MFMALeanTests.test_export_recheck_and_fully_rehashed_last_output_forgery) ... ok
+2026-11-11T15:30:04.1372715Z test_distinct_waves_use_their_own_operand_registers (test_mfma.MFMATests.test_distinct_waves_use_their_own_operand_registers) ... ok
+2026-11-11T15:30:04.3084391Z test_input_layout_and_accumulator_mutations_are_detected (test_mfma.MFMATests.test_input_layout_and_accumulator_mutations_are_detected) ... ok
+2026-11-11T15:30:04.3986901Z test_row_major_tile_matches_independent_matrix_reference (test_mfma.MFMATests.test_row_major_tile_matches_independent_matrix_reference) ... ok
+2026-11-11T15:30:04.4190283Z test_uninitialized_accumulator_and_divergent_participation_are_refused (test_mfma.MFMATests.test_uninitialized_accumulator_and_divergent_participation_are_refused) ... ok
+2026-11-11T15:30:04.4247640Z test_unsupported_types_components_and_modifiers_fail_closed (test_mfma.MFMATests.test_unsupported_types_components_and_modifiers_fail_closed) ... ok
+2026-11-11T15:30:04.4265854Z test_duplicate_cases_cannot_complete_a_cohort (test_model_comparison.ComparisonAuditTests.test_duplicate_cases_cannot_complete_a_cohort) ... ok
+2026-11-11T15:30:04.5685572Z test_later_success_does_not_become_first_attempt_success (test_model_comparison.ComparisonAuditTests.test_later_success_does_not_become_first_attempt_success) ... ok
+2026-11-11T15:30:04.6393118Z test_missing_reasoning_usage_remains_explicit (test_model_comparison.ComparisonAuditTests.test_missing_reasoning_usage_remains_explicit) ... ok
+2026-11-11T15:30:04.6597463Z test_rehashed_weakened_request_is_refused (test_model_comparison.ComparisonAuditTests.test_rehashed_weakened_request_is_refused) ... ok
+2026-11-11T15:30:04.6725866Z test_transport_failure_is_not_a_lean_rejection (test_model_comparison.ComparisonAuditTests.test_transport_failure_is_not_a_lean_rejection) ... ok
+2026-11-11T15:30:08.6678508Z test_valid_manual_proof_replacement_is_not_model_evidence (test_model_comparison.ComparisonAuditTests.test_valid_manual_proof_replacement_is_not_model_evidence) ... ok
+2026-11-11T15:30:08.6718730Z test_complete_source_contract_and_readback (test_native_attention.NativeAttentionTests.test_complete_source_contract_and_readback) ... ok
+2026-11-11T15:30:08.6741816Z test_contract_extremes_and_refusals (test_native_attention.NativeAttentionTests.test_contract_extremes_and_refusals) ... ok
+2026-11-11T15:30:08.6751021Z test_private_uninitialized_and_bounds_faults (test_native_attention.NativeAttentionTests.test_private_uninitialized_and_bounds_faults) ... ok
+2026-11-11T15:30:08.6767826Z test_private_values_survive_other_threads_and_a_barrier (test_native_attention.NativeAttentionTests.test_private_values_survive_other_threads_and_a_barrier) ... ok
+2026-11-11T15:30:08.6783147Z test_closed_contract_and_reference (test_native_fused_rmsnorm.NativeFusedRmsNormTests.test_closed_contract_and_reference) ... ok
+2026-11-11T15:30:08.6805855Z test_exact_readback_and_shared_layout (test_native_fused_rmsnorm.NativeFusedRmsNormTests.test_exact_readback_and_shared_layout) ... ok
+2026-11-11T15:30:10.6461367Z test_finite_accesses_and_missing_barrier_or_ownership (test_native_fused_rmsnorm.NativeFusedRmsNormTests.test_finite_accesses_and_missing_barrier_or_ownership) ... ok
+2026-11-11T15:30:10.7224929Z test_inout_initialization_and_ordinary_refusal (test_native_fused_rmsnorm.NativeFusedRmsNormTests.test_inout_initialization_and_ordinary_refusal) ... ok
+2026-11-11T15:30:10.7232753Z test_shape_extremes (test_native_fused_rmsnorm.NativeFusedRmsNormTests.test_shape_extremes) ... ok
+2026-11-11T15:30:10.7388691Z test_closed_reference_denies_changed_math (test_native_rmsnorm.NativeContractTests.test_closed_reference_denies_changed_math) ... ok
+2026-11-11T15:30:10.7394414Z test_large_profile_is_explicit_and_bounded (test_native_rmsnorm.NativeContractTests.test_large_profile_is_explicit_and_bounded) ... ok
+2026-11-11T15:30:10.7399543Z test_wrong_launch_dtype_and_weight_contracts (test_native_rmsnorm.NativeContractTests.test_wrong_launch_dtype_and_weight_contracts) ... ok
+2026-11-11T15:30:10.7401722Z test_certificate_and_recheck_at_all_validation_row_counts (test_native_rmsnorm.NativeProofTests.test_certificate_and_recheck_at_all_validation_row_counts) ... skipped 'requires pinned optional Mathlib dependencies/cache'
+2026-11-11T15:30:10.7404358Z test_modified_source_programs_are_rejected_directly_by_lean (test_native_rmsnorm.NativeProofTests.test_modified_source_programs_are_rejected_directly_by_lean) ... skipped 'requires pinned optional Mathlib dependencies/cache'
+2026-11-11T15:30:10.7407239Z test_rehashed_source_theorem_model_and_scope_tampering (test_native_rmsnorm.NativeProofTests.test_rehashed_source_theorem_model_and_scope_tampering) ... skipped 'requires pinned optional Mathlib dependencies/cache'
+2026-11-11T15:30:10.7409728Z test_rehashed_task_cannot_rebind_the_proved_shape (test_native_rmsnorm.NativeProofTests.test_rehashed_task_cannot_rebind_the_proved_shape) ... skipped 'requires pinned optional Mathlib dependencies/cache'
+2026-11-11T15:30:10.7412339Z test_closed_contract_preserves_ordinary_limits (test_native_softmax.NativeSoftmaxTests.test_closed_contract_preserves_ordinary_limits) ... ok
+2026-11-11T15:30:10.7474116Z test_full_sources_read_back_and_retain_both_helper_reductions (test_native_softmax.NativeSoftmaxTests.test_full_sources_read_back_and_retain_both_helper_reductions) ... ok
+2026-11-11T15:30:10.7479410Z test_infinity_seed_is_explicit_and_cannot_be_shadowed (test_native_softmax.NativeSoftmaxTests.test_infinity_seed_is_explicit_and_cannot_be_shadowed) ... ok
+2026-11-11T15:30:10.8181638Z test_private_arrays_use_thread_ownership (test_native_softmax.NativeSoftmaxTests.test_private_arrays_use_thread_ownership) ... ok
+2026-11-11T15:30:10.8194105Z test_allocations_and_comparison_protocol_are_fixed (test_nonlinear.DeviceBundleTests.test_allocations_and_comparison_protocol_are_fixed) ... ok
+2026-11-11T15:30:10.8203258Z test_wrapper_is_reconstructed_from_certified_bytes (test_nonlinear.DeviceBundleTests.test_wrapper_is_reconstructed_from_certified_bytes) ... ok
+2026-11-11T15:30:17.5779099Z test_half_silu_certificate_and_tamper_check (test_nonlinear.NonlinearLeanTests.test_half_silu_certificate_and_tamper_check) ... ok
+2026-11-11T15:30:47.4343443Z test_nonlinear_mutant_reaches_and_fails_lean (test_nonlinear.NonlinearLeanTests.test_nonlinear_mutant_reaches_and_fails_lean) ... ok
+2026-11-11T15:30:47.4636716Z test_all_extended_cases_match_the_independent_spec (test_nonlinear.NonlinearTests.test_all_extended_cases_match_the_independent_spec) ... ok
+2026-11-11T15:30:47.4644851Z test_half_operations_require_explicit_conversions (test_nonlinear.NonlinearTests.test_half_operations_require_explicit_conversions) ... ok
+2026-11-11T15:30:47.4647814Z test_half_view_preserves_the_conversion_boundary (test_nonlinear.NonlinearTests.test_half_view_preserves_the_conversion_boundary) ... ok
+2026-11-11T15:30:47.4681117Z test_model_choice_is_derived_from_program_and_spec (test_nonlinear.NonlinearTests.test_model_choice_is_derived_from_program_and_spec) ... ok
+2026-11-11T15:30:47.4684908Z test_original_machine_is_still_pinned (test_nonlinear.NonlinearTests.test_original_machine_is_still_pinned) ... ok
+2026-11-11T15:30:47.4691591Z test_unknown_functions_options_and_dtype_changes_are_refused (test_nonlinear.NonlinearTests.test_unknown_functions_options_and_dtype_changes_are_refused) ... ok
+2026-11-11T15:30:47.4720664Z test_full_profile_refuses_bad_shapes_launch_and_fuel (test_normalization.NormalizationTests.test_full_profile_refuses_bad_shapes_launch_and_fuel) ... ok
+2026-11-11T15:31:11.2135444Z test_full_softmax_export_recheck_and_rehashed_forgery (test_normalization.NormalizationTests.test_full_softmax_export_recheck_and_rehashed_forgery) ... ok
+2026-11-11T15:31:11.2283172Z test_reduced_actual_machine_matches_independent_tensor_formalization (test_normalization.NormalizationTests.test_reduced_actual_machine_matches_independent_tensor_formalization) ... ok
+2026-11-11T15:31:11.2343166Z test_wrong_variance_seed_and_shape_dependent_references_cannot_lift (test_normalization.NormalizationTests.test_wrong_variance_seed_and_shape_dependent_references_cannot_lift) ... ok
+2026-11-11T15:31:15.6014331Z test_lean_symbolic_cohort_and_guard_checks (test_partition_collective.PartitionLeanTests.test_lean_symbolic_cohort_and_guard_checks) ... ok
+2026-11-11T15:31:18.0128061Z test_native_rmsnorm_source_binding_and_direct_controls (test_partition_collective.PartitionLeanTests.test_native_rmsnorm_source_binding_and_direct_controls) ... ok
+2026-11-11T15:31:18.0148703Z test_duplicate_and_cross_wave_cohorts_are_refused (test_partition_collective.PartitionMachineTests.test_duplicate_and_cross_wave_cohorts_are_refused) ... ok
+2026-11-11T15:31:18.0171653Z test_existing_uniform_wave_has_identical_state_and_trace (test_partition_collective.PartitionMachineTests.test_existing_uniform_wave_has_identical_state_and_trace) ... ok
+2026-11-11T15:31:18.0187648Z test_explicit_half_storage_conversions_are_retained (test_partition_collective.PartitionMachineTests.test_explicit_half_storage_conversions_are_retained) ... ok
+2026-11-11T15:31:18.0199704Z test_failed_gather_performs_no_partial_register_or_pc_updates (test_partition_collective.PartitionMachineTests.test_failed_gather_performs_no_partial_register_or_pc_updates) ... ok
+2026-11-11T15:31:18.0219033Z test_incomplete_partitions_are_refused (test_partition_collective.PartitionMachineTests.test_incomplete_partitions_are_refused) ... ok
+2026-11-11T15:31:18.0222624Z test_native_contract_keeps_default_bounded_capacity (test_partition_collective.PartitionMachineTests.test_native_contract_keeps_default_bounded_capacity) ... ok
+2026-11-11T15:31:18.0227507Z test_native_contract_rejects_launch_and_boolean_aliases (test_partition_collective.PartitionMachineTests.test_native_contract_rejects_launch_and_boolean_aliases) ... ok
+2026-11-11T15:31:18.0253929Z test_partial_partition_snapshot_and_inactive_lanes (test_partition_collective.PartitionMachineTests.test_partial_partition_snapshot_and_inactive_lanes) ... ok
+2026-11-11T15:31:18.0270548Z test_two_distinct_logical_partitions_at_different_instructions (test_partition_collective.PartitionMachineTests.test_two_distinct_logical_partitions_at_different_instructions) ... ok
+2026-11-11T15:31:25.9066715Z test_full_length_certificate_rechecks_and_statement_tampering_is_rejected (test_pointwise.PointwiseTests.test_full_length_certificate_rechecks_and_statement_tampering_is_rejected) ... ok
+2026-11-11T15:31:25.9073966Z test_full_length_profile_keeps_the_bounded_verifier_bounded (test_pointwise.PointwiseTests.test_full_length_profile_keeps_the_bounded_verifier_bounded) ... ok
+2026-11-11T15:31:25.9086772Z test_rejects_unproved_launch_layout_and_source_changes (test_pointwise.PointwiseTests.test_rejects_unproved_launch_layout_and_source_changes) ... ok
+2026-11-11T15:31:25.9093664Z test_scalar_disagreement_is_left_to_lean (test_pointwise.PointwiseTests.test_scalar_disagreement_is_left_to_lean) ... ok
+2026-11-11T15:31:25.9112301Z test_shape_dependent_reference_cannot_be_lifted_from_a_single_cell (test_pointwise.PointwiseTests.test_shape_dependent_reference_cannot_be_lifted_from_a_single_cell) ... ok
+2026-11-11T15:31:29.8289013Z test_wrong_full_length_scalar_program_receives_no_certificate (test_pointwise.PointwiseTests.test_wrong_full_length_scalar_program_receives_no_certificate) ... ok
+2026-11-11T15:32:11.6649379Z test_all_ptx_certificates_export_and_recheck (test_ptx.PTXLeanTests.test_all_ptx_certificates_export_and_recheck) ... ok
+2026-11-11T15:32:43.9024089Z test_lean_rejects_mutants_without_python_preflight (test_ptx.PTXLeanTests.test_lean_rejects_mutants_without_python_preflight) ... ok
+2026-11-11T15:32:43.9073468Z test_arithmetic_register_and_byte_address_mutations (test_ptx.PTXTests.test_arithmetic_register_and_byte_address_mutations) ... ok
+2026-11-11T15:32:43.9086933Z test_bounds_guard_and_negated_predicate_agree (test_ptx.PTXTests.test_bounds_guard_and_negated_predicate_agree) ... ok
+2026-11-11T15:32:43.9121805Z test_independent_references_and_lossless_roundtrip (test_ptx.PTXTests.test_independent_references_and_lossless_roundtrip) ... ok
+2026-11-11T15:32:43.9137164Z test_runtime_integer_overflow_and_nonfinite_literals_are_refused (test_ptx.PTXTests.test_runtime_integer_overflow_and_nonfinite_literals_are_refused) ... ok
+2026-11-11T15:32:43.9152015Z test_skipped_pointer_and_predicate_initialization_is_preserved (test_ptx.PTXTests.test_skipped_pointer_and_predicate_initialization_is_preserved) ... ok
+2026-11-11T15:32:43.9213678Z test_unsupported_forms_cannot_be_silently_ignored (test_ptx.PTXTests.test_unsupported_forms_cannot_be_silently_ignored) ... ok
+2026-11-11T15:33:04.6523613Z test_new_reference_families_certify (test_reproduction.ReproductionLeanTests.test_new_reference_families_certify) ... ok
+2026-11-11T15:33:04.6531504Z test_benign_race_survives_symbolic_numerical_equivalence (test_reproduction.ReproductionTests.test_benign_race_survives_symbolic_numerical_equivalence) ... ok
+2026-11-11T15:33:04.6534801Z test_bmm_rejects_rank_two_inputs (test_reproduction.ReproductionTests.test_bmm_rejects_rank_two_inputs) ... ok
+2026-11-11T15:33:04.6538317Z test_convolution_rejects_incompatible_groups (test_reproduction.ReproductionTests.test_convolution_rejects_incompatible_groups) ... ok
+2026-11-11T15:33:04.6563225Z test_multiaxis_broadcast_uses_trailing_dimensions (test_reproduction.ReproductionTests.test_multiaxis_broadcast_uses_trailing_dimensions) ... ok
+2026-11-11T15:33:04.6629594Z test_mutants_are_nontrivial_and_preflight_rejects_each (test_reproduction.ReproductionTests.test_mutants_are_nontrivial_and_preflight_rejects_each) ... ok
+2026-11-11T15:33:04.6631153Z test_paper_shape_catalog_covers_seventeen_distinct_tasks (test_reproduction.ReproductionTests.test_paper_shape_catalog_covers_seventeen_distinct_tasks) ... ok
+2026-11-11T15:33:04.6632485Z test_pinned_upstream_matches_recorded_hash (test_reproduction.ReproductionTests.test_pinned_upstream_matches_recorded_hash) ... ok
+2026-11-11T15:33:04.6706986Z test_reduced_cases_match_independent_specs (test_reproduction.ReproductionTests.test_reduced_cases_match_independent_specs) ... ok
+2026-11-11T15:33:32.3468785Z test_full_export_recheck_and_rehashed_arithmetic_forgery (test_rotary.RotaryTests.test_full_export_recheck_and_rehashed_arithmetic_forgery) ... ok
+2026-11-11T15:33:32.3485630Z test_full_profile_and_coefficient_shapes_preserve_bounded_limits (test_rotary.RotaryTests.test_full_profile_and_coefficient_shapes_preserve_bounded_limits) ... ok
+2026-11-11T15:33:32.3517076Z test_wrong_parity_pairing_and_single_pair_reference_cannot_be_lifted (test_rotary.RotaryTests.test_wrong_parity_pairing_and_single_pair_reference_cannot_be_lifted) ... ok
+2026-11-11T15:33:57.7119599Z test_billion_cell_symbolic_contract_without_enumeration (test_silu.SiluTests.test_billion_cell_symbolic_contract_without_enumeration) ... ok
+2026-11-11T15:34:10.7732107Z test_direct_lean_rejects_removed_reference_rounding (test_silu.SiluTests.test_direct_lean_rejects_removed_reference_rounding) ... ok
+2026-11-11T15:34:23.1602075Z test_large_launch_and_lossless_recheck (test_silu.SiluTests.test_large_launch_and_lossless_recheck) ... ok
+2026-11-11T15:34:48.3050156Z test_partial_final_cuda_warp (test_silu.SiluTests.test_partial_final_cuda_warp) ... ok
+2026-11-11T15:34:48.3099649Z test_reference_precision_and_output_coverage_refusals (test_silu.SiluTests.test_reference_precision_and_output_coverage_refusals) ... ok
+2026-11-11T15:34:48.3141965Z test_rehashed_reference_tamper_fails_fixed_grammar (test_silu.SiluTests.test_rehashed_reference_tamper_fails_fixed_grammar) ... ok
+2026-11-11T15:34:48.3167973Z test_source_launch_and_bounds_refusals (test_silu.SiluTests.test_source_launch_and_bounds_refusals) ... ok
+2026-11-11T15:34:48.3267605Z test_early_half_wrong_silu_and_reordered_reference_are_refused (test_swiglu.SwiGLUTests.test_early_half_wrong_silu_and_reordered_reference_are_refused) ... ok
+2026-11-11T15:35:14.9499351Z test_full_export_recheck_and_rehashed_dtype_forgery (test_swiglu.SwiGLUTests.test_full_export_recheck_and_rehashed_dtype_forgery) ... ok
+2026-11-11T15:35:14.9536686Z test_full_pipeline_requires_fp32_projections_and_exact_wiring (test_swiglu.SwiGLUTests.test_full_pipeline_requires_fp32_projections_and_exact_wiring) ... ok
+2026-11-11T15:35:14.9628438Z test_reduced_four_stage_ir_matches_independent_tensor_reader (test_swiglu.SwiGLUTests.test_reduced_four_stage_ir_matches_independent_tensor_reader) ... ok
+2026-11-11T15:35:14.9630407Z test_certificate_build_files_and_cached_objects_are_ignored (test_wave_sum.WaveSumProofTests.test_certificate_build_files_and_cached_objects_are_ignored) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+2026-11-11T15:35:14.9631790Z test_export_and_fresh_global_check (test_wave_sum.WaveSumProofTests.test_export_and_fresh_global_check) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+2026-11-11T15:35:14.9632995Z test_fully_rehashed_reference_change_fails_global_check (test_wave_sum.WaveSumProofTests.test_fully_rehashed_reference_change_fails_global_check) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+2026-11-11T15:35:14.9634322Z test_last_reference_cell_change_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_last_reference_cell_change_is_rejected_by_lean) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+2026-11-11T15:35:14.9635509Z test_wrong_shuffle_is_rejected_by_lean (test_wave_sum.WaveSumProofTests.test_wrong_shuffle_is_rejected_by_lean) ... skipped 'optional Mathlib checks run with LARK_TEST_REAL=1'
+2026-11-11T15:35:14.9669154Z test_changed_reference_source_geometry_and_precision_refused (test_wave_sum.WaveSumReaderTests.test_changed_reference_source_geometry_and_precision_refused) ... ok
+2026-11-11T15:35:14.9701120Z test_full_program_and_all_reference_cells (test_wave_sum.WaveSumReaderTests.test_full_program_and_all_reference_cells) ... ok
+2026-11-11T15:35:14.9701925Z 
+2026-11-11T15:35:14.9702163Z ----------------------------------------------------------------------
+2026-11-11T15:35:14.9702554Z Ran 169 tests in 618.115s
+2026-11-11T15:35:14.9702708Z 
+2026-11-11T15:35:14.9702801Z OK (skipped=9)
+2026-11-11T15:35:14.9985245Z ##[group]Run lake env lean Lark/FeedForward.lean
+2026-11-11T15:35:14.9985632Z [36;1mlake env lean Lark/FeedForward.lean[0m
+2026-11-11T15:35:15.0007888Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:15.0008143Z env:
+2026-11-11T15:35:15.0008420Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.0008857Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:15.0009296Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.0009685Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.0010065Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.0010442Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:15.0010766Z ##[endgroup]
+2026-11-11T15:35:15.3464543Z 'LarkFeedForward.hidden_eq' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:15.3465551Z 'LarkFeedForward.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:15.3688328Z ##[group]Run python tools/verify_examples.py certificates
+2026-11-11T15:35:15.3688756Z [36;1mpython tools/verify_examples.py certificates[0m
+2026-11-11T15:35:15.3710708Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:15.3710962Z env:
+2026-11-11T15:35:15.3711243Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.3711690Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:15.3712119Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.3712513Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.3712889Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:15.3713264Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:15.3713592Z ##[endgroup]
+2026-11-11T15:35:19.1485798Z block_sum: verified
+2026-11-11T15:35:22.6388911Z fused_relu: verified
+2026-11-11T15:35:29.4285321Z matmul: verified
+2026-11-11T15:35:32.3697800Z relu: verified
+2026-11-11T15:35:36.2107034Z reverse: verified
+2026-11-11T15:35:39.3544103Z saxpy: verified
+2026-11-11T15:35:42.5187236Z vector_add: verified
+2026-11-11T15:35:42.5321291Z ##[group]Run lake env lean Lark/SwiGLU.lean
+2026-11-11T15:35:42.5321838Z [36;1mlake env lean Lark/SwiGLU.lean[0m
+2026-11-11T15:35:42.5352035Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:42.5352431Z env:
+2026-11-11T15:35:42.5352865Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:42.5353592Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:42.5354302Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:42.5354942Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:42.5355572Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:42.5356450Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:42.5356983Z ##[endgroup]
+2026-11-11T15:35:43.0960910Z 'LarkSwiGLU.pair_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.0962111Z 'LarkSwiGLU.down_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.0963217Z 'LarkSwiGLU.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.1186224Z ##[group]Run lake env lean Lark/AttentionPipeline.lean
+2026-11-11T15:35:43.1186712Z [36;1mlake env lean Lark/AttentionPipeline.lean[0m
+2026-11-11T15:35:43.1208834Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:43.1209089Z env:
+2026-11-11T15:35:43.1209362Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.1209802Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:43.1210230Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.1210605Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.1210973Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.1211358Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:43.1211676Z ##[endgroup]
+2026-11-11T15:35:43.6527294Z 'LarkAttention.soft_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.6528232Z 'LarkAttention.value_wired_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.6528861Z 'LarkAttention.correct' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-11-11T15:35:43.6758438Z ##[group]Run lake build
+2026-11-11T15:35:43.6758717Z [36;1mlake build[0m
+2026-11-11T15:35:43.6780916Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:43.6781262Z env:
+2026-11-11T15:35:43.6781545Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.6781979Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:43.6782415Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.6782796Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.6783385Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:43.6783794Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:43.6784146Z ##[endgroup]
+2026-11-11T15:35:43.7215915Z info: lark_certificate: no previous manifest, creating one from scratch
+2026-11-11T15:35:43.7217015Z info: toolchain not updated; already up-to-date
+2026-11-11T15:35:47.0253547Z ℹ [2/3] Built Main
+2026-11-11T15:35:47.0254436Z info: ././././Main.lean:444:0: 'LarkCertificate.segmentation_data' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:47.0257442Z info: ././././Main.lean:445:0: 'LarkCertificate.segmentation' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:47.0258262Z info: ././././Main.lean:446:0: 'LarkCertificate.race_free' does not depend on any axioms
+2026-11-11T15:35:47.0258896Z info: ././././Main.lean:447:0: 'LarkCertificate.segment_equivalence' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:47.0259578Z info: ././././Main.lean:448:0: 'LarkCertificate.kernel_eq_spec' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:47.0260255Z info: ././././Main.lean:449:0: 'LarkCertificate.kernel_eq_spec_pre' depends on axioms: [propext, Quot.sound]
+2026-11-11T15:35:47.0260734Z Build completed successfully.
+2026-11-11T15:35:47.0338670Z ##[group]Run python reproduction/production_race.py --output /tmp/lark-production-race
+2026-11-11T15:35:47.0339301Z [36;1mpython reproduction/production_race.py --output /tmp/lark-production-race[0m
+2026-11-11T15:35:47.0361385Z shell: /usr/bin/bash -e {0}
+2026-11-11T15:35:47.0361636Z env:
+2026-11-11T15:35:47.0361920Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:47.0362379Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T15:35:47.0362809Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:47.0363194Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:47.0363573Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T15:35:47.0363970Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T15:35:47.0364292Z ##[endgroup]
+2026-11-11T15:35:49.1890786Z {
+2026-11-11T15:35:49.1891193Z   "status": "proved",
+2026-11-11T15:35:49.1891684Z   "original_thread_reader": 0,
+2026-11-11T15:35:49.1892102Z   "original_thread_writer": 80,
+2026-11-11T15:35:49.1892473Z   "C": 50257,
+2026-11-11T15:35:49.1892772Z   "block_size": 1024,
+2026-11-11T15:35:49.1893088Z   "unroll": 8,
+2026-11-11T15:35:49.1893393Z   "reader_base": 49152,
+2026-11-11T15:35:49.1893738Z   "reader_slot": 2,
+2026-11-11T15:35:49.1894084Z   "reader_unclamped_index": 51200,
+2026-11-11T15:35:49.1894448Z   "conflicting_cell": 50256,
+2026-11-11T15:35:49.1894702Z   "writer_base": 49232,
+2026-11-11T15:35:49.1894934Z   "writer_slot": 1,
+2026-11-11T15:35:49.1895144Z   "provenance": {
+2026-11-11T15:35:49.1895440Z     "repository": "https://github.com/karpathy/llm.c",
+2026-11-11T15:35:49.1895826Z     "commit": "f1e2ace651495b74ae22d45d1723443fd00ecd3a",
+2026-11-11T15:35:49.1896413Z     "path": "dev/cuda/softmax_forward.cu",
+2026-11-11T15:35:49.1896866Z     "full_source_sha256": "1cb4787d621236018e75cfb2c9412a5db919fe747bcbe425fc0dfc01ce908dba",
+2026-11-11T15:35:49.1897463Z     "excerpt_sha256": "8fde9528ae8f0a11fc96edfacedff3bdf07a9d69042e707904b6bb360699f485",
+2026-11-11T15:35:49.1898243Z     "url": "https://github.com/karpathy/llm.c/blob/f1e2ace651495b74ae22d45d1723443fd00ecd3a/dev/cuda/softmax_forward.cu#L389-L505",
+2026-11-11T15:35:49.1898812Z     "license": "MIT",
+2026-11-11T15:35:49.1899051Z     "paper_revision_available": false,
+2026-11-11T15:35:49.1899714Z     "notes": "Public upstream revision pinned at reproduction time; not asserted to be the paper registry revision. FP32 source; paper adapted storage to FP16."
+2026-11-11T15:35:49.1900357Z   },
+2026-11-11T15:35:49.1900709Z   "model_sha256": "20aeff0bb4da384fd55a636a85ccd24b742ce890629300cb2fc8cc524e02b12e",
+2026-11-11T15:35:49.1901280Z   "lean_sha256": "7fd4afea4ebe07d6bf1f260dfcf3e88f8113e7b2d8a5641943ee30f7b1dd6a11",
+2026-11-11T15:35:49.1902427Z   "axioms": "'ProductionRace.original_address_witness' does not depend on any axioms\n'ProductionRace.guard_eliminates_clamped_read' does not depend on any axioms\n",
+2026-11-11T15:35:49.1903593Z   "scope": "Arithmetic/access-pair counterexample for pinned upstream final-pass formula, not a full-kernel equivalence proof. Source-to-formula mapping is inspected and trusted."
+2026-11-11T15:35:49.1904516Z }
+2026-11-11T15:35:49.2086635Z Post job cleanup.
+2026-11-11T15:35:49.3423650Z (node:12223) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T15:35:49.3424563Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T15:35:49.3670608Z Post job cleanup.
+2026-11-11T15:35:49.4601079Z [command]/usr/bin/git version
+2026-11-11T15:35:49.4677770Z git version 2.56.0
+2026-11-11T15:35:49.4717287Z Temporarily overriding HOME='/home/runner/work/_temp/6052dfa6-c46f-4457-9eb3-2acdb86481bb' before making global git config changes
+2026-11-11T15:35:49.4725651Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T15:35:49.4729035Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-11T15:35:49.4774226Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T15:35:49.4817713Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T15:35:49.5155261Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T15:35:49.5197733Z http.https://github.com/.extraheader
+2026-11-11T15:35:49.5238132Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T15:35:49.5291204Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T15:35:49.5690226Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T15:35:49.5741262Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T15:35:49.6203872Z Cleaning up orphan processes
+2026-11-11T15:35:49.6604929Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

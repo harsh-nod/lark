@@ -308,6 +308,16 @@ principal proofs and earlier scalar-prefix evidence relabeled as a complete
 wave. The [wheel audit](results/exp-wave-packaging-v1/results.json) matches all
 73 required proof modules and the reader byte-for-byte.
 
+All five jobs in [CI run43046411154](https://github.com/harsh-nod/lark/actions/runs/43046411154)
+passed at source commit `8ce41605022ec2b8bf4ac9db18b166c155e130d7`.
+The [saved CI packet](results/exp-wave-ci-v1/results.json) preserves the raw logs
+and job metadata, including fresh export/replay and all34 rehashed metadata
+refusals. The general suite ran169 tests:160 passed and9 optional tests skipped.
+All120 selected live implementation, proof, fixture and workflow files match
+the checked commit byte-for-byte. Later changes contain only this study's
+documentation and frozen evidence. The run covers the complete native64 wave
+through PC82 together with the retained scalar prefix and maximum pass.
+
 The third barrier has not resumed in this wave packet. The complete16-wave
 block phase, serial sum, normalization, whole-grid execution, conflict-state
 reachability and canonical-real/IEEE reference bridges remain open. This
