@@ -1,0 +1,21 @@
+{
+  "upstream_commit": "f1e2ace651495b74ae22d45d1723443fd00ecd3a",
+  "original_paper_artifact": false,
+  "mechanical_rewrites": [
+    "Instantiate C50257/block1024; grid equals rows, so the tid>=C early return is unreachable",
+    "Inline max helper as descending16/8/4/2/1 down-shuffles and sum helper as matching XOR shuffles, logical width32",
+    "Replace for loops by while loops, make cache-hint loads ordinary loads, drop unroll pragmas",
+    "Use two static32-element shared arrays for the nonoverlapping dynamic max/sum regions",
+    "Use two8-element per-thread private arrays for the two original unrolled register-array scopes",
+    "Spell row pointers, clamp indices, compound updates and temporary values explicitly",
+    "Flatten declarations and give variables unique names in the scoped reader",
+    "Target native HIP wave64 with complete aligned logical32 partitions"
+  ],
+  "departures": [
+    "FP32 input storage becomes FP16 with explicit fromHalf",
+    "FP32 output storage becomes FP16 with explicit toHalf"
+  ],
+  "repair": "Guard the normalization pass's output-buffer load by its existing bounds predicate; use the unclamped in-bounds index",
+  "negative_infinity_model": "Dedicated source spelling -INFINITY lowers to Ops.literal(-1,0), a named extended-value seed; no rational or IEEE interpretation is asserted yet",
+  "reference_scope": "Canonical ideal real softmax. FP16 intermediate storage remains explicit in the source; numerical error is assessed separately."
+}

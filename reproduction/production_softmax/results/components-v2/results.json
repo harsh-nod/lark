@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "status": "native-softmax-source-and-instruction-witness-checked",
+  "rows": {
+    "min": 1,
+    "max": 42730
+  },
+  "upstream_default_rows": 8192,
+  "local_lean_modules": 8,
+  "source_archive_sha256": "9808d21783fbe501d0931805402834c217ee55b7458e68dc61912e7b11eccec6",
+  "source_sha256": {
+    "original": "c4c99c49db02315726e25d3c273379a1461fb5201c042204fea0c6f56c020019",
+    "fixed": "ff3f7c7887b85b507b35400424f5f9c321fd139cfcbe9abbb9ac67297175886a"
+  },
+  "axiom_audits": {
+    "LarkCollective.shuffleUpdates_preserves": "",
+    "LarkCollective.runShuffle_preserves": "propext",
+    "LarkCollective.owned_raceFree": "propext, Quot.sound",
+    "LarkCollective.Gather.values_eq": "propext, Quot.sound",
+    "LarkPartitionCollective.runShuffle_preserves": "propext",
+    "LarkPartitionCollective.nextCohort_subset": "propext",
+    "LarkPartitionCollective.nextCohort_nonempty": "propext, Quot.sound",
+    "LarkNativeSoftmax.index_span": "",
+    "LarkNativeSoftmax.native_geometry": "propext",
+    "LarkNativeSoftmax.source_sizes": "",
+    "LarkNativeSoftmax.column_expansion": "propext",
+    "LarkNativeSoftmax.column_owner": "propext",
+    "LarkNativeSoftmax.column_injective": "propext, Classical.choice, Quot.sound",
+    "LarkNativeSoftmax.column_cover": "propext, Quot.sound",
+    "LarkNativeSoftmax.clamped_bound": "propext, Quot.sound",
+    "LarkNativeSoftmax.in_bounds_clamp": "propext, Quot.sound",
+    "LarkNativeSoftmax.address_bound": "propext, Quot.sound",
+    "LarkNativeSoftmax.address_writer": "propext, Quot.sound",
+    "LarkNativeSoftmax.clamped_race_addresses": "",
+    "LarkNativeSoftmax.guard_skips_bad_read": "",
+    "LarkNativeSoftmax.ordered_blocks": "propext, Quot.sound",
+    "LarkNativeSoftmax.collision": "propext, Quot.sound",
+    "LarkNativeSoftmax.conflict_false": "propext, Quot.sound",
+    "LarkNativeSoftmax.race_free": "propext, Quot.sound",
+    "LarkNativeSoftmax.reader_code": "",
+    "LarkNativeSoftmax.writer_code": "",
+    "LarkNativeSoftmax.guard_code": "",
+    "LarkNativeSoftmax.scalar_at": "propext",
+    "LarkNativeSoftmax.output_location_of": "propext, Quot.sound",
+    "LarkNativeSoftmax.witness_output_location": "propext, Quot.sound",
+    "LarkNativeSoftmax.witness_private_location": "propext, Quot.sound",
+    "LarkNativeSoftmax.store_trace_of": "propext, Quot.sound",
+    "LarkNativeSoftmax.half_load_of": "propext",
+    "LarkNativeSoftmax.reader_step_at": "propext, Quot.sound",
+    "LarkNativeSoftmax.writer_step_at": "propext, Quot.sound",
+    "LarkNativeSoftmax.reader_step": "propext, Quot.sound",
+    "LarkNativeSoftmax.writer_step": "propext, Quot.sound",
+    "LarkNativeSoftmax.guard_step": "propext, Quot.sound",
+    "LarkNativeSoftmax.pair_conflict": "propext, Quot.sound",
+    "LarkNativeSoftmax.pair_invalidates_rf": "propext, Quot.sound",
+    "source_program_data": "",
+    "source_interface_data": "",
+    "source_step_data": "Quot.sound",
+    "source_reader_trace": "propext, Quot.sound",
+    "source_writer_trace": "propext, Quot.sound",
+    "source_guard_trace": "propext, Quot.sound",
+    "source_pair_conflicts": "propext, Quot.sound",
+    "source_sufficient_rf": "propext, Quot.sound"
+  },
+  "false_lean_claims_rejected": 9,
+  "checks": [
+    {
+      "name": "frozen-reader",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 0.16815558803500608,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-build",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 14.98831398395123,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-max-reduction",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.1574910120107234,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-clamped-cell",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.2435608200030401,
+      "timed_out": false
+    },
+    {
+      "name": "missing-first-barrier",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.1287796099786647,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-normalization-value",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.1986514859599993,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-private-layout",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.41800622100709,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-block-fuel",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.3348173729609698,
+      "timed_out": false
+    },
+    {
+      "name": "false-original-race-freedom",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.29701133898925036,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-writer-address",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.30432870402000844,
+      "timed_out": false
+    },
+    {
+      "name": "false-repair-takes-load",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.34943417803151533,
+      "timed_out": false
+    }
+  ],
+  "source_certificates": 0,
+  "full_source_identity_checked": true,
+  "instruction_trace_counterexample_proved": true,
+  "repaired_guard_step_proved": true,
+  "sufficient_footprint_race_freedom_proved": true,
+  "whole_kernel_execution_proved": false,
+  "intermediate_state_reachability_proved": false,
+  "actual_trace_universal_classification_proved": false,
+  "canonical_source_equivalence_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "gpu_trials": 0
+}

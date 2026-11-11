@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "closed-torch-reference-numerically-checked",
+  "numpy": "2.4.4",
+  "torch": "2.11.0+cu130",
+  "input_manifest_sha256": "371e217e39d47b64e0642a69c5d4445a23c8c38cb9038113d1b269482bbaa03f",
+  "float64_atol": 1e-15,
+  "float64_rtol": 1e-12,
+  "counts": {
+    "elements": 97398066,
+    "float64_formula_failures": 0,
+    "expected_half_bit_differences": 0,
+    "torch_float64_half_bit_differences": 0,
+    "torch_float32_half_bit_differences": 3528,
+    "torch_float32_tolerance_failures": 0,
+    "max_float64_abs_error": 2.220446049250313e-16
+  },
+  "reference_source_executed": false,
+  "closed_reference_ast_checked": true,
+  "formal_reference_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Finite CPU cross-check of NumPy float64 stable softmax against Torch float64, expected FP16 bytes against their regenerated formula, and the declared FP32 Torch AST interpretation under the recorded FP16 tolerance. No reference source is executed and no universal interpretation/IEEE theorem is claimed."
+}

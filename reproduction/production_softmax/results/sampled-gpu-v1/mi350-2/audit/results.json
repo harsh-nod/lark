@@ -1,0 +1,456 @@
+{
+  "schema": 1,
+  "status": "full-native-softmax-numerical-checks-passed",
+  "checked_at_utc": "2026-11-11T08:50:30.766989+00:00",
+  "device": "AMD Instinct MI350X",
+  "numpy": "2.4.4",
+  "trials": 24,
+  "launches": 48,
+  "atol": 5.960464477539063e-08,
+  "rtol": 0.002,
+  "reference": "CPU float64 stable softmax of exactly promoted FP16 inputs, rounded to FP16 once at the end",
+  "methods": {
+    "racy-output": {
+      "comparisons": 97398066,
+      "failed": 0,
+      "nonfinite": 0,
+      "max_abs_error": 1.52587890625e-05,
+      "max_rel_error": 1.0
+    },
+    "fixed-output": {
+      "comparisons": 97398066,
+      "failed": 0,
+      "nonfinite": 0,
+      "max_abs_error": 1.52587890625e-05,
+      "max_rel_error": 1.0
+    }
+  },
+  "paired_bit_differences": 0,
+  "methods_bit_identical_on_sample": true,
+  "source_sha256": {
+    "native_race": "c4c99c49db02315726e25d3c273379a1461fb5201c042204fea0c6f56c020019",
+    "native_fixed": "ff3f7c7887b85b507b35400424f5f9c321fd139cfcbe9abbb9ac67297175886a"
+  },
+  "input_manifest_sha256": "371e217e39d47b64e0642a69c5d4445a23c8c38cb9038113d1b269482bbaa03f",
+  "device_manifest_sha256": "257c7305d77485e3ee26315d2ca1ed089f2bcebbcdce30bb63858b68bca95515",
+  "compiler_input_hashes_sha256": "b149f26a64734a7dbba8abd8ee94918fdc2d54e829bd299c816fd1b46635ad63",
+  "whole_kernel_lean_execution_proved": false,
+  "source_certificates": 0,
+  "original_source_race_free": false,
+  "repair_universal_race_freedom_proved": false,
+  "ieee_equivalence_proved": false,
+  "floating_point_error_bound_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "records": [
+    {
+      "rows": 1,
+      "trial": 0,
+      "family": "seeded-normal",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 1,
+      "trial": 1,
+      "family": "signed-zero-uniform",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 1,
+      "trial": 2,
+      "family": "all-negative-constant",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 1,
+      "trial": 3,
+      "family": "structured-dyadic",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 1,
+      "trial": 4,
+      "family": "last-cell-maximum",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 1,
+      "trial": 5,
+      "family": "wide-alternating",
+      "elements": 50257,
+      "methods": {
+        "racy-output": {
+          "comparisons": 50257,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 50257,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 0,
+      "family": "seeded-normal",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 1,
+      "family": "signed-zero-uniform",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 2,
+      "family": "all-negative-constant",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 3,
+      "family": "structured-dyadic",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 4,
+      "family": "last-cell-maximum",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 3,
+      "trial": 5,
+      "family": "wide-alternating",
+      "elements": 150771,
+      "methods": {
+        "racy-output": {
+          "comparisons": 150771,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 150771,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 0,
+      "family": "seeded-normal",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 1,
+      "family": "signed-zero-uniform",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 2,
+      "family": "all-negative-constant",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 3,
+      "family": "structured-dyadic",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 4,
+      "family": "last-cell-maximum",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 64,
+      "trial": 5,
+      "family": "wide-alternating",
+      "elements": 3216448,
+      "methods": {
+        "racy-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 3216448,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 0,
+      "family": "seeded-normal",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 1,
+      "family": "signed-zero-uniform",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 2,
+      "family": "all-negative-constant",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 3,
+      "family": "structured-dyadic",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 4,
+      "family": "last-cell-maximum",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    },
+    {
+      "rows": 255,
+      "trial": 5,
+      "family": "wide-alternating",
+      "elements": 12815535,
+      "methods": {
+        "racy-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        },
+        "fixed-output": {
+          "comparisons": 12815535,
+          "failed": 0
+        }
+      },
+      "paired_bit_differences": 0
+    }
+  ],
+  "scope": "Finite paired AMD numerical trials of independent full three-pass FP16 sources. Each method is compared independently with CPU-float64 stable softmax rounded to FP16 at the end. The original clamped-load source has a source-level race; agreement on this finite sample does not establish race freedom or a universal equality theorem. Historical models, original adapted text and NVIDIA timings are not reproduced."
+}

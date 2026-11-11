@@ -1,0 +1,36 @@
+{
+  "name": "independent_llmc_native_race",
+  "entry": "softmax_forward_kernel7",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        1,
+        50257
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "inp",
+      "role": "input",
+      "shape": [
+        1,
+        50257
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 1,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    4096,
+    8,
+    5,
+    1
+  ]
+}

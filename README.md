@@ -70,6 +70,13 @@ The `verify-native-fused-rmsnorm` command exports the closed source-bound profil
 Both AMD hosts have finite numerical evidence. Half conversions are identities
 in the real theorem; IEEE/error bounds and original production results remain open.
 
+The separate [native llm.c softmax study](reproduction/production_softmax/README.md)
+binds the complete three-pass original and repaired sources to their scalar IR,
+checks the paper's clamped-read conflict at instruction level, and replays both
+complete finite address traces. Both variants pass finite numerical checks on
+both AMD hosts. The repair's universal whole-launch and reference proofs remain
+open; this development profile issues no source certificate.
+
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the

@@ -1,0 +1,184 @@
+{
+  "case": "native_race",
+  "seconds": 13.961984233988915,
+  "instructions": 117,
+  "accesses": 489926,
+  "counts": {
+    "global:0:read:epoch4": 57344,
+    "global:0:write:epoch2": 50257,
+    "global:0:write:epoch4": 50257,
+    "global:1:read:epoch0": 57344,
+    "global:1:read:epoch2": 57344,
+    "local:0:read:epoch2": 50257,
+    "local:0:write:epoch2": 57344,
+    "local:1:read:epoch4": 50257,
+    "local:1:write:epoch4": 57344,
+    "shared:0:read:epoch1": 32,
+    "shared:0:read:epoch2": 1024,
+    "shared:0:write:epoch0": 32,
+    "shared:0:write:epoch1": 1,
+    "shared:1:read:epoch3": 32,
+    "shared:1:read:epoch4": 1024,
+    "shared:1:write:epoch2": 32,
+    "shared:1:write:epoch3": 1
+  },
+  "footprint_classification_failures": 7081,
+  "all_threads_halted": true,
+  "final_block_epoch": 4,
+  "missing_output_cells": 0,
+  "first_conflict": {
+    "earlier": 273898,
+    "later": 290953,
+    "earlier_access": {
+      "thread": 0,
+      "location": [
+        "global",
+        0,
+        0,
+        50256
+      ],
+      "write": false,
+      "epoch": [
+        0,
+        4,
+        0
+      ]
+    },
+    "later_access": {
+      "thread": 80,
+      "location": [
+        "global",
+        0,
+        0,
+        50256
+      ],
+      "write": true,
+      "epoch": [
+        0,
+        4,
+        0
+      ]
+    }
+  },
+  "canonical_witness": {
+    "reader": {
+      "event": 273898,
+      "access": {
+        "thread": 0,
+        "location": [
+          "global",
+          0,
+          0,
+          50256
+        ],
+        "write": false,
+        "epoch": [
+          0,
+          4,
+          0
+        ]
+      },
+      "pc": 102,
+      "indices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 57344,
+        "5": 8,
+        "6": 50256,
+        "7": 50256,
+        "8": 32,
+        "9": 57344,
+        "10": 8,
+        "11": 50256,
+        "12": 50256,
+        "13": 8,
+        "14": 56320,
+        "15": 50176,
+        "16": 32,
+        "17": 49152,
+        "18": 2,
+        "19": 50256,
+        "20": 50256,
+        "21": 8,
+        "22": 48128,
+        "23": 48128
+      },
+      "initialized_scalar_registers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "writer": {
+      "event": 290953,
+      "access": {
+        "thread": 80,
+        "location": [
+          "global",
+          0,
+          0,
+          50256
+        ],
+        "write": true,
+        "epoch": [
+          0,
+          4,
+          0
+        ]
+      },
+      "pc": 111,
+      "indices": {
+        "0": 0,
+        "1": 80,
+        "2": 2,
+        "3": 16,
+        "4": 57424,
+        "5": 8,
+        "6": 50256,
+        "7": 50256,
+        "9": 57424,
+        "10": 8,
+        "11": 50256,
+        "12": 50256,
+        "13": 8,
+        "14": 56400,
+        "15": 50256,
+        "17": 49232,
+        "18": 8,
+        "19": 50256,
+        "20": 50256,
+        "21": 1,
+        "22": 50256,
+        "23": 50256
+      },
+      "initialized_scalar_registers": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        12,
+        13
+      ]
+    }
+  },
+  "source_sha256": "c4c99c49db02315726e25d3c273379a1461fb5201c042204fea0c6f56c020019",
+  "trace_file": "native_race-trace.jsonl.gz",
+  "trace_sha256": "db062694e04ca8c2a4c702e08f984c0c9aac6fd0eb1916e3e222e64c09f8814f"
+}
