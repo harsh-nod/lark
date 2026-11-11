@@ -194,6 +194,14 @@ and earlier wave evidence relabeled as a block, before extraction.
 The [wheel audit](results/max-first-block-packaging-v1/results.json) checks the
 complete 37-module closure and closed reader byte-for-byte.
 
+[All five first-block CI jobs](https://github.com/harsh-nod/lark/actions/runs/43018861366)
+passed at source commit `85a2298ffc397eea8082ddb6b5a43f5ef421e7a5`.
+The [saved API responses and raw logs](results/max-first-block-ci-v1/results.json)
+retain the source/archive checks, ten stage refusals, existing real-profile
+checks and general suite: 169 tests run, 160 passed and nine optional skips.
+All 103 selected source files match that commit byte-for-byte. This run does
+not validate the later serial-maximum extension.
+
 Whole-grid composition, the serial reduction of 32 partial maxima, later
 exponentiation/sum/normalization passes, conflict-state reachability and the
 canonical-real reference bridge remain open. This first-block stage still issues
