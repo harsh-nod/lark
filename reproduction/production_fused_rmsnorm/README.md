@@ -153,6 +153,13 @@ earlier lane and first-wave generators/proof closures remain byte-identical to
 their archived versions, as recorded in the
 [source comparison receipt](results/first-block-compatibility-v1/results.json).
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42966727590) passed
+at first-block-phase source commit `059ca70808c877d4a2cca8664aff73192250fb9a`,
+including its fresh prefix check and 165 ordinary tests (nine optional skips).
+The [saved source-CI evidence](results/first-block-ci-v1/results.json) records
+the exact head and scope. The real job rechecks earlier certified profiles;
+this adds no fused canonical-real or complete source certificate.
+
 The second reduction, normalization, second barrier, halt, grid and
 source/reference equivalence remain open. All older frozen component, GPU,
 scalar-prefix and first-wave packets retain their original flags.
