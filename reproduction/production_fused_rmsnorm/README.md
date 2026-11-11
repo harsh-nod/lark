@@ -3,9 +3,9 @@
 This is an independent development study of the paper's
 `sglang_fused_add_rmsnorm` family. **No complete source certificate is claimed.**
 It adds initialized mutable-buffer interfaces, fixed-source identity and address
-proofs, a conditional footprint theorem, and numerical validation on both AMD
-hosts. Whole-launch execution, actual-trace classification and reference
-equivalence remain proof obligations.
+proofs, a conditional footprint theorem, an actual scalar-prefix proof, and
+numerical validation on both AMD hosts. Whole-launch execution, classification
+of the whole launch's trace and reference equivalence remain proof obligations.
 
 The [provenance record](provenance.json) pins SGLang commit
 `fc32cbff6983c7573f4b60eab8b44815668130a0`, independently selected before the
@@ -62,10 +62,40 @@ execution from the full source remains open. A separate finite value-erased run
 for one row halts at PC71/epoch2 and checks 115,777 accesses; it is not a universal
 trace theorem, numerical evaluation or source certificate.
 
+The later [scalar-prefix proof](../../../lean/Lark/NativeFusedRmsNormPrefix.lean)
+connects the actual seeded initializer to PC23, immediately before the first
+logical32 shuffle. For every valid lane, every row count 1..255, arbitrary
+abstract arithmetic operations, inputs and outside memory, it proves the actual
+210-instruction execution with the existing 512-instruction lane fuel. Both
+rounds complete all 16 owned values: residual receives `toHalf(x)`, shared memory
+receives the separate unrounded `x`, its owned input cells remain unchanged,
+and register zero contains the source-ordered sum of squares. The actual prefix contains 64
+accesses; classification and race freedom follow without assuming either.
+
+The [standalone prefix packet](results/scalar-prefix-v1/results.json) includes
+the source/reader, complete local Lean import closure, axiom audits, positive
+nonidentity-cast witnesses, four changed-source refusals and six false-value/
+counter/endpoint refusals. The source, interface, launch geometry and fuel stay
+pinned to the existing development case. This is a per-lane prefix theorem;
+native scheduling across lanes, logical32 reductions, barriers, normalized
+outputs, final halt, whole-launch classification and canonical-real equivalence
+are still open. The older component/GPU packets retain their original flags.
+An [independent archive replay](results/scalar-prefix-validation-v1/results.json)
+rebuilds all 18 modules, repeats all 89 audits and ten refusals, and checks the
+positive witnesses from the archive with no Git available on PATH and no cached
+own Lean objects. The archived reader verifies exact source/IR/interface binding.
+
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
 python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/fused-components
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/fused-scalar-prefix
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
+```
+
+```bash
+python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
+  --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
+  --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD results

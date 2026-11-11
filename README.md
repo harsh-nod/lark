@@ -58,6 +58,13 @@ scale reduction inside physical wave64. Both MI350X hosts passed numerical
 tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
+The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
+has numerical evidence from both AMD hosts and a universal per-lane proof of the
+actual 210-instruction scalar prefix through both input/add/store rounds. It
+keeps rounded residual storage distinct from unrounded shared values. Logical32
+collectives and the rest of the whole-launch/reference proof remain open; this
+family has no complete source certificate yet.
+
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the

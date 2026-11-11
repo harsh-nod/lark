@@ -136,8 +136,14 @@ hosts complete 24 paired trials; the CPU audit checks 127,008,768 normalized
 values and 127,008,768 residual bit patterns across both hosts/methods with zero
 failures. Signed-zero and 475 one-half-ULP normalized-method differences per host
 remain explicit. **No complete source certificate, actual-trace classification
-or original production result is claimed for this new family.** This later
-development evidence is outside the immutable v18 ledger.
+of the whole launch, or original production result is claimed for this new
+family.** Its later scalar-prefix theorem proves the actual 210 instructions
+through both in-place rounds, ending before the first shuffle. It covers all
+16 rounded residual/unrounded shared stores per lane, input preservation,
+source-ordered local squares and classification/race freedom of the actual
+64-access prefix for every valid lane and rows1..255. Logical32 collectives,
+barriers, normalized output, scheduling and full source/reference correctness
+remain open. This later development evidence is outside the immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
