@@ -191,6 +191,13 @@ objects, GPU or model calls. The earlier three stage generators/proof closures
 remain byte-identical to their archived versions, as recorded in the
 [source comparison receipt](results/second-block-compatibility-v1/results.json).
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42971700790) passed
+at second-block-phase source commit `433f04a44b813ce6bcef8a7c12b0ff192eb8bb7e`,
+including the fresh 46-module/349-audit/46-control check and 165 ordinary tests
+(nine optional skips). The [saved source-CI evidence](results/second-block-ci-v1/results.json)
+records the exact head, raw logs and scope. The real job rechecks earlier
+certified profiles; it adds no fused canonical-real or complete source certificate.
+
 Normalization/output execution, halt, grid and canonical source/reference
 equivalence remain open. All older frozen component, GPU, scalar-prefix,
 first-wave and first-block packets retain their original flags. This family
