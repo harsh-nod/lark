@@ -38,7 +38,7 @@ def main():
     source_manifest = json.loads((packet / "source-manifest.json").read_text())
     report = json.loads((packet / "results.json").read_text())
     require(report["status"] in {"native-inout-scalar-prefix-checked", "native-inout-first-wave-checked",
-                                 "native-inout-first-block-checked"}, "Wrong packet stage")
+                                 "native-inout-first-block-checked", "native-inout-second-block-checked"}, "Wrong packet stage")
     require(report["source_certificates"] == 0 and not report["whole_kernel_execution_proved"]
             and not report["actual_trace_classification_proved"]
             and not report["canonical_source_equivalence_proved"]
@@ -81,7 +81,8 @@ def main():
             command = ["lake", "env", "lean", name + ".lean"]
         start = time.monotonic()
         run = subprocess.run(command, cwd=project, env=env, text=True, capture_output=True,
-                             timeout=600 if report["status"] == "native-inout-first-block-checked" and name == "fresh-build" else 300)
+                             timeout=600 if report["status"] in {"native-inout-first-block-checked", "native-inout-second-block-checked"}
+                             and name == "fresh-build" else 300)
         log = run.stdout + run.stderr
         (out / (name + ".log")).write_text(log)
         accepted = run.returncode == 0 and "sorryAx" not in log and "error:" not in log
@@ -97,7 +98,8 @@ def main():
         checks.append({"name": name, "expected_accepted": expected, "exit_code": run.returncode,
                        "seconds": time.monotonic() - start, "timed_out": False})
     result = {
-        "schema": 1, "status": ("frozen-first-block-archive-replayed" if report["status"] == "native-inout-first-block-checked"
+        "schema": 1, "status": ("frozen-second-block-archive-replayed" if report["status"] == "native-inout-second-block-checked"
+                                  else "frozen-first-block-archive-replayed" if report["status"] == "native-inout-first-block-checked"
                                   else "frozen-first-wave-archive-replayed" if report["status"] == "native-inout-first-wave-checked"
                                   else "frozen-scalar-prefix-archive-replayed"), "fresh_source_files": len(seen),
         "local_lean_modules": report["local_lean_modules"], "axiom_audits": len(report["axiom_audits"]),
@@ -109,7 +111,7 @@ def main():
         "original_paper_fully_reproduced": False,
     }
     for key, value in report.items():
-        if key.startswith(("scalar_prefix_", "first_native_wave_", "first_native_block_")):
+        if key.startswith(("scalar_prefix_", "first_native_wave_", "first_native_block_", "second_native_block_")):
             result[key] = value
     (out / "results.json").write_text(json.dumps(result, indent=2) + "\n")
     shutil.copyfile(Path(__file__), out / "replay.py")

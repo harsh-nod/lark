@@ -64,10 +64,12 @@ actual 210-instruction scalar prefix through both input/add/store rounds. It
 keeps rounded residual storage distinct from unrounded shared values. Its later
 native-wave proof completes all five logical32 XOR stages and both partial
 stores in a physical wave64. The later first-block-phase proof composes all 16
-waves, retains every rounded residual and unrounded shared value, and resumes
-all 1,024 participants at PC36/block epoch1. The second reduction, normalization,
-second barrier, halt and grid remain open; this family has no complete source
-certificate yet.
+waves and retains every rounded residual and unrounded shared value. The later
+second-phase proof covers the mixed physical wave's 32 active lanes, all five
+logical32 stages, unique total store, 15 inactive-wave visits and both barrier
+resumes, leaving all 1,024 threads at PC51/block epoch2. Normalization/output,
+halt, grid and canonical-real equivalence remain open; this family has no
+complete source certificate yet.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.

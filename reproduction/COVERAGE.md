@@ -148,8 +148,12 @@ covered with arbitrary arithmetic/input/outside memory. The subsequent first
 block-phase proof composes all 16 waves, proves every rounded residual and
 unrounded shared value across 16,384 columns and all 32 partials, and resumes
 the actual block barrier to PC36/epoch1 for all 1,024 participants while retaining
-read-only weights and historical trace epochs. The second reduction, normalized
-output, second barrier, halt/grid and full source/reference correctness remain
+read-only weights and historical trace epochs. The subsequent middle-phase
+proof selects exactly 32 active lanes inside physical64, executes all five
+logical32 XOR/add stages and the unique total store, visits all 15 inactive
+waves, and resumes both barriers to PC51/epoch2 for all 1,024 participants.
+Actual-prefix classification/race freedom and all retained operands are proved.
+Normalization/output, halt/grid and full source/reference correctness remain
 open. This later development evidence is outside the immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |

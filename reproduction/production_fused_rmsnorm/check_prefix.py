@@ -5,6 +5,8 @@ ending at PC23 before any shuffle. The first-wave stage additionally proves all
 64 native lanes through five logical32 reductions/two partial stores to PC35.
 The first-block stage composes all sixteen waves and the actual barrier resume
 to PC36/epoch1, retaining every rounded residual and unrounded shared value.
+The second-block stage executes the mixed logical32 block reduction and second
+barrier resume to PC51/epoch2, ready for the still-unproved normalization loop.
 Whole-launch and canonical-real source correctness remain open. Existing frozen
 component/GPU/prefix packets are unchanged.
 """
@@ -29,7 +31,7 @@ HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_16384"
 TARGET = "Lark.NativeFusedRmsNormPrefix"
 TARGETS = {"lane": TARGET, "first-wave": "Lark.NativeFusedRmsNormFirstWave",
-           "first-block": "Lark.NativeFusedRmsNormBarrier"}
+           "first-block": "Lark.NativeFusedRmsNormBarrier", "second-block": "Lark.NativeFusedRmsNormOutBarrier"}
 SOURCE_SHA256 = "c297c1842c1a4d2d9be2265aa0d03da759dda22f555947e3483eccb486e5f59e"
 PRINCIPAL = (
     "source_binding", "source_prefix_all_shapes", "source_prefix_values",
@@ -56,6 +58,16 @@ BLOCK_PRINCIPAL = (
     "LarkNativeFusedRmsNorm.first_block_cells", "LarkNativeFusedRmsNorm.first_block_cut",
     "LarkNativeFusedRmsNorm.block_first_eq", "LarkNativeFusedRmsNorm.mid_ready",
     "LarkNativeFusedRmsNorm.initial_first_barrier",
+)
+SECOND_PRINCIPAL = (
+    "source_mixed_cohort", "source_second_wave_run", "source_second_block_run", "source_second_block_total",
+    "source_second_block_frame", "source_second_block_participants", "source_second_block_cut",
+    "source_two_barriers_resume", "source_second_barrier_state", "source_second_barrier_race_free",
+    "LarkNativeFusedRmsNorm.mixed_next", "LarkNativeFusedRmsNorm.shuffle_physical_fold",
+    "LarkNativeFusedRmsNorm.logical_stages_run", "LarkNativeFusedRmsNorm.second_last_lane",
+    "LarkNativeFusedRmsNorm.top_fold_value", "LarkNativeFusedRmsNorm.scale_wave_run",
+    "LarkNativeFusedRmsNorm.scale_block_fold_run", "LarkNativeFusedRmsNorm.block_second_eq",
+    "LarkNativeFusedRmsNorm.initial_two_barriers", "LarkNativeFusedRmsNorm.initial_out_race_free",
 )
 
 
@@ -97,7 +109,7 @@ theorem source_prefix_access_count (p : Shape) (ops : Ops α) (input : Nat → N
 #print axioms source_prefix_race_free
 #print axioms source_prefix_access_count
 """
-    if stage in {"first-wave", "first-block"}:
+    if stage != "lane":
         text += """
 theorem source_first_wave_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row warp : Nat) (hr : row < p.rows) (hw : warp < 16) :
@@ -133,7 +145,7 @@ theorem source_first_wave_race_free (p : Shape) (ops : Ops α) (input : Nat → 
 #print axioms source_first_wave_good
 #print axioms source_first_wave_race_free
 """
-    if stage == "first-block":
+    if stage in {"first-block", "second-block"}:
         text += """
 theorem source_first_block_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
@@ -185,6 +197,65 @@ theorem source_first_barrier_race_free (p : Shape) (ops : Ops α) (input : Nat �
 #print axioms source_first_barrier_state
 #print axioms source_first_barrier_race_free
 """
+    if stage == "second-block":
+        text += """
+theorem source_mixed_cohort (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (ready : MidReady p ops input row s) :
+    LarkPartitionCollective.nextCohort sourceProgram (cohortThreads row 0 64) (midNative ops input row 0 s) =
+      some (cohortThreads row 0 32) := by
+  simpa only [source_binding.1] using mixed_next row 38 (blockPartial ops input row) (midNative ops input row 0 s)
+    (mid_mixed_ready p ops input row s ready) .xor 1 0 (.const 16) mid_shuffle_code
+theorem source_second_wave_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (ready : MidReady p ops input row s) :
+    LarkPartitionCollective.runWarp ops (layout p) (geometry p) sourceFuel sourceProgram
+      (warpThreads (geometry p) row 0) sourceFuel.warp s = some (scaleWave p ops input row s) := by
+  simpa only [source_binding.1, source_binding.2.2.2.2.1] using scale_wave_run p ops input row s ready
+theorem source_second_block_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (ready : MidReady p ops input row s) :
+    (List.range 16).foldlM (fun s w => LarkPartitionCollective.runWarp ops (layout p) (geometry p)
+      sourceFuel sourceProgram (warpThreads (geometry p) row w) sourceFuel.warp s) s =
+      some (scaleBlock p ops input row s) := by
+  simpa only [source_binding.1, source_binding.2.2.2.2.1, geometry, Nat.reduceAdd, Nat.reduceSub, Nat.reduceDiv] using
+    scale_block_fold_run p ops input row s ready
+theorem source_second_block_total (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (row : Nat) (s : State α) :
+    (scaleBlock p ops input row s).memory (partialSlot row 0) = some (blockSum ops input row) :=
+  scale_block_total p ops input row s
+theorem source_second_block_frame (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (l : Location) (hl : l ≠ partialSlot row 0) :
+    (scaleBlock p ops input row s).memory l = s.memory l := scale_block_memory_frame p ops input row s l hl
+theorem source_second_block_participants (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row tid : Nat) (s : State α) (ready : MidReady p ops input row s) (ht : tid < 1024) :
+    (scaleBlock p ops input row s).pc (row*1024+tid) = 50 := scale_block_pc p ops input row tid s ht ready
+theorem source_second_block_cut (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (ready : MidReady p ops input row s) :
+    LarkCollective.converged sourceProgram (blockThreads (geometry p) row) (scaleBlock p ops input row s) = some .block := by
+  simpa only [source_binding.1] using scale_block_cut p ops input row s ready
+theorem source_two_barriers_resume (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
+    LarkPartitionCollective.runBlock ops (layout p) (geometry p) sourceFuel sourceProgram row sourceFuel.block
+      (initial p input outside) =
+    LarkPartitionCollective.runBlock ops (layout p) (geometry p) sourceFuel sourceProgram row 1
+      (outState p ops input row (midState p ops input row (initial p input outside))) := by
+  simpa only [source_binding.1, source_binding.2.2.2.2.1] using initial_two_barriers p ops input outside row hr
+theorem source_second_barrier_state (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
+    OutReady p ops input row (outState p ops input row (midState p ops input row (initial p input outside))) :=
+  initial_out_ready p ops input outside row hr
+theorem source_second_barrier_race_free (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
+    raceFree (geometry p) (outState p ops input row (midState p ops input row (initial p input outside))).trace = true :=
+  initial_out_race_free p ops input outside row hr
+#print axioms source_mixed_cohort
+#print axioms source_second_wave_run
+#print axioms source_second_block_run
+#print axioms source_second_block_total
+#print axioms source_second_block_frame
+#print axioms source_second_block_participants
+#print axioms source_second_block_cut
+#print axioms source_two_barriers_resume
+#print axioms source_second_barrier_state
+#print axioms source_second_barrier_race_free
+"""
     return text
 
 
@@ -194,7 +265,8 @@ def main():
     parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
     wave_stage = args.stage != "lane"
-    block_stage = args.stage == "first-block"
+    block_stage = args.stage in {"first-block", "second-block"}
+    second_stage = args.stage == "second-block"
     target = TARGETS[args.stage]
     out = args.output.resolve()
     if any((p / ".git").exists() for p in (out, *out.parents)):
@@ -245,7 +317,11 @@ name = "Main"
     if block_stage:
         remaining = ("The second reduction, normalization, second barrier, halt/grid,\n"
                      "canonical-real/IEEE equivalence and original-paper results remain open.\n")
-    title = ("Native fused add RMSNorm first block phase and barrier resume, PC36/epoch1.\n" if block_stage else
+    if second_stage:
+        remaining = ("Normalization/output execution, halt/grid, canonical-real/IEEE\n"
+                     "equivalence and original-paper results remain open.\n")
+    title = ("Native fused add RMSNorm first two block phases and both barrier resumes, PC51/epoch2.\n" if second_stage else
+             "Native fused add RMSNorm first block phase and barrier resume, PC36/epoch1.\n" if block_stage else
              "Native fused add RMSNorm first-wave proof, ending at PC35.\n" if wave_stage else
              "Per-lane native fused add RMSNorm scalar-prefix proof, ending at PC23.\n")
     (project / "README.md").write_text(
@@ -303,7 +379,8 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
     execute("frozen-reader-replay", [sys.executable, "validate_source.py"])
     log = execute("fresh-build", ["lake", "build"])
     audits = dict(re.findall(r"'([^']+)' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", log))
-    principal = PRINCIPAL + (WAVE_PRINCIPAL if wave_stage else ()) + (BLOCK_PRINCIPAL if block_stage else ())
+    principal = (PRINCIPAL + (WAVE_PRINCIPAL if wave_stage else ()) + (BLOCK_PRINCIPAL if block_stage else ())
+                 + (SECOND_PRINCIPAL if second_stage else ()))
     if set(principal) - audits.keys():
         raise ValueError("Principal axiom audits absent: " + str(set(principal) - audits.keys()))
     for name, ax in audits.items():
@@ -326,6 +403,14 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
         variants.update({
             "missing-first-block-barrier": source.replace("__syncthreads();", "", 1),
             "physical-instead-logical-partial-index": source.replace("int warp = t / 32;", "int warp = t / 64;", 1),
+        })
+    if second_stage:
+        variants.update({
+            "activated-upper-native-half": source.replace("if (t < 32) {", "if (t < 64) {", 1),
+            "wrong-total-writer": source.replace("if (t == 0) { partial[0] = sum; }", "if (t == 1) { partial[0] = sum; }", 1),
+            "missing-second-block-barrier": source.replace("__syncthreads();\nfloat total", "float total", 1),
+            "widened-second-reduction-shuffle": source.replace("sum = partial[t];\nother = __shfl_xor(sum, 16, 32);",
+                "sum = partial[t];\nother = __shfl_xor(sum, 16, 64);", 1),
         })
     for name, variant in variants.items():
         if variant == source:
@@ -402,6 +487,40 @@ example : ((resume (blockThreads (geometry p) 0) .block start).epochs 1024).bloc
 example : (resume (blockThreads (geometry p) 0) .block marked).trace.length = 1 := by decide
 example : ((resume (blockThreads (geometry p) 0) .block marked).trace[0]?).map (fun a => a.epoch.block) = some 0 := by decide
 """
+    if second_stage:
+        base += """instance (t : Nat) (l : Location) : Decidable (TopWrites t l) :=
+  inferInstanceAs (Decidable (t % 1024 = 0 ∧ l = topCell t))
+def mixed : State Nat := { start with pc := fun t => if t < 32 then 38 else 50 }
+def phaseOne : State Nat :=
+  { start with
+    pc := fun t => if t < 1024 then 50 else 0
+    epochs := fun t => if t < 1024 then { block := 1 } else {}
+    trace := [⟨0, partialSlot 0 0, true, { block := 1 }⟩, ⟨0, globalCell 0 0, false, {}⟩] }
+"""
+        claims.update({
+            "inactive-mid-thread-loaded": "(midEntered 32 0 32 7 start).pc 32 = 38",
+            "last-active-mid-thread-skipped": "(midEntered 31 0 31 7 start).pc 31 = 50",
+            "inactive-mid-thread-recorded-access": "(midEntered 32 0 32 7 start).trace.length = 1",
+            "padded-mixed-shuffle-cohort": "LarkPartitionCollective.nextCohort program (cohortThreads 0 0 64) mixed = some (cohortThreads 0 0 64)",
+            "spurious-nonzero-total-writer": "(topAfter 1 1 7 start).memory (topCell 1) = some 7",
+            "missing-final-total-store": "(secondLastAfter ops 0 2 3 start).memory (topCell 0) = none",
+            "rounded-final-total-store": "(secondLastAfter ops 0 2 3 start).memory (topCell 0) = some 1005",
+            "logical-lane-zero-second-total-writer": "TopWrites 32 (topCell 32)",
+            "unchanged-second-resume-epoch": "((resume (blockThreads (geometry p) 0) .block phaseOne).epochs 1023).block = 1",
+            "unchanged-second-resume-pc": "(resume (blockThreads (geometry p) 0) .block phaseOne).pc 1023 = 50",
+            "rewritten-phase-one-history": "((resume (blockThreads (geometry p) 0) .block phaseOne).trace[0]?).map (fun a => a.epoch.block) = some 2",
+        })
+        witnesses += """example : (midEntered 32 0 32 7 start).pc 32 = 50 := by decide
+example : (midEntered 31 0 31 7 start).pc 31 = 38 := by decide
+example : (midEntered 32 0 32 7 start).trace.length = 0 := by decide
+example : LarkPartitionCollective.nextCohort program (cohortThreads 0 0 64) mixed = some (cohortThreads 0 0 32) := by decide
+example : (topAfter 1 1 7 start).memory (topCell 1) = none := by decide
+example : (secondLastAfter ops 0 2 3 start).memory (topCell 0) = some 5 := by decide
+example : TopWrites 0 (topCell 0) := by decide
+example : ((resume (blockThreads (geometry p) 0) .block phaseOne).epochs 1023).block = 2 := by decide
+example : (resume (blockThreads (geometry p) 0) .block phaseOne).pc 1023 = 51 := by decide
+example : ((resume (blockThreads (geometry p) 0) .block phaseOne).trace[0]?).map (fun a => a.epoch.block) = some 1 := by decide
+"""
     (project / "Witnesses.lean").write_text(base + witnesses)
     execute("positive-cast-and-preservation-witnesses", ["lake", "env", "lean", "Witnesses.lean"])
     for name, claim in claims.items():
@@ -416,7 +535,7 @@ example : ((resume (blockThreads (geometry p) 0) .block marked).trace[0]?).map (
     shutil.copyfile(Path(__file__), out / "checker.py")
     shutil.copyfile(HERE / "check_program.py", out / "component_checker.py")
     report = {
-        "schema": 1, "status": ("native-inout-first-block-checked" if block_stage else
+        "schema": 1, "status": ("native-inout-second-block-checked" if second_stage else "native-inout-first-block-checked" if block_stage else
                                  "native-inout-first-wave-checked" if wave_stage else "native-inout-scalar-prefix-checked"),
         "stage": args.stage, "local_lean_modules": len(own),
         "axiom_audits": audits, "false_claims_rejected": sum(not c["expected_accepted"] for c in checks),
@@ -451,6 +570,22 @@ example : ((resume (blockThreads (geometry p) 0) .block marked).trace[0]?).map (
             "first_native_block_pre_barrier_pc": 35, "first_native_block_resumed_pc": 36,
             "first_native_block_resumed_epoch": 1,
             "scope": "All rows1..255, valid blocks, arbitrary Ops/input/outside: actual seeded inout initialization, the block scheduler's sequential 16-wave fold, both 8-value rounds per lane, five logical32 snapshot XOR stages per wave, all32 partials, every rounded residual and separate unrounded shared value across all16384 columns, owned input preservation and readonly weights, all1024 participants converged at PC35, then actual runBlock barrier resume to PC36/epoch1 with memory and historical trace epochs unchanged. Actual-prefix classification/RF derived. Second reduction, normalization, second barrier, halt/grid, canonical-real/IEEE equivalence and original-paper results remain open.",
+        })
+    if second_stage:
+        report.update({
+            "second_native_block_execution_prefix_proved": True,
+            "second_native_block_actual_trace_classification_proved": True,
+            "second_native_block_race_freedom_proved": True,
+            "second_native_block_total_proved": True,
+            "second_native_block_both_barriers_resumed_proved": True,
+            "second_native_block_active_logical_lanes": 32,
+            "second_native_block_inactive_native_lanes": 32,
+            "second_native_block_skipped_physical_waves": 15,
+            "second_native_block_total_stores": 1,
+            "second_native_block_pre_barrier_pc": 50,
+            "second_native_block_resumed_pc": 51, "second_native_block_resumed_epoch": 2,
+            "normalization_output_execution_proved": False,
+            "scope": "All rows1..255, valid blocks, arbitrary Ops/input/outside: actual first phase, mixed physical64 entry with exactly32 active partial loads and32 parked lanes, five logical32 XOR/add stages with the full physical lane visits retained, unique tid0 source-ordered total store, all15 inactive-wave visits, both actual block-barrier resumes, all1024 participants at PC51/epoch2, retained rounded residual/unrounded shared values and readonly weights, historical access epochs unchanged and actual-prefix classification/RF derived. Normalization/output execution, halt/grid, canonical-real/IEEE equivalence and original-paper results remain open.",
         })
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")
     manifest = {p.name: sha(p) for p in sorted(out.iterdir()) if p.is_file()}

@@ -160,9 +160,41 @@ The [saved source-CI evidence](results/first-block-ci-v1/results.json) records
 the exact head and scope. The real job rechecks earlier certified profiles;
 this adds no fused canonical-real or complete source certificate.
 
-The second reduction, normalization, second barrier, halt, grid and
-source/reference equivalence remain open. All older frozen component, GPU,
-scalar-prefix and first-wave packets retain their original flags.
+The later [second-phase proof](../../../lean/Lark/NativeFusedRmsNormScaleBlock.lean)
+executes the actual mixed physical wave after the first barrier. Exactly 32
+threads load the shared partials, while the upper32 wait at PC50. The unchanged
+scheduler selects the active logical32 cohort for all five snapshot XOR/add
+stages and still visits every parked physical lane in order. Only tid0 stores
+the final source-ordered total. All 15 remaining physical waves execute their
+inactive path, so all 1,024 participants converge at the second block barrier.
+
+The [second-resume theorem](../../../lean/Lark/NativeFusedRmsNormOutBarrier.lean)
+composes both actual block phases and barrier resumes. The original `runBlock`
+call with fuel3 equals the remaining output-phase call with fuel1, entering
+PC51/block epoch2. The total, every rounded residual and separate unrounded
+shared value, read-only weights and historical trace epochs are retained.
+Actual-prefix classification and race freedom are derived for all valid blocks,
+all rows1..255 and arbitrary arithmetic, inputs and outside memory. The proof
+preserves operand order and chooses logical lane0; it assumes no commutativity
+or uniform per-lane sums.
+
+The [two-phase packet](results/second-block-v1/results.json) rebuilds all 46
+local Lean modules, audits 349 declarations using only the standard Lean axioms,
+and rejects 46 false claims. Its
+[independent archive replay](results/second-block-validation-v1/results.json)
+repeats all checks from the frozen source/reader and full local Lean closure,
+including positive witnesses and all earlier and new rejection controls. New controls cover the
+active/inactive boundary, exact mixed-cohort selection, changed source guards
+and shuffles, unique unrounded total storage, second-resume PCs/epochs and
+unchanged historical access epochs. Replay requires no Git, cached own Lean
+objects, GPU or model calls. The earlier three stage generators/proof closures
+remain byte-identical to their archived versions, as recorded in the
+[source comparison receipt](results/second-block-compatibility-v1/results.json).
+
+Normalization/output execution, halt, grid and canonical source/reference
+equivalence remain open. All older frozen component, GPU, scalar-prefix,
+first-wave and first-block packets retain their original flags. This family
+still has no complete source certificate.
 
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
@@ -170,6 +202,7 @@ python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/fus
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/fused-scalar-prefix
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave --output /tmp/fused-first-wave
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-block --output /tmp/fused-first-block
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage second-block --output /tmp/fused-second-block
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 ```
 
@@ -177,7 +210,8 @@ python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
   --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
   --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
-# Other archived stages: results/first-wave-v1 or results/first-block-v1.
+# Other archived stages: results/first-wave-v1, results/first-block-v1,
+# or results/second-block-v1.
 ```
 
 ## Finite AMD results
