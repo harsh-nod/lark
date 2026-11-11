@@ -44,6 +44,8 @@ jobs:
         working-directory: lean-real
       - name: Check online-attention algebra and false-update counterexamples
         run: python3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra
+      - name: Check source-bound native attention canonical-real whole launch
+        run: python3 reproduction/online_attention/check_native_real.py --output /tmp/lark-native-attention-real
   proof-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -104,7 +106,7 @@ jobs:
       - name: Check native attention source identity and footprint witnesses
         run: python3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding
       - name: Rebuild native attention execution prefix outside Git
-        run: python3 reproduction/online_attention/check_native_prefix.py --stage first-key-block --output /tmp/lark-native-attention-prefix
+        run: python3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/lark-native-attention-prefix
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Check two-launch FFN composition

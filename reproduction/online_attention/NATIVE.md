@@ -6,13 +6,15 @@ barriers per key tile, and two private running-state arrays per thread.
 Inputs and outputs use FP16 storage; arithmetic, shared tiles and running state
 use FP32. The group index flattens batch and attention head.
 
-**This source has no whole-launch Lean certificate yet.** The accepted facts
-below are source identity, address/ownership theorems, a sufficient footprint
-condition, actual first-block execution through barrier resumption, and a
-per-lane first-query score/denominator continuation. Whole-launch
-execution, complete actual-trace membership and canonical-reference equality
-must still be joined before this becomes an accepted source certificate.
-It does not reproduce the authors' missing production adaptation or model run.
+The [whole-launch checkpoint](WHOLE_LAUNCH.md) now checks actual execution of
+all four key tiles, every block, all eight barrier resumes and the final halt,
+with input preservation, complete actual-trace race freedom and extraction of
+every output. The abstract-operator proof preserves all half-cast sites and
+source arithmetic order. A separate canonical-real theorem proves equality to
+dense SDPA for all allowed group counts, with four source-bound exports. Half
+casts are identities in that real idealization; IEEE equivalence and error
+bounds remain unproved. This does not recover the authors' original production
+adaptation or historical model run.
 
 `native-provenance.json` records each independent source change. The first tile
 initializes its maximum from its first score. Its previous maximum is then that
@@ -33,8 +35,8 @@ bound is asserted.
 - `NativeAttentionFootprint.lean` proves that a trace satisfying the local access
   conditions passes the original machine's race check. Private arrays belong to
   their thread; Q/score rows have unique owners; K/V tile stores and reads must
-  occur in opposite block-epoch parities. **The source's complete actual trace
-  has not yet been proved to satisfy these conditions.**
+  occur in opposite block-epoch parities. `NativeAttentionCorrect.lean` now
+  proves these conditions for the complete actual launch trace.
 - `NativeAttentionFirstLane.lean` now proves actual `runLane` execution through
   5,405 source instructions to PC 20, the first block barrier, for every permitted
   group count and arbitrary scalar operations. Every lane zeroes its 1,024 output
@@ -65,9 +67,13 @@ bound is asserted.
   the source's second block barrier and resume. The [first-key block checkpoint](FIRST_KEY_BLOCK.md)
   joins two actual `runBlock` phases from arbitrary initial memory to PC 88,
   with all 32,768 first-key output updates and all private maxima/masses.
-  The three later key tiles, whole-block/grid execution and reference equality
-  remain open. Generic row/block phase lemmas already support later key tiles
-  when their loaded K/V and previous online values are supplied.
+  Its frozen packet leaves three later key tiles and complete scheduling open.
+- `NativeAttentionNext*`, `KeyCycle`, `Halt`, `WholeBlock`, `Foreign*`, `GridFold`,
+  `WholeLaunch` and `Correct` compose all remaining phases and the full grid.
+  `LarkReal.NativeAttention*` connects source dot products, denominator and
+  weighted-V folds to the online invariant and an independent dense real SDPA
+  reference. The [full checkpoint](WHOLE_LAUNCH.md) records fresh builds,
+  source-bound exports, axiom audits, controls and independent archive replays.
 
 Fresh checks accept the full source's IR and array layout and reject five
 changes directly in Lean: a missing load barrier, a wrong tile-store owner,
@@ -90,6 +96,8 @@ python3 reproduction/online_attention/check_native_prefix.py --stage first-block
 python3 reproduction/online_attention/check_native_prefix.py --stage weights --output /tmp/native-weights
 python3 reproduction/online_attention/check_native_prefix.py --stage output --output /tmp/native-output
 python3 reproduction/online_attention/check_native_prefix.py --stage first-key-block --output /tmp/native-first-key-block
+python3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/native-whole-launch
+python3 reproduction/online_attention/check_native_real.py --output /tmp/native-canonical-real
 python3 -m unittest discover -s tests -p test_native_attention.py -v
 ```
 

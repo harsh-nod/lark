@@ -1,8 +1,9 @@
-"""Rebuild a native attention execution prefix outside Git, without model/GPU calls.
+"""Rebuild native attention execution proofs outside Git, without model/GPU calls.
 
 The stages check lane initialization, native first-block scheduling, and the
 first query's outputs, and a full first-key block computation and resume. These
-are execution prefixes, not whole-launch or source-reference certificates.
+are execution prefixes. The whole-launch stage checks actual execution and the
+source-ordered online recurrence; the canonical real proof is checked separately.
 """
 
 import argparse
@@ -26,7 +27,7 @@ HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_fp16"
 TARGETS = {"lane": "Lark.NativeAttentionFirstLane", "first-block": "Lark.NativeAttentionFirstResume",
            "weights": "Lark.NativeAttentionWeights", "output": "Lark.NativeAttentionFirstOutput",
-           "first-key-block": "Lark.NativeAttentionFirstKeyBlock"}
+           "first-key-block": "Lark.NativeAttentionFirstKeyBlock", "whole-launch": "Lark.NativeAttentionCorrect"}
 LANE_AUDITS = ("first_lane_eq", "first_lane_run", "first_lane_output", "first_lane_tile", "first_lane_reads",
                "first_lane_good", "first_lane_race_free")
 BLOCK_AUDITS = LANE_AUDITS + (
@@ -62,6 +63,17 @@ KEY_AUDITS = OUTPUT_AUDITS + (
     "query_resumed_private", "query_resumed_reads", "query_resumed_good",
     "first_key_block_reduction", "first_key_resumed_epoch", "first_key_resumed_member", "first_key_resumed_value",
     "first_key_resumed_private", "first_key_resumed_good", "first_key_block_initial",
+)
+LAUNCH_AUDITS = KEY_AUDITS + (
+    "next_entry_eq", "next_load_eq", "next_load_run", "next_load_value", "next_load_good", "next_load_memory_other",
+    "next_fold_run", "next_fold_member", "next_fold_tile", "next_fold_memory_other", "next_fold_good",
+    "next_block_warp", "next_block_step", "next_resumed_pc", "next_resumed_epoch", "next_resumed_queries", "next_resumed_tiles", "next_resumed_good",
+    "halt_lane_eq", "halt_lane_run", "halt_fold_frames", "halt_fold_member", "halt_block_run",
+    "query_phase_done", "copy_phase_start", "initial_query_start", "keys_completed_spec", "keys_completed_reduction",
+    "final_block_run", "final_block_member", "final_block_values", "final_block_private", "final_block_reads", "final_block_good", "final_block_initial",
+    "first_resumed_foreign", "query_resumed_foreign", "keys_completed_foreign", "final_block_foreign",
+    "keys_completed_output_foreign", "final_block_output_foreign", "full_blocks_run", "full_blocks_reads_good", "full_blocks_pc", "full_blocks_value",
+    "grid_run", "grid_pc", "grid_value", "grid_reads_good", "grid_race_free", "source_extract_of_values", "grid_extract", "source_order_correct",
 )
 
 
@@ -116,12 +128,13 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
-    key_stage = args.stage == "first-key-block"
-    output_stage = args.stage in ("output", "first-key-block")
-    weights_stage = args.stage in ("weights", "output", "first-key-block")
+    launch_stage = args.stage == "whole-launch"
+    key_stage = args.stage in ("first-key-block", "whole-launch")
+    output_stage = args.stage in ("output", "first-key-block", "whole-launch")
+    weights_stage = args.stage in ("weights", "output", "first-key-block", "whole-launch")
     block_stage = args.stage != "lane"
     target = TARGETS[args.stage]
-    names = KEY_AUDITS if key_stage else OUTPUT_AUDITS if output_stage else WEIGHT_AUDITS if weights_stage else BLOCK_AUDITS if block_stage else LANE_AUDITS
+    names = LAUNCH_AUDITS if launch_stage else KEY_AUDITS if key_stage else OUTPUT_AUDITS if output_stage else WEIGHT_AUDITS if weights_stage else BLOCK_AUDITS if block_stage else LANE_AUDITS
     out = args.output.resolve()
     require(not any((p / ".git").exists() for p in (out, *out.parents)),
             "Choose --output outside a Git checkout for the standalone check")
@@ -317,6 +330,59 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
   decide
 """,
         })
+    if launch_stage:
+        controls.update({
+            "wrong-next-load-pc": """
+example (ops : Ops α) (input : Nat → Nat → α) (t key : Nat) (s : State α) :
+    (nextLoad ops input t key s).pc t = 21 := by
+  rw [(next_load_fields ops input t key s).1]
+  decide
+""",
+            "wrong-final-key-counter": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (b t : Nat) (s : State α)
+    (ht : t ∈ blockThreads (geometry p) b) : (finalBlock p ops input b s).indices t 5 = some 3 := by
+  rw [(final_block_member p ops input b t s ht).2]
+  decide
+""",
+            "wrong-block-halt-pc": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (b t : Nat) (s : State α)
+    (ht : t ∈ blockThreads (geometry p) b) : (finalBlock p ops input b s).pc t = 88 := by
+  rw [(final_block_member p ops input b t s ht).1]
+  decide
+""",
+            "wrong-grid-halt-pc": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α)
+    (t : Nat) (ht : t < p.groups * 32) : (gridState p ops input (initial (layout p) input outside)).pc t = 88 := by
+  rw [grid_pc p ops input outside t ht]
+  decide
+""",
+            "wrong-final-grid-output": """
+example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (outside : Location → Option Nat)
+    (offset : Nat) (hi : offset < p.groups * 32768) (hv : outputValue ops input offset = 0) :
+    (gridState p ops input (initial (layout p) input outside)).memory (globalCell 0 offset) = some 1 := by
+  rw [grid_value p ops input outside offset hi, hv]
+  decide
+""",
+            "wrong-extracted-output-length": """
+example (ops : Ops Nat) (input : Nat → Nat → Nat) :
+    (sourceSpec ⟨1, by decide, by decide⟩ ops input).length = 32767 := by
+  simp only [sourceSpec, List.length_map, List.length_range]
+  decide
+""",
+            "wrong-grid-race-result": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    raceFree (geometry p) (gridState p ops input (initial (layout p) input outside)).trace = false := by
+  rw [grid_race_free p ops input outside]
+  decide
+""",
+            "wrong-next-key-copy-value": """
+example (ops : Ops Nat) (input : Nat → Nat → Nat) (t key : Nat) (s : State Nat)
+    (hv : ops.fromHalf (input 2 (globalAddress t (key + 1) 255)) = 0) :
+    (nextLoad ops input t key s).memory (sharedCell t 1 (sharedAddress t 255)) = some 1 := by
+  rw [next_load_value ops input t key 1 255 s (Or.inl rfl) (by decide), hv]
+  decide
+""",
+        })
     for name, content in controls.items():
         (standalone / (name + ".lean")).write_text(header + content)
     frozen = standalone / "native-source"
@@ -328,7 +394,10 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
     shutil.copyfile(HERE / "upstream/LICENSE", frozen / "UPSTREAM-LICENSE")
     shutil.copyfile(ROOT / "LICENSE", standalone / "LICENSE")
     shutil.copyfile(Path(__file__), out / "checker.py")
-    scope = ("actual first two native runBlock phases and barrier resumes to PC 88: all 32 lanes and all four query rows "
+    scope = ("actual full native runLaunch for every allowed group count: all four keys, nine block phases, full grid halt, "
+             "all outputs extracted against the source-ordered online recurrence, input preservation and actual trace race freedom"
+             if launch_stage else
+             "actual first two native runBlock phases and barrier resumes to PC 88: all 32 lanes and all four query rows "
              "for key tile zero, including all output/private state stores, input preservation and prefix trace race freedom"
              if key_stage else
              "native first block phase and resume, then a per-lane continuation from PC 21 through 119060 instructions "
@@ -338,7 +407,9 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
              "to PC 56: first query row scores, maximum, exponential weights and denominator" if weights_stage else
              "actual first runBlock phase, including 32 native lanes, block convergence and resume to PC 21"
              if block_stage else "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20")
-    remaining = ("The three later key tiles, their copy/barrier phases, whole-launch execution and dense-reference equality remain unproved."
+    remaining = ("Canonical dense-real equality is checked separately with Mathlib. No IEEE equivalence or error bound, NVIDIA execution or original-paper completion is claimed."
+                 if launch_stage else
+                 "The three later key tiles, their copy/barrier phases, whole-launch execution and dense-reference equality remain unproved."
                  if key_stage else
                  "Private-state stores, later query/key tiles, whole-launch execution and dense-reference equality remain unproved."
                  if output_stage else
@@ -346,7 +417,7 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
                  if weights_stage else "It does not execute attention computation or later block phases, compose "
                  "the whole launch, or prove dense-reference equality.")
     (standalone / "README.md").write_text(
-        f"# Native attention {args.stage} prefix proof\n\n"
+        f"# Native attention {args.stage} {'proof' if launch_stage else 'prefix proof'}\n\n"
         "Run `lake build`, then `lake env lean Main.lean` with Lean 4.19.0.\n"
         f"The {len(controls)} other top-level Lean files intentionally fail at false postconditions.\n"
         f"Scope: {scope}.\n"
@@ -374,56 +445,67 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
         require(set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, "Extra axiom: " + name)
         audits[name] = axioms
     report = {
-        "schema": 1, "status": "native-first-key-block-prefix-checked" if key_stage else
+        "schema": 1, "status": "native-whole-launch-checked" if launch_stage else "native-first-key-block-prefix-checked" if key_stage else
                                "native-output-prefix-checked" if output_stage else "native-weights-prefix-checked" if weights_stage else
                                "native-block-prefix-checked" if block_stage else "native-lane-prefix-checked",
         "stage": args.stage,
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": scope,
         "groups": {"min": 1, "max": 65535}, "block": 32, "warp": 64,
-        "prefix_instructions_per_lane": 476254 if key_stage else 119060 if output_stage else 58891 if weights_stage else 5405, "barrier_pc": 20,
+        "prefix_instructions_per_lane": 1914303 if launch_stage else 476254 if key_stage else 119060 if output_stage else 58891 if weights_stage else 5405, "barrier_pc": 20,
         "initialization_instructions_per_lane": 5405,
-        "instruction_count_start_pc": 21 if weights_stage else 0,
+        "instruction_count_start_pc": 0 if launch_stage else 21 if weights_stage else 0,
         "input_preservation_proved": True, "output_initialization_proved": True,
         "first_kv_row_copy_proved": True, "prefix_actual_trace_race_freedom_proved": True,
         "first_block_phase_and_resume_proved": block_stage,
         "all_block_outputs_initialized_proved": block_stage,
         "first_kv_tile_loaded_proved": block_stage,
         "barrier_resumption_proved": block_stage,
-        "resumed_pc": 88 if key_stage else 21 if block_stage else None,
-        "block_epoch_increment": 2 if key_stage else 1 if block_stage else 0,
+        "resumed_pc": None if launch_stage else 88 if key_stage else 21 if block_stage else None,
+        "block_epoch_increment": 8 if launch_stage else 2 if key_stage else 1 if block_stage else 0,
         "first_query_scores_and_exponential_weights_proved": weights_stage,
         "first_query_denominator_proved": weights_stage,
-        "query_preparation_instructions": 4117 if key_stage else 1030 if weights_stage else 0,
-        "score_loop_instructions": 230664 if key_stage else 57666 if weights_stage else 0,
-        "exponential_loop_instructions": 780 if key_stage else 195 if weights_stage else 0,
-        "compute_end_pc": 87 if key_stage else 83 if output_stage else 56 if weights_stage else None,
-        "later_query_tiles_proved": False, "later_key_tiles_proved": False,
+        "query_preparation_instructions": 16468 if launch_stage else 4117 if key_stage else 1030 if weights_stage else 0,
+        "score_loop_instructions": 922656 if launch_stage else 230664 if key_stage else 57666 if weights_stage else 0,
+        "exponential_loop_instructions": 3120 if launch_stage else 780 if key_stage else 195 if weights_stage else 0,
+        "compute_end_pc": 90 if launch_stage else 87 if key_stage else 83 if output_stage else 56 if weights_stage else None,
+        "later_query_tiles_proved": launch_stage, "later_key_tiles_proved": launch_stage,
         "weighted_value_product_proved": output_stage, "output_updates_proved": output_stage,
-        "output_columns_proved": 1024 if key_stage else 256 if output_stage else 0,
+        "output_columns_proved": 4096 if launch_stage else 1024 if key_stage else 256 if output_stage else 0,
         "weighted_value_terms_per_column": 32 if output_stage else 0,
-        "output_loop_instructions": 240644 if key_stage else 60161 if output_stage else 0,
-        "first_old_state_and_rescale_instructions": 32 if key_stage else 8 if output_stage else 0,
+        "output_loop_instructions": 962576 if launch_stage else 240644 if key_stage else 60161 if output_stage else 0,
+        "first_old_state_and_rescale_instructions": 152 if launch_stage else 32 if key_stage else 8 if output_stage else 0,
         "half_conversion_sites_preserved": output_stage,
         "private_state_stores_proved": key_stage,
         "all_query_rows_for_first_key_tile_proved": key_stage,
         "first_key_compute_phase_and_resume_proved": key_stage,
-        "completed_block_phases": 2 if key_stage else 1 if block_stage else 0,
+        "completed_block_phases": 9 if launch_stage else 2 if key_stage else 1 if block_stage else 0,
         "first_key_output_stores_per_block": 32768 if key_stage else 0,
         "lane_fuel": 1000000, "lane_fuel_changed": False,
-        "private_state_and_query_tail_instructions": 16 if key_stage else 0,
-        "query_exit_guard_instructions": 1 if key_stage else 0,
+        "private_state_and_query_tail_instructions": 64 if launch_stage else 16 if key_stage else 0,
+        "query_exit_guard_instructions": 4 if launch_stage else 1 if key_stage else 0,
+        "later_kv_copy_instructions": 3855 if launch_stage else 0,
+        "final_halt_instructions": 3 if launch_stage else 0,
+        "whole_grid_halt_proved": launch_stage,
+        "all_outputs_extracted_proved": launch_stage,
+        "source_ordered_recurrence_equality_proved": launch_stage,
         "subsequent_key_lane_instruction_count": 476262 if key_stage else None,
         "arbitrary_scalar_operations": True, "axioms": audits,
         "fresh_standalone_build": True, "local_lean_modules": len(modules),
         "source_sha256": sha(CASE / "kernel.hip"),
         "source_archive_sha256": sha(out / "source.tar.gz"), "checks": records,
         "false_prefix_claims_rejected": len(controls),
-        "source_certificates": 0, "whole_kernel_execution_proved": False,
-        "whole_kernel_race_freedom_proved": False, "source_reference_equality_proved": False,
+        "source_certificates": 0, "whole_kernel_execution_proved": launch_stage,
+        "whole_kernel_race_freedom_proved": launch_stage, "source_reference_equality_proved": False,
+        "canonical_dense_reference_equality_proved": False,
         "ieee_equivalence_proved": False, "original_paper_fully_reproduced": False,
         "gpu_trials": 0, "model_calls": 0,
     }
+    if launch_stage:
+        parts = ("initialization_instructions_per_lane", "query_preparation_instructions", "score_loop_instructions",
+                 "exponential_loop_instructions", "first_old_state_and_rescale_instructions", "output_loop_instructions",
+                 "private_state_and_query_tail_instructions", "query_exit_guard_instructions", "later_kv_copy_instructions", "final_halt_instructions")
+        require(sum(report[k] for k in parts) == report["prefix_instructions_per_lane"], "Inconsistent whole-launch source instruction accounting")
     write(out / "results.json", report)
     members = [p for p in sorted(out.iterdir()) if p.is_file()]
     write(out / "manifest.json", {p.name: sha(p) for p in members})

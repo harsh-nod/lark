@@ -1,0 +1,1104 @@
+{
+  "schema": 1,
+  "status": "native-whole-launch-checked",
+  "stage": "whole-launch",
+  "checked_at_utc": "2026-11-11T02:31:10.395923+00:00",
+  "scope": "actual full native runLaunch for every allowed group count: all four keys, nine block phases, full grid halt, all outputs extracted against the source-ordered online recurrence, input preservation and actual trace race freedom",
+  "groups": {
+    "min": 1,
+    "max": 65535
+  },
+  "block": 32,
+  "warp": 64,
+  "prefix_instructions_per_lane": 1914303,
+  "barrier_pc": 20,
+  "initialization_instructions_per_lane": 5405,
+  "instruction_count_start_pc": 0,
+  "input_preservation_proved": true,
+  "output_initialization_proved": true,
+  "first_kv_row_copy_proved": true,
+  "prefix_actual_trace_race_freedom_proved": true,
+  "first_block_phase_and_resume_proved": true,
+  "all_block_outputs_initialized_proved": true,
+  "first_kv_tile_loaded_proved": true,
+  "barrier_resumption_proved": true,
+  "resumed_pc": null,
+  "block_epoch_increment": 8,
+  "first_query_scores_and_exponential_weights_proved": true,
+  "first_query_denominator_proved": true,
+  "query_preparation_instructions": 16468,
+  "score_loop_instructions": 922656,
+  "exponential_loop_instructions": 3120,
+  "compute_end_pc": 90,
+  "later_query_tiles_proved": true,
+  "later_key_tiles_proved": true,
+  "weighted_value_product_proved": true,
+  "output_updates_proved": true,
+  "output_columns_proved": 4096,
+  "weighted_value_terms_per_column": 32,
+  "output_loop_instructions": 962576,
+  "first_old_state_and_rescale_instructions": 152,
+  "half_conversion_sites_preserved": true,
+  "private_state_stores_proved": true,
+  "all_query_rows_for_first_key_tile_proved": true,
+  "first_key_compute_phase_and_resume_proved": true,
+  "completed_block_phases": 9,
+  "first_key_output_stores_per_block": 32768,
+  "lane_fuel": 1000000,
+  "lane_fuel_changed": false,
+  "private_state_and_query_tail_instructions": 64,
+  "query_exit_guard_instructions": 4,
+  "later_kv_copy_instructions": 3855,
+  "final_halt_instructions": 3,
+  "whole_grid_halt_proved": true,
+  "all_outputs_extracted_proved": true,
+  "source_ordered_recurrence_equality_proved": true,
+  "subsequent_key_lane_instruction_count": 476262,
+  "arbitrary_scalar_operations": true,
+  "axioms": {
+    "first_lane_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_race_free": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_block_from_initial": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_block_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_epoch": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_resumed_native": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_resumed_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_query_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "dot_columns_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "dot_columns_value": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_dot_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_maximum": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "score_rows_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_computation_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_scores_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exp_columns_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_columns_sum": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_columns_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exp_columns_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_computation_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_weights_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_values": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_weights_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_initial_prefix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_key": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "old_selected_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "rescale_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_prepare_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_prepared_ready": [
+      "propext",
+      "Quot.sound"
+    ],
+    "pv_cycle_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "pv_rows_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "pv_rows_value": [
+      "propext",
+      "Quot.sound"
+    ],
+    "pv_computation_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "pv_computed_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_finish_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_column_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_columns_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_columns_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "output_columns_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_update_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "output_updated_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_output_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_output_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_output_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_output_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_output_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_output_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_output_initial_prefix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_tail_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_tail_values": [
+      "propext"
+    ],
+    "query_tail_global": [
+      "propext"
+    ],
+    "query_tail_good": [
+      "propext"
+    ],
+    "first_query_complete_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_query_complete_private": [
+      "propext"
+    ],
+    "first_query_complete_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_scores_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_scores_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "row_scores_values": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_scores_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "row_weights_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_weights_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "row_weights_values": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_weights_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "row_output_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_output_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "row_output_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_row_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_row_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_row_private": [
+      "propext"
+    ],
+    "query_row_native": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_row_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_row_tiles": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_row_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_rows_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_rows_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_rows_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_rows_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_rows_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_tile_fuel": [
+      "propext"
+    ],
+    "query_tile_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_tile_eq": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_tile_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_tile_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_tile_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "eval_expr_frame": [
+      "propext"
+    ],
+    "execute_lane_other": [
+      "propext",
+      "Quot.sound"
+    ],
+    "run_lane_other": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_tile_ready_other": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_fold_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_fold_member": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_fold_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_fold_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_fold_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_block_warp": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_block_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_resumed_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_resumed_epoch": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_resumed_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_resumed_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_resumed_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_resumed_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_key_block_reduction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_key_resumed_epoch": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_key_resumed_member": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_key_resumed_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_key_resumed_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_key_resumed_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_key_block_initial": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_entry_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_load_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_load_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_load_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_load_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_load_memory_other": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_fold_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_fold_member": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_fold_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_fold_memory_other": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_fold_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_block_warp": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_block_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_resumed_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_resumed_epoch": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_resumed_queries": [
+      "propext",
+      "Quot.sound"
+    ],
+    "next_resumed_tiles": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "next_resumed_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "halt_lane_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "halt_lane_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "halt_fold_frames": [
+      "propext",
+      "Quot.sound"
+    ],
+    "halt_fold_member": [
+      "propext",
+      "Quot.sound"
+    ],
+    "halt_block_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "query_phase_done": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "copy_phase_start": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "initial_query_start": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "keys_completed_spec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "keys_completed_reduction": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_member": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_values": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_private": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_reads": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_good": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_initial": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_foreign": [
+      "propext",
+      "Quot.sound"
+    ],
+    "query_resumed_foreign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "keys_completed_foreign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "final_block_foreign": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "keys_completed_output_foreign": [
+      "propext",
+      "Quot.sound"
+    ],
+    "final_block_output_foreign": [
+      "propext",
+      "Quot.sound"
+    ],
+    "full_blocks_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "full_blocks_reads_good": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "full_blocks_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "full_blocks_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "grid_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "grid_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "grid_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "grid_reads_good": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "grid_race_free": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "source_extract_of_values": [
+      "propext",
+      "Quot.sound"
+    ],
+    "grid_extract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "source_order_correct": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "fresh_standalone_build": true,
+  "local_lean_modules": 84,
+  "source_sha256": "6504b91255ed0a59d072376b9e071e76c154655986e8c1bad566258a19e19c1e",
+  "source_archive_sha256": "75243f3bd2a4155aa4dcc442b80f4093ab015a6eff4c41ed402e7fe9cbae1e1c",
+  "checks": [
+    {
+      "name": "build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 92.76301848102594
+    },
+    {
+      "name": "main",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 12.071870292013045
+    },
+    {
+      "name": "wrong-barrier-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.32767413201509044
+    },
+    {
+      "name": "nonzero-initialized-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3349273009807803
+    },
+    {
+      "name": "wrong-copied-key-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3733445580000989
+    },
+    {
+      "name": "wrong-resumed-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3657607270288281
+    },
+    {
+      "name": "missing-block-epoch-bump",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.33952016703551635
+    },
+    {
+      "name": "wrong-block-key-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3487850389792584
+    },
+    {
+      "name": "wrong-weight-prefix-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.36350255203433335
+    },
+    {
+      "name": "wrong-exponential-weight",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3915818289970048
+    },
+    {
+      "name": "wrong-denominator-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.396678792021703
+    },
+    {
+      "name": "wrong-output-prefix-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.31673663697438315
+    },
+    {
+      "name": "wrong-weighted-value-accumulator",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3455775260226801
+    },
+    {
+      "name": "wrong-half-output-store",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.34954964101780206
+    },
+    {
+      "name": "wrong-first-output-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.33198377798544243
+    },
+    {
+      "name": "wrong-initial-key-counter",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3302665809751488
+    },
+    {
+      "name": "wrong-full-query-lane-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3319902060320601
+    },
+    {
+      "name": "wrong-subsequent-key-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3144511909922585
+    },
+    {
+      "name": "missing-private-mass-store",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.31575734401121736
+    },
+    {
+      "name": "wrong-last-query-block-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.32340579997980967
+    },
+    {
+      "name": "wrong-second-resume-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.36592282296624035
+    },
+    {
+      "name": "missing-second-epoch-bump",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.34170123701915145
+    },
+    {
+      "name": "wrong-block-private-maximum",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3442232849774882
+    },
+    {
+      "name": "wrong-next-load-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3214820440043695
+    },
+    {
+      "name": "wrong-final-key-counter",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.31955537002068013
+    },
+    {
+      "name": "wrong-block-halt-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3383230350445956
+    },
+    {
+      "name": "wrong-grid-halt-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3241596900043078
+    },
+    {
+      "name": "wrong-final-grid-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.37682729499647394
+    },
+    {
+      "name": "wrong-extracted-output-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3553764470270835
+    },
+    {
+      "name": "wrong-grid-race-result",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3414107729913667
+    },
+    {
+      "name": "wrong-next-key-copy-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3259035959490575
+    }
+  ],
+  "false_prefix_claims_rejected": 29,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": true,
+  "whole_kernel_race_freedom_proved": true,
+  "source_reference_equality_proved": false,
+  "canonical_dense_reference_equality_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "gpu_trials": 0,
+  "model_calls": 0
+}

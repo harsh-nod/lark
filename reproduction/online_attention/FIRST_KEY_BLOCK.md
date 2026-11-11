@@ -72,8 +72,10 @@ A [separate empty-directory archive replay](results/native-first-key-block-valid
 rechecks source hashes, binding, audits and controls. The earlier output-stage
 sources and audits also pass unchanged; previous frozen packets are preserved.
 
-The three later K/V copy/query phases, final halt, complete block/grid launch
-and dense-reference equality remain unfinished. The full source is unchanged
+At this frozen checkpoint, the three later K/V copy/query phases, final halt,
+complete block/grid launch and dense-reference equality remain unfinished.
+The subsequent [whole-launch checkpoint](WHOLE_LAUNCH.md) joins those obligations
+and the canonical-real reference. The full source is unchanged
 from the paired [MI350 numerical validation](NATIVE.md). This checkpoint adds
 no GPU trials, hosted or local model calls, original author artifacts,
 historical pass rates/token costs, H100 timings or engineering-effort results.

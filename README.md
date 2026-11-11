@@ -61,8 +61,7 @@ the certificate does not assert IEEE equivalence or a floating-point error bound
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the
-unchanged upstream FP32 kernel. This adds no source certificate: actual launch
-and race-freedom proofs, and the paper's FP16 adaptation, remain open.
+unchanged upstream FP32 kernel. That upstream FP32 study adds no source certificate.
 The later [native FP16 development](reproduction/online_attention/NATIVE.md)
 adds the full tiled source, checked address/ownership components and paired
 both-host numerical evidence. Its [first-block proof](reproduction/online_attention/BLOCK.md)
@@ -73,8 +72,14 @@ denominator. The [output-prefix proof](reproduction/online_attention/OUTPUT.md)
 joins those computations to all 256 output stores for the first query row and
 first key tile. The [first-key block proof](reproduction/online_attention/FIRST_KEY_BLOCK.md)
 then composes all four query rows and all 32 lanes through the second block
-barrier and resume. The three later key tiles, whole-launch execution and
-source-reference equality remain unfinished.
+barrier and resume. The [whole-launch proof](reproduction/online_attention/WHOLE_LAUNCH.md)
+now covers all four key tiles, all blocks and the final halt, with actual-trace
+race freedom and every output extracted. A separate canonical-real theorem
+connects this unchanged native source to dense 128-key, 256-component SDPA for
+all `1 <= groups <= 65535`; four source-bound exports cover groups 1, 3, 64 and
+65535. This idealization treats storage casts as identities and asserts no IEEE
+equivalence or floating-point error bound. Original author artifacts and
+historical model/H100 results remain unreproduced.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

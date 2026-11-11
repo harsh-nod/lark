@@ -13,6 +13,8 @@ exact missing inputs. These overlapping items do not define a completion percent
 It includes the production SiLU, wave-reduction and complete native weighted
 RMSNorm studies, binds evidence at experiment-code commit `489b836`, and can be replayed after later documentation
 changes. The [historical snapshot](paper_results/README.md) is preserved.
+The complete native-attention launch and real-reference evidence below is
+newer than that frozen ledger.
 
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
@@ -73,8 +75,8 @@ launches. Floating-point error theorems remain outside their claims.
 The [online-attention value proof](online_attention/README.md) separately proves
 the normalized tiled recurrence equals dense softmax over exact reals, with
 positive denominators and four checked false-update counterexamples. It is
-algorithm algebra only: native source execution, race freedom, the upstream
-infinity sentinel and the original paper's attention certificate remain open.
+algorithm algebra only; the upstream infinity sentinel and original-paper
+attention artifact remain outside that study.
 Separate native checks of the unchanged upstream FP32 online kernel passed
 749,568 output comparisons on both MI350X hosts, including the 128×256 workload
 and large common score shifts. Every CPU float64 reference was recomputed in an
@@ -95,9 +97,17 @@ all 32 score dot products and maximum updates, exponential weights and ordered
 denominator accumulation for each lane's first query row and first key tile.
 It checks a 58,891-instruction per-lane continuation
 from PC 21 through PC 56, with values, input preservation and prefix-trace race
-freedom. Output updates and later query/key tiles remain open.
-Whole-launch execution, complete trace membership and source-reference equality
-remain unproved. It contributes zero accepted source certificates.
+freedom. Its frozen packet leaves later computation open.
+The [whole-launch checkpoint](online_attention/WHOLE_LAUNCH.md) now joins all four
+key tiles, all query rows, every native block and the final halt. It proves
+actual complete execution, input preservation, actual-trace race freedom and
+extraction of every source-ordered output. A separate canonical-real theorem
+connects the unchanged source to dense 128-key, 256-component SDPA for every
+group count `1..65535`, with four source-bound exports at 1, 3, 64 and 65535.
+Half casts are identities only in that idealization; IEEE equivalence and
+floating-point error bounds remain unproved. The complete native source is
+unchanged from the paired AMD numerical packet. This independent adaptation
+does not recover the original author source, models or H100 results.
 
 The separate [full-wave reduction study](wave_reduction/RESULTS.md) now supplies
 those proofs for one independent native wave64 XOR butterfly. One source-bound
@@ -122,17 +132,17 @@ source/reference/task/model tamper controls pass.
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
-| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates, with exact-source HIP checks | Original PTX kernels/GQA project, FlashAttention online algorithm, optimized launches and collectives |
+| Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates; independent native tiled online attention now has complete execution/race proofs and four canonical-real exports | Original PTX kernels/GQA project, original optimized attention adaptations, NVIDIA launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul and weighted RMSNorm families: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md) and four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md), each freshly rechecked and backed by both-host numerical comparisons within its declared scope | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths, in-place buffers and other optimized collective kernels remain; these two families do not reproduce the original nine |
+| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm and online-attention families: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md) and four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths, in-place buffers and other optimized collective kernels remain; these three families do not reproduce the original nine |
 | llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
-| Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, and connected attention through 4,096-token rows / 1,048,576-wide projections | Original kernels, tiled/online attention, original token/time measurements |
+| Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, connected attention through 4,096-token rows / 1,048,576-wide projections, and native online attention for 1..65535 groups at N128/D256 | Original kernels, other optimized attention shapes, original token/time measurements |
 | Model size versus pass rates/tokens (A.4.6) | Completed 17-fixture cohorts for GLM, Flash and DeepSeek with identical decoded first requests; first certificates 1 / 0 / 0, separate retry results 1 / 0 / 1, audited table and SVG | Original model versions, harness, token accounting and runs; tokenizers/precision/TP differ, so no isolated model-size conclusion |
 | Stage token costs (A.4.3) | Completed matched cohorts: GLM 832,937 tokens / 36 Lean checks, Flash 312,772 / 7, DeepSeek 821,063 / 37; earlier pilots and reasoning-only runs archived separately | Original stage traces/endpoints and stage boundaries; local inference does not reproduce billed costs |
 | Refusal census and hard Level-1 tasks (A.4.2/A.4.5) | Strict refusals; full-size independent BatchMatmul/DepthwiseConv certificates and device checks | Original failed runs/statements; smaller proofs do not contradict the paper's model outcomes |
-| Race-freedom fallback (A.4.7) | llm.c conflict witness, generic pointwise ownership and complete actual-trace classification for native RMSNorm | Original fallback conversations, second opinions and token costs |
+| Race-freedom fallback (A.4.7) | llm.c conflict witness, generic pointwise ownership and complete actual-trace classification for native RMSNorm and online attention | Original fallback conversations, second opinions and token costs |
 | Latencies/speedups (A.4.10, Table 14/Figure 7) | Independent 17-workload FP16 numerical checks and eager/compiled timings on MI300X/MI350X | Authors' optimized kernels/reference contracts, fastest vendor baselines, H100 for original PTX/CUDA cells |
 | Per-operation conformance (A.5) | Eight scalar operation samples on AMD; exhaustive finite-half decode/roundtrip, sampled FP32-to-half conversions, full-partition shuffle layouts and one native MFMA shape with exhaustive basis-pair probes on two MI350X hosts; five shuffle certificates, one native MFMA tile certificate and complete aligned logical-16 reduction execution inside native RMSNorm | Full instruction table, other combined/tiled collective programs, arbitrary sparse masks and other vector/alignment/collective forms and modifiers, NVIDIA hardware for NVIDIA operations. Samples are not complete semantics |
 | Retargeting effort/source counts (A.6) | Independent CUDA/HIP and bounded scalar PTX readers sharing a machine | Authors' source tree and development history; historical person-days cannot be regenerated by an independent implementation |
@@ -151,9 +161,10 @@ path or Lean/PTX/HIP file in its complete tree. This bounded tree/README check
 does not exclude relevant material elsewhere.
 
 All 17 workload shapes now have independent full-size contracts and exact-source
-HIP checks. Dense SDPA covers the attention workload, not FlashAttention's online
-algorithm. Software work remains: optimized/tiled/online kernels, broader PTX and
-collective semantics, actual adapted production sources, and corresponding
+HIP checks. The separate native online-attention study also has a complete
+four-tile launch and dense-real reference proof at N128/D256. Remaining software
+work includes other optimized/tiled/vectorized production kernels, broader PTX
+and collective semantics, original adapted production sources, and corresponding
 hardware validation. It cannot recover missing original model outcomes, source
 revisions, historical development effort or H100 measurements. AMD adaptations
 and independent experiments remain labeled as such.
