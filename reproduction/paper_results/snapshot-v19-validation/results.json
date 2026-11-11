@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "outside-checkout-no-git",
+      "accepted": true,
+      "git_on_path": false
+    },
+    {
+      "name": "global-completion-claim",
+      "accepted": false,
+      "fully_rehashed": true,
+      "gate": "frozen report regeneration"
+    },
+    {
+      "name": "original-production-claim",
+      "accepted": false,
+      "fully_rehashed": true,
+      "gate": "frozen report regeneration"
+    },
+    {
+      "name": "fully-rehashed-traversal",
+      "accepted": false,
+      "fully_rehashed": true,
+      "gate": "safe archive path"
+    },
+    {
+      "name": "wrong-manuscript",
+      "accepted": false,
+      "gate": "pinned manuscript digest"
+    }
+  ],
+  "positive_replays": 1,
+  "negative_controls": 4,
+  "source_snapshot_manifest_sha256": "c730e76f60a7ab9d3250a6f49e1ef9a39a9cbc9828dfd91992426c1edfb920b2",
+  "replayer_sha256": "2eaeff437b71c1a83a2691dd9b0f4329f51676e59a413f17cbc0b95f92368b5e",
+  "control_runner_sha256": "75da9689926dba788f22fe8da0e902f4ded94f1d743fe1ce7636a8c290cbcf7e",
+  "fresh_lean_checks": 0,
+  "fresh_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}

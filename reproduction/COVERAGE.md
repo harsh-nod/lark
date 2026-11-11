@@ -5,14 +5,15 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261110-v18/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261111-v19/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
 exact missing inputs. These overlapping items do not define a completion percentage.
-It includes production SiLU, wave reduction, complete native weighted RMSNorm
-and complete native online-attention studies, binds evidence at experiment-code
-commit `3401f08`, and can be replayed after later documentation changes. The
+It includes production SiLU, wave reduction, complete native weighted and fused
+RMSNorm, complete native online attention, and the source-bound softmax
+race/repair studies. It binds published evidence at commit `7437374` and can be
+replayed after later documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
 
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
@@ -128,50 +129,44 @@ does not assert IEEE equivalence, an error bound, the complete upstream API or
 an original-paper result. Standalone rebuilds, installed-wheel checks and direct
 source/reference/task/model tamper controls pass.
 
-The additional [in-place fused add RMSNorm development study](production_fused_rmsnorm/README.md)
-pins SGLang's wrapper and its exact FlashInfer dependency. It adds initialized
-mutable-buffer interfaces and address/conditional-footprint proofs, with a fresh
-11-module component build, 40 audits and nine false-claim refusals. Both AMD
-hosts complete 24 paired trials; the CPU audit checks 127,008,768 normalized
-values and 127,008,768 residual bit patterns across both hosts/methods with zero
-failures. Signed-zero and 475 one-half-ULP normalized-method differences per host
-remain explicit. **No complete source certificate, actual-trace classification
-of the whole launch, or original production result is claimed for this new
-family.** Its later scalar-prefix theorem proves the actual 210 instructions
-through both in-place rounds, ending before the first shuffle. It covers all
-16 rounded residual/unrounded shared stores per lane, input preservation,
-source-ordered local squares and classification/race freedom of the actual
-64-access prefix for every valid lane and rows1..255. A later native-wave proof
-composes all 64 lanes through five logical32 XOR stages, two distinct partial
-stores and the first barrier. All row counts1..255 and physical waves0..15 are
-covered with arbitrary arithmetic/input/outside memory. The subsequent first
-block-phase proof composes all 16 waves, proves every rounded residual and
-unrounded shared value across 16,384 columns and all 32 partials, and resumes
-the actual block barrier to PC36/epoch1 for all 1,024 participants while retaining
-read-only weights and historical trace epochs. The subsequent middle-phase
-proof selects exactly 32 active lanes inside physical64, executes all five
-logical32 XOR/add stages and the unique total store, visits all 15 inactive
-waves, and resumes both barriers to PC51/epoch2 for all 1,024 participants.
-Actual-prefix classification/race freedom and all retained operands are proved.
-The later output-lane theorem executes the actual 192-instruction normalization
-and output phase through both eight-component rounds and halt at PC71. The
-subsequent whole-launch theorem composes all actual physical output waves,
-complete blocks and rows under the original scheduler and fuel. It derives
-actual full-trace classification/race freedom, every normalized and rounded
-residual value, preservation of completed rows and original pending operands,
-all-thread halt and source-ordered extraction of both mutable buffers from the
-seeded-inout precondition. All operations, inputs and outside memory are
-quantified for rows1..255. Canonical-real/independent-reference and IEEE
-correctness remain open; this development still issues no complete
-source/reference certificate. This evidence is outside the immutable v18 ledger.
+The additional [in-place fused add RMSNorm study](production_fused_rmsnorm/README.md)
+pins SGLang's wrapper and its exact FlashInfer dependency. Its complete actual
+launch proof covers rows1..255, seeded mutable buffers, all native waves and
+both output buffers under the original scheduler and fuel. It derives actual
+trace race freedom and retains every rounded residual and normalized output.
+The later canonical-real bridge supplies four source-bound exports and fresh
+checks, with standalone archive replay. Half casts are identities in that real
+interpretation. As in the paper, floating-point behavior is tested numerically;
+IEEE/error bounds are outside the formal claims. The original production
+artifact remains unavailable. Both AMD hosts complete 24 paired trials. The CPU audit checks
+127,008,768 normalized values and 127,008,768 residual bit patterns across both
+hosts/methods with zero failures; signed-zero and 475 one-half-ULP normalized
+method differences per host remain explicit.
+
+The separate [native llm.c softmax study](production_softmax/README.md) binds
+both complete three-pass HIP adaptations to their full translated programs.
+Both have complete block proofs under the original fuel. The repaired source
+also has whole-grid execution, actual-trace race freedom and source-ordered
+output extraction for every supported row count1..42730 at width50257 and
+block1024/wave64. Its optional canonical-real theorem proves the dense softmax
+formula for all real inputs and any finite seed, with identity half casts and
+a positive source denominator. Independent fresh archive replays and scope
+guards are saved. Both AMD hosts pass 2,036,413,640 value comparisons with no
+tolerance failures. These adaptations do not recover the authors' exact PTX,
+NVIDIA timings or historical model results. The original-race proof now reaches
+both conflicting accesses in the actual complete original block trace from
+initialization and proves a complete supported one-row launch is racy and fails
+`Correct` for any reference. The source/replay each audit 1,530 declarations and
+reject 11 false claims; all eight CI jobs pass. The development reader still
+issues zero registered softmax source certificates.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates; independent native tiled online attention now has complete execution/race proofs and four canonical-real exports | Original PTX kernels/GQA project, original optimized attention adaptations, NVIDIA launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm and online-attention families: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md) and four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths, in-place buffers and other optimized collective kernels remain; these three families do not reproduce the original nine |
-| llm.c data race | Lean witness for a pinned public upstream formula matching reported threads/cell; reduced reproducer/repair | Exact paper registry revision and full adapted kernel; source-to-formula mapping remains trusted |
+| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm, fused add RMSNorm and online-attention families: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md), four [fused in-place canonical-real exports](production_fused_rmsnorm/README.md) and four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths and other optimized collective kernels remain; these independent families do not reproduce the original nine |
+| llm.c data race | Full-source native HIP binding, actual reached conflicting accesses, complete original one-row launch counterexample, repaired whole-grid execution/race freedom and canonical-real softmax, complete finite traces and paired both-host numerical checks | Exact paper registry revision/author-adapted PTX and original NVIDIA experiments |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
 | Verification scaling (A.4.4) | Independent ReLU proofs through length 2^31-1, GEMV/GEMM reduction through K=1,048,576 BMM output footprints through 2^30, all three normalization families through N=2^31-1, connected attention through 4,096-token rows / 1,048,576-wide projections, and native online attention for 1..65535 groups at N128/D256 | Original kernels, other optimized attention shapes, original token/time measurements |
