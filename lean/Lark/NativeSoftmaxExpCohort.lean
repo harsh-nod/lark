@@ -145,6 +145,34 @@ theorem exp_scalar_fold_good (p : Shape) (ops : Ops α) (input : Nat → Nat →
     exact ih _ htail (by intro u hu; exact hb u (by simp [hu]))
       (exp_cohort_entry_tail p ops input row t ts s hnot (hb t (by simp)) entry)
 
+theorem exp_lane_step_native (ops : Ops α) (input : Nat → Nat → α)
+    (row t u : Nat) (s : State α) (hb : t/1024=row) (hi : MaxNativeIndices u s) :
+    MaxNativeIndices u (expLaneStep ops input row t s) := by
+  have he : row*1024+t%1024=t := by omega
+  by_cases h : u=t
+  · subst u
+    simpa only [expLaneStep,he] using exp_prefix_native ops input row (t%1024) s (by simpa only [he] using hi)
+  · exact exp_prefix_native_other ops input row (t%1024) u s (by simpa only [he] using h) hi
+
+theorem exp_scalar_fold_native (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (ts : List Nat) (s : State α) (u : Nat) (hb : ∀ t ∈ ts, t/1024=row)
+    (hi : MaxNativeIndices u s) : MaxNativeIndices u (expScalarFold ops input row ts s) := by
+  induction ts generalizing s with
+  | nil => exact hi
+  | cons t ts ih =>
+    exact ih _ (by intro t ht; exact hb t (by simp [ht]))
+      (exp_lane_step_native ops input row t u s (hb t (by simp)) hi)
+
+theorem exp_scalar_fold_epochs (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (ts : List Nat) (s : State α) : (expScalarFold ops input row ts s).epochs=s.epochs := by
+  induction ts generalizing s with
+  | nil => rfl
+  | cons t ts ih =>
+    exact (ih (expLaneStep ops input row t s)).trans (exp_prefix_epochs ops input row (t%1024) s)
+
+#print axioms exp_lane_step_native
+#print axioms exp_scalar_fold_native
+#print axioms exp_scalar_fold_epochs
 #print axioms exp_lane_entry_of_cohort
 #print axioms exp_lane_step_run
 #print axioms exp_lane_step_other

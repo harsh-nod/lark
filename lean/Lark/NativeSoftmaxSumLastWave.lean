@@ -1,0 +1,147 @@
+import Lark.NativeSoftmaxSumLastFold
+
+/-! Actual fifth logical32 XOR shuffle and the two distinct partial stores in a
+physical wave64. All lanes stop at the source's third block barrier.
+-/
+namespace LarkNativeSoftmax
+open LarkNonlinear LarkCollective
+set_option maxRecDepth 10000
+set_option maxHeartbeats 2000000
+
+def sumWaveLeft (p : Shape) (values : Nat → α) (t : Nat) : α :=
+  values (LarkPartitionCollective.nativeLane (geometry p) t)
+def sumWaveRight (p : Shape) (values : Nat → α) (t : Nat) : α :=
+  values (sumXorPeer32 (LarkPartitionCollective.nativeLane (geometry p) t) 1)
+def sumLastWave (p : Shape) (ops : Ops α) (row warp : Nat) (values : Nat → α) (s : State α) : State α :=
+  sumLastFold ops (sumWaveLeft p values) (sumWaveRight p values) (cohortThreads row warp 64)
+    (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s)
+
+structure SumLastReady (row warp : Nat) (values : Nat → α) (s : State α) : Prop where
+  pc : ∀ lane, lane < 64 → s.pc (cohortBase row warp + lane) = 78
+  accumulator : ∀ lane, lane < 64 → s.regs (cohortBase row warp + lane) 6 = some (values lane)
+  indices : ∀ t ∈ cohortThreads row warp 64, MaxNativeIndices t s
+
+theorem sum_last_shuffled_fold (p : Shape) (guarded : Bool) (ops : Ops α) (row warp : Nat) (values : Nat → α)
+    (s : State α) (hw : warp < 16) (ready : SumLastReady row warp values s) :
+    (cohortThreads row warp 64).foldlM
+      (fun u t => LarkCollective.runLane ops (layout p) (geometry p) (program guarded) t fuel.lane u)
+      (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s) =
+      some (sumLastWave p ops row warp values s) := by
+  apply sum_last_fold_run p guarded ops (sumWaveLeft p values) (sumWaveRight p values) _ _ (cohort_nodup row warp 64)
+  · intro t ht; exact ready.indices t ht
+  · intro t ht
+    obtain ⟨lane, hl, rfl⟩ := (cohort_mem row warp 64 t).mp ht
+    exact (sum_xor_shuffled_fields p row warp 64 1 lane values s hw (by decide) hl).1.trans
+      (congrArg (· + 1) (ready.pc lane hl))
+  · intro t ht
+    obtain ⟨lane, hl, rfl⟩ := (cohort_mem row warp 64 t).mp ht
+    change _ = some (values (LarkPartitionCollective.nativeLane (geometry p) (cohortBase row warp + lane)))
+    rewrite [(cohort_coords p row warp lane hw hl).2]
+    exact (sum_xor_shuffled_fields p row warp 64 1 lane values s hw (by decide) hl).2.1.trans (ready.accumulator lane hl)
+  · intro t ht
+    obtain ⟨lane, hl, rfl⟩ := (cohort_mem row warp 64 t).mp ht
+    change _ = some (values (sumXorPeer32 (LarkPartitionCollective.nativeLane (geometry p) (cohortBase row warp + lane)) 1))
+    rewrite [(cohort_coords p row warp lane hw hl).2]
+    exact (sum_xor_shuffled_fields p row warp 64 1 lane values s hw (by decide) hl).2.2
+
+theorem sum_last_wave_pc (p : Shape) (ops : Ops α) (row warp : Nat) (values : Nat → α) (s : State α)
+    (lane : Nat) (hl : lane < 64) : (sumLastWave p ops row warp values s).pc (cohortBase row warp + lane) = 82 :=
+  (sum_last_fold_member ops (sumWaveLeft p values) (sumWaveRight p values) _ _ (cohort_nodup row warp 64) _
+    ((cohort_mem row warp 64 _).mpr ⟨lane, hl, rfl⟩)).1
+
+theorem sum_last_wave_partial (p : Shape) (ops : Ops α) (row warp half : Nat)
+    (values : Nat → α) (s : State α) (hw : warp < 16) (hh : half < 2) :
+    (sumLastWave p ops row warp values s).memory ⟨.shared, row, 1, warp * 2 + half⟩ =
+      some (ops.add (values (half * 32)) (values (sumXorPeer32 (half * 32) 1))) := by
+  let t := cohortBase row warp + half * 32
+  have ht : t ∈ cohortThreads row warp 64 := (cohort_mem row warp 64 t).mpr ⟨half * 32, by omega, rfl⟩
+  have hz : t % 1024 % 32 = 0 := by dsimp [t, cohortBase]; omega
+  have coords := cohort_arithmetic row warp (half * 32) hw (by omega)
+  have hlogical : t % 1024 / 32 = warp * 2 + half := by dsimp only [t]; rewrite [coords.2.1]; omega
+  have h := sum_last_fold_value ops (sumWaveLeft p values) (sumWaveRight p values) _
+    (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s) (cohort_nodup row warp 64) t ht hz
+  simpa only [sumWaveLeft, sumWaveRight, t, (cohort_coords p row warp (half * 32) hw (by omega)).2,
+    sumPartialCell, coords.1, hlogical] using h
+
+theorem sum_last_wave_preserves (p : Shape) (ops : Ops α) (row warp : Nat) (values : Nat → α) (s : State α) :
+    (sumLastWave p ops row warp values s).indices = s.indices ∧ (sumLastWave p ops row warp values s).epochs = s.epochs :=
+  sum_last_fold_preserves ops (sumWaveLeft p values) (sumWaveRight p values) (cohortThreads row warp 64)
+    (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s)
+
+theorem sum_last_wave_memory_frame (p : Shape) (ops : Ops α) (row warp : Nat) (values : Nat → α) (s : State α)
+    (l : Location) (hl : l.space = .global ∨ l.buffer ≠ 1) :
+    (sumLastWave p ops row warp values s).memory l = s.memory l := by
+  apply sum_last_fold_memory_other ops (sumWaveLeft p values) (sumWaveRight p values) _
+    (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s) l
+  intro t ht hw
+  rcases hl with hspace | hbuffer
+  · have h := congrArg Location.space hw.2
+    simp [hspace, sumPartialCell] at h
+  · exact hbuffer (by simpa only [sumPartialCell] using congrArg Location.buffer hw.2)
+
+theorem sum_last_wave_good (p : Shape) (ops : Ops α) (row warp : Nat) (values : Nat → α) (s : State α)
+    (he : ∀ t ∈ cohortThreads row warp 64, (s.epochs t).block = 2) (good : ∀ a ∈ s.trace, Good a) :
+    ∀ a ∈ (sumLastWave p ops row warp values s).trace, Good a :=
+  sum_last_fold_good ops (sumWaveLeft p values) (sumWaveRight p values) _
+    (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s) he good
+
+theorem cohort_sum_partial_barrier (guarded : Bool) (row warp active : Nat) (s : State α) (hpos : 0 < active)
+    (hp : ∀ lane, lane < active → s.pc (cohortBase row warp + lane) = 82) :
+    LarkPartitionCollective.nextCohort (program guarded) (cohortThreads row warp active) s = none ∧
+    LarkCollective.converged (program guarded) (cohortThreads row warp active) s = some .block := by
+  have hp0 : s.pc (cohortBase row warp) = 82 := by simpa only [Nat.add_zero] using hp 0 hpos
+  have hf : (cohortThreads row warp active).filter (LarkPartitionCollective.isShuffle (program guarded) s) = [] := by
+    apply List.filter_eq_nil_iff.mpr
+    intro t ht
+    obtain ⟨lane, hl, rfl⟩ := (cohort_mem row warp active t).mp ht
+    simp [LarkPartitionCollective.isShuffle, hp lane hl, sum_partial_barrier guarded]
+  have ha : (cohortThreads row warp active).all (fun t => s.pc t == s.pc (cohortBase row warp)) = true := by
+    apply List.all_eq_true.mpr
+    intro t ht
+    obtain ⟨lane, hl, rfl⟩ := (cohort_mem row warp active t).mp ht
+    simp [hp lane hl, hp0]
+  constructor
+  · simp [LarkPartitionCollective.nextCohort, hf]
+  · unfold LarkCollective.converged
+    rewrite [cohort_head row warp active hpos]
+    simp only [bind, pure, Option.bind, ha, ↓reduceIte]
+    unfold LarkCollective.parked
+    rewrite [hp0, sum_partial_barrier guarded]
+    rfl
+
+theorem warp_at_sum_partial_barrier (p : Shape) (guarded : Bool) (ops : Ops α) (row warp active extra : Nat)
+    (s next : State α) (hpos : 0 < active)
+    (hfold : (cohortThreads row warp active).foldlM
+      (fun u t => runLane ops (layout p) (geometry p) (program guarded) t fuel.lane u) s = some next)
+    (hp : ∀ lane, lane < active → next.pc (cohortBase row warp + lane) = 82) :
+    LarkPartitionCollective.runWarp ops (layout p) (geometry p) fuel (program guarded)
+      (cohortThreads row warp active) (extra + 1) s = some next := by
+  obtain ⟨hc, hconverged⟩ := cohort_sum_partial_barrier guarded row warp active next hpos hp
+  rewrite [LarkPartitionCollective.runWarp, hfold]
+  simp only [bind, pure, Option.some_bind, hc, hconverged, reduceCtorEq, ↓reduceIte]
+
+theorem sum_last_wave_warp (p : Shape) (guarded : Bool) (ops : Ops α) (row warp extra : Nat) (values : Nat → α)
+    (s : State α) (hw : warp < 16) (ready : SumLastReady row warp values s) :
+    continueCohort p guarded ops (cohortThreads row warp 64) (extra + 1) s = some (sumLastWave p ops row warp values s) := by
+  have hc : LarkPartitionCollective.nextCohort (program guarded) (cohortThreads row warp 64) s = some (cohortThreads row warp 64) := by
+    apply cohort_next guarded row warp 64 78 s (by decide) ready.pc
+    intro t ht
+    simp only [LarkPartitionCollective.isShuffle, ht]
+    cases guarded <;> rfl
+  rewrite [continue_shuffle p guarded ops _ _ (extra + 1) s hc,
+    cohort_sum_xor_shuffle p guarded row warp 64 1 78 s values hw (Or.inr rfl) (by decide) ready.pc ready.accumulator (by cases guarded <;> decide)]
+  change LarkPartitionCollective.runWarp ops (layout p) (geometry p) fuel (program guarded)
+    (cohortThreads row warp 64) (extra + 1) (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s) = _
+  exact warp_at_sum_partial_barrier p guarded ops row warp 64 extra _ _ (by decide)
+    (sum_last_shuffled_fold p guarded ops row warp values s hw ready) (sum_last_wave_pc p ops row warp values s)
+
+#print axioms sum_last_shuffled_fold
+#print axioms sum_last_wave_pc
+#print axioms sum_last_wave_partial
+#print axioms sum_last_wave_preserves
+#print axioms sum_last_wave_memory_frame
+#print axioms sum_last_wave_good
+#print axioms cohort_sum_partial_barrier
+#print axioms warp_at_sum_partial_barrier
+#print axioms sum_last_wave_warp
+end LarkNativeSoftmax
