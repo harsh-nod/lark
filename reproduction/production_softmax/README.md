@@ -234,9 +234,42 @@ real-profile checks, and 169 general tests: 160 passed and nine optional skips.
 All 88 selected implementation, proof and fixture files match that source commit
 byte-for-byte. Later tracked changes contain only study documentation and evidence.
 
-Whole-grid composition, exponentiation/sum/normalization execution,
+The later [scalar exponentiation/sum prefix](../../lean/Lark/NativeSoftmaxExpPrefix.lean)
+starts after the proved maximum pass. Each selected lane executes all seven
+outer rounds: eight clamped input loads into private storage before that round's
+exponential stores. Valid columns store converted outputs and add the unrounded
+exponential to the source-ordered sum; invalid columns skip the private read,
+output write and sum update. Earlier outputs survive subsequent iterations.
+The false outer exit initializes the shuffle temporary and parks at PC70,
+before the first logical32 XOR sum shuffle. This is an individual-lane execution
+family for both complete sources, all supported shapes/rows and arbitrary
+operations, inputs and outside memory.
+
+The [exact count proof](../../lean/Lark/NativeSoftmaxExpPrefixCounts.lean) gives
+982 scalar instructions, 213 added accesses and 50 valid stores for tids0..80;
+tids81..1023 use 978 instructions, 211 accesses and 49 valid stores. The original
+lane fuel stays4,096. Block epoch2 and the native indices survive. Actual prefix
+trace classification derives race freedom. The output proof retains both half
+conversions, and the sum proof retains the unrounded exponential and operand order.
+
+The [source packet](results/exp-prefix-v1/results.json) and
+[independent replay](results/exp-prefix-validation-v1/results.json) freshly build
+62 Lean modules, audit733 declarations and reject72 false Lean claims. The
+complete source/reader/IR/interface binding and constructive maximum-pass folds
+remain included. Four integer witnesses at tids0,80,81,1023 check both the actual
+run's sum register and an actual converted output against independently computed
+values. Their operations distinguish subtraction order, accumulation order and
+input/output conversion. The replay starts without Git or own compiled cache
+and compares both complete finite address traces. Twenty-four
+[rehashed metadata controls](results/exp-prefix-stage-guards-v1/results.json)
+reject false certificates, collective/whole-kernel claims, changed counts/values,
+missing principal proofs and earlier maximum-pass evidence relabeled as this
+prefix, before extraction. The [wheel audit](results/exp-prefix-packaging-v1/results.json)
+checks all62 required proof modules and the closed reader byte-for-byte.
+
+Collective sum execution, serial sum, normalization, whole-grid composition,
 conflict-state reachability and the canonical-real reference bridge remain open.
-The maximum-pass stage issues zero source certificates and does not reproduce
+This lane-prefix stage issues zero source certificates and does not reproduce
 the paper's original NVIDIA or historical model results.
 
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
@@ -298,6 +331,15 @@ python3 reproduction/production_softmax/check_maximum_stages.py \
   --packet /tmp/softmax-maximum \
   --earlier-packet reproduction/production_softmax/results/max-first-block-v1 \
   --output /tmp/softmax-maximum-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_exp_prefix.py --output /tmp/softmax-exp-prefix
+python3 reproduction/production_softmax/replay_exp_prefix.py \
+  --packet /tmp/softmax-exp-prefix \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-exp-prefix-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_exp_prefix_stages.py \
+  --packet /tmp/softmax-exp-prefix \
+  --earlier-packet reproduction/production_softmax/results/maximum-v1 \
+  --output /tmp/softmax-exp-prefix-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
