@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "status": "finite-native-rope-source-values-and-traces-checked",
+  "cases": [
+    {
+      "layout": "interleaved",
+      "rows": 1,
+      "instructions": 50,
+      "outputs": 5120,
+      "accesses": 15360,
+      "unique_writes": 5120,
+      "all_threads_halt_pc": 49,
+      "all_epochs": [
+        0,
+        0,
+        0
+      ],
+      "all_actual_accesses_classified": true,
+      "cache_unchanged": true,
+      "trace_sha256": "450f8ff49ed48930f17231801981fd4b3b14cce8d092e5f9fca479a99610cb69",
+      "output_expression_sha256": "a42f75d7792199292d5815044a5add526ca86034441d0e62be431bda9675e44d"
+    },
+    {
+      "layout": "interleaved",
+      "rows": 3,
+      "instructions": 50,
+      "outputs": 15360,
+      "accesses": 46080,
+      "unique_writes": 15360,
+      "all_threads_halt_pc": 49,
+      "all_epochs": [
+        0,
+        0,
+        0
+      ],
+      "all_actual_accesses_classified": true,
+      "cache_unchanged": true,
+      "trace_sha256": "577482dbcd13317691296ee56fb4583b1ae9eba84ad200c56aae6d18518e3718",
+      "output_expression_sha256": "09cc38896e71e209dc25fcfa967d01204e5f2720b99c61fe2da364655643d285"
+    },
+    {
+      "layout": "split-half",
+      "rows": 1,
+      "instructions": 50,
+      "outputs": 5120,
+      "accesses": 15360,
+      "unique_writes": 5120,
+      "all_threads_halt_pc": 49,
+      "all_epochs": [
+        0,
+        0,
+        0
+      ],
+      "all_actual_accesses_classified": true,
+      "cache_unchanged": true,
+      "trace_sha256": "2d8b55ba4a2a1487a2e3e4827af5eec8cca201945b60939289d7cafe8948a5c5",
+      "output_expression_sha256": "14e50bc64c3cc87ec935b9ea2fb98f017b499f41a82d98adeaf8986d7a2bea9f"
+    },
+    {
+      "layout": "split-half",
+      "rows": 3,
+      "instructions": 50,
+      "outputs": 15360,
+      "accesses": 46080,
+      "unique_writes": 15360,
+      "all_threads_halt_pc": 49,
+      "all_epochs": [
+        0,
+        0,
+        0
+      ],
+      "all_actual_accesses_classified": true,
+      "cache_unchanged": true,
+      "trace_sha256": "9f295d4865f2465e4870937a1058d012de7c5518880c8eda269e19638fcdb5ab",
+      "output_expression_sha256": "271a20fe7df8d2f0b564453e1fe6faa339d11ae639663c099de593d085c914e3"
+    }
+  ],
+  "false_sources_rejected": [
+    {
+      "layout": "interleaved",
+      "name": "overlapping-pairs",
+      "accepted": false,
+      "reason": "native-rope-footprint: unexpected access (1, ('global', 0, 0, 0), False)"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-stride",
+      "accepted": false,
+      "reason": "native-rope-footprint: unexpected access (0, ('global', 0, 0, 1022), False)"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-cache-half",
+      "accepted": false,
+      "reason": "Full output differs from independent source-order reference"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-subtraction",
+      "accepted": false,
+      "reason": "Full output differs from independent source-order reference"
+    },
+    {
+      "layout": "interleaved",
+      "name": "missing-second-store",
+      "accepted": false,
+      "reason": "Incomplete native traversal"
+    },
+    {
+      "layout": "split-half",
+      "name": "overlapping-pairs",
+      "accepted": false,
+      "reason": "native-rope-footprint: unexpected access (1, ('global', 0, 0, 0), False)"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-stride",
+      "accepted": false,
+      "reason": "native-rope-footprint: unexpected access (0, ('global', 0, 0, 959), False)"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-cache-half",
+      "accepted": false,
+      "reason": "Full output differs from independent source-order reference"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-subtraction",
+      "accepted": false,
+      "reason": "Full output differs from independent source-order reference"
+    },
+    {
+      "layout": "split-half",
+      "name": "missing-second-store",
+      "accepted": false,
+      "reason": "Incomplete native traversal"
+    }
+  ],
+  "complete_native_launch_theorem": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}

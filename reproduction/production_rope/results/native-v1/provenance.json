@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "upstream_repository": "https://github.com/vllm-project/vllm",
+  "upstream_revision": "83f5de466a889c29ac5fbfbe342d6fe4c09811e8",
+  "upstream_path": "csrc/pos_encoding_kernels.cu",
+  "upstream_url": "https://github.com/vllm-project/vllm/blob/83f5de466a889c29ac5fbfbe342d6fe4c09811e8/csrc/pos_encoding_kernels.cu",
+  "files_sha256": {
+    "cases/interleaved/kernel.hip": "5e341652fc4ce45fbcb42169c28c8fb137b4489a8354a460936916884be95826",
+    "cases/interleaved/reference.py": "66b3000f4a1a21cc381b7512466c037184f252764db0930ffc83099a170c0a94",
+    "cases/interleaved/task.json": "bf42dc39e542b3874ca448419937ac3fe048ada18c5ce532e228d67e05fc3eb3",
+    "cases/split-half/kernel.hip": "2a94e567a770147ce90a61880dcfdac8323d8d60b333999f3de18311afdacd65",
+    "cases/split-half/reference.py": "0e2f098b5045bdef0f6e2469f08794fac09ce15d68d2c8b4cc041e1286eae189",
+    "cases/split-half/task.json": "994192266cd8770d0c58959b0c26d728a3b3c1c62dcee6369324e9aacd0acb7b",
+    "upstream/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "upstream/pos_encoding_kernels.cu": "23b62c68866ad41385cc3bb6156648f76e87b86b15b33dbd9a65f530d97d8e8c"
+  },
+  "rows": [
+    1,
+    65535
+  ],
+  "query_heads": 32,
+  "key_heads": 8,
+  "head_size": 128,
+  "rotary_dimension": 128,
+  "rope_dim_offset": 0,
+  "inverse": false,
+  "cache_dtype": "float16",
+  "native_block": 512,
+  "physical_warp": 64,
+  "rewrites": [
+    "Instantiate half query/key/cache templates, both IS_NEOX values, inverse=false and full128 rotary dimension.",
+    "Inline both apply_rotary_embedding and apply_token_rotary_embedding helpers.",
+    "Make contiguous query/key strides4096/1024, head_stride128, Qheads32/Kheads8 and host-selected block512 literal.",
+    "Expand expressions into scalar temporaries and for loops into while loops; preserve all cache and in-place load/store order.",
+    "Replace CUDA half conversions with HIP half conversions; use HIP physical wave64."
+  ],
+  "departures": [
+    "Drop positions gather: input cache contains already gathered128-element rows, as the manuscript describes.",
+    "Specialize shapes/strides/flags to the declared profile; this is not the complete upstream API.",
+    "Run the CUDA-source adaptation on AMD HIP; no NVIDIA timing or hardware correspondence theorem is supplied."
+  ],
+  "retained": [
+    "Both query and key are initialized mutable in-place buffers.",
+    "Four query pair iterations and one key pair iteration per native thread.",
+    "Both pair inputs are read before either output is stored; FP32 products precede final half storage.",
+    "Read-only gathered FP16 cosine/sine rows; both interleaved and split-half pairing."
+  ],
+  "whole_kernel_execution_proved": false,
+  "source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0
+}

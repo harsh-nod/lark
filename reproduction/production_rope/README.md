@@ -35,11 +35,22 @@ repeats these checks without Git or any owned compiled cache. Rehashed scope
 guards reject invented complete launch/reference proofs or certificates before
 source extraction.
 
+The frozen [source packet](results/components-v1/results.json),
+[independent replay](results/components-validation-v1/results.json) and
+[scope guards](results/component-stage-guards-v1/results.json) retain the checked
+statements, source archive, audit logs and refusals. All 57 archived source and
+checker files match source revision `84d0ef6ea3e87ac306e21cfbd1f17f164bf804bb`.
+The [wheel audit](results/packaging-v1/results.json) matches the reader and all
+146 required proof modules for this profile and the earlier softmax results
+to that revision, including both new native RoPE modules.
+
 The separate finite interpreter executes each complete source at one and three
 rows. It compares all 40,960 symbolic output expressions with an independently
 indexed formula, retains all 122,880 access records, checks every thread's halt
 at PC49 and the read-only cache, and rejects ten changed source programs. Each
 row has 15,360 accesses and 5,120 output values at epoch(grid0,block0,warp0).
+The [finite packet](results/symbolic-v1/results.json) preserves all complete
+traces and symbolic output lists as compressed, hashed streams.
 
 Both AMD hosts completed 48 paired trials (96 launches per host). The comparison
 retains all three upstream device/helper bodies verbatim, substitutes HIP
@@ -52,6 +63,15 @@ differences and zero adapted/upstream bit differences. These are independent
 finite HIP comparisons; the original CUDA binary is not executed. Numerical
 controls fully rehash one wrong output, false proof/certificate claims, a missing
 trial and a widened tolerance, and reject all five.
+
+The [both-host packet](results/native-v1/results.json) retains runtime reports,
+input hashes, compiler inventories and the [fresh CPU audit](results/native-v1/gpu-audit.json).
+Full input/output and compiler source captures are available in the
+[public release](https://github.com/harsh-nod/lark/releases/tag/native-rope-evidence-20261111).
+All four asset bodies were [downloaded anonymously and hashed](results/publication-v1/results.json)
+in full, checking 109,450,561 bytes against both the local packets and GitHub's
+server digests. The [numerical controls](results/numerical-controls-v1/results.json)
+retain all five fully rehashed rejections.
 
 **Complete native launch execution, classification of its universal actual
 trace, and source/reference equality are still pending.** This development

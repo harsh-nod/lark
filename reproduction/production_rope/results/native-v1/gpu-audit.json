@@ -1,0 +1,3935 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "hosts": [
+    {
+      "directory": "mi350",
+      "device": "AMD Instinct MI350X",
+      "trials": 48,
+      "compiler_inputs": 319,
+      "runtime_report_sha256": "56ca19402e974d84f92121fa5664daa2ba751eb3a240273fef70de715cd56abf",
+      "comparisons": 39813120,
+      "tolerance_failures": 0,
+      "max_abs_error": 0.0625,
+      "torch_fp32_bit_differences": 0,
+      "torch_signed_zero_differences": 0,
+      "adapted_vs_upstream_bit_differences": 0,
+      "details": [
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        }
+      ]
+    },
+    {
+      "directory": "mi350-2",
+      "device": "AMD Instinct MI350X",
+      "trials": 48,
+      "compiler_inputs": 314,
+      "runtime_report_sha256": "20b48413fc6d45edc2f67d0bfedc965a24cf8969aa8c1182c77265a2381d36dc",
+      "comparisons": 39813120,
+      "tolerance_failures": 0,
+      "max_abs_error": 0.0625,
+      "torch_fp32_bit_differences": 0,
+      "torch_signed_zero_differences": 0,
+      "adapted_vs_upstream_bit_differences": 0,
+      "details": [
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 4096,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 1,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 1024,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 12288,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 3,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 3072,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 64,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 65536,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "normal",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "signed-zero",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "structured",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "cancellation",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "wide",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "interleaved",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "adapted",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "query",
+          "method": "upstream",
+          "comparisons": 1048576,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "adapted",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        },
+        {
+          "rows": 256,
+          "trial": "small",
+          "layout": "split-half",
+          "buffer": "key",
+          "method": "upstream",
+          "comparisons": 262144,
+          "tolerance_failures": 0,
+          "torch_fp32_bit_differences": 0
+        }
+      ]
+    }
+  ],
+  "fresh_cpu_float64_reference_cases": 48,
+  "fresh_cpu_torch_reference_cases": 48,
+  "torch_version": "2.11.0+cu130",
+  "numpy_version": "2.4.4",
+  "comparisons": 79626240,
+  "tolerance_failures": 0,
+  "torch_fp32_bit_differences": 0,
+  "adapted_vs_upstream_bit_differences": 0,
+  "cross_host_streams_identical": {
+    "interleaved-adapted-query": true,
+    "interleaved-adapted-key": true,
+    "interleaved-upstream-query": true,
+    "interleaved-upstream-key": true,
+    "split-half-adapted-query": true,
+    "split-half-adapted-key": true,
+    "split-half-upstream-query": true,
+    "split-half-upstream-key": true
+  },
+  "output_sha256": {
+    "interleaved-adapted-query": [
+      "a141a0fdbefb71b15dbf6e8c9b6fafb3bd80133bb769f33b6358ec1b06f3c639",
+      "a141a0fdbefb71b15dbf6e8c9b6fafb3bd80133bb769f33b6358ec1b06f3c639"
+    ],
+    "interleaved-adapted-key": [
+      "f1b868fde9bd6b4369e6b8327ba8726b13a56f78dc3ed34ee8556ddfd3657b19",
+      "f1b868fde9bd6b4369e6b8327ba8726b13a56f78dc3ed34ee8556ddfd3657b19"
+    ],
+    "interleaved-upstream-query": [
+      "a141a0fdbefb71b15dbf6e8c9b6fafb3bd80133bb769f33b6358ec1b06f3c639",
+      "a141a0fdbefb71b15dbf6e8c9b6fafb3bd80133bb769f33b6358ec1b06f3c639"
+    ],
+    "interleaved-upstream-key": [
+      "f1b868fde9bd6b4369e6b8327ba8726b13a56f78dc3ed34ee8556ddfd3657b19",
+      "f1b868fde9bd6b4369e6b8327ba8726b13a56f78dc3ed34ee8556ddfd3657b19"
+    ],
+    "split-half-adapted-query": [
+      "e94c27f2bc7638cecf91d3133f6eb4b26b2a165a5bcdb90edbb17ccbb7a5181c",
+      "e94c27f2bc7638cecf91d3133f6eb4b26b2a165a5bcdb90edbb17ccbb7a5181c"
+    ],
+    "split-half-adapted-key": [
+      "ea1cebfd4c193ceef6d3fcaf084fb14c0861386328d0439486bee9da67f7359a",
+      "ea1cebfd4c193ceef6d3fcaf084fb14c0861386328d0439486bee9da67f7359a"
+    ],
+    "split-half-upstream-query": [
+      "e94c27f2bc7638cecf91d3133f6eb4b26b2a165a5bcdb90edbb17ccbb7a5181c",
+      "e94c27f2bc7638cecf91d3133f6eb4b26b2a165a5bcdb90edbb17ccbb7a5181c"
+    ],
+    "split-half-upstream-key": [
+      "ea1cebfd4c193ceef6d3fcaf084fb14c0861386328d0439486bee9da67f7359a",
+      "ea1cebfd4c193ceef6d3fcaf084fb14c0861386328d0439486bee9da67f7359a"
+    ]
+  },
+  "input_manifest_sha256": "d5f63deff3fe7b5c55a37b18fb764bdff8a588b5071c5036495799969e715e91",
+  "auditor_sha256": "627020432b8fc2da0e36d540d530b7ca10bbbc1ef051679728df2014db34903d",
+  "whole_kernel_execution_proved": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Finite independent HIP adaptation and retained-upstream HIP comparison on AMD. Float64 tolerance and Torch FP32 bit comparisons are separate; no universal source/reference, IEEE or original NVIDIA result is claimed."
+}
