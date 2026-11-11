@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261110-v17/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261110-v18/results/RESULTS.md) ·
+[earlier v17 ledger](snapshots/20261110-v17/results/RESULTS.md) ·
 [earlier v16 ledger](snapshots/20261110-v16/results/RESULTS.md) ·
 [historical ledger](results/RESULTS.md) · [historical audit](results/audit.json)
 
@@ -10,25 +11,30 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
-The [updated snapshot](snapshots/20261110-v17/results/RESULTS.md) includes the later
+The [updated snapshot](snapshots/20261110-v18/results/RESULTS.md) includes the later
 production SiLU, exact-real, full-wave reduction and complete native weighted
-RMSNorm studies at experiment-code commit `489b836`. Its evidence and auditor are frozen for replay without a
+RMSNorm and online-attention studies at experiment-code commit `3401f08`.
+Attention now has complete actual-launch execution/race-freedom and dense-real
+proofs, four source-bound exports and separate standalone archive replays. Its
+paired AMD measurements retain their floating-point differences; the real proof
+does not imply IEEE equivalence or an error bound. The snapshot evidence and
+auditor are frozen for replay without a
 historical checkout, and its existing-study links target that exact Git commit:
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
-  --snapshot reproduction/paper_results/snapshots/20261110-v17 \
+  --snapshot reproduction/paper_results/snapshots/20261110-v18 \
   --source-archive /path/to/2611.02028v1.tar
 ```
 
-The [validation records](snapshot-v17-validation/results.json) include replay
+The [validation records](snapshot-v18-validation/results.json) include replay
 outside the checkout with Git unavailable, two fully rehashed false-completion
 claims, a fully rehashed traversal entry and a wrong-manuscript control. Repeat
 them with a fresh output directory:
 
 ```bash
 python3 reproduction/paper_results/check_snapshot_controls.py \
-  --snapshot reproduction/paper_results/snapshots/20261110-v17 \
+  --snapshot reproduction/paper_results/snapshots/20261110-v18 \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-snapshot-controls
 ```
 
