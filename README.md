@@ -85,12 +85,15 @@ behavior is tested numerically outside the exact-real theorem, following the
 paper's stated scope. This development profile issues no registered softmax
 source certificate.
 
-The [native in-place vLLM RoPE development study](reproduction/production_rope/README.md)
-retains the 512-thread launch, Q/K strided loops and both rotary layouts. Full
-source binding, initialized mutable interfaces and address/ownership lemmas are
-Lean checked; complete native launch/reference proofs remain pending. Both AMD
-hosts pass 79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance
-or bit differences. The study issues no registered source certificate.
+The [native in-place vLLM RoPE study](reproduction/production_rope/README.md)
+proves the complete 512-thread launch, both Q/K strided loops, actual-trace race
+freedom and both extracted buffers against a dense reference for either rotary
+layout at `1..65535` rows. The theorem retains arbitrary scalar operations and
+explicit half conversions. Eight registered source certificates and fresh
+rechecks pass through `verify-native-rope`. Both AMD hosts pass 79,626,240 fresh
+CPU float64/Torch FP32 comparisons, with zero tolerance or bit differences.
+This independent adaptation does not recover the original paper's artifacts
+or measurements.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.

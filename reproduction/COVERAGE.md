@@ -160,23 +160,25 @@ initialization and proves a complete supported one-row launch is racy and fails
 reject 11 false claims; all eight CI jobs pass. The development reader still
 issues zero registered softmax source certificates.
 
-The [native in-place vLLM RoPE development study](production_rope/README.md)
-retains block512, Q32/K8 heads, width128, both rotary layouts and seeded mutable
-Q/K buffers. Full-source binding, initialized interfaces, address coverage and
-conditional ownership/race lemmas pass 99 audits and nine false Lean controls;
-independent archive replay passes without Git or owned compiled caches. Complete
-finite traces at one and three rows check 40,960 symbolic values. Both AMD hosts
-pass 79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance or
-bit differences. Complete native launch/reference proofs remain pending, and
-this development issues zero source certificates. This evidence is outside the
-immutable v19 ledger and does not add an original accepted production kernel.
+The [native in-place vLLM RoPE study](production_rope/README.md) now proves the
+complete launch, actual-trace race freedom and extraction of both dense-reference
+outputs at every supported row count `1..65535`. It retains block512, Q32/K8
+heads, width128, both rotary layouts, seeded mutable Q/K buffers, arbitrary
+scalar operations and explicit half conversions. Eight registered certificates
+and fresh rechecks pass with 157 library and 80 source axiom audits, eight false
+Lean claims and eight rehashed integrity/scope controls. Earlier complete finite
+traces at one and three rows check 40,960 symbolic values. Both AMD hosts pass
+79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance or bit
+differences. This evidence is outside the immutable v19 ledger and does not add
+an original accepted production kernel. IEEE/error guarantees remain outside
+the paper's formal scope.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates; independent native tiled online attention now has complete execution/race proofs and four canonical-real exports | Original PTX kernels/GQA project, original optimized attention adaptations, NVIDIA launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm, fused add RMSNorm and online-attention families: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md), four [fused in-place canonical-real exports](production_fused_rmsnorm/README.md) and four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths and other optimized collective kernels remain; these independent families do not reproduce the original nine |
+| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm, fused add RMSNorm, online attention and in-place RoPE: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md), four [fused in-place canonical-real exports](production_fused_rmsnorm/README.md), four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md) and eight [native in-place RoPE certificates](production_rope/README.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths and other optimized collective kernels remain; these independent families do not reproduce the original nine |
 | llm.c data race | Full-source native HIP binding, actual reached conflicting accesses, complete original one-row launch counterexample, repaired whole-grid execution/race freedom and canonical-real softmax, complete finite traces and paired both-host numerical checks | Exact paper registry revision/author-adapted PTX and original NVIDIA experiments |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |

@@ -1,0 +1,48 @@
+{
+  "name": "native-vllm-rope-split-half",
+  "entry": "rotary_embedding",
+  "language": "hip",
+  "rotary_layout": "split-half",
+  "buffers": [
+    {
+      "name": "query",
+      "role": "inout",
+      "shape": [
+        3,
+        32,
+        128
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "key",
+      "role": "inout",
+      "shape": [
+        3,
+        8,
+        128
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "cache",
+      "role": "input",
+      "shape": [
+        3,
+        128
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 3,
+    "block": 512,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    1,
+    1,
+    1
+  ]
+}

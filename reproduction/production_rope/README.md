@@ -1,4 +1,4 @@
-# Native in-place vLLM RoPE development study
+# Native in-place vLLM RoPE study
 
 Both complete HIP adaptations retain vLLM's 512-thread block and strided
 query/key loops. Query has 32 heads, key has eight, and each head has 128 FP16
@@ -23,10 +23,10 @@ read-only cache, geometry and unchanged fuel. The
 [address module](../../lean/Lark/NativeRopeAddress.lean) proves both pair
 coordinates cover every component exactly, their inverse owner mapping, native
 thread ownership and signed-int32 address bounds. The conditional footprint
-theorem derives race freedom if every actual access is classified. Its premise
-must still be proved from the complete source execution.
+theorem derives race freedom if every actual access is classified. The later
+complete launch proof discharges that premise for the actual source trace.
 
-The fresh source check builds four local Lean modules, audits 27 library
+The earlier foundation check builds four local Lean modules, audits 27 library
 declarations and nine source results at each of eight layout/row instances
 (99 audits total), and rejects nine false Lean claims. Controls change pair
 coordinates, loop stride, sine-cache offset, buffer, store, arithmetic, layout
@@ -35,12 +35,12 @@ repeats these checks without Git or any owned compiled cache. Rehashed scope
 guards reject invented complete launch/reference proofs or certificates before
 source extraction.
 
-The frozen [source packet](results/components-v1/results.json),
+The historical [foundation packet](results/components-v1/results.json),
 [independent replay](results/components-validation-v1/results.json) and
 [scope guards](results/component-stage-guards-v1/results.json) retain the checked
 statements, source archive, audit logs and refusals. All 57 archived source and
 checker files match source revision `84d0ef6ea3e87ac306e21cfbd1f17f164bf804bb`.
-The [wheel audit](results/packaging-v1/results.json) matches the reader and all
+Its [wheel audit](results/packaging-v1/results.json) matches the reader and all
 146 required proof modules for this profile and the earlier softmax results
 to that revision, including both new native RoPE modules.
 
@@ -73,10 +73,47 @@ in full, checking 109,450,561 bytes against both the local packets and GitHub's
 server digests. The [numerical controls](results/numerical-controls-v1/results.json)
 retain all five fully rehashed rejections.
 
-**Complete native launch execution, classification of its universal actual
-trace, and source/reference equality are still pending.** This development
-issues zero registered source certificates and is outside the immutable v19
-paper ledger. It does not add another accepted original production result.
+The [complete launch theorem](../../lean/Lark/NativeRopeCorrect.lean) now proves
+actual execution, universal classification and race freedom of the actual
+trace, and extraction of every query and key output. Each thread executes four
+query rounds and one key round, with 120 scalar steps before halt, inside the
+unchanged lane fuel256. A compositional lane/grid invariant preserves pending
+inputs, completed outputs and the read-only cache. An independent column-indexed
+dense formula fixes all source-ordered products, subtractions/additions and
+explicit half conversions. The theorem is universal over scalar operations,
+input values and outside memory; it needs only Std.
+
+The [whole-launch packet](results/whole-launch-v1/results.json) checks 25 proof
+modules and 157 library axiom declarations. The registered `verify-native-rope`
+command exports eight source-bound certificates at rows 1, 3, 256 and 65535 for
+both layouts, with ten source audits each, and all eight fresh generic `check`
+calls pass. Four changed sources and four false semantic claims are rejected by
+Lean as false, without resource failures. Eight fully rehashed certificate
+changes are rejected, including modified proof/model/reference bytes and
+invented IEEE or paper-completion claims. The archive retains 83 source files
+and contains no owned compiled proof cache.
+
+All 83 archived source files match revision
+`98abb2fe8667328cad5a25c127a54941a0d328e5`. The
+[independent archive replay](results/whole-launch-validation-v1/results.json)
+rebuilds all 25 modules without Git or any seeded owned proof cache, repeats
+all certificates, rechecks and refusal controls, and compares the regenerated
+certificate bytes. The [13 scope guards](results/whole-launch-stage-guards-v1/results.json)
+reject fully rehashed changes before extracting source, including promotion of
+the older component-only packet. The
+[installed-wheel audit](results/whole-launch-packaging-v1/results.json) matches
+all 25 required native RoPE modules and the 164-module union with the earlier
+softmax proofs to the source revision, checks every packaged Python reader,
+and exports/rechecks a certificate through the installed CLI outside the checkout.
+The [native RoPE CI job](https://github.com/harsh-nod/lark/actions/runs/43106973239/job/130812724341)
+passed the foundation, finite, complete-launch, independent-replay and scope
+checks at that revision. The [publication receipt](results/whole-launch-publication-v1/results.json)
+binds all archived sources, certificate reports, evidence manifests and the
+captured CI responses. Other jobs in that CI run were still running at capture.
+
+The historical foundation packets retain their original limited claims and
+zero certificate count. The complete launch evidence is outside the immutable
+v19 paper ledger; it does not add another accepted original production result.
 As in the paper, IEEE/rounding/error-bound guarantees are outside formal scope;
 floating-point behavior is checked numerically.
 
@@ -91,6 +128,20 @@ python3 reproduction/production_rope/check_component_stages.py \
   --packet /tmp/rope-components --output /tmp/rope-stage-guards \
   --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_rope/run_symbolic.py --output /tmp/rope-symbolic
+python3 reproduction/production_rope/run_whole.py --output /tmp/rope-whole
+python3 reproduction/production_rope/replay_whole.py \
+  --packet /tmp/rope-whole --output /tmp/rope-whole-replayed \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_rope/check_whole_stages.py \
+  --packet /tmp/rope-whole --earlier-packet reproduction/production_rope/results/components-v1 \
+  --output /tmp/rope-whole-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+
+# Single source export and standalone check:
+python3 -m lark_kernels verify-native-rope \
+  reproduction/production_rope/cases/split-half/kernel.hip \
+  --reference reproduction/production_rope/cases/split-half/reference.py \
+  --task reproduction/production_rope/cases/split-half/task.json --output /tmp/rope-certificate
+python3 -m lark_kernels check /tmp/rope-certificate --timeout 600
 
 # Input preparation and independent CPU audits need NumPy and CPU PyTorch.
 python3 reproduction/production_rope/prepare_gpu.py --output /tmp/rope-input
