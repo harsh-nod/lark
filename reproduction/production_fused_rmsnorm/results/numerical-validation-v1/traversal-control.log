@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/tmp/lark-fused-traversal-final-4s2l0y35/packet/replay_packet.py", line 122, in <module>
+    main()
+  File "/tmp/lark-fused-traversal-final-4s2l0y35/packet/replay_packet.py", line 90, in main
+    restore(packet / "input", data, "files.tar.gz")
+  File "/tmp/lark-fused-traversal-final-4s2l0y35/packet/replay_packet.py", line 50, in restore
+    extract(source / archive, root)
+  File "/tmp/lark-fused-traversal-final-4s2l0y35/packet/replay_packet.py", line 39, in extract
+    name = safe(member.name)
+           ^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-fused-traversal-final-4s2l0y35/packet/replay_packet.py", line 31, in safe
+    raise ValueError("Unsafe packet member: " + name)
+ValueError: Unsafe packet member: ../escape-d3386978e17545ffb5bf7e253e7a0a8d

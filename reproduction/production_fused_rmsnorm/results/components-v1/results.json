@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "status": "native-inout-components-checked",
+  "local_lean_modules": 11,
+  "axiom_audits": {
+    "LarkInOut.initial_mutable": "propext, Quot.sound",
+    "LarkInOut.initial_readonly": "propext, Quot.sound",
+    "LarkInOut.initial_controls": "propext, Quot.sound",
+    "LarkInOut.pre_satisfiable": "propext, Quot.sound",
+    "LarkScalarLaunch.launch_simulation": "propext, Quot.sound",
+    "LarkCollective.shuffleUpdates_preserves": "",
+    "LarkCollective.runShuffle_preserves": "propext",
+    "LarkCollective.owned_raceFree": "propext, Quot.sound",
+    "LarkCollective.Gather.values_eq": "propext, Quot.sound",
+    "LarkPartitionCollective.runShuffle_preserves": "propext",
+    "LarkPartitionCollective.nextCohort_subset": "propext",
+    "LarkPartitionCollective.nextCohort_nonempty": "propext, Quot.sound",
+    "LarkPointwise.correct": "propext, Classical.choice, Quot.sound",
+    "LarkReduction.loop_step": "propext, Quot.sound",
+    "LarkReduction.loop_eq": "propext, Quot.sound",
+    "LarkReduction.lane_eq": "propext, Quot.sound",
+    "LarkReduction.correct": "propext, Classical.choice, Quot.sound",
+    "LarkReduction.matrix_correct": "propext, Classical.choice, Quot.sound",
+    "LarkVectorStride.coverage": "propext, Quot.sound",
+    "LarkVectorStride.address_writer": "propext, Quot.sound",
+    "LarkVectorStride.int32_address": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.program_length": "",
+    "LarkNativeFusedRmsNorm.first_barrier": "",
+    "LarkNativeFusedRmsNorm.second_barrier": "",
+    "LarkNativeFusedRmsNorm.final_halt": "",
+    "LarkNativeFusedRmsNorm.interface_valid": "propext",
+    "LarkNativeFusedRmsNorm.initial_values": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.initial_weight": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.readonly_weight": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.column_bound": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.address_bound": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.address_int32": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.address_writer": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.coverage": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.collision": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.conflict_false": "propext, Quot.sound",
+    "LarkNativeFusedRmsNorm.race_free": "propext, Quot.sound",
+    "source_binding": "",
+    "source_interface": "propext",
+    "source_pre_satisfiable": "propext, Quot.sound"
+  },
+  "false_claims_rejected": 9,
+  "frozen_python_reader_replayed": true,
+  "fresh_standalone_build": true,
+  "source_archive_sha256": "1e22cbe08c41e369a8c0b5aceaa8c0925ca88fc27aa1e9b1f499674b6b70d61d",
+  "source_kernel_sha256": "c297c1842c1a4d2d9be2265aa0d03da759dda22f555947e3483eccb486e5f59e",
+  "checks": [
+    {
+      "name": "frozen-reader-replay",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 0.1474779440322891,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-build",
+      "expected_accepted": true,
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 14.997904960007872,
+      "timed_out": false
+    },
+    {
+      "name": "removed-first-barrier",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.5468180049792863,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-shared-owner",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6349966339766979,
+      "timed_out": false
+    },
+    {
+      "name": "unguarded-partial-store",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6074476770008914,
+      "timed_out": false
+    },
+    {
+      "name": "rounded-output-source",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6492235189653002,
+      "timed_out": false
+    },
+    {
+      "name": "missing-residual-inout-binding",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6037129030446522,
+      "timed_out": false
+    },
+    {
+      "name": "unseeded-input-value",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3280293080024421,
+      "timed_out": false
+    },
+    {
+      "name": "unseeded-residual-value",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3525184969766997,
+      "timed_out": false
+    },
+    {
+      "name": "write-readonly-weight",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33453222300158814,
+      "timed_out": false
+    },
+    {
+      "name": "seed-foreign-owner",
+      "expected_accepted": false,
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.35980682901572436,
+      "timed_out": false
+    }
+  ],
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_classification_proved": false,
+  "canonical_source_equivalence_proved": false,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "In-out initialization/non-vacuity, exact source/layout/interface binding, address coverage/unique ownership and sufficient footprint lemmas. Actual source trace classification and whole-launch/reference proofs remain open."
+}

@@ -91,6 +91,21 @@ original-paper completion and a nonfinite output. No paid endpoints or model
 calls are used. The original production adaptation, historical agent results,
 NVIDIA measurements and full upstream API remain unreproduced.
 
+The [numerical/source packet](results/native-v1/report.json) binds experiment-code
+commit `d35cd2042d839fa07d29ee1f76bfa75f26c4893d`. Individual compressed streams
+preserve the prepared operands, references and all four outputs on each host;
+compiler-reported dependencies and the exact comparison driver are included.
+The [numerical replay validation](results/numerical-validation-v1/results.json)
+restores the packet outside the checkout and regenerates its audit report byte
+for byte. A fully rehashed archive-traversal control is rejected before writing
+the parent-directory target. The replay uses Python and NumPy, with no GPU,
+Lean, Git or model calls:
+
+```bash
+python3 reproduction/production_fused_rmsnorm/replay_packet.py \
+  --packet reproduction/production_fused_rmsnorm/results/native-v1 --output /tmp/fused-replay
+```
+
 ```bash
 python3 reproduction/production_fused_rmsnorm/prepare_gpu.py --output /tmp/fused-input
 # On each available AMD host after copying that frozen directory:
