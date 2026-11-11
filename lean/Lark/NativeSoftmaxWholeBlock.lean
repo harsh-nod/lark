@@ -37,6 +37,10 @@ theorem whole_block_outputs (p : Shape) (guarded : Bool) (ops : Ops α) (input :
     (row : Nat) (s : State α) : NormOutputRow ops input row (wholeBlock p guarded ops input row s) :=
   norm_block_outputs guarded ops input row _
 
+theorem whole_block_normalization_epochs (p : Shape) (guarded : Bool) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) : (wholeBlock p guarded ops input row s).epochs=(sumState p ops input row s).epochs :=
+  norm_block_epochs guarded ops input row _
+
 theorem whole_block_fixed_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row : Nat) (s : State α) (entry : BlockEntry p input row s) :
     ∀ a ∈ (wholeBlock p true ops input row s).trace, Good a :=
@@ -99,6 +103,7 @@ theorem initial_whole_block_trace_length (p : Shape) (guarded : Bool) (ops : Ops
 #print axioms whole_block_run
 #print axioms whole_block_pc
 #print axioms whole_block_outputs
+#print axioms whole_block_normalization_epochs
 #print axioms whole_block_fixed_good
 #print axioms whole_block_fixed_race_free
 #print axioms sum_state_trace_length
