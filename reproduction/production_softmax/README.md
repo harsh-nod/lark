@@ -105,7 +105,8 @@ The [maximum-prefix packet](results/max-prefix-v1/results.json) and its
 freshly build 20 local Lean modules, audit 143 declarations and reject 18 false
 claims. They retain the exact source/reader/IR/interface binding and complete
 proof closure. The replay starts without Git or cached own
-Lean objects and also compares both complete finite address traces. The logical
+Lean objects and also compares both complete finite address traces. That prefix
+packet leaves the logical
 reductions, shared partial stores, barriers, exponentiation/sum and normalization
 passes, whole block/grid execution, conflict-state reachability and reference
 bridge remain open. This stage still issues zero source certificates.
@@ -124,6 +125,42 @@ existing real-profile checks and general suite: 169 tests run, 160 passed and
 nine optional skips. All 74 selected proof, reader, checker, runtime, test,
 packaging and workflow files match that source commit byte-for-byte. This run
 does not validate later lane-fold or wave extensions.
+
+The later [actual maximum first-wave proof](../../lean/Lark/NativeSoftmaxMaxFirstWave.lean)
+executes both complete source variants from the actual initializer through the
+unchanged physical wave64 scheduler. All 64 lanes complete their scalar prefixes,
+then execute the five logical32 downward shuffles and maximum updates at distances
+16, 8, 4, 2 and 1. The two logical leader lanes store their exact reduction trees
+in distinct shared bank0 slots `2*warp` and `2*warp+1`. Every lane parks at PC32,
+the first block barrier, using the unchanged lane/warp fuel 4,096/8. The theorem
+covers every valid row and native wave for every supported shape, with arbitrary
+operations, inputs and outside memory.
+
+The [source-ordered tree witnesses](../../lean/Lark/NativeSoftmaxMaxWaveTree.lean)
+retain the bit-reversed leader leaf order and every overflowing lane's self update,
+without assuming associativity, commutativity or idempotence of maximum.
+The [exact access count](../../lean/Lark/NativeSoftmaxMaxWaveCount.lean) is 3,586
+records: 3,584 input reads and two shared writes. Global memory, the other shared
+bank and all synchronization epochs are preserved. Actual-trace
+classification derives first-wave race freedom without assuming it. The barrier
+has not resumed; shuffles do not acquire a memory fence.
+
+The [first-wave source packet](results/max-first-wave-v1/results.json) and
+[independent archive replay](results/max-first-wave-validation-v1/results.json)
+freshly build 33 local Lean modules, audit 287 declarations and reject 33 false
+claims. The replay starts without Git or cached own Lean objects and again
+compares both complete finite address traces. Nine
+[fully rehashed stage controls](results/max-first-wave-stage-guards-v1/results.json)
+reject stronger claims, missing principal audits/refusals, changed fuel/counts
+and earlier prefix evidence relabeled as a wave, all before extraction. The
+[wheel audit](results/max-first-wave-packaging-v1/results.json) checks the complete
+33-module closure and closed reader byte-for-byte.
+
+Block/grid composition, the serial reduction of 32 partial maxima, later
+exponentiation/sum/normalization passes, conflict-state reachability and the
+canonical-real reference bridge remain open. This first-wave stage still issues
+zero source certificates and does not reproduce the paper's original NVIDIA or
+historical model results.
 
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
@@ -165,6 +202,11 @@ python3 reproduction/production_softmax/replay_prefix.py \
   --packet /tmp/softmax-max-prefix \
   --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
   --output /tmp/softmax-max-prefix-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_first_wave.py --output /tmp/softmax-max-first-wave
+python3 reproduction/production_softmax/replay_first_wave.py \
+  --packet /tmp/softmax-max-first-wave \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-max-first-wave-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
