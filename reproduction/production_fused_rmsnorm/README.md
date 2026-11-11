@@ -126,16 +126,43 @@ repeating its 18-module build, 89 audits and ten refusals. Its default lane-stag
 generator and proof closure are
 [byte-identical to the earlier archive](results/scalar-prefix-compatibility-v1/default-generation-comparison.json).
 
-This is the first **wave phase**, ending before barrier resume. Composition across
-the block's 16 native waves, the block barrier, second reduction, normalization,
-halt, grid and source/reference equivalence remain open. All older frozen
-component, GPU and scalar-prefix packets retain their original flags.
+The later [first-block-phase proof](../../../lean/Lark/NativeFusedRmsNormFirstBlock.lean)
+composes the exact sequential `runWarp` calls for all 16 physical waves. It
+preserves earlier results and unread cells of later waves. Every one of the
+16,384 residual cells receives its rounded sum, all 16,384 shared cells retain
+the unrounded sums, all 32 partial slots have their source-ordered logical-group
+results, and all 1,024 threads converge at the source's first block barrier.
+
+The [barrier theorem](../../../lean/Lark/NativeFusedRmsNormBarrier.lean) then
+decomposes the actual `runBlock` call with fuel3 into the remaining call with
+fuel2. All participating PCs advance from 35 to 36 and their block epochs from
+zero to one. Memory, read-only weights and historical trace epochs remain
+unchanged. Actual-prefix classification and race freedom are derived for every
+input, outside memory and arithmetic interpretation, for every valid block in
+the rows1..255 profile. This proves the first block phase and resume, not the
+complete block or grid execution.
+
+The [first-block packet](results/first-block-v1/results.json) freshly checks 33
+local Lean modules, 251 axiom audits and 31 rejection controls. New controls
+cover omitted barrier/source changes, the last physical wave, the next-block
+boundary, partial-cell separation, PC/epoch participation and preservation of
+historical trace records. The
+[independent archive replay](results/first-block-validation-v1/results.json)
+repeats all checks with Git unavailable and no cached own Lean objects. The
+earlier lane and first-wave generators/proof closures remain byte-identical to
+their archived versions, as recorded in the
+[source comparison receipt](results/first-block-compatibility-v1/results.json).
+
+The second reduction, normalization, second barrier, halt, grid and
+source/reference equivalence remain open. All older frozen component, GPU,
+scalar-prefix and first-wave packets retain their original flags.
 
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
 python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/fused-components
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/fused-scalar-prefix
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave --output /tmp/fused-first-wave
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-block --output /tmp/fused-first-block
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 ```
 
@@ -143,7 +170,7 @@ python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
   --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
   --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
-# For the complete first-wave archive, use results/first-wave-v1 instead.
+# Other archived stages: results/first-wave-v1 or results/first-block-v1.
 ```
 
 ## Finite AMD results

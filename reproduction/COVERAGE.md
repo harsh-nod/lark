@@ -144,10 +144,13 @@ source-ordered local squares and classification/race freedom of the actual
 64-access prefix for every valid lane and rows1..255. A later native-wave proof
 composes all 64 lanes through five logical32 XOR stages, two distinct partial
 stores and the first barrier. All row counts1..255 and physical waves0..15 are
-covered with arbitrary arithmetic/input/outside memory. Composition across
-waves, barrier resume, the second reduction, normalized output, full scheduling
-and full source/reference correctness remain open. This later development
-evidence is outside the immutable v18 ledger.
+covered with arbitrary arithmetic/input/outside memory. The subsequent first
+block-phase proof composes all 16 waves, proves every rounded residual and
+unrounded shared value across 16,384 columns and all 32 partials, and resumes
+the actual block barrier to PC36/epoch1 for all 1,024 participants while retaining
+read-only weights and historical trace epochs. The second reduction, normalized
+output, second barrier, halt/grid and full source/reference correctness remain
+open. This later development evidence is outside the immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
