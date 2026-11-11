@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "upstream_repository": "https://github.com/vllm-project/vllm",
+  "upstream_revision": "83f5de466a889c29ac5fbfbe342d6fe4c09811e8",
+  "upstream_path": "csrc/fused_qknorm_rope_kernel.cu",
+  "files_sha256": {
+    "cases/interleaved/kernel.hip": "41aa4eb0766ef8ed4c5b26ab046698cd306ae9a75e76be33fc7f419b2b586cee",
+    "cases/interleaved/reference.py": "6916a5841dd6d6e06527555648dc2baa87d7a5a8dca12929c1022374cceefe6c",
+    "cases/interleaved/task.json": "e38dd4b8d59a25114f0835720382f0834729bda302b12f78e5323c3df2a161b0",
+    "cases/split-half/kernel.hip": "119a49ebd04859f3ccfe9279e301279f6c3320a9d8e411f10354f36a849ab1ec",
+    "cases/split-half/reference.py": "e974803a165177b137c6adae72a4efe22315a542b54abf785b02aae99507ee1e",
+    "cases/split-half/task.json": "c7772efca115faeef1c4447104ae5a749f6d720f5b848e36e1d19249c6bb4415",
+    "upstream/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "upstream/csrc/async_util.cuh": "efb1a6666ab82174c8bd7ccf1d5dc7a42b56fd92e7915ccbb43ebadde2e7a55e",
+    "upstream/csrc/core/cuda_compat.h": "7049d1b472a61113e654c8a1432668496182454772f6dfa2689dcbf989e667d6",
+    "upstream/csrc/dispatch_utils.h": "0397432fab9020f2b39f3053d019f8b4fee78d78f4ac41c72490dd1b84a41fed",
+    "upstream/csrc/fused_qknorm_rope_kernel.cu": "d30d5f6f3a0b32ec21e63ef1d37e1bed41c47631024b7cd5b0ab7190468c2969",
+    "upstream/csrc/torch_utils.h": "f619e1943039a67a3254f7e0679e1f3e0faa9d8fccae795f3b20df9e91a8a429",
+    "upstream/csrc/type_convert.cuh": "9274a7464c53de92976f6b5a19cc548b315f5d85e68b825515a6ff1fd73be4ca",
+    "upstream/tests/kernels/core/test_fused_qk_norm_rope.py": "84677bc9c656a586c6e9a4aa046773be1d3032a9292cb145d8eb85a5f2b8f8eb"
+  },
+  "rows": [
+    1,
+    65535
+  ],
+  "q_heads": 32,
+  "k_heads": 8,
+  "v_heads": 8,
+  "head_dim": 128,
+  "native_block": 256,
+  "physical_warp": 64,
+  "logical_warp": 32,
+  "epsilon": "1e-5",
+  "rotary_dimension": 128,
+  "rewrites": [
+    "Instantiate FP16 input/weights/cache and full128 rotation, Q32/K8/V8 heads, native block256.",
+    "Inline four-element register arrays and packed vector loads/stores as scalar operations in source order.",
+    "Expand the five XOR shuffle stages with width32 inside physical wave64.",
+    "Replace sync-mask CUDA spellings with HIP full-wave synchronization and logical32 shuffles.",
+    "Drop the provably unreachable token guard at grid5*tokens; use bounded signed-int32 arithmetic.",
+    "Retain upstream unary negation; the exact-arithmetic IR interprets it as zero subtraction.",
+    "Omit PDL/cache hints; use standard HIP launches."
+  ],
+  "departures": [
+    "Already-gathered cosine/sine rows replace position_ids gather, as in the paper.",
+    "Write Q/K to a separate [tokens,40,128] output; read-only QKV input retains V heads, as the paper makes this kernel out of place.",
+    "Fixed shapes/flags/epsilon and HIP execution; original author-adapted source and NVIDIA measurements are unavailable."
+  ],
+  "whole_kernel_execution_proved": false,
+  "source_reference_equality_proved": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}
