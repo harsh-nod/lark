@@ -1,0 +1,887 @@
+{
+  "schema": 1,
+  "status": "frozen-softmax-exp-wave-and-finite-traces-replayed",
+  "stage": "exp-wave",
+  "source_archive_sha256": "67f3a1490b787598e0ac5f5f4fae42905860f951a345d4b72075bc93fb014eda",
+  "packet_manifest_sha256": "e71a06790cdd2b0da5f0904f30d9f5e9ef1e3d142ae21b44515815b4da112781",
+  "local_lean_modules": 73,
+  "axiom_audits": 870,
+  "false_lean_claims_rejected": 88,
+  "checks": [
+    {
+      "name": "frozen-reader",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 0.3299155959393829,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-library-build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 119.60156913404353,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-exp-library-build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 23.20777381991502,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-wave-library-build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 19.902790960040875,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 97.0551194701111,
+      "timed_out": false
+    },
+    {
+      "name": "changed-infinity-seed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.671075157006271,
+      "timed_out": false
+    },
+    {
+      "name": "changed-max-clamp",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.851723420084454,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-inner-component",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.492971273954026,
+      "timed_out": false
+    },
+    {
+      "name": "changed-outer-stride",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.727983542019501,
+      "timed_out": false
+    },
+    {
+      "name": "swapped-max-operands",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.584538326016627,
+      "timed_out": false
+    },
+    {
+      "name": "changed-first-shuffle",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.563852939987555,
+      "timed_out": false
+    },
+    {
+      "name": "changed-later-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.629628614988178,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-lane-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 5.067179491976276,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-private-layout",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 5.500039397971705,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-prefix-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.39921037305612117,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-prefix-trace-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3931488509988412,
+      "timed_out": false
+    },
+    {
+      "name": "insufficient-prefix-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.39042901003267616,
+      "timed_out": false
+    },
+    {
+      "name": "missing-half-conversion",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.5293936759699136,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-clamped-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6399690880207345,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-final-round",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.5875444340053946,
+      "timed_out": false
+    },
+    {
+      "name": "reversed-input-order",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6004007350420579,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-initial-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.6371595290256664,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exact-instruction-count",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4224141420563683,
+      "timed_out": false
+    },
+    {
+      "name": "changed-last-max-distance",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.295409444952384,
+      "timed_out": false
+    },
+    {
+      "name": "changed-logical-width",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.15689334506169,
+      "timed_out": false
+    },
+    {
+      "name": "swapped-shuffle-max-operands",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.079050621017814,
+      "timed_out": false
+    },
+    {
+      "name": "changed-partial-leader",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.2096610110020265,
+      "timed_out": false
+    },
+    {
+      "name": "changed-partial-slot",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.1166109659243375,
+      "timed_out": false
+    },
+    {
+      "name": "changed-partial-bank",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.321475862059742,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-first-block-barrier",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 6.14816119603347,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-wave-endpoint",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3633546360069886,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-wave-trace-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3430947969900444,
+      "timed_out": false
+    },
+    {
+      "name": "invented-shuffle-fence",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3516131149372086,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-warp-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.658898986992426,
+      "timed_out": false
+    },
+    {
+      "name": "cross-logical-partition-peer",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3932929279981181,
+      "timed_out": false
+    },
+    {
+      "name": "dropped-overflow-self-update",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4153938079252839,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-leaf-order",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3896805510157719,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-second-half-leaves",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4026345470920205,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-block-endpoint",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4226498670177534,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-block-trace-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33986586704850197,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-resumed-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.5361036540707573,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-resumed-epoch",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4293852689443156,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-native-wave-count",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4365477229002863,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-block-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 11.08765925699845,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-final-partial-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3417449271073565,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-final-partial-run-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.34751084994059056,
+      "timed_out": false
+    },
+    {
+      "name": "changed-serial-leader",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.781806780956686,
+      "timed_out": false
+    },
+    {
+      "name": "changed-serial-bound",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.104194152052514,
+      "timed_out": false
+    },
+    {
+      "name": "changed-serial-start",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.74472149903886,
+      "timed_out": false
+    },
+    {
+      "name": "swapped-serial-operands",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.162863641045988,
+      "timed_out": false
+    },
+    {
+      "name": "changed-serial-store",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.361215718905441,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-second-block-barrier",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.693198665045202,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-maximum-endpoint",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33392969297710806,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-maximum-epoch",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33186024497263134,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-maximum-trace-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3254095980664715,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-row-maximum-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3253282840596512,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-row-maximum-run-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3302455380326137,
+      "timed_out": false
+    },
+    {
+      "name": "exp-input-round-trip",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.031938106985763,
+      "timed_out": false
+    },
+    {
+      "name": "exp-private-bank-changed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.598862907965668,
+      "timed_out": false
+    },
+    {
+      "name": "exp-subtraction-reversed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.052699789055623,
+      "timed_out": false
+    },
+    {
+      "name": "exp-output-from-input",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.562072140048258,
+      "timed_out": false
+    },
+    {
+      "name": "exp-guard-changed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.042510351981036,
+      "timed_out": false
+    },
+    {
+      "name": "exp-sum-from-rounded-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.019268368952908,
+      "timed_out": false
+    },
+    {
+      "name": "exp-stride-changed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.802458805963397,
+      "timed_out": false
+    },
+    {
+      "name": "exp-clamp-changed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.424918559961952,
+      "timed_out": false
+    },
+    {
+      "name": "exp-exit-temp-changed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.337020606035367,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-endpoint",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33740446309093386,
+      "timed_out": false
+    },
+    {
+      "name": "invented-exp-barrier",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3285153869073838,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-access-count",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3393007899867371,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-early-cost",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3322594310157001,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-tail-cost",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3503496410558,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-valid-stores",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.35636895697098225,
+      "timed_out": false
+    },
+    {
+      "name": "exp-rounded-sum-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.36321856500580907,
+      "timed_out": false
+    },
+    {
+      "name": "exp-reversed-sub-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.35668377904221416,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-edge-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3535351239843294,
+      "timed_out": false
+    },
+    {
+      "name": "exp-unconverted-output-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3502808209741488,
+      "timed_out": false
+    },
+    {
+      "name": "invented-exp-none",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.36110417696181685,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-xor-kind",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.004183366079815,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-last-distance",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.949951332993805,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-logical-width",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.5499781309627,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-source-register",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.53732357302215,
+      "timed_out": false
+    },
+    {
+      "name": "swapped-sum-operands",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.227736589033157,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-partial-bank",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.362325786030851,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-partial-slot",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.645454264013097,
+      "timed_out": false
+    },
+    {
+      "name": "changed-sum-partial-leader",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 10.250733077991754,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-third-block-barrier",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 9.493889596080408,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exp-wave-endpoint",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3340856189606711,
+      "timed_out": false
+    },
+    {
+      "name": "invented-third-barrier-resume",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3394523559836671,
+      "timed_out": false
+    },
+    {
+      "name": "invented-exp-wave-none",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33129957504570484,
+      "timed_out": false
+    },
+    {
+      "name": "reversed-sum-tree-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3424587739864364,
+      "timed_out": false
+    },
+    {
+      "name": "sequential-sum-snapshot-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3533499150071293,
+      "timed_out": false
+    },
+    {
+      "name": "cross-half-sum-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3370815349044278,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-boundary-sum-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3818592650350183,
+      "timed_out": false
+    },
+    {
+      "name": "full-finite-source-replay",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 26.731826355913654,
+      "timed_out": false
+    }
+  ],
+  "git_available_on_path": false,
+  "own_lean_compiled_cache_seeded": false,
+  "complete_finite_traces_compared": [
+    {
+      "case": "native_race",
+      "accesses": 489926,
+      "trace_content_sha256": "8a3163f040b4c353e527b12f12fb638bd602eb7efb62297047e81fdc1b264329"
+    },
+    {
+      "case": "native_fixed",
+      "accesses": 475752,
+      "trace_content_sha256": "15cb39ec093bf3ee6eab994973fe0fc9965924d8b36c8b3b639fc062dec8588a"
+    }
+  ],
+  "actual_first_block_wave_fold_execution_proved": true,
+  "starts_at_actual_initializer": true,
+  "maximum_parked_pc": 42,
+  "maximum_resumed_pc": 43,
+  "maximum_block_epoch": 2,
+  "accesses_per_maximum_pass": 57409,
+  "input_reads_per_maximum_pass": 57344,
+  "shared_writes_per_maximum_pass": 33,
+  "shared_reads_per_maximum_pass": 32,
+  "first_barrier_resume_proved": true,
+  "second_barrier_resume_proved": true,
+  "actual_serial_block_wave_fold_execution_proved": true,
+  "all32_serial_partial_reads_proved": true,
+  "maximum_pass_race_freedom_proved": true,
+  "checksum_row_maximum_actual_fold_value_proved": true,
+  "checksum_row_maximum": 133254668662643834119504341449835759241818635200,
+  "block_scheduler_decomposition_proved": true,
+  "remaining_block_fuel_after_maximum": 3,
+  "first_block_race_freedom_proved": true,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "conflict_witness_state_reachability_proved": false,
+  "actual_trace_universal_classification_proved": false,
+  "canonical_source_equivalence_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "actual_exp_scalar_lane_prefix_execution_proved": true,
+  "exp_starts_at_proved_maximum_state": true,
+  "exp_parked_pc": 70,
+  "exp_block_epoch": 2,
+  "exp_outer_rounds": 7,
+  "exp_components_per_round": 8,
+  "exp_lane_costs": {
+    "tid0_to80": 982,
+    "tid81_to1023": 978
+  },
+  "exp_lane_access_increments": {
+    "tid0_to80": 213,
+    "tid81_to1023": 211
+  },
+  "exp_valid_stores_per_lane": {
+    "tid0_to80": 50,
+    "tid81_to1023": 49
+  },
+  "exp_converted_outputs_proved": true,
+  "exp_unrounded_source_ordered_sum_proved": true,
+  "exp_prefix_race_freedom_proved": true,
+  "exp_native_indices_preserved_proved": true,
+  "exp_word_model": {
+    "max": "right projection",
+    "add": "7*a+b",
+    "sub": "2*a+b",
+    "exp": "5*a+3",
+    "fromHalf": "3*a+1",
+    "toHalf": "7*a+1"
+  },
+  "exp_word_maximum": 150772,
+  "exp_word_cases": {
+    "0": {
+      "valid": 50,
+      "sum": 227512722010894451627360840823366159669454745784,
+      "first_unrounded": 753903,
+      "first_output": 5277322
+    },
+    "80": {
+      "valid": 50,
+      "sum": 228232108027953416486008952959594019409155244984,
+      "first_unrounded": 756303,
+      "first_output": 5294122
+    },
+    "81": {
+      "valid": 49,
+      "sum": 32605871479023807649534579194470981093699891373,
+      "first_unrounded": 756333,
+      "first_output": 5294332
+    },
+    "1023": {
+      "valid": 49,
+      "sum": 33815981529147994965331939252197130870124655633,
+      "first_unrounded": 784593,
+      "first_output": 5492152
+    }
+  },
+  "exp_word_actual_sum_and_output_values_proved": true,
+  "actual_exp_wave_fold_execution_proved": true,
+  "actual_exp_block_phase_execution_proved": false,
+  "exp_wave_parked_pc": 82,
+  "exp_wave_block_epoch": 2,
+  "exp_wave_logical_partials": 2,
+  "exp_wave_sum_stages": 5,
+  "exp_wave_shuffle_kind": "xor",
+  "exp_wave_logical_width": 32,
+  "exp_wave_source_ordered_sum_proved": true,
+  "exp_wave_snapshot_transport_proved": true,
+  "exp_wave_partial_values_proved": true,
+  "exp_wave_race_freedom_proved": true,
+  "third_barrier_resume_proved": false,
+  "serial_sum_execution_proved": false,
+  "exp_wave_word_cases": {
+    "0:0": 7456278684339265379949006315682683179027545742180352,
+    "0:1": 7465707820742060644144278851074648982207748125294592,
+    "1:0": 7143489113574839878422223905868109296159210485174537,
+    "1:1": 1069223727649664453219260560265511512652582680633344,
+    "15:0": 1105593253774731900829597482491665324919077465595904,
+    "15:1": 1106940273260845510000350701833374725373392087261184
+  },
+  "exp_wave_word_actual_partial_values_proved": true
+}

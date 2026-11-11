@@ -277,10 +277,50 @@ the checked commit byte-for-byte; later changes contain only this study's
 documentation and frozen evidence. This CI run covers the scalar lane prefix
 through PC70 and the retained maximum phase.
 
-Collective sum execution, serial sum, normalization, whole-grid composition,
-conflict-state reachability and the canonical-real reference bridge remain open.
-This lane-prefix stage issues zero source certificates and does not reproduce
-the paper's original NVIDIA or historical model results.
+The scalar-prefix packet leaves collective sum execution, serial sum,
+normalization, whole-grid composition, conflict-state reachability and the
+canonical-real reference bridge open. It issues zero source certificates and
+does not reproduce the paper's original NVIDIA or historical model results.
+
+The later [complete native64 wave proof](../../lean/Lark/NativeSoftmaxExpWave.lean)
+starts at the proved maximum state and executes all seven scalar rounds, five
+logical32 XOR/add stages and two distinct shared-bank1 partial stores. Every
+lane parks at PC82, at the third block barrier, with block epoch2. The theorem
+uses the original lane/warp fuel and applies to both bound sources, every
+supported row/shape and arbitrary operations, inputs and outside memory. It
+also supports a cohort entry that preserves the preconditions needed by later
+waves. The addition tree follows source order and snapshot transport; neither
+associativity nor commutativity is assumed. Its actual wave trace is proved
+race-free.
+
+The [source packet](results/exp-wave-v1/results.json) and
+[independent replay](results/exp-wave-validation-v1/results.json) freshly build
+73 Lean modules, audit 870 declarations and reject 88 false
+Lean claims. The replay starts without Git or an own compiled cache and
+compares both complete finite address traces. Six integer witnesses check the
+actual run's stored partials in both logical groups of warps0,1,15. The model
+uses noncommuting addition and distinct half-conversion, subtraction and
+exponential operations. Its separate CPU calculation distinguishes reversed
+addition, sequential snapshot updates, cross-half peers and the tid80/81 tail
+boundary. The 34 [rehashed report controls](results/exp-wave-stage-guards-v1/results.json)
+reject invented stronger claims, wrong endpoints/partition values, missing
+principal proofs and earlier scalar-prefix evidence relabeled as a complete
+wave. The [wheel audit](results/exp-wave-packaging-v1/results.json) matches all
+73 required proof modules and the reader byte-for-byte.
+
+The third barrier has not resumed in this wave packet. The complete16-wave
+block phase, serial sum, normalization, whole-grid execution, conflict-state
+reachability and canonical-real/IEEE reference bridges remain open. This
+stage issues zero source certificates and does not reproduce the original
+NVIDIA timings or historical model experiments.
+
+A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
+at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
+KernelCraft remains empty and the public benchmark head is unchanged. The
+[arXiv abstract](https://arxiv.org/abs/2611.02028) still lists v1, and the
+[coauthor publication entry](https://jiaeenie.github.io/) links the paper without
+a visible code link. The saved scope does not exclude private, other-author,
+unindexed, other-branch or future releases. No author was contacted.
 
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
