@@ -86,6 +86,71 @@ jobs:
             --packet /tmp/lark-softmax-whole-block \
             --earlier-packet reproduction/production_softmax/results/reduction-prefix-v1 \
             --output /tmp/lark-softmax-whole-block-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check source-bound repaired softmax complete grid and source-order Correct relation
+        run: python3 reproduction/production_softmax/check_whole_grid.py --output /tmp/lark-softmax-whole-grid
+      - name: Replay complete grid archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_whole_grid.py \
+            --packet /tmp/lark-softmax-whole-grid \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-whole-grid-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check whole-grid report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_whole_grid_stages.py \
+            --packet /tmp/lark-softmax-whole-grid \
+            --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+            --output /tmp/lark-softmax-whole-grid-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check source-bound canonical-real repaired softmax whole grid
+        run: python3 reproduction/production_softmax/check_native_real.py --output /tmp/lark-softmax-canonical-real
+      - name: Replay canonical-real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_native_real.py \
+            --packet /tmp/lark-softmax-canonical-real \
+            --output /tmp/lark-softmax-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Check canonical-real report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_native_real_stages.py \
+            --packet /tmp/lark-softmax-canonical-real \
+            --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+            --output /tmp/lark-softmax-canonical-real-stage-guards --lean-bin "$HOME/.elan/bin"
   exact-real:
     runs-on: ubuntu-latest
     timeout-minutes: 20
