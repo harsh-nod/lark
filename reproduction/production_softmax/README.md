@@ -318,10 +318,42 @@ the checked commit byte-for-byte. Later changes contain only this study's
 documentation and frozen evidence. The run covers the complete native64 wave
 through PC82 together with the retained scalar prefix and maximum pass.
 
-The third barrier has not resumed in this wave packet. The complete16-wave
-block phase, serial sum, normalization, whole-grid execution, conflict-state
-reachability and canonical-real/IEEE reference bridges remain open. This
-stage issues zero source certificates and does not reproduce the original
+The wave packet stops before the third barrier resumes and leaves the
+complete16-wave block phase and serial sum to the later reduction-prefix
+milestone below. It issues zero source certificates and does not reproduce
+the original NVIDIA timings or historical model experiments.
+
+The later [constructive four-phase reduction prefix](../../lean/Lark/NativeSoftmaxReductionPrefix.lean)
+executes all16 exponentiation/XOR-sum waves, stores all32 logical partials,
+resumes the third barrier, and executes thread0's source-ordered serial sum.
+The fourth barrier then resumes all1,024 threads at PC93 with block epoch4,
+the exact row sum in shared bank1/slot0, and all50,257 converted exponential
+output values preserved. The actual four-phase prefix returns `Some` from
+the source initializer. A continuation theorem links that prefix to the
+unchanged `runBlock`, leaving one original block phase for normalization.
+Both full bound sources, all supported shapes/rows and arbitrary operations,
+inputs and outside memory are covered. No sum associativity or commutativity
+is assumed. The exact prefix trace has273,700 accesses and its classification
+derives race freedom.
+
+The [source packet](results/reduction-prefix-v1/results.json) and
+[independent replay](results/reduction-prefix-validation-v1/results.json)
+freshly build90 Lean modules, audit1,083 declarations and reject103 false Lean
+claims. The replay starts without Git or an own compiled cache and compares
+both complete finite address traces. A full-prefix integer model checks the
+actual row total and preserved first/last output values. A separate
+noncommuting `7*a+b` checksum checks the actual serial phase from a synthetic
+PC83/epoch3 entry with partial slots1..32; that checksum is not a full-prefix
+witness. The six earlier noncommuting wave witnesses remain included.
+The52 [fully rehashed metadata controls](results/reduction-prefix-stage-guards-v1/results.json)
+reject stronger stage claims, wrong counts/fuel, missing principal proofs,
+incorrect diagnostic scope and earlier wave evidence relabeled as this
+prefix before extraction. The [wheel audit](results/reduction-prefix-packaging-v1/results.json)
+matches all90 required proof modules and the closed reader byte-for-byte.
+
+Normalization execution, whole-grid composition, conflict-state reachability
+and the canonical-real/IEEE reference bridges remain open in this packet.
+It issues zero source certificates and does not reproduce the paper's original
 NVIDIA timings or historical model experiments.
 
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
