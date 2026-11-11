@@ -153,8 +153,13 @@ proof selects exactly 32 active lanes inside physical64, executes all five
 logical32 XOR/add stages and the unique total store, visits all 15 inactive
 waves, and resumes both barriers to PC51/epoch2 for all 1,024 participants.
 Actual-prefix classification/race freedom and all retained operands are proved.
-Normalization/output, halt/grid and full source/reference correctness remain
-open. This later development evidence is outside the immutable v18 ledger.
+The later output-lane theorem executes the actual 192-instruction normalization
+and output phase through both eight-component rounds and halt at PC71. It
+proves every lane’s sixteen output values, 49 actual accesses, classification/
+race freedom, epoch preservation and a full memory frame outside its output
+cells. Final output-wave/block/grid composition and full source/reference
+correctness remain open. This later development evidence is outside the
+immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |

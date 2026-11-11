@@ -198,10 +198,35 @@ including the fresh 46-module/349-audit/46-control check and 165 ordinary tests
 records the exact head, raw logs and scope. The real job rechecks earlier
 certified profiles; it adds no fused canonical-real or complete source certificate.
 
-Normalization/output execution, halt, grid and canonical source/reference
+The later [output-lane proof](../../../lean/Lark/NativeFusedRmsNormOutputLane.lean)
+executes the actual 192 instructions from PC51 through normalization, both
+output rounds, both false loop exits and halt at PC71. It retains the exact
+division/epsilon/rsqrt order, unrounded shared loads, explicit `0 + weight`, both
+multiplies and the final half cast. Every valid lane stores all sixteen of its
+output values and records exactly 49 accesses. The
+[frame theorem](../../../lean/Lark/NativeFusedRmsNormOutputFrame.lean) proves
+all other memory cells retain their exact values, including every residual,
+shared, weight and outside cell. Actual-trace classification/race freedom and
+unchanged epochs follow for arbitrary operations and inputs from the proved
+second-barrier state, without race-freedom assumptions.
+
+The [output-lane packet](results/output-lane-v1/results.json) rebuilds all 53
+local Lean modules, audits 407 declarations using only the standard Lean axioms,
+and rejects 63 false claims. Its
+[independent archive replay](results/output-lane-validation-v1/results.json)
+repeats all 66 checks from the full frozen source/reader/proof closure, including
+positive concrete witnesses and earlier/new false-claim controls. New controls cover
+skipped output rounds, premature rounding, changed divisor/epsilon/literal bias,
+swapped multiplies, changed half-store values, wrong output buffers/strides,
+missing casts, wrong halt and missing trace accesses. All four earlier stage
+generators/proof closures remain byte-identical to their archived versions, as
+recorded in the [source comparison receipt](results/output-lane-compatibility-v1/results.json).
+
+Composition of those final output lanes into native waves, blocks and the
+grid, full seeded-inout source correctness and canonical source/reference
 equivalence remain open. All older frozen component, GPU, scalar-prefix,
-first-wave and first-block packets retain their original flags. This family
-still has no complete source certificate.
+first-wave, first-block and second-block packets retain their original flags.
+This family still has no complete source certificate.
 
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
@@ -210,6 +235,7 @@ python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/fuse
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave --output /tmp/fused-first-wave
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-block --output /tmp/fused-first-block
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage second-block --output /tmp/fused-second-block
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage output-lane --output /tmp/fused-output-lane
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 ```
 
@@ -218,7 +244,7 @@ python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
   --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
   --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
 # Other archived stages: results/first-wave-v1, results/first-block-v1,
-# or results/second-block-v1.
+# results/second-block-v1, or results/output-lane-v1.
 ```
 
 ## Finite AMD results

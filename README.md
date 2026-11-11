@@ -67,9 +67,12 @@ stores in a physical wave64. The later first-block-phase proof composes all 16
 waves and retains every rounded residual and unrounded shared value. The later
 second-phase proof covers the mixed physical wave's 32 active lanes, all five
 logical32 stages, unique total store, 15 inactive-wave visits and both barrier
-resumes, leaving all 1,024 threads at PC51/block epoch2. Normalization/output,
-halt, grid and canonical-real equivalence remain open; this family has no
-complete source certificate yet.
+resumes, leaving all 1,024 threads at PC51/block epoch2. A subsequent per-lane
+proof executes normalization and both output rounds through all sixteen half
+stores to halt at PC71, with 49 actual accesses and a full memory frame outside
+the lane’s output cells. Composition of that final phase across native waves,
+blocks and grid, and canonical-real equivalence remain open; this family has
+no complete source certificate yet.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
