@@ -9,14 +9,14 @@ open LarkReduction (setIndex setReg execute_index_of execute_pure_of)
 set_option maxRecDepth 10000
 set_option maxHeartbeats 2000000
 
-theorem output_location_of (l : Layout) (g : Geometry) (t offset size : Nat)
+theorem exp_output_location_of (l : Layout) (g : Geometry) (t offset size : Nat)
     (hl : l.global[0]?=some ⟨.output,size⟩) (hb : offset<size) :
     location l g t .global 0 (offset : Int) true=some (globalCell 0 offset) := by
   simp [location,hl,globalCell,hb,show (Role.output == Role.input)=false by rfl]
 
-theorem output_location (p : Shape) (t offset : Nat) (hb : offset<p.rows*50257) :
+theorem exp_output_location (p : Shape) (t offset : Nat) (hb : offset<p.rows*50257) :
     location (layout p) (geometry p) t .global 0 (offset : Int) true=some (globalCell 0 offset) :=
-  output_location_of (layout p) (geometry p) t offset (p.rows*50257) rfl hb
+  exp_output_location_of (layout p) (geometry p) t offset (p.rows*50257) rfl hb
 
 theorem eval_exp_store_address (p : Shape) (t row col : Nat) (s : State α)
     (hr : row<p.rows) (hc : col<50257) (h0 : s.indices t 0=some (row : Int))
@@ -59,7 +59,7 @@ theorem exp_store_emit_eq (p : Shape) (guarded : Bool) (ops : Ops α) (value acc
   have h15 : s1.indices t 15=some ((address row col : Nat) : Int) := by simp [s1,setIndex,advance]
   have e2 := execute_store_effect ops (layout p) (geometry p) t 64 .global 0 (.ivar 15)
     (.un .toHalf (.reg 8)) s1 s1 _ (globalCell 0 (address row col)) (ops.toHalf value)
-    h15 (output_location p t _ (address_bound p row col hr hc))
+    h15 (exp_output_location p t _ (address_bound p row col hr hc))
     (exp_half_eval_of ops (layout p) (geometry p) t value s1 h81) (by simp [s1,setIndex,advance])
   change execute _ _ _ _ _ s1=some s2 at e2
   have h62 : s2.regs t 6=some acc := h6
@@ -108,8 +108,8 @@ theorem exp_store_emit_good (ops : Ops α) (value acc : α) (row tid iteration c
   · exact Good.output rfl rfl rfl (hthread.trans (address_writer row tid iteration component ht hc).symm)
   · exact good a ha
 
-#print axioms output_location_of
-#print axioms output_location
+#print axioms exp_output_location_of
+#print axioms exp_output_location
 #print axioms eval_exp_store_address
 #print axioms exp_half_eval_of
 #print axioms exp_sum_eval_of

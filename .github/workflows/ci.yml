@@ -61,7 +61,7 @@ jobs:
             --output /tmp/lark-softmax-max-first-wave-stage-guards --lean-bin "$HOME/.elan/bin"
   softmax-block:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -72,20 +72,20 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Check source-bound native softmax complete maximum pass and both barrier resumes
-        run: python3 reproduction/production_softmax/check_maximum.py --output /tmp/lark-softmax-maximum
-      - name: Replay native softmax maximum-pass archive without Git or own compiled cache
+      - name: Check source-bound native softmax scalar exponential/sum prefix and retained maximum pass
+        run: python3 reproduction/production_softmax/check_exp_prefix.py --output /tmp/lark-softmax-exp-prefix
+      - name: Replay native softmax exponentiation-prefix archive without Git or own compiled cache
         run: |
-          python3 reproduction/production_softmax/replay_maximum.py \
-            --packet /tmp/lark-softmax-maximum \
+          python3 reproduction/production_softmax/replay_exp_prefix.py \
+            --packet /tmp/lark-softmax-exp-prefix \
             --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
-            --output /tmp/lark-softmax-maximum-replay --lean-bin "$HOME/.elan/bin"
-      - name: Check maximum-pass report stage guards
+            --output /tmp/lark-softmax-exp-prefix-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check exponentiation-prefix report stage guards
         run: |
-          python3 reproduction/production_softmax/check_maximum_stages.py \
-            --packet /tmp/lark-softmax-maximum \
-            --earlier-packet reproduction/production_softmax/results/max-first-block-v1 \
-            --output /tmp/lark-softmax-maximum-stage-guards --lean-bin "$HOME/.elan/bin"
+          python3 reproduction/production_softmax/check_exp_prefix_stages.py \
+            --packet /tmp/lark-softmax-exp-prefix \
+            --earlier-packet reproduction/production_softmax/results/maximum-v1 \
+            --output /tmp/lark-softmax-exp-prefix-stage-guards --lean-bin "$HOME/.elan/bin"
   exact-real:
     runs-on: ubuntu-latest
     timeout-minutes: 20
