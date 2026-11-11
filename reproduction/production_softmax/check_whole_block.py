@@ -119,25 +119,30 @@ def controls(original,fixed,task,positive):
             raise ValueError("Normalization source control did not translate: "+name) from error
     common="import Main\nopen LarkNonlinear LarkNativeSoftmax\n"
     for name,guarded,wrong in (("wrong-whole-fixed-halt","true",116),("wrong-whole-original-halt","false",115)):
-        result[name]=common+f"""example :
-    (sourceWholeBlock expWordOne {guarded} expWordOps expWordInput (fun _ => none) 0).pc 0={wrong} := by
-  rewrite [source_whole_block_pc expWordOne {guarded} expWordOps expWordInput (fun _ => none) 0 0 (by decide)]
+        result[name]=common+f"""example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat)
+    (outside : Location → Option Nat) (row tid : Nat) (ht : tid<1024) :
+    (sourceWholeBlock p {guarded} ops input outside row).pc (row*1024+tid)={wrong} := by
+  rewrite [source_whole_block_pc p {guarded} ops input outside row tid ht]
   decide
 """
-    result["wrong-whole-epoch"]=common+"""example :
-    ((sourceWholeBlock expWordOne true expWordOps expWordInput (fun _ => none) 0).epochs 0).block=5 := by
-  rewrite [source_whole_block_epoch expWordOne true expWordOps expWordInput (fun _ => none) 0 0 (by decide) (by decide)]
+    result["wrong-whole-epoch"]=common+"""example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat)
+    (outside : Location → Option Nat) (row tid : Nat) (hr : row<p.rows) (ht : tid<1024) :
+    ((sourceWholeBlock p true ops input outside row).epochs (row*1024+tid)).block=5 := by
+  rewrite [source_whole_block_epoch p true ops input outside row tid hr ht]
   decide
 """
     for name,guarded,wrong in (("wrong-whole-fixed-trace","true",475751),("wrong-whole-original-trace","false",489925)):
-        result[name]=common+f"""example :
-    (sourceWholeBlock expWordOne {guarded} expWordOps expWordInput (fun _ => none) 0).trace.length={wrong} := by
+        result[name]=common+f"""example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat)
+    (outside : Location → Option Nat) (row : Nat) :
+    (sourceWholeBlock p {guarded} ops input outside row).trace.length={wrong} := by
   rewrite [source_whole_block_trace]
   decide
 """
-    result["invented-whole-block-none"]=common+"""example :
-    sourceBlock expWordOne true expWordOps 0 sourceFuel.block (sourceInitial expWordOne expWordInput (fun _ => none))=none := by
-  rewrite [source_whole_block_run expWordOne true expWordOps expWordInput (fun _ => none) 0 (by decide)]
+    result["invented-whole-block-none"]=common+"""example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat)
+    (outside : Location → Option Nat) (row : Nat) (hr : row<p.rows) :
+    (sourceBlock p true ops row sourceFuel.block (sourceInitial p input outside)).isSome=false := by
+  rewrite [source_whole_block_run p true ops input outside row hr]
+  change true=false
   decide
 """
     for name,wrong in (("whole-output-left-exponential",5277322),("whole-output-reversed-division",1),
