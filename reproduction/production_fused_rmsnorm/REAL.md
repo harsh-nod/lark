@@ -64,3 +64,10 @@ python3 reproduction/production_fused_rmsnorm/replay_native_real.py \
   --packet /tmp/fused-real-checks --output /tmp/fused-real-replay \
   --lean-bin /path/to/lean-4.19.0/bin --dependency-project lean-real
 ```
+
+All [three CI jobs](https://github.com/harsh-nod/lark/actions/runs/42984922624) passed
+at source commit `a21651525c85d87b48b27c43a1096771234878fb`. The
+[saved CI evidence](results/canonical-real-ci-v1/results.json) includes raw
+provider responses and logs for `fused-real`, `exact-real` and `proof-tests`.
+This confirms the new real profile and fresh archive replay, alongside the
+existing checks. IEEE/error bounds and original-paper completion remain open.
