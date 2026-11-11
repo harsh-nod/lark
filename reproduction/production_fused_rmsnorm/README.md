@@ -85,6 +85,12 @@ rebuilds all 18 modules, repeats all 89 audits and ten refusals, and checks the
 positive witnesses from the archive with no Git available on PATH and no cached
 own Lean objects. The archived reader verifies exact source/IR/interface binding.
 
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42960404492) passed
+at scalar-prefix source commit `b768edfd5263c879192b9d417c85b2627459f7ad`,
+including the new fresh-prefix step and 165 ordinary tests (nine optional skips).
+The [saved source-CI evidence](results/scalar-prefix-ci-v1/results.json) records
+the exact head and scope. This adds no whole-source or real fused certificate.
+
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
 python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/fused-components
