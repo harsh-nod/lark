@@ -174,13 +174,31 @@ Independent restoration from the prepared release assets passes every original
 input and device manifest for the [sampled](results/sampled-restoration-v1/results.json)
 and [upstream-default](results/upstream-restoration-v1/results.json) datasets.
 
-Large raw input/output payloads are published as separate release assets;
+Large raw input/output payloads are published as separate
+[release assets](https://github.com/harsh-nod/lark/releases/tag/native-softmax-evidence-20261111);
 metadata packets retain the original manifests and compiler inputs. The
 [restorer](restore_gpu.py) reconstructs all original input and device streams
 losslessly and checks each original manifest before independent numerical audit.
-Release receipts and packet links are added after publication. No paid endpoints
+The [publication audit](results/publication-v1/results.json) checks all four
+server-side SHA256 digests against the frozen packets, verifies the tag's exact
+commit and checks anonymous public access and file lengths. It also downloads
+and hashes the complete sampled-output asset without authentication; the other
+three public bodies are covered by their server digests and public HEAD checks.
+The four compressed assets total 1,593,326,479 bytes. No paid endpoints
 or model calls are used. Original NVIDIA results, historical agent runs/token
 costs and the authors' unreleased adaptation remain unreproduced.
+
+```bash
+gh release download native-softmax-evidence-20261111 --repo harsh-nod/lark \
+  --pattern 'native-softmax-*' --dir /tmp/softmax-assets
+# Choose either sampled-gpu-v1 or upstream-gpu-v1; use a fresh output directory.
+python3 reproduction/production_softmax/restore_gpu.py \
+  --packet reproduction/production_softmax/results/upstream-gpu-v1 \
+  --assets /tmp/softmax-assets --output /tmp/softmax-restored-upstream
+python3 reproduction/production_softmax/audit_gpu.py \
+  --input /tmp/softmax-restored-upstream/input \
+  --device-output /tmp/softmax-restored-upstream/mi350 --output /tmp/softmax-restored-audit
+```
 
 ```bash
 python3 reproduction/production_softmax/prepare_gpu.py --output /tmp/softmax-input
