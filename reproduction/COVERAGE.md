@@ -160,6 +160,17 @@ initialization and proves a complete supported one-row launch is racy and fails
 reject 11 false claims; all eight CI jobs pass. The development reader still
 issues zero registered softmax source certificates.
 
+The [native in-place vLLM RoPE development study](production_rope/README.md)
+retains block512, Q32/K8 heads, width128, both rotary layouts and seeded mutable
+Q/K buffers. Full-source binding, initialized interfaces, address coverage and
+conditional ownership/race lemmas pass 99 audits and nine false Lean controls;
+independent archive replay passes without Git or owned compiled caches. Complete
+finite traces at one and three rows check 40,960 symbolic values. Both AMD hosts
+pass 79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance or
+bit differences. Complete native launch/reference proofs remain pending, and
+this development issues zero source certificates. This evidence is outside the
+immutable v19 ledger and does not add an original accepted production kernel.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |

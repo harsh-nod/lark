@@ -85,6 +85,13 @@ behavior is tested numerically outside the exact-real theorem, following the
 paper's stated scope. This development profile issues no registered softmax
 source certificate.
 
+The [native in-place vLLM RoPE development study](reproduction/production_rope/README.md)
+retains the 512-thread launch, Q/K strided loops and both rotary layouts. Full
+source binding, initialized mutable interfaces and address/ownership lemmas are
+Lean checked; complete native launch/reference proofs remain pending. Both AMD
+hosts pass 79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance
+or bit differences. The study issues no registered source certificate.
+
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the
@@ -145,7 +152,7 @@ footprints with small standalone certificates. Those largest arrays were not
 allocated or executed. A [same-source dot-product ablation](reproduction/dot_ablation/RESULTS.md)
 compares flat proof execution with loop induction. See the [paper coverage ledger](reproduction/COVERAGE.md)
 for original pass rates, kernels, timings and other results that remain missing.
-The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261110-v16/results/RESULTS.md)
+The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261111-v19/results/RESULTS.md)
 maps every paper table and figure to published evidence and concrete dependencies;
 all original paper results have not been reproduced.
 

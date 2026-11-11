@@ -8,6 +8,35 @@ permissions:
   contents: read
 
 jobs:
+  native-rope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check native mutable Q/K contract and complete finite values
+        run: python3 -m unittest discover -s tests -p test_native_rope.py -v
+      - name: Bind both complete source layouts and check initialized interfaces and ownership
+        run: python3 reproduction/production_rope/check_program.py --output /tmp/lark-rope-components
+      - name: Replay frozen native RoPE components without Git or owned compiled caches
+        run: |
+          python3 reproduction/production_rope/replay_components.py \
+            --packet /tmp/lark-rope-components --output /tmp/lark-rope-components-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed RoPE stage overclaims before extraction
+        run: |
+          python3 reproduction/production_rope/check_component_stages.py \
+            --packet /tmp/lark-rope-components --output /tmp/lark-rope-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Execute complete finite native Q/K traces and reject source mutations
+        run: python3 reproduction/production_rope/run_symbolic.py --output /tmp/lark-rope-symbolic
   softmax-source:
     runs-on: ubuntu-latest
     timeout-minutes: 20
