@@ -9,7 +9,9 @@ Lean witnesses and complete finite address traces expose the original conflict;
 finite numerical tests pass on both AMD hosts. The repaired source now has a
 source-bound complete-grid correctness and race-freedom proof for every closed
 shape, plus an optional canonical-real reference bridge with identity half
-conversions. Original conflict-state reachability and IEEE/error bounds remain open.
+conversions. The original's conflicting accesses are proved to occur in actual
+initialized block traces, and a complete one-row original launch is proved
+racy and unable to satisfy `Correct` for any reference specification.
 **This development profile issues zero source certificates.**
 
 ## Source and supported launch
@@ -83,7 +85,9 @@ They do **not** prove that the initializer reaches those intermediate states.
 These early component packets also stop short of classifying every access in a
 complete repaired launch or proving a canonical-real reference bridge. The later
 whole-grid and real milestones below supply those repaired-source proofs.
-Original witness reachability and IEEE/error bounds remain separate obligations.
+The later reached-pair milestone also connects the two instruction-witness
+accesses to actual initialized executions. Floating-point bounds are outside
+these theorem claims, as in the paper.
 
 The later [actual maximum-prefix proof](../../lean/Lark/NativeSoftmaxMaxPrefix.lean)
 starts at the actual machine initializer for both complete source variants. Every
@@ -482,8 +486,9 @@ The [combined wheel audit](results/grid-real-packaging-v1/results.json) matches
 the reader and all 134 required proof modules byte-for-byte with the proof
 source revision. The wheel data-file list includes the four new softmax real
 modules. The development reader still issues zero registered source certificates;
-original witness reachability, IEEE/error bounds, original NVIDIA timings and
-historical model experiments remain open.
+original NVIDIA timings and historical model experiments remain unreproduced.
+Floating-point behavior is tested at the stated tolerances; IEEE/error bounds
+are outside the exact-arithmetic theorem claims, as in the paper.
 
 The [saved grid/real CI packet](results/grid-real-ci-v1/results.json) retains
 the API responses and raw logs for all seven successful jobs in
@@ -497,6 +502,47 @@ CI revision. Later changes contain documentation, frozen evidence and one
 explicit wheel data-file addition: `NativeSoftmax*.lean` includes the four new
 real modules. That packaging addition is checked by the separate wheel audit;
 the proof and checker implementation bytes are unchanged.
+
+The [reached original-race proof](../../lean/Lark/NativeSoftmaxOriginalRace.lean)
+now proves that both conflicting accesses belong to the actual complete
+original block trace from initialization, for every supported selected row and
+arbitrary operations, inputs and outside memory. Thread0's normalization round6,
+component2 reads raw column51200 clamped to50256; thread80's round6, component1
+writes50256. Both accesses have the complete epoch `(grid0, block4, warp0)` and
+belong to different physical wave64 groups. The source's four actual block
+resumes determine that epoch. The pair conflicts, so the complete original
+block's actual trace has `raceFree = false`. The actual `runBlock` returns
+`Some` under the original fuel; trace reachability is derived from that run.
+At row0, these are exactly the earlier `reader` and `writerAccess` values.
+The convenience instruction-snippet whole states serve a narrower purpose;
+the reached-trace theorem identifies the accesses and their source phases.
+
+The additional [original launch counterexample](../../lean/Lark/NativeSoftmaxOriginalLaunch.lean)
+proves that the supported one-row original `runLaunch` also returns `Some`,
+halts all threads at PC116 and has a racy final trace. It therefore cannot
+satisfy the machine's `Correct` relation for any reference specification.
+This is an initialized whole-launch counterexample independent of output
+values. The complete original-launch result covers one row; the per-block
+counterexample covers every supported selected row from initialization. The
+repaired full-grid correctness and canonical-real results above remain valid.
+
+The [race source packet](results/original-race-v1/results.json) freshly builds
+134 standard modules, audits 1,530 declarations and rejects 11 new false claims.
+It retains all full-source, initializer, geometry and fuel bindings. Controls
+reject changed clamp cells or last-store guards, repaired code relabeled as
+original, invented original race freedom or `None` results, denied access
+membership/conflict, and denial of the one-row counterexample. The 48
+[rehashed race metadata guards](results/original-race-stage-guards-v1/results.json)
+reject missing principal proofs, wrong witness threads/columns/epochs,
+invented whole-state reachability, false interpretation or certificate claims,
+and earlier grid or real packets promoted to a reached-race proof before
+extraction. The [combined wheel audit](results/original-race-packaging-v1/results.json)
+matches the reader, packaging metadata and all 143 required standard/real proof
+modules byte-for-byte with this milestone's source revision.
+The [independent race replay](results/original-race-validation-v1/results.json)
+rebuilds all 134 standard modules and repeats the 1,530 audits and 11 refusals
+without Git or any owned compiled cache. Its 20 checks also reproduce both
+complete finite source traces, including the original conflicting pair.
 
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
 at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
@@ -610,6 +656,15 @@ python3 reproduction/production_softmax/check_native_real_stages.py \
   --packet /tmp/softmax-canonical-real \
   --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
   --output /tmp/softmax-canonical-real-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_original_race.py --output /tmp/softmax-original-race
+python3 reproduction/production_softmax/replay_original_race.py \
+  --packet /tmp/softmax-original-race \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-original-race-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_original_race_stages.py \
+  --packet /tmp/softmax-original-race \
+  --earlier-packet reproduction/production_softmax/results/whole-grid-v1 \
+  --output /tmp/softmax-original-race-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence

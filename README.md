@@ -79,8 +79,11 @@ race-freedom proof for every supported shape under the original fuel, retaining
 all converted outputs. An optional pinned-Mathlib proof connects that actual
 launch to canonical real softmax, with identity half conversions and an
 arbitrary finite seed. Both variants pass finite numerical checks on both AMD
-hosts. Original conflict-state reachability and IEEE/error bounds remain open;
-this development profile issues no registered source certificate.
+hosts. The original has a proved reached conflicting pair and a complete racy
+one-row launch that cannot satisfy `Correct` for any reference. Floating-point
+behavior is tested numerically outside the exact-real theorem, following the
+paper's stated scope. This development profile issues no registered softmax
+source certificate.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
