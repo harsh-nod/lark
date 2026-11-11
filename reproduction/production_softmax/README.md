@@ -485,6 +485,19 @@ modules. The development reader still issues zero registered source certificates
 original witness reachability, IEEE/error bounds, original NVIDIA timings and
 historical model experiments remain open.
 
+The [saved grid/real CI packet](results/grid-real-ci-v1/results.json) retains
+the API responses and raw logs for all seven successful jobs in
+[run 43077422597](https://github.com/harsh-nod/lark/actions/runs/43077422597),
+at proof source commit `a23a5da395470876ab8a72a2ed0a04f2f58c6747`.
+The two new jobs repeat the grid and real source exports, independent archive
+replays and all 44/46 metadata guards. The general suite ran 169 tests: 160
+passed and nine optional tests skipped. The byte audit matches 226 selected
+proof, reader, checker, source, configuration and workflow files to that exact
+CI revision. Later changes contain documentation, frozen evidence and one
+explicit wheel data-file addition: `NativeSoftmax*.lean` includes the four new
+real modules. That packaging addition is checked by the separate wheel audit;
+the proof and checker implementation bytes are unchanged.
+
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
 at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
 KernelCraft remains empty and the public benchmark head is unchanged. The

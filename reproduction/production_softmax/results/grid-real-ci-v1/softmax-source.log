@@ -1,0 +1,285 @@
+﻿2026-11-11T18:24:14.2002547Z Current runner version: '2.338.2'
+2026-11-11T18:24:14.2031363Z ##[group]Runner Image Provisioner
+2026-11-11T18:24:14.2032405Z Hosted Compute Agent
+2026-11-11T18:24:14.2033243Z Version: 20261028.624
+2026-11-11T18:24:14.2034115Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-11T18:24:14.2035074Z Build Date: 2026-10-28T21:51:42Z
+2026-11-11T18:24:14.2036093Z Worker ID: {3284d9fc-b1fa-45a1-8aeb-dc4e84ba19ee}
+2026-11-11T18:24:14.2036987Z Region: eastus2
+2026-11-11T18:24:14.2038179Z Cloud: Azure
+2026-11-11T18:24:14.2039101Z ##[endgroup]
+2026-11-11T18:24:14.2040660Z ##[group]Operating System
+2026-11-11T18:24:14.2041572Z Ubuntu
+2026-11-11T18:24:14.2042216Z 24.04.5
+2026-11-11T18:24:14.2042873Z LTS
+2026-11-11T18:24:14.2043637Z ##[endgroup]
+2026-11-11T18:24:14.2044407Z ##[group]Runner Image
+2026-11-11T18:24:14.2045209Z Image: ubuntu-24.04
+2026-11-11T18:24:14.2046006Z Version: 20261101.360.1
+2026-11-11T18:24:14.2047693Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-11T18:24:14.2049815Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-11T18:24:14.2051147Z ##[endgroup]
+2026-11-11T18:24:14.2052532Z ##[group]GITHUB_TOKEN Permissions
+2026-11-11T18:24:14.2055346Z Contents: read
+2026-11-11T18:24:14.2056098Z Metadata: read
+2026-11-11T18:24:14.2056792Z ##[endgroup]
+2026-11-11T18:24:14.2059664Z Secret source: Actions
+2026-11-11T18:24:14.2060883Z Cache mode: write
+2026-11-11T18:24:14.2062267Z Prepare workflow directory
+2026-11-11T18:24:14.2475181Z Prepare all required actions
+2026-11-11T18:24:14.2517810Z Getting action download info
+2026-11-11T18:24:14.4048006Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-11T18:24:14.4988248Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-11T18:24:14.6950936Z Complete job name: softmax-source
+2026-11-11T18:24:14.7719812Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-11T18:24:14.7720676Z with:
+2026-11-11T18:24:14.7721050Z   repository: harsh-nod/lark
+2026-11-11T18:24:14.7724441Z   token: ***
+2026-11-11T18:24:14.7724800Z   ssh-strict: true
+2026-11-11T18:24:14.7725167Z   ssh-user: git
+2026-11-11T18:24:14.7725536Z   persist-credentials: true
+2026-11-11T18:24:14.7725991Z   clean: true
+2026-11-11T18:24:14.7726356Z   sparse-checkout-cone-mode: true
+2026-11-11T18:24:14.7726781Z   fetch-depth: 1
+2026-11-11T18:24:14.7727139Z   fetch-tags: false
+2026-11-11T18:24:14.7727500Z   show-progress: true
+2026-11-11T18:24:14.7727868Z   lfs: false
+2026-11-11T18:24:14.7728294Z   submodules: false
+2026-11-11T18:24:14.7728911Z   set-safe-directory: true
+2026-11-11T18:24:14.7729447Z   allow-unsafe-pr-checkout: false
+2026-11-11T18:24:14.7730178Z ##[endgroup]
+2026-11-11T18:24:14.9711257Z Syncing repository: harsh-nod/lark
+2026-11-11T18:24:14.9713584Z ##[group]Getting Git version info
+2026-11-11T18:24:14.9714596Z Working directory is '/home/runner/work/lark/lark'
+2026-11-11T18:24:14.9715828Z [command]/usr/bin/git version
+2026-11-11T18:24:14.9793905Z git version 2.56.0
+2026-11-11T18:24:14.9813717Z ##[endgroup]
+2026-11-11T18:24:14.9829153Z Temporarily overriding HOME='/home/runner/work/_temp/5626b1a6-9812-449f-8b95-74782146bb69' before making global git config changes
+2026-11-11T18:24:14.9830833Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T18:24:14.9841543Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-11T18:24:14.9893154Z Deleting the contents of '/home/runner/work/lark/lark'
+2026-11-11T18:24:14.9898791Z ##[group]Initializing the repository
+2026-11-11T18:24:14.9901960Z [command]/usr/bin/git init /home/runner/work/lark/lark
+2026-11-11T18:24:14.9983280Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-11T18:24:14.9984692Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-11T18:24:14.9986202Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-11T18:24:14.9987322Z hint: call:
+2026-11-11T18:24:14.9987966Z hint:
+2026-11-11T18:24:14.9988901Z hint: 	git config --global init.defaultBranch <name>
+2026-11-11T18:24:14.9989751Z hint:
+2026-11-11T18:24:14.9990549Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-11T18:24:14.9991917Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-11T18:24:14.9992762Z hint:
+2026-11-11T18:24:14.9993132Z hint: 	git branch -m <name>
+2026-11-11T18:24:14.9993535Z hint:
+2026-11-11T18:24:14.9994177Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-11T18:24:14.9995342Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+2026-11-11T18:24:15.0002103Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+2026-11-11T18:24:15.0049260Z ##[endgroup]
+2026-11-11T18:24:15.0049938Z ##[group]Disabling automatic garbage collection
+2026-11-11T18:24:15.0053282Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-11T18:24:15.0086400Z ##[endgroup]
+2026-11-11T18:24:15.0087011Z ##[group]Setting up auth
+2026-11-11T18:24:15.0093289Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T18:24:15.0127907Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T18:24:15.0449409Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T18:24:15.0489605Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T18:24:15.0705006Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T18:24:15.0745519Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T18:24:15.0961645Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-11T18:24:15.1009849Z ##[endgroup]
+2026-11-11T18:24:15.1010608Z ##[group]Fetching the repository
+2026-11-11T18:24:15.1021499Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a23a5da395470876ab8a72a2ed0a04f2f58c6747:refs/remotes/origin/reproduction/native-softmax-exp-block
+2026-11-11T18:24:21.6879791Z From https://github.com/harsh-nod/lark
+2026-11-11T18:24:21.6881599Z  * [new ref]         a23a5da395470876ab8a72a2ed0a04f2f58c6747 -> origin/reproduction/native-softmax-exp-block
+2026-11-11T18:24:21.6884611Z ##[endgroup]
+2026-11-11T18:24:21.6885758Z ##[group]Determining the checkout info
+2026-11-11T18:24:21.6892926Z ##[endgroup]
+2026-11-11T18:24:21.6896994Z [command]/usr/bin/git sparse-checkout disable
+2026-11-11T18:24:21.6947766Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-11T18:24:21.6987669Z ##[group]Checking out the ref
+2026-11-11T18:24:21.6990408Z [command]/usr/bin/git checkout --progress --force -B reproduction/native-softmax-exp-block refs/remotes/origin/reproduction/native-softmax-exp-block
+2026-11-11T18:24:22.7149193Z Switched to a new branch 'reproduction/native-softmax-exp-block'
+2026-11-11T18:24:22.7159810Z branch 'reproduction/native-softmax-exp-block' set up to track 'origin/reproduction/native-softmax-exp-block'.
+2026-11-11T18:24:22.7330624Z ##[endgroup]
+2026-11-11T18:24:22.7390486Z [command]/usr/bin/git log -1 --format=%H
+2026-11-11T18:24:22.7421829Z a23a5da395470876ab8a72a2ed0a04f2f58c6747
+2026-11-11T18:24:22.7678105Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-11-11T18:24:22.7678648Z with:
+2026-11-11T18:24:22.7679032Z   python-version: 3.12
+2026-11-11T18:24:22.7679269Z   check-latest: false
+2026-11-11T18:24:22.7681757Z   token: ***
+2026-11-11T18:24:22.7681978Z   update-environment: true
+2026-11-11T18:24:22.7682222Z   allow-prereleases: false
+2026-11-11T18:24:22.7682456Z   freethreaded: false
+2026-11-11T18:24:22.7682685Z ##[endgroup]
+2026-11-11T18:24:22.9875971Z ##[group]Installed versions
+2026-11-11T18:24:22.9945550Z (node:2123) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T18:24:22.9946464Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T18:24:22.9946974Z Successfully set up CPython (3.12.16)
+2026-11-11T18:24:22.9947558Z ##[endgroup]
+2026-11-11T18:24:23.0101056Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+2026-11-11T18:24:23.0102059Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+2026-11-11T18:24:23.0102782Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+2026-11-11T18:24:23.0103141Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+2026-11-11T18:24:23.0132987Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:24:23.0133320Z env:
+2026-11-11T18:24:23.0133650Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.0134171Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:24:23.0134704Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.0135179Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.0135726Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.0136209Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:24:23.0136625Z ##[endgroup]
+2026-11-11T18:24:23.2733876Z info: downloading installer
+2026-11-11T18:24:23.7823529Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+2026-11-11T18:24:23.7916355Z ##[group]Run python3 reproduction/production_softmax/check_program.py --output /tmp/lark-softmax-components
+2026-11-11T18:24:23.7916995Z [36;1mpython3 reproduction/production_softmax/check_program.py --output /tmp/lark-softmax-components[0m
+2026-11-11T18:24:23.7936312Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:24:23.7936536Z env:
+2026-11-11T18:24:23.7936770Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.7937126Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:24:23.7937478Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.7937782Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.7938085Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:23.7938509Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:24:23.7938880Z ##[endgroup]
+2026-11-11T18:24:44.6416589Z {"status": "native-softmax-source-and-instruction-witness-checked", "modules": 8, "audits": 52, "rejections": 10}
+2026-11-11T18:24:44.6539954Z ##[group]Run python3 reproduction/production_softmax/replay_components.py \
+2026-11-11T18:24:44.6540431Z [36;1mpython3 reproduction/production_softmax/replay_components.py \[0m
+2026-11-11T18:24:44.6540800Z [36;1m  --packet /tmp/lark-softmax-components \[0m
+2026-11-11T18:24:44.6541176Z [36;1m  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \[0m
+2026-11-11T18:24:44.6541632Z [36;1m  --output /tmp/lark-softmax-components-replay --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T18:24:44.6560121Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:24:44.6560334Z env:
+2026-11-11T18:24:44.6560559Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:44.6560923Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:24:44.6561278Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:44.6561798Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:44.6562126Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:24:44.6562429Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:24:44.6562688Z ##[endgroup]
+2026-11-11T18:25:16.9060186Z {"status": "frozen-softmax-components-and-complete-finite-traces-replayed", "modules": 8, "audits": 52, "rejections": 10}
+2026-11-11T18:25:16.9157554Z ##[group]Run python3 -m unittest discover -s tests -p test_native_softmax.py -v
+2026-11-11T18:25:16.9158128Z [36;1mpython3 -m unittest discover -s tests -p test_native_softmax.py -v[0m
+2026-11-11T18:25:16.9176559Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:25:16.9176776Z env:
+2026-11-11T18:25:16.9177027Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:16.9177429Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:25:16.9177801Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:16.9178156Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:16.9178603Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:16.9178936Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:25:16.9179203Z ##[endgroup]
+2026-11-11T18:25:17.1629667Z test_closed_contract_preserves_ordinary_limits (test_native_softmax.NativeSoftmaxTests.test_closed_contract_preserves_ordinary_limits) ... ok
+2026-11-11T18:25:17.1681559Z test_full_sources_read_back_and_retain_both_helper_reductions (test_native_softmax.NativeSoftmaxTests.test_full_sources_read_back_and_retain_both_helper_reductions) ... ok
+2026-11-11T18:25:17.1692524Z test_infinity_seed_is_explicit_and_cannot_be_shadowed (test_native_softmax.NativeSoftmaxTests.test_infinity_seed_is_explicit_and_cannot_be_shadowed) ... ok
+2026-11-11T18:25:17.2350830Z test_private_arrays_use_thread_ownership (test_native_softmax.NativeSoftmaxTests.test_private_arrays_use_thread_ownership) ... ok
+2026-11-11T18:25:17.2351299Z 
+2026-11-11T18:25:17.2351605Z ----------------------------------------------------------------------
+2026-11-11T18:25:17.2351986Z Ran 4 tests in 0.073s
+2026-11-11T18:25:17.2352175Z 
+2026-11-11T18:25:17.2352269Z OK
+2026-11-11T18:25:17.2487657Z ##[group]Run python3 reproduction/production_softmax/check_prefix.py --output /tmp/lark-softmax-max-prefix
+2026-11-11T18:25:17.2488271Z [36;1mpython3 reproduction/production_softmax/check_prefix.py --output /tmp/lark-softmax-max-prefix[0m
+2026-11-11T18:25:17.2506424Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:25:17.2506645Z env:
+2026-11-11T18:25:17.2506869Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:17.2507221Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:25:17.2507576Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:17.2507888Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:17.2508206Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:17.2508651Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:25:17.2508909Z ##[endgroup]
+2026-11-11T18:25:57.4211211Z {"status": "native-softmax-source-bound-maximum-prefix-checked", "modules": 20, "audits": 143, "rejections": 18}
+2026-11-11T18:25:57.4322368Z ##[group]Run python3 reproduction/production_softmax/replay_prefix.py \
+2026-11-11T18:25:57.4322791Z [36;1mpython3 reproduction/production_softmax/replay_prefix.py \[0m
+2026-11-11T18:25:57.4323120Z [36;1m  --packet /tmp/lark-softmax-max-prefix \[0m
+2026-11-11T18:25:57.4323502Z [36;1m  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \[0m
+2026-11-11T18:25:57.4323963Z [36;1m  --output /tmp/lark-softmax-max-prefix-replay --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T18:25:57.4341826Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:25:57.4342025Z env:
+2026-11-11T18:25:57.4342244Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:57.4342743Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:25:57.4343074Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:57.4343491Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:57.4343814Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:25:57.4344119Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:25:57.4344373Z ##[endgroup]
+2026-11-11T18:26:56.8637731Z {"status": "frozen-softmax-maximum-prefix-and-finite-traces-replayed", "modules": 20, "audits": 143, "rejections": 18}
+2026-11-11T18:26:56.8753297Z ##[group]Run python3 reproduction/production_softmax/check_prefix_stages.py \
+2026-11-11T18:26:56.8753758Z [36;1mpython3 reproduction/production_softmax/check_prefix_stages.py \[0m
+2026-11-11T18:26:56.8754107Z [36;1m  --packet /tmp/lark-softmax-max-prefix \[0m
+2026-11-11T18:26:56.8754462Z [36;1m  --earlier-packet reproduction/production_softmax/results/components-v3 \[0m
+2026-11-11T18:26:56.8754938Z [36;1m  --output /tmp/lark-softmax-max-prefix-stage-guards --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T18:26:56.8772701Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:26:56.8772906Z env:
+2026-11-11T18:26:56.8773128Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:56.8773473Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:26:56.8773809Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:56.8774114Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:56.8774455Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:56.8774765Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:26:56.8775020Z ##[endgroup]
+2026-11-11T18:26:57.4004469Z {"status": "six-rehashed-false-prefix-stage-claims-rejected-before-extraction", "checks": 6}
+2026-11-11T18:26:57.4088770Z ##[group]Run python3 reproduction/production_softmax/check_first_wave.py --output /tmp/lark-softmax-max-first-wave
+2026-11-11T18:26:57.4089436Z [36;1mpython3 reproduction/production_softmax/check_first_wave.py --output /tmp/lark-softmax-max-first-wave[0m
+2026-11-11T18:26:57.4107304Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:26:57.4107505Z env:
+2026-11-11T18:26:57.4107725Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:57.4108076Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:26:57.4108564Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:57.4108868Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:57.4109166Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:26:57.4109458Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:26:57.4109713Z ##[endgroup]
+2026-11-11T18:28:22.0257766Z {"status": "native-softmax-source-bound-maximum-first-wave-checked", "modules": 33, "audits": 287, "rejections": 33}
+2026-11-11T18:28:22.0383065Z ##[group]Run python3 reproduction/production_softmax/replay_first_wave.py \
+2026-11-11T18:28:22.0383806Z [36;1mpython3 reproduction/production_softmax/replay_first_wave.py \[0m
+2026-11-11T18:28:22.0384383Z [36;1m  --packet /tmp/lark-softmax-max-first-wave \[0m
+2026-11-11T18:28:22.0385025Z [36;1m  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \[0m
+2026-11-11T18:28:22.0385839Z [36;1m  --output /tmp/lark-softmax-max-first-wave-replay --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T18:28:22.0410862Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:28:22.0411160Z env:
+2026-11-11T18:28:22.0411488Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:28:22.0412036Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:28:22.0412591Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:28:22.0413073Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:28:22.0413863Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:28:22.0414432Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:28:22.0414853Z ##[endgroup]
+2026-11-11T18:30:08.9266655Z {"status": "frozen-softmax-maximum-first-wave-and-finite-traces-replayed", "modules": 33, "audits": 287, "rejections": 33}
+2026-11-11T18:30:08.9357458Z ##[group]Run python3 reproduction/production_softmax/check_first_wave_stages.py \
+2026-11-11T18:30:08.9357963Z [36;1mpython3 reproduction/production_softmax/check_first_wave_stages.py \[0m
+2026-11-11T18:30:08.9358328Z [36;1m  --packet /tmp/lark-softmax-max-first-wave \[0m
+2026-11-11T18:30:08.9358893Z [36;1m  --earlier-packet reproduction/production_softmax/results/max-prefix-v1 \[0m
+2026-11-11T18:30:08.9359391Z [36;1m  --output /tmp/lark-softmax-max-first-wave-stage-guards --lean-bin "$HOME/.elan/bin"[0m
+2026-11-11T18:30:08.9377164Z shell: /usr/bin/bash -e {0}
+2026-11-11T18:30:08.9377389Z env:
+2026-11-11T18:30:08.9377616Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:30:08.9377974Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-11T18:30:08.9378319Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:30:08.9378824Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:30:08.9379153Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-11T18:30:08.9379459Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-11T18:30:08.9379721Z ##[endgroup]
+2026-11-11T18:30:09.7810915Z {"status": "nine-rehashed-false-first-wave-stage-claims-rejected-before-extraction", "checks": 9}
+2026-11-11T18:30:09.7953083Z Post job cleanup.
+2026-11-11T18:30:09.9030900Z (node:6224) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-11T18:30:09.9031821Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-11T18:30:09.9236682Z Post job cleanup.
+2026-11-11T18:30:10.0047872Z [command]/usr/bin/git version
+2026-11-11T18:30:10.0088188Z git version 2.56.0
+2026-11-11T18:30:10.0122034Z Temporarily overriding HOME='/home/runner/work/_temp/cf268ef2-0055-4b96-aa0b-59f1934c7fa3' before making global git config changes
+2026-11-11T18:30:10.0123245Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-11T18:30:10.0127432Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-11T18:30:10.0170819Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-11T18:30:10.0216124Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-11T18:30:10.0468842Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-11T18:30:10.0505686Z http.https://github.com/.extraheader
+2026-11-11T18:30:10.0514664Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-11T18:30:10.0553512Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-11T18:30:10.0809848Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-11T18:30:10.0851221Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-11T18:30:10.1215284Z Cleaning up orphan processes
+2026-11-11T18:30:10.1522543Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
