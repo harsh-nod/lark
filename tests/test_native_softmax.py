@@ -41,7 +41,8 @@ class NativeSoftmaxTests(unittest.TestCase):
 float maximum = -INFINITY;
 }'''
         tr = native.translate(code, self.task)
-        self.assertEqual(tr.program[0].args[1].args, (-1, 0))
+        self.assertEqual(tr.program[0].args[1].args, (-1, native.NEG_INF_SEED_DENOMINATOR))
+        self.assertGreater(native.NEG_INF_SEED_DENOMINATOR, 0)
         with self.assertRaises(Refusal):
             OrdinaryReader(code, self.task).read()
         changed = code.replace("float maximum", "float INFINITY = 2.0f;\nfloat maximum")

@@ -16,6 +16,6 @@
     "FP32 output storage becomes FP16 with explicit toHalf"
   ],
   "repair": "Guard the normalization pass's output-buffer load by its existing bounds predicate; use the unclamped in-bounds index",
-  "negative_infinity_model": "Dedicated source spelling -INFINITY lowers to Ops.literal(-1,0), a named extended-value seed; no rational or IEEE interpretation is asserted yet",
-  "reference_scope": "Canonical ideal real softmax. FP16 intermediate storage remains explicit in the source; numerical error is assessed separately."
+  "negative_infinity_model": "Dedicated source spelling -INFINITY lowers to the reserved executable Ops.literal(-1,4294967296) key. withSeed supplies an arbitrary extended-value seed. No ordinary rational/real/IEEE interpretation is asserted.",
+  "reference_scope": "Declared numerical reference is torch.softmax(inp.float(), dim=1).half(); an independent FP64 stable-softmax oracle is also checked. No formal source/reference bridge is asserted."
 }

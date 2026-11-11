@@ -72,7 +72,10 @@ class Replay(native.Machine):
             self.expr(t, args[2])
         elif op == "un":
             self.expr(t, args[1])
-        elif op != "lit":
+        elif op == "lit":
+            if args[1] == 0:
+                raise Refusal("literal", "the pinned machine rejects zero-denominator literals")
+        else:
             super().expr(t, n)  # Checks register/memory initialization and records loads.
         return 0
 

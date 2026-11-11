@@ -55,8 +55,14 @@ def main():
         "actual_trace_universal_classification_proved", "canonical_source_equivalence_proved",
         "ieee_equivalence_proved", "original_paper_fully_reproduced")), "Invented whole-source/reference claim")
     principal = {"source_program_data", "source_reader_trace", "source_writer_trace", "source_guard_trace",
-                 "LarkNativeSoftmax.reader_step", "LarkNativeSoftmax.writer_step", "LarkNativeSoftmax.pair_conflict"}
+                 "source_seed_code", "source_seed_evaluates", "LarkNativeSoftmax.seed_expr",
+                 "LarkNativeSoftmax.zero_denominator_refused", "LarkNativeSoftmax.reader_step",
+                 "LarkNativeSoftmax.writer_step", "LarkNativeSoftmax.pair_conflict"}
     require(principal <= report["axiom_audits"].keys(), "Principal instruction witness audits absent")
+    require(report.get("seed_denominator") == 4294967296
+            and report.get("named_seed_evaluation_proved") is True
+            and report.get("zero_denominator_seed_rejected") is True,
+            "Executable seed checks absent; earlier zero-denominator checkpoints are superseded")
     require(sha(packet / "source.tar.gz") == report["source_archive_sha256"], "Source archive differs")
     source_manifest = json.loads((packet / "source-manifest.json").read_text())
     out.mkdir(parents=True, exist_ok=False)
@@ -135,6 +141,7 @@ def main():
         "git_available_on_path": False, "own_lean_compiled_cache_seeded": False,
         "checks": checks, "complete_finite_traces_compared": comparisons,
         "source_certificates": 0, "instruction_trace_counterexample_proved": True,
+        "named_seed_evaluation_proved": True, "zero_denominator_seed_rejected": True,
         "whole_kernel_execution_proved": False, "intermediate_state_reachability_proved": False,
         "actual_trace_universal_classification_proved": False, "canonical_source_equivalence_proved": False,
         "original_paper_fully_reproduced": False, "model_calls": 0, "gpu_trials": 0,

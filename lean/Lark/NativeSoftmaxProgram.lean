@@ -2,8 +2,9 @@ import Lark.PartitionCollective
 
 /-! Fixed full three-pass llm.c source programs. This module binds the source
 interface and instructions; whole actual execution remains a separate proof.
-The negative-infinity seed is the named Ops.literal(-1,0) marker, not rational
-arithmetic. Both programs retain both private8 arrays and four block barriers.
+The negative-infinity seed uses a reserved executable abstract-operation key,
+not an asserted rational/real/IEEE interpretation. Both programs retain both
+private8 arrays and four block barriers.
 -/
 namespace LarkNativeSoftmax
 open LarkNonlinear
@@ -22,12 +23,23 @@ def layout (p : Shape) : Layout :=
 def geometry (p : Shape) : Geometry := ⟨p.rows,1024,64⟩
 def fuel : Fuel := ⟨4096,8,5,1⟩
 
+def seedDenominator : Nat := 4294967296
+def withSeed (ops : Ops α) (seed : α) : Ops α :=
+  { ops with literal := fun n d => if n = -1 ∧ d = seedDenominator then seed else ops.literal n d }
+
+theorem seed_expr (ops : Ops α) (seed : α) (l : Layout) (g : Geometry) (t : Nat) (s : State α) :
+    evalExpr (withSeed ops seed) l g t (.lit (-1) 4294967296) s = some (seed,s) := by
+  simp [evalExpr,withSeed,seedDenominator]
+
+theorem zero_denominator_refused (ops : Ops α) (l : Layout) (g : Geometry) (t : Nat) (s : State α) :
+    evalExpr ops l g t (.lit (-1) 0) s = none := rfl
+
 def racyProgram : List LarkCollective.Instr := [
   (.scalar (.index 0 .bid)),
   (.scalar (.index 1 .tid)),
   (.scalar (.index 2 (.div (.ivar (1)) (.const (32))))),
   (.scalar (.index 3 (.mod (.ivar (1)) (.const (32))))),
-  (.scalar (.assign 0 (.lit (-1) 0))),
+  (.scalar (.assign 0 (.lit (-1) 4294967296))),
   (.scalar (.index 4 (.ivar (1)))),
   (.scalar (.branch (.lt (.ivar (4)) (.const (50257))) 19)),
   (.scalar (.index 5 (.const (0)))),
@@ -147,7 +159,7 @@ def fixedProgram : List LarkCollective.Instr := [
   (.scalar (.index 1 .tid)),
   (.scalar (.index 2 (.div (.ivar (1)) (.const (32))))),
   (.scalar (.index 3 (.mod (.ivar (1)) (.const (32))))),
-  (.scalar (.assign 0 (.lit (-1) 0))),
+  (.scalar (.assign 0 (.lit (-1) 4294967296))),
   (.scalar (.index 4 (.ivar (1)))),
   (.scalar (.branch (.lt (.ivar (4)) (.const (50257))) 19)),
   (.scalar (.index 5 (.const (0)))),
@@ -275,4 +287,6 @@ theorem source_sizes : racyProgram.length = 117 ∧ fixedProgram.length = 116 :=
 #print axioms index_span
 #print axioms native_geometry
 #print axioms source_sizes
+#print axioms seed_expr
+#print axioms zero_denominator_refused
 end LarkNativeSoftmax

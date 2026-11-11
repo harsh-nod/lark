@@ -79,6 +79,11 @@ theorem source_step_data (p : Shape) (guarded : Bool) (ops : Ops α) (t : Nat) (
   cases h : (if guarded then fixedProgram else racyProgram)[s.pc t]? with
   | none => rfl
   | some i => cases i <;> rfl
+theorem source_seed_code : sourceOriginal[4]? = some (.scalar (.assign 0 (.lit (-1) 4294967296))) ∧
+    sourceFixed[4]? = some (.scalar (.assign 0 (.lit (-1) 4294967296))) := by decide
+theorem source_seed_evaluates (p : Shape) (ops : Ops α) (seed : α) (t : Nat) (s : State α) :
+    evalExpr (withSeed ops seed) (sourceLayout p) (sourceGeometry p) t (.lit (-1) 4294967296) s =
+      some (seed,s) := seed_expr ops seed (sourceLayout p) (sourceGeometry p) t s
 theorem source_reader_trace (p : Shape) (ops : Ops α) (x : α) :
     (sourceStep p false ops 0 (readerStart 50256 2 x)).map State.trace =
       some [⟨0,⟨.local,0,1,2⟩,true,⟨0,4,0⟩⟩,reader] := by
@@ -102,6 +107,8 @@ theorem source_sufficient_rf (p : Shape) (trace : List Access) (h : ∀ a ∈ tr
 #print axioms source_program_data
 #print axioms source_interface_data
 #print axioms source_step_data
+#print axioms source_seed_code
+#print axioms source_seed_evaluates
 #print axioms source_reader_trace
 #print axioms source_writer_trace
 #print axioms source_guard_trace
@@ -216,6 +223,13 @@ example : (sourceStep ⟨1, by decide, by decide⟩ true unitOps 0 guardStart).m
   rewrite [source_guard_trace]
   decide
 """,
+        "false-zero-denominator-seed-executes": """import Main
+open LarkNativeSoftmax LarkNonlinear
+example (p : Shape) (s : State Unit) :
+    (evalExpr unitOps (sourceLayout p) (sourceGeometry p) 0 (.lit (-1) 0) s).isSome = true := by
+  change false = true
+  decide
+""",
     }
     for name, text in controls.items():
         require(text != positive, "Vacuous mutation: " + name)
@@ -223,7 +237,7 @@ example : (sourceStep ⟨1, by decide, by decide⟩ true unitOps 0 guardStart).m
         execute(name, ["lake", "env", "lean", name + ".lean"], False)
     (project / "README.md").write_text(
         "Check source/reader binding: python3 validate_source.py. Fresh proof: lake build.\n"
-        "The nine other root Lean files intentionally fail.\n"
+        f"The {len(controls)} other root Lean files intentionally fail.\n"
         "Full source identity, loop-address coverage, conditional footprint RF and single-instruction trace witness only.\n"
         "The witness states are explicit intermediates; full initializer reachability/reference equivalence remains open.\n"
         "No source certificate or original-paper completion is claimed.\n")
@@ -245,6 +259,8 @@ example : (sourceStep ⟨1, by decide, by decide⟩ true unitOps 0 guardStart).m
         "source_sha256": {"original": hashlib.sha256(original.encode()).hexdigest(), "fixed": hashlib.sha256(fixed.encode()).hexdigest()},
         "axiom_audits": audits, "false_lean_claims_rejected": len(controls), "checks": checks,
         "source_certificates": 0, "full_source_identity_checked": True,
+        "seed_denominator": native.NEG_INF_SEED_DENOMINATOR,
+        "named_seed_evaluation_proved": True, "zero_denominator_seed_rejected": True,
         "instruction_trace_counterexample_proved": True, "repaired_guard_step_proved": True,
         "sufficient_footprint_race_freedom_proved": True, "whole_kernel_execution_proved": False,
         "intermediate_state_reachability_proved": False, "actual_trace_universal_classification_proved": False,

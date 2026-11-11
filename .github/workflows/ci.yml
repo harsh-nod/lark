@@ -27,7 +27,7 @@ jobs:
         run: |
           python3 reproduction/production_softmax/replay_components.py \
             --packet /tmp/lark-softmax-components \
-            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v1 \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
             --output /tmp/lark-softmax-components-replay --lean-bin "$HOME/.elan/bin"
       - name: Check closed native softmax contract and private-array ownership
         run: python3 -m unittest discover -s tests -p test_native_softmax.py -v

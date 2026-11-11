@@ -16,6 +16,9 @@ WIDTH = 50257
 BLOCK = 1024
 MAX_ROWS = (2 ** 31 - 1) // WIDTH
 FUEL = (4096, 8, 5, 1)
+# Reserved abstract-operation key; its positive denominator is executable by
+# the pinned machine. It has no ordinary rational/real/IEEE interpretation here.
+NEG_INF_SEED_DENOMINATOR = 2 ** 32
 
 
 @dataclass
@@ -44,9 +47,7 @@ class Reader(collective.Reader):
                 and self.tokens[self.i + 1].text == "INFINITY"):
             self.pop("-")
             self.pop("INFINITY")
-            # Named extended-value seed, not rational division by zero.
-            # It is interpreted only by this opt-in profile's operation model.
-            return node("lit", -1, 0)
+            return node("lit", -1, NEG_INF_SEED_DENOMINATOR)
         return super().expr(mode, precedence)
 
     def statement(self):

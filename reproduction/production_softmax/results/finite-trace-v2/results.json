@@ -1,0 +1,294 @@
+{
+  "schema": 1,
+  "status": "full-native-softmax-finite-access-replay-checked",
+  "rows": 1,
+  "width": 50257,
+  "block": 1024,
+  "physical_warp": 64,
+  "logical_warp": 32,
+  "records": [
+    {
+      "case": "native_race",
+      "seconds": 14.39226734393742,
+      "instructions": 117,
+      "accesses": 489926,
+      "counts": {
+        "global:0:read:epoch4": 57344,
+        "global:0:write:epoch2": 50257,
+        "global:0:write:epoch4": 50257,
+        "global:1:read:epoch0": 57344,
+        "global:1:read:epoch2": 57344,
+        "local:0:read:epoch2": 50257,
+        "local:0:write:epoch2": 57344,
+        "local:1:read:epoch4": 50257,
+        "local:1:write:epoch4": 57344,
+        "shared:0:read:epoch1": 32,
+        "shared:0:read:epoch2": 1024,
+        "shared:0:write:epoch0": 32,
+        "shared:0:write:epoch1": 1,
+        "shared:1:read:epoch3": 32,
+        "shared:1:read:epoch4": 1024,
+        "shared:1:write:epoch2": 32,
+        "shared:1:write:epoch3": 1
+      },
+      "footprint_classification_failures": 7081,
+      "all_threads_halted": true,
+      "final_block_epoch": 4,
+      "missing_output_cells": 0,
+      "first_conflict": {
+        "earlier": 273898,
+        "later": 290953,
+        "earlier_access": {
+          "thread": 0,
+          "location": [
+            "global",
+            0,
+            0,
+            50256
+          ],
+          "write": false,
+          "epoch": [
+            0,
+            4,
+            0
+          ]
+        },
+        "later_access": {
+          "thread": 80,
+          "location": [
+            "global",
+            0,
+            0,
+            50256
+          ],
+          "write": true,
+          "epoch": [
+            0,
+            4,
+            0
+          ]
+        }
+      },
+      "canonical_witness": {
+        "reader": {
+          "event": 273898,
+          "access": {
+            "thread": 0,
+            "location": [
+              "global",
+              0,
+              0,
+              50256
+            ],
+            "write": false,
+            "epoch": [
+              0,
+              4,
+              0
+            ]
+          },
+          "pc": 102,
+          "indices": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 57344,
+            "5": 8,
+            "6": 50256,
+            "7": 50256,
+            "8": 32,
+            "9": 57344,
+            "10": 8,
+            "11": 50256,
+            "12": 50256,
+            "13": 8,
+            "14": 56320,
+            "15": 50176,
+            "16": 32,
+            "17": 49152,
+            "18": 2,
+            "19": 50256,
+            "20": 50256,
+            "21": 8,
+            "22": 48128,
+            "23": 48128
+          },
+          "initialized_scalar_registers": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        "writer": {
+          "event": 290953,
+          "access": {
+            "thread": 80,
+            "location": [
+              "global",
+              0,
+              0,
+              50256
+            ],
+            "write": true,
+            "epoch": [
+              0,
+              4,
+              0
+            ]
+          },
+          "pc": 111,
+          "indices": {
+            "0": 0,
+            "1": 80,
+            "2": 2,
+            "3": 16,
+            "4": 57424,
+            "5": 8,
+            "6": 50256,
+            "7": 50256,
+            "9": 57424,
+            "10": 8,
+            "11": 50256,
+            "12": 50256,
+            "13": 8,
+            "14": 56400,
+            "15": 50256,
+            "17": 49232,
+            "18": 8,
+            "19": 50256,
+            "20": 50256,
+            "21": 1,
+            "22": 50256,
+            "23": 50256
+          },
+          "initialized_scalar_registers": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13
+          ]
+        }
+      },
+      "source_sha256": "c4c99c49db02315726e25d3c273379a1461fb5201c042204fea0c6f56c020019",
+      "trace_file": "native_race-trace.jsonl.gz",
+      "trace_sha256": "db062694e04ca8c2a4c702e08f984c0c9aac6fd0eb1916e3e222e64c09f8814f"
+    },
+    {
+      "case": "native_fixed",
+      "seconds": 13.149594524991699,
+      "instructions": 116,
+      "accesses": 475752,
+      "counts": {
+        "global:0:read:epoch4": 50257,
+        "global:0:write:epoch2": 50257,
+        "global:0:write:epoch4": 50257,
+        "global:1:read:epoch0": 57344,
+        "global:1:read:epoch2": 57344,
+        "local:0:read:epoch2": 50257,
+        "local:0:write:epoch2": 57344,
+        "local:1:read:epoch4": 50257,
+        "local:1:write:epoch4": 50257,
+        "shared:0:read:epoch1": 32,
+        "shared:0:read:epoch2": 1024,
+        "shared:0:write:epoch0": 32,
+        "shared:0:write:epoch1": 1,
+        "shared:1:read:epoch3": 32,
+        "shared:1:read:epoch4": 1024,
+        "shared:1:write:epoch2": 32,
+        "shared:1:write:epoch3": 1
+      },
+      "footprint_classification_failures": 0,
+      "all_threads_halted": true,
+      "final_block_epoch": 4,
+      "missing_output_cells": 0,
+      "first_conflict": null,
+      "canonical_witness": {
+        "writer": {
+          "event": 289981,
+          "access": {
+            "thread": 80,
+            "location": [
+              "global",
+              0,
+              0,
+              50256
+            ],
+            "write": true,
+            "epoch": [
+              0,
+              4,
+              0
+            ]
+          },
+          "pc": 110,
+          "indices": {
+            "0": 0,
+            "1": 80,
+            "2": 2,
+            "3": 16,
+            "4": 57424,
+            "5": 8,
+            "6": 50256,
+            "7": 50256,
+            "9": 57424,
+            "10": 8,
+            "11": 50256,
+            "12": 50256,
+            "13": 8,
+            "14": 56400,
+            "15": 50256,
+            "17": 49232,
+            "18": 8,
+            "19": 56400,
+            "20": 50256,
+            "21": 1,
+            "22": 50256,
+            "23": 50256
+          },
+          "initialized_scalar_registers": [
+            0,
+            1,
+            2,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13
+          ]
+        }
+      },
+      "source_sha256": "ff3f7c7887b85b507b35400424f5f9c321fd139cfcbe9abbb9ac67297175886a",
+      "trace_file": "native_fixed-trace.jsonl.gz",
+      "trace_sha256": "3b12da29ba1d520ce1c996e70d4b8ab1210f30c9236258a8c3eaae4e2ef40bcd"
+    }
+  ],
+  "source_certificates": 0,
+  "whole_kernel_lean_execution_proved": false,
+  "whole_kernel_universal_race_freedom_proved": false,
+  "canonical_source_equivalence_proved": false,
+  "scalar_values_evaluated": false,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Every address of both complete source variants is replayed at one50257-column row. Integer control, bounds, initialization, cuts and native shuffle cohorts are checked; scalar values are erased. The original conflicts, while the guarded repair's finite trace has no conflicting pair and every access satisfies its sufficient ownership/epoch classification. This is not a universal Lean whole-launch proof."
+}

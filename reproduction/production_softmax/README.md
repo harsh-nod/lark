@@ -40,19 +40,22 @@ load and removes its clamp; the two separate load/store loops remain.
 The opt-in [reader](../../lark_kernels/native_softmax.py) handles this closed
 source family with unchanged machine definitions and fuel `(4096,8,5,1)`.
 It gives each private-array cell its actual thread owner. A dedicated reserved
-`-INFINITY` spelling maps to an abstract seed operation; no rational, real or
-IEEE interpretation of that marker is asserted. Ordinary task parsing and
+`-INFINITY` spelling maps to the reserved, executable
+`Ops.literal(-1,4294967296)` key; `withSeed` supplies its abstract value. Lean
+checks that this expression evaluates to the supplied seed. No ordinary
+rational, real or IEEE interpretation of that key is asserted. Ordinary task parsing and
 registered certificate profiles are unchanged. The secondary 32-thread witness
 described by the paper is outside this 1,024-thread study.
 
 ## Checked proof scope
 
-The latest [component packet](results/components-v2/results.json) freshly builds
-eight Lean modules, audits 48 declarations and rejects nine false claims.
-Its [archive replay](results/components-validation-v2/results.json) repeats the
+The latest [component packet](results/components-v3/results.json) freshly builds
+eight Lean modules, audits 52 declarations and rejects ten false claims.
+Its [archive replay](results/components-validation-v3/results.json) repeats the
 reader check, build and refusals with Git unavailable and no own compiled Lean
 cache. It also reproduces the full finite traces from frozen source. Earlier
-`components-v1` packets retain their original narrower row bound.
+`components-v1` packets retain their original narrower row bound. Both earlier
+component versions are superseded by the executable-seed correction below.
 
 The four local proof files establish:
 
@@ -70,7 +73,7 @@ in every complete repaired launch satisfies the classification. Those are
 separate remaining source-execution obligations. There is no canonical-real
 softmax theorem, IEEE equivalence theorem or numerical error bound here.
 
-The separate [finite source replay](results/finite-trace-v1/results.json) erases
+The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
 logical collectives for one complete 1,024-thread block:
 
@@ -87,12 +90,22 @@ in compressed streams; the independent archive replay compares their complete
 decompressed SHA256 hashes and diagnostic records. This finite replay is not a
 universal Lean execution theorem or a numerical run.
 
+The initial source checkpoint `31e031c` encoded the abstract seed with denominator
+zero. The pinned Lean machine rejects that expression, while the earlier finite
+value-erased replay skipped this literal check. Thus those earlier packets do
+not establish an executable full kernel. The corrected component packet proves
+the reserved positive-denominator seed's evaluation and explicitly rejects a
+false claim that the old seed executes. The new finite replay checks the literal
+gate and preserves the same complete address traces. Old packets remain frozen
+as historical evidence. The GPU HIP sources and numerical input/output bytes
+are unchanged by this modeling correction.
+
 ```bash
 # Lean 4.19.0, standard library only; use fresh output directories.
 python3 reproduction/production_softmax/check_program.py --output /tmp/softmax-components
 python3 reproduction/production_softmax/replay_components.py \
   --packet /tmp/softmax-components \
-  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v1 \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
   --output /tmp/softmax-components-replay --lean-bin /path/to/lean-4.19.0/bin
 python3 -m unittest discover -s tests -p test_native_softmax.py -v
 ```
