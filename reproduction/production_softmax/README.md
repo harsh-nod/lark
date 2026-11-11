@@ -6,8 +6,10 @@ implements both the clamped-read original and the guarded-read repair described
 in [Appendix A.14 of the paper](https://arxiv.org/html/2611.02028v1#A1.SS14).
 The complete sources are bound to their translated programs. Instruction-level
 Lean witnesses and complete finite address traces expose the original conflict;
-finite numerical tests pass on both AMD hosts. Conflict-state reachability,
-universal repaired-launch correctness and its reference bridge remain open.
+finite numerical tests pass on both AMD hosts. The repaired source now has a
+source-bound complete-grid correctness and race-freedom proof for every closed
+shape, plus an optional canonical-real reference bridge with identity half
+conversions. Original conflict-state reachability and IEEE/error bounds remain open.
 **This development profile issues zero source certificates.**
 
 ## Source and supported launch
@@ -78,10 +80,10 @@ The four local proof files establish:
 
 The Lean instruction witnesses use arbitrary arithmetic operations and values.
 They do **not** prove that the initializer reaches those intermediate states.
-Likewise, the sufficient classification theorem does not prove that every access
-in every complete repaired launch satisfies the classification. Those are
-separate remaining source-execution obligations. There is no canonical-real
-softmax theorem, IEEE equivalence theorem or numerical error bound here.
+These early component packets also stop short of classifying every access in a
+complete repaired launch or proving a canonical-real reference bridge. The later
+whole-grid and real milestones below supply those repaired-source proofs.
+Original witness reachability and IEEE/error bounds remain separate obligations.
 
 The later [actual maximum-prefix proof](../../lean/Lark/NativeSoftmaxMaxPrefix.lean)
 starts at the actual machine initializer for both complete source variants. Every
@@ -419,6 +421,60 @@ canonical-real/IEEE reference bridges remain open here. It issues zero source
 certificates and does not reproduce the paper's original NVIDIA timings or
 historical model experiments.
 
+The later [complete repaired-grid proof](../../lean/Lark/NativeSoftmaxCorrect.lean)
+composes the actual block executions over every row, from the initializer
+through `runLaunch`, under the unchanged geometry and fuel `(4096,8,5,1)`.
+It proves the machine's complete `Correct` relation against the explicit
+source-ordered normalization specification for every supported shape, arbitrary
+scalar operations, inputs and outside memory. Every thread halts at PC115 and
+block epoch4. The actual trace contains exactly `475752 * rows` accesses and is
+classified `Good` and proved race-free. All `rows * 50257` converted output
+cells are extracted. Foreign-block control, epoch and memory frames keep pending
+block entries and previously completed outputs intact.
+
+The [grid source packet](results/whole-grid-v1/results.json) freshly builds
+125 modules, audits 1,461 declarations and rejects 11 new false claims.
+Three controls alter the full repaired source's normalization load guard,
+division or stride. The others assert wrong halt/epoch values, an invented
+`None` result or race, missing outputs/extraction, or denied trace/output counts.
+The earlier 129 block refusals remain separate evidence and are not counted
+again in these 11 grid controls. The 44 [rehashed grid metadata guards](results/whole-grid-stage-guards-v1/results.json)
+reject omitted principal proofs, changed counts, invented original-source grid
+or race-freedom claims, and an earlier block packet relabeled as a grid proof,
+before extraction. This grid packet retains arbitrary operations and every
+source conversion; it does not claim algebraic reassociation or an IEEE bridge.
+
+The optional [canonical-real proof](../../lean-real/LarkReal/NativeSoftmaxCanonical.lean)
+then connects that same actual repaired launch to the independent dense formula
+`exp(x_col) / sum(exp(x))`. It proves that the five-stage logical32 XOR trees
+and serial32 fold sum all 1,024 thread contributions, and that the seven rounds
+of eight components cover precisely the 50,257 valid columns. The source
+denominator is positive. The normalization shift cancels for any finite real
+seed; the proof does not interpret negative infinity as a real number. Both
+half conversions are identities in this idealization. No IEEE equality or
+floating-point error bound follows from these real algebraic steps.
+
+The [real source packet](results/canonical-real-v1/results.json) freshly builds
+134 owned modules (129 standard and five real), audits 1,515 declarations and
+rejects nine false claims using Mathlib revision
+`c44e0c8ee63ca166450922a373c7409c5d26b00b`. The source-bound `Correct`, extraction
+and per-cell theorems cover every supported shape and all real inputs.
+For an all-zero row, every actual output is proved exactly `1/50257`.
+Controls reject a dropped denominator column, missing division, a nonpositive
+denominator, an omitted XOR-tree leaf, a zero exponential and an unscaled
+exponential shift, together with the three full-source mutations. The 46
+[real metadata guards](results/canonical-real-stage-guards-v1/results.json)
+reject false interpretation, cache, certificate, IEEE and original-source
+claims, missing proof audits and earlier block evidence promoted to real
+whole-grid correctness, before extraction.
+
+The [combined wheel audit](results/grid-real-packaging-v1/results.json) matches
+the reader and all 134 required proof modules byte-for-byte with the proof
+source revision. The wheel data-file list includes the four new softmax real
+modules. The development reader still issues zero registered source certificates;
+original witness reachability, IEEE/error bounds, original NVIDIA timings and
+historical model experiments remain open.
+
 A bounded [artifact recheck](results/exp-wave-artifact-recheck-v1/results.json)
 at 2026-11-11 15:06:50 UTC found no original release at the inspected endpoints:
 KernelCraft remains empty and the public benchmark head is unchanged. The
@@ -513,6 +569,24 @@ python3 reproduction/production_softmax/check_whole_block_stages.py \
   --packet /tmp/softmax-whole-block \
   --earlier-packet reproduction/production_softmax/results/reduction-prefix-v1 \
   --output /tmp/softmax-whole-block-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_whole_grid.py --output /tmp/softmax-whole-grid
+python3 reproduction/production_softmax/replay_whole_grid.py \
+  --packet /tmp/softmax-whole-grid \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-whole-grid-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_whole_grid_stages.py \
+  --packet /tmp/softmax-whole-grid \
+  --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+  --output /tmp/softmax-whole-grid-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+# Initialize the pinned optional lean-real dependency cache before these real checks.
+python3 reproduction/production_softmax/check_native_real.py --output /tmp/softmax-canonical-real
+python3 reproduction/production_softmax/replay_native_real.py \
+  --packet /tmp/softmax-canonical-real --output /tmp/softmax-canonical-real-replay \
+  --lean-bin /path/to/lean-4.19.0/bin --dependency-project lean-real
+python3 reproduction/production_softmax/check_native_real_stages.py \
+  --packet /tmp/softmax-canonical-real \
+  --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+  --output /tmp/softmax-canonical-real-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence

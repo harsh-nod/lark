@@ -73,14 +73,14 @@ in the real theorem; IEEE/error bounds and original production results remain op
 The separate [native llm.c softmax study](reproduction/production_softmax/README.md)
 binds the complete three-pass original and repaired sources to their scalar IR,
 checks the paper's clamped-read conflict at instruction level, and replays both
-complete finite address traces. Its proof composes the actual first block phase
-across all sixteen physical waves and resumes the first block barrier. It
-retains all thirty-two source-ordered partial maxima, derives race freedom for
-the 57,376-access phase and advances all 1,024 threads to PC33/block epoch1.
-The scheduler's four remaining block phases stay explicit.
-Both variants pass finite numerical checks on
-both AMD hosts. The repair's universal whole-launch and reference proofs remain
-open; this development profile issues no source certificate.
+complete finite address traces. Both full sources have constructive complete
+block proofs. The repair also has a source-bound whole-grid correctness and
+race-freedom proof for every supported shape under the original fuel, retaining
+all converted outputs. An optional pinned-Mathlib proof connects that actual
+launch to canonical real softmax, with identity half conversions and an
+arbitrary finite seed. Both variants pass finite numerical checks on both AMD
+hosts. Original conflict-state reachability and IEEE/error bounds remain open;
+this development profile issues no registered source certificate.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
