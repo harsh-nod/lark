@@ -76,6 +76,34 @@ theorem query_prepared_tiles (ops : Ops α) (input : Nat → Nat → α) (t tile
 def firstQuery (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : State α :=
   queryPrepared ops input t 0 (setIndex s t 7 0 22)
 
+theorem first_query_state (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    firstQuery ops input t s = queryPrepared ops input t 0 (setIndex s t 7 0 22) := rfl
+
+theorem first_query_fields (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (firstQuery ops input t s).pc t = 30 ∧ (firstQuery ops input t s).indices t 9 = some 0 ∧
+    (firstQuery ops input t s).regs t 0 = some (ops.literal 0 1) ∧ (firstQuery ops input t s).epochs = s.epochs := by
+  have hs := first_query_state ops input t s
+  have h := query_prepared_fields ops input t 0 (setIndex s t 7 0 22)
+  exact ⟨(congrArg (fun state : State α => state.pc t) hs).trans h.1,
+    (congrArg (fun state : State α => state.indices t 9) hs).trans h.2.1,
+    (congrArg (fun state : State α => state.regs t 0) hs).trans h.2.2.1,
+    (congrArg (fun state : State α => state.epochs) hs).trans h.2.2.2⟩
+
+theorem first_query_native (ops : Ops α) (input : Nat → Nat → α) (t : Nat)
+    (s : State α) (hn : NativeIndices t s) : NativeIndices t (firstQuery ops input t s) :=
+  Eq.mpr (congrArg (NativeIndices t) (first_query_state ops input t s))
+    (query_prepared_native ops input t 0 (setIndex s t 7 0 22) (indices_set s t 7 22 0 (by decide) hn))
+
+theorem first_query_reads (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (t : Nat)
+    (s : State α) (hr : Reads p input s) : Reads p input (firstQuery ops input t s) :=
+  Eq.mpr (congrArg (Reads p input) (first_query_state ops input t s))
+    (query_prepared_reads p ops input t 0 (setIndex s t 7 0 22) hr)
+
+theorem first_query_good (ops : Ops α) (input : Nat → Nat → α) (t : Nat)
+    (s : State α) (hg : TraceGood s) : TraceGood (firstQuery ops input t s) :=
+  Eq.mpr (congrArg TraceGood (first_query_state ops input t s))
+    (query_prepared_good ops input t 0 (setIndex s t 7 0 22) hg)
+
 theorem first_query_eq (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (t extra : Nat) (s : State α) (ht : t < p.groups * 32) (hr : Reads p input s)
     (hn : NativeIndices t s) (hp : s.pc t = 21) :
