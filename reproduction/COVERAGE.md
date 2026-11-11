@@ -154,12 +154,16 @@ logical32 XOR/add stages and the unique total store, visits all 15 inactive
 waves, and resumes both barriers to PC51/epoch2 for all 1,024 participants.
 Actual-prefix classification/race freedom and all retained operands are proved.
 The later output-lane theorem executes the actual 192-instruction normalization
-and output phase through both eight-component rounds and halt at PC71. It
-proves every lane’s sixteen output values, 49 actual accesses, classification/
-race freedom, epoch preservation and a full memory frame outside its output
-cells. Final output-wave/block/grid composition and full source/reference
-correctness remain open. This later development evidence is outside the
-immutable v18 ledger.
+and output phase through both eight-component rounds and halt at PC71. The
+subsequent whole-launch theorem composes all actual physical output waves,
+complete blocks and rows under the original scheduler and fuel. It derives
+actual full-trace classification/race freedom, every normalized and rounded
+residual value, preservation of completed rows and original pending operands,
+all-thread halt and source-ordered extraction of both mutable buffers from the
+seeded-inout precondition. All operations, inputs and outside memory are
+quantified for rows1..255. Canonical-real/independent-reference and IEEE
+correctness remain open; this development still issues no complete
+source/reference certificate. This evidence is outside the immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |

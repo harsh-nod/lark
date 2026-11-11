@@ -229,11 +229,52 @@ optional skips). The [saved source-CI evidence](results/output-lane-ci-v1/result
 records the exact head, raw logs and scope. The real job rechecks earlier
 certified profiles; it adds no fused canonical-real or complete source certificate.
 
-Composition of those final output lanes into native waves, blocks and the
-grid, full seeded-inout source correctness and canonical source/reference
-equivalence remain open. All older frozen component, GPU, scalar-prefix,
-first-wave, first-block and second-block packets retain their original flags.
-This family still has no complete source certificate.
+The later [whole-launch proof](../../../lean/Lark/NativeFusedRmsNormCorrect.lean)
+composes the actual physical output waves, complete blocks and source grid.
+Every thread reaches halt at PC71. Every row retains all 16,384 normalized
+outputs and 16,384 rounded residuals; later rows preserve completed values and
+the original operands of rows still waiting to run. It derives actual full-trace
+classification/race freedom without assuming race freedom. The unchanged source,
+geometry and fuel are bound to the theorem for all rows1..255 and arbitrary
+operations, inputs and outside memory.
+
+The [seeded-inout correctness relation](../../../lean/Lark/InOutPartition.lean)
+requires a valid mutable-buffer declaration and the actual initialized mutable
+precondition. The original extractor returns normalized buffer0 followed by
+rounded residual buffer1. The specification preserves the exact source-order
+reduction tree, division/epsilon/rsqrt sequence, unrounded shared reads, literal
+zero weight add, multiplies and final casts. It is not an independent
+canonical-real reference theorem or an IEEE/error-bound result.
+
+The [whole-launch packet](results/whole-launch-v1/results.json) rebuilds all 66
+local Lean modules, audits 514 declarations using only the standard Lean axioms,
+and rejects 77 false claims. Its
+[independent archive replay](results/whole-launch-validation-v1/results.json)
+repeats all 80 checks from the frozen source/reader/proof closure, including the
+positive examples and all earlier/new rejection controls. New controls cover
+unseeded mutable buffers, insufficient block/grid fuel, wrong native geometry,
+wrong extraction order or missing/extra buffers, cross-row write footprints,
+readonly weights, the last output writer, other-row controls and omitted or
+duplicated output waves. The five earlier generators and proof closures remain
+byte-identical, as recorded in the
+[source comparison receipt](results/whole-launch-compatibility-v1/results.json).
+The [wheel audit](results/whole-launch-packaging-v1/results.json) checks that all
+66 local proof sources, including the seeded-inout correctness relation, are
+packaged byte-for-byte. Two
+[rehashed stage-claim controls](results/whole-launch-stage-guards-v2/results.json)
+are separately rejected before extraction/build: an earlier packet relabeled as
+whole-launch and a whole-launch report missing its extraction theorem audit.
+These two preflight checks are separate from the 77 Lean false-claim controls.
+
+Canonical-real/independent-reference equivalence, IEEE/error bounds and original
+paper results remain open. All older frozen packets retain their original
+flags. This whole-launch packet proves source-ordered machine correctness and
+still issues no complete source/reference certificate. A later
+[bounded public-release recheck](results/whole-launch-artifact-recheck-v1/results.json)
+found no original release at the inspected endpoints: KernelCraft remained
+empty, the related benchmark head was unchanged, and the title search returned
+only this independent repository. This does not exclude other authors, branches,
+unindexed/private files or future releases. No authors were contacted.
 
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
@@ -243,6 +284,8 @@ python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-block --output /tmp/fused-first-block
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage second-block --output /tmp/fused-second-block
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage output-lane --output /tmp/fused-output-lane
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/fused-whole-launch
+python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/fused-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 ```
 
@@ -251,7 +294,7 @@ python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
   --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
   --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
 # Other archived stages: results/first-wave-v1, results/first-block-v1,
-# results/second-block-v1, or results/output-lane-v1.
+# results/second-block-v1, results/output-lane-v1, or results/whole-launch-v1.
 ```
 
 ## Finite AMD results

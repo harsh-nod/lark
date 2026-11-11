@@ -59,20 +59,16 @@ tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
-has numerical evidence from both AMD hosts and a universal per-lane proof of the
-actual 210-instruction scalar prefix through both input/add/store rounds. It
-keeps rounded residual storage distinct from unrounded shared values. Its later
-native-wave proof completes all five logical32 XOR stages and both partial
-stores in a physical wave64. The later first-block-phase proof composes all 16
-waves and retains every rounded residual and unrounded shared value. The later
-second-phase proof covers the mixed physical wave's 32 active lanes, all five
-logical32 stages, unique total store, 15 inactive-wave visits and both barrier
-resumes, leaving all 1,024 threads at PC51/block epoch2. A subsequent per-lane
-proof executes normalization and both output rounds through all sixteen half
-stores to halt at PC71, with 49 actual accesses and a full memory frame outside
-the lane’s output cells. Composition of that final phase across native waves,
-blocks and grid, and canonical-real equivalence remain open; this family has
-no complete source certificate yet.
+now proves the complete native seeded-inout launch, including both logical32
+reductions/barrier resumes, every normalized output and rounded residual, all
+native-wave/block/grid scheduling and halt, actual-trace race freedom, and
+extraction of both mutable buffers. It quantifies over arbitrary operations,
+inputs and outside memory for all `1 <= rows < 256` at width 16,384 and
+1,024-thread/wave64 geometry. It keeps unrounded shared values distinct from
+rounded residuals and retains the source operation order. Both AMD hosts have
+finite numerical evidence. Canonical-real/independent-reference equivalence and
+IEEE/error bounds remain open, so this development still issues no complete
+source/reference certificate and reproduces no original production result.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.

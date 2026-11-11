@@ -9,7 +9,10 @@ The second-block stage executes the mixed logical32 block reduction and second
 barrier resume to PC51/epoch2, ready for the still-unproved normalization loop.
 The output-lane stage also proves the actual192-instruction normalization/output
 phase through sixteen stores and halt. Whole-wave/block/grid composition of
-that final phase and canonical-real source correctness remain open. Existing frozen
+that final phase remain open at that checkpoint. The whole-launch stage proves
+the complete seeded-inout execution, actual-trace classification/race freedom
+and both extracted source-ordered buffers; canonical-real/reference and IEEE
+equivalence remain open. Existing frozen
 component/GPU/prefix packets are unchanged.
 """
 
@@ -34,7 +37,8 @@ CASE = HERE / "cases/native_16384"
 TARGET = "Lark.NativeFusedRmsNormPrefix"
 TARGETS = {"lane": TARGET, "first-wave": "Lark.NativeFusedRmsNormFirstWave",
            "first-block": "Lark.NativeFusedRmsNormBarrier", "second-block": "Lark.NativeFusedRmsNormOutBarrier",
-           "output-lane": "Lark.NativeFusedRmsNormOutputFrame"}
+           "output-lane": "Lark.NativeFusedRmsNormOutputFrame",
+           "whole-launch": "Lark.NativeFusedRmsNormCorrect"}
 SOURCE_SHA256 = "c297c1842c1a4d2d9be2265aa0d03da759dda22f555947e3483eccb486e5f59e"
 PRINCIPAL = (
     "source_binding", "source_prefix_all_shapes", "source_prefix_values",
@@ -81,6 +85,19 @@ OUTPUT_PRINCIPAL = (
     "LarkNativeFusedRmsNorm.output_components_eq", "LarkNativeFusedRmsNorm.output_round_eq",
     "LarkNativeFusedRmsNorm.output_lane_eq", "LarkNativeFusedRmsNorm.initial_output_lane_run",
     "LarkNativeFusedRmsNorm.output_lane_frame", "LarkNativeFusedRmsNorm.out_ready_output_values",
+)
+
+
+WHOLE_PRINCIPAL = (
+    "source_complete_block", "source_complete_output_block", "source_row_memory_frame", "source_other_row_entry",
+    "source_whole_launch_execution", "source_whole_launch_pc", "source_whole_launch_values",
+    "source_whole_launch_extraction", "source_family_correct", "source_case_correct", "source_correct_from_pre",
+    "LarkNativeFusedRmsNorm.output_lane_other", "LarkNativeFusedRmsNorm.output_fold_run",
+    "LarkNativeFusedRmsNorm.output_wave_run", "LarkNativeFusedRmsNorm.output_waves_run",
+    "LarkNativeFusedRmsNorm.output_block_run", "LarkNativeFusedRmsNorm.native_block_run",
+    "LarkNativeFusedRmsNorm.native_block_memory_frame", "LarkNativeFusedRmsNorm.native_block_entry_other",
+    "LarkNativeFusedRmsNorm.native_rows_exec", "LarkNativeFusedRmsNorm.final_exec",
+    "LarkNativeFusedRmsNorm.final_extract", "LarkNativeFusedRmsNorm.correct", "LarkInOutPartition.correct_from_pre",
 )
 
 
@@ -158,7 +175,7 @@ theorem source_first_wave_race_free (p : Shape) (ops : Ops α) (input : Nat → 
 #print axioms source_first_wave_good
 #print axioms source_first_wave_race_free
 """
-    if stage in {"first-block", "second-block", "output-lane"}:
+    if stage in {"first-block", "second-block", "output-lane", "whole-launch"}:
         text += """
 theorem source_first_block_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
@@ -210,7 +227,7 @@ theorem source_first_barrier_race_free (p : Shape) (ops : Ops α) (input : Nat �
 #print axioms source_first_barrier_state
 #print axioms source_first_barrier_race_free
 """
-    if stage in {"second-block", "output-lane"}:
+    if stage in {"second-block", "output-lane", "whole-launch"}:
         text += """
 theorem source_mixed_cohort (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row : Nat) (s : State α) (ready : MidReady p ops input row s) :
@@ -269,7 +286,7 @@ theorem source_second_barrier_race_free (p : Shape) (ops : Ops α) (input : Nat 
 #print axioms source_second_barrier_state
 #print axioms source_second_barrier_race_free
 """
-    if stage == "output-lane":
+    if stage in {"output-lane", "whole-launch"}:
         text += """
 theorem source_output_lane_initial (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row tid : Nat) (hr : row < p.rows) (ht : tid < 1024) :
@@ -309,6 +326,61 @@ theorem source_output_lane_epochs (ops : Ops α) (input : Nat → Nat → α)
 #print axioms source_output_lane_access_count
 #print axioms source_output_lane_epochs
 """
+    if stage == "whole-launch":
+        text += """
+theorem source_complete_block (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (entry : BlockEntry p input row s) :
+    LarkPartitionCollective.runBlock ops (layout p) (geometry p) sourceFuel sourceProgram row sourceFuel.block s =
+      some (nativeBlock p ops input row s) := by
+  simpa only [source_binding.1,source_binding.2.2.2.2.1] using native_block_run p ops input row s entry
+theorem source_complete_output_block (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (ready : OutReady p ops input row s) :
+    LarkPartitionCollective.runBlock ops (layout p) (geometry p) sourceFuel sourceProgram row 1 s =
+      some (outputBlock p ops input row s) := by
+  simpa only [source_binding.1,source_binding.2.2.2.2.1] using output_block_run p ops input row 0 s ready
+theorem source_row_memory_frame (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (l : Location) (hl : ¬ RowWrites row l) :
+    (nativeBlock p ops input row s).memory l = s.memory l := native_block_memory_frame p ops input row s l hl
+theorem source_other_row_entry (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row other : Nat) (s : State α) (hne : other ≠ row)
+    (entry : BlockEntry p input row s) (otherEntry : BlockEntry p input other s) :
+    BlockEntry p input other (nativeBlock p ops input row s) := native_block_entry_other p ops input row other s hne entry otherEntry
+theorem source_whole_launch_execution (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    LarkPartitionCollective.runLaunch ops (layout p) (geometry p) sourceFuel sourceProgram (initial p input outside) =
+      some (finalState p ops input outside) ∧ raceFree (geometry p) (finalState p ops input outside).trace = true := by
+  simpa only [source_binding.1,source_binding.2.2.2.2.1] using final_exec p ops input outside
+theorem source_whole_launch_pc (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (t : Nat) (ht : t < p.rows * 1024) :
+    (finalState p ops input outside).pc t = 71 := final_pc p ops input outside t ht
+theorem source_whole_launch_values (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row : Nat) (hr : row < p.rows) :
+    RowValues ops input row (finalState p ops input outside) := final_values p ops input outside row hr
+theorem source_whole_launch_extraction (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    extract (layout p) (finalState p ops input outside) = some (spec p ops input) := final_extract p ops input outside
+theorem source_family_correct (p : Shape) (ops : Ops α) :
+    LarkInOutPartition.Correct ops (layout p) sourceMutable (geometry p) sourceFuel sourceProgram (spec p ops) := by
+  simpa only [source_binding.1,source_binding.2.2.2.1,source_binding.2.2.2.2.1] using correct p ops
+theorem source_case_correct (ops : Ops α) :
+    LarkInOutPartition.Correct ops (layout sourceShape) sourceMutable sourceGeometry sourceFuel sourceProgram (spec sourceShape ops) := by
+  simpa only [source_binding.1,source_binding.2.2.2.1,source_binding.2.2.2.2.1,source_binding.2.2.2.2.2] using correct sourceShape ops
+theorem source_correct_from_pre (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (s : State α)
+    (pre : LarkInOut.StdPre (layout p) sourceMutable input s) :
+    ∃ final, LarkPartitionCollective.runLaunch ops (layout p) (geometry p) sourceFuel sourceProgram s = some final ∧
+      raceFree (geometry p) final.trace = true ∧ extract (layout p) final = some (spec p ops input) :=
+  LarkInOutPartition.correct_from_pre ops (layout p) sourceMutable (geometry p) sourceFuel sourceProgram (spec p ops)
+    (source_family_correct p ops) input s pre
+#print axioms source_complete_block
+#print axioms source_complete_output_block
+#print axioms source_row_memory_frame
+#print axioms source_other_row_entry
+#print axioms source_whole_launch_execution
+#print axioms source_whole_launch_pc
+#print axioms source_whole_launch_values
+#print axioms source_whole_launch_extraction
+#print axioms source_family_correct
+#print axioms source_case_correct
+#print axioms source_correct_from_pre
+"""
     return text
 
 
@@ -318,9 +390,10 @@ def main():
     parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
     wave_stage = args.stage != "lane"
-    block_stage = args.stage in {"first-block", "second-block", "output-lane"}
-    second_stage = args.stage in {"second-block", "output-lane"}
-    output_stage = args.stage == "output-lane"
+    block_stage = args.stage in {"first-block", "second-block", "output-lane", "whole-launch"}
+    second_stage = args.stage in {"second-block", "output-lane", "whole-launch"}
+    output_stage = args.stage in {"output-lane", "whole-launch"}
+    whole_stage = args.stage == "whole-launch"
     target = TARGETS[args.stage]
     out = args.output.resolve()
     if any((p / ".git").exists() for p in (out, *out.parents)):
@@ -377,7 +450,12 @@ name = "Main"
     if output_stage:
         remaining = ("Composition of final output lanes into native waves, blocks and grid,\n"
                      "whole-launch and canonical-real/IEEE equivalence and original-paper results remain open.\n")
-    title = ("Native fused add RMSNorm both block phases and per-lane output through halt, PC71.\n" if output_stage else
+    if whole_stage:
+        remaining = ("Whole actual execution, actual-trace classification/race freedom and\n"
+                     "source-ordered extraction of both mutable buffers are proved.\n"
+                     "Canonical-real/independent-reference and IEEE equivalence and original-paper results remain open.\n")
+    title = ("Native fused add RMSNorm whole seeded-inout source-ordered launch correctness.\n" if whole_stage else
+             "Native fused add RMSNorm both block phases and per-lane output through halt, PC71.\n" if output_stage else
              "Native fused add RMSNorm first two block phases and both barrier resumes, PC51/epoch2.\n" if second_stage else
              "Native fused add RMSNorm first block phase and barrier resume, PC36/epoch1.\n" if block_stage else
              "Native fused add RMSNorm first-wave proof, ending at PC35.\n" if wave_stage else
@@ -438,7 +516,7 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
     log = execute("fresh-build", ["lake", "build"])
     audits = dict(re.findall(r"'([^']+)' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", log))
     principal = (PRINCIPAL + (WAVE_PRINCIPAL if wave_stage else ()) + (BLOCK_PRINCIPAL if block_stage else ())
-                 + (SECOND_PRINCIPAL if second_stage else ()) + (OUTPUT_PRINCIPAL if output_stage else ()))
+                 + (SECOND_PRINCIPAL if second_stage else ()) + (OUTPUT_PRINCIPAL if output_stage else ()) + (WHOLE_PRINCIPAL if whole_stage else ()))
     if set(principal) - audits.keys():
         raise ValueError("Principal axiom audits absent: " + str(set(principal) - audits.keys()))
     for name, ax in audits.items():
@@ -487,6 +565,19 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
             raise ValueError("No-op source control")
         (project / (name + ".lean")).write_text(statement(variant, contract, args.stage))
         execute(name, ["lake", "env", "lean", name + ".lean"], False)
+    if whole_stage:
+        positive = statement(source, contract, args.stage)
+        headers = {
+            "insufficient-source-block-fuel": positive.replace("def sourceFuel : Fuel := ⟨512,8,3,1⟩", "def sourceFuel : Fuel := ⟨512,8,2,1⟩", 1),
+            "unseeded-source-residual": positive.replace("def sourceMutable : List Nat := [0, 1]", "def sourceMutable : List Nat := [0]", 1),
+            "wrong-source-native-wave-width": positive.replace("def sourceGeometry : Geometry := ⟨1,1024,64⟩", "def sourceGeometry : Geometry := ⟨1,1024,32⟩", 1),
+            "missing-source-grid-fuel": positive.replace("def sourceFuel : Fuel := ⟨512,8,3,1⟩", "def sourceFuel : Fuel := ⟨512,8,3,0⟩", 1),
+        }
+        for name, variant in headers.items():
+            if variant == positive:
+                raise ValueError("No-op binding control: " + name)
+            (project / (name + ".lean")).write_text(variant)
+            execute(name, ["lake", "env", "lean", name + ".lean"], False)
     base = f"""import {target}
 open LarkNonlinear LarkNativeFusedRmsNorm
 set_option maxRecDepth 10000
@@ -615,6 +706,36 @@ example : outDone.pc 0 = 71 := by decide
 example : outDone.trace.length = 49 := by decide
 example : outputWeighted biasOps values 0 0 3 = 1056 := by decide
 """
+    if whole_stage:
+        base += """def tiny : Layout := ⟨[⟨.output,1⟩,⟨.output,1⟩,⟨.input,1⟩],[],[]⟩
+def seeded : State Nat := LarkInOut.initial tiny [0,1] values (fun _ => none)
+def ordinary : State Nat := LarkNonlinear.initial tiny values (fun _ => none)
+instance (row : Nat) (l : Location) : Decidable (RowWrites row l) :=
+  inferInstanceAs (Decidable ((l.space = .global ∧ l.owner = 0 ∧ (l.buffer = 0 ∨ l.buffer = 1) ∧ l.offset / 16384 = row) ∨ (l.space = .shared ∧ l.owner = row)))
+"""
+        claims.update({
+            "uninitialized-output-treated-as-seeded": "ordinary.memory (globalCell 0 0) = some 1",
+            "missing-second-extracted-buffer": "extract tiny seeded = some [1]",
+            "swapped-extracted-buffer-order": "extract tiny seeded = some [8,1]",
+            "readonly-weight-extracted-as-output": "extract tiny seeded = some [1,8,15]",
+            "cross-row-output-footprint": "RowWrites 0 (globalCell 0 (address 1 0))",
+            "spurious-readonly-row-write": "RowWrites 0 (globalCell 2 0)",
+            "last-output-column-wrong-writer": "writer (address 0 16383) = 1022",
+            "spurious-other-row-output-halt": "outDone.pc 1024 = 71",
+            "missing-native-output-wave": "((List.range 16).flatMap (fun w => cohortThreads 0 w 64)).length = 960",
+            "duplicate-output-cohort-treated-nodup": "(cohortThreads 0 0 64 ++ cohortThreads 0 0 64).Nodup",
+        })
+        witnesses += """example : ordinary.memory (globalCell 0 0) = none := by decide
+example : seeded.memory (globalCell 0 0) = some 1 := by decide
+example : seeded.memory (globalCell 1 0) = some 8 := by decide
+example : extract tiny seeded = some [1,8] := by decide
+example : ¬ RowWrites 0 (globalCell 0 (address 1 0)) := by decide
+example : ¬ RowWrites 0 (globalCell 2 0) := by decide
+example : writer (address 0 16383) = 1023 := by decide
+example : outDone.pc 1024 = 0 := by decide
+example : ((List.range 16).flatMap (fun w => cohortThreads 0 w 64)).length = 1024 := by decide
+example : (cohortThreads 0 0 64 ++ cohortThreads 0 1 64).Nodup := by decide
+"""
     (project / "Witnesses.lean").write_text(base + witnesses)
     execute("positive-cast-and-preservation-witnesses", ["lake", "env", "lean", "Witnesses.lean"])
     for name, claim in claims.items():
@@ -629,7 +750,7 @@ example : outputWeighted biasOps values 0 0 3 = 1056 := by decide
     shutil.copyfile(Path(__file__), out / "checker.py")
     shutil.copyfile(HERE / "check_program.py", out / "component_checker.py")
     report = {
-        "schema": 1, "status": ("native-inout-output-lane-checked" if output_stage else "native-inout-second-block-checked" if second_stage else "native-inout-first-block-checked" if block_stage else
+        "schema": 1, "status": ("native-inout-whole-launch-checked" if whole_stage else "native-inout-output-lane-checked" if output_stage else "native-inout-second-block-checked" if second_stage else "native-inout-first-block-checked" if block_stage else
                                  "native-inout-first-wave-checked" if wave_stage else "native-inout-scalar-prefix-checked"),
         "stage": args.stage, "local_lean_modules": len(own),
         "axiom_audits": audits, "false_claims_rejected": sum(not c["expected_accepted"] for c in checks),
@@ -692,6 +813,18 @@ example : outputWeighted biasOps values 0 0 3 = 1056 := by decide
             "output_lane_stores": 16, "output_lane_end_pc": 71,
             "output_block_execution_proved": False,
             "scope": "All rows1..255, valid blocks/lanes and arbitrary Ops/input/outside: both actual block phases and resumes; actual per-lane PC51 setup, source-ordered division/epsilon/rsqrt, two eight-component output rounds, unrounded shared reads, explicit literal-zero weight add, both multiplies and final half stores, both loop exits and halt atPC71, all16 output values,49 actual accesses, classification/RF and full memory frame outside the lane's16 output cells including every residual/shared/weight cell. Composition of final output lanes into physical waves, blocks and grid, full seeded-inout source correctness, canonical-real/IEEE equivalence and original-paper results remain open.",
+        })
+    if whole_stage:
+        report.update({
+            "output_block_execution_proved": True, "normalization_output_execution_proved": True,
+            "whole_kernel_execution_proved": True, "actual_trace_classification_proved": True,
+            "whole_launch_race_freedom_proved": True, "whole_launch_source_ordered_correctness_proved": True,
+            "whole_launch_seeded_inout_relation_proved": True, "whole_launch_both_output_buffers_extracted": True,
+            "whole_launch_rows_min": 1, "whole_launch_rows_max": 255,
+            "whole_launch_normalized_values_per_row": 16384, "whole_launch_residual_values_per_row": 16384,
+            "whole_launch_participants_per_block": 1024, "whole_launch_halt_pc": 71,
+            "whole_launch_output_accesses_per_block": 50176,
+            "scope": "All rows1..255 and arbitrary Ops/input/outside: complete actual native seeded-inout launch under the unchanged program,geometry and fuel; both reductions/barriers, physical-wave/block/grid composition, all normalized and rounded residual values, all participants atPC71, actual full-trace classification/RF derived, row frames retaining completed outputs and original pending operands, valid mutable-buffer contract and extraction of normalized buffer0 followed by residual buffer1. This is source-ordered machine correctness. Canonical-real/independent-reference equivalence, IEEE/error bounds and original-paper results remain open; no complete source/reference certificate is issued.",
         })
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")
     manifest = {p.name: sha(p) for p in sorted(out.iterdir()) if p.is_file()}

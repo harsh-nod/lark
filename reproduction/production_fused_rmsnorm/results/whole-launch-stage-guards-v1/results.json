@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "whole-launch-stage-claim-guards-checked",
+  "checks": [
+    {
+      "name": "relabeled-earlier-stage",
+      "earlier_packet": "output-lane-v1",
+      "earlier_packet_manifest_sha256": "8af48337cef13b6cf39607c7b4417b4d9e512ca33cad2025f1cb10b277838e83",
+      "input_manifest_rehashed": true,
+      "exit_code": 1,
+      "rejected_before_extraction_or_build": true,
+      "gate": "Whole-launch theorem audits absent"
+    },
+    {
+      "name": "missing-extraction-audit",
+      "earlier_packet": "whole-launch-v1",
+      "earlier_packet_manifest_sha256": "005a3d8cc2eaf7fecae080b808dbc4e7e9d8fb1d5be66346ce76b6c7b36b42cf",
+      "input_manifest_rehashed": true,
+      "exit_code": 1,
+      "rejected_before_extraction_or_build": true,
+      "gate": "Whole-launch theorem audits absent"
+    }
+  ],
+  "replayer_sha256": "2eb6fb7b1659f1b494f83088202506d547c55425bcea9eadfbb5ae00d7f5a22c",
+  "scope": "Two report-level controls with recomputed manifest hashes are rejected before creating the replay output: an earlier-stage packet relabeled as whole-launch, and a whole-launch packet missing the extraction theorem audit. Full positive source checking and archive replay are recorded separately.",
+  "source_certificates": 0,
+  "canonical_source_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "gpu_trials": 0
+}

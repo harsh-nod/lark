@@ -1,4 +1,4 @@
-"""Rebuild a frozen scalar-prefix source archive, without Git or own Lean cache."""
+"""Rebuild a frozen native execution source archive, without Git or own Lean cache."""
 
 import argparse
 import hashlib
@@ -38,11 +38,26 @@ def main():
     source_manifest = json.loads((packet / "source-manifest.json").read_text())
     report = json.loads((packet / "results.json").read_text())
     require(report["status"] in {"native-inout-scalar-prefix-checked", "native-inout-first-wave-checked",
-                                 "native-inout-first-block-checked", "native-inout-second-block-checked", "native-inout-output-lane-checked"}, "Wrong packet stage")
-    require(report["source_certificates"] == 0 and not report["whole_kernel_execution_proved"]
-            and not report["actual_trace_classification_proved"]
-            and not report["canonical_source_equivalence_proved"]
-            and not report["original_paper_fully_reproduced"], "Invented whole-source/paper claim")
+                                 "native-inout-first-block-checked", "native-inout-second-block-checked", "native-inout-output-lane-checked", "native-inout-whole-launch-checked"}, "Wrong packet stage")
+    whole_stage = report["status"] == "native-inout-whole-launch-checked"
+    require(report["source_certificates"] == 0 and not report["canonical_source_equivalence_proved"]
+            and not report["original_paper_fully_reproduced"], "Invented canonical/source-certificate/paper claim")
+    require(report["whole_kernel_execution_proved"] is whole_stage
+            and report["actual_trace_classification_proved"] is whole_stage,
+            "Whole-launch flags do not match checked stage")
+    if whole_stage:
+        require(all(report.get(k) is True for k in (
+            "whole_launch_race_freedom_proved", "whole_launch_source_ordered_correctness_proved",
+            "whole_launch_seeded_inout_relation_proved", "whole_launch_both_output_buffers_extracted")),
+            "Incomplete whole-launch source-order report")
+        whole_audits = {
+            "source_complete_block", "source_whole_launch_execution", "source_whole_launch_pc",
+            "source_whole_launch_values", "source_whole_launch_extraction", "source_family_correct",
+            "source_case_correct", "source_correct_from_pre", "LarkNativeFusedRmsNorm.native_rows_exec",
+            "LarkNativeFusedRmsNorm.final_exec", "LarkNativeFusedRmsNorm.final_extract",
+            "LarkNativeFusedRmsNorm.correct", "LarkInOutPartition.correct_from_pre",
+        }
+        require(whole_audits <= report["axiom_audits"].keys(), "Whole-launch theorem audits absent")
     out.mkdir(parents=True, exist_ok=False)
     project = out / "project"
     project.mkdir()
@@ -81,7 +96,7 @@ def main():
             command = ["lake", "env", "lean", name + ".lean"]
         start = time.monotonic()
         run = subprocess.run(command, cwd=project, env=env, text=True, capture_output=True,
-                             timeout=600 if report["status"] in {"native-inout-first-block-checked", "native-inout-second-block-checked", "native-inout-output-lane-checked"}
+                             timeout=600 if report["status"] in {"native-inout-first-block-checked", "native-inout-second-block-checked", "native-inout-output-lane-checked", "native-inout-whole-launch-checked"}
                              and name == "fresh-build" else 300)
         log = run.stdout + run.stderr
         (out / (name + ".log")).write_text(log)
@@ -98,7 +113,8 @@ def main():
         checks.append({"name": name, "expected_accepted": expected, "exit_code": run.returncode,
                        "seconds": time.monotonic() - start, "timed_out": False})
     result = {
-        "schema": 1, "status": ("frozen-output-lane-archive-replayed" if report["status"] == "native-inout-output-lane-checked"
+        "schema": 1, "status": ("frozen-whole-launch-archive-replayed" if whole_stage
+                                  else "frozen-output-lane-archive-replayed" if report["status"] == "native-inout-output-lane-checked"
                                   else "frozen-second-block-archive-replayed" if report["status"] == "native-inout-second-block-checked"
                                   else "frozen-first-block-archive-replayed" if report["status"] == "native-inout-first-block-checked"
                                   else "frozen-first-wave-archive-replayed" if report["status"] == "native-inout-first-wave-checked"
@@ -107,12 +123,12 @@ def main():
         "false_claims_rejected": sum(not c["expected_accepted"] for c in checks), "checks": checks,
         "source_archive_sha256": sha(packet / "source.tar.gz"), "packet_manifest_sha256": sha(packet / "manifest.json"),
         "git_available_on_path": False, "frozen_python_reader_replayed": True, "own_lean_compiled_cache_seeded": False,
-        "source_certificates": 0, "whole_kernel_execution_proved": False, "actual_trace_classification_proved": False,
+        "source_certificates": 0, "whole_kernel_execution_proved": whole_stage, "actual_trace_classification_proved": whole_stage,
         "canonical_source_equivalence_proved": False, "gpu_trials": 0, "model_calls": 0,
         "original_paper_fully_reproduced": False,
     }
     for key, value in report.items():
-        if key.startswith(("scalar_prefix_", "first_native_wave_", "first_native_block_", "second_native_block_", "output_lane_")):
+        if key.startswith(("scalar_prefix_", "first_native_wave_", "first_native_block_", "second_native_block_", "output_lane_", "output_block_", "whole_launch_")):
             result[key] = value
     (out / "results.json").write_text(json.dumps(result, indent=2) + "\n")
     shutil.copyfile(Path(__file__), out / "replay.py")
