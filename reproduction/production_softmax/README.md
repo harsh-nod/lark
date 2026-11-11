@@ -443,6 +443,10 @@ reject omitted principal proofs, changed counts, invented original-source grid
 or race-freedom claims, and an earlier block packet relabeled as a grid proof,
 before extraction. This grid packet retains arbitrary operations and every
 source conversion; it does not claim algebraic reassociation or an IEEE bridge.
+The [independent grid replay](results/whole-grid-validation-v1/results.json)
+rebuilds the same 125 modules, repeats all 1,461 audits and 11 refusals with
+Git unavailable and no owned compiled cache, and reproduces both complete
+finite source traces. Its 19 checks include that complete finite-trace replay.
 
 The optional [canonical-real proof](../../lean-real/LarkReal/NativeSoftmaxCanonical.lean)
 then connects that same actual repaired launch to the independent dense formula
@@ -467,6 +471,12 @@ exponential shift, together with the three full-source mutations. The 46
 reject false interpretation, cache, certificate, IEEE and original-source
 claims, missing proof audits and earlier block evidence promoted to real
 whole-grid correctness, before extraction.
+The [independent real replay](results/canonical-real-validation-v1/results.json)
+freshly rebuilds all 134 owned modules, repeats the 1,515 audits and nine
+refusals, and checks the frozen full-source reader and canonical reference.
+Git is unavailable during replay, and no owned compiled cache is seeded. Only
+the nine revision-locked external dependency packages may supply compiled
+objects; their source revisions and clean tracked bytes are checked first.
 
 The [combined wheel audit](results/grid-real-packaging-v1/results.json) matches
 the reader and all 134 required proof modules byte-for-byte with the proof
