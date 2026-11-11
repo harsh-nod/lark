@@ -110,6 +110,9 @@ passed the foundation, finite, complete-launch, independent-replay and scope
 checks at that revision. The [publication receipt](results/whole-launch-publication-v1/results.json)
 binds all archived sources, certificate reports, evidence manifests and the
 captured CI responses. Other jobs in that CI run were still running at capture.
+The later [complete CI receipt](results/ci-v1/results.json) records all nine jobs
+passing on both the source revision and the published evidence revision, with
+all 83 archived source files matched to both commits.
 
 The historical foundation packets retain their original limited claims and
 zero certificate count. The complete launch evidence is outside the immutable
