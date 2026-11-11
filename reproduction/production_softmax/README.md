@@ -324,10 +324,10 @@ milestone below. It issues zero source certificates and does not reproduce
 the original NVIDIA timings or historical model experiments.
 
 The later [constructive four-phase reduction prefix](../../lean/Lark/NativeSoftmaxReductionPrefix.lean)
-executes all16 exponentiation/XOR-sum waves, stores all32 logical partials,
+executes all 16 exponentiation/XOR-sum waves, stores all 32 logical partials,
 resumes the third barrier, and executes thread0's source-ordered serial sum.
-The fourth barrier then resumes all1,024 threads at PC93 with block epoch4,
-the exact row sum in shared bank1/slot0, and all50,257 converted exponential
+The fourth barrier then resumes all 1,024 threads at PC93 with block epoch4,
+the exact row sum in shared bank1/slot0, and all 50,257 converted exponential
 output values preserved. The actual four-phase prefix returns `Some` from
 the source initializer. A continuation theorem links that prefix to the
 unchanged `runBlock`, leaving one original block phase for normalization.
@@ -338,18 +338,28 @@ derives race freedom.
 
 The [source packet](results/reduction-prefix-v1/results.json) and
 [independent replay](results/reduction-prefix-validation-v1/results.json)
-freshly build90 Lean modules, audit1,083 declarations and reject103 false Lean
+freshly build 90 Lean modules, audit 1,083 declarations and reject 103 false Lean
 claims. The replay starts without Git or an own compiled cache and compares
 both complete finite address traces. A full-prefix integer model checks the
 actual row total and preserved first/last output values. A separate
 noncommuting `7*a+b` checksum checks the actual serial phase from a synthetic
-PC83/epoch3 entry with partial slots1..32; that checksum is not a full-prefix
+PC83/epoch3 entry with partial slots 1..32; that checksum is not a full-prefix
 witness. The six earlier noncommuting wave witnesses remain included.
-The52 [fully rehashed metadata controls](results/reduction-prefix-stage-guards-v1/results.json)
+The 52 [fully rehashed metadata controls](results/reduction-prefix-stage-guards-v1/results.json)
 reject stronger stage claims, wrong counts/fuel, missing principal proofs,
 incorrect diagnostic scope and earlier wave evidence relabeled as this
 prefix before extraction. The [wheel audit](results/reduction-prefix-packaging-v1/results.json)
-matches all90 required proof modules and the closed reader byte-for-byte.
+matches all 90 required proof modules and the closed reader byte-for-byte.
+
+All five jobs in [CI run43057612879](https://github.com/harsh-nod/lark/actions/runs/43057612879)
+passed at source commit `b8bada94ed2d1e555ca47d39ab3fc1904f7f7cda`.
+The [saved CI packet](results/reduction-prefix-ci-v1/results.json) retains raw
+logs and job metadata, including fresh export/replay and all 52 rehashed
+metadata refusals. The general suite ran 169 tests: 160 passed and nine optional
+tests skipped. All 141 selected live implementation, proof, fixture and workflow
+files match the checked commit byte-for-byte. Later tracked changes contain
+only this study's documentation and frozen evidence. The run validates the
+constructive four-phase prefix through PC93/epoch4 and its preserved outputs.
 
 Normalization execution, whole-grid composition, conflict-state reachability
 and the canonical-real/IEEE reference bridges remain open in this packet.
@@ -432,6 +442,15 @@ python3 reproduction/production_softmax/check_exp_prefix_stages.py \
   --packet /tmp/softmax-exp-prefix \
   --earlier-packet reproduction/production_softmax/results/maximum-v1 \
   --output /tmp/softmax-exp-prefix-stage-guards --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_reduction_prefix.py --output /tmp/softmax-reduction-prefix
+python3 reproduction/production_softmax/replay_reduction_prefix.py \
+  --packet /tmp/softmax-reduction-prefix \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-reduction-prefix-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_reduction_prefix_stages.py \
+  --packet /tmp/softmax-reduction-prefix \
+  --earlier-packet reproduction/production_softmax/results/exp-wave-v1 \
+  --output /tmp/softmax-reduction-prefix-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
