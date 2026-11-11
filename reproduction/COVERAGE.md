@@ -128,6 +128,17 @@ does not assert IEEE equivalence, an error bound, the complete upstream API or
 an original-paper result. Standalone rebuilds, installed-wheel checks and direct
 source/reference/task/model tamper controls pass.
 
+The additional [in-place fused add RMSNorm development study](production_fused_rmsnorm/README.md)
+pins SGLang's wrapper and its exact FlashInfer dependency. It adds initialized
+mutable-buffer interfaces and address/conditional-footprint proofs, with a fresh
+11-module component build, 40 audits and nine false-claim refusals. Both AMD
+hosts complete 24 paired trials; the CPU audit checks 127,008,768 normalized
+values and 127,008,768 residual bit patterns across both hosts/methods with zero
+failures. Signed-zero and 475 one-half-ULP normalized-method differences per host
+remain explicit. **No complete source certificate, actual-trace classification
+or original production result is claimed for this new family.** This later
+development evidence is outside the immutable v18 ledger.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |

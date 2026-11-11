@@ -100,6 +100,8 @@ jobs:
       - name: Check native RMSNorm execution components
         run: lake build Lark.NativeRmsNormCorrect
         working-directory: lean
+      - name: Check native in-place fused RMSNorm interface and source components
+        run: python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
       - name: Check native tiled attention address and footprint components
         run: lake build Lark.NativeAttentionAddress
         working-directory: lean

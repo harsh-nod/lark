@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-11T03:03:45.545922+00:00",
+  "status": "development; source/interface/address components and finite native validation passed; complete source proof pending",
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "paper_family": "sglang_fused_add_rmsnorm",
+  "independent_adaptation": true,
+  "authors_original_adapted_file_available": false,
+  "sglang": {
+    "repository": "https://github.com/sgl-project/sglang",
+    "commit": "fc32cbff6983c7573f4b60eab8b44815668130a0",
+    "selection": "latest root commit before 2026-11-01T00:00:00Z; this is an independent selection, not an inferred original experiment revision",
+    "wrapper_path": "python/sglang/kernels/aot/csrc/elementwise/fused_add_rms_norm_kernel.cu",
+    "wrapper_git_blob": "02d5b20c9b115385862aa570e14c168f0fbfcf03",
+    "cmake_path": "python/sglang/kernels/aot/CMakeLists.txt"
+  },
+  "flashinfer": {
+    "repository": "https://github.com/flashinfer-ai/flashinfer",
+    "commit": "bc29697ba20b7e6bdb728ded98f04788e16ee021",
+    "path": "include/flashinfer/norm.cuh",
+    "selection": "exact dependency revision in the pinned SGLang CMakeLists.txt",
+    "selected_template": "flashinfer::norm::FusedAddRMSNormKernel<8,__half>",
+    "host_entry": "flashinfer::norm::FusedAddRMSNorm"
+  },
+  "files_sha256": {
+    "FLASHINFER_LICENSE": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de",
+    "SGLANG_LICENSE": "1495e1e757ef4d0925a2350563cf5754bb23c51701a8ec4fb3c5cdcbedae6747",
+    "flashinfer-norm.cuh": "a4c010e8aa1acbeeb7ea1f09a4ddf53d89facc1a144e99b5242ab8a40d8923c3",
+    "sglang-CMakeLists.txt": "72ed61c72db74fc672cffe0e617ec22e9bf471021dccba7b0052f5652fdb58a6",
+    "sglang-fused_add_rms_norm_kernel.cu": "91173e4c7d1139209dbe60ada9f6c160cc579e64d6e2bc6093b19489f194d893"
+  },
+  "shape": {
+    "width": 16384,
+    "vector_width": 8,
+    "rounds": 2,
+    "threads_per_block": 1024,
+    "logical_warp": 32,
+    "native_wave": 64,
+    "shared_partials": 32,
+    "shared_unrounded_values": 16384,
+    "rows_min": 1,
+    "rows_max": 255,
+    "gpu_rows": [
+      1,
+      3,
+      64,
+      255
+    ]
+  },
+  "host_contract": [
+    "three mutually disjoint contiguous FP16 buffers; input and residual are initialized in-out buffers, weight is read-only",
+    "16-byte aligned input/residual/weight storage",
+    "fixed width16384 and rows1..255; all scalar indices below signed-int32 limit",
+    "HIP wave64; complete aligned logical32 shuffle cohorts inside each native wave"
+  ],
+  "rewrites": [
+    {
+      "change": "Instantiate FP16, width16384, VEC_SIZE8, contiguous row strides, zero weight bias and epsilon1e-5; flatten 2-D (32,32) block to1024 threads",
+      "scope": "concrete independent interface, not original adapted bytes"
+    },
+    {
+      "change": "Scalarize vector accesses in per-thread component order; preserve FP32 sum before residual half store and keep unrounded x in shared storage for output",
+      "scope": "alignment/disjointness premises; no general vector/alignment support or IEEE compiler-equivalence proof"
+    },
+    {
+      "change": "Guard identical per-logical-warp partial writes with lane0 and identical final shared-sum writes with thread0",
+      "scope": "ownership rewrite removing concurrent same-cell stores, as described in the paper common adaptations"
+    },
+    {
+      "change": "Map CUDA logical32 XOR shuffles to explicit width32 HIP shuffles inside native wave64",
+      "scope": "scoped architecture adaptation; hardware correspondence requires separate finite checks"
+    },
+    {
+      "change": "Use rsqrtf and omit programmatic dependent-launch assembly/configuration",
+      "scope": "single ordinary launch; exact-real interpretation only, no NVIDIA execution or approximate-instruction equivalence claim"
+    }
+  ],
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "whole_kernel_race_freedom_proved": false,
+  "ieee_equivalence_proved": false,
+  "floating_point_error_bound_proved": false,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "initialized_inout_interface_proved": true,
+  "address_coverage_and_ownership_proved": true,
+  "conditional_footprint_theorem_proved": true,
+  "finite_gpu_trials_per_host": 24,
+  "gpu_launches_per_host": 48,
+  "finite_normalized_comparisons_both_hosts": 127008768,
+  "finite_residual_bit_comparisons_both_hosts": 127008768,
+  "finite_numerical_failures": 0,
+  "canonical_source_equivalence_proved": false
+}
