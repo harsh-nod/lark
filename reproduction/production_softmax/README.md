@@ -6,7 +6,7 @@ implements both the clamped-read original and the guarded-read repair described
 in [Appendix A.14 of the paper](https://arxiv.org/html/2611.02028v1#A1.SS14).
 The complete sources are bound to their translated programs. Instruction-level
 Lean witnesses and complete finite address traces expose the original conflict;
-finite numerical tests pass on both AMD hosts. Whole-source reachability,
+finite numerical tests pass on both AMD hosts. Conflict-state reachability,
 universal repaired-launch correctness and its reference bridge remain open.
 **This development profile issues zero source certificates.**
 
@@ -63,8 +63,9 @@ The dedicated source job repeats the fresh component/finite-trace archive
 checks and four contract tests. The other jobs recheck the existing general
 proof/test suite and real-certified profiles. The
 [saved API responses and raw logs](results/source-ci-v1/results.json) identify
-the exact source commit; later numerical/documentation metadata changes no
-reader, machine, proof or runtime source bytes.
+the exact component source commit. Subsequent numerical/publication receipts
+change metadata only. This component CI run does not validate the later
+maximum-prefix extension.
 
 The four local proof files establish:
 
@@ -81,6 +82,39 @@ Likewise, the sufficient classification theorem does not prove that every access
 in every complete repaired launch satisfies the classification. Those are
 separate remaining source-execution obligations. There is no canonical-real
 softmax theorem, IEEE equivalence theorem or numerical error bound here.
+
+The later [actual maximum-prefix proof](../../lean/Lark/NativeSoftmaxMaxPrefix.lean)
+starts at the actual machine initializer for both complete source variants. Every
+valid thread, for every supported row count and arbitrary arithmetic operations,
+inputs and outside memory, executes all seven outer iterations, all eight
+components per iteration, every clamp branch and both false loop exits. With
+the unchanged lane fuel 4,096, it parks at PC20 immediately before the first
+logical32 shuffle. Register0 contains the exact source-ordered maximum fold,
+including every clamped duplicate read and explicit input half conversion.
+
+The actual prefix has exactly 56 accesses. All are reads of input buffer1; all
+memory and epochs remain unchanged, and prefix race freedom is derived without
+assuming it. The [exact count theorem](../../lean/Lark/NativeSoftmaxMaxPrefixCost.lean)
+establishes 497 scalar IR instructions for tid0..80 and 498 for tid81..1023.
+These are model instruction counts, not GPU instructions or NVIDIA timings.
+Noncommutative word-valued witnesses check the source operand/cast order at both
+sides of the final-clamp boundary.
+
+The [maximum-prefix packet](results/max-prefix-v1/results.json) and its
+[independent archive replay](results/max-prefix-validation-v1/results.json)
+freshly build 20 local Lean modules, audit 143 declarations and reject 18 false
+claims. They retain the exact source/reader/IR/interface binding and complete
+proof closure. The replay starts without Git or cached own
+Lean objects and also compares both complete finite address traces. The logical
+reductions, shared partial stores, barriers, exponentiation/sum and normalization
+passes, whole block/grid execution, conflict-state reachability and reference
+bridge remain open. This stage still issues zero source certificates.
+Six [fully rehashed stage controls](results/max-prefix-stage-guards-v1/results.json)
+separately reject invented certificates/whole-launch/reference claims, an
+omitted input-trace audit and earlier components relabeled as this prefix.
+All six fail before extraction or compilation.
+The [wheel audit](results/max-prefix-packaging-v1/results.json) checks that the
+complete 20-module proof closure and closed reader are packaged byte-for-byte.
 
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
@@ -117,6 +151,11 @@ python3 reproduction/production_softmax/replay_components.py \
   --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
   --output /tmp/softmax-components-replay --lean-bin /path/to/lean-4.19.0/bin
 python3 -m unittest discover -s tests -p test_native_softmax.py -v
+python3 reproduction/production_softmax/check_prefix.py --output /tmp/softmax-max-prefix
+python3 reproduction/production_softmax/replay_prefix.py \
+  --packet /tmp/softmax-max-prefix \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-max-prefix-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence

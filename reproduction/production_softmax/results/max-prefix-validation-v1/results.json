@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "status": "frozen-softmax-maximum-prefix-and-finite-traces-replayed",
+  "stage": "max-prefix",
+  "source_archive_sha256": "d4d7467b7c140af2e41ecc6f3efc61b23d0a06b97d7a426e09252f4f338e4383",
+  "packet_manifest_sha256": "7a914c53c9d471524aca4a2019efd083091c6c00f57d7c3864d37181e1011def",
+  "local_lean_modules": 20,
+  "axiom_audits": 143,
+  "false_lean_claims_rejected": 18,
+  "checks": [
+    {
+      "name": "frozen-reader",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 0.15854482306167483,
+      "timed_out": false
+    },
+    {
+      "name": "fresh-build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 27.66640804405324,
+      "timed_out": false
+    },
+    {
+      "name": "changed-infinity-seed",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.607169719063677,
+      "timed_out": false
+    },
+    {
+      "name": "changed-max-clamp",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.262444405932911,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-inner-component",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 3.9882471029413864,
+      "timed_out": false
+    },
+    {
+      "name": "changed-outer-stride",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 3.9256959229242057,
+      "timed_out": false
+    },
+    {
+      "name": "swapped-max-operands",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 3.8095975019969046,
+      "timed_out": false
+    },
+    {
+      "name": "changed-first-shuffle",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.214594410033897,
+      "timed_out": false
+    },
+    {
+      "name": "changed-later-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.2558183069340885,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-lane-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.503607906051911,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-source-private-layout",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 4.50446452095639,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-prefix-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.32818510103970766,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-prefix-trace-length",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.31884078099392354,
+      "timed_out": false
+    },
+    {
+      "name": "insufficient-prefix-fuel",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.35049394401721656,
+      "timed_out": false
+    },
+    {
+      "name": "missing-half-conversion",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3991951609496027,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-clamped-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4550562349613756,
+      "timed_out": false
+    },
+    {
+      "name": "omitted-final-round",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.464165261015296,
+      "timed_out": false
+    },
+    {
+      "name": "reversed-input-order",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4314214929472655,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-initial-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4601232149871066,
+      "timed_out": false
+    },
+    {
+      "name": "wrong-exact-instruction-count",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3720819599693641,
+      "timed_out": false
+    },
+    {
+      "name": "full-finite-source-replay",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "seconds": 27.078489445033483,
+      "timed_out": false
+    }
+  ],
+  "git_available_on_path": false,
+  "own_lean_compiled_cache_seeded": false,
+  "complete_finite_traces_compared": [
+    {
+      "case": "native_race",
+      "accesses": 489926,
+      "trace_content_sha256": "8a3163f040b4c353e527b12f12fb638bd602eb7efb62297047e81fdc1b264329"
+    },
+    {
+      "case": "native_fixed",
+      "accesses": 475752,
+      "trace_content_sha256": "15cb39ec093bf3ee6eab994973fe0fc9965924d8b36c8b3b639fc062dec8588a"
+    }
+  ],
+  "actual_maximum_prefix_execution_proved": true,
+  "starts_at_actual_initializer": true,
+  "endpoint_pc": 20,
+  "accesses_per_lane": 56,
+  "prefix_race_freedom_proved": true,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "conflict_witness_state_reachability_proved": false,
+  "actual_trace_universal_classification_proved": false,
+  "canonical_source_equivalence_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "model_calls": 0,
+  "gpu_trials": 0
+}

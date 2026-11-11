@@ -31,6 +31,20 @@ jobs:
             --output /tmp/lark-softmax-components-replay --lean-bin "$HOME/.elan/bin"
       - name: Check closed native softmax contract and private-array ownership
         run: python3 -m unittest discover -s tests -p test_native_softmax.py -v
+      - name: Check source-bound native softmax maximum prefix and rejection controls
+        run: python3 reproduction/production_softmax/check_prefix.py --output /tmp/lark-softmax-max-prefix
+      - name: Replay native softmax maximum-prefix archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_prefix.py \
+            --packet /tmp/lark-softmax-max-prefix \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-max-prefix-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check maximum-prefix report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_prefix_stages.py \
+            --packet /tmp/lark-softmax-max-prefix \
+            --earlier-packet reproduction/production_softmax/results/components-v3 \
+            --output /tmp/lark-softmax-max-prefix-stage-guards --lean-bin "$HOME/.elan/bin"
   exact-real:
     runs-on: ubuntu-latest
     timeout-minutes: 20

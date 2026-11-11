@@ -73,7 +73,9 @@ in the real theorem; IEEE/error bounds and original production results remain op
 The separate [native llm.c softmax study](reproduction/production_softmax/README.md)
 binds the complete three-pass original and repaired sources to their scalar IR,
 checks the paper's clamped-read conflict at instruction level, and replays both
-complete finite address traces. Both variants pass finite numerical checks on
+complete finite address traces. Its actual scalar maximum prefix is proved
+from the initializer, with all 56 input reads and exact source operand order.
+Both variants pass finite numerical checks on
 both AMD hosts. The repair's universal whole-launch and reference proofs remain
 open; this development profile issues no source certificate.
 
