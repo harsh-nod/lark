@@ -90,6 +90,12 @@ checks actual native scheduling, barrier convergence and resumption, all
 block-owned zero outputs, the first full K/V tile, input preservation and
 prefix-trace race freedom. Each lane executes 5,405 scalar instructions
 before the barrier.
+The [compute prefix](online_attention/WEIGHTS.md) adds actual query preparation,
+all 32 score dot products and maximum updates, exponential weights and ordered
+denominator accumulation for each lane's first query row and first key tile.
+It checks a 58,891-instruction per-lane continuation
+from PC 21 through PC 56, with values, input preservation and prefix-trace race
+freedom. Output updates and later query/key tiles remain open.
 Whole-launch execution, complete trace membership and source-reference equality
 remain unproved. It contributes zero accepted source certificates.
 

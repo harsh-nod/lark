@@ -1,8 +1,8 @@
 """Rebuild a native attention execution prefix outside Git, without model/GPU calls.
 
-The lane stage checks runLane through the first barrier; the first-block stage
-also checks native scheduling and barrier resumption. Neither is a whole-launch
-or source-reference certificate.
+The stages check lane initialization, native first-block scheduling, and the
+first query's scores and exponential denominator. These are execution prefixes,
+not whole-launch or source-reference certificates.
 """
 
 import argparse
@@ -24,12 +24,20 @@ from lark_kernels.ir import lean_node  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_fp16"
-TARGETS = {"lane": "Lark.NativeAttentionFirstLane", "first-block": "Lark.NativeAttentionFirstResume"}
+TARGETS = {"lane": "Lark.NativeAttentionFirstLane", "first-block": "Lark.NativeAttentionFirstResume",
+           "weights": "Lark.NativeAttentionWeights"}
 LANE_AUDITS = ("first_lane_eq", "first_lane_run", "first_lane_output", "first_lane_tile", "first_lane_reads",
                "first_lane_good", "first_lane_race_free")
 BLOCK_AUDITS = LANE_AUDITS + (
     "first_block_from_initial", "first_block_step", "first_resumed_pc", "first_resumed_epoch",
     "first_resumed_native", "first_resumed_reads", "first_resumed_output", "first_resumed_tile", "first_resumed_good",
+)
+WEIGHT_AUDITS = BLOCK_AUDITS + (
+    "first_query_from_resumed", "dot_columns_eq", "dot_columns_value", "score_dot_eq", "score_rows_eq",
+    "score_rows_maximum", "score_rows_value", "score_rows_good", "score_computation_eq", "first_scores_from_resumed",
+    "exp_columns_eq", "exp_columns_sum", "exp_columns_value", "exp_columns_good", "exp_computation_eq",
+    "first_weights_from_resumed", "first_weights_fields", "first_weights_values", "first_weights_reads", "first_weights_good",
+    "first_weights_initial_prefix",
 )
 
 
@@ -84,9 +92,10 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
-    block_stage = args.stage == "first-block"
+    weights_stage = args.stage == "weights"
+    block_stage = args.stage != "lane"
     target = TARGETS[args.stage]
-    names = BLOCK_AUDITS if block_stage else LANE_AUDITS
+    names = WEIGHT_AUDITS if weights_stage else BLOCK_AUDITS if block_stage else LANE_AUDITS
     out = args.output.resolve()
     require(not any((p / ".git").exists() for p in (out, *out.parents)),
             "Choose --output outside a Git checkout for the standalone check")
@@ -171,6 +180,29 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
   decide
 """,
         })
+    if weights_stage:
+        controls.update({
+            "wrong-weight-prefix-pc": """
+example (ops : Ops α) (input : Nat → Nat → α) (t keyTile : Nat) (s : State α) :
+    (firstWeights ops input t keyTile s).pc t = 55 := by
+  rw [(first_weights_fields ops input t keyTile s).1]
+  decide
+""",
+            "wrong-exponential-weight": """
+example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : State Nat)
+    (hw : normalizedWeight ops (values 0) maximum = 0) :
+    (weightsComputed ops t values maximum s).memory (sharedCell t 3 (scoreAddress t 0)) = some 1 := by
+  rw [weights_computed_value ops t values 0 maximum s (by decide), hw]
+  decide
+""",
+            "wrong-denominator-value": """
+example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : State Nat)
+    (hd : expFold ops values maximum 0 32 (ops.literal 0 1) = 0) :
+    (weightsComputed ops t values maximum s).regs t 5 = some 1 := by
+  rw [(weights_computed_fields ops t values maximum s).2.2.1, hd]
+  decide
+""",
+        })
     for name, content in controls.items():
         (standalone / (name + ".lean")).write_text(header + content)
     frozen = standalone / "native-source"
@@ -182,15 +214,19 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
     shutil.copyfile(HERE / "upstream/LICENSE", frozen / "UPSTREAM-LICENSE")
     shutil.copyfile(ROOT / "LICENSE", standalone / "LICENSE")
     shutil.copyfile(Path(__file__), out / "checker.py")
-    scope = ("actual first runBlock phase, including 32 native lanes, block convergence and resume to PC 21"
+    scope = ("native first block phase and resume, then a per-lane continuation from PC 21 through 58891 instructions "
+             "to PC 56: first query row scores, maximum, exponential weights and denominator" if weights_stage else
+             "actual first runBlock phase, including 32 native lanes, block convergence and resume to PC 21"
              if block_stage else "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20")
+    remaining = ("Output updates, later query/key tiles, whole-launch execution and dense-reference equality remain unproved."
+                 if weights_stage else "It does not execute attention computation or later block phases, compose "
+                 "the whole launch, or prove dense-reference equality.")
     (standalone / "README.md").write_text(
         f"# Native attention {args.stage} prefix proof\n\n"
         "Run `lake build`, then `lake env lean Main.lean` with Lean 4.19.0.\n"
         f"The {len(controls)} other top-level Lean files intentionally fail at false postconditions.\n"
         f"Scope: {scope}.\n"
-        "It does not execute attention computation or later block phases, compose\n"
-        "the whole launch, or prove dense-reference equality.\n")
+        + remaining + "\n")
     source_paths = sorted(p for p in standalone.rglob("*") if p.is_file())
     write(out / "source-manifest.json", {str(p.relative_to(standalone)): sha(p) for p in source_paths})
     with tarfile.open(out / "source.tar.gz", "w:gz") as archive:
@@ -214,12 +250,15 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
         require(set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, "Extra axiom: " + name)
         audits[name] = axioms
     report = {
-        "schema": 1, "status": "native-block-prefix-checked" if block_stage else "native-lane-prefix-checked",
+        "schema": 1, "status": "native-weights-prefix-checked" if weights_stage else
+                               "native-block-prefix-checked" if block_stage else "native-lane-prefix-checked",
         "stage": args.stage,
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": scope,
         "groups": {"min": 1, "max": 65535}, "block": 32, "warp": 64,
-        "prefix_instructions_per_lane": 5405, "barrier_pc": 20,
+        "prefix_instructions_per_lane": 58891 if weights_stage else 5405, "barrier_pc": 20,
+        "initialization_instructions_per_lane": 5405,
+        "instruction_count_start_pc": 21 if weights_stage else 0,
         "input_preservation_proved": True, "output_initialization_proved": True,
         "first_kv_row_copy_proved": True, "prefix_actual_trace_race_freedom_proved": True,
         "first_block_phase_and_resume_proved": block_stage,
@@ -228,6 +267,14 @@ example (p : Shape) (ops : Ops Nat) (input : Nat → Nat → Nat) (b t : Nat) (s
         "barrier_resumption_proved": block_stage,
         "resumed_pc": 21 if block_stage else None,
         "block_epoch_increment": 1 if block_stage else 0,
+        "first_query_scores_and_exponential_weights_proved": weights_stage,
+        "first_query_denominator_proved": weights_stage,
+        "query_preparation_instructions": 1030 if weights_stage else 0,
+        "score_loop_instructions": 57666 if weights_stage else 0,
+        "exponential_loop_instructions": 195 if weights_stage else 0,
+        "compute_end_pc": 56 if weights_stage else None,
+        "later_query_tiles_proved": False, "later_key_tiles_proved": False,
+        "weighted_value_product_proved": False, "output_updates_proved": False,
         "arbitrary_scalar_operations": True, "axioms": audits,
         "fresh_standalone_build": True, "local_lean_modules": len(modules),
         "source_sha256": sha(CASE / "kernel.hip"),

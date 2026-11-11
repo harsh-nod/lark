@@ -147,6 +147,38 @@ theorem first_weights_from_resumed (p : Shape) (ops : Ops α) (input : Nat → N
     (first_resumed_native p ops input b t s ht) (first_resumed_tiles p ops input b t s ht)
     (first_resumed_pc p ops input b t s ht)
 
+/-- A joined prefix result from every declared input and outside memory. PC 56
+is a continuation point, not a barrier or completed attention launch. -/
+theorem first_weights_initial_prefix (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (b t extra : Nat) (hb : b < p.groups)
+    (ht : t ∈ blockThreads (geometry p) b) :
+    ∃ final,
+      runBlock ops (layout p) (geometry p) fuel program b fuel.block (initial (layout p) input outside) =
+        runBlock ops (layout p) (geometry p) fuel program b 8
+          (firstResumed p ops input b (initial (layout p) input outside)) ∧
+      runLane ops (layout p) (geometry p) program t (extra + 58891)
+          (firstResumed p ops input b (initial (layout p) input outside)) =
+        runLane ops (layout p) (geometry p) program t extra final ∧
+      final.pc t = 56 ∧ final.regs t 0 = some (tileMaximum ops input t 0 0) ∧
+      final.regs t 5 = some (tileDenominator ops input t 0 0) ∧
+      ScoreRange t (fun row => normalizedWeight ops (scoreValue ops input t 0 0 row)
+        (tileMaximum ops input t 0 0)) 0 32 final ∧
+      Reads p input final ∧ raceFree (geometry p) final.trace = true := by
+  let start := initial (layout p) input outside
+  let resumed := firstResumed p ops input b start
+  have hr := initial_reads p input outside
+  have hg : TraceGood resumed := first_resumed_good p ops input b start
+    (by intro u hu; rfl) (by intro a ha; cases ha)
+  have he : (resumed.epochs t).block % 2 = 1 :=
+    congrArg (fun epoch : Epoch => epoch.block % 2) (first_resumed_epoch p ops input b t start ht)
+  have hf := first_weights_fields ops input t 0 resumed
+  refine ⟨firstWeights ops input t 0 resumed,
+    first_block_step p ops input b 8 start hb hr (by intro u hu; rfl),
+    first_weights_from_resumed p ops input b t extra start hb ht hr,
+    hf.1, hf.2.1, hf.2.2.1, first_weights_values ops input t 0 resumed,
+    first_weights_reads p ops input t 0 resumed (first_resumed_reads p ops input b start hr), ?_⟩
+  exact race_free p _ (first_weights_good ops input t 0 resumed he hg)
+
 #print axioms exp_computation_eq
 #print axioms weights_computed_fields
 #print axioms weights_computed_value
@@ -156,4 +188,5 @@ theorem first_weights_from_resumed (p : Shape) (ops : Ops α) (input : Nat → N
 #print axioms first_weights_reads
 #print axioms first_weights_good
 #print axioms first_weights_from_resumed
+#print axioms first_weights_initial_prefix
 end LarkNativeAttention

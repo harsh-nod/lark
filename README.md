@@ -67,7 +67,9 @@ The later [native FP16 development](reproduction/online_attention/NATIVE.md)
 adds the full tiled source, checked address/ownership components and paired
 both-host numerical evidence. Its [first-block proof](reproduction/online_attention/BLOCK.md)
 checks actual setup, output zeroing, full first K/V copies and barrier resumption
-under the native scheduler. Attention computation, whole-launch execution and
+under the native scheduler. A later [compute-prefix proof](reproduction/online_attention/WEIGHTS.md)
+extends each lane through its first query row's scores and exponential
+denominator. Output updates, later tiles, whole-launch execution and
 source-reference equality remain unfinished.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,

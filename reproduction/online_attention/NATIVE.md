@@ -8,7 +8,8 @@ use FP32. The group index flattens batch and attention head.
 
 **This source has no whole-launch Lean certificate yet.** The accepted facts
 below are source identity, address/ownership theorems, a sufficient footprint
-condition and actual first-block execution through barrier resumption. Whole-launch
+condition, actual first-block execution through barrier resumption, and a
+per-lane first-query score/denominator continuation. Whole-launch
 execution, complete actual-trace membership and canonical-reference equality
 must still be joined before this becomes an accepted source certificate.
 It does not reproduce the authors' missing production adaptation or model run.
@@ -46,6 +47,12 @@ bound is asserted.
   zero outputs, the complete first K/V shared tile, input preservation and
   prefix-trace race freedom. The [block checkpoint](BLOCK.md) leaves attention
   computation and later block phases open.
+- `NativeAttentionWeights.lean` now joins query preparation, all 32 score dot
+  products, maximum updates and in-place exponentials/denominator accumulation
+  through PC 56. The [compute checkpoint](WEIGHTS.md) checks the actual
+  58,891-instruction per-lane continuation from PC 21 and its values, input
+  preservation and prefix-trace race freedom from arbitrary initial memory.
+  Output updates, later query/key tiles and complete scheduling remain open.
 
 Fresh checks accept the full source's IR and array layout and reject five
 changes directly in Lean: a missing load barrier, a wrong tile-store owner,
@@ -65,6 +72,7 @@ lake -d lean build Lark.NativeAttentionAddress
 python3 reproduction/online_attention/check_native_program.py --output /tmp/native-binding
 python3 reproduction/online_attention/check_native_prefix.py --output /tmp/native-prefix
 python3 reproduction/online_attention/check_native_prefix.py --stage first-block --output /tmp/native-block
+python3 reproduction/online_attention/check_native_prefix.py --stage weights --output /tmp/native-weights
 python3 -m unittest discover -s tests -p test_native_attention.py -v
 ```
 

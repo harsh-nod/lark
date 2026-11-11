@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "status": "native-weights-prefix-checked",
+  "stage": "weights",
+  "checked_at_utc": "2026-11-11T00:41:08.000526+00:00",
+  "scope": "native first block phase and resume, then a per-lane continuation from PC 21 through 58891 instructions to PC 56: first query row scores, maximum, exponential weights and denominator",
+  "groups": {
+    "min": 1,
+    "max": 65535
+  },
+  "block": 32,
+  "warp": 64,
+  "prefix_instructions_per_lane": 58891,
+  "barrier_pc": 20,
+  "initialization_instructions_per_lane": 5405,
+  "instruction_count_start_pc": 21,
+  "input_preservation_proved": true,
+  "output_initialization_proved": true,
+  "first_kv_row_copy_proved": true,
+  "prefix_actual_trace_race_freedom_proved": true,
+  "first_block_phase_and_resume_proved": true,
+  "all_block_outputs_initialized_proved": true,
+  "first_kv_tile_loaded_proved": true,
+  "barrier_resumption_proved": true,
+  "resumed_pc": 21,
+  "block_epoch_increment": 1,
+  "first_query_scores_and_exponential_weights_proved": true,
+  "first_query_denominator_proved": true,
+  "query_preparation_instructions": 1030,
+  "score_loop_instructions": 57666,
+  "exponential_loop_instructions": 195,
+  "compute_end_pc": 56,
+  "later_query_tiles_proved": false,
+  "later_key_tiles_proved": false,
+  "weighted_value_product_proved": false,
+  "output_updates_proved": false,
+  "arbitrary_scalar_operations": true,
+  "axioms": {
+    "first_lane_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_run": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_lane_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_lane_race_free": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_block_from_initial": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_block_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_pc": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_epoch": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_resumed_native": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_resumed_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_tile": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_resumed_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_query_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "dot_columns_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "dot_columns_value": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_dot_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_maximum": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_rows_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "score_rows_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "score_computation_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_scores_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exp_columns_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_columns_sum": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_columns_value": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exp_columns_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "exp_computation_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_from_resumed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_weights_fields": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_values": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "first_weights_reads": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_good": [
+      "propext",
+      "Quot.sound"
+    ],
+    "first_weights_initial_prefix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "fresh_standalone_build": true,
+  "local_lean_modules": 43,
+  "source_sha256": "6504b91255ed0a59d072376b9e071e76c154655986e8c1bad566258a19e19c1e",
+  "source_archive_sha256": "81791ce931a09eed1b1f38d3613e2d8704f82a042b2e78148866419e61a549e2",
+  "checks": [
+    {
+      "name": "build",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 51.373588259040844
+    },
+    {
+      "name": "main",
+      "accepted": true,
+      "expected_accepted": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 2.267154713976197
+    },
+    {
+      "name": "wrong-barrier-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.32949216198176146
+    },
+    {
+      "name": "nonzero-initialized-output",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.342037970025558
+    },
+    {
+      "name": "wrong-copied-key-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3167763720266521
+    },
+    {
+      "name": "wrong-resumed-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.331040904042311
+    },
+    {
+      "name": "missing-block-epoch-bump",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.34108382504200563
+    },
+    {
+      "name": "wrong-block-key-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.31683319597505033
+    },
+    {
+      "name": "wrong-weight-prefix-pc",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.3542126460233703
+    },
+    {
+      "name": "wrong-exponential-weight",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.31219786702422425
+    },
+    {
+      "name": "wrong-denominator-value",
+      "accepted": false,
+      "expected_accepted": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.30417247203877196
+    }
+  ],
+  "false_prefix_claims_rejected": 9,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "whole_kernel_race_freedom_proved": false,
+  "source_reference_equality_proved": false,
+  "ieee_equivalence_proved": false,
+  "original_paper_fully_reproduced": false,
+  "gpu_trials": 0,
+  "model_calls": 0
+}

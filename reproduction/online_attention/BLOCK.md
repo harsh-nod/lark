@@ -3,8 +3,9 @@
 The native FP16 attention proof now composes all 32 lanes in the original
 block32/wave64 scheduler and resumes the first block barrier. This extends the
 [lane prefix](PREFIX.md). **It is still a partial execution proof, with zero
-whole-source attention certificates.** Attention computation, later phases and
-canonical dense-reference equality remain unproved.
+whole-source attention certificates.** The later [compute checkpoint](WEIGHTS.md)
+extends this result through the first query row's scores and denominator.
+Output computation, later phases and canonical dense-reference equality remain unproved.
 
 `first_block_from_initial` quantifies over every permitted group count
 (`1..65535`), every active block, every scalar type and operation interpretation,

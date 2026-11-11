@@ -104,7 +104,7 @@ jobs:
       - name: Check native attention source identity and footprint witnesses
         run: python3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding
       - name: Rebuild native attention execution prefix outside Git
-        run: python3 reproduction/online_attention/check_native_prefix.py --stage first-block --output /tmp/lark-native-attention-prefix
+        run: python3 reproduction/online_attention/check_native_prefix.py --stage weights --output /tmp/lark-native-attention-prefix
       - name: Run tests, including Lean integration and mutants
         run: python -m unittest discover -s tests -v
       - name: Check two-launch FFN composition
