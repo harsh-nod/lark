@@ -37,7 +37,7 @@ def main():
         require(Path(name).name == name and sha(packet / name) == digest, "Packet hash/path: " + name)
     source_manifest = json.loads((packet / "source-manifest.json").read_text())
     report = json.loads((packet / "results.json").read_text())
-    require(report["status"] == "native-inout-scalar-prefix-checked", "Wrong packet stage")
+    require(report["status"] in {"native-inout-scalar-prefix-checked", "native-inout-first-wave-checked"}, "Wrong packet stage")
     require(report["source_certificates"] == 0 and not report["whole_kernel_execution_proved"]
             and not report["actual_trace_classification_proved"]
             and not report["canonical_source_equivalence_proved"]
@@ -95,7 +95,8 @@ def main():
         checks.append({"name": name, "expected_accepted": expected, "exit_code": run.returncode,
                        "seconds": time.monotonic() - start, "timed_out": False})
     result = {
-        "schema": 1, "status": "frozen-scalar-prefix-archive-replayed", "fresh_source_files": len(seen),
+        "schema": 1, "status": ("frozen-first-wave-archive-replayed" if report["status"] == "native-inout-first-wave-checked"
+                                  else "frozen-scalar-prefix-archive-replayed"), "fresh_source_files": len(seen),
         "local_lean_modules": report["local_lean_modules"], "axiom_audits": len(report["axiom_audits"]),
         "false_claims_rejected": sum(not c["expected_accepted"] for c in checks), "checks": checks,
         "source_archive_sha256": sha(packet / "source.tar.gz"), "packet_manifest_sha256": sha(packet / "manifest.json"),
@@ -105,7 +106,7 @@ def main():
         "original_paper_fully_reproduced": False,
     }
     for key, value in report.items():
-        if key.startswith("scalar_prefix_"):
+        if key.startswith(("scalar_prefix_", "first_native_wave_")):
             result[key] = value
     (out / "results.json").write_text(json.dumps(result, indent=2) + "\n")
     shutil.copyfile(Path(__file__), out / "replay.py")

@@ -1,8 +1,10 @@
-"""Fresh source-bound per-lane scalar-prefix proof; no GPU/model calls.
+"""Fresh source-bound scalar-prefix or first-native-wave proof; no GPU/model calls.
 
 This proves the actual 210-instruction prefix through both in-place rounds,
-ending at PC23 before any shuffle. Whole-launch and canonical-real source
-correctness remain open. Existing frozen component/GPU packets are unchanged.
+ending at PC23 before any shuffle. The first-wave stage additionally proves all
+64 native lanes through five logical32 reductions/two partial stores to PC35.
+Whole-launch and canonical-real source correctness remain open. Existing frozen
+component/GPU/prefix packets are unchanged.
 """
 
 import argparse
@@ -24,6 +26,7 @@ from reproduction.production_fused_rmsnorm import check_program as component  # 
 HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_16384"
 TARGET = "Lark.NativeFusedRmsNormPrefix"
+TARGETS = {"lane": TARGET, "first-wave": "Lark.NativeFusedRmsNormFirstWave"}
 SOURCE_SHA256 = "c297c1842c1a4d2d9be2265aa0d03da759dda22f555947e3483eccb486e5f59e"
 PRINCIPAL = (
     "source_binding", "source_prefix_all_shapes", "source_prefix_values",
@@ -33,16 +36,24 @@ PRINCIPAL = (
     "LarkNativeFusedRmsNorm.initial_prefix_run", "LarkNativeFusedRmsNorm.initial_prefix_values",
     "LarkNativeFusedRmsNorm.initial_prefix_good", "LarkNativeFusedRmsNorm.initial_prefix_race_free",
 )
+WAVE_PRINCIPAL = (
+    "source_first_wave_run", "source_first_wave_partials", "source_first_wave_cells",
+    "source_first_wave_good", "source_first_wave_race_free",
+    "LarkNativeFusedRmsNorm.owns_unique", "LarkNativeFusedRmsNorm.prefix_fold_run",
+    "LarkNativeFusedRmsNorm.xor_peer_partition", "LarkNativeFusedRmsNorm.native_first_four",
+    "LarkNativeFusedRmsNorm.last_fold_value", "LarkNativeFusedRmsNorm.first_wave_run",
+    "LarkNativeFusedRmsNorm.first_wave_initial", "LarkNativeFusedRmsNorm.first_wave_initial_race_free",
+)
 
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def statement(source, contract):
+def statement(source, contract, stage="lane"):
     identity = component.statement(source, contract).replace(
-        "import Lark.NativeFusedRmsNormAddress", f"import {TARGET}", 1)
-    return identity + """
+        "import Lark.NativeFusedRmsNormAddress", f"import {TARGETS[stage]}", 1)
+    text = identity + """
 theorem source_prefix_all_shapes (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (t : Nat) (ht : t < p.rows * 1024) :
     LarkCollective.runLane ops (layout p) (geometry p) sourceProgram t sourceFuel.lane
@@ -73,12 +84,52 @@ theorem source_prefix_access_count (p : Shape) (ops : Ops α) (input : Nat → N
 #print axioms source_prefix_race_free
 #print axioms source_prefix_access_count
 """
+    if stage == "first-wave":
+        text += """
+theorem source_first_wave_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row warp : Nat) (hr : row < p.rows) (hw : warp < 16) :
+    LarkPartitionCollective.runWarp ops (layout p) (geometry p) sourceFuel sourceProgram
+      (warpThreads (geometry p) row warp) sourceFuel.warp (initial p input outside) =
+      some (firstWave p ops input row warp (initial p input outside)) := by
+  simpa only [source_binding.1, source_binding.2.2.2.2.1] using
+    first_wave_initial p ops input outside row warp hr hw
+theorem source_first_wave_partials (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row warp half : Nat) (hw : warp < 16) (hh : half < 2) :
+    (firstWave p ops input row warp (initial p input outside)).memory ⟨.shared,row,0,warp*2+half⟩ =
+      some (waveValues ops input row warp 5 (half*32)) :=
+  first_wave_partial p ops input row warp half _ hw hh
+theorem source_first_wave_cells (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row warp : Nat) (hr : row < p.rows) (hw : warp < 16)
+    (t : Nat) (ht : t ∈ cohortThreads row warp 64) :
+    Pending input (t/1024) (t%1024) 16 (firstWave p ops input row warp (initial p input outside)) ∧
+    Completed ops input (t/1024) (t%1024) t 16 (firstWave p ops input row warp (initial p input outside)) :=
+  first_wave_cells p ops input row warp _ hr hw
+    (initial_pending_lanes p input outside _ (cohort_bound p row warp 64 hr hw (by decide)))
+    (by intro a ha; cases ha) t ht
+theorem source_first_wave_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row warp : Nat) (hr : row < p.rows) (hw : warp < 16) :
+    ∀ a ∈ (firstWave p ops input row warp (initial p input outside)).trace, Good a :=
+  first_wave_initial_good p ops input outside row warp hr hw
+theorem source_first_wave_race_free (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (row warp : Nat) (hr : row < p.rows) (hw : warp < 16) :
+    raceFree (geometry p) (firstWave p ops input row warp (initial p input outside)).trace = true :=
+  first_wave_initial_race_free p ops input outside row warp hr hw
+#print axioms source_first_wave_run
+#print axioms source_first_wave_partials
+#print axioms source_first_wave_cells
+#print axioms source_first_wave_good
+#print axioms source_first_wave_race_free
+"""
+    return text
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
+    wave_stage = args.stage == "first-wave"
+    target = TARGETS[args.stage]
     out = args.output.resolve()
     if any((p / ".git").exists() for p in (out, *out.parents)):
         raise ValueError("Fresh standalone output must be outside a Git checkout")
@@ -86,7 +137,7 @@ def main():
     project = out / "project"
     project.mkdir()
     own = {}
-    component.modules(TARGET, own)
+    component.modules(target, own)
     for name, text in own.items():
         dest = project / (name.replace(".", "/") + ".lean")
         dest.parent.mkdir(parents=True, exist_ok=True)
@@ -106,7 +157,7 @@ name = "Main"
         raise ValueError("Pinned source changed")
     contract = native.parse_task((CASE / "task.json").read_text())
     native.check_reference((CASE / "reference.py").read_text())
-    (project / "Main.lean").write_text(statement(source, contract))
+    (project / "Main.lean").write_text(statement(source, contract, args.stage))
     reader_dir = project / "lark_kernels"
     reader_dir.mkdir()
     for path in sorted((ROOT / "lark_kernels").glob("*.py")):
@@ -120,8 +171,14 @@ name = "Main"
     licenses.mkdir()
     for name in ("FLASHINFER_LICENSE", "SGLANG_LICENSE"):
         shutil.copyfile(HERE / "upstream" / name, licenses / name)
+    remaining = ("Composition across native waves, block-barrier resume, second reduction,\n"
+                 "output normalization, halt, grid, canonical-real/IEEE equivalence\n"
+                 "and original-paper results remain open.\n") if wave_stage else (
+        "Logical32 shuffles, barriers, output normalization, halt, scheduling,\n"
+        "canonical-real/IEEE equivalence and original-paper results remain open.\n")
     (project / "README.md").write_text(
-        "Per-lane native fused add RMSNorm scalar-prefix proof, ending at PC23.\n"
+        ("Native fused add RMSNorm first-wave proof, ending at PC35.\n" if wave_stage else
+         "Per-lane native fused add RMSNorm scalar-prefix proof, ending at PC23.\n") +
         "Requires Python 3 and Lean 4.19.0; no Git, GPUs or models.\n"
         "Replay the frozen reader: python3 validate_source.py\n"
         "Rebuild from source: lake build\n"
@@ -129,9 +186,7 @@ name = "Main"
         "Every other top-level .lean file except Main.lean is a control that must\n"
         "fail with 'is false' at its assertion. No .lake objects are archived.\n"
         "All inputs/operations/outside memory and valid lanes/rows1..255 are\n"
-        "quantified by the prefix theorem. This is not a full kernel certificate.\n"
-        "Logical32 shuffles, barriers, output normalization, halt, scheduling,\n"
-        "canonical-real/IEEE equivalence and original-paper results remain open.\n")
+        "quantified by the prefix theorem. This is not a full kernel certificate.\n" + remaining)
     # The archived replay derives the translated IR again from frozen source,
     # without importing the live checkout or depending on Git.
     (project / "validate_source.py").write_text('''from pathlib import Path
@@ -176,8 +231,9 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
     execute("frozen-reader-replay", [sys.executable, "validate_source.py"])
     log = execute("fresh-build", ["lake", "build"])
     audits = dict(re.findall(r"'([^']+)' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", log))
-    if set(PRINCIPAL) - audits.keys():
-        raise ValueError("Principal axiom audits absent: " + str(set(PRINCIPAL) - audits.keys()))
+    principal = PRINCIPAL + (WAVE_PRINCIPAL if wave_stage else ())
+    if set(principal) - audits.keys():
+        raise ValueError("Principal axiom audits absent: " + str(set(principal) - audits.keys()))
     for name, ax in audits.items():
         if set(x.strip() for x in ax.split(",") if x.strip()) - {"propext", "Classical.choice", "Quot.sound"}:
             raise ValueError("Extra axiom in " + name)
@@ -187,12 +243,19 @@ print("Frozen source/reader/IR/interface/fuel binding replay passed.")
         "rounded-shared-value": source.replace("unrounded[column] = x;", "unrounded[column] = __half2float(residual[address]);", 1),
         "wrong-component-stride": source.replace("component = component + 1;", "component = component + 2;", 1),
     }
+    if wave_stage:
+        variants.update({
+            "cross-logical-partition-shuffle": source.replace("__shfl_xor(sum, 16, 32)", "__shfl_xor(sum, 16, 64)", 1),
+            "missing-second-partial-writer": source.replace("if (lane == 0)", "if (t == 0)", 1),
+            "aliased-partial-slot": source.replace("partial[warp] = sum", "partial[warp / 2] = sum", 1),
+            "changed-xor-stage-order": source.replace("__shfl_xor(sum, 16, 32)", "__shfl_xor(sum, 1, 32)", 1),
+        })
     for name, variant in variants.items():
         if variant == source:
             raise ValueError("No-op source control")
-        (project / (name + ".lean")).write_text(statement(variant, contract))
+        (project / (name + ".lean")).write_text(statement(variant, contract, args.stage))
         execute(name, ["lake", "env", "lean", name + ".lean"], False)
-    base = f"""import {TARGET}
+    base = f"""import {target}
 open LarkNonlinear LarkNativeFusedRmsNorm
 set_option maxRecDepth 10000
 set_option maxHeartbeats 2000000
@@ -219,6 +282,26 @@ example : once.memory (globalCell 1 1) = some 9 := by decide
 example : once.regs 0 0 = some 81 := by decide
 example : (prefixState ops values 0 start).pc 0 = 23 := by decide
 """
+    if wave_stage:
+        base += "def orderOps : Ops Nat := { ops with add := fun a b => a * 100 + b }\n"
+        base += """instance (t : Nat) (l : Location) : Decidable (PartialWrites t l) :=
+  inferInstanceAs (Decidable ((t % 1024) % 32 = 0 ∧ l = partialCell t ((t % 1024) / 32)))
+"""
+        claims.update({
+            "upper-half-crossed-partition": "xorPeer32 32 16 = 16",
+            "lower-half-crossed-partition": "xorPeer32 31 16 = 47",
+            "second-writer-aliased-first-slot": "PartialWrites 32 (partialCell 0 0)",
+            "second-partial-store-omitted": "(firstLastAfter ops 32 2 3 start).memory (partialCell 32 1) = none",
+            "second-store-overwrote-first-slot": "(firstLastAfter ops 32 2 3 start).memory (partialCell 0 0) = some 5",
+            "swapped-post-shuffle-add": "(addAfter orderOps 0 24 2 3 start).regs 0 0 = some 302",
+        })
+        witnesses += """example : xorPeer32 32 16 = 48 := by decide
+example : xorPeer32 31 16 = 15 := by decide
+example : PartialWrites 32 (partialCell 32 1) := by decide
+example : (firstLastAfter ops 32 2 3 start).memory (partialCell 32 1) = some 5 := by decide
+example : (firstLastAfter ops 32 2 3 start).memory (partialCell 0 0) = none := by decide
+example : (addAfter orderOps 0 24 2 3 start).regs 0 0 = some 203 := by decide
+"""
     (project / "Witnesses.lean").write_text(base + witnesses)
     execute("positive-cast-and-preservation-witnesses", ["lake", "env", "lean", "Witnesses.lean"])
     for name, claim in claims.items():
@@ -233,7 +316,8 @@ example : (prefixState ops values 0 start).pc 0 = 23 := by decide
     shutil.copyfile(Path(__file__), out / "checker.py")
     shutil.copyfile(HERE / "check_program.py", out / "component_checker.py")
     report = {
-        "schema": 1, "status": "native-inout-scalar-prefix-checked", "local_lean_modules": len(own),
+        "schema": 1, "status": "native-inout-first-wave-checked" if wave_stage else "native-inout-scalar-prefix-checked",
+        "stage": args.stage, "local_lean_modules": len(own),
         "axiom_audits": audits, "false_claims_rejected": sum(not c["expected_accepted"] for c in checks),
         "checks": checks, "fresh_standalone_build": True, "frozen_python_reader_replayed": True,
         "source_archive_sha256": sha(out / "source.tar.gz"), "source_kernel_sha256": sha(CASE / "kernel.hip"),
@@ -245,6 +329,15 @@ example : (prefixState ops values 0 start).pc 0 = 23 := by decide
         "gpu_trials": 0, "model_calls": 0, "original_paper_fully_reproduced": False,
         "scope": "All rows1..255, valid lanes, arbitrary Ops/input/outside; actual seeded initialization and both rounds through first shuffle, all 16 rounded residual and unrounded shared stores, input preservation, source-order local square sum, actual-prefix trace classification/race freedom. Logical32 collectives, both barriers, normalized outputs, halt, scheduler/grid, canonical-real and IEEE equivalence remain open.",
     }
+    if wave_stage:
+        report.update({
+            "first_native_wave_execution_proved": True, "first_native_wave_actual_trace_classification_proved": True,
+            "first_native_wave_race_freedom_proved": True, "first_native_wave_end_pc": 35,
+            "first_native_wave_physical_lanes": 64, "first_native_wave_logical_partition_width": 32,
+            "first_native_wave_logical_partitions": 2, "first_native_wave_xor_stages": 5,
+            "first_native_wave_partial_stores": 2,
+            "scope": "All rows1..255, native waves0..15, arbitrary Ops/input/outside: actual seeded inout initialization and sequential lane folds, both 8-value rounds, five snapshot logical32 XOR/add stages inside physical64, separate lane0 results for both groups, two distinct partial stores, all lanes at first block barrier PC35, retained rounded residual/unrounded shared values and owned input cells, actual-wave classification/race freedom without RF assumptions. Composition across waves, barrier resume, second reduction, normalized outputs, halt/grid, canonical-real/IEEE equivalence and original-paper results remain open.",
+        })
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")
     manifest = {p.name: sha(p) for p in sorted(out.iterdir()) if p.is_file()}
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

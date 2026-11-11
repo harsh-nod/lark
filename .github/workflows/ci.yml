@@ -102,8 +102,8 @@ jobs:
         working-directory: lean
       - name: Check native in-place fused RMSNorm interface and source components
         run: python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
-      - name: Rebuild native in-place fused RMSNorm scalar prefix outside Git
-        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/lark-native-fused-rmsnorm-scalar-prefix
+      - name: Rebuild native in-place fused RMSNorm first wave outside Git
+        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave --output /tmp/lark-native-fused-rmsnorm-first-wave
       - name: Check native tiled attention address and footprint components
         run: lake build Lark.NativeAttentionAddress
         working-directory: lean

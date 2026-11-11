@@ -141,9 +141,13 @@ family.** Its later scalar-prefix theorem proves the actual 210 instructions
 through both in-place rounds, ending before the first shuffle. It covers all
 16 rounded residual/unrounded shared stores per lane, input preservation,
 source-ordered local squares and classification/race freedom of the actual
-64-access prefix for every valid lane and rows1..255. Logical32 collectives,
-barriers, normalized output, scheduling and full source/reference correctness
-remain open. This later development evidence is outside the immutable v18 ledger.
+64-access prefix for every valid lane and rows1..255. A later native-wave proof
+composes all 64 lanes through five logical32 XOR stages, two distinct partial
+stores and the first barrier. All row counts1..255 and physical waves0..15 are
+covered with arbitrary arithmetic/input/outside memory. Composition across
+waves, barrier resume, the second reduction, normalized output, full scheduling
+and full source/reference correctness remain open. This later development
+evidence is outside the immutable v18 ledger.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |

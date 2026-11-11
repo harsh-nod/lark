@@ -3,8 +3,8 @@
 This is an independent development study of the paper's
 `sglang_fused_add_rmsnorm` family. **No complete source certificate is claimed.**
 It adds initialized mutable-buffer interfaces, fixed-source identity and address
-proofs, a conditional footprint theorem, an actual scalar-prefix proof, and
-numerical validation on both AMD hosts. Whole-launch execution, classification
+proofs, a conditional footprint theorem, actual scalar-prefix/native-wave proofs,
+and numerical validation on both AMD hosts. Whole-launch execution, classification
 of the whole launch's trace and reference equivalence remain proof obligations.
 
 The [provenance record](provenance.json) pins SGLang commit
@@ -91,10 +91,44 @@ including the new fresh-prefix step and 165 ordinary tests (nine optional skips)
 The [saved source-CI evidence](results/scalar-prefix-ci-v1/results.json) records
 the exact head and scope. This adds no whole-source or real fused certificate.
 
+The later [native-wave theorem](../../../lean/Lark/NativeFusedRmsNormFirstWave.lean)
+composes the sequential lane fold, all five actual snapshot XOR/add stages and
+both distinct partial stores under `LarkPartitionCollective.runWarp`, with the
+unchanged fuel. Every lane ends at PC35, the first block barrier. The physical
+wave64 contains two complete logical32 groups. Their partial results select
+lane0 and lane32 respectively, preserving the source order under arbitrary
+arithmetic operations; the proof assumes no commutativity or uniform lane sums.
+All 16 rounded residual/unrounded shared values per lane and owned input cells
+are retained, epochs do not change, and the actual wave trace is classified and
+proved race-free without assuming race freedom.
+
+The [first-wave packet](results/first-wave-v1/results.json) freshly builds 29
+standard-library-only Lean modules, audits 204 results, checks exact
+source/reader/IR/interface binding and rejects 20 false claims. It adds controls
+for crossed logical partitions, an omitted second
+partial writer, aliased partial cells, changed XOR order and reversed operand
+order under a noncommutative arithmetic witness. The
+[independent archive replay](results/first-wave-validation-v1/results.json)
+repeats the build, axiom audits, positive witnesses and every rejection with Git
+unavailable and no cached own Lean objects. These theorems cover arbitrary inputs,
+operations and outside memory, rows1..255, and physical waves0..15.
+
+The updated replay tool also
+[rechecks the original scalar-prefix packet](results/scalar-prefix-compatibility-v1/results.json),
+repeating its 18-module build, 89 audits and ten refusals. Its default lane-stage
+generator and proof closure are
+[byte-identical to the earlier archive](results/scalar-prefix-compatibility-v1/default-generation-comparison.json).
+
+This is the first **wave phase**, ending before barrier resume. Composition across
+the block's 16 native waves, the block barrier, second reduction, normalization,
+halt, grid and source/reference equivalence remain open. All older frozen
+component, GPU and scalar-prefix packets retain their original flags.
+
 ```bash
 # Lean 4.19.0, standard library only; fresh output outside the checkout:
 python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/fused-components
 python3 reproduction/production_fused_rmsnorm/check_prefix.py --output /tmp/fused-scalar-prefix
+python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage first-wave --output /tmp/fused-first-wave
 python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 ```
 
@@ -102,6 +136,7 @@ python3 -m unittest discover -s tests -p test_native_fused_rmsnorm.py -v
 python3 reproduction/production_fused_rmsnorm/replay_prefix.py \
   --packet reproduction/production_fused_rmsnorm/results/scalar-prefix-v1 \
   --output /tmp/fused-prefix-archive-replay --lean-bin /path/to/lean-4.19.0/bin
+# For the complete first-wave archive, use results/first-wave-v1 instead.
 ```
 
 ## Finite AMD results

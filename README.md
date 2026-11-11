@@ -61,9 +61,11 @@ the certificate does not assert IEEE equivalence or a floating-point error bound
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 has numerical evidence from both AMD hosts and a universal per-lane proof of the
 actual 210-instruction scalar prefix through both input/add/store rounds. It
-keeps rounded residual storage distinct from unrounded shared values. Logical32
-collectives and the rest of the whole-launch/reference proof remain open; this
-family has no complete source certificate yet.
+keeps rounded residual storage distinct from unrounded shared values. Its later
+native-wave proof completes all five logical32 XOR stages and both partial
+stores in a physical wave64, ending at the first block barrier. Composition
+across waves, barrier resume, the second reduction and normalized output remain
+open; this family has no complete source certificate yet.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
