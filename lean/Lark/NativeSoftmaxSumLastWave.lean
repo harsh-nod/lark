@@ -135,6 +135,16 @@ theorem sum_last_wave_warp (p : Shape) (guarded : Bool) (ops : Ops α) (row warp
   exact warp_at_sum_partial_barrier p guarded ops row warp 64 extra _ _ (by decide)
     (sum_last_shuffled_fold p guarded ops row warp values s hw ready) (sum_last_wave_pc p ops row warp values s)
 
+theorem sum_last_wave_sum (p : Shape) (ops : Ops α) (row warp lane : Nat)
+    (values : Nat → α) (s : State α) (hw : warp<16) (hl : lane<64) :
+    (sumLastWave p ops row warp values s).regs (cohortBase row warp+lane) 6=
+      some (ops.add (values lane) (values (sumXorPeer32 lane 1))) := by
+  have h := sum_last_fold_member ops (sumWaveLeft p values) (sumWaveRight p values)
+    (cohortThreads row warp 64) (shuffleUpdates 9 (sumXorSnapshot p row warp 64 1 values) s)
+    (cohort_nodup row warp 64) _ ((cohort_mem row warp 64 _).mpr ⟨lane,hl,rfl⟩)
+  simpa only [sumWaveLeft,sumWaveRight,(cohort_coords p row warp lane hw hl).2] using h.2
+
+#print axioms sum_last_wave_sum
 #print axioms sum_last_shuffled_fold
 #print axioms sum_last_wave_pc
 #print axioms sum_last_wave_partial

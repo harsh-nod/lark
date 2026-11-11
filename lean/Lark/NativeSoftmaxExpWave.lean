@@ -65,6 +65,13 @@ theorem exp_wave_epochs (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     ((sum_stages_preserves p ops input row warp 0 4 _).2.2.1.trans
       (exp_scalar_fold_epochs ops input row (cohortThreads row warp 64) s))
 
+theorem exp_wave_sum (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row warp lane : Nat) (s : State α) (hw : warp<16) (hl : lane<64) :
+    (expWave p ops input row warp s).regs (cohortBase row warp+lane) 6=
+      some (sumWaveValues ops input row warp 5 lane) := by
+  exact sum_last_wave_sum p ops row warp lane (sumWaveValues ops input row warp 4)
+    (sumStages p ops input row warp 0 4 (expScalarWave ops input row warp s)) hw hl
+
 theorem exp_wave_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row warp : Nat) (s : State α) (hw : warp<16)
     (ready : ExpCohortEntry p ops input row (cohortThreads row warp 64) s) :
@@ -98,6 +105,7 @@ theorem initial_exp_wave (p : Shape) (guarded : Bool) (ops : Ops α) (input : Na
 #print axioms exp_wave_pc
 #print axioms exp_wave_partial
 #print axioms exp_wave_epochs
+#print axioms exp_wave_sum
 #print axioms exp_wave_good
 #print axioms exp_wave_race_free
 #print axioms initial_exp_wave
