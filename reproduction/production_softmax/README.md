@@ -267,6 +267,16 @@ missing principal proofs and earlier maximum-pass evidence relabeled as this
 prefix, before extraction. The [wheel audit](results/exp-prefix-packaging-v1/results.json)
 checks all62 required proof modules and the closed reader byte-for-byte.
 
+All five jobs in [CI run43039634652](https://github.com/harsh-nod/lark/actions/runs/43039634652)
+passed at source commit `1cfcf67d970d69ee9bdd2699c704171f944c5f18`.
+The [saved CI packet](results/exp-prefix-ci-v1/results.json) retains the raw
+logs and job metadata, including the fresh export/replay and24 rehashed metadata
+refusals. The general suite ran169 tests:160 passed and9 optional tests skipped.
+All106 selected live implementation, proof, fixture and workflow files match
+the checked commit byte-for-byte; later changes contain only this study's
+documentation and frozen evidence. This CI run covers the scalar lane prefix
+through PC70 and the retained maximum phase.
+
 Collective sum execution, serial sum, normalization, whole-grid composition,
 conflict-state reachability and the canonical-real reference bridge remain open.
 This lane-prefix stage issues zero source certificates and does not reproduce
