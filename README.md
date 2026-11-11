@@ -59,16 +59,16 @@ tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
-now proves the complete native seeded-inout launch, including both logical32
-reductions/barrier resumes, every normalized output and rounded residual, all
-native-wave/block/grid scheduling and halt, actual-trace race freedom, and
-extraction of both mutable buffers. It quantifies over arbitrary operations,
-inputs and outside memory for all `1 <= rows < 256` at width 16,384 and
-1,024-thread/wave64 geometry. It keeps unrounded shared values distinct from
-rounded residuals and retains the source operation order. Both AMD hosts have
-finite numerical evidence. Canonical-real/independent-reference equivalence and
-IEEE/error bounds remain open, so this development still issues no complete
-source/reference certificate and reproduces no original production result.
+now proves the complete native seeded-inout launch and connects both extracted
+buffers to an independent canonical-real reference. It covers all `1 <= rows < 256`
+at width 16,384 and 1,024-thread/wave64 geometry, including both logical32
+reductions/barriers, source scheduling, halt and actual-trace race freedom.
+The source-order theorem retains arbitrary arithmetic operations; the
+[real interpretation](reproduction/production_fused_rmsnorm/REAL.md) proves the
+full reduction covers all columns and both buffers equal the reference.
+The `verify-native-fused-rmsnorm` command exports the closed source-bound profile.
+Both AMD hosts have finite numerical evidence. Half conversions are identities
+in the real theorem; IEEE/error bounds and original production results remain open.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.

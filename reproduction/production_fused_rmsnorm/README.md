@@ -1,11 +1,12 @@
 # Native in-place fused add RMSNorm
 
-This is an independent development study of the paper's
-`sglang_fused_add_rmsnorm` family. **No complete source certificate is claimed.**
-It adds initialized mutable-buffer interfaces, fixed-source identity and address
-proofs, a conditional footprint theorem, actual scalar-prefix/native-wave proofs,
-and numerical validation on both AMD hosts. Whole-launch execution, classification
-of the whole launch's trace and reference equivalence remain proof obligations.
+This independently implements the paper's `sglang_fused_add_rmsnorm` family.
+The complete native seeded-inout launch, actual-trace race freedom and both
+canonical-real reference buffers are proved for the closed shape family.
+The [real certificate](REAL.md) extends the source-ordered proof and exports
+`native-fused-rmsnorm-real-v18`. Numerical validation has also run on both AMD
+hosts. IEEE/error bounds and reproduction of the original production result
+remain open; the authors' adapted source is unavailable at the inspected endpoints.
 
 The [provenance record](provenance.json) pins SGLang commit
 `fc32cbff6983c7573f4b60eab8b44815668130a0`, independently selected before the
@@ -36,8 +37,11 @@ floating-point algorithm. Weight remains read-only.
 The scoped development reader maps the two in-out buffers to writable cells of
 the existing machine and initializes them using `LarkInOut.initial`. The pinned
 scalar/collective machine definitions and ordinary reader acceptance rules are
-unchanged. The ordinary task parser still refuses this in-out task; there is no
-new registered verification profile.
+unchanged. The ordinary task parser still refuses this in-out task. The separate
+`verify-native-fused-rmsnorm` command uses its closed in-out contract and the
+complete canonical-real proof. The historical packets below retain the claims
+and open obligations at each checkpoint; the latest reference proof is described
+in [REAL.md](REAL.md).
 
 The [frozen component packet](results/components-v1/results.json) freshly builds
 11 local Lean modules, replays the frozen Python reader, checks exact IR/layout/
@@ -58,11 +62,12 @@ certificate yet. Later evidence/replay metadata is validated separately.
 
 The sufficient footprint theorem proves race freedom **if** every actual access
 satisfies its classification. Deriving that classification and successful
-execution from the full source remains open. A separate finite value-erased run
+execution from the full source was open at the component checkpoint and is
+established by the later whole-launch proof. A separate finite value-erased run
 for one row halts at PC71/epoch2 and checks 115,777 accesses; it is not a universal
 trace theorem, numerical evaluation or source certificate.
 
-The later [scalar-prefix proof](../../../lean/Lark/NativeFusedRmsNormPrefix.lean)
+The later [scalar-prefix proof](../../lean/Lark/NativeFusedRmsNormPrefix.lean)
 connects the actual seeded initializer to PC23, immediately before the first
 logical32 shuffle. For every valid lane, every row count 1..255, arbitrary
 abstract arithmetic operations, inputs and outside memory, it proves the actual
@@ -91,7 +96,7 @@ including the new fresh-prefix step and 165 ordinary tests (nine optional skips)
 The [saved source-CI evidence](results/scalar-prefix-ci-v1/results.json) records
 the exact head and scope. This adds no whole-source or real fused certificate.
 
-The later [native-wave theorem](../../../lean/Lark/NativeFusedRmsNormFirstWave.lean)
+The later [native-wave theorem](../../lean/Lark/NativeFusedRmsNormFirstWave.lean)
 composes the sequential lane fold, all five actual snapshot XOR/add stages and
 both distinct partial stores under `LarkPartitionCollective.runWarp`, with the
 unchanged fuel. Every lane ends at PC35, the first block barrier. The physical
@@ -126,14 +131,14 @@ repeating its 18-module build, 89 audits and ten refusals. Its default lane-stag
 generator and proof closure are
 [byte-identical to the earlier archive](results/scalar-prefix-compatibility-v1/default-generation-comparison.json).
 
-The later [first-block-phase proof](../../../lean/Lark/NativeFusedRmsNormFirstBlock.lean)
+The later [first-block-phase proof](../../lean/Lark/NativeFusedRmsNormFirstBlock.lean)
 composes the exact sequential `runWarp` calls for all 16 physical waves. It
 preserves earlier results and unread cells of later waves. Every one of the
 16,384 residual cells receives its rounded sum, all 16,384 shared cells retain
 the unrounded sums, all 32 partial slots have their source-ordered logical-group
 results, and all 1,024 threads converge at the source's first block barrier.
 
-The [barrier theorem](../../../lean/Lark/NativeFusedRmsNormBarrier.lean) then
+The [barrier theorem](../../lean/Lark/NativeFusedRmsNormBarrier.lean) then
 decomposes the actual `runBlock` call with fuel3 into the remaining call with
 fuel2. All participating PCs advance from 35 to 36 and their block epochs from
 zero to one. Memory, read-only weights and historical trace epochs remain
@@ -160,7 +165,7 @@ The [saved source-CI evidence](results/first-block-ci-v1/results.json) records
 the exact head and scope. The real job rechecks earlier certified profiles;
 this adds no fused canonical-real or complete source certificate.
 
-The later [second-phase proof](../../../lean/Lark/NativeFusedRmsNormScaleBlock.lean)
+The later [second-phase proof](../../lean/Lark/NativeFusedRmsNormScaleBlock.lean)
 executes the actual mixed physical wave after the first barrier. Exactly 32
 threads load the shared partials, while the upper32 wait at PC50. The unchanged
 scheduler selects the active logical32 cohort for all five snapshot XOR/add
@@ -168,7 +173,7 @@ stages and still visits every parked physical lane in order. Only tid0 stores
 the final source-ordered total. All 15 remaining physical waves execute their
 inactive path, so all 1,024 participants converge at the second block barrier.
 
-The [second-resume theorem](../../../lean/Lark/NativeFusedRmsNormOutBarrier.lean)
+The [second-resume theorem](../../lean/Lark/NativeFusedRmsNormOutBarrier.lean)
 composes both actual block phases and barrier resumes. The original `runBlock`
 call with fuel3 equals the remaining output-phase call with fuel1, entering
 PC51/block epoch2. The total, every rounded residual and separate unrounded
@@ -198,13 +203,13 @@ including the fresh 46-module/349-audit/46-control check and 165 ordinary tests
 records the exact head, raw logs and scope. The real job rechecks earlier
 certified profiles; it adds no fused canonical-real or complete source certificate.
 
-The later [output-lane proof](../../../lean/Lark/NativeFusedRmsNormOutputLane.lean)
+The later [output-lane proof](../../lean/Lark/NativeFusedRmsNormOutputLane.lean)
 executes the actual 192 instructions from PC51 through normalization, both
 output rounds, both false loop exits and halt at PC71. It retains the exact
 division/epsilon/rsqrt order, unrounded shared loads, explicit `0 + weight`, both
 multiplies and the final half cast. Every valid lane stores all sixteen of its
 output values and records exactly 49 accesses. The
-[frame theorem](../../../lean/Lark/NativeFusedRmsNormOutputFrame.lean) proves
+[frame theorem](../../lean/Lark/NativeFusedRmsNormOutputFrame.lean) proves
 all other memory cells retain their exact values, including every residual,
 shared, weight and outside cell. Actual-trace classification/race freedom and
 unchanged epochs follow for arbitrary operations and inputs from the proved
@@ -229,7 +234,7 @@ optional skips). The [saved source-CI evidence](results/output-lane-ci-v1/result
 records the exact head, raw logs and scope. The real job rechecks earlier
 certified profiles; it adds no fused canonical-real or complete source certificate.
 
-The later [whole-launch proof](../../../lean/Lark/NativeFusedRmsNormCorrect.lean)
+The later [whole-launch proof](../../lean/Lark/NativeFusedRmsNormCorrect.lean)
 composes the actual physical output waves, complete blocks and source grid.
 Every thread reaches halt at PC71. Every row retains all 16,384 normalized
 outputs and 16,384 rounded residuals; later rows preserve completed values and
@@ -238,7 +243,7 @@ classification/race freedom without assuming race freedom. The unchanged source,
 geometry and fuel are bound to the theorem for all rows1..255 and arbitrary
 operations, inputs and outside memory.
 
-The [seeded-inout correctness relation](../../../lean/Lark/InOutPartition.lean)
+The [seeded-inout correctness relation](../../lean/Lark/InOutPartition.lean)
 requires a valid mutable-buffer declaration and the actual initialized mutable
 precondition. The original extractor returns normalized buffer0 followed by
 rounded residual buffer1. The specification preserves the exact source-order
@@ -266,10 +271,17 @@ are separately rejected before extraction/build: an earlier packet relabeled as
 whole-launch and a whole-launch report missing its extraction theorem audit.
 These two preflight checks are separate from the 77 Lean false-claim controls.
 
-Canonical-real/independent-reference equivalence, IEEE/error bounds and original
-paper results remain open. All older frozen packets retain their original
-flags. This whole-launch packet proves source-ordered machine correctness and
-still issues no complete source/reference certificate. A later
+[Both CI jobs](https://github.com/harsh-nod/lark/actions/runs/42981079794) passed
+at whole-launch source commit `ca0c9e3cab1c1eca0a88d37b1e9bb7fc2ac7af02`.
+The [saved CI packet](results/whole-launch-ci-v1/results.json) includes raw job
+responses and logs, the fresh whole-launch rebuild, both stage guards and165
+ordinary tests with9 optional skips. This checks the source-ordered checkpoint;
+the later [real profile](REAL.md) adds the independent reference bridge.
+
+The whole-launch packet proves source-ordered machine correctness; its independent
+reference bridge is supplied by the later [canonical-real packet](REAL.md).
+IEEE/error bounds and original paper results remain open. All older frozen
+packets retain their original flags and certificate counts. A later
 [bounded public-release recheck](results/whole-launch-artifact-recheck-v1/results.json)
 found no original release at the inspected endpoints: KernelCraft remained
 empty, the related benchmark head was unchanged, and the title search returned

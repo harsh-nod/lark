@@ -1,0 +1,44 @@
+{
+  "name": "native-fused-add-rmsnorm-16384",
+  "entry": "fused_add_rmsnorm",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "input",
+      "role": "inout",
+      "shape": [
+        255,
+        16384
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "residual",
+      "role": "inout",
+      "shape": [
+        255,
+        16384
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "weight",
+      "role": "input",
+      "shape": [
+        16384
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 255,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    512,
+    8,
+    3,
+    1
+  ]
+}

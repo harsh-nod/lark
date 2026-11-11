@@ -1,8 +1,9 @@
-"""Scoped development contract for initialized, mutable fused RMSNorm buffers.
+"""Closed source contract for initialized, mutable fused RMSNorm buffers.
 
 The existing machine's writable output cells are initialized explicitly from
-the in-out interface. This module is not a registered certificate profile.
-The ordinary task parser and all pinned earlier machine models are unchanged.
+this in-out interface. The separate native_fused_rmsnorm_certificate module
+connects it to the complete seeded-inout canonical-real proof.
+The ordinary task parser and pinned earlier machine models are unchanged.
 """
 
 import ast
