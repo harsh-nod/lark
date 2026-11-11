@@ -52,7 +52,14 @@ bound is asserted.
   through PC 56. The [compute checkpoint](WEIGHTS.md) checks the actual
   58,891-instruction per-lane continuation from PC 21 and its values, input
   preservation and prefix-trace race freedom from arbitrary initial memory.
-  Output updates, later query/key tiles and complete scheduling remain open.
+  Its frozen packet leaves output updates and later scheduling open.
+- `NativeAttentionFirstOutput.lean` extends that joined prefix through the
+  weighted-V products and all 256 global output stores for the first query
+  row and first key tile. The [output checkpoint](OUTPUT.md) checks the actual
+  119,060-instruction continuation from PC 21 to PC 83, its source-ordered
+  output values, input preservation and race-free prefix trace. It preserves
+  the source's old-output half conversion, rescaling, division and half store.
+  Private-state stores, later query/key tiles and complete scheduling remain open.
 
 Fresh checks accept the full source's IR and array layout and reject five
 changes directly in Lean: a missing load barrier, a wrong tile-store owner,
@@ -73,6 +80,7 @@ python3 reproduction/online_attention/check_native_program.py --output /tmp/nati
 python3 reproduction/online_attention/check_native_prefix.py --output /tmp/native-prefix
 python3 reproduction/online_attention/check_native_prefix.py --stage first-block --output /tmp/native-block
 python3 reproduction/online_attention/check_native_prefix.py --stage weights --output /tmp/native-weights
+python3 reproduction/online_attention/check_native_prefix.py --stage output --output /tmp/native-output
 python3 -m unittest discover -s tests -p test_native_attention.py -v
 ```
 

@@ -69,8 +69,10 @@ both-host numerical evidence. Its [first-block proof](reproduction/online_attent
 checks actual setup, output zeroing, full first K/V copies and barrier resumption
 under the native scheduler. A later [compute-prefix proof](reproduction/online_attention/WEIGHTS.md)
 extends each lane through its first query row's scores and exponential
-denominator. Output updates, later tiles, whole-launch execution and
-source-reference equality remain unfinished.
+denominator. The [output-prefix proof](reproduction/online_attention/OUTPUT.md)
+joins those computations to all 256 output stores for the first query row and
+first key tile. Later tiles, whole-launch execution and source-reference
+equality remain unfinished.
 
 [The reproduction study](reproduction/README.md) adds CPU proof/mutation experiments,
 an upstream softmax race witness, and actual AMD MI300X measurements at the paper's

@@ -1,8 +1,8 @@
 """Rebuild a native attention execution prefix outside Git, without model/GPU calls.
 
 The stages check lane initialization, native first-block scheduling, and the
-first query's scores and exponential denominator. These are execution prefixes,
-not whole-launch or source-reference certificates.
+first query's scores, exponential denominator and output update. These are
+execution prefixes, not whole-launch or source-reference certificates.
 """
 
 import argparse
@@ -25,7 +25,7 @@ from lark_kernels.ir import lean_node  # noqa: E402
 HERE = Path(__file__).resolve().parent
 CASE = HERE / "cases/native_fp16"
 TARGETS = {"lane": "Lark.NativeAttentionFirstLane", "first-block": "Lark.NativeAttentionFirstResume",
-           "weights": "Lark.NativeAttentionWeights"}
+           "weights": "Lark.NativeAttentionWeights", "output": "Lark.NativeAttentionFirstOutput"}
 LANE_AUDITS = ("first_lane_eq", "first_lane_run", "first_lane_output", "first_lane_tile", "first_lane_reads",
                "first_lane_good", "first_lane_race_free")
 BLOCK_AUDITS = LANE_AUDITS + (
@@ -38,6 +38,13 @@ WEIGHT_AUDITS = BLOCK_AUDITS + (
     "exp_columns_eq", "exp_columns_sum", "exp_columns_value", "exp_columns_good", "exp_computation_eq",
     "first_weights_from_resumed", "first_weights_fields", "first_weights_values", "first_weights_reads", "first_weights_good",
     "first_weights_initial_prefix",
+)
+OUTPUT_AUDITS = WEIGHT_AUDITS + (
+    "first_resumed_key", "old_selected_eq", "rescale_eq", "output_prepare_eq", "output_prepared_ready",
+    "pv_cycle_eq", "pv_rows_eq", "pv_rows_value", "pv_computation_eq", "pv_computed_fields",
+    "output_finish_eq", "output_column_eq", "output_columns_eq", "output_columns_value", "output_columns_good",
+    "output_update_eq", "output_updated_value", "first_output_eq", "first_output_fields", "first_output_value",
+    "first_output_reads", "first_output_good", "first_output_from_resumed", "first_output_initial_prefix",
 )
 
 
@@ -92,10 +99,11 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--stage", choices=tuple(TARGETS), default="lane")
     args = parser.parse_args()
-    weights_stage = args.stage == "weights"
+    output_stage = args.stage == "output"
+    weights_stage = args.stage in ("weights", "output")
     block_stage = args.stage != "lane"
     target = TARGETS[args.stage]
-    names = WEIGHT_AUDITS if weights_stage else BLOCK_AUDITS if block_stage else LANE_AUDITS
+    names = OUTPUT_AUDITS if output_stage else WEIGHT_AUDITS if weights_stage else BLOCK_AUDITS if block_stage else LANE_AUDITS
     out = args.output.resolve()
     require(not any((p / ".git").exists() for p in (out, *out.parents)),
             "Choose --output outside a Git checkout for the standalone check")
@@ -203,6 +211,45 @@ example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : St
   decide
 """,
         })
+    if output_stage:
+        controls.update({
+            "wrong-output-prefix-pc": """
+example (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (firstOutput ops input t s).pc t = 82 := by
+  rw [(first_output_fields ops input t s).1]
+  decide
+""",
+            "wrong-weighted-value-accumulator": """
+example (ops : Ops Nat) (input : Nat → Nat → Nat) (t key col : Nat) (weights : Nat → Nat) (s : State Nat)
+    (hv : pvValue ops input t key col weights = 0) :
+    (pvComputed ops input t key col weights s).regs t 13 = some 1 := by
+  rw [(pv_computed_fields ops input t key col weights s).2.1, hv]
+  decide
+""",
+            "wrong-half-output-store": """
+example (ops : Ops Nat) (input : Nat → Nat → Nat) (t qi key col : Nat) (weights : Nat → Nat)
+    (scales : ScaleValues Nat) (oldMass oldStored : Nat) (s : State Nat)
+    (hv : storedOutput ops scales oldMass oldStored (pvValue ops input t key col weights) = 0) :
+    (outputColumn ops input t qi key col weights scales oldMass oldStored s).memory
+      (globalCell 0 (globalAddress t qi col)) = some 1 := by
+  rw [output_column_memory, if_pos rfl, hv]
+  decide
+""",
+            "wrong-first-output-value": """
+example (ops : Ops Nat) (input : Nat → Nat → Nat) (t : Nat) (s : State Nat)
+    (hv : firstOutputValues ops input t 0 = 0) :
+    (firstOutput ops input t s).memory (globalCell 0 (globalAddress t 0 0)) = some 1 := by
+  rw [first_output_value ops input t 0 s (by decide), hv]
+  decide
+""",
+            "wrong-initial-key-counter": """
+example (p : Shape) (ops : Ops α) (input : Nat → Nat → α) (b t : Nat) (s : State α)
+    (ht : t ∈ blockThreads (geometry p) b) :
+    (firstResumed p ops input b s).indices t 5 = some 1 := by
+  rw [first_resumed_key p ops input b t s ht]
+  decide
+""",
+        })
     for name, content in controls.items():
         (standalone / (name + ".lean")).write_text(header + content)
     frozen = standalone / "native-source"
@@ -214,11 +261,16 @@ example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : St
     shutil.copyfile(HERE / "upstream/LICENSE", frozen / "UPSTREAM-LICENSE")
     shutil.copyfile(ROOT / "LICENSE", standalone / "LICENSE")
     shutil.copyfile(Path(__file__), out / "checker.py")
-    scope = ("native first block phase and resume, then a per-lane continuation from PC 21 through 58891 instructions "
+    scope = ("native first block phase and resume, then a per-lane continuation from PC 21 through 119060 instructions "
+             "to PC 83: first query row scores, weights, denominator, all weighted-V products and 256 output stores"
+             if output_stage else
+             "native first block phase and resume, then a per-lane continuation from PC 21 through 58891 instructions "
              "to PC 56: first query row scores, maximum, exponential weights and denominator" if weights_stage else
              "actual first runBlock phase, including 32 native lanes, block convergence and resume to PC 21"
              if block_stage else "actual runLane from PC 0 through 5405 instructions to first block barrier PC 20")
-    remaining = ("Output updates, later query/key tiles, whole-launch execution and dense-reference equality remain unproved."
+    remaining = ("Private-state stores, later query/key tiles, whole-launch execution and dense-reference equality remain unproved."
+                 if output_stage else
+                 "Output updates, later query/key tiles, whole-launch execution and dense-reference equality remain unproved."
                  if weights_stage else "It does not execute attention computation or later block phases, compose "
                  "the whole launch, or prove dense-reference equality.")
     (standalone / "README.md").write_text(
@@ -250,13 +302,13 @@ example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : St
         require(set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, "Extra axiom: " + name)
         audits[name] = axioms
     report = {
-        "schema": 1, "status": "native-weights-prefix-checked" if weights_stage else
+        "schema": 1, "status": "native-output-prefix-checked" if output_stage else "native-weights-prefix-checked" if weights_stage else
                                "native-block-prefix-checked" if block_stage else "native-lane-prefix-checked",
         "stage": args.stage,
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "scope": scope,
         "groups": {"min": 1, "max": 65535}, "block": 32, "warp": 64,
-        "prefix_instructions_per_lane": 58891 if weights_stage else 5405, "barrier_pc": 20,
+        "prefix_instructions_per_lane": 119060 if output_stage else 58891 if weights_stage else 5405, "barrier_pc": 20,
         "initialization_instructions_per_lane": 5405,
         "instruction_count_start_pc": 21 if weights_stage else 0,
         "input_preservation_proved": True, "output_initialization_proved": True,
@@ -272,9 +324,15 @@ example (ops : Ops Nat) (t : Nat) (values : Nat → Nat) (maximum : Nat) (s : St
         "query_preparation_instructions": 1030 if weights_stage else 0,
         "score_loop_instructions": 57666 if weights_stage else 0,
         "exponential_loop_instructions": 195 if weights_stage else 0,
-        "compute_end_pc": 56 if weights_stage else None,
+        "compute_end_pc": 83 if output_stage else 56 if weights_stage else None,
         "later_query_tiles_proved": False, "later_key_tiles_proved": False,
-        "weighted_value_product_proved": False, "output_updates_proved": False,
+        "weighted_value_product_proved": output_stage, "output_updates_proved": output_stage,
+        "output_columns_proved": 256 if output_stage else 0,
+        "weighted_value_terms_per_column": 32 if output_stage else 0,
+        "output_loop_instructions": 60161 if output_stage else 0,
+        "first_old_state_and_rescale_instructions": 8 if output_stage else 0,
+        "half_conversion_sites_preserved": output_stage,
+        "private_state_stores_proved": False,
         "arbitrary_scalar_operations": True, "axioms": audits,
         "fresh_standalone_build": True, "local_lean_modules": len(modules),
         "source_sha256": sha(CASE / "kernel.hip"),

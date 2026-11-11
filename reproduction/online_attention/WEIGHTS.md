@@ -68,9 +68,10 @@ assertions. A [separate archive replay](results/native-weights-validation-v1/res
 rebuilds that archive from an empty directory and rechecks its source hashes,
 binding and controls. The earlier lane and block frozen packets are unchanged.
 
-Old running-state selection, weighted V products, global output updates, later
+At this frozen checkpoint, old running-state selection, weighted V products, global output updates, later
 query/key tiles, complete block/grid scheduling and canonical-reference equality
-remain unproved. The source is byte-identical to the existing paired
+remain unproved. The subsequent [output checkpoint](OUTPUT.md) joins the first
+query's output stores. The source is byte-identical to the existing paired
 [MI350 numerical validation](NATIVE.md); this checkpoint adds no hardware trials
 or model calls. It does not recover missing author artifacts, historical model
 pass rates/token costs or H100 timings.
