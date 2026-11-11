@@ -226,6 +226,14 @@ rehashed false claims before extraction, including earlier first-block evidence
 relabeled as a complete maximum pass. The [wheel audit](results/maximum-packaging-v1/results.json)
 checks all 47 proof modules and the reader byte-for-byte.
 
+[All five maximum-pass CI jobs](https://github.com/harsh-nod/lark/actions/runs/43026870118)
+passed at source commit `1979f20db03d4fa57d78c8274c978e7cbd54cb58`.
+The [saved API responses and raw logs](results/maximum-ci-v1/results.json)
+record the fresh source/archive checks and fifteen stage refusals, the existing
+real-profile checks, and 169 general tests: 160 passed and nine optional skips.
+All 88 selected implementation, proof and fixture files match that source commit
+byte-for-byte. Later tracked changes contain only study documentation and evidence.
+
 Whole-grid composition, exponentiation/sum/normalization execution,
 conflict-state reachability and the canonical-real reference bridge remain open.
 The maximum-pass stage issues zero source certificates and does not reproduce
