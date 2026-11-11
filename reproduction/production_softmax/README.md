@@ -116,6 +116,15 @@ All six fail before extraction or compilation.
 The [wheel audit](results/max-prefix-packaging-v1/results.json) checks that the
 complete 20-module proof closure and closed reader are packaged byte-for-byte.
 
+[All four maximum-prefix CI jobs](https://github.com/harsh-nod/lark/actions/runs/43007162456)
+passed at source commit `b02f85d3e3f825fb0b2d8ca0782061fddc7bb75e`.
+The [saved API responses and raw logs](results/max-prefix-ci-v1/results.json)
+record the fresh prefix check, archive replay and six stage refusals, plus the
+existing real-profile checks and general suite: 169 tests run, 160 passed and
+nine optional skips. All 74 selected proof, reader, checker, runtime, test,
+packaging and workflow files match that source commit byte-for-byte. This run
+does not validate later lane-fold or wave extensions.
+
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
 logical collectives for one complete 1,024-thread block:
@@ -226,6 +235,12 @@ three public bodies are covered by their server digests and public HEAD checks.
 The four compressed assets total 1,593,326,479 bytes. No paid endpoints
 or model calls are used. Original NVIDIA results, historical agent runs/token
 costs and the authors' unreleased adaptation remain unreproduced.
+
+A [bounded public-artifact recheck](results/max-prefix-artifact-recheck-v1/results.json)
+on November 11, 2026 found no original release at the inspected author/org/repository
+endpoints or exact-paper repository searches. KernelCraft was still empty and
+the inspected benchmark head unchanged. This does not exclude private,
+unindexed, other-author, other-branch or future releases.
 
 ```bash
 gh release download native-softmax-evidence-20261111 --repo harsh-nod/lark \
