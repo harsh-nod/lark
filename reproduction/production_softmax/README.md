@@ -202,11 +202,34 @@ checks and general suite: 169 tests run, 160 passed and nine optional skips.
 All 103 selected source files match that commit byte-for-byte. This run does
 not validate the later serial-maximum extension.
 
-Whole-grid composition, the serial reduction of 32 partial maxima, later
-exponentiation/sum/normalization passes, conflict-state reachability and the
-canonical-real reference bridge remain open. This first-block stage still issues
-zero source certificates and does not reproduce the paper's original NVIDIA or
-historical model results.
+The later [complete maximum-pass proof](../../lean/Lark/NativeSoftmaxMaximum.lean)
+executes the thread-zero serial reduction of all thirty-two partials and resumes
+the actual second block barrier. It uses the scheduler's sequential lane and
+wave folds: the leader needs the old partials while pending, and later skip lanes
+preserve the stored result. All 1,024 participating threads now reach PC43 with
+block epoch2, with the exact source-ordered row maximum in shared slot0. Both
+source variants, all supported rows and arbitrary operations/inputs are covered.
+The original scheduler retains three block phases after this point; the machine
+fuel is unchanged. The exact 57,409-access trace includes 57,344 input reads,
+32 shared reads and 33 shared writes. Its classification derives phase race freedom.
+
+The [maximum-pass source packet](results/maximum-v1/results.json) and
+[independent replay](results/maximum-validation-v1/results.json) freeze the full
+source binding, freshly build 47 Lean modules, audit 512 declarations and reject
+52 false Lean claims. The replay starts without Git or any own
+compiled cache and compares both complete finite address traces. An integer
+witness interprets the maximum operation as `3*a+b`, checks all thirty-two
+partials, and checks the serial fold's actual shared result. This detects changes
+to reduction order without assuming commutativity, associativity or idempotence.
+Fifteen [stage controls](results/maximum-stage-guards-v1/results.json) reject fully
+rehashed false claims before extraction, including earlier first-block evidence
+relabeled as a complete maximum pass. The [wheel audit](results/maximum-packaging-v1/results.json)
+checks all 47 proof modules and the reader byte-for-byte.
+
+Whole-grid composition, exponentiation/sum/normalization execution,
+conflict-state reachability and the canonical-real reference bridge remain open.
+The maximum-pass stage issues zero source certificates and does not reproduce
+the paper's original NVIDIA or historical model results.
 
 The separate [finite source replay](results/finite-trace-v2/results.json) erases
 scalar values and executes integer control, source accesses, barriers and
@@ -258,6 +281,15 @@ python3 reproduction/production_softmax/replay_first_block.py \
   --packet /tmp/softmax-max-first-block \
   --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
   --output /tmp/softmax-max-first-block-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_maximum.py --output /tmp/softmax-maximum
+python3 reproduction/production_softmax/replay_maximum.py \
+  --packet /tmp/softmax-maximum \
+  --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+  --output /tmp/softmax-maximum-replay --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_softmax/check_maximum_stages.py \
+  --packet /tmp/softmax-maximum \
+  --earlier-packet reproduction/production_softmax/results/max-first-block-v1 \
+  --output /tmp/softmax-maximum-stage-guards --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 ## Finite AMD numerical evidence
