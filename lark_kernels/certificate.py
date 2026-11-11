@@ -441,6 +441,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "native-rope-whole-v19":
+        from .native_rope_certificate import check as check_native_rope
+
+        return check_native_rope(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "native-fused-rmsnorm-real-v18":
         from .native_fused_rmsnorm_certificate import check as check_native_fused_rmsnorm
 

@@ -10,7 +10,7 @@ permissions:
 jobs:
   native-rope:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -37,6 +37,19 @@ jobs:
             --lean-bin "$HOME/.elan/bin"
       - name: Execute complete finite native Q/K traces and reject source mutations
         run: python3 reproduction/production_rope/run_symbolic.py --output /tmp/lark-rope-symbolic
+      - name: Export and recheck both complete native RoPE layouts and reject false claims
+        run: python3 reproduction/production_rope/run_whole.py --output /tmp/lark-rope-whole
+      - name: Rebuild frozen whole-launch certificates without Git or owned proof caches
+        run: |
+          python3 reproduction/production_rope/replay_whole.py \
+            --packet /tmp/lark-rope-whole --output /tmp/lark-rope-whole-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed whole-launch scope changes and promoted component packets
+        run: |
+          python3 reproduction/production_rope/check_whole_stages.py \
+            --packet /tmp/lark-rope-whole \
+            --earlier-packet reproduction/production_rope/results/components-v1 \
+            --output /tmp/lark-rope-whole-stage-guards --lean-bin "$HOME/.elan/bin"
   softmax-source:
     runs-on: ubuntu-latest
     timeout-minutes: 20
