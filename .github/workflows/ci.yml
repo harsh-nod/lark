@@ -72,20 +72,20 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
           sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Check source-bound native softmax complete exponentiation/XOR-sum wave and retained prefix/maximum pass
-        run: python3 reproduction/production_softmax/check_exp_wave.py --output /tmp/lark-softmax-exp-wave
-      - name: Replay native softmax exponentiation-wave archive without Git or own compiled cache
+      - name: Check source-bound native softmax constructive four-phase reduction prefix and preserved exponential outputs
+        run: python3 reproduction/production_softmax/check_reduction_prefix.py --output /tmp/lark-softmax-reduction-prefix
+      - name: Replay native softmax four-phase reduction-prefix archive without Git or own compiled cache
         run: |
-          python3 reproduction/production_softmax/replay_exp_wave.py \
-            --packet /tmp/lark-softmax-exp-wave \
+          python3 reproduction/production_softmax/replay_reduction_prefix.py \
+            --packet /tmp/lark-softmax-reduction-prefix \
             --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
-            --output /tmp/lark-softmax-exp-wave-replay --lean-bin "$HOME/.elan/bin"
-      - name: Check exponentiation-wave report stage guards
+            --output /tmp/lark-softmax-reduction-prefix-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check four-phase reduction-prefix report stage guards
         run: |
-          python3 reproduction/production_softmax/check_exp_wave_stages.py \
-            --packet /tmp/lark-softmax-exp-wave \
-            --earlier-packet reproduction/production_softmax/results/exp-prefix-v1 \
-            --output /tmp/lark-softmax-exp-wave-stage-guards --lean-bin "$HOME/.elan/bin"
+          python3 reproduction/production_softmax/check_reduction_prefix_stages.py \
+            --packet /tmp/lark-softmax-reduction-prefix \
+            --earlier-packet reproduction/production_softmax/results/exp-wave-v1 \
+            --output /tmp/lark-softmax-reduction-prefix-stage-guards --lean-bin "$HOME/.elan/bin"
   exact-real:
     runs-on: ubuntu-latest
     timeout-minutes: 20
