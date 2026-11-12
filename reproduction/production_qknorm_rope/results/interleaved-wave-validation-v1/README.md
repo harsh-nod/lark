@@ -1,0 +1,7 @@
+This packet validates complete interleaved physical-wave execution and outputs. It is not a complete block/grid or dense-reference certificate. Split-half remains at its normalization prefix.
+
+All 106 archived source files match commit `15fd617473eb78436ced20b1984588de4a3139e1`. The replay extracted those files into a new directory, rejected any owned compiled cache in the archive, and ran the frozen checker with a PATH containing only pinned Lean/Lake 4.19.0. Git was unavailable, and LEAN_PATH and PYTHONPATH were removed. All 350 library audits, 128 source-bound audits, four false source-binding rejections, count/scope fields and source-manifest bindings matched the first run.
+
+The executed standalone replay launcher is [replay.py](replay.py). Run it with `--packet` pointing to `../interleaved-wave-v1`, `--output` pointing to a new directory, and `--lean-bin` pointing to the pinned Lean 4.19.0 binaries. It validates packet hashes and proof scope before extraction. Two fully rehashed negative controls promoted whole-kernel correctness or invented a certificate; both were rejected before extraction.
+
+The checked source kernel, reference, strict reader and previous GPU input/output evidence were unchanged. The four source controls change a stored register, rotation sign, source operand order or cache pair; their assertions falsely bind those changed programs to the pinned program. The operand-order control tests source identity, without claiming commutative real addition is a different mathematical operation.

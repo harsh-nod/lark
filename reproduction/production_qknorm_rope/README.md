@@ -69,8 +69,13 @@ preserve outputs already stored by earlier lanes. `check_interleaved_wave.py`
 binds this theorem to the translated sources at all four row counts, retains
 the split-half normalization-prefix checks, and rejects four changed-source
 claims for a wrong output register, sign, operand order or cache pair.
-The fresh check builds 40 Std-only modules, audits 350 library declarations
-and 128 source-bound instances, and rejects all four changed-source claims.
+The fresh check builds 40 Std-only modules and checks 350 library axiom audits
+plus 128 source-bound audits across eight layout/row instances, rejecting all
+four changed-source claims. The [frozen wave packet](results/interleaved-wave-v1/results.json)
+and [archive replay](results/interleaved-wave-validation-v1/README.md) publish
+the same checks and two rejected scope promotions. A bounded
+[artifact recheck](results/interleaved-wave-artifact-recheck-v1/queries.json)
+records the public author/org endpoints and exact-paper searches examined.
 Complete block/grid execution, split-half rotation and dense reference
 equality remain open; this development still registers zero certificates.
 
