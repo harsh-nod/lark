@@ -115,3 +115,11 @@ build of the identical download is not counted. The exact-source
 [18-job CI run](https://github.com/harsh-nod/lark/actions/runs/43300772965)
 is recorded as in progress in that immutable receipt; it is not counted as
 passed there.
+
+The [completed regression CI job](results/canonical-real-python-ci-v1/results.json)
+checks source commit `13fa403`: 195 tests in 657.499 seconds, 186 passed and nine
+optional Mathlib tests explicitly skipped. The dedicated AWQ real CI job
+separately passes complete source certificates, frozen proof replay, scope
+controls and installed-wheel checks. The local full-suite attempt hit its
+600-second wrapper limit and remains recorded as incomplete in its
+[timeout receipt](results/canonical-real-local-suite-timeout-v1/results.json).

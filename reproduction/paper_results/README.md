@@ -65,6 +65,13 @@ contains complete AWQ certificates. The refreshed
 records primary pages, named repository metadata/head and three limited queries;
 it does not establish absence from other repositories, branches or future releases.
 
+The [public-download replay](snapshot-v21-publication/results.json) anonymously
+downloaded all eleven snapshot/reader files from commit `5a3cd45`: 38,506,592
+bytes, each matching its committed source. The downloaded tools repeated the
+outside-checkout replay with Git unavailable and all eight negative controls.
+The ledger and its controls perform no fresh Lean checks, model calls or GPU
+trials; linked experiments retain their own validation and limits.
+
 The remainder of this page documents the original historical snapshot.
 
 This is a coverage snapshot of the evidence associated with experiment-code
