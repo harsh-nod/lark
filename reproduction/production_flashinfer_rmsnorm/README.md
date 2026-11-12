@@ -75,6 +75,9 @@ is tracked separately from the earlier first-block checkpoint. The
 complete-profile gates: certificates/controls, fresh no-Git replay and installed
 wheel verification/recheck. Its source files match the published evidence;
 other jobs in the fourteen-job workflow were still running at capture.
+The later [complete CI receipt](results/canonical-complete-ci-v1/results.json)
+records all fourteen jobs passing at that same proof-source commit, with all
+119 selected source, packaging, checker and test files unchanged.
 The [public-download receipt](results/canonical-publication-v1/results.json)
 checks 64 anonymously downloaded files (2,179,128 bytes) and the complete
 312-file certificate bundle. The separate
