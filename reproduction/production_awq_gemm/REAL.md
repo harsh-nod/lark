@@ -123,3 +123,10 @@ separately passes complete source certificates, frozen proof replay, scope
 controls and installed-wheel checks. The local full-suite attempt hit its
 600-second wrapper limit and remains recorded as incomplete in its
 [timeout receipt](results/canonical-real-local-suite-timeout-v1/results.json).
+
+The [complete source CI/main receipt](results/canonical-real-ci-main-v1/results.json)
+records all eighteen jobs passing at source `13fa403` and the checked
+fast-forward of `main` to documentation/publication commit `3eab929`.
+All SDK, Lean, test, dependency/configuration and workflow files are identical
+between those two revisions. Later paper-ledger changes have a separate source
+CI run; historical publication receipts retain their actual observation times.

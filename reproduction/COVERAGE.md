@@ -262,6 +262,12 @@ GitHub queries and the empty `AICrossSim/KernelCraft` metadata. The [arXiv sourc
 inventory](results/paper-source-manifest.json) has manuscript files/figures and no
 implementation. These bounded searches do not prove that artifacts cannot exist
 elsewhere or be released later.
+The later [complete-page query record](paper_results/original-artifact-full-query-20261112/results.json)
+retrieves all 256 returned repository names/metadata for one `LARK Lean GPU`
+query, below GitHub's 1000-result cap. The known GPU/Lean candidate describes
+an independent project and cites LARK as related work. Other terms, private or
+unindexed code, repository contents and unsearched branches remain outside this
+query; no original implementation was identified from its inspected metadata.
 The [expanded author-repository check](results/artifact-expanded-20261110.json)
 also records the public `gpu_optim_bench` repository: its inspected revision
 identifies itself as FlashInfer-Bench and has no LARK/Lean/KernelCraft-named
