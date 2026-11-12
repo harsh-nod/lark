@@ -8,6 +8,7 @@ import json
 import math
 import os
 from pathlib import Path, PurePosixPath
+import re
 import shutil
 import struct
 import subprocess
@@ -31,6 +32,21 @@ CASE_FOLDERS = {
 }
 STRATA = ['dyadic','normal','basis','cancellation']
 CAPS = ('set_option maxRecDepth 10000\n','set_option maxHeartbeats 2000000\n')
+FAMILIES = dict(zip(CASE_FOLDERS, (
+    'vllm-silu','vllm-rmsnorm','fused-add-rmsnorm','native-attention',
+    'vllm-rope','vllm-rope','fused-qknorm-rope','fused-qknorm-rope',
+    'flashinfer-rmsnorm','sglang-rmsnorm','vllm-awq','llmc-softmax-reference')))
+CONTROL_NAMES = ('positive','semantic-doubling','unsupported-operation','wrong-element-type',
+                 'output-index','input-buffer','input-offset','zero-denominator','negative-sqrt',
+                 'nonfinite-input','nonfinite-intermediate','unknown-input-schema',
+                 'noncanonical-add','noncanonical-literal','noncanonical-append')
+REFUSALS = dict(zip(CONTROL_NAMES[2:], (
+    'reference-audit unsupported declaration: Real.sin',
+    'reference-audit expected List Real', 'reference-audit output index out of bounds',
+    'reference-audit input index out of bounds','reference-audit input index out of bounds',
+    'reference-audit zero denominator','reference-audit negative square-root input',
+    'reference-audit non-finite input','reference-audit non-finite intermediate',
+    'reference-audit unknown input schema', *(['reference-audit unsupported primitive instance']*3))))
 
 
 def require(condition, message):
@@ -108,40 +124,72 @@ def logs(path):
             for line in raw.splitlines() if 'LARK_SPEC_AUDIT ' in line]
 
 
+def correct_caps(text):
+    # Refuse extra overrides as well as changed values in these new files.
+    options = re.findall(r'\bset_option\s+(?:maxRecDepth|maxHeartbeats)[^\n]*',text)
+    return options == [c.rstrip('\n') for c in CAPS]
+
+
 def audit(source, evidence, report):
     fixed = {'schema':2,'status':'elaborated-production-references-matched-on-samples',
              'families':10,'variants':12,'samples':240,'device':'cpu',
              'new_certificates':0,'formal_ieee_or_error_theorem':False,
              'original_paper_fully_reproduced':False,'model_calls':0,'gpu_trials':0,
              'comparison_atol':1e-10,'comparison_rtol':1e-10,
-             'strata':STRATA,'selected_cases':list(CASE_FOLDERS),'positive_controls':1}
+             'strata':STRATA,'selected_cases':list(CASE_FOLDERS),'positive_controls':1,'negative_controls':14}
+    extra = {'checks','torch_version','module_compilation','reference_imports','source_bindings',
+             'lean_version','lean_binary_sha256','python','platform','cast_idealization'}
+    require(type(report) is dict and set(report) == set(fixed)|extra,
+            'Unsupported numerical-study report fields')
     for key, expected in fixed.items():
         require(type(report.get(key)) is type(expected) and report[key] == expected,
                 'Unsupported numerical-study scope: '+key)
-    require('4.19.0' in report['lean_version'], 'Unpinned Lean version')
+    require(type(report['lean_version']) is str and re.match(r'Lean \(version 4\.19\.0(?:,|\))',report['lean_version']),
+            'Unpinned Lean version')
+    require(all(type(report[k]) is str and bool(report[k]) for k in ('torch_version','python','platform')),
+            'Missing numerical runtime provenance')
+    require(type(report['module_compilation']) is dict
+            and set(report['module_compilation']) == {'source_sha256','olean_sha256'}
+            and all(type(h) is str and re.fullmatch('[0-9a-f]{64}',h)
+                    for h in (*report['module_compilation'].values(),report['lean_binary_sha256'])),
+            'Invalid compiler provenance')
+    require(report['cast_idealization'] == 'Explicit float/half/floating to()/dtype conversions are identities for the float64 Torch track; original dtype outputs are reported separately.',
+            'Storage interpretation differs')
     verify_files(source,report['source_bindings'])
     require(report['source_bindings'] == read(evidence/'source-bindings.json'), 'Source inventory differs')
     module = source/'reproduction/specification_validation/SpecAudit.lean'
     require(sha(module) == report['module_compilation']['source_sha256'], 'Numerical module differs')
-    require(all(c in module.read_text() for c in CAPS), 'Numerical module options differ')
+    require(correct_caps(module.read_text()), 'Numerical module options differ')
     require('checkPrimitive' in module.read_text(), 'Missing primitive instance guards')
     require('error:' not in (evidence/'compile.log').read_text(), 'Numerical compilation failed')
     controls = read(evidence/'controls/results.json')
-    require(controls['status'] == 'numerical-auditor-controls-passed'
+    require(set(controls) == {'schema','status','positive_controls','negative_controls','controls','new_certificates'}
+            and type(controls['schema']) is int and controls['schema'] == 1
+            and type(controls['new_certificates']) is int and controls['new_certificates'] == 0
+            and controls['status'] == 'numerical-auditor-controls-passed'
+            and type(controls['positive_controls']) is int
             and controls['positive_controls'] == 1
-            and type(report['negative_controls']) is int
+            and type(controls['negative_controls']) is int
             and controls['negative_controls'] == report['negative_controls']
-            and report['negative_controls'] >= 14
-            and len(controls['controls']) == report['negative_controls']+1, 'Control count/status differs')
+            and [r['control'] for r in controls['controls']] == list(CONTROL_NAMES), 'Control count/status differs')
     for row in controls['controls']:
         path = evidence/'controls'/safe(row['control'])
         text = (path/'lean.log').read_text()
-        require(all(c in (path/'Main.lean').read_text() for c in CAPS), 'Control options differ')
+        require(correct_caps((path/'Main.lean').read_text()), 'Control options differ')
+        require(type(row['seconds']) in (int,float) and math.isfinite(row['seconds']) and row['seconds'] >= 0,
+                'Invalid control runtime')
         if row['outcome'] == 'refused':
-            require(type(row['exit_code']) is int and row['exit_code'] != 0
+            require(set(row) == {'control','exit_code','seconds','outcome','expected_refusal'}
+                    and type(row['exit_code']) is int and row['exit_code'] == 1
+                    and row['control'] not in ('positive','semantic-doubling')
+                    and row['expected_refusal'] == REFUSALS[row['control']]
                     and row['expected_refusal'] in text and 'LARK_SPEC_AUDIT ' not in text,
                     'Control did not refuse as reported')
         else:
+            require(set(row) == {'control','exit_code','seconds','outcome','lean_float64','independent_expected'}
+                    and ((row['control'],row['outcome']) in (
+                        ('positive','matched'),('semantic-doubling','numerical-mismatch-detected'))),
+                    'Unknown control outcome')
             found = logs(path/'lean.log')
             require(row['exit_code'] == 0 and len(found) == 1, 'Positive/mutation control did not evaluate')
             value = struct.unpack('<d',struct.pack('<Q',int(found[0]['float64_bits'])))[0]
@@ -152,16 +200,37 @@ def audit(source, evidence, report):
     expected_order = [(case,stratum) for case in CASE_FOLDERS for stratum in STRATA]
     require([(r['case'],r['stratum']) for r in report['checks']] == expected_order,
             'Incomplete/duplicate case-stratum matrix')
+    require(type(report['reference_imports']) is dict and set(report['reference_imports']) == set(CASE_FOLDERS),
+            'Incomplete reference import provenance')
+    for imported in report['reference_imports'].values():
+        require(set(imported) == {'sources','compiled'} and bool(imported['sources'])
+                and set(imported['compiled']) == {str(PurePosixPath(n).with_suffix('.olean')) for n in imported['sources']},
+                'Reference source/compiled inventory differs')
+        for name, expected in imported['sources'].items():
+            prefix = 'lean-real/' if name.startswith('LarkReal/') else 'lean/'
+            require(sha(source/prefix/safe(name)) == expected, 'Reference import source differs')
+        require(all(type(h) is str and re.fullmatch('[0-9a-f]{64}',h) for h in imported['compiled'].values()),
+                'Invalid compiled reference import hashes')
     for row in report['checks']:
         folder = source/'reproduction'/CASE_FOLDERS[row['case']]
         path = evidence/row['case']/row['stratum']
+        task = read(folder/'task.json')
+        output_elements = sum(math.prod(b['shape']) for b in task['buffers'] if b['role'] in ('output','inout'))
+        require(set(row) == {'case','family','stratum','samples','reference_sha256','task_sha256','input_sha256',
+                            'main_sha256','lean_log_sha256','lean_seconds','reference_executed_unchanged',
+                            'output_elements','ideal_max_abs_error','native_max_abs_difference','seed','input_stratum'}
+                and row['family'] == FAMILIES[row['case']] and row['input_stratum'] == row['stratum']
+                and type(row['output_elements']) is int and row['output_elements'] == output_elements
+                and type(row['seed']) is int and row['seed'] == 7321+list(CASE_FOLDERS).index(row['case'])*1009
+                and type(row['lean_seconds']) in (int,float) and math.isfinite(row['lean_seconds']) and row['lean_seconds'] >= 0,
+                'Unsupported case scope/provenance')
         require(row['reference_executed_unchanged'] is True
                 and sha(folder/'reference.py') == row['reference_sha256']
                 and sha(folder/'task.json') == row['task_sha256'], 'Torch/reference binding differs')
         for name, key in (('Input.json','input_sha256'),('Main.lean','main_sha256'),('lean.log','lean_log_sha256')):
             require(sha(path/name) == row[key], 'Case bytes differ: '+str(path/name))
         require(read(path/'results.json') == row, 'Aggregate/per-case results differ')
-        require(all(c in (path/'Main.lean').read_text() for c in CAPS), 'Case options differ')
+        require(correct_caps((path/'Main.lean').read_text()), 'Case options differ')
         found = logs(path/'lean.log')
         indices = sorted({0,1,min(127,row['output_elements']-1),row['output_elements']//2,row['output_elements']-1})
         require(len(found) == 5 and [r['index'] for r in row['samples']] == indices,
@@ -172,8 +241,12 @@ def audit(source, evidence, report):
             value = struct.unpack('<d',struct.pack('<Q',int(actual['float64_bits'])))[0]
             require(math.isfinite(value) and value == sample['lean_float64']
                     and math.isfinite(sample['torch_ideal_float64'])
+                    and math.isfinite(sample['torch_original_dtype'])
                     and abs(value-sample['torch_ideal_float64']) <= 1e-10+1e-10*abs(sample['torch_ideal_float64']),
                     'Float64 numerical comparison failed')
+        require(row['ideal_max_abs_error'] == max(abs(s['lean_float64']-s['torch_ideal_float64']) for s in row['samples'])
+                and row['native_max_abs_difference'] == max(abs(s['lean_float64']-s['torch_original_dtype']) for s in row['samples']),
+                'Reported numerical difference metrics differ')
     return {'status':'frozen-numerical-evidence-audit-passed','variants':12,'families':10,
             'strata':4,'samples':240,'negative_controls':report['negative_controls'],
             'fresh_lean_executions':0,'new_certificates':0,'original_paper_fully_reproduced':False}
@@ -229,7 +302,7 @@ def main():
             env[name] = ''
         with (out/'recompute.log').open('w') as log:
             run = subprocess.run([sys.executable,str(out/'source/reproduction/specification_validation/study.py'),
-                                  '--lean',str(args.lean.resolve()),'--output',str(out/'recomputed')],
+                                  '--lean',str(args.lean.absolute()),'--output',str(out/'recomputed')],
                                  env=env,stdout=log,stderr=subprocess.STDOUT)
         require(run.returncode == 0, 'Fresh numerical recomputation failed; inspect recompute.log')
         fresh = read(out/'recomputed/results.json')
@@ -239,7 +312,9 @@ def main():
             for x,y in zip(old['samples'],new['samples']):
                 require(abs(x['lean_float64']-y['lean_float64']) <= 1e-10+1e-10*abs(x['lean_float64']),
                         'Recomputed Lean scalar differs')
-        result.update(status='source-only-numerical-recomputation-passed',fresh_lean_executions=1+48+len(read(out/'recomputed/controls/results.json')['controls']))
+        result.update(status='source-only-numerical-recomputation-passed',
+                      fresh_lean_executions=1+48+len(read(out/'recomputed/controls/results.json')['controls']),
+                      execution_count_scope='Direct numerical module/control/case Lean processes; SDK import-cache builds are additional.')
     write(out/'results.json',result)
     print(json.dumps(result))
 

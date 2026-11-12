@@ -1,5 +1,14 @@
 # Numerical audit of elaborated Lean references
 
+The completed [production study](RESULTS.md) matched **240 sampled values**
+across twelve variants and four input strata. Its immutable
+[source and evidence packet](results/production-real-v1/manifest.json) contains
+712 owned source files and 240 evidence files inside two archives. All fourteen
+numerical negative controls and all
+[26 packet mutation controls](results/production-real-packet-controls-v1/results.json)
+passed. A separate fresh numerical recomputation is in progress; it is not
+counted as complete by these file-verification receipts.
+
 The paper's Appendix A, “Kernel-independent trusted base,” tests its Torch
 formalizations with a metaprogram that evaluates the **elaborated Lean
 specification** in float64. GPU-versus-Torch tests alone do not exercise this
@@ -57,3 +66,34 @@ kept separately from that source bundle.
 Every new Lean module and generated Main uses `maxRecDepth 10000` and
 `maxHeartbeats 2000000`. Existing source kernels, proof fuel and shape bounds
 are preserved. Failed development attempts are not successful study results.
+
+Audit the published packet using Python's standard library, without executing
+Lean, Torch, GPUs or models:
+
+```bash
+python3 reproduction/specification_validation/packet.py verify \
+  --packet reproduction/specification_validation/results/production-real-v1 \
+  --output /tmp/lark-spec-packet-verified
+python3 reproduction/specification_validation/check_packet.py \
+  --packet reproduction/specification_validation/results/production-real-v1 \
+  --output /tmp/lark-spec-packet-controls
+```
+
+To recompute every sampled Lean and Torch value from the frozen owned sources,
+compile the numerical auditor anew and reuse only imports checked by the pinned
+SDK cache validator:
+
+```bash
+python3 reproduction/specification_validation/packet.py recompute \
+  --packet reproduction/specification_validation/results/production-real-v1 \
+  --output /tmp/lark-spec-recomputed --lean /path/to/lean-4.19.0/bin/lean \
+  --dependency-project /path/to/initialized/lean-real
+```
+
+The packet preserves the exact source frozen at the start of measurement,
+including the then-unused packet authoring helper. The top-level packet verifier
+was subsequently tightened and tested. The reference, evaluator, inputs, raw
+logs and numerical results remain unchanged. A fresh replay evaluates those
+frozen references and evaluator, while the current verifier checks the resulting
+scope and data. Existing checked reference-library imports may be reused;
+this does not claim a cold rebuild of every imported proof or of Mathlib.

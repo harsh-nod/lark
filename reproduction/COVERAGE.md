@@ -22,6 +22,15 @@ replayed after later documentation changes. The
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
 independent adaptations, not completeness of the original paper.
 
+The later [elaborated Lean-reference numerical study](specification_validation/RESULTS.md)
+matched 240 sampled values across twelve production-reference variants and four
+input strata. It evaluates actual imported Lean definitions against unchanged
+Torch modules on CPU, with explicit identity storage casts in its float64 track.
+Its fourteen numerical negative controls and 26 packet mutation controls passed.
+This is additional evidence for the tested specification formalizations, with
+zero new source certificates, GPU trials or model calls. It is separate from
+the immutable v21 ledger and does not recover the authors' registry or results.
+
 [Offline model experiment preparation](local_models/README.md) now identifies
 official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
 This makes local adaptations possible; it does not recover the original harness
