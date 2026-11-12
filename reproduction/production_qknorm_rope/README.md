@@ -50,6 +50,10 @@ sources, audits the printed theorem axioms, and binds these partial execution
 theorems to both complete translated HIP sources at 1, 3, 256 and 65,535 rows.
 The normalization-prefix check builds 30 Std-only modules and checks 245 library
 axiom audits plus 104 source-bound audits across those eight instances.
+The [frozen prefix packet](results/normalization-prefix-v1/results.json) and
+[independent fresh replay](results/normalization-prefix-validation-v1/README.md)
+publish the logs, archive and source-commit binding. Both runs checked the same
+theorem axiom sets; the replay had no Git executable or seeded owned proof cache.
 The historical component packets below retain their original, narrower scope.
 
 The component study builds six Std-only modules, checks 31 library declarations
