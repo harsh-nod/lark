@@ -53,6 +53,13 @@ neither Git nor an owned compiled cache; all fourteen
 [fully rehashed scope controls](results/first-block-stage-guards-v1/results.json)
 rejected claims about unfinished later stages before extracting any source. The older component and
 GPU evidence below retain their original scope and source pins.
+The [publication receipt](results/first-block-publication-v1/results.json)
+records 42 anonymously downloaded public files (291,957 bytes), all matching
+commit `adbc0c83cb8dba4b59c683414e7c074f4875f998`. All ninety archived source
+files match proof-source commit `2e44acc3e101e07614cf30abf7bf4e1bff1e4f23`.
+The separate frozen-source replay passed; the public download itself did not
+execute another replay. [CI](https://github.com/harsh-nod/lark/actions/runs/43173986851)
+was still running at this checkpoint.
 
 ```sh
 python3 reproduction/production_flashinfer_rmsnorm/check_execution.py \
