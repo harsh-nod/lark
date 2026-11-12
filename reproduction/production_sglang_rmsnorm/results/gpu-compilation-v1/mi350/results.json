@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "status": "compiled-no-gpu-trial",
+  "returncode": 0,
+  "command": [
+    "hipcc",
+    "-O3",
+    "-std=c++17",
+    "-shared",
+    "-fPIC",
+    "-ffp-contract=off",
+    "--offload-arch=gfx950",
+    "-MD",
+    "-MF",
+    "dependencies.d",
+    "driver.hip",
+    "-o",
+    "driver.so"
+  ],
+  "input_manifest_sha256": "b3d313946e8bac5e3cbbbd19340e2ce7eeca9a517ed4c6293df3accf2fac8c17",
+  "driver_sha256": "6dfa9248f30c9612688214457da47ddbafbebf95305c9a09aeb4860f93990277",
+  "compiler": "HIP version: 7.2.53211-e1a6bc5663\nAMD clang version 22.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-7.2.1 26084 f58b06dce1f9c15707c5f808fd002e18c2accf7e)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/rocm-7.2.1/lib/llvm/bin\nConfiguration file: /opt/rocm-7.2.1/lib/llvm/bin/clang++.cfg\n",
+  "gpu_trials": 0,
+  "source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "binary_sha256": "d863e77dd1d5b6decc21c3dbb93ba7d0b38daab2ebcc1c080d370bf913be19c3"
+}

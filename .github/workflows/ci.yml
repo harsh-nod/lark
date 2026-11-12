@@ -57,7 +57,7 @@ jobs:
             --lean "$HOME/.elan/bin/lean" --timeout 600
   native-sglang-rmsnorm:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -115,6 +115,20 @@ jobs:
         run: |
           python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
             --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Prove carried native wave preparation and the first XOR snapshot
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_entry.py \
+            --output /tmp/lark-sglang-wave-entry --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen native wave-entry proofs without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_wave_entry.py \
+            --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed claims about later reduction and synchronization
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_entry_stages.py \
+            --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-stage-guards \
             --lean-bin "$HOME/.elan/bin"
   native-flashinfer-rmsnorm:
     runs-on: ubuntu-latest

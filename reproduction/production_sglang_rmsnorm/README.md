@@ -61,7 +61,37 @@ initialized Lean execution, actual whole-trace classification, and exact-real
 source/reference equality remain outstanding for this family. There have been
 no model calls or GPU trials in this study.
 
-The latest `results/first-shuffle-v1` stage proves successful native scalar
+The latest `results/native-wave-entry-v1` stage proves successful execution of
+all sixty-four lane preparations followed by the first logical32 XOR snapshot.
+Both complete source variants bind at rows 1, 3 and 131072. The universal theorem
+covers every native physical wave of every supported row count, arbitrary
+arithmetic operations and input, and carried machine state with read-only
+global buffers and PC0 for the incoming lanes. It requires no safety premise
+for the earlier trace. The resulting state is at PC45 with each lane's own
+sum in register0 and its mask16 peer's sum in register1, both private half caches
+intact, and the two logical32 partitions still separate. Exactly 5120 new access
+events precede the unchanged earlier trace. The snapshot changes no memory or
+epochs. The native warp-runner transition uses the unchanged `(512,8,3,1)` fuel.
+
+Thirty-three modules and six source instances pass 356 axiom audits, and eleven
+false source/execution claims are rejected. Independent frozen-source replay in
+`results/native-wave-entry-validation-v1` uses no Git or owned compiled caches.
+Twenty-two fully rehashed controls in `results/native-wave-entry-stage-guards-v1`
+reject claims about completed reductions, shared stores, barriers, complete
+execution and reference equality before extraction. New loop invariants use
+induction and local control of definition unfolding; proof limits remain
+maxRecDepth10000 and maxHeartbeats2000000. The remaining four XOR snapshots,
+five additions, shared stores, barriers, full launch and real-reference equality
+remain outstanding. This stage issues no source certificate.
+
+`results/gpu-compilation-v1` freezes and hashes a three-method HIP comparison:
+the original adaptation, guarded repair and verbatim selected upstream template
+body with explicit HIP helpers. Both `mi350` and `mi350-2` compile the identical
+driver for gfx950 with contraction disabled. Compilation does not execute a GPU
+trial or establish CUDA helper/compiler equivalence; numerical trials remain
+pending.
+
+The earlier `results/first-shuffle-v1` stage proves successful native scalar
 execution from the standard initializer through PC44, the first logical32 XOR
 shuffle, with unchanged lane fuel512. The universal theorem covers every valid
 thread at every supported row count, arbitrary arithmetic operations, input and
@@ -142,6 +172,14 @@ python3 reproduction/production_sglang_rmsnorm/replay_prefix.py \
   --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
   --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_wave_entry.py \
+  --output /tmp/lark-sglang-wave-entry --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/replay_wave_entry.py \
+  --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-replay \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_wave_entry_stages.py \
+  --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-stage-guards \
   --lean-bin /path/to/lean-4.19.0/bin
 ```
 
