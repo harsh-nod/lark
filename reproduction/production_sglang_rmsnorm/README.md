@@ -137,6 +137,9 @@ The [dedicated CI receipt](results/native-wave-entry-ci-v1/results.json) records
 the native SGLang job passing its source checks, fresh proofs, independent
 replays and rejection controls at the same proof revision. Its captured full-run
 job list retains the status of the other regression jobs.
+The later [complete CI receipt](results/native-wave-entry-all-ci-v1/results.json)
+records all fifteen jobs passing, with unchanged proof sources, workflow and
+contract tests in the published evidence revision.
 
 The earlier `results/first-shuffle-v1` stage proves successful native scalar
 execution from the standard initializer through PC44, the first logical32 XOR
