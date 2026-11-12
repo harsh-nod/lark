@@ -41,6 +41,13 @@ Current packets are [source checks](results/a-staging-v1),
 [scope guards](results/a-staging-scope-guards-v1) and
 [historical-reader compatibility](results/legacy-reader-compatibility-v1).
 The source-only archive is `results/a-staging-v1/source-project.tar.gz`.
+The same archive is available in the
+[public A-staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-a-staging-20261112).
+An anonymous download matched the independently replayed bytes, all twenty
+owned model files matched source commit `2f505a7`, and all four source instances
+were freshly rerendered from that commit. This check did not repeat the cold
+build on the identical download. Its [receipt](results/a-staging-publication-v1)
+binds 86 source files and records the CI status at publication.
 
 Every new module retains `maxRecDepth=10000` and `maxHeartbeats=2000000`.
 Lane/warp/block/grid fuel remains 512, `tile_N/8+1`, `2*(K/32)+1`, and 1.
