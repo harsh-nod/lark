@@ -145,6 +145,18 @@ archive without Git or seeded owned compiled objects, using only verified
 external dependency sources and their cache. Earlier packets retain their
 original narrower claims.
 
+The [real certificate packet](results/canonical-real-v1/results.json) exports
+four certificates, checks 454 library and 12 principal axiom audits, and rejects
+25 changed-source, reference, output or integrity/scope claims. The
+[fresh replay](results/canonical-real-validation-v1/results.json) reproduces all
+466 audits, all four row specializations and all eight false Lean claims without
+Git or owned compiled caches. Seven additional
+[fully rehashed scope promotions](results/canonical-real-stage-guards-v1/results.json)
+are refused before archive extraction. The
+[downloadable certificates and wheel](results/canonical-real-publication-v1/README.md)
+include the [source-commit binding](results/canonical-real-publication-v1/source-binding.json).
+The installed wheel also rechecked a certificate outside the repository.
+
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
 audits), and rejects nine false Lean claims. Its standalone replay rebuilds
