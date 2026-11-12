@@ -14,6 +14,15 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
+**v21 correction:** the frozen `dependencies.semantics` paragraph mistakenly
+retains an older statement that FlashInfer, SGLang RMSNorm and AWQ are
+unimplemented. Its own production inventory and source/replay checks correctly
+record their completed independent profiles. The
+[explicit correction](errata/20261112-v21-semantics.json) replaces that authored
+assessment; the frozen snapshot, proof sources and experimental results remain
+unchanged. General instruction/signature coverage and the original artifacts
+are still separate gaps.
+
 The [updated snapshot](snapshots/20261112-v21/results/RESULTS.md) freezes 3,312
 published evidence files at commit `3eab929`, plus its own auditor and targets.
 It adds complete distinct FlashInfer RMSNorm, guarded packed SGLang RMSNorm
