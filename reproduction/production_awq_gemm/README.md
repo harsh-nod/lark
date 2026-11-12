@@ -1,12 +1,12 @@
 # Native AWQ GEMM reproduction checkpoint
 
 The independent AMD FP16 adaptation passes paired numerical validation and
-finite symbolic execution. Its Lean proofs currently cover complete source
-identity, addresses, ownership, launch bounds, the complete first native block
-visit, the full 64-lane staging visit, middle barrier resumption and both native
-K16 passes for any valid K32 tile, including all 8/16 MFMA instructions and accumulator values.
-**The complete AWQ execution, whole-trace race-freedom and
-dense-reference proofs are unfinished; this checkpoint issues zero AWQ source
+finite symbolic execution. Its Lean proofs now cover complete initialized
+`runGrid` execution and termination: source identity, signed addresses,
+staging, both native K16 passes, every K32 iteration and the original guarded
+FP32-to-half output stores. The original scheduler and fuel are retained.
+**Whole-trace race freedom, complete output extraction and dense-reference
+equality remain unfinished; this checkpoint issues zero AWQ source
 certificates.** The accepted production-family count remains eight.
 
 The source is pinned to vLLM
@@ -29,7 +29,7 @@ generic shared-memory limit is unchanged.
 | Check | Result |
 | --- | --- |
 | Complete source binding | Four 138/226-instruction sources match the fixed Lean template, including every matrix site, barrier and store |
-| Lean components | Forty-nine owned modules in the current source archive, 461 library audits and 64 source audits; only `propext`, `Classical.choice`, `Quot.sound` |
+| Lean components | Sixty-two owned modules in the current source archive, 572 library audits and 72 source audits; only `propext`, `Classical.choice`, `Quot.sound` |
 | Universal arithmetic | Shared/global bounds, writer inversion, fragment coordinates, signed scalar bounds and `grid*64 ≤ M*N` |
 | Initial execution | Actual full-program `runLane` executes all 31/47 setup instructions; all 64 lanes converge and the first block barrier resumes through the existing scheduler |
 | Guarded A staging | Both complete eight-iteration loops, row guard and join: 35/36 scalar instructions; all eight shared values, input preservation, outside-memory frame and exact 8/16-event trace length |
@@ -38,8 +38,9 @@ generic shared-memory limit is unchanged.
 | Complete block staging | All 64 actual lane executions, middle convergence and barrier resumption; initial block execution through both barriers retains the remaining matrix/K-loop continuation |
 | Dense shared tiles | All 16×32 A cells, including row-tail zeros, and 32×tileN B cells equal the dense input coordinates |
 | Native matrix phase | All operand loads and all 8/16 MFMA instructions for one valid K32 iteration; all 256 results per instruction read the old snapshot, and the final C values equal the source-order two-pass result using original warp9/17 fuel |
+| Complete execution | Every K32 iteration, actual K increment/back edge, guarded converted output stores, complete block and grid termination with the original fuel; global inputs preserved |
 | Logical controls | Six altered sources fail on false source identity, without exhausting proof budgets |
-| Stage controls | Forty-four fully rehashed false claims are rejected before extracting a proof project, including an invented all-K scope |
+| Stage controls | Sixty-two fully rehashed false claims are rejected before extracting a proof project, including increased fuel and invented race/reference/`runLaunch` acceptance |
 | Finite complete execution | Four launches, 18,048 independent output expressions, 359,424 actual trace events; no conflicts, one output writer and unchanged inputs |
 | Finite semantic controls | Wrong matrix operand, missing reuse barrier, missing staging barrier, shortened K loop, aliased output and missing half conversion are detected |
 | Native compilation | Both tile paths disassemble to 8/16 native MFMA sites, wave64 and expected shared sizes |
@@ -47,7 +48,7 @@ generic shared-memory limit is unchanged.
 | Host agreement | Zero FP16 bit differences between `mi350` and `mi350-2`; 380 total FP16-word differences against separately rounded CPU Torch FP32 |
 | Memory preservation | Every input matrix and allocation guard unchanged; every output initialized to NaN before launch |
 | Numerical controls | Ten fully rehashed false packets rejected, including a wrong output, missing final store, changed read-only input and false proof claims |
-| Packaging | All forty-seven AWQ Lean resources and the Python reader match the current built wheel byte for byte; the source archive also contains its two fixed machine dependencies |
+| Packaging | All sixty AWQ Lean resources and the Python reader match the current built wheel byte for byte; the source archive also contains its two fixed machine dependencies |
 
 The numerical study covers ten `(M,K,N)` shapes:
 `(1,32,64)`, `(15,32,128)`, `(16,64,192)`, `(17,32,64)`, `(17,32,128)`,
@@ -70,14 +71,15 @@ fuel remains lane512, warp9/17, block`2*(K/32)+1`, grid1. Every new Lean module
 uses `maxRecDepth=10000` and `maxHeartbeats=2000000`. No proof option, machine
 fuel or shape limit was raised to close these components.
 
-The [native matrix-phase proof](MATRIX_EXECUTION.md) records the current source-bound
+The [complete grid execution proof](GRID_EXECUTION.md) records the current source-bound
 scope. Historical `source-components-v1` and its release
 retain the earlier first-six-instruction result; `a-staging-v1` records the
 later 256-audit result. `lane-staging-v1` records the earlier 363-audit result.
 `block-staging-v1` records the earlier 418-audit result; `native-matrix-v1`
-records the current 525-audit result.
-The [native matrix-phase archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-matrix-phase-20261112)
-passes anonymous download, hash and Git-source binding checks. The earlier
+records the earlier 525-audit result; `whole-grid-v1` records the current
+644-audit result.
+The earlier [native matrix-phase archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-matrix-phase-20261112)
+retains its anonymous download, hash and Git-source binding checks. The earlier
 [whole-block source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-block-staging-20261112)
 and
 [per-lane source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112)
@@ -103,5 +105,6 @@ python3 reproduction/production_awq_gemm/replay_components.py \
   --output /tmp/awq-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
-The next proof steps are the K counter/back edge, full K-loop induction, final
-stores, whole-grid trace classification and dense exact-real reference equality.
+The next proof steps are final-output coverage and source-order extraction,
+whole-grid trace classification, dense exact-real reference equality and full
+AWQ certificate/CLI support.

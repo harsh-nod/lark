@@ -86,15 +86,16 @@ comparisons across 144 three-method launches with zero tolerance failures and
 recorded Torch FP32 bit differences. These independent adaptation results do
 not recover the paper authors' source, model outcomes or NVIDIA measurements.
 
-The [native FP16 AWQ GEMM development](reproduction/production_awq_gemm/MATRIX_EXECUTION.md)
-now proves actual staging and both native K16 passes for any valid K32 tile,
-including all 8/16 MFMA instructions, their accumulator values and input preservation.
-Four complete source bindings and independent replays pass 525 axiom audits;
-44 rehashed stage claims are rejected before extraction. Paired MI350 runs retain
+The [native FP16 AWQ GEMM development](reproduction/production_awq_gemm/GRID_EXECUTION.md)
+now proves complete initialized grid execution and termination, including every
+K32 iteration, native MFMA instruction, original guarded output store and
+FP32-to-half conversion, with the original fuel and input preservation.
+Four complete source bindings and independent replays pass 644 axiom audits;
+62 rehashed stage claims are rejected before extraction. Paired MI350 runs retain
 820,224 output comparisons over 120 launches with no tolerance failures or host
-bit differences. K-counter/K-loop execution, final outputs, whole-trace
-race freedom and dense-reference equality remain unfinished. This development
-stage issues zero AWQ source certificates.
+bit differences. Whole-trace race freedom, complete output extraction and
+dense-reference equality remain unfinished. This development stage issues zero
+AWQ source certificates.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted

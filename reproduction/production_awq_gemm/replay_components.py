@@ -31,6 +31,10 @@ MATRIX_MODELS = ('NativeAwqGemmMatrixProgram', 'NativeAwqGemmFragmentIndex', 'Na
                  'NativeAwqGemmOperandFold', 'NativeAwqGemmOperandBlock', 'NativeAwqGemmMMAElement',
                  'NativeAwqGemmMMAValues', 'NativeAwqGemmMMABank', 'NativeAwqGemmMMAFold',
                  'NativeAwqGemmMatrixPass', 'NativeAwqGemmMatrixPhase', 'NativeAwqGemmMatrixIteration')
+GRID_MODELS = ('NativeAwqGemmTailProgram', 'NativeAwqGemmKControl', 'NativeAwqGemmOutputIndex',
+               'NativeAwqGemmOutputStore', 'NativeAwqGemmOutputRound', 'NativeAwqGemmOutputLoop',
+               'NativeAwqGemmOutputLane', 'NativeAwqGemmTailFold', 'NativeAwqGemmTailBlock',
+               'NativeAwqGemmTileStep', 'NativeAwqGemmKLoop', 'NativeAwqGemmBlockFrames', 'NativeAwqGemmGrid')
 BASE_SOURCE_AUDITS = {'AwqSource.'+name for name in ('source_binding', 'layout_binding', 'geometry_binding', 'fuel_binding',
                       'first_barrier', 'middle_barrier', 'halt_site', 'matrix_sites', 'source_length')}
 INITIAL_SOURCE_AUDITS = {'AwqSource.initial_execution', 'AwqSource.initial_block_execution'}
@@ -60,6 +64,14 @@ STAGES = {
                                  {'AwqSource.a_staging_execution', 'AwqSource.lane_staging_execution',
                                   'AwqSource.block_staging_execution', 'AwqSource.initial_through_staging',
                                   'AwqSource.matrix_iteration_execution'}},
+    'whole-grid-execution-v7': {'models': BASE_MODELS+INITIAL_MODELS+A_MODELS+B_MODELS+BLOCK_MODELS+MATRIX_MODELS+GRID_MODELS,
+                              'audits': 644, 'library_audits': 572, 'steps': [31, 47],
+                              'root': 'NativeAwqGemmGrid',
+                              'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|
+                                  {'AwqSource.a_staging_execution', 'AwqSource.lane_staging_execution',
+                                   'AwqSource.block_staging_execution', 'AwqSource.initial_through_staging',
+                                   'AwqSource.matrix_iteration_execution', 'AwqSource.whole_block_execution',
+                                   'AwqSource.whole_grid_execution'}},
 }
 
 
@@ -108,7 +120,7 @@ def main():
         raise ValueError('Stage audit coverage')
     if len(recorded['library_axiom_audits'])+sum(map(len, recorded['source_axiom_audits'].values())) != stage['audits']:
         raise ValueError('Derived audit count')
-    if stage_name in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6'):
+    if stage_name in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7'):
         for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved'):
             if recorded[field] is not True:
                 raise ValueError('A staging claim: '+field)
@@ -119,7 +131,7 @@ def main():
                       'b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
             if recorded.get(field, False) is not False:
                 raise ValueError('Unsupported later-stage claim: '+field)
-    if stage_name in ('lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6'):
+    if stage_name in ('lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7'):
         for field in ('b_staging_execution_proved', 'b_staging_shared_values_proved', 'b_staging_outside_memory_preserved',
                       'lane_staging_source_execution_proved', 'middle_barrier_reached_per_lane_proved'):
             if recorded[field] is not True:
@@ -138,7 +150,7 @@ def main():
                     'actual_initial_through_middle_barrier_proved', 'staging_dense_shared_tiles_proved',
                     'native_fragment_shared_values_proved')
     for field in block_fields:
-        if stage_name in ('block-staging-v5', 'native-matrix-phase-v6'):
+        if stage_name in ('block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7'):
             if recorded[field] is not True:
                 raise ValueError('Block staging claim: '+field)
         elif recorded.get(field, False) is not False:
@@ -147,20 +159,40 @@ def main():
                      'native_mfma_snapshot_execution_proved', 'matrix_accumulator_values_proved',
                      'matrix_memory_indices_epochs_preserved', 'matrix_uses_original_warp_fuel')
     for field in matrix_fields:
-        if stage_name == 'native-matrix-phase-v6':
+        if stage_name in ('native-matrix-phase-v6', 'whole-grid-execution-v7'):
             if recorded[field] is not True:
                 raise ValueError('Native matrix phase claim: '+field)
         elif recorded.get(field, False) is not False:
             raise ValueError('Unsupported later-stage claim: '+field)
-    if stage_name == 'native-matrix-phase-v6':
+    if stage_name in ('native-matrix-phase-v6', 'whole-grid-execution-v7'):
         if (recorded['matrix_phase_k_extent'] != 32 or recorded['matrix_half_passes'] != 2
                 or recorded['matrix_native_instructions_per_iteration'] != [8, 16]
                 or recorded['matrix_execution_scope'] != 'one-k32-iteration'):
             raise ValueError('Native matrix phase extent/count/scope')
-    for field in ('k_loop_execution_proved', 'k_counter_and_backedge_execution_proved'):
-        if recorded.get(field, False) is not False:
+    grid_fields = ('k_loop_execution_proved', 'k_counter_and_backedge_execution_proved',
+                   'guarded_output_stores_execution_proved', 'whole_block_execution_proved',
+                   'whole_grid_termination_proved', 'initialized_whole_grid_execution_proved',
+                   'original_fuel_preserved', 'output_fp32_to_half_conversion_retained')
+    for field in grid_fields:
+        if stage_name == 'whole-grid-execution-v7':
+            if recorded[field] is not True:
+                raise ValueError('Whole grid execution claim: '+field)
+        elif recorded.get(field, False) is not False:
             raise ValueError('Unsupported later-stage claim: '+field)
-    for field in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
+    if stage_name == 'whole-grid-execution-v7':
+        if (any(type(recorded[field]) is not int for field in ('output_scalar_steps_upper_bound', 'lane_fuel', 'grid_fuel'))
+                or recorded['k_loop_execution_scope'] != 'all-k32-iterations'
+                or recorded['k_loop_iteration_count'] != 'K/32' or recorded['block_visit_count'] != '2*(K/32)+1'
+                or recorded['output_pairs_per_lane'] != [16, 32] or recorded['output_scalar_steps_upper_bound'] != 64
+                or recorded['lane_fuel'] != 512 or recorded['warp_fuel'] != 'tileN/8+1'
+                or recorded['block_fuel'] != '2*(K/32)+1' or recorded['grid_fuel'] != 1
+                or recorded['execution_semantics'] != 'LarkMFMA.runGrid'):
+            raise ValueError('Whole grid count/fuel/semantics scope')
+    if recorded['whole_kernel_execution_proved'] is not (stage_name == 'whole-grid-execution-v7'):
+        raise ValueError('Unsupported component claim: whole_kernel_execution_proved')
+    if recorded.get('runLaunch_acceptance_proved', False) is not False:
+        raise ValueError('Unsupported component claim: runLaunch_acceptance_proved')
+    for field in ('actual_whole_trace_race_freedom_proved',
                   'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
         if recorded[field] is not False:
             raise ValueError('Unsupported component claim: '+field)
@@ -226,7 +258,9 @@ def main():
               'axiom_audit_occurrences': len(library)+sum(map(len, source_audits.values())),
               'archive_sha256': sha(args.archive), 'git_available_on_proof_path': False,
               'owned_compiled_cache_seeded': False, 'source_certificates': 0,
-              'whole_kernel_execution_proved': False, 'actual_whole_trace_race_freedom_proved': False,
+              'whole_kernel_execution_proved': stage_name == 'whole-grid-execution-v7',
+              'execution_semantics': recorded.get('execution_semantics'),
+              'runLaunch_acceptance_proved': False, 'actual_whole_trace_race_freedom_proved': False,
               'source_reference_equality_proved': False, 'ieee_equivalence_proved': False,
               'original_paper_fully_reproduced': False, 'model_calls': 0, 'gpu_trials': 0, 'checks': checks}
     (out/'results.json').write_text(json.dumps(result, indent=2)+'\n')

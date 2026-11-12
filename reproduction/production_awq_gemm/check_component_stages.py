@@ -27,22 +27,25 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     original = json.loads((packet/'results.json').read_text())
     stage = original['stage']
-    assert stage in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6')
+    assert stage in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7')
     manifest = json.loads((packet/'manifest.json').read_text())
     for name, digest in manifest.items():
         assert sha(packet/name) == digest
     controls = []
     for name in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
                  'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
-        controls.append(('invented-'+name, name, True, 'Unsupported component claim'))
-    later = ('k_loop_execution_proved',)
+        if name == 'whole_kernel_execution_proved' and stage == 'whole-grid-execution-v7':
+            controls.append(('erased-'+name, name, False, 'Unsupported component claim'))
+        else:
+            controls.append(('invented-'+name, name, True, 'Unsupported component claim'))
+    later = () if stage == 'whole-grid-execution-v7' else ('k_loop_execution_proved',)
     if stage == 'a-staging-v3':
         later += ('matrix_execution_proved', 'b_staging_execution_proved')
     elif stage == 'lane-staging-v4':
         later += ('matrix_execution_proved', 'block_staging_execution_proved', 'middle_block_barrier_resumption_proved')
     elif stage == 'block-staging-v5':
         later += ('matrix_execution_proved', 'matrix_fragment_scalar_loads_executed')
-    else:
+    elif stage == 'native-matrix-phase-v6':
         later += ('k_counter_and_backedge_execution_proved',)
     for name in later:
         controls.append(('invented-'+name, name, True, 'Unsupported later-stage claim'))
@@ -61,7 +64,7 @@ def main():
         ('missing-library-audit', 'drop-library', None, 'Stage audit coverage'),
         ('missing-source-stage-audit', 'rename-source', None, 'Stage audit coverage'),
     ]
-    if stage in ('lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6'):
+    if stage in ('lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7'):
         controls += [
             ('wrong-b-chunk-count', 'b_staging_chunks_per_lane', [4, 9], 'Lane staging shape/count/order scope'),
             ('wrong-b-cell-count', 'b_staging_cells_per_chunk', 7, 'Lane staging shape/count/order scope'),
@@ -73,12 +76,12 @@ def main():
             ('erased-lane-execution', 'lane_staging_source_execution_proved', False, 'Lane staging claim'),
             ('erased-middle-barrier', 'middle_barrier_reached_per_lane_proved', False, 'Lane staging claim'),
         ]
-    if stage in ('block-staging-v5', 'native-matrix-phase-v6'):
+    if stage in ('block-staging-v5', 'native-matrix-phase-v6', 'whole-grid-execution-v7'):
         for field in ('block_staging_execution_proved', 'middle_block_barrier_resumption_proved',
                       'actual_initial_through_middle_barrier_proved', 'staging_dense_shared_tiles_proved',
                       'native_fragment_shared_values_proved'):
             controls.append(('erased-'+field, field, False, 'Block staging claim'))
-    if stage == 'native-matrix-phase-v6':
+    if stage in ('native-matrix-phase-v6', 'whole-grid-execution-v7'):
         for field in ('matrix_execution_proved', 'matrix_fragment_scalar_loads_executed',
                       'native_mfma_snapshot_execution_proved', 'matrix_accumulator_values_proved',
                       'matrix_memory_indices_epochs_preserved', 'matrix_uses_original_warp_fuel'):
@@ -89,6 +92,26 @@ def main():
             ('wrong-native-matrix-count', 'matrix_native_instructions_per_iteration', [8, 15], 'Native matrix phase extent/count/scope'),
             ('invented-all-k-matrix-scope', 'matrix_execution_scope', 'all-k-iterations', 'Native matrix phase extent/count/scope'),
         ]
+    if stage == 'whole-grid-execution-v7':
+        for field in ('k_loop_execution_proved', 'k_counter_and_backedge_execution_proved',
+                      'guarded_output_stores_execution_proved', 'whole_block_execution_proved',
+                      'whole_grid_termination_proved', 'initialized_whole_grid_execution_proved',
+                      'original_fuel_preserved', 'output_fp32_to_half_conversion_retained'):
+            controls.append(('erased-'+field, field, False, 'Whole grid execution claim'))
+        controls.append(('invented-runLaunch-acceptance', 'runLaunch_acceptance_proved', True, 'Unsupported component claim'))
+        for name, field, value in (
+                ('shortened-k-scope', 'k_loop_execution_scope', 'one-k32-iteration'),
+                ('shortened-k-count', 'k_loop_iteration_count', 'K/64'),
+                ('raised-block-visit-count', 'block_visit_count', '2*(K/32)+2'),
+                ('wrong-output-pair-count', 'output_pairs_per_lane', [16, 31]),
+                ('raised-output-cost', 'output_scalar_steps_upper_bound', 65),
+                ('raised-final-lane-fuel', 'lane_fuel', 513),
+                ('raised-warp-fuel', 'warp_fuel', 'tileN/8+2'),
+                ('raised-block-fuel', 'block_fuel', '2*(K/32)+2'),
+                ('raised-grid-fuel', 'grid_fuel', 2),
+                ('boolean-grid-fuel', 'grid_fuel', True),
+                ('substituted-runLaunch', 'execution_semantics', 'LarkMFMA.runLaunch')):
+            controls.append((name, field, value, 'Whole grid count/fuel/semantics scope'))
     checks = []
     reader = Path(__file__).with_name('replay_components.py')
     for name, field, value, expected in controls:
@@ -102,6 +125,7 @@ def main():
         elif field == 'rename-source':
             audit = metadata['source_axiom_audits']['m17_k32_n64']
             audit['AwqSource.unrelated_claim'] = audit.pop(
+                'AwqSource.whole_grid_execution' if stage == 'whole-grid-execution-v7' else
                 'AwqSource.matrix_iteration_execution' if stage == 'native-matrix-phase-v6' else
                 'AwqSource.initial_through_staging' if stage == 'block-staging-v5' else
                 'AwqSource.lane_staging_execution' if stage == 'lane-staging-v4' else 'AwqSource.a_staging_execution')

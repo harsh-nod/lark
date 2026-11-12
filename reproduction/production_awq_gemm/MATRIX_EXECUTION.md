@@ -1,5 +1,10 @@
 # Native matrix execution for one K32 iteration
 
+This page records the historical V6 checkpoint. The later
+[complete grid execution stage](GRID_EXECUTION.md) proves the surrounding
+K loop, guarded output execution and full grid termination. Whole-trace
+race freedom and dense-reference equality remain unfinished.
+
 The `native-matrix-phase-v6` stage proves the actual scalar operand loads and
 both native K16 matrix passes after the source's middle block barrier. It
 executes all 8/16 MFMA instructions for N64/N128, with all four accumulator

@@ -1,4 +1,4 @@
-"""Check AWQ source identity, staging and both native K16 passes of one K32 iteration."""
+"""Check AWQ source identity and complete native grid execution with original fuel."""
 
 import argparse
 from datetime import datetime, timezone
@@ -33,7 +33,11 @@ MODELS = ("Nonlinear", "MFMA", "NativeAwqGemmAddress", "NativeAwqGemmGlobal", "N
           "NativeAwqGemmOperandLoop", "NativeAwqGemmOperandLane", "NativeAwqGemmOperandFold",
           "NativeAwqGemmOperandBlock", "NativeAwqGemmMMAElement", "NativeAwqGemmMMAValues",
           "NativeAwqGemmMMABank", "NativeAwqGemmMMAFold", "NativeAwqGemmMatrixPass",
-          "NativeAwqGemmMatrixPhase", "NativeAwqGemmMatrixIteration")
+          "NativeAwqGemmMatrixPhase", "NativeAwqGemmMatrixIteration", "NativeAwqGemmTailProgram",
+          "NativeAwqGemmKControl", "NativeAwqGemmOutputIndex", "NativeAwqGemmOutputStore",
+          "NativeAwqGemmOutputRound", "NativeAwqGemmOutputLoop", "NativeAwqGemmOutputLane",
+          "NativeAwqGemmTailFold", "NativeAwqGemmTailBlock", "NativeAwqGemmTileStep",
+          "NativeAwqGemmKLoop", "NativeAwqGemmBlockFrames", "NativeAwqGemmGrid")
 
 
 def sha(path):
@@ -46,7 +50,7 @@ def write(path, value):
 
 def render(task, tr):
     p = native.shape_of(task)
-    return f'''import Lark.NativeAwqGemmMatrixIteration
+    return f'''import Lark.NativeAwqGemmGrid
 namespace AwqSource
 open LarkNonlinear
 set_option maxRecDepth 10000
@@ -56,6 +60,7 @@ attribute [local irreducible] LarkNativeAwqGemm.aLoopState LarkNativeAwqGemm.aRo
 attribute [local irreducible] LarkNativeAwqGemm.bChunksState LarkNativeAwqGemm.bChunkState LarkNativeAwqGemm.bChunkBody LarkNativeAwqGemm.bLoopState LarkNativeAwqGemm.bRoundState LarkNativeAwqGemm.bBodyState
 attribute [local irreducible] LarkNativeAwqGemm.stagingState LarkNativeAwqGemm.stagingFold
 attribute [local irreducible] LarkNativeAwqGemm.operandLoop LarkNativeAwqGemm.operandLoaded LarkNativeAwqGemm.operandLaneState LarkNativeAwqGemm.operandFold LarkNativeAwqGemm.blockOperands LarkNativeAwqGemm.matrixState LarkNativeAwqGemm.matrixBankState LarkNativeAwqGemm.matrixFold LarkNativeAwqGemm.matrixPassState LarkNativeAwqGemm.matrixPhaseState
+attribute [local irreducible] LarkNativeAwqGemm.outputRound LarkNativeAwqGemm.outputStored LarkNativeAwqGemm.outputLoop LarkNativeAwqGemm.outputLane LarkNativeAwqGemm.tailLane LarkNativeAwqGemm.tailFold LarkNativeAwqGemm.blockTail LarkNativeAwqGemm.nextTile LarkNativeAwqGemm.tileMatrix LarkNativeAwqGemm.tileEnd LarkNativeAwqGemm.tileNext LarkNativeAwqGemm.kLoopState LarkNativeAwqGemm.wholeBlock LarkNativeAwqGemm.gridFold LarkNativeAwqGemm.wholeGrid
 def shape : LarkNativeAwqGemm.Shape := ⟨{p.m},{p.k},{p.n},by decide,by decide,by decide,by decide,by decide,by decide,by decide,by decide⟩
 def sourceProgram : List LarkMFMA.Instr := {lean_list(mfma.emit(i) for i in tr.program)}
 def sourceLayout : Layout := ⟨[⟨.input,{p.m*p.k}⟩,⟨.input,{p.k*p.n}⟩,⟨.output,{p.m*p.n}⟩],{lean_list(str(size) for _,size in tr.shared)},[]⟩
@@ -198,6 +203,26 @@ theorem matrix_iteration_execution {{α : Type}} (ops : Ops α) (input : Nat →
   rw [layout_binding,geometry_binding,fuel_binding,source_binding]
   exact LarkNativeAwqGemm.matrix_iteration shape ops input tile b extra acc s hk reads
     (by simpa only [geometry_binding] using starts) (by simpa only [geometry_binding] using hc)
+theorem whole_block_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat → α)
+    (s : State α) (b : Nat) (hb : b<sourceGeometry.grid)
+    (reads : LarkNativeAwqGemm.Reads shape input s) (hp : ∀ t∈blockThreads sourceGeometry b, s.pc t=0) :
+    LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b sourceFuel.block s=
+      some (LarkNativeAwqGemm.wholeBlock shape ops input b s) := by
+  rw [layout_binding,geometry_binding,fuel_binding,source_binding]
+  exact LarkNativeAwqGemm.whole_block_run shape ops input b s
+    (by simpa only [geometry_binding] using hb) reads (by simpa only [geometry_binding] using hp)
+theorem whole_grid_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    let start := initial sourceLayout input outside
+    let final := LarkNativeAwqGemm.wholeGrid shape ops input start
+    LarkMFMA.runGrid ops sourceLayout sourceGeometry sourceFuel sourceProgram sourceFuel.grid start=some final ∧
+      (∀ t, t<sourceGeometry.grid*64 → final.pc t=LarkNativeAwqGemm.haltPC shape) ∧
+      LarkNativeAwqGemm.Reads shape input final := by
+  rw [layout_binding,geometry_binding,fuel_binding,source_binding]
+  exact ⟨LarkNativeAwqGemm.initialized_whole_grid_run shape ops input outside,
+    fun t ht => LarkNativeAwqGemm.whole_grid_halt shape ops input _ t ht,
+    by
+      unfold LarkNativeAwqGemm.wholeGrid
+      exact LarkNativeAwqGemm.grid_fold_reads shape ops input _ _ (LarkNativeAwqGemm.initial_reads shape input outside)⟩
 #print axioms source_binding
 #print axioms layout_binding
 #print axioms geometry_binding
@@ -214,6 +239,8 @@ theorem matrix_iteration_execution {{α : Type}} (ops : Ops α) (input : Nat →
 #print axioms block_staging_execution
 #print axioms initial_through_staging
 #print axioms matrix_iteration_execution
+#print axioms whole_block_execution
+#print axioms whole_grid_execution
 end AwqSource
 '''
 
@@ -263,8 +290,8 @@ def main():
                        "exit_code": result.returncode, "seconds": time.monotonic()-before, "timed_out": False})
         return log
 
-    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmMatrixIteration"], True))
-    assert len(library) == 461
+    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmGrid"], True))
+    assert len(library) == 572
     source_audits = {}
     for name in CASES:
         case = HERE/"cases"/name
@@ -273,7 +300,7 @@ def main():
         tr = native.translate((case/"kernel.hip").read_text(), task)
         (project/(name+".lean")).write_text(render(task, tr))
         source_audits[name] = audits(run(name, [str(lean_bin/"lake"), "env", "lean", name+".lean"], True))
-        assert len(source_audits[name]) == 16
+        assert len(source_audits[name]) == 18
     case = HERE/"cases/m33_k64_n192"
     source = (case/"kernel.hip").read_text()
     task = native.parse_task((case/"task.json").read_text())
@@ -298,8 +325,8 @@ def main():
     with tarfile.open(out/"source-project.tar.gz", "w:gz") as archive:
         for name in sorted(hashes):
             archive.add(project/name, arcname=name, recursive=False)
-    result = {"schema": 1, "stage": "native-matrix-phase-v6",
-              "status": "native-awq-source-bound-one-k32-native-matrix-phase-checked",
+    result = {"schema": 1, "stage": "whole-grid-execution-v7",
+              "status": "native-awq-source-bound-complete-grid-execution-checked",
               "checked_at_utc": datetime.now(timezone.utc).isoformat(), "owned_lean_modules": len(MODELS),
               "library_axiom_audits": library, "source_axiom_audits": source_audits,
               "axiom_audit_occurrences": len(library)+sum(map(len,source_audits.values())),
@@ -331,9 +358,17 @@ def main():
               "matrix_memory_indices_epochs_preserved": True, "matrix_uses_original_warp_fuel": True,
               "matrix_phase_k_extent": 32, "matrix_half_passes": 2,
               "matrix_native_instructions_per_iteration": [8, 16], "matrix_execution_scope": "one-k32-iteration",
-              "k_counter_and_backedge_execution_proved": False,
-              "k_loop_execution_proved": False,
-              "whole_kernel_execution_proved": False, "actual_whole_trace_race_freedom_proved": False,
+              "k_counter_and_backedge_execution_proved": True,
+              "k_loop_execution_proved": True, "k_loop_execution_scope": "all-k32-iterations",
+              "guarded_output_stores_execution_proved": True,
+              "whole_block_execution_proved": True, "whole_grid_termination_proved": True,
+              "initialized_whole_grid_execution_proved": True, "original_fuel_preserved": True,
+              "output_fp32_to_half_conversion_retained": True,
+              "k_loop_iteration_count": "K/32", "block_visit_count": "2*(K/32)+1",
+              "output_pairs_per_lane": [16, 32], "output_scalar_steps_upper_bound": 64,
+              "lane_fuel": 512, "warp_fuel": "tileN/8+1", "block_fuel": "2*(K/32)+1", "grid_fuel": 1,
+              "execution_semantics": "LarkMFMA.runGrid", "runLaunch_acceptance_proved": False,
+              "whole_kernel_execution_proved": True, "actual_whole_trace_race_freedom_proved": False,
               "source_reference_equality_proved": False, "source_certificates": 0,
               "git_available_on_proof_path": False, "owned_compiled_cache_seeded": False,
               "ieee_equivalence_proved": False, "original_paper_fully_reproduced": False,
