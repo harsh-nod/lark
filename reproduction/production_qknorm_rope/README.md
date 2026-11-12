@@ -77,6 +77,10 @@ and [archive replay](results/interleaved-wave-validation-v1/README.md) publish
 the same checks and two rejected scope promotions. A bounded
 [artifact recheck](results/interleaved-wave-artifact-recheck-v1/queries.json)
 records the public author/org endpoints and exact-paper searches examined.
+All ten [wave CI jobs](https://github.com/harsh-nod/lark/actions/runs/43146980739)
+passed at source commit `15fd617473eb78436ced20b1984588de4a3139e1`;
+the [wave CI receipt](results/interleaved-wave-ci-v1/results.json) binds that run
+to the published physical-wave evidence.
 The wave packet retains its original scope; the whole-launch development below
 extends the interleaved proof. This development still registers zero certificates.
 
