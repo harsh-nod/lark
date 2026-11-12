@@ -54,6 +54,10 @@ The [frozen prefix packet](results/normalization-prefix-v1/results.json) and
 [independent fresh replay](results/normalization-prefix-validation-v1/README.md)
 publish the logs, archive and source-commit binding. Both runs checked the same
 theorem axiom sets; the replay had no Git executable or seeded owned proof cache.
+All ten [CI jobs](https://github.com/harsh-nod/lark/actions/runs/43143732308)
+passed for source commit `8bf62f9b3c255212b95b10e70126abfafe2ba84d`;
+the [CI receipt](results/normalization-prefix-ci-v1/results.json) binds that run
+to the published normalization-prefix evidence.
 The historical component packets below retain their original, narrower scope.
 
 The component study builds six Std-only modules, checks 31 library declarations
