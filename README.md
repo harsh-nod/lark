@@ -58,6 +58,14 @@ scale reduction inside physical wave64. Both MI350X hosts passed numerical
 tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
+The [native FlashInfer RMSNorm development](reproduction/production_flashinfer_rmsnorm/README.md)
+adds full-source binding and universal address/ownership components for its
+distinct logical32 reduction. Both AMD hosts pass 127,008,768 CPU float64
+comparisons; the complete outputs, recorded rounding differences and nine
+numerical rejection controls have a public standalone replay. Complete source
+execution and dense-real proofs remain pending, with zero registered FlashInfer
+certificates.
+
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted
 buffers to an independent canonical-real reference. It covers all `1 <= rows < 256`
@@ -68,7 +76,8 @@ The source-order theorem retains arbitrary arithmetic operations; the
 full reduction covers all columns and both buffers equal the reference.
 The `verify-native-fused-rmsnorm` command exports the closed source-bound profile.
 Both AMD hosts have finite numerical evidence. Half conversions are identities
-in the real theorem; IEEE/error bounds and original production results remain open.
+in the real theorem. IEEE/rounding guarantees are outside the paper's formal
+scope; original production results remain unreproduced.
 
 The separate [native llm.c softmax study](reproduction/production_softmax/README.md)
 binds the complete three-pass original and repaired sources to their scalar IR,

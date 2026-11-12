@@ -107,6 +107,13 @@ It verifies unchanged component sources, workflow and contract tests at the
 published component-evidence commit. GPU execution is validated separately by
 the paired-host packet above.
 
+All four numerical release assets were
+[downloaded anonymously and replayed](results/native-publication-v1/results.json):
+56,262,937 bytes matched both the committed checksums and GitHub's server
+digests. Outside the checkout, with Git unavailable, the CPU audit, rounding
+analysis and all nine numerical controls reproduced their reports byte for
+byte. That public replay executed no GPU kernels or model calls.
+
 Original paper model/token-cost results
 and NVIDIA measurements remain separate missing inputs. This development uses
 zero model calls and does not mark the paper's FlashInfer result reproduced.
