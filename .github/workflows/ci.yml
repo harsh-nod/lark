@@ -41,6 +41,20 @@ jobs:
         run: |
           python3 reproduction/production_flashinfer_rmsnorm/run_symbolic.py \
             --output /tmp/lark-flashinfer-symbolic
+      - name: Prove actual native execution through the first block barrier
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_execution.py \
+            --output /tmp/lark-flashinfer-first-block --lean-bin "$HOME/.elan/bin"
+      - name: Replay first-block execution from frozen sources without Git or owned caches
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/replay_execution.py \
+            --packet /tmp/lark-flashinfer-first-block --output /tmp/lark-flashinfer-first-block-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject overclaims about later execution and outputs
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_execution_stages.py \
+            --packet /tmp/lark-flashinfer-first-block --output /tmp/lark-flashinfer-first-block-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
   native-qknorm-rope:
     runs-on: ubuntu-latest
     timeout-minutes: 25

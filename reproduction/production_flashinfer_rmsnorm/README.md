@@ -32,6 +32,36 @@ classification for every actual access. Deriving that classification from
 complete source execution remains work, as do the whole-launch and exact-real
 reference theorems. There are **zero registered source certificates**.
 
+The [first-block execution proof](../../lean/Lark/NativeFlashInferRmsNormBarrier.lean)
+now derives the actual scheduler execution through the first barrier for every
+supported shape and arbitrary value operations. It composes all sixteen native
+waves without resetting memory, proves all thirty-two partial values, preserves
+every global cell, classifies the generated trace and proves its race freedom.
+The actual barrier continuation advances every participating thread to PC32 and
+block epoch one. The fixed fuel remains `(512,8,3,1)`. These declarations use
+the standard Lean kernel with recursion 10,000 and heartbeat limit 2,000,000.
+The second reduction, normalization, output execution, complete launch and
+reference equality remain unfinished. The first-block result issues no
+certificate and does not change the original paper result status.
+
+The new checker builds a fresh thirty-module source closure and audits 225
+library declarations plus twelve declarations at each of six source instances
+(297 audits). It also checks eleven false Lean claims. The separate replay
+uses neither Git nor an owned compiled cache; fourteen fully rehashed scope
+controls reject claims about unfinished later stages. The older component and
+GPU evidence below retain their original scope and source pins.
+
+```sh
+python3 reproduction/production_flashinfer_rmsnorm/check_execution.py \
+  --output /tmp/flashinfer-first-block --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_flashinfer_rmsnorm/replay_execution.py \
+  --packet /tmp/flashinfer-first-block --output /tmp/flashinfer-first-block-replay \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_flashinfer_rmsnorm/check_execution_stages.py \
+  --packet /tmp/flashinfer-first-block --output /tmp/flashinfer-first-block-guards \
+  --lean-bin /path/to/lean-4.19.0/bin
+```
+
 The [fresh component check](results/components-v1/results.json) rebuilds six
 Std-only modules, audits 21 library and five source declarations per instance,
 and binds the complete source, signature, shared layout, geometry and fuel at
