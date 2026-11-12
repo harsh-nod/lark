@@ -205,6 +205,19 @@ Use the command above with `cases/split-half` to export the split-half profile.
 changed source, reference, model, theorem and scope claims.
 `replay_split_real.py` rebuilds the frozen split-half archive without Git or
 seeded owned compiled objects, using only verified pinned external dependencies.
+The [split-half certificate packet](results/split-real-v1/results.json) exports
+four certificates, checks 570 library and 12 principal axiom audits, and rejects
+29 changed-source, reference, output or integrity/scope claims. The
+[independent rebuild](results/split-real-validation-v1/results.json) reproduces
+all 582 audits, all four row specializations and all twelve false Lean claims.
+Eight [fully rehashed scope changes](results/split-real-stage-guards-v1/results.json)
+are refused before archive extraction. The
+[downloadable certificates and wheel](results/split-real-publication-v1/README.md)
+include the public source-commit binding and installed-package/legacy-certificate
+recheck logs. Across both native rotary layouts, eight source-bound fused-Q/K
+certificates are now published. These remain independent adaptations of the
+paper's operator and do not reproduce its unavailable original artifacts,
+historical model experiments or NVIDIA measurements.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom

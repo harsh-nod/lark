@@ -1,0 +1,64 @@
+{
+  "name": "native-fused-qknorm-rope-split-half",
+  "language": "hip",
+  "entry": "fused_qknorm_rope",
+  "buffers": [
+    {
+      "name": "output",
+      "shape": [
+        3,
+        40,
+        128
+      ],
+      "dtype": "float16",
+      "role": "output"
+    },
+    {
+      "name": "qkv",
+      "shape": [
+        3,
+        48,
+        128
+      ],
+      "dtype": "float16",
+      "role": "input"
+    },
+    {
+      "name": "q_weight",
+      "shape": [
+        128
+      ],
+      "dtype": "float16",
+      "role": "input"
+    },
+    {
+      "name": "k_weight",
+      "shape": [
+        128
+      ],
+      "dtype": "float16",
+      "role": "input"
+    },
+    {
+      "name": "cache",
+      "shape": [
+        3,
+        128
+      ],
+      "dtype": "float16",
+      "role": "input"
+    }
+  ],
+  "launch": {
+    "grid": 15,
+    "block": 256,
+    "warp": 64
+  },
+  "fuel": [
+    256,
+    16,
+    1,
+    1
+  ],
+  "rotary_layout": "split-half"
+}
