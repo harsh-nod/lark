@@ -60,6 +60,20 @@ the [CI receipt](results/normalization-prefix-ci-v1/results.json) binds that run
 to the published normalization-prefix evidence.
 The historical component packets below retain their original, narrower scope.
 
+The interleaved execution development additionally proves the complete native
+physical wave from entry to halt, including both rotary pairs and every FP16
+output store. All 256 owned output values match the source-order expression;
+the 1,024-access wave trace is classified and race-free from an initial state.
+Read-only QKV, weights and gathered cache are preserved, and later lanes
+preserve outputs already stored by earlier lanes. `check_interleaved_wave.py`
+binds this theorem to the translated sources at all four row counts, retains
+the split-half normalization-prefix checks, and rejects four changed-source
+claims for a wrong output register, sign, operand order or cache pair.
+The fresh check builds 40 Std-only modules, audits 350 library declarations
+and 128 source-bound instances, and rejects all four changed-source claims.
+Complete block/grid execution, split-half rotation and dense reference
+equality remain open; this development still registers zero certificates.
+
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
 audits), and rejects nine false Lean claims. Its standalone replay rebuilds
@@ -120,6 +134,8 @@ python3 -m unittest discover -s tests -p test_native_qknorm_rope.py -v
 python3 reproduction/production_qknorm_rope/check_program.py --output /tmp/fused-qk-components
 python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
   --output /tmp/fused-qk-execution-prefix --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_qknorm_rope/check_interleaved_wave.py \
+  --output /tmp/fused-qk-interleaved-wave --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_qknorm_rope/replay_components.py \
   --packet /tmp/fused-qk-components --output /tmp/fused-qk-replayed \
   --lean-bin /path/to/lean-4.19.0/bin

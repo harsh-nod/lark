@@ -79,11 +79,8 @@ theorem source_normalization_prefix_race_free (ops : Ops α) (input : Nat → Na
     return body
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--lean-bin", type=Path, required=True)
-    args = parser.parse_args()
+def run_stage(args, *, target=TARGET, statement_factory=source_statement,
+              additional_claims=None, required_principals=(), control_factory=None):
     out, lean_bin = args.output.resolve(), args.lean_bin.resolve()
     if out.is_relative_to(ROOT):
         raise ValueError("Fresh output outside the repository required")
@@ -94,7 +91,7 @@ def main():
     if "Lean version 4.19.0" not in subprocess.check_output([lake, "--version"], text=True, env=env):
         raise ValueError("Pinned Lean4.19.0 required")
     own = {}
-    components.modules(TARGET, own)
+    components.modules(target, own)
     source = out / "source"
     files = ["lean/" + name.replace(".", "/") + ".lean" for name in own]
     files += ["lean/lean-toolchain", "lean/lakefile.toml", "LICENSE", "pyproject.toml"]
@@ -114,25 +111,31 @@ def main():
             archive.add(source / filename, arcname=filename, recursive=False)
     audits, checks = {}, []
 
-    def check(name, command, expected_count):
+    def check(name, command, expected_count, accepted=True):
         run = subprocess.run(command, cwd=source / "lean", env=env, capture_output=True, text=True, timeout=600)
         log = run.stdout + run.stderr
         (out / (name + ".log")).write_text(log)
         entries = re.findall(r"'([^']+)' (?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)", log)
         values = {key: [a.strip() for a in value.split(",") if a.strip()] for key, value in entries}
-        if (run.returncode or len(entries) != len(values) or len(values) != expected_count
-                or any(not set(value) <= ALLOWED_AXIOMS for value in values.values())):
+        if (run.returncode == 0) is not accepted:
             raise ValueError("Execution-prefix check failed: " + name + ": " + log[-12000:])
-        audits[name] = values
-        checks.append({"name": name, "exit_code": run.returncode, "axiom_audits": len(values)})
+        if accepted:
+            if (len(entries) != len(values) or len(values) != expected_count
+                    or any(not set(value) <= ALLOWED_AXIOMS for value in values.values())):
+                raise ValueError("Execution-prefix axiom closure differs: " + name)
+            audits[name] = values
+        elif "is false" not in log or re.search(r"maximum recursion|heartbeats|stack overflow|timed out|out of memory", log, re.I):
+            raise ValueError("Source mutation did not fail logically: " + name)
+        checks.append({"name": name, "exit_code": run.returncode, "axiom_audits": len(values) if accepted else 0})
 
     count = sum(len(re.findall(r"^#print axioms ", contents, re.M)) for contents in own.values())
-    check("fresh-build", [lake, "build", TARGET], count)
+    check("fresh-build", [lake, "build", target], count)
     principals = {"LarkNativeQKNormRope.native_fifth_snapshot", "LarkNativeQKNormRope.normal_lane_eq",
                   "LarkNativeQKNormRope.native_normalization_step", "LarkNativeQKNormRope.normal_wave_value",
                   "LarkNativeQKNormRope.normal_wave_initial_race_free"}
-    if not principals <= audits["fresh-build"].keys():
+    if not (principals | set(required_principals)) <= audits["fresh-build"].keys():
         raise ValueError("Missing execution principals")
+    contracts = {}
     for layout in components.native.LAYOUTS:
         case = HERE / "cases" / layout
         text = (case / "kernel.hip").read_text()
@@ -145,9 +148,16 @@ def main():
                     buffer["shape"][0] = rows
             contract = components.native.parse_task(json.dumps(raw))
             name = layout.replace("-", "_") + "_" + str(rows)
-            statement = source_statement(text, contract)
+            statement = statement_factory(text, contract)
             (source / "lean" / (name + ".lean")).write_text(statement)
             check(name, [lake, "env", "lean", name + ".lean"], len(re.findall(r"^#print axioms ", statement, re.M)))
+            if rows == 1:
+                contracts[layout] = text, contract
+    controls = control_factory(contracts) if control_factory else {}
+    for name, statement in controls.items():
+        filename = "control_" + name.replace("-", "_") + ".lean"
+        (source / "lean" / filename).write_text(statement)
+        check(name, [lake, "env", "lean", filename], 0, accepted=False)
     report = {"schema": 1, "status": "partial-native-qknorm-rope-normalization-prefix-checked",
               "local_lean_modules": len(own), "library_axiom_audits": count, "source_instances": 8,
               "full_source_binding_proved": True, "five_reduction_snapshot_continuation_both_layouts": True,
@@ -158,10 +168,21 @@ def main():
               "original_paper_fully_reproduced": False, "model_calls": 0, "gpu_trials": 0,
               "axiom_audits": audits, "checks": checks, "source_archive_sha256": sha(out / "source.tar.gz"),
               "source_manifest_sha256": sha(out / "source-manifest.json")}
+    if additional_claims:
+        report.update(additional_claims)
+    if controls:
+        report["false_lean_claims_rejected"] = len(controls)
     (out / "results.json").write_text(json.dumps(report, indent=2) + "\n")
     (out / "manifest.json").write_text(json.dumps({p.name: sha(p) for p in sorted(out.iterdir()) if p.is_file()}, indent=2) + "\n")
     print(json.dumps({"status": report["status"], "modules": len(own), "library_audits": count,
                       "source_audits": sum(len(v) for k, v in audits.items() if k != "fresh-build")}))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--lean-bin", type=Path, required=True)
+    run_stage(parser.parse_args())
 
 
 if __name__ == "__main__":

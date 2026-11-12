@@ -29,6 +29,10 @@ jobs:
         run: |
           python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
             --output /tmp/lark-fused-qk-execution-prefix --lean-bin "$HOME/.elan/bin"
+      - name: Check complete native interleaved physical-wave execution and false source controls
+        run: |
+          python3 reproduction/production_qknorm_rope/check_interleaved_wave.py \
+            --output /tmp/lark-fused-qk-interleaved-wave --lean-bin "$HOME/.elan/bin"
       - name: Replay frozen components without Git or owned compiled caches
         run: |
           python3 reproduction/production_qknorm_rope/replay_components.py \
