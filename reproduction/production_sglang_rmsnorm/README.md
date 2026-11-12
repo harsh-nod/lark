@@ -121,10 +121,22 @@ sources and numerical controls. Repository
 [metadata and hashes](results/native-gpu-v1/results.json) bind every asset.
 Numerical checks issue zero source certificates and make no original paper
 model/token-cost or NVIDIA reproduction claim.
+All four assets were [downloaded anonymously and replayed](results/native-gpu-publication-v1/results.json),
+76,562,395 bytes matching local checksums and GitHub server digests. Outside the
+checkout with Git unavailable, both the CPU audit and all thirteen rejection
+controls reproduced their result JSON byte for byte. That replay ran no GPU
+kernels or model calls.
 
 `results/native-wave-entry-publication-v1` binds all 110 frozen proof-source
 files to commit `6b2850ffa5fe73de8ac8a1345be46b064554f71c` and records five
 anonymous public downloads whose bytes match the committed packets.
+The [clean-checkout wheel check](results/native-wave-entry-wheel-v1/results.json)
+compares all 33 required Lean resources and all 27 native SGLang modules byte
+for byte, including the newly packaged general trace-transport module.
+The [dedicated CI receipt](results/native-wave-entry-ci-v1/results.json) records
+the native SGLang job passing its source checks, fresh proofs, independent
+replays and rejection controls at the same proof revision. Its captured full-run
+job list retains the status of the other regression jobs.
 
 The earlier `results/first-shuffle-v1` stage proves successful native scalar
 execution from the standard initializer through PC44, the first logical32 XOR
