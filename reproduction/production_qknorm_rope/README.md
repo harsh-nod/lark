@@ -219,6 +219,13 @@ certificates are now published. These remain independent adaptations of the
 paper's operator and do not reproduce its unavailable original artifacts,
 historical model experiments or NVIDIA measurements.
 
+All twelve [CI jobs](https://github.com/harsh-nod/lark/actions/runs/43158538932)
+passed at source commit `9f26eeceed294ee43f8f1f98a655cea28b52d878`, including
+fresh certificate production and independent replay for both complete layouts.
+The [CI receipt](results/split-real-ci-v1/results.json) binds that source to the
+published split-half evidence and confirms the proof sources, workflow and
+checkers are unchanged.
+
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
 audits), and rejects nine false Lean claims. Its standalone replay rebuilds
