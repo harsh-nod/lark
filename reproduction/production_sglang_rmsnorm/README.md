@@ -81,6 +81,10 @@ equation stage below and still issue no source certificate.
 `4f6c2ee5a4452ceb9331bd55bdcd0b28b8fe86bf` and verifies five anonymous public
 downloads. Those bytes match the independently replayed local packet; the
 public-download check does not execute another replay.
+`results/first-shuffle-ci-v1` records all fifteen CI jobs passing at that same
+source commit, including the successful-prefix proof, independent replay and
+scope guards. It binds all 95 source archive files and makes no claim about
+later native wave execution.
 
 The additional `results/input-preload-prefix-v1` stage proves a scalar prefix
 equation for the first 128 executed instructions, through PC16 before weight
