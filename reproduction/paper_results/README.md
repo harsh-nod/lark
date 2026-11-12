@@ -72,6 +72,13 @@ outside-checkout replay with Git unavailable and all eight negative controls.
 The ledger and its controls perform no fresh Lean checks, model calls or GPU
 trials; linked experiments retain their own validation and limits.
 
+The [complete ledger CI/main receipt](snapshot-v21-ci-main-v1/results.json)
+records all eighteen jobs passing for source `5a3cd45` and the checked
+fast-forward of `main` to publication commit `b934b02`. The intervening changes
+are documentation and recorded evidence; SDK, Lean, tests, configuration and
+workflow sources are unchanged. Earlier frozen observations retain their actual
+timestamps and are not rewritten as later CI success.
+
 The remainder of this page documents the original historical snapshot.
 
 This is a coverage snapshot of the evidence associated with experiment-code
