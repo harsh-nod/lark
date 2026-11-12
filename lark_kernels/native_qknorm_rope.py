@@ -1,7 +1,7 @@
 """Closed native fused Q/K RMSNorm + RoPE source and finite-execution profile.
 
-The separate native_qknorm_rope_certificate backend binds complete interleaved
-exact-real launch proofs. Split-half remains a development execution profile.
+The separate interleaved and split-half certificate backends bind complete
+exact-real launch proofs for their respective closed native profiles.
 """
 
 import ast

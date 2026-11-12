@@ -202,7 +202,12 @@ def main(argv=None):
             elif args.command == "verify-native-rope":
                 from .native_rope_certificate import verify as verify_inductive
             elif args.command == "verify-native-qknorm-rope":
-                from .native_qknorm_rope_certificate import verify as verify_inductive
+                from .native_qknorm_rope import parse_task
+
+                if parse_task(args.task.read_text()).rotary_layout == "split-half":
+                    from .native_qknorm_rope_split_certificate import verify as verify_inductive
+                else:
+                    from .native_qknorm_rope_certificate import verify as verify_inductive
             elif args.command == "verify-native-fused-rmsnorm":
                 from .native_fused_rmsnorm_certificate import verify as verify_inductive
             elif args.command == "verify-native-rmsnorm":

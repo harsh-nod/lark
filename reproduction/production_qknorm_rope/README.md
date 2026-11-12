@@ -123,9 +123,9 @@ interpretation; no IEEE equality or error bound is claimed.
 `verify-native-qknorm-rope` exports the fixed source-bound exact-real profile;
 `check` re-translates the HIP, checks the closed reference AST, regenerates the
 theorem, validates pinned proof/configuration sources and re-runs Lean. This
-backend currently accepts only the interleaved layout. The native split-half
-reader, numerical runs and normalization-prefix evidence do not confer a
-complete split-half certificate.
+interleaved backend retains its original fixed profile. The separate split-half
+backend described below binds its own complete launch and dense-reference proof.
+Earlier split-half prefix and wave packets retain their original narrower scope.
 
 ```bash
 python3 -m lark_kernels verify-native-qknorm-rope \
@@ -168,8 +168,9 @@ advance exactly twice; other threads' state is preserved.
 `check_split_wave.py` binds these theorems to the complete translated source at
 1, 3, 256 and 65,535 rows, retaining the earlier interleaved prefix witnesses.
 It tests changed fences, rotary shuffles, partner signs, cache indexing and
-output stores. This milestone leaves the split-half block/grid connection and
-independent dense-reference equality open and adds zero source certificates.
+output stores. That historical wave milestone left the split-half block/grid
+connection and independent dense-reference equality open and added zero source
+certificates.
 The [frozen split-half wave packet](results/split-wave-v1/results.json) builds
 48 Std-only modules and checks 430 library plus 132 source-bound axiom audits,
 rejecting all seven changed-source claims. The
@@ -177,6 +178,33 @@ rejecting all seven changed-source claims. The
 the same checks without Git or an owned compiled cache, binds all 119 archived
 files to the public source commit and rejects six rehashed scope changes before
 extraction. Both kernels and references retain the GPU-tested bytes.
+
+The [complete split-half launch](../../lean/Lark/NativeQKNormRopeSplitCorrect.lean)
+now carries the actual wave states through every native block and the complete
+grid. Its source-order `Correct` and `StdPre` theorems extract every output and
+prove actual-trace race freedom for arbitrary scalar operations, every input and
+outside memory. The complete trace contains `tokens * 25600` classified accesses.
+Both actual warp-fence resumes remain in the execution; no wave or block state
+is reset between folds.
+
+The [split-half dense proof](../../lean-real/LarkReal/NativeQKNormRopeSplitDense.lean)
+shows that XOR16 selects the opposite 64-column half of the same normalized
+head, with the correct sign and cache column. The
+[canonical-real launch proof](../../lean-real/LarkReal/NativeQKNormRopeSplit.lean)
+then connects the complete extraction to an independent dense reference for
+every supported row count. These proofs retain the existing resource limits
+and use only standard Lean axioms.
+
+`verify-native-qknorm-rope` selects the fixed certificate profile from the task's
+`rotary_layout`: interleaved uses `native-qknorm-rope-interleaved-real-v20`, and
+split-half uses `native-qknorm-rope-split-half-real-v21`. The original v20 proof
+closure and certificates remain unchanged. Both profiles require the same
+closed Q32/K8/V8, width128, separate-output interface and exact-real arithmetic.
+Use the command above with `cases/split-half` to export the split-half profile.
+`check_split_real.py` exports and rechecks four row specializations and tests
+changed source, reference, model, theorem and scope claims.
+`replay_split_real.py` rebuilds the frozen split-half archive without Git or
+seeded owned compiled objects, using only verified pinned external dependencies.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom

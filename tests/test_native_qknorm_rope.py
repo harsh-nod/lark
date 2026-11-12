@@ -6,6 +6,7 @@ import unittest
 
 from lark_kernels import collective, native_qknorm_rope as native
 from lark_kernels import native_qknorm_rope_certificate as certificate
+from lark_kernels import native_qknorm_rope_split_certificate as split_certificate
 from lark_kernels.ir import Refusal, Task
 
 CASES = Path(__file__).resolve().parents[1] / "reproduction/production_qknorm_rope/cases"
@@ -64,6 +65,11 @@ class NativeQKNormRopeTests(unittest.TestCase):
         case = CASES / "split-half"
         with self.assertRaisesRegex(Refusal, "complete exact-real certificate currently requires interleaved"):
             certificate.prepare(*((case / name).read_text() for name in ("kernel.hip", "reference.py", "task.json")))
+
+    def test_interleaved_cannot_inherit_the_split_half_real_certificate(self):
+        case = CASES / "interleaved"
+        with self.assertRaisesRegex(Refusal, "split-half certificate requires split-half layout"):
+            split_certificate.prepare(*((case / name).read_text() for name in ("kernel.hip", "reference.py", "task.json")))
 
     def test_write_to_the_readonly_qkv_is_refused_during_translation(self):
         case = CASES / "interleaved"
