@@ -80,6 +80,14 @@ Evidence is under [source checks](results/whole-grid-v1),
 The source-only archive is `results/whole-grid-v1/source-project.tar.gz`
 (116,631 bytes, SHA256
 `e75e7b1d1a4fddc0044b6ca18f0a6c75ef03f0f774f75558da2a7c3992545330`).
+The same bytes are available in the
+[complete grid execution release](https://github.com/harsh-nod/lark/releases/tag/native-awq-whole-grid-20261112).
+An anonymous download matched the independently replayed archive; all 62
+owned model files and 128 source files were bound to commit `1f28d87`, and
+all four complete source instances were freshly rerendered. The
+[publication receipt](results/whole-grid-publication-v1) records those checks
+and the observed CI status. A second cold build on the byte-identical download
+is not counted.
 
 The updated reader also replays the preceding matrix-phase archive with its
 original [525 audits](results/native-matrix-reader-compatibility-v6) and

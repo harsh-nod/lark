@@ -78,6 +78,8 @@ later 256-audit result. `lane-staging-v1` records the earlier 363-audit result.
 `block-staging-v1` records the earlier 418-audit result; `native-matrix-v1`
 records the earlier 525-audit result; `whole-grid-v1` records the current
 644-audit result.
+The [complete grid execution archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-whole-grid-20261112)
+passes anonymous download, hash and Git-source binding checks.
 The earlier [native matrix-phase archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-matrix-phase-20261112)
 retains its anonymous download, hash and Git-source binding checks. The earlier
 [whole-block source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-block-staging-20261112)
