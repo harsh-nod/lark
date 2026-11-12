@@ -202,9 +202,13 @@ address coverage/ownership and signed-int32 bounds, and checks a conditional
 footprint theorem. Source/replay check six Std modules, six row specializations,
 51 axiom audits and nine false Lean claims. Complete finite traces at one and
 three rows check 65,536 source-order expressions and 266,500 accesses. Ten
-rehashed scope guards reject invented complete proofs or certificates. Complete
-source execution, actual-trace classification, dense-real equality and paired
-GPU validation remain pending; it issues zero registered certificates. This
+rehashed scope guards reject invented complete proofs or certificates. Both
+AMD hosts now pass 127,008,768 CPU float64 comparisons at the fixed tolerance,
+with read-only inputs and allocation guards preserved. Per-host method
+differences retain 3,422,543 signed-zero cases and 264 other one-ULP cases;
+nine rehashed numerical controls are refused. All thirteen CI jobs pass.
+Complete source execution, actual-trace classification and dense-real equality
+remain pending; it issues zero registered certificates. This
 new development is outside the immutable v20 ledger and does not change the
 three outstanding native production adaptations above.
 
