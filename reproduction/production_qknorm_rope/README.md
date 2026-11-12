@@ -41,9 +41,9 @@ selection, four weight reads, and eight source-order normalization products.
 For split-half, the actual wave scheduler is connected through normalization
 to the first warp barrier at PC59. Its four normalized values match the
 source-order five-stage reduction expression; its prefix records 512 reads,
-preserves memory and epochs, and is race-free from an initial state. For
-split-half this remains a prefix proof: its rotary suffix and connection to
-the checked store suffix remain open. The later interleaved exact-real proof
+preserves memory and epochs, and is race-free from an initial state. That
+historical packet retains its prefix scope; the later split-half physical-wave
+proof connects the rotary suffix and output stores. The interleaved exact-real proof
 and certificate backend are described below.
 
 `check_execution_prefix.py` rebuilds the dependency closure from fresh copied
@@ -156,6 +156,20 @@ are refused before archive extraction. The
 [downloadable certificates and wheel](results/canonical-real-publication-v1/README.md)
 include the [source-commit binding](results/canonical-real-publication-v1/source-binding.json).
 The installed wheel also rechecked a certificate outside the repository.
+
+The [split-half physical-wave proof](../../lean/Lark/NativeQKNormRopeSplitWave.lean)
+now connects entry, normalization, both actual warp-fence resumes, all four
+rotary XOR16 snapshots, the lane-dependent partner sign, four cache/product
+groups and all output stores to halt. The proof retains the fixed native fuel
+and original HIP bytes. Each of the 256 stored values equals its source-order
+expression, the 1,280-access trace is classified and race-free from an initial
+state, and all read-only inputs are preserved. Participating warp epochs
+advance exactly twice; other threads' state is preserved.
+`check_split_wave.py` binds these theorems to the complete translated source at
+1, 3, 256 and 65,535 rows, retaining the earlier interleaved prefix witnesses.
+It tests changed fences, rotary shuffles, partner signs, cache indexing and
+output stores. This milestone leaves the split-half block/grid connection and
+independent dense-reference equality open and adds zero source certificates.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
