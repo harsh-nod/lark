@@ -70,6 +70,8 @@ The [initial execution and lane-staging proof](INITIAL_EXECUTION.md) records the
 current source-bound scope. Historical `source-components-v1` and its release
 retain the earlier first-six-instruction result; `a-staging-v1` records the
 later 256-audit result. `lane-staging-v1` records the current 363-audit result.
+Its [public source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112)
+passes anonymous download, hash and Git-source binding checks.
 Evidence is under [results](results), with standalone
 source and GPU archives in the
 [original checkpoint release](https://github.com/harsh-nod/lark/releases/tag/native-awq-gemm-checkpoint-20261112).

@@ -54,6 +54,18 @@ Current packets are [source checks](results/lane-staging-v1),
 [scope guards](results/lane-staging-scope-guards-v1) and
 [wheel resource checks](results/lane-staging-package-v1).
 The source-only archive is `results/lane-staging-v1/source-project.tar.gz`.
+The same bytes are available in the
+[per-lane staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112).
+An anonymous download matched the independently replayed archive; all 29
+owned model files and 95 source files were bound to commit `c961103`, and the
+four complete source instances were freshly rerendered. The
+[receipt](results/lane-staging-publication-v1) records those checks and the
+CI status at publication. It does not count an additional cold build on the
+identical download. The current reader also freshly replays the historical
+[first-decode](results/first-decode-reader-compatibility-v3) and
+[A-staging](results/a-staging-reader-compatibility-v3) archives, retaining
+their respective 90- and 256-audit scopes.
+
 The earlier `a-staging-v3` archive remains available in the
 [public A-staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-a-staging-20261112).
 An anonymous download matched the independently replayed bytes, all twenty
