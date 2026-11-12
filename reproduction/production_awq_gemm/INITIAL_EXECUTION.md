@@ -1,5 +1,9 @@
 # Actual block execution through both staging barriers
 
+The later [native matrix phase](MATRIX_EXECUTION.md) extends this staging result
+through both K16 passes. The evidence and scope below describe the preceding
+whole-block staging checkpoint.
+
 The `block-staging-v5` development stage checks four complete source instances
 against the fixed 138/226-instruction template, then applies universal Lean
 execution theorems to each instance. Its standalone archive contains 34 owned
@@ -66,7 +70,7 @@ the independent dense global input coordinates. It also identifies every
 native fragment's shared value. Executing the scalar fragment loads and the
 MFMA instructions remains future work.
 
-Current packets are [source checks](results/block-staging-v1),
+Whole-block staging packets are [source checks](results/block-staging-v1),
 [standalone replay](results/block-staging-replay-v1),
 [scope guards](results/block-staging-scope-guards-v1) and
 [wheel resource checks](results/block-staging-package-v1).
@@ -78,6 +82,9 @@ owned model files and 100 source files were bound to commit `bcc29e8`, and
 all four source instances were freshly rerendered. The
 [publication receipt](results/block-staging-publication-v1) records those
 checks and CI status, without counting another cold build on identical bytes.
+All seventeen CI jobs on the whole-block source subsequently passed. Its
+publication commit `7f5281d` was fast-forwarded to `main`; the
+[CI and promotion receipt](results/block-staging-ci-main-v1) records that update.
 The current reader also replays the preceding
 [per-lane archive](results/lane-staging-reader-compatibility-v4) with its
 original 363 audits and [31 scope controls](results/lane-stage-guard-compatibility-v4).
@@ -116,7 +123,8 @@ No source kernel, shape contract, numerical tolerance or machine limit changed.
 Explicit state arguments and proved frame properties avoid repeated expansion
 of the functional loop states during composition.
 
-Scalar matrix loads, MFMA execution, the complete K loop, final output stores,
+This historical staging stage does not prove scalar matrix loads or MFMA
+execution; those are covered by the later matrix-phase checkpoint. The complete K loop, final output stores,
 whole-trace race freedom and dense-reference equality remain unfinished.
 This stage issues **zero AWQ source certificates** and does not increase the
 eight accepted independent production-family count. It adds no model calls or

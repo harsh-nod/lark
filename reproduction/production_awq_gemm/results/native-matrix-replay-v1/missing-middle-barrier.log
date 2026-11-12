@@ -1,0 +1,28 @@
+missing-middle-barrier.lean:16:77: error: tactic 'decide' proved that the proposition
+  sourceProgram = LarkNativeAwqGemm.program shape
+is false
+missing-middle-barrier.lean:21:118: error: tactic 'decide' proved that the proposition
+  sourceProgram[LarkNativeAwqGemm.middleBarrier shape]? = some (LarkMFMA.Instr.scalar (Instr.barrier Cut.block))
+is false
+missing-middle-barrier.lean:22:94: error: tactic 'decide' proved that the proposition
+  sourceProgram[LarkNativeAwqGemm.haltPC shape]? = some (LarkMFMA.Instr.scalar Instr.halt)
+is false
+missing-middle-barrier.lean:24:55: error: tactic 'decide' proved that the proposition
+  sourceProgram.length = 138
+is false
+'AwqSource.source_binding' depends on axioms: [sorryAx]
+'AwqSource.layout_binding' does not depend on any axioms
+'AwqSource.geometry_binding' does not depend on any axioms
+'AwqSource.fuel_binding' does not depend on any axioms
+'AwqSource.first_barrier' does not depend on any axioms
+'AwqSource.middle_barrier' depends on axioms: [sorryAx]
+'AwqSource.halt_site' depends on axioms: [sorryAx]
+'AwqSource.matrix_sites' does not depend on any axioms
+'AwqSource.source_length' depends on axioms: [sorryAx]
+'AwqSource.initial_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.initial_block_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.a_staging_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.lane_staging_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.block_staging_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.initial_through_staging' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AwqSource.matrix_iteration_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

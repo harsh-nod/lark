@@ -28,12 +28,12 @@
     "PTX transcription from upstream inline assembly"
   ],
   "selected_upstream_matrix_path": "m16n8k16, the modern-CUDA branch; no Turing m16n8k8 branch claim",
-  "implementation_status": "Independent native wave64 FP16 port; complete source binding and actual block execution through both staging barriers with dense shared A/B tiles and memory frames proved; matrix/K/output execution and full source certificate unfinished",
+  "implementation_status": "Independent native wave64 FP16 port; complete source binding, staging and both native K16 matrix passes for any valid K32 tile proved, including original operand loads, old-snapshot MFMA results and unchanged warp fuel; full K loop/output/RF/reference and complete source certificate unfinished",
   "model_calls": 0,
   "original_paper_fully_reproduced": false,
   "record_scope": "Pinned upstream source and independent adaptation; GPU results are recorded separately",
   "source_certificates": 0,
   "gpu_trials_recorded_in_this_packet": 0,
-  "implementation_updated_at_utc": "2026-11-12T18:08:14.006779+00:00",
-  "development_stage": "block-staging-v5"
+  "implementation_updated_at_utc": "2026-11-12T18:57:19.788789+00:00",
+  "development_stage": "native-matrix-phase-v6"
 }

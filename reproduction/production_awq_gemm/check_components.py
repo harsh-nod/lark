@@ -1,4 +1,4 @@
-"""Check AWQ source identity and actual block execution through both staging barriers."""
+"""Check AWQ source identity, staging and both native K16 passes of one K32 iteration."""
 
 import argparse
 from datetime import datetime, timezone
@@ -28,7 +28,12 @@ MODELS = ("Nonlinear", "MFMA", "NativeAwqGemmAddress", "NativeAwqGemmGlobal", "N
           "NativeAwqGemmBStore", "NativeAwqGemmBRound", "NativeAwqGemmBLoop", "NativeAwqGemmBEntry",
           "NativeAwqGemmBChunk", "NativeAwqGemmBStage", "NativeAwqGemmBValues", "NativeAwqGemmStaging",
           "NativeAwqGemmStagingFrame", "NativeAwqGemmStagingFold", "NativeAwqGemmStagingBlock",
-          "NativeAwqGemmStagingMemory", "NativeAwqGemmStagingTiles")
+          "NativeAwqGemmStagingMemory", "NativeAwqGemmStagingTiles", "NativeAwqGemmMatrixProgram",
+          "NativeAwqGemmFragmentIndex", "NativeAwqGemmFragmentValues", "NativeAwqGemmFragmentLoad",
+          "NativeAwqGemmOperandLoop", "NativeAwqGemmOperandLane", "NativeAwqGemmOperandFold",
+          "NativeAwqGemmOperandBlock", "NativeAwqGemmMMAElement", "NativeAwqGemmMMAValues",
+          "NativeAwqGemmMMABank", "NativeAwqGemmMMAFold", "NativeAwqGemmMatrixPass",
+          "NativeAwqGemmMatrixPhase", "NativeAwqGemmMatrixIteration")
 
 
 def sha(path):
@@ -41,7 +46,7 @@ def write(path, value):
 
 def render(task, tr):
     p = native.shape_of(task)
-    return f'''import Lark.NativeAwqGemmStagingTiles
+    return f'''import Lark.NativeAwqGemmMatrixIteration
 namespace AwqSource
 open LarkNonlinear
 set_option maxRecDepth 10000
@@ -50,6 +55,7 @@ set_option autoImplicit false
 attribute [local irreducible] LarkNativeAwqGemm.aLoopState LarkNativeAwqGemm.aRoundState LarkNativeAwqGemm.aBodyState
 attribute [local irreducible] LarkNativeAwqGemm.bChunksState LarkNativeAwqGemm.bChunkState LarkNativeAwqGemm.bChunkBody LarkNativeAwqGemm.bLoopState LarkNativeAwqGemm.bRoundState LarkNativeAwqGemm.bBodyState
 attribute [local irreducible] LarkNativeAwqGemm.stagingState LarkNativeAwqGemm.stagingFold
+attribute [local irreducible] LarkNativeAwqGemm.operandLoop LarkNativeAwqGemm.operandLoaded LarkNativeAwqGemm.operandLaneState LarkNativeAwqGemm.operandFold LarkNativeAwqGemm.blockOperands LarkNativeAwqGemm.matrixState LarkNativeAwqGemm.matrixBankState LarkNativeAwqGemm.matrixFold LarkNativeAwqGemm.matrixPassState LarkNativeAwqGemm.matrixPhaseState
 def shape : LarkNativeAwqGemm.Shape := ⟨{p.m},{p.k},{p.n},by decide,by decide,by decide,by decide,by decide,by decide,by decide,by decide⟩
 def sourceProgram : List LarkMFMA.Instr := {lean_list(mfma.emit(i) for i in tr.program)}
 def sourceLayout : Layout := ⟨[⟨.input,{p.m*p.k}⟩,⟨.input,{p.k*p.n}⟩,⟨.output,{p.m*p.n}⟩],{lean_list(str(size) for _,size in tr.shared)},[]⟩
@@ -172,6 +178,26 @@ theorem initial_through_staging {{α : Type}} (ops : Ops α) (input : Nat → Na
   · intro t ht
     exact (LarkNativeAwqGemm.after_middle_ready shape ops input 0 b t _ ht
       (fun u hu => LarkNativeAwqGemm.after_first_staging_start shape ops b u s hu)).1
+theorem matrix_iteration_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat → α)
+    (s : State α) (tile b extra : Nat) (acc : Nat → Nat → Nat → α) (hk : tile<shape.k/32)
+    (reads : LarkNativeAwqGemm.Reads shape input s)
+    (starts : ∀ t∈blockThreads sourceGeometry b, LarkNativeAwqGemm.StagingStart shape tile t s)
+    (hc : ∀ bank, bank<LarkNativeAwqGemm.banks shape → ∀ t∈blockThreads sourceGeometry b, ∀ e, e<4 →
+      s.regs t (bank*4+e)=some (acc bank t e)) :
+    let mid := LarkNativeAwqGemm.afterMiddleBarrier shape ops input tile b s
+    let final := LarkNativeAwqGemm.matrixPhaseState shape ops input tile b acc mid
+    (LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b (extra+1) s=
+      LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b extra mid) ∧
+    (LarkMFMA.runWarp ops sourceLayout sourceGeometry sourceFuel sourceProgram (blockThreads sourceGeometry b) sourceFuel.warp mid=
+      LarkMFMA.runWarp ops sourceLayout sourceGeometry sourceFuel sourceProgram (blockThreads sourceGeometry b) 1 final) ∧
+    (∀ t∈blockThreads sourceGeometry b, final.pc t=47+14*LarkNativeAwqGemm.banks shape) ∧
+    (∀ bank, bank<LarkNativeAwqGemm.banks shape → ∀ t∈blockThreads sourceGeometry b, ∀ e, e<4 →
+      final.regs t (bank*4+e)=some (LarkNativeAwqGemm.matrixPhaseResult shape ops input tile b acc bank t e)) ∧
+    final.memory=mid.memory ∧ final.indices=mid.indices ∧ final.epochs=mid.epochs ∧
+    LarkNativeAwqGemm.Reads shape input final := by
+  rw [layout_binding,geometry_binding,fuel_binding,source_binding]
+  exact LarkNativeAwqGemm.matrix_iteration shape ops input tile b extra acc s hk reads
+    (by simpa only [geometry_binding] using starts) (by simpa only [geometry_binding] using hc)
 #print axioms source_binding
 #print axioms layout_binding
 #print axioms geometry_binding
@@ -187,6 +213,7 @@ theorem initial_through_staging {{α : Type}} (ops : Ops α) (input : Nat → Na
 #print axioms lane_staging_execution
 #print axioms block_staging_execution
 #print axioms initial_through_staging
+#print axioms matrix_iteration_execution
 end AwqSource
 '''
 
@@ -236,8 +263,8 @@ def main():
                        "exit_code": result.returncode, "seconds": time.monotonic()-before, "timed_out": False})
         return log
 
-    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmStagingTiles"], True))
-    assert len(library) == 358
+    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmMatrixIteration"], True))
+    assert len(library) == 461
     source_audits = {}
     for name in CASES:
         case = HERE/"cases"/name
@@ -246,7 +273,7 @@ def main():
         tr = native.translate((case/"kernel.hip").read_text(), task)
         (project/(name+".lean")).write_text(render(task, tr))
         source_audits[name] = audits(run(name, [str(lean_bin/"lake"), "env", "lean", name+".lean"], True))
-        assert len(source_audits[name]) == 15
+        assert len(source_audits[name]) == 16
     case = HERE/"cases/m33_k64_n192"
     source = (case/"kernel.hip").read_text()
     task = native.parse_task((case/"task.json").read_text())
@@ -271,8 +298,8 @@ def main():
     with tarfile.open(out/"source-project.tar.gz", "w:gz") as archive:
         for name in sorted(hashes):
             archive.add(project/name, arcname=name, recursive=False)
-    result = {"schema": 1, "stage": "block-staging-v5",
-              "status": "native-awq-source-bound-block-staging-through-middle-barrier-checked",
+    result = {"schema": 1, "stage": "native-matrix-phase-v6",
+              "status": "native-awq-source-bound-one-k32-native-matrix-phase-checked",
               "checked_at_utc": datetime.now(timezone.utc).isoformat(), "owned_lean_modules": len(MODELS),
               "library_axiom_audits": library, "source_axiom_audits": source_audits,
               "axiom_audit_occurrences": len(library)+sum(map(len,source_audits.values())),
@@ -299,8 +326,12 @@ def main():
               "middle_block_barrier_resumption_proved": True, "block_staging_execution_proved": True,
               "actual_initial_through_middle_barrier_proved": True,
               "staging_dense_shared_tiles_proved": True, "native_fragment_shared_values_proved": True,
-              "matrix_fragment_scalar_loads_executed": False,
-              "matrix_execution_proved": False,
+              "matrix_fragment_scalar_loads_executed": True, "matrix_execution_proved": True,
+              "native_mfma_snapshot_execution_proved": True, "matrix_accumulator_values_proved": True,
+              "matrix_memory_indices_epochs_preserved": True, "matrix_uses_original_warp_fuel": True,
+              "matrix_phase_k_extent": 32, "matrix_half_passes": 2,
+              "matrix_native_instructions_per_iteration": [8, 16], "matrix_execution_scope": "one-k32-iteration",
+              "k_counter_and_backedge_execution_proved": False,
               "k_loop_execution_proved": False,
               "whole_kernel_execution_proved": False, "actual_whole_trace_race_freedom_proved": False,
               "source_reference_equality_proved": False, "source_certificates": 0,

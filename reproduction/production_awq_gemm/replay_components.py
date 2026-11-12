@@ -26,6 +26,11 @@ B_MODELS = ('NativeAwqGemmBIndex', 'NativeAwqGemmBStore', 'NativeAwqGemmBRound',
             'NativeAwqGemmStaging')
 BLOCK_MODELS = ('NativeAwqGemmStagingFrame', 'NativeAwqGemmStagingFold', 'NativeAwqGemmStagingBlock',
                 'NativeAwqGemmStagingMemory', 'NativeAwqGemmStagingTiles')
+MATRIX_MODELS = ('NativeAwqGemmMatrixProgram', 'NativeAwqGemmFragmentIndex', 'NativeAwqGemmFragmentValues',
+                 'NativeAwqGemmFragmentLoad', 'NativeAwqGemmOperandLoop', 'NativeAwqGemmOperandLane',
+                 'NativeAwqGemmOperandFold', 'NativeAwqGemmOperandBlock', 'NativeAwqGemmMMAElement',
+                 'NativeAwqGemmMMAValues', 'NativeAwqGemmMMABank', 'NativeAwqGemmMMAFold',
+                 'NativeAwqGemmMatrixPass', 'NativeAwqGemmMatrixPhase', 'NativeAwqGemmMatrixIteration')
 BASE_SOURCE_AUDITS = {'AwqSource.'+name for name in ('source_binding', 'layout_binding', 'geometry_binding', 'fuel_binding',
                       'first_barrier', 'middle_barrier', 'halt_site', 'matrix_sites', 'source_length')}
 INITIAL_SOURCE_AUDITS = {'AwqSource.initial_execution', 'AwqSource.initial_block_execution'}
@@ -48,6 +53,13 @@ STAGES = {
                         'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|
                             {'AwqSource.a_staging_execution', 'AwqSource.lane_staging_execution',
                              'AwqSource.block_staging_execution', 'AwqSource.initial_through_staging'}},
+    'native-matrix-phase-v6': {'models': BASE_MODELS+INITIAL_MODELS+A_MODELS+B_MODELS+BLOCK_MODELS+MATRIX_MODELS,
+                             'audits': 525, 'library_audits': 461, 'steps': [31, 47],
+                             'root': 'NativeAwqGemmMatrixIteration',
+                             'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|
+                                 {'AwqSource.a_staging_execution', 'AwqSource.lane_staging_execution',
+                                  'AwqSource.block_staging_execution', 'AwqSource.initial_through_staging',
+                                  'AwqSource.matrix_iteration_execution'}},
 }
 
 
@@ -96,7 +108,7 @@ def main():
         raise ValueError('Stage audit coverage')
     if len(recorded['library_axiom_audits'])+sum(map(len, recorded['source_axiom_audits'].values())) != stage['audits']:
         raise ValueError('Derived audit count')
-    if stage_name in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5'):
+    if stage_name in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6'):
         for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved'):
             if recorded[field] is not True:
                 raise ValueError('A staging claim: '+field)
@@ -107,7 +119,7 @@ def main():
                       'b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
             if recorded.get(field, False) is not False:
                 raise ValueError('Unsupported later-stage claim: '+field)
-    if stage_name in ('lane-staging-v4', 'block-staging-v5'):
+    if stage_name in ('lane-staging-v4', 'block-staging-v5', 'native-matrix-phase-v6'):
         for field in ('b_staging_execution_proved', 'b_staging_shared_values_proved', 'b_staging_outside_memory_preserved',
                       'lane_staging_source_execution_proved', 'middle_barrier_reached_per_lane_proved'):
             if recorded[field] is not True:
@@ -126,12 +138,26 @@ def main():
                     'actual_initial_through_middle_barrier_proved', 'staging_dense_shared_tiles_proved',
                     'native_fragment_shared_values_proved')
     for field in block_fields:
-        if stage_name == 'block-staging-v5':
+        if stage_name in ('block-staging-v5', 'native-matrix-phase-v6'):
             if recorded[field] is not True:
                 raise ValueError('Block staging claim: '+field)
         elif recorded.get(field, False) is not False:
             raise ValueError('Unsupported later-stage claim: '+field)
-    for field in ('matrix_execution_proved', 'k_loop_execution_proved', 'matrix_fragment_scalar_loads_executed'):
+    matrix_fields = ('matrix_execution_proved', 'matrix_fragment_scalar_loads_executed',
+                     'native_mfma_snapshot_execution_proved', 'matrix_accumulator_values_proved',
+                     'matrix_memory_indices_epochs_preserved', 'matrix_uses_original_warp_fuel')
+    for field in matrix_fields:
+        if stage_name == 'native-matrix-phase-v6':
+            if recorded[field] is not True:
+                raise ValueError('Native matrix phase claim: '+field)
+        elif recorded.get(field, False) is not False:
+            raise ValueError('Unsupported later-stage claim: '+field)
+    if stage_name == 'native-matrix-phase-v6':
+        if (recorded['matrix_phase_k_extent'] != 32 or recorded['matrix_half_passes'] != 2
+                or recorded['matrix_native_instructions_per_iteration'] != [8, 16]
+                or recorded['matrix_execution_scope'] != 'one-k32-iteration'):
+            raise ValueError('Native matrix phase extent/count/scope')
+    for field in ('k_loop_execution_proved', 'k_counter_and_backedge_execution_proved'):
         if recorded.get(field, False) is not False:
             raise ValueError('Unsupported later-stage claim: '+field)
     for field in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
