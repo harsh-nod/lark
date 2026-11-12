@@ -68,6 +68,14 @@ python3 reproduction/production_flashinfer_rmsnorm/run_symbolic.py \
   --output /tmp/flashinfer-symbolic
 ```
 
-The new CI job repeats these checks. Original paper model/token-cost results
+The [publication check](results/publication-v1/results.json) binds all 58 archived
+source files to commit `7097c674b132baf7e6477b5b5481d0ada0268a8d`. It anonymously
+downloaded 47 source/finite-packet files (3,089,408 bytes), matched their committed
+bytes, and replayed all 51 axiom audits and nine false Lean claims from the public
+source archive. No owned compiled cache or Git executable was used for replay.
+The dedicated [FlashInfer CI job](https://github.com/harsh-nod/lark/actions/runs/43164561966)
+passed; the complete thirteen-job run was still in progress at publication capture.
+
+Original paper model/token-cost results
 and NVIDIA measurements remain separate missing inputs. This development uses
 zero model calls and does not mark the paper's FlashInfer result reproduced.
