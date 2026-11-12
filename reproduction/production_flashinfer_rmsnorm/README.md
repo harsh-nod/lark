@@ -70,11 +70,17 @@ contains all 312 files of the four complete certificate exports. The
 and rechecked an export outside the checkout using the packaged 68 proof
 modules; its [wheel](results/installed-wheel-v22-v1/lark_kernels-0.1.0-py3-none-any.whl)
 is included. [CI for the complete profile](https://github.com/harsh-nod/lark/actions/runs/43177203373)
-is tracked separately from the earlier first-block checkpoint.
-The [public-download and source-binding receipt](results/canonical-publication-v1/results.json)
-checks 64 anonymously downloaded files (2,179,128 bytes), the complete
-312-file certificate bundle, 112 Git-bound archived sources and all 68 wheel
-proof modules against source commit `1444f37f6ddb2d8620267f768bed69f8a102b54e`.
+is tracked separately from the earlier first-block checkpoint. The
+[dedicated real CI job](results/canonical-ci-v1/results.json) passed all three
+complete-profile gates: certificates/controls, fresh no-Git replay and installed
+wheel verification/recheck. Its source files match the published evidence;
+other jobs in the fourteen-job workflow were still running at capture.
+The [public-download receipt](results/canonical-publication-v1/results.json)
+checks 64 anonymously downloaded files (2,179,128 bytes) and the complete
+312-file certificate bundle. The separate
+[source binding](results/canonical-publication-v1/source-binding.json) checks
+112 Git-bound archived sources and all 68 wheel proof modules against source
+commit `1444f37f6ddb2d8620267f768bed69f8a102b54e`.
 Those downloads matched the committed evidence byte for byte. The independent
 fresh-source replay above passed; the download check did not execute it again.
 
