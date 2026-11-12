@@ -41,9 +41,10 @@ selection, four weight reads, and eight source-order normalization products.
 For split-half, the actual wave scheduler is connected through normalization
 to the first warp barrier at PC59. Its four normalized values match the
 source-order five-stage reduction expression; its prefix records 512 reads,
-preserves memory and epochs, and is race-free from an initial state. This is
-a prefix proof: rotary exchanges, cache loads, stores, complete block/grid
-execution, dense reference equality and registered certificates remain open.
+preserves memory and epochs, and is race-free from an initial state. For
+split-half this remains a prefix proof: its rotary suffix and connection to
+the checked store suffix remain open. Dense reference equality and registered
+certificates remain open for both layouts.
 
 `check_execution_prefix.py` rebuilds the dependency closure from fresh copied
 sources, audits the printed theorem axioms, and binds these partial execution
@@ -76,8 +77,27 @@ and [archive replay](results/interleaved-wave-validation-v1/README.md) publish
 the same checks and two rejected scope promotions. A bounded
 [artifact recheck](results/interleaved-wave-artifact-recheck-v1/queries.json)
 records the public author/org endpoints and exact-paper searches examined.
-Complete block/grid execution, split-half rotation and dense reference
-equality remain open; this development still registers zero certificates.
+The wave packet retains its original scope; the whole-launch development below
+extends the interleaved proof. This development still registers zero certificates.
+
+The complete interleaved block/grid/launch proof now carries actual memory
+through all four waves per block and all five blocks per token. Every output
+is extracted in tensor order and equals an explicit source-order expression,
+and the full trace contains exactly `tokens * 20480` classified accesses and is
+race-free from an initial state. All read-only inputs are preserved. The
+`Correct` theorem covers every input and outside-memory function, and a second
+theorem covers every state satisfying the fixed satisfiable `StdPre`.
+
+`check_interleaved_launch.py` binds these whole-launch theorems to the complete
+translated sources at 1, 3, 256 and 65,535 rows. It retains the earlier eight
+layout/row witnesses and adds false interface claims with a shortened grid,
+altered fuel or truncated output shape. The complete interleaved result follows
+the kernel's arithmetic order; equality to the independent dense reference is
+still a separate obligation. The combined-layout whole-kernel flags remain
+false because the split-half rotary execution is unfinished.
+The fresh launch check builds 47 Std-only modules and checks 416 library axiom
+audits plus 156 source-bound audits, rejecting all seven changed source/interface
+claims.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
@@ -141,6 +161,8 @@ python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
   --output /tmp/fused-qk-execution-prefix --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_qknorm_rope/check_interleaved_wave.py \
   --output /tmp/fused-qk-interleaved-wave --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_qknorm_rope/check_interleaved_launch.py \
+  --output /tmp/fused-qk-interleaved-launch --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_qknorm_rope/replay_components.py \
   --packet /tmp/fused-qk-components --output /tmp/fused-qk-replayed \
   --lean-bin /path/to/lean-4.19.0/bin

@@ -33,6 +33,10 @@ jobs:
         run: |
           python3 reproduction/production_qknorm_rope/check_interleaved_wave.py \
             --output /tmp/lark-fused-qk-interleaved-wave --lean-bin "$HOME/.elan/bin"
+      - name: Check complete interleaved grid, output extraction and source-order correctness
+        run: |
+          python3 reproduction/production_qknorm_rope/check_interleaved_launch.py \
+            --output /tmp/lark-fused-qk-interleaved-launch --lean-bin "$HOME/.elan/bin"
       - name: Replay frozen components without Git or owned compiled caches
         run: |
           python3 reproduction/production_qknorm_rope/replay_components.py \
