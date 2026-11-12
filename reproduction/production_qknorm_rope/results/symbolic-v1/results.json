@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "status": "finite-native-fused-qknorm-rope-source-values-and-traces-checked",
+  "cases": [
+    {
+      "layout": "interleaved",
+      "rows": 1,
+      "outputs": 5120,
+      "instructions": 88,
+      "accesses": 20480,
+      "unique_writes": 5120,
+      "halt_pc": 87,
+      "all_actual_accesses_classified": true,
+      "all_input_buffers_unchanged": true,
+      "finite_trace_race_free": true,
+      "trace_sha256": "9f429dcd24ba005ab8f03707c22795fb89f1d64ef172280bf4fb3351d622f5f3",
+      "output_graph_sha256": "bc990a57a08caaefbbae7225d4bbd2e0abb23ed49ec6ad867fe7d557082a017a"
+    },
+    {
+      "layout": "interleaved",
+      "rows": 3,
+      "outputs": 15360,
+      "instructions": 88,
+      "accesses": 61440,
+      "unique_writes": 15360,
+      "halt_pc": 87,
+      "all_actual_accesses_classified": true,
+      "all_input_buffers_unchanged": true,
+      "finite_trace_race_free": true,
+      "trace_sha256": "c713e288b8d6bb6dc8c3af3331b500c6e61568a1afa60fb2536e6f258595a0b6",
+      "output_graph_sha256": "e050ab765fee97dc2c8aac50b2ccfe2e1bb3ce3125376cecfe02276427d3610f"
+    },
+    {
+      "layout": "split-half",
+      "rows": 1,
+      "outputs": 5120,
+      "instructions": 107,
+      "accesses": 25600,
+      "unique_writes": 5120,
+      "halt_pc": 106,
+      "all_actual_accesses_classified": true,
+      "all_input_buffers_unchanged": true,
+      "finite_trace_race_free": true,
+      "trace_sha256": "f01a662a91f5a60e74fbff898168d665e177beb3a473471443bdd0cfc57cc9e0",
+      "output_graph_sha256": "bd8d40e44c534c449390d1f791a290d3f971899150ab58e4020ad0ed20576c24"
+    },
+    {
+      "layout": "split-half",
+      "rows": 3,
+      "outputs": 15360,
+      "instructions": 107,
+      "accesses": 76800,
+      "unique_writes": 15360,
+      "halt_pc": 106,
+      "all_actual_accesses_classified": true,
+      "all_input_buffers_unchanged": true,
+      "finite_trace_race_free": true,
+      "trace_sha256": "14bc23f20fd721ad9735c374e30ac32161c38ec03d2f864cda1331b07e1a53e1",
+      "output_graph_sha256": "773aead5f7d2abc8f0bfa95975645c56980ba708294e1fe870be232fee33fbc1"
+    }
+  ],
+  "false_sources_rejected": [
+    {
+      "layout": "interleaved",
+      "name": "wrong-reduction-mask",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-logical-width",
+      "accepted": false,
+      "reason": "shuffle-domain: index/xor argument must be smaller than width"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-weight-buffer",
+      "accepted": false,
+      "reason": "native-qknorm-rope-footprint: unexpected access (1024, ('global', 0, 2, 0), False)"
+    },
+    {
+      "layout": "interleaved",
+      "name": "missing-normalization",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-cache-half",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "interleaved",
+      "name": "missing-output",
+      "accepted": false,
+      "reason": "Incomplete native fused traversal"
+    },
+    {
+      "layout": "interleaved",
+      "name": "wrong-rotation-sign",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-reduction-mask",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-logical-width",
+      "accepted": false,
+      "reason": "shuffle-domain: index/xor argument must be smaller than width"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-weight-buffer",
+      "accepted": false,
+      "reason": "native-qknorm-rope-footprint: unexpected access (1024, ('global', 0, 2, 0), False)"
+    },
+    {
+      "layout": "split-half",
+      "name": "missing-normalization",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-cache-half",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "split-half",
+      "name": "missing-output",
+      "accepted": false,
+      "reason": "Incomplete native fused traversal"
+    },
+    {
+      "layout": "split-half",
+      "name": "wrong-rotation-peer",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    },
+    {
+      "layout": "split-half",
+      "name": "missing-negation",
+      "accepted": false,
+      "reason": "Fused output differs from independent source-order tree and rotation"
+    }
+  ],
+  "complete_native_launch_theorem": false,
+  "dense_reference_equivalence_proved": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}

@@ -95,6 +95,14 @@ CPU float64/Torch FP32 comparisons, with zero tolerance or bit differences.
 This independent adaptation does not recover the original paper's artifacts
 or measurements.
 
+The separate [native fused Q/K normalization and RoPE development](reproduction/production_qknorm_rope/README.md)
+retains the 256-thread launch and logical32 reductions inside physical wave64,
+then rotates the normalized values and writes Q/K out of place as the paper
+specifies. Both full source layouts, address coverage, ownership and index bounds
+are Lean checked. Paired AMD runs pass 79,626,240 CPU-reference comparisons, with
+zero adapted/upstream bit differences. Complete native execution and dense-reference
+proofs remain pending; this development issues zero source certificates.
+
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.
 Both MI350X hosts also passed 749,568 combined numerical comparisons for the

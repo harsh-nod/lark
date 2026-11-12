@@ -58,8 +58,8 @@ complete compiler-reported include/source closure is captured.
 
 Fresh CPU float64 and Torch FP32 references check **79,626,240 output values**
 with zero failures at `atol=rtol=0.002` and zero adapted/upstream bit differences.
-There are 3,948 output-bit differences from rounded Torch FP32 results across
-the audited streams; these pass tolerance and are not hidden as exact equality.
+The FP16 bits of 3,948 audited output values differ from rounded Torch FP32
+results; these comparisons pass tolerance.
 Six fully rehashed numerical controls reject a wrong output, invented proofs or
 certificate, a missing trial and a widened tolerance without new GPU launches.
 
@@ -68,6 +68,24 @@ dense-reference equality remain pending.** This development issues zero source
 certificates and is outside the immutable v19 paper ledger. As in the paper,
 IEEE/rounding/error guarantees are outside formal scope. This independent
 adaptation does not reproduce an original production acceptance or model result.
+
+The frozen [component packet](results/components-v1/results.json),
+[independent replay](results/components-validation-v1/results.json),
+[scope guards](results/component-stage-guards-v1/results.json) and
+[finite values/traces](results/symbolic-v1/results.json) retain the checked
+statements and complete finite expression DAGs. The
+[both-host packet](results/native-v1/results.json) and
+[six numerical controls](results/numerical-controls-v1/results.json) retain the
+runtime and CPU audit results. Full raw inputs, output streams, compiler captures
+and binaries are in the
+[public release](https://github.com/harsh-nod/lark/releases/tag/native-qknorm-rope-evidence-20261111).
+All ten [CI jobs](https://github.com/harsh-nod/lark/actions/runs/43112261267) passed
+at source revision `c9a7a242de6696e4c9c1aa402d7046b3db2518d9`.
+The [publication receipt](results/publication-v1/results.json) binds all 70
+archived source files to that revision and records full anonymous downloads of
+all four release assets: 111,245,855 bytes matched the local hashes and GitHub's
+server digests. It also binds all six evidence manifests and the passing CI
+responses.
 
 ```bash
 # Python3.11+ and Lean/Lake4.19.0; use fresh output directories.

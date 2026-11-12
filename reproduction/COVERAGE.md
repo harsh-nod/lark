@@ -173,6 +173,17 @@ differences. This evidence is outside the immutable v19 ledger and does not add
 an original accepted production kernel. IEEE/error guarantees remain outside
 the paper's formal scope.
 
+The separate [fused Q/K normalization and RoPE development](production_qknorm_rope/README.md)
+retains the native block256, Q32/K8/V8 heads, width128 and logical32 reductions
+inside physical wave64. It follows the paper's out-of-place and gathered-cache
+departures and covers both rotary layouts. Six Std modules and eight source
+instances pass 103 axiom audits and nine false Lean controls, with independent
+archive replay and ten rehashed scope guards. Complete finite traces check 40,960
+expressions; both hosts pass 79,626,240 fresh CPU-reference comparisons with zero
+tolerance failures or adapted/upstream bit differences. Complete native execution,
+actual-trace classification and dense-reference equality remain pending. This
+development issues zero certificates and is outside the immutable v19 ledger.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
