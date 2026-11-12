@@ -105,8 +105,10 @@ binds all 128 frozen source files to commit
 `df39d5aa8440cda658247a9a5835e09074856b9e` and verifies five anonymous public
 downloads byte for byte. A [clean-checkout wheel check](results/native-wave-partial-wheel-v1/results.json)
 compares all 43 required Lean resources and all 37 native SGLang modules with
-their published sources. The [new CI run](https://github.com/harsh-nod/lark/actions/runs/43209285830)
-is checking this source revision, including all earlier proof/replay gates.
+their published sources. The [CI run](https://github.com/harsh-nod/lark/actions/runs/43209285830)
+passes all fifteen jobs, including all earlier proof/replay gates. The
+[complete receipt](results/native-wave-partial-ci-v1/results.json) binds the
+unchanged proof sources, workflow and contract tests to that checked revision.
 
 The earlier `results/native-wave-entry-v1` stage proves successful execution of
 all sixty-four lane preparations followed by the first logical32 XOR snapshot.
