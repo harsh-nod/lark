@@ -93,6 +93,10 @@ identical download. Earlier reader compatibility checks replayed the historical
 [first-decode](results/first-decode-reader-compatibility-v3) and
 [A-staging](results/a-staging-reader-compatibility-v3) archives, retaining
 their respective 90- and 256-audit scopes.
+All seventeen CI jobs on the per-lane source subsequently passed, and its
+publication commit `1a65556` was fast-forwarded to `main` after verifying the
+publication-only delta. The [CI and promotion receipt](results/lane-staging-ci-main-v1)
+records that later main update.
 
 The earlier `a-staging-v3` archive remains available in the
 [public A-staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-a-staging-20261112).
