@@ -103,3 +103,15 @@ differences, and 380 FP16-word differences against separately rounded CPU
 Torch FP32. Those finite numerical observations remain separate from the
 exact-real proof. This proof extension makes no GPU launches or model calls.
 Historical component archives retain their original scopes and counts.
+
+The [public source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-canonical-real-20261112)
+is bound to source commit `13fa403b879018d8263876652761d8202fc40efd`.
+Its [anonymous-download receipt](results/canonical-real-publication-v1/results.json)
+checks all 176 frozen files, binds all 83 proof files and 150 source files to Git,
+and rerenders the four complete source instances. The 234,051-byte download
+has SHA256 `c473e80dd1ee9b6cba4160371c5c06805ef771fbb165a6a4ddd6199925c6fd6d`
+and is byte-identical to the independently rebuilt archive. A second cold
+build of the identical download is not counted. The exact-source
+[18-job CI run](https://github.com/harsh-nod/lark/actions/runs/43300772965)
+is recorded as in progress in that immutable receipt; it is not counted as
+passed there.
