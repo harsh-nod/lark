@@ -71,6 +71,16 @@ Current packets are [source checks](results/block-staging-v1),
 [scope guards](results/block-staging-scope-guards-v1) and
 [wheel resource checks](results/block-staging-package-v1).
 The source-only archive is `results/block-staging-v1/source-project.tar.gz`.
+The same bytes are available in the
+[whole-block staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-block-staging-20261112).
+An anonymous download matched the independently replayed archive, all 34
+owned model files and 100 source files were bound to commit `bcc29e8`, and
+all four source instances were freshly rerendered. The
+[publication receipt](results/block-staging-publication-v1) records those
+checks and CI status, without counting another cold build on identical bytes.
+The current reader also replays the preceding
+[per-lane archive](results/lane-staging-reader-compatibility-v4) with its
+original 363 audits and [31 scope controls](results/lane-stage-guard-compatibility-v4).
 
 The earlier `lane-staging-v4` archive remains available in the
 [per-lane staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112).
@@ -79,7 +89,7 @@ owned model files and 95 source files were bound to commit `c961103`, and the
 four complete source instances were freshly rerendered. The
 [receipt](results/lane-staging-publication-v1) records those checks and the
 CI status at publication. It does not count an additional cold build on the
-identical download. The current reader also freshly replays the historical
+identical download. Earlier reader compatibility checks replayed the historical
 [first-decode](results/first-decode-reader-compatibility-v3) and
 [A-staging](results/a-staging-reader-compatibility-v3) archives, retaining
 their respective 90- and 256-audit scopes.
@@ -91,6 +101,10 @@ owned model files matched source commit `2f505a7`, and all four source instances
 were freshly rerendered from that commit. This check did not repeat the cold
 build on the identical download. Its [receipt](results/a-staging-publication-v1)
 binds 86 source files and records the CI status at publication.
+All seventeen CI jobs on that A-staging source subsequently passed, including
+the unchanged Q/K-norm real-proof retry after an optional-library timeout.
+Its publication commit `cb9fa03` was fast-forwarded to `main`; the
+[CI and promotion receipt](results/a-staging-ci-main-v1) preserves the evidence.
 
 Every new module retains `maxRecDepth=10000` and `maxHeartbeats=2000000`.
 Lane/warp/block/grid fuel remains 512, `tile_N/8+1`, `2*(K/32)+1`, and 1.

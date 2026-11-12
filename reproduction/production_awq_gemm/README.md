@@ -73,7 +73,9 @@ The [initial execution and lane-staging proof](INITIAL_EXECUTION.md) records the
 current source-bound scope. Historical `source-components-v1` and its release
 retain the earlier first-six-instruction result; `a-staging-v1` records the
 later 256-audit result. `lane-staging-v1` records the earlier 363-audit result.
-`block-staging-v1` records the current 418-audit result. The earlier
+`block-staging-v1` records the current 418-audit result.
+The [whole-block source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-block-staging-20261112)
+passes anonymous download, hash and Git-source binding checks. The earlier
 [per-lane source archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112)
 retains its anonymous download, hash and Git-source binding checks.
 Evidence is under [results](results), with standalone
