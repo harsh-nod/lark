@@ -8,9 +8,10 @@ numerical negative controls and all
 [26 packet mutation controls](results/production-real-packet-controls-v1/results.json)
 passed. An [anonymous public download](results/production-real-publication-v1/results.json)
 verified eight files totaling 4,512,499 bytes against their committed blobs and
-repeated the file audit and 26 controls successfully. A separate fresh numerical
-recomputation is in progress; it is not
-counted as complete by these file-verification receipts.
+repeated the file audit and 26 controls successfully. The separate
+[fresh source replay](results/production-real-source-replay-v1/results.json)
+recompiled the numerical auditor, repeated all 240 samples with identical
+float64 bits, and passed the fourteen numerical negative controls again.
 
 The paper's Appendix A, “Kernel-independent trusted base,” tests its Torch
 formalizations with a metaprogram that evaluates the **elaborated Lean

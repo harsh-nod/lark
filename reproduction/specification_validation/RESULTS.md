@@ -59,8 +59,14 @@ and 240 evidence files inside two archives. It retains all sampled bit patterns,
 actual elaborated expressions, unfolded-definition names, inputs, generated
 Mains, logs and source bindings. The separate
 [verification receipt](results/production-real-packet-verification-v1/results.json)
-audits those bytes and records without rerunning Lean. A fresh numerical
-recomputation is running and has not yet been counted as complete.
+audits those bytes and records without rerunning Lean. The separate
+[fresh source replay](results/production-real-source-replay-v1/results.json)
+compiled the numerical auditor anew and reran all cases and numerical controls:
+64 direct Lean processes, 48 identical input files and Mains, and all
+240 sampled float64 values bit-identical to the measured run. The final stricter
+packet verifier also passed on the actual recomputed source and evidence.
+Source-checked SDK import caches were reused; this is not a cold rebuild of every
+reference-library proof or of Mathlib.
 The [anonymous publication check](results/production-real-publication-v1/results.json)
 downloaded eight public files totaling 4,512,499 bytes from commit `4a4c5ef`,
 matched every byte against its committed blob, and passed the audit and all
