@@ -1,0 +1,652 @@
+{
+  "schema": 1,
+  "status": "native-sglang-rmsnorm-input-preload-prefix-equations-checked",
+  "local_lean_modules": 14,
+  "library_axiom_audits": 80,
+  "source_instances": 6,
+  "source_axiom_audits_per_instance": 10,
+  "false_lean_claims_rejected": 6,
+  "axiom_audits": {
+    "fresh-build": {
+      "LarkCollective.shuffleUpdates_preserves": [],
+      "LarkCollective.runShuffle_preserves": [
+        "propext"
+      ],
+      "LarkCollective.owned_raceFree": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkCollective.Gather.values_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkPartitionCollective.runShuffle_preserves": [
+        "propext"
+      ],
+      "LarkPartitionCollective.nextCohort_subset": [
+        "propext"
+      ],
+      "LarkPartitionCollective.nextCohort_nonempty": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkPointwise.correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.instruction_lengths": [],
+      "LarkNativeSglangRmsNorm.original_partial_store": [],
+      "LarkNativeSglangRmsNorm.repaired_partial_gate": [],
+      "LarkNativeSglangRmsNorm.repaired_partial_store": [],
+      "LarkNativeSglangRmsNorm.original_barriers": [],
+      "LarkNativeSglangRmsNorm.repaired_barriers": [],
+      "LarkNativeSglangRmsNorm.final_halts": [],
+      "LarkReduction.loop_step": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.loop_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.lane_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkReduction.matrix_correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_slot_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_pair_bound": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.column_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_int32": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_writer": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.coverage": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.ordered_blocks": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.collision": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.sameLocation_true_iff": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.conflict_false": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.race_free": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.scalar_step": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.eval_nat_mul": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_nat_sum": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_column": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_slot": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_address": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.initial_weight": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.output_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.indexed_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_preserves": [],
+      "LarkNativeSglangRmsNorm.initialized_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.copy_input_half": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_cycle": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_memory": [],
+      "LarkNativeSglangRmsNorm.input_cache_epochs": [],
+      "LarkNativeSglangRmsNorm.input_cache_trace": [],
+      "LarkNativeSglangRmsNorm.input_cache_good": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.initial_reads": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_reads": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_prefix": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_epochs": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_entry_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_exit_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_entry_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_round_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_reads": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_pc": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_trace_length": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_1": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_3": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_131072": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_1": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_3": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_131072": {
+      "source_binding": [],
+      "source_preload_equation": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_cached_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_readonly_globals": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_footprint": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_preload_pc": [
+        "propext"
+      ],
+      "source_preload_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_preload_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_private_bounds": [
+        "propext",
+        "Quot.sound"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "fresh-build",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 27.322248258977197
+    },
+    {
+      "name": "native_original_rows_1",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2737021270440891
+    },
+    {
+      "name": "native_original_rows_3",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2240204639965668
+    },
+    {
+      "name": "native_original_rows_131072",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2273784769931808
+    },
+    {
+      "name": "native_fixed_rows_1",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2325578649761155
+    },
+    {
+      "name": "native_fixed_rows_3",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2523733000271022
+    },
+    {
+      "name": "native_fixed_rows_131072",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 1.2652143820887432
+    },
+    {
+      "name": "aliased-input-cache-slot",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.9376941780792549
+    },
+    {
+      "name": "wrong-input-cache-address",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.0372615589294583
+    },
+    {
+      "name": "invented-weight-preload-pc",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3972223369637504
+    },
+    {
+      "name": "missing-private-write-events",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3348227810347453
+    },
+    {
+      "name": "wrong-last-input-half",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33678328804671764
+    },
+    {
+      "name": "invented-weight-cache-value",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.34466886904556304
+    }
+  ],
+  "source_archive_sha256": "85573be2a83c0e5930f9c779420d5e8beb451dfa45ec3fd16b08fb71d9817cdb",
+  "source_manifest_sha256": "4017fbed26f55169310e7066e43c9432cf608d66f979ce18c394dd3e93e250af",
+  "full_source_binding_proved": true,
+  "input_preload_prefix_equation_proved": true,
+  "prefix_instruction_count": 128,
+  "prefix_exit_pc": 16,
+  "input_cache_cells": 16,
+  "prefix_access_events": 32,
+  "private_cache_values_and_readonly_globals_proved": true,
+  "initializer_reaches_partial_store_cut_proved": false,
+  "continued_lane_success_proved": false,
+  "whole_kernel_execution_proved": false,
+  "actual_whole_trace_classification_proved": false,
+  "source_reference_equality_proved": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}

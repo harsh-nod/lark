@@ -61,6 +61,25 @@ initialized Lean execution, actual whole-trace classification, and exact-real
 source/reference equality remain outstanding for this family. There have been
 no model calls or GPU trials in this study.
 
+The additional `results/input-preload-prefix-v1` stage proves a scalar prefix
+equation for the first 128 executed instructions, through PC16 before weight
+preloads, for both complete programs and arbitrary arithmetic operations. The
+resulting explicit state contains all sixteen raw input half-cache values,
+preserves read-only global buffers, and accounts for sixteen global reads plus
+sixteen private writes. Fourteen modules and six source instances pass 140
+axiom audits; six false source/cache claims are rejected. The prefix equation
+equates the remaining `runLane` continuations. It does not establish successful
+execution through the first shuffle or reachability of the later partial-store
+cut state. This distinction is explicit in its report.
+
+`results/input-preload-validation-v1` repeats that check from frozen source
+without Git or owned compiled caches. Fifteen fully rehashed controls in
+`results/input-preload-stage-guards-v1` reject claims about weight preloads,
+continued lane success, the later cut state, complete execution and reference
+equality before extraction. `results/component-ci-v1` records the passing
+dedicated component CI job at `4d082a49bdcd7e89ec7527153c5b447f2beb74fc`
+and byte-binds all 75 files in that earlier component source archive to Git.
+
 From the repository root, with Lean/Lake 4.19.0 installed:
 
 ```sh
@@ -77,6 +96,14 @@ python3 reproduction/production_sglang_rmsnorm/run_symbolic.py \
   --output /tmp/lark-sglang-symbolic
 python3 reproduction/production_sglang_rmsnorm/check_controls.py \
   --output /tmp/lark-sglang-finite-controls
+python3 reproduction/production_sglang_rmsnorm/check_input_preloads.py \
+  --output /tmp/lark-sglang-input-preloads --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/replay_input_preloads.py \
+  --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-replay \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_input_preload_stages.py \
+  --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-stage-guards \
+  --lean-bin /path/to/lean-4.19.0/bin
 ```
 
 Each command requires a fresh output directory. The dedicated

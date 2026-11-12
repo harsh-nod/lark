@@ -88,6 +88,20 @@ jobs:
         run: python3 reproduction/production_sglang_rmsnorm/run_symbolic.py --output /tmp/lark-sglang-symbolic
       - name: Reject changed reduction, traffic and output controls
         run: python3 reproduction/production_sglang_rmsnorm/check_controls.py --output /tmp/lark-sglang-finite-controls
+      - name: Check scalar initializer and input preload prefix equations through PC16
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_input_preloads.py \
+            --output /tmp/lark-sglang-input-preloads --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen input preload equations without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_input_preloads.py \
+            --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed claims about later execution
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_input_preload_stages.py \
+            --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
   native-flashinfer-rmsnorm:
     runs-on: ubuntu-latest
     timeout-minutes: 20
