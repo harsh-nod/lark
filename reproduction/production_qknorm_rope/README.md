@@ -170,6 +170,13 @@ advance exactly twice; other threads' state is preserved.
 It tests changed fences, rotary shuffles, partner signs, cache indexing and
 output stores. This milestone leaves the split-half block/grid connection and
 independent dense-reference equality open and adds zero source certificates.
+The [frozen split-half wave packet](results/split-wave-v1/results.json) builds
+48 Std-only modules and checks 430 library plus 132 source-bound axiom audits,
+rejecting all seven changed-source claims. The
+[independent archive replay](results/split-wave-validation-v1/README.md) repeats
+the same checks without Git or an owned compiled cache, binds all 119 archived
+files to the public source commit and rejects six rehashed scope changes before
+extraction. Both kernels and references retain the GPU-tested bytes.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
