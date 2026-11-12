@@ -121,6 +121,14 @@ skipped in that invocation. Its 668 code/test/configuration files match the
 same source commit. The complete SGLang real source checker and frozen replay
 are separate successful checks, rather than being counted among those skips.
 
+The [complete CI gate](results/canonical-real-ci-v1/results.json) records all
+sixteen jobs passing for source commit
+`564354a308d17b850d6cd72e74b23578facd4a8e`, including the new full-real checker,
+frozen replay, scope guards and installed-wheel check. It retains all earlier
+gates and binds 668 unchanged code/test/configuration files to that checked
+source. The corresponding [public run](https://github.com/harsh-nod/lark/actions/runs/43234715882)
+is complete.
+
 ## Relation to the paper and earlier evidence
 
 This is independent adaptation evidence. The paper authors' adapted source,
