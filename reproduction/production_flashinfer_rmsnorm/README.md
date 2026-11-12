@@ -44,11 +44,14 @@ The second reduction, normalization, output execution, complete launch and
 reference equality remain unfinished. The first-block result issues no
 certificate and does not change the original paper result status.
 
-The new checker builds a fresh thirty-module source closure and audits 225
+The [first-block checker receipt](results/first-block-v1/results.json) records a
+fresh thirty-module source closure and audits 225
 library declarations plus twelve declarations at each of six source instances
-(297 audits). It also checks eleven false Lean claims. The separate replay
-uses neither Git nor an owned compiled cache; fourteen fully rehashed scope
-controls reject claims about unfinished later stages. The older component and
+(297 audits). It also checks eleven false Lean claims. The
+[independent replay](results/first-block-validation-v1/results.json) passed with
+neither Git nor an owned compiled cache; all fourteen
+[fully rehashed scope controls](results/first-block-stage-guards-v1/results.json)
+rejected claims about unfinished later stages before extracting any source. The older component and
 GPU evidence below retain their original scope and source pins.
 
 ```sh
