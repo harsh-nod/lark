@@ -77,6 +77,10 @@ rehashed controls in `results/first-shuffle-stage-guards-v1` reject unsupported
 claims about later shared stores, barriers, whole execution and reference
 equality before extraction. These results strengthen the earlier prefix
 equation stage below and still issue no source certificate.
+`results/first-shuffle-publication-v1` byte-binds all 95 frozen source files to
+`4f6c2ee5a4452ceb9331bd55bdcd0b28b8fe86bf` and verifies five anonymous public
+downloads. Those bytes match the independently replayed local packet; the
+public-download check does not execute another replay.
 
 The additional `results/input-preload-prefix-v1` stage proves a scalar prefix
 equation for the first 128 executed instructions, through PC16 before weight
@@ -98,6 +102,10 @@ dedicated component CI job at `4d082a49bdcd7e89ec7527153c5b447f2beb74fc`
 and byte-binds all 75 files in that earlier component source archive to Git.
 `results/components-complete-ci-v1` records all fifteen repository CI jobs
 passing at that component commit; it does not claim CI coverage of later stages.
+`results/input-preload-complete-ci-v1` records all fifteen jobs passing at the
+later input-preload prefix commit `ff0d169c7b45bbe4f76abeb5b2c1bf6ab0056414`
+and byte-binds its 83 archived source files. The first-shuffle CI run is tracked
+separately at its own source commit.
 
 From the repository root, with Lean/Lake 4.19.0 installed:
 
