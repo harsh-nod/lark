@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261112-v20/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261112-v21/results/RESULTS.md) ·
+[earlier v20 ledger](snapshots/20261112-v20/results/RESULTS.md) ·
 [earlier v19 ledger](snapshots/20261111-v19/results/RESULTS.md) ·
 [earlier v18 ledger](snapshots/20261110-v18/results/RESULTS.md) ·
 [earlier v17 ledger](snapshots/20261110-v17/results/RESULTS.md) ·
@@ -13,49 +14,56 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
-The [updated snapshot](snapshots/20261112-v20/results/RESULTS.md) freezes 1,588
-published evidence files at commit `5e3b331`. It adds complete native rotary
-embedding and both fused QK-normalization/RoPE layouts to the earlier weighted
-and seeded in-place fused RMSNorm, online attention, and llm.c softmax
-race/repair studies. Native RoPE has eight source-bound certificates; fused
-QK/RoPE has four interleaved and four split-half exact-real certificates.
-Both native rotary studies each retain 79,626,240 paired-host CPU-reference
-comparisons with zero tolerance failures. All twelve latest CI jobs pass.
-Softmax retains its development-checker scope and zero registered frontend
-source certificates. Paired AMD numerical results retain measured floating-point
-differences. As in the paper, IEEE/rounding guarantees are outside formal claims.
+The [updated snapshot](snapshots/20261112-v21/results/RESULTS.md) freezes 3,312
+published evidence files at commit `3eab929`, plus its own auditor and targets.
+It adds complete distinct FlashInfer RMSNorm, guarded packed SGLang RMSNorm
+and native FP16 single-split-K AWQ GEMM to the earlier studies. Each new
+profile has four source-bound exports and rechecks, complete initialized
+launch execution, actual whole-trace race freedom, output extraction and dense
+canonical-real equality. Their standalone source-only replays reproduce 522,
+782 and 734 axiom-audit occurrences over 68, 88 and 83 owned modules respectively.
+Installed-package and anonymous source-download checks also pass. CI records
+retain their exact source commits and observation times; the AWQ publication
+receipt captured the new 18-job CI run while it was still in progress.
 
 A ten-case production inventory is checked against the manuscript table.
-Six accepted families and the rejected original softmax race case have
-independent scoped coverage. SGLang RMSNorm, FlashInfer RMSNorm and the paper's
-FP16, single-split-K AWQ GEMM remain native-adaptation work. The paper removes
-AWQ int4 dequantization. No original experimental row is relabeled reproduced.
+Nine accepted families and the rejected original softmax race case have
+independent scoped coverage. Their separate fixed profiles publish 48 exports;
+these are not the authors' nine original certificates. Softmax retains its
+development-checker scope and zero registered frontend source certificates.
+The SGLang lane-zero repair and original unguarded conflict are explicit.
+Paired AMD measurements retain their floating-point differences, separately
+from the idealized real proofs. No original experimental row is relabeled reproduced.
 The evidence and auditor are frozen for replay without a historical checkout,
 and study links target that exact Git commit:
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
-  --snapshot reproduction/paper_results/snapshots/20261112-v20 \
+  --snapshot reproduction/paper_results/snapshots/20261112-v21 \
   --source-archive /path/to/2611.02028v1.tar
 ```
 
-The [validation records](snapshot-v20-validation/results.json) include replay
-outside the checkout with Git unavailable and six rejected controls: global and
-original-result completion, invented AWQ proof coverage, omission of AWQ from
-the manuscript inventory, an unsafe archive path and the wrong manuscript.
+The [validation records](snapshot-v21-validation/results.json) include replay
+outside the checkout with Git unavailable and eight rejected controls: global
+and original-result completion, a false AWQ certificate count, omission of
+AWQ from the manuscript inventory, rehashed study-level IEEE/cache claims,
+an unsafe archive path and the wrong manuscript.
 All but the wrong-manuscript control fully rehash the changed packet. Repeat
 them with a fresh output directory:
 
 ```bash
 python3 reproduction/paper_results/check_snapshot_controls.py \
-  --snapshot reproduction/paper_results/snapshots/20261112-v20 \
+  --snapshot reproduction/paper_results/snapshots/20261112-v21 \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-snapshot-controls
 ```
 
-The [public-download replay](snapshot-v20-publication/results.json) anonymously
-downloaded all eleven snapshot/replayer files (26,772,694 bytes), matched their
-committed bytes, and repeated the outside-checkout no-Git replay and all six
-negative controls. No authenticated requests, model calls or GPU trials were used.
+The [v20 compatibility check](snapshot-v21-v20-compatibility/results.json)
+replays the unchanged prior snapshot and repeats all six of its original
+controls. The new AWQ control only changes when the selected snapshot actually
+contains complete AWQ certificates. The refreshed
+[bounded artifact search](original-artifact-refresh-20261112-v21/results.json)
+records primary pages, named repository metadata/head and three limited queries;
+it does not establish absence from other repositories, branches or future releases.
 
 The remainder of this page documents the original historical snapshot.
 

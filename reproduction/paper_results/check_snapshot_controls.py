@@ -85,8 +85,11 @@ def main():
         results.append({"name": "outside-checkout-no-git", "accepted": True, "git_on_path": False})
         names = ["global-completion-claim", "original-production-claim"]
         has_production_cases = "production_cases" in read(snapshot / "targets.json")
+        awq_case = next((row for row in read(snapshot / "targets.json").get("production_cases", [])
+                         if row["paper_case"] == "vllm-awq-gemm"), None)
         if has_production_cases:
-            names.append("invented-native-awq-coverage")
+            names.append("false-native-awq-certificate-count" if awq_case["registered_source_certificates"]
+                         else "invented-native-awq-coverage")
         for name in names:
             altered = root / name
             shutil.copytree(snapshot, altered)
@@ -101,7 +104,10 @@ def main():
                 row = next(r for r in report["production_cases"]
                            if r["paper_case"] == "vllm-awq-gemm")
                 row["independent_status"] = "complete-scoped-proof"
-                row["registered_source_certificates"] = 4
+                row["registered_source_certificates"] = (
+                    awq_case["registered_source_certificates"] + 1
+                    if awq_case["registered_source_certificates"] else 4
+                )
             write(altered / "results/audit.json", report)
             rehash(altered)
             code, log = execute(name, altered)
@@ -145,6 +151,42 @@ def main():
                 "name": "missing-production-case", "accepted": False,
                 "fully_rehashed": True, "gate": "actual manuscript production table",
             })
+        if "production_proof_checks" in read(snapshot / "targets.json"):
+            awq = read(snapshot / "targets.json")["production_proof_checks"]["vllm-awq-gemm"]
+            for name, selected, field, value, expected_gate in (
+                ("rehashed-study-ieee-overclaim", awq["report"], "ieee_equivalence_proved", True,
+                 "New production proof scope differs: vllm-awq-gemm"),
+                ("rehashed-study-owned-cache-claim", awq["replay"], "own_lean_compiled_cache_seeded", True,
+                 "New production replay scope differs: vllm-awq-gemm"),
+            ):
+                altered = root / name
+                shutil.copytree(snapshot, altered)
+                with tarfile.open(altered / "evidence.tar.gz") as archive:
+                    entries = {m.name: archive.extractfile(m).read() for m in archive}
+                record = json.loads(entries[selected])
+                record[field] = value
+                entries[selected] = (json.dumps(record, indent=2) + "\n").encode()
+                inner_manifest = str(Path(selected).with_name("manifest.json"))
+                if inner_manifest in entries:
+                    hashes = json.loads(entries[inner_manifest])
+                    hashes[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
+                    entries[inner_manifest] = (json.dumps(hashes, indent=2) + "\n").encode()
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+                    for entry_name, data in entries.items():
+                        info = tarfile.TarInfo(entry_name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+                write(altered / "evidence-manifest.json", {
+                    entry_name: hashlib.sha256(data).hexdigest() for entry_name, data in entries.items()
+                })
+                rehash(altered, archive_changed=True)
+                code, log = execute(name, altered)
+                if code == 0 or expected_gate not in log:
+                    raise RuntimeError("Study scope control failed: " + name + "\n" + log)
+                results.append({
+                    "name": name, "accepted": False, "fully_rehashed": True,
+                    "gate": "frozen study scope consistency",
+                })
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         with tarfile.open(altered / "evidence.tar.gz") as archive:

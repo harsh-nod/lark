@@ -68,8 +68,8 @@ at rows1,3,64,131072; the universal theorem covers every supported row count
 Both AMD hosts passed 127,008,768 CPU float64 comparisons; complete outputs,
 recorded rounding differences and nine numerical rejection controls retain
 their public standalone replay. These independent results do not reproduce the
-original paper's model or NVIDIA experiments. The immutable v20 paper ledger
-predates this extension.
+original paper's model or NVIDIA experiments. The v21 paper ledger includes
+this extension; the earlier v20 snapshot remains unchanged.
 
 The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnorm/CANONICAL_REAL.md)
 now proves complete guarded native launch execution, actual whole-trace race
@@ -206,7 +206,7 @@ footprints with small standalone certificates. Those largest arrays were not
 allocated or executed. A [same-source dot-product ablation](reproduction/dot_ablation/RESULTS.md)
 compares flat proof execution with loop induction. See the [paper coverage ledger](reproduction/COVERAGE.md)
 for original pass rates, kernels, timings and other results that remain missing.
-The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261112-v20/results/RESULTS.md)
+The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261112-v21/results/RESULTS.md)
 maps every paper table and figure to published evidence and concrete dependencies;
 all original paper results have not been reproduced.
 

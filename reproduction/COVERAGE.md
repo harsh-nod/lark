@@ -5,15 +5,16 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261112-v20/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261112-v21/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
 exact missing inputs. These overlapping items do not define a completion percentage.
 It includes production SiLU, wave reduction, complete native weighted and fused
 RMSNorm, complete native online attention, complete native RoPE and both fused
-QK/RoPE layouts, and the source-bound softmax race/repair studies. It binds 1,588
-published evidence files at commit `5e3b331` and can be
+QK/RoPE layouts, complete FlashInfer and guarded SGLang RMSNorm, native FP16
+single-split-K AWQ GEMM, and the source-bound softmax race/repair studies. It
+binds 3,312 published evidence files at commit `3eab929` and can be
 replayed after later documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
 
@@ -206,8 +207,9 @@ Four finite launches match 18,048 output expressions and
 with no tolerance failures or host bit differences. The full AWQ profile
 adds the ninth independent family with four source certificates.
 Original sources, model runs and hardware
-measurements remain separate missing inputs. The immutable v20 ledger predates
-the later complete FlashInfer, SGLang and AWQ profiles described here.
+measurements remain separate missing inputs. The immutable v21 ledger includes
+the complete FlashInfer, SGLang and AWQ profiles; earlier snapshots retain
+their historical scopes.
 
 The [complete FlashInfer RMSNorm profile](production_flashinfer_rmsnorm/README.md)
 proves actual guarded native whole-launch execution, actual-trace race freedom
