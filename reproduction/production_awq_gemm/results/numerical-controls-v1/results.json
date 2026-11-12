@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "status": "native-awq-numerical-guards-checked",
+  "accepted": 1,
+  "rejected": 10,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "checks": [
+    {
+      "name": "unchanged-paired-packet",
+      "accepted": true,
+      "compared_output_elements": 820224
+    },
+    {
+      "name": "widened-tolerance",
+      "accepted": false,
+      "expected_refusal": "Tolerance differs",
+      "actual_refusal": "Tolerance differs",
+      "fully_rehashed": true
+    },
+    {
+      "name": "missing-trial",
+      "accepted": false,
+      "expected_refusal": "Trial coverage",
+      "actual_refusal": "Trial coverage",
+      "fully_rehashed": true
+    },
+    {
+      "name": "changed-readonly-input",
+      "accepted": false,
+      "expected_refusal": "Memory preservation",
+      "actual_refusal": "Memory preservation",
+      "fully_rehashed": true
+    },
+    {
+      "name": "one-wrong-output",
+      "accepted": false,
+      "expected_refusal": "Numerical mismatch",
+      "actual_refusal": "Numerical mismatch mi350 case-0-trial-0: 1",
+      "fully_rehashed": true
+    },
+    {
+      "name": "missing-final-store",
+      "accepted": false,
+      "expected_refusal": "Nonfinite/incomplete output",
+      "actual_refusal": "Nonfinite/incomplete output",
+      "fully_rehashed": true
+    },
+    {
+      "name": "invented-whole-execution",
+      "accepted": false,
+      "expected_refusal": "Unsupported scope",
+      "actual_refusal": "Unsupported scope: whole_kernel_execution_proved",
+      "fully_rehashed": true
+    },
+    {
+      "name": "invented-paper-completion",
+      "accepted": false,
+      "expected_refusal": "Unsupported scope",
+      "actual_refusal": "Unsupported scope: original_paper_fully_reproduced",
+      "fully_rehashed": true
+    },
+    {
+      "name": "boolean-certificate-count",
+      "accepted": false,
+      "expected_refusal": "Certificate scope",
+      "actual_refusal": "Certificate scope",
+      "fully_rehashed": true
+    },
+    {
+      "name": "occupied-gpu",
+      "accepted": false,
+      "expected_refusal": "Occupied GPU",
+      "actual_refusal": "Occupied GPU",
+      "fully_rehashed": true
+    },
+    {
+      "name": "non-idle-final-history",
+      "accepted": false,
+      "expected_refusal": "Stable idle samples",
+      "actual_refusal": "Stable idle samples",
+      "fully_rehashed": true
+    }
+  ]
+}

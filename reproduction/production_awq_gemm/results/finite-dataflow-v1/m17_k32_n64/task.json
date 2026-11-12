@@ -1,0 +1,45 @@
+{
+  "name": "native-awq-fp16-M17-K32-N64",
+  "entry": "awq_fp16_gemm",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        17,
+        32
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        32,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        17,
+        64
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 2,
+    "block": 64,
+    "warp": 64
+  },
+  "fuel": [
+    512,
+    9,
+    3,
+    1
+  ]
+}

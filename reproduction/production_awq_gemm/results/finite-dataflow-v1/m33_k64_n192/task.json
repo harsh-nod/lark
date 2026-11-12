@@ -1,0 +1,45 @@
+{
+  "name": "native-awq-fp16-M33-K64-N192",
+  "entry": "awq_fp16_gemm",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "a",
+      "role": "input",
+      "shape": [
+        33,
+        64
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "b",
+      "role": "input",
+      "shape": [
+        64,
+        192
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        33,
+        192
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 9,
+    "block": 64,
+    "warp": 64
+  },
+  "fuel": [
+    512,
+    9,
+    5,
+    1
+  ]
+}

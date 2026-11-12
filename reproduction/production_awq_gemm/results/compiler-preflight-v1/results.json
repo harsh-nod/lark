@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "status": "compile-only-awq-native-gfx950-preflight",
+  "compiler": "/usr/bin/hipcc",
+  "host": "mi350-2",
+  "cases": [
+    {
+      "name": "m17_k32_n64",
+      "source_sha256": "1162bb20eda8cc574d0f44f768f87d0e3b9f08c4a61b470bfbd72cc8c4f61ca1",
+      "compiler_input_sha256": "a24ffb7648e182e77c64bb46fd2eb8fbe20396f84b1b13442339b002ce4b05a0",
+      "command": [
+        "/usr/bin/hipcc",
+        "--genco",
+        "--offload-arch=gfx950",
+        "-std=c++17",
+        "-O2",
+        "-ffp-contract=off",
+        "/tmp/lark-awq-compiler-preflight-v1-20261112/m17_k32_n64.hip",
+        "-o",
+        "/tmp/lark-awq-compiler-preflight-v1-20261112/m17_k32_n64.hsaco"
+      ],
+      "exit_code": 0,
+      "compiled": true,
+      "diagnostic_tail": "",
+      "bundle_sha256": "392ac2a2cae7170a74938bc0cd5bd72d922785e21a2fd131eaa19b7eb8ed2c17",
+      "bundle_bytes": 10752,
+      "bundle_targets": [
+        "hipv4-amdgcn-amd-amdhsa--gfx950",
+        "host-x86_64-unknown-linux-gnu-"
+      ],
+      "selected_target": "hipv4-amdgcn-amd-amdhsa--gfx950",
+      "code_object_sha256": "1e96582364d96fd04e59c600c1cba85382be8dec5b2d46e9d0b69d93cf015224",
+      "code_object_bytes": 6656,
+      "matrix_instructions": {
+        "v_mfma_f32_16x16x16_f16": 8
+      },
+      "wavefront_sizes": [
+        64
+      ],
+      "shared_bytes": [
+        5888
+      ]
+    },
+    {
+      "name": "m17_k32_n128",
+      "source_sha256": "d2ed6d7607fea1e3f643c7ba537410f7c87894d0b79903c49a8e012fc0a2ad21",
+      "compiler_input_sha256": "50c7289b2ca4891486d998b6d0aa86b4e3c95340da823eeb35eda095431edf90",
+      "command": [
+        "/usr/bin/hipcc",
+        "--genco",
+        "--offload-arch=gfx950",
+        "-std=c++17",
+        "-O2",
+        "-ffp-contract=off",
+        "/tmp/lark-awq-compiler-preflight-v1-20261112/m17_k32_n128.hip",
+        "-o",
+        "/tmp/lark-awq-compiler-preflight-v1-20261112/m17_k32_n128.hsaco"
+      ],
+      "exit_code": 0,
+      "compiled": true,
+      "diagnostic_tail": "",
+      "bundle_sha256": "403ad73bd5b767a923166d076ca35a1769069eacfd9a7e695856b8c5d8b14dda",
+      "bundle_bytes": 12032,
+      "bundle_targets": [
+        "hipv4-amdgcn-amd-amdhsa--gfx950",
+        "host-x86_64-unknown-linux-gnu-"
+      ],
+      "selected_target": "hipv4-amdgcn-amd-amdhsa--gfx950",
+      "code_object_sha256": "40c43a8206c9b37d1666d193ddfdc97272648b6fd9d0eddab178b4e2952be8ff",
+      "code_object_bytes": 7936,
+      "matrix_instructions": {
+        "v_mfma_f32_16x16x16_f16": 16
+      },
+      "wavefront_sizes": [
+        64
+      ],
+      "shared_bytes": [
+        9984
+      ]
+    }
+  ],
+  "gpu_launches": 0,
+  "model_calls": 0,
+  "source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "disassembly_checked": true,
+  "disassembly_tools": {
+    "llvm-objdump": "/opt/rocm/llvm/bin/llvm-objdump",
+    "llvm-readobj": "/opt/rocm/llvm/bin/llvm-readobj",
+    "clang-offload-bundler": "/opt/rocm/llvm/bin/clang-offload-bundler"
+  }
+}

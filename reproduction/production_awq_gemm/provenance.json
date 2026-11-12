@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-12T14:32:06.807404+00:00",
+  "repository": "vllm-project/vllm",
+  "commit": "83f5de466a889c29ac5fbfbe342d6fe4c09811e8",
+  "independent_pin": true,
+  "original_paper_source": false,
+  "files": [
+    {
+      "path": "csrc/quantization/awq/gemm_kernels.cu",
+      "local_path": "upstream/gemm_kernels.cu",
+      "git_blob": "a0be657045446c5585626841cd798d1ce665b9b7",
+      "sha256": "4bacfcf104c016bcc75e30ccd81212fda114090e03e93302fa557b4f77e6e559",
+      "bytes": 23057
+    },
+    {
+      "path": "LICENSE",
+      "local_path": "upstream/LICENSE",
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    }
+  ],
+  "paper_departures": [
+    "FP16 weights replace int4 dequantization",
+    "one split-K iteration",
+    "literal block-decode sizes",
+    "PTX transcription from upstream inline assembly"
+  ],
+  "selected_upstream_matrix_path": "m16n8k16, the modern-CUDA branch; no Turing m16n8k8 branch claim",
+  "implementation_status": "Independent native wave64 FP16 port; complete source binding, address components and first six scalar instructions proved; full source certificate not yet proved",
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "record_scope": "Pinned upstream source and independent adaptation; GPU results are recorded separately",
+  "source_certificates": 0,
+  "gpu_trials_recorded_in_this_packet": 0
+}

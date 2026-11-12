@@ -1,0 +1,50 @@
+[
+  {
+    "name": "wrong-matrix-right-operand",
+    "accepted": false,
+    "gate": "source-order-output-mismatch",
+    "diagnostic": "Dense row0 column0 differs",
+    "seconds": 8.836654253071174,
+    "timed_out": false
+  },
+  {
+    "name": "missing-reuse-barrier",
+    "accepted": false,
+    "gate": "actual-trace-conflict",
+    "diagnostic": "(Access(thread=0, location=('shared', 0, 0, 4), write=True, epoch=(0, 1, 0)), Access(thread=16, location=('shared', 0, 0, 4), write=False, epoch=(0, 1, 0)))",
+    "seconds": 10.263033249066211,
+    "timed_out": false
+  },
+  {
+    "name": "missing-staging-barrier",
+    "accepted": false,
+    "gate": "frontend-or-execution-refusal",
+    "diagnostic": "uninitialized: thread 0: load from ('shared', 0, 1, 72)",
+    "seconds": 0.02381974400486797,
+    "timed_out": false
+  },
+  {
+    "name": "wrong-k-trip-count",
+    "accepted": false,
+    "gate": "changed-barrier-schedule",
+    "diagnostic": "Actual final block epochs differ",
+    "seconds": 6.118906778050587,
+    "timed_out": false
+  },
+  {
+    "name": "aliased-output-columns",
+    "accepted": false,
+    "gate": "actual-trace-conflict",
+    "diagnostic": "(Access(thread=0, location=('global', 0, 2, 0), write=True, epoch=(0, 4, 0)), Access(thread=8, location=('global', 0, 2, 0), write=True, epoch=(0, 4, 0)))",
+    "seconds": 15.65353857097216,
+    "timed_out": false
+  },
+  {
+    "name": "erased-output-half-conversion",
+    "accepted": false,
+    "gate": "frontend-or-execution-refusal",
+    "diagnostic": "native-awq-type: typed half tiles and explicit output conversion required",
+    "seconds": 0.006617699051275849,
+    "timed_out": false
+  }
+]
