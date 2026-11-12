@@ -102,6 +102,10 @@ false because the split-half rotary execution is unfinished.
 The fresh launch check builds 47 Std-only modules and checks 416 library axiom
 audits plus 156 source-bound audits, rejecting all seven changed source/interface
 claims.
+The [frozen launch packet](results/interleaved-launch-v1/results.json) and
+[independent archive replay](results/interleaved-launch-validation-v1/README.md)
+publish matching theorem audits, source bindings and rejection results. Three
+fully rehashed scope promotions were rejected before archive extraction.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
