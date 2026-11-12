@@ -70,21 +70,21 @@ their public standalone replay. These independent results do not reproduce the
 original paper's model or NVIDIA experiments. The immutable v20 paper ledger
 predates this extension.
 
-The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnorm/README.md)
-now binds both the selected original source and an explicit lane-zero repair.
-Complete finite runs check 131,072 output expressions and 1,323,648 access events;
-the original has 15,872 conflicting shared-write pairs per row in the access model.
-Lean proofs now execute all 64 physical wave lanes through all five logical32
-XOR/add rounds and the shared stores to the first block-barrier visit. The
-original initialized wave has conflicting shared writes; the guarded wave's
-actual trace is race-free. Both half caches and arbitrary earlier trace survive.
-The new stage checks 466 axiom audits across 43 modules and six source instances.
-Both AMD hosts pass 190,513,152 CPU float64 comparisons across 144 three-method
-launches, with complete frozen output packets and recorded Torch FP32 bit
-differences. Convergence of all block threads, barrier resumption, the remaining
-normalization/output phases, whole-launch correctness and real-reference
-equality remain outstanding;
-this intermediate study issues no source certificate.
+The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnorm/CANONICAL_REAL.md)
+now proves complete guarded native launch execution, actual whole-trace race
+freedom and equality to the dense exact-real reference. The
+`verify-native-sglang-rmsnorm` command exports the source-bound v23 profile.
+Four exports and independent rechecks cover rows1,3,64,131072; the theorem
+quantifies over all supported row counts, inputs and initial outside memory at
+width16,384. Both reductions/barrier resumptions and all three private half[16]
+caches remain in the complete 110-instruction source. A frozen replay without
+Git or owned compiled objects matches 782 axiom-audit occurrences over 88 modules
+and repeats eighteen logical rejections. The selected unguarded adaptation's
+reached conflicting writes remain a separate theorem; the guarded source's
+lane-zero repair is explicit. Both AMD hosts retain 190,513,152 CPU float64
+comparisons across 144 three-method launches with zero tolerance failures and
+recorded Torch FP32 bit differences. These independent adaptation results do
+not recover the paper authors' source, model outcomes or NVIDIA measurements.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted

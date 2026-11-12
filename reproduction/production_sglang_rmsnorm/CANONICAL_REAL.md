@@ -99,6 +99,28 @@ records all 32 rehashed overclaims rejected before extraction. The
 from the installed package outside the checkout. This managed-cache check is
 separate from a fresh frozen-source rebuild without owned compiled objects.
 
+The [independent frozen-source replay](results/canonical-real-validation-v1/results.json)
+rebuilds the complete proof and all four Main instances, reproduces all 782
+audit occurrences over 758 distinct declarations and rejects all eighteen
+false Lean claims. Its fresh build takes 530.3 seconds with the same 600-second
+limit, no Git executable on the build path and no owned compiled objects at
+start. The external pinned dependency sources are checked before restricting
+the path.
+
+The [public-source check](results/canonical-real-publication-v1/results.json)
+anonymously downloads five files totaling 349153 bytes from commit
+`564354a308d17b850d6cd72e74b23578facd4a8e`. All 162 frozen files are hash-checked;
+88 owned proof files and 41 SDK files match that published revision, and all
+four Main instances rerender exactly. The downloaded archive is byte-identical
+to the independently replayed archive. A second identical cold rebuild is not
+claimed.
+
+The [broader Python/Lean suite](results/canonical-real-python-validation-v1/results.json)
+completes 192 tests: 183 pass and nine optional Mathlib checks are explicitly
+skipped in that invocation. Its 668 code/test/configuration files match the
+same source commit. The complete SGLang real source checker and frozen replay
+are separate successful checks, rather than being counted among those skips.
+
 ## Relation to the paper and earlier evidence
 
 This is independent adaptation evidence. The paper authors' adapted source,

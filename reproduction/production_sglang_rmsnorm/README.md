@@ -40,8 +40,10 @@ covers every row count1..131072 and all inputs/outside memory. Its 88 owned
 modules and four Main instances contribute 782 axiom-audit occurrences. Forty
 source/reference/certificate controls and 32 scope controls are rejected at
 their intended gates. An installed wheel matches all 88 resources and verifies
-and rechecks a certificate outside the checkout. Frozen-source replay is a
-separate check. The earlier [whole-block development receipt](SECOND_REDUCTION_PROGRESS.md)
+and rechecks a certificate outside the checkout. Independent frozen-source
+replay rebuilds all four instances with no Git executable or owned compiled
+objects, matches all 782 audits and repeats all eighteen logical rejections.
+Anonymous public downloads match the replayed archive byte for byte. The earlier [whole-block development receipt](SECOND_REDUCTION_PROGRESS.md)
 and published packets below retain their original source bytes and scopes.
 
 - The complete original and repaired sources translate to 109 and 110 IR

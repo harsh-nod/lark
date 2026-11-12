@@ -189,35 +189,45 @@ with rounded Torch FP32 remain explicit. Historical component/prefix packets
 retain their earlier scope. Full evidence is included in the immutable v20 ledger.
 
 The manuscript's ten-case production inventory now has independent scoped
-coverage for six accepted families and the rejected original softmax race case.
-The three native adaptations still outstanding are SGLang RMSNorm, FlashInfer
-RMSNorm and AWQ GEMM. The paper's AWQ adaptation removes int4 dequantization,
-uses FP16 weights and one split-K iteration; dequantization is not required for
-that case. Original sources, model runs and hardware measurements remain separate
-missing inputs.
+coverage for eight accepted families and the rejected original softmax race
+case. The remaining native adaptation is AWQ GEMM. The paper removes its int4
+dequantization, uses FP16 weights and one split-K iteration; those departures
+will be retained explicitly. Original sources, model runs and hardware
+measurements remain separate missing inputs. The immutable v20 ledger predates
+the later complete FlashInfer and SGLang profiles described here.
 
-The [FlashInfer RMSNorm development](production_flashinfer_rmsnorm/README.md)
-now binds its actual upstream-derived block1024 source, proves universal
-address coverage/ownership and signed-int32 bounds, and checks a conditional
-footprint theorem. Source/replay check six Std modules, six row specializations,
-51 axiom audits and nine false Lean claims. Complete finite traces at one and
-three rows check 65,536 source-order expressions and 266,500 accesses. Ten
-rehashed scope guards reject invented complete proofs or certificates. Both
-AMD hosts now pass 127,008,768 CPU float64 comparisons at the fixed tolerance,
-with read-only inputs and allocation guards preserved. Per-host method
-differences retain 3,422,543 signed-zero cases and 264 other one-ULP cases;
-nine rehashed numerical controls are refused. All thirteen CI jobs pass.
-Complete source execution, actual-trace classification and dense-real equality
-remain pending; it issues zero registered certificates. This
-new development is outside the immutable v20 ledger and does not change the
-three outstanding native production adaptations above.
+The [complete FlashInfer RMSNorm profile](production_flashinfer_rmsnorm/README.md)
+proves actual guarded native whole-launch execution, actual-trace race freedom
+and dense exact-real reference equality at width16384 and rows1..131072. Four
+complete-source exports and rechecks, a frozen replay without Git or owned
+compiled objects, source/reference/tamper controls and installed-wheel checks
+pass. Its 68 owned modules, 490 library audits and four eight-audit Main
+instances contribute 522 audit occurrences. Paired AMD runs retain 127008768
+CPU-float64 comparisons with zero tolerance failures. Measured signed-zero and
+one-half-ULP differences remain explicit; no original-paper or IEEE result is
+claimed.
+
+The [complete guarded SGLang RMSNorm profile](production_sglang_rmsnorm/CANONICAL_REAL.md)
+likewise proves the actual whole native launch, actual whole-trace race freedom
+and every dense weighted RMSNorm reference output for all rows1..131072 at
+width16384. It retains both reductions, both barrier resumptions, all three
+private half[16] caches, paired arithmetic, block1024/wave64 and logical32.
+Four complete-source exports/rechecks and an independent frozen-source replay
+pass 782 axiom-audit occurrences over 88 owned modules; eighteen false Lean
+claims are rejected again in that replay. The source checker records forty
+proper refusals, and 32 fully rehashed scope controls reject overclaims before
+extraction. Installed-wheel checks and anonymous public-source download/binding
+checks pass. The earlier numerical packet retains 144 AMD launches and
+190513152 CPU-float64 comparisons with zero tolerance failures. Its lane-zero
+partial-store guard is explicit. The original unguarded adaptation's reached
+conflict, earlier proof stages and original-paper scope remain separate.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates; independent native tiled online attention now has complete execution/race proofs and four canonical-real exports | Original PTX kernels/GQA project, original optimized attention adaptations, NVIDIA launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | Six independent upstream-derived families: SiLU-and-mul, weighted RMSNorm, fused add RMSNorm, online attention, in-place RoPE and fused QK/RoPE. Their respective fixed profiles publish 8, 4, 4, 4, 8 and 8 source-bound exports, with standalone replays and both-host numerical checks | SGLang RMSNorm, FlashInfer RMSNorm and the paper's FP16 single-split-K AWQ GEMM adaptations; all original adapted files, revisions, signatures/departures, proof projects and model outcomes. These independent families do not reproduce the original nine |
+| Nine accepted production kernels (§5.3, Table 5) | Eight independent upstream-derived families: SiLU-and-mul, weighted RMSNorm, fused add RMSNorm, online attention, in-place RoPE, fused QK/RoPE, FlashInfer RMSNorm and guarded SGLang RMSNorm. Their respective fixed profiles publish 8, 4, 4, 4, 8, 8, 4 and 4 source-bound exports, with standalone replays and paired-host numerical checks | The paper's FP16 single-split-K AWQ GEMM adaptation; all original adapted files, revisions, signatures/departures, proof projects and model outcomes. These independent families do not reproduce the original nine |
 | llm.c data race | Full-source native HIP binding, actual reached conflicting accesses, complete original one-row launch counterexample, repaired whole-grid execution/race freedom and canonical-real softmax, complete finite traces and paired both-host numerical checks | Exact paper registry revision/author-adapted PTX and original NVIDIA experiments |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |
