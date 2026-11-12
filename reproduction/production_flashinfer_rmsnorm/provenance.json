@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-12T05:41:45.120773+00:00",
+  "paper": "https://arxiv.org/abs/2611.02028v1",
+  "paper_family": "flashinfer-rmsnorm",
+  "independent_adaptation": true,
+  "authors_original_adapted_file_available": false,
+  "upstream_repository": "https://github.com/flashinfer-ai/flashinfer",
+  "upstream_revision": "bc29697ba20b7e6bdb728ded98f04788e16ee021",
+  "upstream_path": "include/flashinfer/norm.cuh",
+  "selection": "Exact FlashInfer dependency of independently pinned SGLang fc32cbff6983c7573f4b60eab8b44815668130a0, reused for an independent FlashInfer RMSNorm study; original paper revision unknown",
+  "selected_template": "flashinfer::norm::RMSNormKernel<8,__half>",
+  "host_entry": "flashinfer::norm::RMSNorm",
+  "files_sha256": {
+    "flashinfer-norm.cuh": "a4c010e8aa1acbeeb7ea1f09a4ddf53d89facc1a144e99b5242ab8a40d8923c3",
+    "FLASHINFER_LICENSE": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de"
+  },
+  "shape": {
+    "width": 16384,
+    "vector_width": 8,
+    "rounds": 2,
+    "block": [
+      32,
+      32
+    ],
+    "flattened_block": 1024,
+    "logical_warp": 32,
+    "physical_wave": 64,
+    "rows_min": 1,
+    "rows_max": 131072,
+    "gpu_rows": [
+      1,
+      3,
+      64,
+      255
+    ]
+  },
+  "interface": "Three disjoint contiguous FP16 buffers: output, read-only input and weight; 16-byte aligned storage; 32-bit indices are nonnegative and below 2^31",
+  "rewrites": [
+    {
+      "change": "Instantiate FP16,width16384,VEC_SIZE8,contiguous strides,weight_bias0,epsilon1e-5; flatten (32,32) block to1024 threads",
+      "departure": true,
+      "reason": "The manuscript classifies the literal host thread count as a departure; the independent width16384 instantiation selects exactly1024 threads."
+    },
+    {
+      "change": "Scalarize aligned eight-value loads/stores in original component order; retain two rounds and original per-lane accumulation order",
+      "departure": false
+    },
+    {
+      "change": "Inline both full-mask XOR32 reductions; guard identical partial stores by logical lane0 and final shared store by thread0",
+      "departure": false
+    },
+    {
+      "change": "Static shared partial[32], while loops, one operation per line, explicit literals; omit ordinary-launch PDL assembly",
+      "departure": false
+    },
+    {
+      "change": "Replace math::rsqrt rsqrt.approx with rsqrtf, as the manuscript records for this family",
+      "departure": true
+    },
+    {
+      "change": "Execute logical32 groups inside physical HIP wave64, preserving complete subgroup snapshots",
+      "departure": true
+    }
+  ],
+  "status": "development source profile; full native proof pending",
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_race_freedom_proved": false,
+  "source_reference_equality_proved": false,
+  "ieee_equivalence_proved": false,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}

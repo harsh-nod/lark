@@ -196,6 +196,18 @@ uses FP16 weights and one split-K iteration; dequantization is not required for
 that case. Original sources, model runs and hardware measurements remain separate
 missing inputs.
 
+The [FlashInfer RMSNorm development](production_flashinfer_rmsnorm/README.md)
+now binds its actual upstream-derived block1024 source, proves universal
+address coverage/ownership and signed-int32 bounds, and checks a conditional
+footprint theorem. Source/replay check six Std modules, six row specializations,
+51 axiom audits and nine false Lean claims. Complete finite traces at one and
+three rows check 65,536 source-order expressions and 266,500 accesses. Ten
+rehashed scope guards reject invented complete proofs or certificates. Complete
+source execution, actual-trace classification, dense-real equality and paired
+GPU validation remain pending; it issues zero registered certificates. This
+new development is outside the immutable v20 ledger and does not change the
+three outstanding native production adaptations above.
+
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |

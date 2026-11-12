@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "status": "finite-symbolic-native-flashinfer-rmsnorm-checked",
+  "checks": [
+    {
+      "rows": 1,
+      "outputs": 16384,
+      "accesses": 66625,
+      "expression_nodes": 169126,
+      "instructions": 68,
+      "halt_pc": 67,
+      "streams": [
+        {
+          "file": "expressions.json.gz",
+          "uncompressed_bytes": 4025994,
+          "sha256": "18921817a05204025bf7c8105650a3791f8e52b1eb8550a6f094302a57eef5da"
+        },
+        {
+          "file": "outputs.json.gz",
+          "uncompressed_bytes": 112132,
+          "sha256": "aa9e804694974ecdc6d0e6a902fb8ee8d392a7bad0d284b26335cf7fb87b19e2"
+        },
+        {
+          "file": "trace.json.gz",
+          "uncompressed_bytes": 5059319,
+          "sha256": "175f876daf8e240e1a60bd47287585f6c4ab9a7292ef86541ba6ac3a3d1728b6"
+        }
+      ]
+    },
+    {
+      "rows": 3,
+      "outputs": 49152,
+      "accesses": 199875,
+      "expression_nodes": 409068,
+      "instructions": 68,
+      "halt_pc": 67,
+      "streams": [
+        {
+          "file": "expressions.json.gz",
+          "uncompressed_bytes": 10179883,
+          "sha256": "28be5199b9a9cb71d0c16d07f1521d44335b09adf127eba8a159c7880a2d3719"
+        },
+        {
+          "file": "outputs.json.gz",
+          "uncompressed_bytes": 344066,
+          "sha256": "f9ca19523dd9819be64acd18914285b59b9f85a53468d8012a4400761314d8ba"
+        },
+        {
+          "file": "trace.json.gz",
+          "uncompressed_bytes": 15389141,
+          "sha256": "c8cfea8120d2ac49f5c4be6277258d7e5ba618b208460146db27f221c9c1b4a9"
+        }
+      ]
+    }
+  ],
+  "negative_controls": [
+    {
+      "name": "wrong-first-xor",
+      "accepted": false,
+      "code": "finite-source-order"
+    },
+    {
+      "name": "missing-first-barrier",
+      "accepted": false,
+      "code": "finite-footprint"
+    },
+    {
+      "name": "unguarded-partial-store",
+      "accepted": false,
+      "code": "finite-footprint"
+    },
+    {
+      "name": "aliased-output-store",
+      "accepted": false,
+      "code": "finite-footprint"
+    },
+    {
+      "name": "wrong-weight-index",
+      "accepted": false,
+      "code": "finite-source-order"
+    },
+    {
+      "name": "wrong-mean",
+      "accepted": false,
+      "code": "finite-source-order"
+    },
+    {
+      "name": "wrong-epsilon",
+      "accepted": false,
+      "code": "finite-source-order"
+    },
+    {
+      "name": "missing-weight-product",
+      "accepted": false,
+      "code": "finite-source-order"
+    },
+    {
+      "name": "missing-second-barrier",
+      "accepted": false,
+      "code": "finite-footprint"
+    }
+  ],
+  "total_outputs": 65536,
+  "total_accesses": 266500,
+  "finite_source_order_expression_equality": true,
+  "source_certificates": 0,
+  "whole_kernel_execution_proved": false,
+  "actual_trace_race_freedom_proved": false,
+  "source_reference_equality_proved": false,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false,
+  "source_sha256": "5b6602a2c845fad673424ce786287bbffd92c5578223731eac7b1746ab4bfe5e",
+  "runner_sha256": "12bbfd749d374a1f130703a7f672b256068ce0551216e5bafae36b2e2b80d3c2"
+}
