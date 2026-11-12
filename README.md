@@ -7,8 +7,9 @@ An independent implementation of the verification workflow in
 **This repository implements restricted CUDA/HIP/PTX profiles of the method.**
 It is not the authors' code or a full reproduction of their KernelCraft results.
 It produces real, standalone Lean certificates for the supported kernels. The
-paper's broader PTX, tensor-core, and production-kernel coverage
-is outside this implementation. [The implementation map](docs/paper.md)
+paper's original optimized PTX, NVIDIA tensor-core paths, production sources
+and model results remain unreproduced. Independent AMD production profiles
+are described below. [The implementation map](docs/paper.md)
 records the correspondence and differences.
 
 The [bounded PTX extension](reproduction/ptx/README.md) certifies four independent

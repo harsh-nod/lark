@@ -50,7 +50,7 @@ FlashAttention's online algorithm.
 | Agent–checker iteration | `lark_kernels/certificate.py` | Bounded local proof-provider protocol, diagnostics and immutable statements; deterministic default prover; optional HTTP model adapter |
 | Certificate export, A.12 | `Main.lean`, task/source/reference, report | Dependency-free standalone Lean project, explicit axioms, source/model hashes, separate source-binding recheck |
 | Mutation evaluation, §5.2 | Study runners under `reproduction/` | Independent reduced/full-length arithmetic mutants checked directly in Lean; GEMV changes fail fixed-program structural equality; not the original 42 mutants |
-| Production softmax race | `reproduction/production_race.py` | Checked thread-0/thread-80 address conflict for the pinned upstream formula, plus a certified minimal repair; not a full production-kernel certificate |
+| Production softmax race | `reproduction/production_race.py`, `reproduction/production_softmax/` | Early minimal witness plus complete native source binding, initialized actual-trace conflict, racy complete one-row launch, and repaired whole-grid execution/race freedom/dense-real correctness; the development reader issues no registered softmax source certificate |
 | Hardware experiments | GPU study runners under `reproduction/` | MI300X/MI350X numerical checks/timings; reduced and all seventeen full-size families with certified-source HIP checks on both MI350X hosts; separate scalar, binary16 and collective probes. PTX has assembly checks only |
 
 The [reproduction study](../reproduction/README.md) records exactly which experiments
@@ -61,10 +61,11 @@ in the arXiv source bundle; NVIDIA hardware is only one of the missing requireme
 
 The [PTX reader](../reproduction/ptx/README.md) covers four independent tiny
 float32 programs, not the original optimized kernels or NVIDIA execution.
-The source frontends remain smaller: general packed/vector arithmetic,
-other matrix-instruction layouts, masked/partial-wave shuffles, cooperative grid-sync
-templates, asynchronous instructions, arbitrary layouts, dynamic shapes,
-in-place arguments, and general aliasing remain unsupported. The machine has a grid cut, but the
+The source frontends remain smaller: general packed/vector arithmetic beyond
+the fixed native profiles, other matrix-instruction layouts, masked/partial-wave
+shuffles, cooperative grid-sync templates, asynchronous instructions, arbitrary
+layouts, dynamic shapes, and general aliasing/in-place interfaces beyond the
+fixed seeded-buffer profiles remain unsupported. The machine has a grid cut, but the
 source frontend refuses grid synchronization until a host contract and pinned
 hardware template are provided.
 
@@ -106,13 +107,33 @@ the source addition tree bit for bit; fixed cancellation probes disagree with
 CPU Torch and are reported separately. Original production reductions and
 NVIDIA results remain unavailable.
 
-The [online-attention study](../reproduction/online_attention/README.md) proves
-the normalized tiled value recurrence equals a dense real softmax-weighted sum.
-It separately validates the unchanged upstream FP32 kernel on both MI350X hosts,
-including the 128×256 workload. Its mathematical initialization uses a finite
-first tile; the hardware run executes the upstream infinity sentinel. Source
-lowering, actual tiled launch completion and race freedom remain to be proved.
-This algebra and finite evidence add no online-attention source certificate.
+The [native online-attention study](../reproduction/online_attention/README.md)
+now proves the complete initialized launch, actual-trace race freedom and every
+output's equality to dense exact-real SDPA for all supported group counts
+1..65535 at N128/D256. All four key tiles, nine block phases and eight barrier
+resumptions remain. Four source-bound canonical-real exports and independent
+source-only replays pass. Half casts are identities in this real interpretation;
+the source-ordered theorem retains explicit conversions. Paired AMD numerical
+checks and the earlier algebra-only checkpoint remain separate evidence.
+
+The current [production inventory](../reproduction/COVERAGE.md) has nine
+independently adapted accepted families: SiLU-and-mul, weighted RMSNorm,
+seeded in-place fused add RMSNorm, online attention, both native RoPE layouts,
+both fused QK/RoPE layouts, distinct FlashInfer RMSNorm, guarded packed SGLang
+RMSNorm, and native FP16 single-split-K AWQ GEMM. Their separate fixed profiles
+publish 48 exports, with actual whole-launch correctness/race freedom and
+source/reference bindings. The RMSNorm, attention, fused QK/RoPE and AWQ real
+profiles additionally connect to independent dense mathematical references.
+
+The [AWQ proof](../reproduction/production_awq_gemm/REAL.md) composes actual
+native MFMA operand snapshots through both K16 passes and every K32 tile,
+retaining padded shared staging, block barriers, row guards, half conversion
+and original source-derived fuel. Its four source instances replay 734 audits
+over 83 owned modules and reject 14 false Lean claims. The distinct FlashInfer
+and SGLang profiles retain logical32 reductions inside physical wave64; the
+SGLang lane-zero shared-store repair and original unguarded conflict are explicit.
+These are independent adaptations, not the authors' unavailable original
+production sources, certificates, model outcomes or NVIDIA measurements.
 
 The paper uses unbounded memories and does not prove allocation bounds.
 This profile checks accesses against finite declared buffer sizes, a stronger
