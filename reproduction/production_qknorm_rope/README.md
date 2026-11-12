@@ -33,6 +33,25 @@ token count `1..65535`. A footprint theorem derives race freedom under an
 explicit actual-access classification premise. It does not discharge that
 premise or prove complete execution.
 
+The execution development now checks the actual first 24 scalar instructions,
+the sequential 64-lane preparation fold, and all five logical-width-32 XOR
+snapshots. Both layouts have a checked scalar continuation from the last
+snapshot through the final add, RMS scale, four weight indices, Q/K weight
+selection, four weight reads, and eight source-order normalization products.
+For split-half, the actual wave scheduler is connected through normalization
+to the first warp barrier at PC59. Its four normalized values match the
+source-order five-stage reduction expression; its prefix records 512 reads,
+preserves memory and epochs, and is race-free from an initial state. This is
+a prefix proof: rotary exchanges, cache loads, stores, complete block/grid
+execution, dense reference equality and registered certificates remain open.
+
+`check_execution_prefix.py` rebuilds the dependency closure from fresh copied
+sources, audits the printed theorem axioms, and binds these partial execution
+theorems to both complete translated HIP sources at 1, 3, 256 and 65,535 rows.
+The normalization-prefix check builds 30 Std-only modules and checks 245 library
+axiom audits plus 104 source-bound audits across those eight instances.
+The historical component packets below retain their original, narrower scope.
+
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom
 audits), and rejects nine false Lean claims. Its standalone replay rebuilds
@@ -91,6 +110,8 @@ responses.
 # Python3.11+ and Lean/Lake4.19.0; use fresh output directories.
 python3 -m unittest discover -s tests -p test_native_qknorm_rope.py -v
 python3 reproduction/production_qknorm_rope/check_program.py --output /tmp/fused-qk-components
+python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
+  --output /tmp/fused-qk-execution-prefix --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_qknorm_rope/replay_components.py \
   --packet /tmp/fused-qk-components --output /tmp/fused-qk-replayed \
   --lean-bin /path/to/lean-4.19.0/bin

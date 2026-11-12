@@ -25,6 +25,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_native_qknorm_rope.py -v
       - name: Bind both complete sources and check native ownership and bounds
         run: python3 reproduction/production_qknorm_rope/check_program.py --output /tmp/lark-fused-qk-components
+      - name: Rebuild partial reduction and normalization execution proofs from fresh sources
+        run: |
+          python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
+            --output /tmp/lark-fused-qk-execution-prefix --lean-bin "$HOME/.elan/bin"
       - name: Replay frozen components without Git or owned compiled caches
         run: |
           python3 reproduction/production_qknorm_rope/replay_components.py \
