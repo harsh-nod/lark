@@ -33,6 +33,7 @@ def main(argv=None):
         "verify-native-rmsnorm",
         "verify-native-fused-rmsnorm",
         "verify-native-rope",
+        "verify-native-qknorm-rope",
     ):
         p = sub.add_parser(command)
         p.add_argument("kernel", type=Path)
@@ -54,13 +55,14 @@ def main(argv=None):
             "verify-native-rmsnorm",
             "verify-native-fused-rmsnorm",
             "verify-native-rope",
+            "verify-native-qknorm-rope",
         }:
             p.add_argument("--output", required=True, type=Path)
             p.add_argument("--lean")
             p.add_argument(
                 "--timeout",
                 type=float,
-                default=600 if command in {"verify-native-rmsnorm", "verify-native-fused-rmsnorm", "verify-native-rope"} else (
+                default=600 if command in {"verify-native-rmsnorm", "verify-native-fused-rmsnorm", "verify-native-rope", "verify-native-qknorm-rope"} else (
                     300 if command in {"verify-shuffle", "verify-mfma", "verify-wave-sum"} else 120
                 ),
             )
@@ -181,6 +183,7 @@ def main(argv=None):
             "verify-native-rmsnorm",
             "verify-native-fused-rmsnorm",
             "verify-native-rope",
+            "verify-native-qknorm-rope",
         }:
             if args.command == "verify-pointwise":
                 from .pointwise import verify as verify_inductive
@@ -198,6 +201,8 @@ def main(argv=None):
                 from .wave_sum import verify as verify_inductive
             elif args.command == "verify-native-rope":
                 from .native_rope_certificate import verify as verify_inductive
+            elif args.command == "verify-native-qknorm-rope":
+                from .native_qknorm_rope_certificate import verify as verify_inductive
             elif args.command == "verify-native-fused-rmsnorm":
                 from .native_fused_rmsnorm_certificate import verify as verify_inductive
             elif args.command == "verify-native-rmsnorm":

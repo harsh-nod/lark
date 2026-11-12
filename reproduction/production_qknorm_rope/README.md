@@ -43,8 +43,8 @@ to the first warp barrier at PC59. Its four normalized values match the
 source-order five-stage reduction expression; its prefix records 512 reads,
 preserves memory and epochs, and is race-free from an initial state. For
 split-half this remains a prefix proof: its rotary suffix and connection to
-the checked store suffix remain open. Dense reference equality and registered
-certificates remain open for both layouts.
+the checked store suffix remain open. The later interleaved exact-real proof
+and certificate backend are described below.
 
 `check_execution_prefix.py` rebuilds the dependency closure from fresh copied
 sources, audits the printed theorem axioms, and binds these partial execution
@@ -82,7 +82,7 @@ passed at source commit `15fd617473eb78436ced20b1984588de4a3139e1`;
 the [wave CI receipt](results/interleaved-wave-ci-v1/results.json) binds that run
 to the published physical-wave evidence.
 The wave packet retains its original scope; the whole-launch development below
-extends the interleaved proof. This development still registers zero certificates.
+extends the interleaved proof. That historical wave packet registers zero certificates.
 
 The complete interleaved block/grid/launch proof now carries actual memory
 through all four waves per block and all five blocks per token. Every output
@@ -96,8 +96,8 @@ theorem covers every state satisfying the fixed satisfiable `StdPre`.
 translated sources at 1, 3, 256 and 65,535 rows. It retains the earlier eight
 layout/row witnesses and adds false interface claims with a shortened grid,
 altered fuel or truncated output shape. The complete interleaved result follows
-the kernel's arithmetic order; equality to the independent dense reference is
-still a separate obligation. The combined-layout whole-kernel flags remain
+the kernel's arithmetic order; that packet leaves equality to the independent
+dense reference as a separate obligation. Its combined-layout whole-kernel flags remain
 false because the split-half rotary execution is unfinished.
 The fresh launch check builds 47 Std-only modules and checks 416 library axiom
 audits plus 156 source-bound audits, rejecting all seven changed source/interface
@@ -106,6 +106,44 @@ The [frozen launch packet](results/interleaved-launch-v1/results.json) and
 [independent archive replay](results/interleaved-launch-validation-v1/README.md)
 publish matching theorem audits, source bindings and rejection results. Three
 fully rehashed scope promotions were rejected before archive extraction.
+All ten [launch CI jobs](https://github.com/harsh-nod/lark/actions/runs/43149928895)
+passed at source commit `50d16fca030777f7b1c9d9b70b6e5b290b9ef620`;
+the [launch CI receipt](results/interleaved-launch-ci-v1/results.json) records the run.
+
+The [exact-real interleaved proof](../../lean-real/LarkReal/NativeQKNormRopeInterleaved.lean)
+closes the dense-reference obligation for the complete launch. It first proves
+that the five XOR snapshots sum exactly the 128 squares of the thread's own
+head. It then connects normalization, Q/K weight selection, interleaved rotation
+and cache indexing to independent dense formulas. The final `Correct` theorem
+and `StdPre` theorem cover every input, outside-memory function and supported
+row count. The four new proof modules use the existing proof resource limits
+and only standard Lean axioms. Storage conversions are identities in this
+interpretation; no IEEE equality or error bound is claimed.
+
+`verify-native-qknorm-rope` exports the fixed source-bound exact-real profile;
+`check` re-translates the HIP, checks the closed reference AST, regenerates the
+theorem, validates pinned proof/configuration sources and re-runs Lean. This
+backend currently accepts only the interleaved layout. The native split-half
+reader, numerical runs and normalization-prefix evidence do not confer a
+complete split-half certificate.
+
+```bash
+python3 -m lark_kernels verify-native-qknorm-rope \
+  reproduction/production_qknorm_rope/cases/interleaved/kernel.hip \
+  --reference reproduction/production_qknorm_rope/cases/interleaved/reference.py \
+  --task reproduction/production_qknorm_rope/cases/interleaved/task.json \
+  --output /tmp/fused-qk-real-certificate --timeout 600
+python3 -m lark_kernels check /tmp/fused-qk-real-certificate --timeout 600
+```
+
+Initialize the pinned optional `lean-real` dependencies and selected Mathlib
+cache first, or set `LARK_REAL_PROJECT` to an initialized checkout.
+`check_native_real.py` exports and rechecks row counts 1, 3, 256 and 65,535,
+checks changed-source refusals in Lean and rejects rehashed source, reference,
+model, theorem and scope changes. `replay_native_real.py` rebuilds the frozen
+archive without Git or seeded owned compiled objects, using only verified
+external dependency sources and their cache. Earlier packets retain their
+original narrower claims.
 
 The component study builds six Std-only modules, checks 31 library declarations
 and nine source declarations at each of eight layout/row instances (103 axiom

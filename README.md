@@ -100,8 +100,10 @@ retains the 256-thread launch and logical32 reductions inside physical wave64,
 then rotates the normalized values and writes Q/K out of place as the paper
 specifies. Both full source layouts, address coverage, ownership and index bounds
 are Lean checked. Paired AMD runs pass 79,626,240 CPU-reference comparisons, with
-zero adapted/upstream bit differences. Complete native execution and dense-reference
-proofs remain pending; this development issues zero source certificates.
+zero adapted/upstream bit differences. The complete interleaved launch now has
+Lean proofs of execution, actual-trace race freedom and equality to the dense
+exact-real reference, with source-bound certificate export and rechecking.
+The split-half rotary execution proof remains open.
 
 The separate [online-attention study](reproduction/online_attention/README.md)
 proves the tiled normalized value recurrence equals dense softmax over reals.

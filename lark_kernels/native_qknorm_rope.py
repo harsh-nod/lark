@@ -1,6 +1,7 @@
 """Closed native fused Q/K RMSNorm + RoPE source and finite-execution profile.
 
-This development reader does not issue a complete launch certificate.
+The separate native_qknorm_rope_certificate backend binds complete interleaved
+exact-real launch proofs. Split-half remains a development execution profile.
 """
 
 import ast

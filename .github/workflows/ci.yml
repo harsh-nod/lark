@@ -299,6 +299,38 @@ jobs:
         run: python3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra
       - name: Check source-bound native attention canonical-real whole launch
         run: python3 reproduction/online_attention/check_native_real.py --output /tmp/lark-native-attention-real
+  qknorm-rope-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native interleaved Q/K normalization and RoPE real certificates and controls
+        run: python3 reproduction/production_qknorm_rope/check_native_real.py --output /tmp/lark-qknorm-rope-canonical-real
+      - name: Replay frozen native interleaved Q/K normalization and RoPE real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_qknorm_rope/replay_native_real.py \
+            --packet /tmp/lark-qknorm-rope-canonical-real --output /tmp/lark-qknorm-rope-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
   fused-real:
     runs-on: ubuntu-latest
     timeout-minutes: 25
