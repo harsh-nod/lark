@@ -58,6 +58,19 @@ python3 -m lark_kernels check /tmp/flashinfer-certificate --lean /path/to/lean-4
 These commands use the optional exact locked Mathlib packages/cache from
 `lean-real`; `LARK_REAL_PROJECT` may select an initialized dependency checkout.
 Owned proof sources are compiled and source-checked separately.
+The [canonical-real check](results/canonical-real-v1/results.json) records all
+four exports and registered rechecks, 522 axiom audits and 25 negative controls.
+The [fresh standalone replay](results/canonical-real-validation-v1/results.json)
+rebuilt the 130-file archive without Git or an owned compiled cache, replayed
+all four source instances and rejected all eight false Lean claims. Only the
+exact locked external Mathlib packages/cache were seeded. The
+[certificate bundle](results/canonical-certificates-v1/certificates.tar.gz)
+contains all 312 files of the four complete certificate exports. The
+[installed-wheel check](results/installed-wheel-v22-v1/results.json) verified
+and rechecked an export outside the checkout using the packaged 68 proof
+modules; its [wheel](results/installed-wheel-v22-v1/lark_kernels-0.1.0-py3-none-any.whl)
+is included. [CI for the complete profile](https://github.com/harsh-nod/lark/actions/runs/43177203373)
+is tracked separately from the earlier first-block checkpoint.
 
 The earlier [first-block execution proof](../../lean/Lark/NativeFlashInferRmsNormBarrier.lean)
 now derives the actual scheduler execution through the first barrier for every
