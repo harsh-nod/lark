@@ -1,5 +1,10 @@
 # Complete native grid execution
 
+This document preserves the historical v7 execution-only checkpoint. The
+later [complete real profile](REAL.md) additionally proves initialized
+`runLaunch`, actual whole-trace race freedom, every extracted output and
+dense-reference equality, and exports four complete source certificates.
+
 The `whole-grid-execution-v7` stage proves that the unchanged complete AWQ
 program executes every K32 iteration, its guarded converted output stores,
 every block and the complete grid. Every launched thread reaches the actual
@@ -106,7 +111,7 @@ The paired numerical evidence remains 120 launches across `mi350` and
 zero host FP16 bit differences. These measurements and the finite symbolic
 checks remain separate from the universal proof obligations.
 
-The next steps are final-output coverage and source-order extraction,
+The subsequent [complete real profile](REAL.md) closes final-output coverage and source-order extraction,
 actual whole-trace race classification, the dense exact-real bridge and
 complete AWQ certificate/CLI support. Original author-adapted PTX, original
 model pass rates/token costs and NVIDIA measurements remain separate gaps

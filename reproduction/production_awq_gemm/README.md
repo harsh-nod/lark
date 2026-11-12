@@ -1,13 +1,13 @@
-# Native AWQ GEMM reproduction checkpoint
+# Native AWQ GEMM reproduction
 
-The independent AMD FP16 adaptation passes paired numerical validation and
-finite symbolic execution. Its Lean proofs now cover complete initialized
-`runGrid` execution and termination: source identity, signed addresses,
-staging, both native K16 passes, every K32 iteration and the original guarded
-FP32-to-half output stores. The original scheduler and fuel are retained.
-**Whole-trace race freedom, complete output extraction and dense-reference
-equality remain unfinished; this checkpoint issues zero AWQ source
-certificates.** The accepted production-family count remains eight.
+The independent AMD FP16 adaptation has [complete source certificates](REAL.md)
+for initialized native launch execution, actual whole-trace race freedom,
+output extraction and dense exact-real matrix-product equality. All four
+source-bound exports verify and recheck. The original scheduler, native matrix
+snapshots, fuel and guarded FP32-to-half output stores are retained. This
+brings independent accepted production-family coverage to nine. Paired
+numerical validation and finite symbolic execution remain separate evidence;
+the original paper's results are still not fully reproduced.
 
 The source is pinned to vLLM
 [`83f5de4`](https://github.com/vllm-project/vllm/blob/83f5de466a889c29ac5fbfbe342d6fe4c09811e8/csrc/quantization/awq/gemm_kernels.cu).
@@ -29,7 +29,8 @@ generic shared-memory limit is unchanged.
 | Check | Result |
 | --- | --- |
 | Complete source binding | Four 138/226-instruction sources match the fixed Lean template, including every matrix site, barrier and store |
-| Lean components | Sixty-two owned modules in the current source archive, 572 library audits and 72 source audits; only `propext`, `Classical.choice`, `Quot.sound` |
+| Complete real certificates | Four verified/rechecked exports; 83 owned modules, 702 library audits and 32 Main audits, 734 total; only `propext`, `Classical.choice`, `Quot.sound` |
+| Complete correctness | Universal initialized `runLaunch`, actual whole-trace race freedom, all output extraction and independent dense real equality under the original shape/fuel contract |
 | Universal arithmetic | Shared/global bounds, writer inversion, fragment coordinates, signed scalar bounds and `grid*64 ≤ M*N` |
 | Initial execution | Actual full-program `runLane` executes all 31/47 setup instructions; all 64 lanes converge and the first block barrier resumes through the existing scheduler |
 | Guarded A staging | Both complete eight-iteration loops, row guard and join: 35/36 scalar instructions; all eight shared values, input preservation, outside-memory frame and exact 8/16-event trace length |
@@ -39,8 +40,8 @@ generic shared-memory limit is unchanged.
 | Dense shared tiles | All 16×32 A cells, including row-tail zeros, and 32×tileN B cells equal the dense input coordinates |
 | Native matrix phase | All operand loads and all 8/16 MFMA instructions for one valid K32 iteration; all 256 results per instruction read the old snapshot, and the final C values equal the source-order two-pass result using original warp9/17 fuel |
 | Complete execution | Every K32 iteration, actual K increment/back edge, guarded converted output stores, complete block and grid termination with the original fuel; global inputs preserved |
-| Logical controls | Six altered sources fail on false source identity, without exhausting proof budgets |
-| Stage controls | Sixty-two fully rehashed false claims are rejected before extracting a proof project, including increased fuel and invented race/reference/`runLaunch` acceptance |
+| Logical controls | Nine altered sources and five direct false Lean statements fail logically; four changed references and twenty rehashed certificate changes are refused |
+| Stage controls | The full real reader rejects38 fully rehashed scope changes before extraction; historical grid components retain62 controls at their earlier scope |
 | Finite complete execution | Four launches, 18,048 independent output expressions, 359,424 actual trace events; no conflicts, one output writer and unchanged inputs |
 | Finite semantic controls | Wrong matrix operand, missing reuse barrier, missing staging barrier, shortened K loop, aliased output and missing half conversion are detected |
 | Native compilation | Both tile paths disassemble to 8/16 native MFMA sites, wave64 and expected shared sizes |
@@ -48,7 +49,7 @@ generic shared-memory limit is unchanged.
 | Host agreement | Zero FP16 bit differences between `mi350` and `mi350-2`; 380 total FP16-word differences against separately rounded CPU Torch FP32 |
 | Memory preservation | Every input matrix and allocation guard unchanged; every output initialized to NaN before launch |
 | Numerical controls | Ten fully rehashed false packets rejected, including a wrong output, missing final store, changed read-only input and false proof claims |
-| Packaging | All sixty AWQ Lean resources and the Python reader match the current built wheel byte for byte; the source archive also contains its two fixed machine dependencies |
+| Packaging | All83 required proof resources and SDK files match the wheel; installed verification/recheck outside the checkout pass and a rehashed changed statement is refused |
 
 The numerical study covers ten `(M,K,N)` shapes:
 `(1,32,64)`, `(15,32,128)`, `(16,64,192)`, `(17,32,64)`, `(17,32,128)`,
@@ -71,13 +72,14 @@ fuel remains lane512, warp9/17, block`2*(K/32)+1`, grid1. Every new Lean module
 uses `maxRecDepth=10000` and `maxHeartbeats=2000000`. No proof option, machine
 fuel or shape limit was raised to close these components.
 
-The [complete grid execution proof](GRID_EXECUTION.md) records the current source-bound
-scope. Historical `source-components-v1` and its release
+The [complete real proof](REAL.md) records the current source-bound scope.
+The [complete grid execution proof](GRID_EXECUTION.md) retains the preceding
+execution-only checkpoint. Historical `source-components-v1` and its release
 retain the earlier first-six-instruction result; `a-staging-v1` records the
 later 256-audit result. `lane-staging-v1` records the earlier 363-audit result.
 `block-staging-v1` records the earlier 418-audit result; `native-matrix-v1`
-records the earlier 525-audit result; `whole-grid-v1` records the current
-644-audit result.
+records the earlier 525-audit result; `whole-grid-v1` records the earlier
+644-audit result. `canonical-real-v1` records the full 734-audit result.
 The [complete grid execution archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-whole-grid-20261112)
 passes anonymous download, hash and Git-source binding checks.
 The earlier [native matrix-phase archive](https://github.com/harsh-nod/lark/releases/tag/native-awq-matrix-phase-20261112)
@@ -107,6 +109,7 @@ python3 reproduction/production_awq_gemm/replay_components.py \
   --output /tmp/awq-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
-The next proof steps are final-output coverage and source-order extraction,
-whole-grid trace classification, dense exact-real reference equality and full
-AWQ certificate/CLI support.
+Use `verify-native-awq-gemm` and generic `check` for complete source
+certificates; [REAL.md](REAL.md) gives export, frozen replay, scope-control and
+installed-package commands. Original adapted PTX/model/token/NVIDIA results
+remain separate dependencies.

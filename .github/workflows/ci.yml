@@ -8,6 +8,48 @@ permissions:
   contents: read
 
 jobs:
+  native-awq-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Export and recheck four complete native AWQ real certificates and rejection controls
+        run: python3 reproduction/production_awq_gemm/check_native_real.py --output /tmp/lark-awq-canonical-real
+      - name: Rebuild frozen native AWQ proofs without Git or owned compiled objects
+        run: |
+          python3 reproduction/production_awq_gemm/replay_native_real.py \
+            --packet /tmp/lark-awq-canonical-real --output /tmp/lark-awq-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Reject fully rehashed proof scope changes before extraction
+        run: |
+          python3 reproduction/production_awq_gemm/check_native_real_stages.py \
+            --packet /tmp/lark-awq-canonical-real --output /tmp/lark-awq-canonical-real-stage-guards \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Verify, recheck and reject a rehashed certificate from an installed wheel outside the checkout
+        run: |
+          python3 reproduction/production_awq_gemm/check_installed.py \
+            --output /tmp/lark-awq-installed-wheel --lean "$HOME/.elan/bin/lean" \
+            --dependency-project lean-real
   native-awq-components:
     runs-on: ubuntu-latest
     timeout-minutes: 15

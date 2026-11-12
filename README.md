@@ -86,16 +86,17 @@ comparisons across 144 three-method launches with zero tolerance failures and
 recorded Torch FP32 bit differences. These independent adaptation results do
 not recover the paper authors' source, model outcomes or NVIDIA measurements.
 
-The [native FP16 AWQ GEMM development](reproduction/production_awq_gemm/GRID_EXECUTION.md)
-now proves complete initialized grid execution and termination, including every
-K32 iteration, native MFMA instruction, original guarded output store and
-FP32-to-half conversion, with the original fuel and input preservation.
-Four complete source bindings and independent replays pass 644 axiom audits;
-62 rehashed stage claims are rejected before extraction. Paired MI350 runs retain
-820,224 output comparisons over 120 launches with no tolerance failures or host
-bit differences. Whole-trace race freedom, complete output extraction and
-dense-reference equality remain unfinished. This development stage issues zero
-AWQ source certificates.
+The [native FP16 AWQ GEMM profile](reproduction/production_awq_gemm/REAL.md)
+now proves complete initialized launch execution, actual whole-trace race
+freedom, output extraction and equality to an independent dense real matrix
+product. All K32 iterations, native MFMA snapshots, guarded converted output
+stores and original fuel remain. Four source-bound v24 exports and rechecks
+cover both tile paths and multiple blocks; frozen replay reproduces 734 axiom
+audits over 83 owned modules and fourteen false Lean rejections. Paired MI350
+runs retain 820,224 output comparisons over 120 launches with zero tolerance
+failures or host bit differences. This is the ninth independently accepted
+production family. IEEE equivalence, the authors' adapted PTX and original
+model/NVIDIA results remain outside the claim.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted
