@@ -62,7 +62,46 @@ source/reference equality remain outstanding for this family. The component
 packets contain no model calls or GPU trials. The later paired-host numerical
 study below records GPU execution separately.
 
-The latest `results/native-wave-entry-v1` stage proves successful execution of
+The latest `results/native-wave-partial-v1` stage proves a complete native
+physical wave reaches its first block-barrier visit: all five logical32 XOR
+snapshots, all five ordered additions, and the actual original or guarded
+shared stores execute successfully. The universal theorem covers every physical
+wave in every supported row count, arbitrary arithmetic operations and input,
+and carried state with incoming PC0 lanes and read-only global buffers. It
+requires no safety premise for earlier trace. Source instances bind both full
+programs at rows1,3,131072 with unchanged `(512,8,3,1)` fuel.
+
+Every lane reaches PC55 in the original or PC56 in the repair. Its register0
+retains the source-ordered five-round value; both sixteen-cell half caches and
+native indices survive. The original records all 64 partial writes. The repair
+records exactly the two logical leaders, native lanes0 and32, in distinct shared
+slots. Their traces add 5184 or 5122 events respectively to unchanged earlier
+trace. No barrier is resumed, so synchronization epochs remain unchanged.
+
+The original race witness now belongs to **actual initialized native execution**:
+lanes0 and1 reach conflicting writes to the same shared partial slot. This holds
+for arbitrary arithmetic and input, including coincident stored values. The
+repaired initialized wave's entire actual trace satisfies `Good` and is
+race-free. These claims concern the independently selected source adaptation,
+not the authors' unavailable adapted kernel text or source revision.
+
+Forty-three modules contribute 346 library axiom audits, and six complete-source
+instances contribute twenty each, for **466 audits**. Eighteen false source or
+execution claims are rejected logically. The independent frozen replay in
+`results/native-wave-partial-validation-v1` runs without Git or owned compiled
+caches. Twenty-nine fully rehashed controls in
+`results/native-wave-partial-stage-guards-v1` reject unsupported completion,
+barrier-resumption, race, cache, trace, fuel and certificate claims before source
+extraction. New proof modules retain maxRecDepth10000/maxHeartbeats2000000;
+no source, machine, fuel or shape bounds are raised.
+
+This stage leaves whole-block convergence and barrier resumption outside its
+checked scope. The second reduction, inverse storage, second barrier, output
+phase, whole launch and
+canonical-real reference equality remain outstanding. This stage issues zero
+source certificates and makes no original paper/model/NVIDIA reproduction claim.
+
+The earlier `results/native-wave-entry-v1` stage proves successful execution of
 all sixty-four lane preparations followed by the first logical32 XOR snapshot.
 Both complete source variants bind at rows 1, 3 and 131072. The universal theorem
 covers every native physical wave of every supported row count, arbitrary
@@ -222,6 +261,14 @@ python3 reproduction/production_sglang_rmsnorm/replay_prefix.py \
   --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
   --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_wave_partial.py \
+  --output /tmp/lark-sglang-wave-partial --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/replay_wave_partial.py \
+  --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-replay \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_wave_partial_stages.py \
+  --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-stage-guards \
   --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_sglang_rmsnorm/check_wave_entry.py \
   --output /tmp/lark-sglang-wave-entry --lean-bin /path/to/lean-4.19.0/bin

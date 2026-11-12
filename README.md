@@ -74,13 +74,16 @@ The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnor
 now binds both the selected original source and an explicit lane-zero repair.
 Complete finite runs check 131,072 output expressions and 1,323,648 access events;
 the original has 15,872 conflicting shared-write pairs per row in the access model.
-Fresh Lean proofs now execute all 64 physical wave lanes and the first logical32
-XOR snapshot, preserving both half caches, both logical partitions and arbitrary
-earlier trace, with 356 axiom audits and independent frozen-source replay.
+Lean proofs now execute all 64 physical wave lanes through all five logical32
+XOR/add rounds and the shared stores to the first block-barrier visit. The
+original initialized wave has conflicting shared writes; the guarded wave's
+actual trace is race-free. Both half caches and arbitrary earlier trace survive.
+The new stage checks 466 axiom audits across 43 modules and six source instances.
 Both AMD hosts pass 190,513,152 CPU float64 comparisons across 144 three-method
 launches, with complete frozen output packets and recorded Torch FP32 bit
-differences. The remaining reduction steps, partial shared stores, barriers,
-whole-launch correctness and real-reference equality remain outstanding;
+differences. Convergence of all block threads, barrier resumption, the remaining
+normalization/output phases, whole-launch correctness and real-reference
+equality remain outstanding;
 this intermediate study issues no source certificate.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)

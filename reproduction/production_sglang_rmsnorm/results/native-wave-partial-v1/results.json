@@ -1,0 +1,2062 @@
+{
+  "schema": 1,
+  "status": "native-sglang-rmsnorm-wave-first-barrier-and-initialized-race-checked",
+  "local_lean_modules": 43,
+  "library_axiom_audits": 346,
+  "source_instances": 6,
+  "source_axiom_audits_per_instance": 20,
+  "false_lean_claims_rejected": 18,
+  "axiom_audits": {
+    "fresh-build": {
+      "LarkCollective.shuffleUpdates_preserves": [],
+      "LarkCollective.runShuffle_preserves": [
+        "propext"
+      ],
+      "LarkCollective.owned_raceFree": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkCollective.Gather.values_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkPartitionCollective.runShuffle_preserves": [
+        "propext"
+      ],
+      "LarkPartitionCollective.nextCohort_subset": [
+        "propext"
+      ],
+      "LarkPartitionCollective.nextCohort_nonempty": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkPointwise.correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkTraceTransport.append_empty_trace": [],
+      "LarkTraceTransport.record_append": [],
+      "LarkTraceTransport.advance_append": [],
+      "LarkTraceTransport.eval_index_append": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkTraceTransport.eval_predicate_append": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkTraceTransport.eval_expr_append": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkTraceTransport.execute_append": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkTraceTransport.parked_append": [],
+      "LarkTraceTransport.run_lane_append": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.instruction_lengths": [],
+      "LarkNativeSglangRmsNorm.original_partial_store": [],
+      "LarkNativeSglangRmsNorm.repaired_partial_gate": [],
+      "LarkNativeSglangRmsNorm.repaired_partial_store": [],
+      "LarkNativeSglangRmsNorm.original_barriers": [],
+      "LarkNativeSglangRmsNorm.repaired_barriers": [],
+      "LarkNativeSglangRmsNorm.final_halts": [],
+      "LarkReduction.loop_step": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.loop_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.lane_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkReduction.correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkReduction.matrix_correct": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_slot_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_pair_bound": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.private_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.column_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_bound": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_int32": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.address_writer": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.coverage": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.ordered_blocks": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.collision": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.sameLocation_true_iff": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.conflict_false": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.race_free": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.scalar_step": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.eval_nat_mul": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_nat_sum": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_column": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_slot": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_address": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.initial_weight": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.output_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.indexed_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_preserves": [],
+      "LarkNativeSglangRmsNorm.initialized_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.copy_input_half": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_cycle": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_memory": [],
+      "LarkNativeSglangRmsNorm.input_cache_epochs": [],
+      "LarkNativeSglangRmsNorm.input_cache_trace": [],
+      "LarkNativeSglangRmsNorm.input_cache_good": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.initial_reads": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_reads": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_prefix": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_epochs": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_components_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_entry_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_exit_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_entry_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_cache_round_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_round_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_reads": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_pc": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_weight_column": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_weight_slot": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.copy_weight_half": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_cycle": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_memory": [],
+      "LarkNativeSglangRmsNorm.weight_cache_epochs": [],
+      "LarkNativeSglangRmsNorm.weight_cache_trace": [],
+      "LarkNativeSglangRmsNorm.weight_cache_good": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_reads": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_prefix": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_input_preserved": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_components_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_components_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_components_epochs": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_components_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_entry_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_exit_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_entry_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_round_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_cache_round_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_input_preloads_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_weight_round_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_reads": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_preloads_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.preloads_pc": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.preloads_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.preloads_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cached_input_at": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pair_memory": [],
+      "LarkNativeSglangRmsNorm.pair_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pair_epochs": [],
+      "LarkNativeSglangRmsNorm.pair_trace": [],
+      "LarkNativeSglangRmsNorm.pair_good": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.pair_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.eval_pair_slot": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.load_private_half": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pair_cycle": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pair_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_memory": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_epochs": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.begin_round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.end_round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.exit_rounds_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.begin_round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.end_round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.round_ready": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.round_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.round_memory": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.round_epochs": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.round_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.sum_started_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_sum_started_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_pc": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_reads": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_input_round_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_input_prepared": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_input_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_weight_round_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_preloads_prepared": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_preloads_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_sum_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_prefix_eq": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_prefix_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.general_prefix_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initialized_append": [],
+      "LarkNativeSglangRmsNorm.input_after_append": [],
+      "LarkNativeSglangRmsNorm.input_components_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_round_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_after_append": [],
+      "LarkNativeSglangRmsNorm.weight_components_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.weight_round_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.preloads_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.sum_started_append": [],
+      "LarkNativeSglangRmsNorm.pair_after_append": [],
+      "LarkNativeSglangRmsNorm.pairs_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.round_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.carried_prefix_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.carried_prefix_data": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.carried_prefix_trace": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.carried_new_events_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.ThreadFrame.trans": [],
+      "LarkNativeSglangRmsNorm.outside_not_private": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_after_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_components_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_round_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.input_preloads_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_after_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_components_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.weight_round_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.preloads_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pair_after_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.pairs_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.round_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_reads_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_data_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_low_indices": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_native_indices": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_native_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.carried_prefix_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_ready_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_reads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_ready_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_member": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_fold_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_fold_member": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_prefix_fold_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_coords": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_native_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_complete32": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_next": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_step": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_initial": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_next": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_source32": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.xor_peer_bound": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.xor_peer_partition": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_values32": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_read32": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_xor_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_xor_shuffle": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_first_shuffle": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_prefix_snapshot": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.snapshot_lookup": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.snapshot_any": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_shuffled_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_shuffled_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_shuffled_preserves": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.native_first_snapshot_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.add_eq": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.add_lane": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.add_fold_run": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.add_fold_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.add_fold_preserves": [],
+      "LarkNativeSglangRmsNorm.xor_step_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_step_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.xor_step_preserves": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_add_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_add_preserves": [],
+      "LarkNativeSglangRmsNorm.cohort_add_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_add_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.following_snapshot_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.following_snapshot_preserves": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.following_snapshot_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.cohort_add_snapshot_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_add_snapshot_step": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_slot_location": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_store_execute": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_partial_tail": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_partial_tail": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_lane": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_fields": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.last_partial_regs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_indices_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_outside_shared": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_reads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_caches": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_run": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_fold_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_partial_events_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_partial_events_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_last_partial_good": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_partial_fold_good": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_prepared_ready": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_prepared_next": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_first_shuffle": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_first_snapshot_step": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_entry_success": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_preserves": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_reads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.prefix_fold_trace_tail": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_trace_tail": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_wave_snapshot_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.first_barrier_code": [],
+      "LarkNativeSglangRmsNorm.barrier_next_none": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.barrier_converged": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_partial_cohort": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.reduction_snapshot_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.reduction_snapshot_preserves": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.reduction_snapshot_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.first_reduction_sites": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.snapshot_pairs_success": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_reduction_snapshot_step": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_reduction_four": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_prepared_accumulator": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_snapshot_zero": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_success": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_native": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_preserves": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_reads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_last_snapshot_trace_tail": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_wave_last_snapshot_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.native_wave_partial": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_native_wave_partial": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_fields": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_indices_epochs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_reads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_trace_tail": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_other": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.wave_partial_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_fixed_wave_partial_good": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_fixed_wave_partial_race_free": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_wave_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_wave_pair_conflict": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.conflicting_trace_members": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_original_wave_partial_racy": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.initial_original_racy_native_wave": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_events_append": [
+        "propext"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_prefix_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_wave_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.partial_access_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.original_wave_partial_trace_length": [
+        "propext",
+        "Quot.sound"
+      ],
+      "LarkNativeSglangRmsNorm.fixed_wave_partial_trace_length": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_1": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_3": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_original_rows_131072": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_1": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_3": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "native_fixed_rows_131072": {
+      "source_binding": [],
+      "source_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_initial_wave_execution": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_all_five_reduction_values": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_first_barrier_site": [],
+      "source_private_caches": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_native_indices": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_global_inputs": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_epoch_frame": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_threads": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_other_memory": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_exact_trace": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_prior_trace": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_five_shuffle_sites": [],
+      "source_actual_race_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_execution_and_classification": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_fixed_leader_events": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_original_access_member": [
+        "propext",
+        "Quot.sound"
+      ],
+      "source_shared_location": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "source_exact_event_count": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "fresh-build",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 351.0217431120109
+    },
+    {
+      "name": "native_original_rows_1",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.0743544379947707
+    },
+    {
+      "name": "native_original_rows_3",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.101928215008229
+    },
+    {
+      "name": "native_original_rows_131072",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.0950982889626175
+    },
+    {
+      "name": "native_fixed_rows_1",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.089854425052181
+    },
+    {
+      "name": "native_fixed_rows_3",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.243620574939996
+    },
+    {
+      "name": "native_fixed_rows_131072",
+      "accepted": true,
+      "exit_code": 0,
+      "seconds": 2.418574382085353
+    },
+    {
+      "name": "aliased-input-cache-slot",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.9385207389714196
+    },
+    {
+      "name": "wrong-input-cache-address",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 2.2622630670666695
+    },
+    {
+      "name": "aliased-weight-cache-slot",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 2.012698912061751
+    },
+    {
+      "name": "wrong-weight-cache-address",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.9434776639100164
+    },
+    {
+      "name": "wrong-pair-grouping",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 2.054849302978255
+    },
+    {
+      "name": "wrong-first-shuffle",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 2.0304459650069475
+    },
+    {
+      "name": "wrong-last-shuffle",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 2.0482534479815513
+    },
+    {
+      "name": "wrong-leader-predicate",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.9893952530110255
+    },
+    {
+      "name": "wrong-shared-slot",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.9756507480051368
+    },
+    {
+      "name": "missing-first-barrier",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 1.9850561290513724
+    },
+    {
+      "name": "crossed-logical-partition",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3370099199237302
+    },
+    {
+      "name": "erased-prior-trace",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.344853856950067
+    },
+    {
+      "name": "invented-barrier-resume",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.33774678502231836
+    },
+    {
+      "name": "invented-whole-kernel-pc",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3837195769883692
+    },
+    {
+      "name": "invented-original-race-freedom",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.4078149349661544
+    },
+    {
+      "name": "invented-repaired-race",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3457905240356922
+    },
+    {
+      "name": "erased-original-writes",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.342621335061267
+    },
+    {
+      "name": "invented-repaired-writes",
+      "accepted": false,
+      "exit_code": 1,
+      "seconds": 0.3645206689834595
+    }
+  ],
+  "source_archive_sha256": "d667042ea66ec02a94237f73b7b887d835dede1e3bcf2262e92954988361729b",
+  "source_manifest_sha256": "4eba88f560126c4a7eef30ba12a79c0254b0717a4ade8618b778a335bfe2b4d7",
+  "full_source_binding_proved": true,
+  "native_wave_first_barrier_execution_proved": true,
+  "all_five_first_reduction_shuffles_proved": true,
+  "all_five_first_reduction_additions_proved": true,
+  "original_partial_store_reachability_proved": true,
+  "repaired_partial_stores_proved": true,
+  "original_initialized_wave_racy_proved": true,
+  "repaired_initialized_wave_race_freedom_proved": true,
+  "wave_threads": 64,
+  "logical_partition_width": 32,
+  "source_lane_fuel": 512,
+  "source_warp_fuel": 8,
+  "original_exit_pc": 55,
+  "repaired_exit_pc": 56,
+  "input_cache_cells_per_thread": 16,
+  "weight_cache_cells_per_thread": 16,
+  "new_private_events_per_wave": 5120,
+  "original_partial_writes_per_wave": 64,
+  "repaired_partial_writes_per_wave": 2,
+  "original_new_events_per_wave": 5184,
+  "repaired_new_events_per_wave": 5122,
+  "private_cache_values_and_other_thread_state_framed": true,
+  "arbitrary_prior_trace_preserved": true,
+  "prior_trace_safety_assumed": false,
+  "epochs_preserved_at_barrier_visit": true,
+  "whole_block_barrier_convergence_proved": false,
+  "first_block_barrier_resumed_proved": false,
+  "whole_kernel_execution_proved": false,
+  "actual_whole_trace_classification_proved": false,
+  "source_reference_equality_proved": false,
+  "source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}

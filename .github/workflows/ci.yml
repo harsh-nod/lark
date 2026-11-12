@@ -130,6 +130,20 @@ jobs:
           python3 reproduction/production_sglang_rmsnorm/check_wave_entry_stages.py \
             --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-stage-guards \
             --lean-bin "$HOME/.elan/bin"
+      - name: Prove complete native waves through the first block-barrier visit
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_partial.py \
+            --output /tmp/lark-sglang-wave-partial --lean-bin "$HOME/.elan/bin"
+      - name: Replay first-barrier execution and initialized race without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_wave_partial.py \
+            --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed block-resumption and whole-kernel overclaims
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_partial_stages.py \
+            --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
   native-flashinfer-rmsnorm:
     runs-on: ubuntu-latest
     timeout-minutes: 20
