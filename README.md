@@ -70,6 +70,15 @@ their public standalone replay. These independent results do not reproduce the
 original paper's model or NVIDIA experiments. The immutable v20 paper ledger
 predates this extension.
 
+The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnorm/README.md)
+now binds both the selected original source and an explicit lane-zero repair.
+Complete finite runs check 131,072 output expressions and 1,323,648 access events;
+the original has 15,872 conflicting shared-write pairs per row in the access model.
+Fresh Lean replay checks address/private-cache bounds and instruction witnesses
+from an explicit cut state. Initializer reachability, whole-launch correctness,
+GPU validation and real-reference equality remain outstanding; this intermediate
+study issues no source certificate.
+
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted
 buffers to an independent canonical-real reference. It covers all `1 <= rows < 256`
