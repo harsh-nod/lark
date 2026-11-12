@@ -60,6 +60,13 @@ Current packets are [source checks](results/native-matrix-v1),
 [scope controls](results/native-matrix-scope-guards-v1) and
 [wheel resource checks](results/native-matrix-package-v1).
 The source-only archive is `results/native-matrix-v1/source-project.tar.gz`.
+The same bytes are available in the
+[native matrix-phase release](https://github.com/harsh-nod/lark/releases/tag/native-awq-matrix-phase-20261112).
+An anonymous download matched the independently replayed archive. All 49
+owned model files and 115 source files were bound to commit `5c6fa68`; the four
+complete source instances were freshly rerendered. The
+[publication receipt](results/native-matrix-publication-v1) records those
+checks and the CI status, without counting another cold build on identical bytes.
 The current reader also replays the preceding
 [whole-block archive](results/block-staging-reader-compatibility-v5) with its
 original 418 audits and [35 controls](results/block-stage-guard-compatibility-v5).
