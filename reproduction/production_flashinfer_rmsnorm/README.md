@@ -71,6 +71,12 @@ and rechecked an export outside the checkout using the packaged 68 proof
 modules; its [wheel](results/installed-wheel-v22-v1/lark_kernels-0.1.0-py3-none-any.whl)
 is included. [CI for the complete profile](https://github.com/harsh-nod/lark/actions/runs/43177203373)
 is tracked separately from the earlier first-block checkpoint.
+The [public-download and source-binding receipt](results/canonical-publication-v1/results.json)
+checks 64 anonymously downloaded files (2,179,128 bytes), the complete
+312-file certificate bundle, 112 Git-bound archived sources and all 68 wheel
+proof modules against source commit `1444f37f6ddb2d8620267f768bed69f8a102b54e`.
+Those downloads matched the committed evidence byte for byte. The independent
+fresh-source replay above passed; the download check did not execute it again.
 
 The earlier [first-block execution proof](../../lean/Lark/NativeFlashInferRmsNormBarrier.lean)
 now derives the actual scheduler execution through the first barrier for every
