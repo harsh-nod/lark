@@ -52,6 +52,11 @@ python3 reproduction/paper_results/check_snapshot_controls.py \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-snapshot-controls
 ```
 
+The [public-download replay](snapshot-v20-publication/results.json) anonymously
+downloaded all eleven snapshot/replayer files (26,772,694 bytes), matched their
+committed bytes, and repeated the outside-checkout no-Git replay and all six
+negative controls. No authenticated requests, model calls or GPU trials were used.
+
 The remainder of this page documents the original historical snapshot.
 
 This is a coverage snapshot of the evidence associated with experiment-code
