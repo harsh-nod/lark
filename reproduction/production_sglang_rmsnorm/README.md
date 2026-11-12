@@ -32,6 +32,13 @@ selected revision does not establish a defect in the paper authors' adaptation.
 
 Current evidence:
 
+The [development proof](SECOND_REDUCTION_PROGRESS.md) now establishes complete
+initialized guarded **block** execution: both reductions and barrier resumptions,
+all output loops, source-ordered output values and a race-free actual trace.
+Its 77 Std-only modules contribute 689 library axiom audits. Whole-grid
+composition, exact-real equality and new source-bound certificate/replay packets
+remain outstanding. The published packets below retain their original scopes.
+
 - The complete original and repaired sources translate to 109 and 110 IR
   instructions. Six source instances bind both programs, geometry, global,
   shared and private layouts, and fixed fuel for rows 1, 3 and 131072.
@@ -56,13 +63,13 @@ Current evidence:
 The checked packets are in `results/components-v1`,
 `results/component-validation-v1`, `results/component-stage-guards-v1`,
 `results/symbolic-v1` and `results/finite-controls-v1`. These stage names preserve
-their original scope when later proof stages are added. Complete
-initialized Lean execution, actual whole-trace classification, and exact-real
-source/reference equality remain outstanding for this family. The component
+their original scope when later proof stages are added. Those component packets
+do not establish complete initialized Lean execution, actual whole-trace
+classification or exact-real source/reference equality. The component
 packets contain no model calls or GPU trials. The later paired-host numerical
 study below records GPU execution separately.
 
-The latest `results/native-wave-partial-v1` stage proves a complete native
+The latest published `results/native-wave-partial-v1` stage proves a complete native
 physical wave reaches its first block-barrier visit: all five logical32 XOR
 snapshots, all five ordered additions, and the actual original or guarded
 shared stores execute successfully. The universal theorem covers every physical
@@ -96,9 +103,9 @@ extraction. New proof modules retain maxRecDepth10000/maxHeartbeats2000000;
 no source, machine, fuel or shape bounds are raised.
 
 This stage leaves whole-block convergence and barrier resumption outside its
-checked scope. The second reduction, inverse storage, second barrier, output
-phase, whole launch and
-canonical-real reference equality remain outstanding. This stage issues zero
+checked scope. It does not cover the second reduction, inverse storage, second
+barrier, output phase, whole launch or canonical-real reference equality. The
+development proof above extends through the complete guarded block. This stage issues zero
 source certificates and makes no original paper/model/NVIDIA reproduction claim.
 The [publication check](results/native-wave-partial-publication-v1/results.json)
 binds all 128 frozen source files to commit

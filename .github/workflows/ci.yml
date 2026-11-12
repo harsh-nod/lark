@@ -144,6 +144,24 @@ jobs:
           python3 reproduction/production_sglang_rmsnorm/check_wave_partial_stages.py \
             --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-stage-guards \
             --lean-bin "$HOME/.elan/bin"
+      - name: Check guarded initialized whole-block development proof and axioms
+        working-directory: lean
+        run: |
+          lake build Lark.NativeSglangRmsNormCompleteBlockFrame 2>&1 | tee /tmp/lark-sglang-complete-block.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log = Path('/tmp/lark-sglang-complete-block.log').read_text()
+          assert 'Build completed successfully.' in log
+          assert not re.search(r'^error:|^warning:|Stack overflow', log, re.M)
+          axioms = re.findall(r'depends on axioms:\s*\[([^\]]*)\]', log)
+          used = {a.strip() for group in axioms for a in group.split(',')}
+          assert used <= {'propext', 'Classical.choice', 'Quot.sound'}, used
+          for name in ('complete_block_run', 'complete_block_value', 'complete_block_good',
+                       'initial_complete_block_run', 'initial_complete_block_race_free'):
+              assert f"'LarkNativeSglangRmsNorm.{name}'" in log, name
+          print('Whole-block development proof passed; whole-grid and exact-real validation remain separate.')
+          PY
   native-flashinfer-rmsnorm:
     runs-on: ubuntu-latest
     timeout-minutes: 20

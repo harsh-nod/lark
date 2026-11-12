@@ -1,42 +1,51 @@
-# Second reduction proof checkpoint
+# Native whole-block development proof
 
-This development checkpoint extends the published `native-wave-partial-v1`
-packet. It is not a whole-kernel certificate or a reproduction of the paper's
-original SGLang experiment.
+`Lark.NativeSglangRmsNormCompleteBlock` now proves successful execution of the
+guarded adaptation from initialized native block state through both reductions,
+both block-barrier resumptions, every output loop and halt at PC109. The proof
+covers every supported row count and arbitrary scalar operations, inputs and
+outside memory. It retains the full physical wave64 runner, logical32 shuffle
+partitions, the fixed `(512,8,3,1)` execution fuel and all recorded accesses.
 
-`Lark.NativeSglangRmsNormWaveSecond.native_second_wave` proves successful native
-wave64 execution from the guarded adaptation's reached first-block resumption
-through the second reduction to the second block barrier (PC76). It retains all
-64 physical lanes in the native runner: the first 32 lanes execute all five XOR
-snapshots, ordered additions, mean/epsilon/rsqrt, and distinct shared stores;
-the upper 32 lanes park at PC76. The proof quantifies over arbitrary scalar
-operations and retains lane-specific values without reassociation.
+Every thread writes its 16 source-ordered output halves. Private raw input and
+weight caches are preserved through scaling, conversion occurs at the source's
+explicit half operations, and the global copy loop copies the resulting halves
+without another conversion. Inverse values remain lane-specific for arbitrary
+scalar operations. No arithmetic reassociation is assumed.
 
-Its dependency chain also proves that all 16 native waves reach the first block
-barrier from initialized execution, records the 32 shared partial values, and
-resumes that barrier. The original adaptation's reached first-phase conflict
-and the guarded first-phase race freedom are proved separately from successful
-execution.
+Successful execution, output values and complete trace classification are
+proved separately. Execution requires no incoming trace-safety premise. The
+complete initialized guarded block's actual trace is race-free. The reached
+original first-phase conflict remains a separate theorem about the unguarded
+adaptation. Neither finding identifies the paper authors' unavailable adapted
+source text or revision.
 
 Validation:
 
 ```sh
 cd lean
-lake build Lark.NativeSglangRmsNormWaveSecond
+lake build Lark.NativeSglangRmsNormCompleteBlockFrame
 ```
 
-The checked root has 56 owned Std-only modules and 468 library axiom audits.
-Every new module keeps recursion 10000 and heartbeats 2000000; no machine fuel or
-shape bound was increased. Audits use only `propext`, `Classical.choice`, and
-`Quot.sound`.
+The checked root, including frames for other blocks, has 77 owned Std-only
+modules and 689 library axiom audits.
+All new modules retain recursion 10000 and heartbeats 2000000. No machine fuel,
+shape bound, stack limit or numeric proof limit was raised. The audits use only
+`propext`, `Classical.choice` and `Quot.sound`. CI checks this development root
+and rejects warnings, build failures and unsupported proof axioms.
+The [development receipt](results/native-block-development-v1/results.json)
+records a successful isolated rebuild from copied source with no project cache
+at the start or Git metadata. It includes all 77 source hashes and 689 distinct
+axiom audits. The separate frame check used a Lean-only executable path. This
+source-only library check is separate from a frozen complete-source replay.
 
-Remaining work includes carrying second-phase completion through the other 15
-waves and the block scheduler, resuming the second block barrier, all output
-loops, whole-grid correctness and actual trace classification, exact-real
-reference equality, and a fresh source-bound frozen packet with independent
-replay and rejection controls. The existing published packet, source-instance
-audit counts, and 15 passing CI jobs apply to the earlier first-barrier scope;
-they do not validate this stronger development checkpoint.
+Whole-grid composition, exact-real reference equality, full source-bound
+certificate export, a new frozen source packet with independent replay and
+rejection controls, and clean-wheel validation remain outstanding. This is a
+development checkpoint, not a whole-kernel certificate or a reproduction of the
+paper's original SGLang result. The published `native-wave-partial-v1` packet,
+its six source instances and independent replay retain their earlier
+first-barrier scope.
 
 The previously published 144 AMD numerical launches are unchanged. This
 checkpoint runs no new GPU trials or model calls.
