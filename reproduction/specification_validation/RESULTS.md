@@ -61,6 +61,10 @@ Mains, logs and source bindings. The separate
 [verification receipt](results/production-real-packet-verification-v1/results.json)
 audits those bytes and records without rerunning Lean. A fresh numerical
 recomputation is running and has not yet been counted as complete.
+The [anonymous publication check](results/production-real-publication-v1/results.json)
+downloaded eight public files totaling 4,512,499 bytes from commit `4a4c5ef`,
+matched every byte against its committed blob, and passed the audit and all
+26 mutation controls on the downloaded packet. TLS verification remained enabled.
 
 The original authors' registry, formalizations and validation inputs remain
 unavailable. These results validate the independent production references in

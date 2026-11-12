@@ -6,7 +6,10 @@ across twelve variants and four input strata. Its immutable
 712 owned source files and 240 evidence files inside two archives. All fourteen
 numerical negative controls and all
 [26 packet mutation controls](results/production-real-packet-controls-v1/results.json)
-passed. A separate fresh numerical recomputation is in progress; it is not
+passed. An [anonymous public download](results/production-real-publication-v1/results.json)
+verified eight files totaling 4,512,499 bytes against their committed blobs and
+repeated the file audit and 26 controls successfully. A separate fresh numerical
+recomputation is in progress; it is not
 counted as complete by these file-verification receipts.
 
 The paper's Appendix A, “Kernel-independent trusted base,” tests its Torch
