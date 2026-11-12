@@ -61,6 +61,23 @@ initialized Lean execution, actual whole-trace classification, and exact-real
 source/reference equality remain outstanding for this family. There have been
 no model calls or GPU trials in this study.
 
+The latest `results/first-shuffle-v1` stage proves successful native scalar
+execution from the standard initializer through PC44, the first logical32 XOR
+shuffle, with unchanged lane fuel512. The universal theorem covers every valid
+thread at every supported row count, arbitrary arithmetic operations, input and
+initial outside memory. It executes all input and weight preload loops and all
+eight paired-square additions in their source order. It extracts all thirty-two
+raw input/weight cache values and the accumulated thread sum, preserves global
+read-only buffers and epochs, and classifies all eighty actual prefix memory
+events to prove this prefix race free. It stops before executing the shuffle.
+Twenty-three modules and six source instances pass 224 axiom audits; ten false
+source and execution claims are rejected. `results/first-shuffle-validation-v1`
+rebuilds the frozen proof without Git or owned compiled caches; eighteen fully
+rehashed controls in `results/first-shuffle-stage-guards-v1` reject unsupported
+claims about later shared stores, barriers, whole execution and reference
+equality before extraction. These results strengthen the earlier prefix
+equation stage below and still issue no source certificate.
+
 The additional `results/input-preload-prefix-v1` stage proves a scalar prefix
 equation for the first 128 executed instructions, through PC16 before weight
 preloads, for both complete programs and arbitrary arithmetic operations. The
@@ -79,6 +96,8 @@ continued lane success, the later cut state, complete execution and reference
 equality before extraction. `results/component-ci-v1` records the passing
 dedicated component CI job at `4d082a49bdcd7e89ec7527153c5b447f2beb74fc`
 and byte-binds all 75 files in that earlier component source archive to Git.
+`results/components-complete-ci-v1` records all fifteen repository CI jobs
+passing at that component commit; it does not claim CI coverage of later stages.
 
 From the repository root, with Lean/Lake 4.19.0 installed:
 
@@ -103,6 +122,14 @@ python3 reproduction/production_sglang_rmsnorm/replay_input_preloads.py \
   --lean-bin /path/to/lean-4.19.0/bin
 python3 reproduction/production_sglang_rmsnorm/check_input_preload_stages.py \
   --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-stage-guards \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_prefix.py \
+  --output /tmp/lark-sglang-first-shuffle --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/replay_prefix.py \
+  --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-replay \
+  --lean-bin /path/to/lean-4.19.0/bin
+python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
+  --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
   --lean-bin /path/to/lean-4.19.0/bin
 ```
 

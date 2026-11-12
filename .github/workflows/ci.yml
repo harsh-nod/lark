@@ -102,6 +102,20 @@ jobs:
           python3 reproduction/production_sglang_rmsnorm/check_input_preload_stages.py \
             --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-stage-guards \
             --lean-bin "$HOME/.elan/bin"
+      - name: Prove successful native scalar execution to the first shuffle
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_prefix.py \
+            --output /tmp/lark-sglang-first-shuffle --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen first-shuffle proofs without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_prefix.py \
+            --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed claims about later collectives and shared stores
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
+            --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
   native-flashinfer-rmsnorm:
     runs-on: ubuntu-latest
     timeout-minutes: 20

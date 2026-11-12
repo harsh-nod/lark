@@ -74,10 +74,11 @@ The distinct [SGLang packed RMSNorm study](reproduction/production_sglang_rmsnor
 now binds both the selected original source and an explicit lane-zero repair.
 Complete finite runs check 131,072 output expressions and 1,323,648 access events;
 the original has 15,872 conflicting shared-write pairs per row in the access model.
-Fresh Lean replay checks address/private-cache bounds and instruction witnesses
-from an explicit cut state. Initializer reachability, whole-launch correctness,
-GPU validation and real-reference equality remain outstanding; this intermediate
-study issues no source certificate.
+Fresh Lean proofs now establish successful scalar execution from the initializer
+to the first logical32 shuffle, preserving both half caches and the paired sum,
+with 224 axiom audits. Execution through the later partial-store cut,
+whole-launch correctness, GPU validation and real-reference equality remain
+outstanding; this intermediate study issues no source certificate.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted
