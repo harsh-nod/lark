@@ -29,13 +29,33 @@ theorem resumed_twice_shared_values (p : Shape) (ops : Ops α) (input : Nat → 
       some (blockInverseValue ops input row lane) :=
   second_block_shared_value p ops input row lane _ hl
 
+private theorem native_indices_transport (t : Nat) (a b : State α)
+    (he : a.indices=b.indices) (h : NativeIndices t b) : NativeIndices t a := by
+  unfold NativeIndices at *
+  rw [he]
+  exact h
+
+private theorem resume_indices_eq (ts : List Nat) (cut : LarkNonlinear.Cut) (s : State α) :
+    (resume ts cut s).indices=s.indices := rfl
+
+private theorem resume_trace_eq (ts : List Nat) (cut : LarkNonlinear.Cut) (s : State α) :
+    (resume ts cut s).trace=s.trace := rfl
+
+private theorem good_trace_transport (a b : List Access) (he : a=b)
+    (h : ∀ event∈b,Good event) : ∀ event∈a,Good event :=
+  he.symm ▸ h
+
+private theorem resumed_second_indices_eq (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) : (resumedSecondBlock p ops input row s).indices=s.indices :=
+  (resume_indices_eq (blockThreads (geometry p) row) .block (secondBlock p ops input row s)).trans
+    (second_block_indices_epochs p ops input row s).1
+
 theorem resumed_twice_indices (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row t : Nat) (s : State α) (reads : Reads p input s) (ht : t∈blockThreads (geometry p) row) :
-    NativeIndices t (resumedSecondBlock p ops input row (resumedFirstBlock p ops input row s)) := by
-  change NativeIndices t (secondBlock p ops input row (resumedFirstBlock p ops input row s))
-  unfold NativeIndices
-  rw [(second_block_indices_epochs p ops input row _).1]
-  exact resumed_first_block_indices p ops input row t s reads ht
+    NativeIndices t (resumedSecondBlock p ops input row (resumedFirstBlock p ops input row s)) :=
+  native_indices_transport t _ _
+    (resumed_second_indices_eq p ops input row (resumedFirstBlock p ops input row s))
+    (resumed_first_block_indices p ops input row t s reads ht)
 
 theorem resumed_twice_caches (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row w lane : Nat) (s : State α) (reads : Reads p input s) (hw : w<16) (hl : lane<64) :
@@ -75,7 +95,8 @@ theorem resumed_twice_epochs (p : Shape) (ops : Ops α) (input : Nat → Nat →
     ((resumedSecondBlock p ops input row (resumedFirstBlock p ops input row s)).epochs t).grid=(s.epochs t).grid := by
   have h1 := resumed_first_block_epochs p ops input row t s ht
   have h2 := resumed_second_block_epochs p ops input row t (resumedFirstBlock p ops input row s) ht
-  exact ⟨by omega,h2.2.1.trans h1.2.1,h2.2.2.trans h1.2.2⟩
+  exact ⟨h2.1.trans ((congrArg (fun n : Nat => n+1) h1.1).trans (Nat.add_assoc _ 1 1)),
+    h2.2.1.trans h1.2.1,h2.2.2.trans h1.2.2⟩
 
 theorem second_block_trace (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (row : Nat) (s : State α) :
@@ -92,16 +113,35 @@ theorem second_block_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α
   rw [(inactive_waves_preserves row remainingWaves _).2.2.2.2]
   exact wave_second_good p ops input row s epochs good
 
+theorem resumed_second_block_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (epochs : ∀ t∈cohortThreads row 0 64,(s.epochs t).block=1)
+    (good : ∀ event∈s.trace,Good event) :
+    ∀ event∈(resumedSecondBlock p ops input row s).trace,Good event :=
+  good_trace_transport _ _
+    (resume_trace_eq (blockThreads (geometry p) row) .block (secondBlock p ops input row s))
+    (second_block_good p ops input row s epochs good)
+
+theorem resumed_first_block_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
+    (row : Nat) (s : State α) (reads : Reads p input s)
+    (epochs : ∀ t∈blockThreads (geometry p) row,(s.epochs t).block=0)
+    (good : ∀ event∈s.trace,Good event) :
+    ∀ event∈(resumedFirstBlock p ops input row s).trace,Good event :=
+  good_trace_transport _ _
+    (resume_trace_eq (blockThreads (geometry p) row) .block (firstBlockFold p true ops input row (List.range 16) s))
+    (fixed_first_block_fold_good p ops input row (List.range 16) s
+      (fun _ hw => List.mem_range.mp hw) reads epochs good)
+
 theorem initial_resumed_twice_good (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row : Nat) :
     ∀ event∈(resumedSecondBlock p ops input row (resumedFirstBlock p ops input row (initial p input outside))).trace,
       Good event := by
-  apply second_block_good
+  apply resumed_second_block_good p ops input row (resumedFirstBlock p ops input row (initial p input outside))
   · intro t ht
     have h := resumed_first_block_epochs p ops input row t (initial p input outside)
       (cohort_in_block p row 0 t (by decide) ht)
     exact h.1
-  · exact initial_fixed_first_block_good p ops input outside row
+  · exact resumed_first_block_good p ops input row (initial p input outside) (initial_reads p input outside)
+      (by intro t ht; rfl) (by intro event he; cases he)
 
 theorem initial_resumed_twice_race_free (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row : Nat) :
@@ -118,6 +158,8 @@ theorem initial_resumed_twice_race_free (p : Shape) (ops : Ops α) (input : Nat 
 #print axioms resumed_twice_epochs
 #print axioms second_block_trace
 #print axioms second_block_good
+#print axioms resumed_second_block_good
+#print axioms resumed_first_block_good
 #print axioms initial_resumed_twice_good
 #print axioms initial_resumed_twice_race_free
 end LarkNativeSglangRmsNorm

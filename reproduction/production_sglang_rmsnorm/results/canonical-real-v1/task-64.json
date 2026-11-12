@@ -1,0 +1,44 @@
+{
+  "name": "native-flashinfer-rmsnorm-16384",
+  "entry": "sglang_rmsnorm",
+  "language": "hip",
+  "buffers": [
+    {
+      "name": "output",
+      "role": "output",
+      "shape": [
+        64,
+        16384
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "input",
+      "role": "input",
+      "shape": [
+        64,
+        16384
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "weight",
+      "role": "input",
+      "shape": [
+        16384
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 64,
+    "block": 1024,
+    "warp": 64
+  },
+  "fuel": [
+    512,
+    8,
+    3,
+    1
+  ]
+}

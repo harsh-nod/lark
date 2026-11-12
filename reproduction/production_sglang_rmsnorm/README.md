@@ -32,12 +32,17 @@ selected revision does not establish a defect in the paper authors' adaptation.
 
 Current evidence:
 
-The [development proof](SECOND_REDUCTION_PROGRESS.md) now establishes complete
-initialized guarded **block** execution: both reductions and barrier resumptions,
-all output loops, source-ordered output values and a race-free actual trace.
-Its 77 Std-only modules contribute 689 library axiom audits. Whole-grid
-composition, exact-real equality and new source-bound certificate/replay packets
-remain outstanding. The published packets below retain their original scopes.
+The [complete native certificate](CANONICAL_REAL.md) now establishes complete
+guarded **launch** execution, race freedom of the actual whole trace and equality
+of every output with the dense exact-real reference. Four complete-source
+certificates and their independent rechecks pass at rows1,3,64,131072; the theorem
+covers every row count1..131072 and all inputs/outside memory. Its 88 owned
+modules and four Main instances contribute 782 axiom-audit occurrences. Forty
+source/reference/certificate controls and 32 scope controls are rejected at
+their intended gates. An installed wheel matches all 88 resources and verifies
+and rechecks a certificate outside the checkout. Frozen-source replay is a
+separate check. The earlier [whole-block development receipt](SECOND_REDUCTION_PROGRESS.md)
+and published packets below retain their original source bytes and scopes.
 
 - The complete original and repaired sources translate to 109 and 110 IR
   instructions. Six source instances bind both programs, geometry, global,
@@ -69,7 +74,7 @@ classification or exact-real source/reference equality. The component
 packets contain no model calls or GPU trials. The later paired-host numerical
 study below records GPU execution separately.
 
-The latest published `results/native-wave-partial-v1` stage proves a complete native
+The earlier published `results/native-wave-partial-v1` stage proves a complete native
 physical wave reaches its first block-barrier visit: all five logical32 XOR
 snapshots, all five ordered additions, and the actual original or guarded
 shared stores execute successfully. The universal theorem covers every physical

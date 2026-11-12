@@ -441,6 +441,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "native-sglang-rmsnorm-real-v23":
+        from .native_sglang_rmsnorm_certificate import check as check_native_sglang_rmsnorm
+
+        return check_native_sglang_rmsnorm(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "native-flashinfer-rmsnorm-real-v22":
         from .native_flashinfer_rmsnorm_certificate import check as check_native_flashinfer_rmsnorm
 

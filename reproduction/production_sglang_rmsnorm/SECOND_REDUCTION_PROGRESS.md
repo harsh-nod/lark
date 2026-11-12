@@ -1,4 +1,4 @@
-# Native whole-block development proof
+# Historical native whole-block development proof
 
 `Lark.NativeSglangRmsNormCompleteBlock` now proves successful execution of the
 guarded adaptation from initialized native block state through both reductions,
@@ -27,8 +27,9 @@ cd lean
 lake build Lark.NativeSglangRmsNormCompleteBlockFrame
 ```
 
-The checked root, including frames for other blocks, has 77 owned Std-only
-modules and 689 library axiom audits.
+The historical checked root at commit `b71a51f659a1fea71400fc522c95d272d05a9180`,
+including frames for other blocks, had 77 owned Std-only modules and 689 library
+axiom audits. That receipt retains its original proof bytes.
 All new modules retain recursion 10000 and heartbeats 2000000. No machine fuel,
 shape bound, stack limit or numeric proof limit was raised. The audits use only
 `propext`, `Classical.choice` and `Quot.sound`. CI checks this development root
@@ -39,13 +40,15 @@ at the start or Git metadata. It includes all 77 source hashes and 689 distinct
 axiom audits. The separate frame check used a Lean-only executable path. This
 source-only library check is separate from a frozen complete-source replay.
 
-Whole-grid composition, exact-real reference equality, full source-bound
-certificate export, a new frozen source packet with independent replay and
-rejection controls, and clean-wheel validation remain outstanding. This is a
-development checkpoint, not a whole-kernel certificate or a reproduction of the
-paper's original SGLang result. The published `native-wave-partial-v1` packet,
-its six source instances and independent replay retain their earlier
-first-barrier scope.
+The later [canonical-real profile](CANONICAL_REAL.md) extends this development
+through the complete native grid and dense mathematical reference. It exports
+four complete-source certificates, checks source/reference/tamper controls,
+freezes a new source packet and verifies an installed wheel. The original
+whole-block receipt remains a development checkpoint with its original scope;
+it is not retroactively relabeled a whole-kernel certificate. The published
+`native-wave-partial-v1` packet, its six source instances and independent replay
+also retain their earlier first-barrier scope. No original-paper result is
+claimed by these independent adaptations.
 
 The previously published 144 AMD numerical launches are unchanged. This
 checkpoint runs no new GPU trials or model calls.

@@ -52,19 +52,20 @@ theorem complete_block_good (p : Shape) (ops : Ops α) (input : Nat → Nat → 
     (epochs : ∀ t∈blockThreads (geometry p) row,(s.epochs t).block=0)
     (good : ∀ event∈s.trace,Good event) :
     ∀ event∈(completeBlock p ops input row s).trace,Good event := by
-  apply output_block_good
+  change ∀ event∈(outputBlock p ops input row (resumedSecondBlock p ops input row (resumedFirstBlock p ops input row s))).trace,
+    Good event
+  apply output_block_good p ops input row (resumedSecondBlock p ops input row (resumedFirstBlock p ops input row s))
   · intro t ht
     have h := (resumed_twice_epochs p ops input row t s ht).1
     rw [epochs t ht] at h
     exact h
-  · apply second_block_good
+  · apply resumed_second_block_good p ops input row (resumedFirstBlock p ops input row s)
     · intro t ht
       have hb := cohort_in_block p row 0 t (by decide) ht
       have h := (resumed_first_block_epochs p ops input row t s hb).1
       rw [epochs t hb] at h
       exact h
-    · exact fixed_first_block_fold_good p ops input row (List.range 16) s
-        (fun w hw => List.mem_range.mp hw) reads epochs good
+    · exact resumed_first_block_good p ops input row s reads epochs good
 
 theorem initial_complete_block_run (p : Shape) (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) (row : Nat) (hr : row<p.rows) :
