@@ -15,7 +15,8 @@ float64 bits, and passed the fourteen numerical negative controls again.
 All eighteen [source CI jobs](https://github.com/harsh-nod/lark/actions/runs/43323933466)
 passed before the checked fast-forward to `main`; the
 [gate receipt](results/production-real-ci-main-v1/results.json) binds the tested
-source, evidence manifests and documentation-only publication delta.
+source and evidence manifests, and records the documentation and evidence
+added after testing.
 
 The paper's Appendix A, “Kernel-independent trusted base,” tests its Torch
 formalizations with a metaprogram that evaluates the **elaborated Lean
