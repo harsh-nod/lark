@@ -441,6 +441,10 @@ def verify(
 
 def check(directory, *, lean=None, timeout=120):
     report = json.loads((directory / "report.json").read_text())
+    if report.get("model_profile") == "native-flashinfer-rmsnorm-real-v22":
+        from .native_flashinfer_rmsnorm_certificate import check as check_native_flashinfer_rmsnorm
+
+        return check_native_flashinfer_rmsnorm(directory, lean=lean, timeout=timeout)
     if report.get("model_profile") == "native-qknorm-rope-split-half-real-v21":
         from .native_qknorm_rope_split_certificate import check as check_native_qknorm_rope_split
 

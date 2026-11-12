@@ -58,13 +58,17 @@ scale reduction inside physical wave64. Both MI350X hosts passed numerical
 tolerance checks. Signed-zero and one-half-ULP differences remain recorded;
 the certificate does not assert IEEE equivalence or a floating-point error bound.
 
-The [native FlashInfer RMSNorm development](reproduction/production_flashinfer_rmsnorm/README.md)
-adds full-source binding and universal address/ownership components for its
-distinct logical32 reduction. Both AMD hosts pass 127,008,768 CPU float64
-comparisons; the complete outputs, recorded rounding differences and nine
-numerical rejection controls have a public standalone replay. Complete source
-execution and dense-real proofs remain pending, with zero registered FlashInfer
-certificates.
+The [native FlashInfer RMSNorm study](reproduction/production_flashinfer_rmsnorm/README.md)
+now proves complete native execution, actual-trace race freedom, output extraction
+and dense exact-real equality for its distinct logical32 reductions. The new
+`native-flashinfer-rmsnorm-real-v22` profile exports and rechecks four certificates
+at rows1,3,64,131072; the universal theorem covers every supported row count
+1..131072, arbitrary input and initial outside memory, at width16,384.
+Both AMD hosts passed 127,008,768 CPU float64 comparisons; complete outputs,
+recorded rounding differences and nine numerical rejection controls retain
+their public standalone replay. These independent results do not reproduce the
+original paper's model or NVIDIA experiments. The immutable v20 paper ledger
+predates this extension.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
 now proves the complete native seeded-inout launch and connects both extracted

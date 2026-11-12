@@ -28,11 +28,38 @@ complete 68-instruction translation, both barriers and PC67 halt. The
 [address module](../../lean/Lark/NativeFlashInferRmsNormAddress.lean) proves
 column coverage, unique native output ownership and int32 bounds for every
 supported row count. Its race-freedom theorem requires an explicit `Good`
-classification for every actual access. Deriving that classification from
-complete source execution remains work, as do the whole-launch and exact-real
-reference theorems. There are **zero registered source certificates**.
+classification for every actual access. The later
+[whole-launch theorem](../../lean/Lark/NativeFlashInferRmsNormCorrect.lean) now
+derives that classification from the actual source scheduler, proves termination
+and extracts every output for arbitrary value operations. The separate
+[dense exact-real theorem](../../lean-real/LarkReal/NativeFlashInferRmsNorm.lean)
+proves that the reduction covers every input square and the complete output
+matches weighted RMSNorm's independent dense formula.
 
-The [first-block execution proof](../../lean/Lark/NativeFlashInferRmsNormBarrier.lean)
+The new `native-flashinfer-rmsnorm-real-v22` profile issues **four checked source
+certificates** at rows1,3,64,131072; its theorem covers all supported row counts
+and arbitrary real inputs/outside memory. The 68-module proof closure contains
+490 library axiom audits and eight audits per source instance (522 in total).
+All 25 negative checks passed: eight false Lean claims, four altered references,
+and thirteen fully rehashed file/scope changes. The kernel, reference, task,
+upstream pin, fixed fuel and published GPU results are unchanged.
+The exact-real interpretation uses identity storage conversions, as disclosed
+for this proof model; it does not assert an IEEE accuracy or error bound.
+
+```sh
+python3 -m lark_kernels verify-native-flashinfer-rmsnorm \
+  reproduction/production_flashinfer_rmsnorm/cases/native_16384/kernel.hip \
+  --reference reproduction/production_flashinfer_rmsnorm/cases/native_16384/reference.py \
+  --task reproduction/production_flashinfer_rmsnorm/cases/native_16384/task.json \
+  --output /tmp/flashinfer-certificate --lean /path/to/lean-4.19.0/bin/lean
+python3 -m lark_kernels check /tmp/flashinfer-certificate --lean /path/to/lean-4.19.0/bin/lean --timeout 600
+```
+
+These commands use the optional exact locked Mathlib packages/cache from
+`lean-real`; `LARK_REAL_PROJECT` may select an initialized dependency checkout.
+Owned proof sources are compiled and source-checked separately.
+
+The earlier [first-block execution proof](../../lean/Lark/NativeFlashInferRmsNormBarrier.lean)
 now derives the actual scheduler execution through the first barrier for every
 supported shape and arbitrary value operations. It composes all sixteen native
 waves without resetting memory, proves all thirty-two partial values, preserves
@@ -40,9 +67,10 @@ every global cell, classifies the generated trace and proves its race freedom.
 The actual barrier continuation advances every participating thread to PC32 and
 block epoch one. The fixed fuel remains `(512,8,3,1)`. These declarations use
 the standard Lean kernel with recursion 10,000 and heartbeat limit 2,000,000.
-The second reduction, normalization, output execution, complete launch and
-reference equality remain unfinished. The first-block result issues no
-certificate and does not change the original paper result status.
+At that checkpoint, the second reduction, normalization, output execution,
+complete launch and reference equality were unfinished. Its frozen receipt
+issues no certificate; the later whole-launch profile above supplies those
+independent proof obligations without changing the original paper result status.
 
 The [first-block checker receipt](results/first-block-v1/results.json) records a
 fresh thirty-module source closure and audits 225
