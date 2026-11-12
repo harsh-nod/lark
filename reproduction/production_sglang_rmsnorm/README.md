@@ -56,10 +56,11 @@ Current evidence:
 The checked packets are in `results/components-v1`,
 `results/component-validation-v1`, `results/component-stage-guards-v1`,
 `results/symbolic-v1` and `results/finite-controls-v1`. These stage names preserve
-their original scope when later proof stages are added. GPU execution, complete
+their original scope when later proof stages are added. Complete
 initialized Lean execution, actual whole-trace classification, and exact-real
-source/reference equality remain outstanding for this family. There have been
-no model calls or GPU trials in this study.
+source/reference equality remain outstanding for this family. The component
+packets contain no model calls or GPU trials. The later paired-host numerical
+study below records GPU execution separately.
 
 The latest `results/native-wave-entry-v1` stage proves successful execution of
 all sixty-four lane preparations followed by the first logical32 XOR snapshot.
@@ -88,8 +89,42 @@ remain outstanding. This stage issues no source certificate.
 the original adaptation, guarded repair and verbatim selected upstream template
 body with explicit HIP helpers. Both `mi350` and `mi350-2` compile the identical
 driver for gfx950 with contraction disabled. Compilation does not execute a GPU
-trial or establish CUDA helper/compiler equivalence; numerical trials remain
-pending.
+trial or establish CUDA helper/compiler equivalence. The subsequent numerical
+study executes those same three methods.
+
+The [paired-host numerical audit](results/native-gpu-v1/gpu-audit.json) passes
+all **190,513,152 CPU float64 comparisons** at `atol=rtol=0.002`. Each host runs
+24 cases at rows1,3,64,255 and width16384: random normal, signed zero, constant,
+structured dyadic, half rounding/subnormal and mixed-magnitude inputs. That is
+**144 launches** across the three methods and both hosts. Every allocation
+canary and read-only input/weight bit survives; each output starts as NaN.
+Every method and both hosts produce identical bits in these finite cases.
+The separate freshly recomputed CPU Torch FP32 reference differs in **1,734
+comparisons**, retained by trial in the report; no IEEE equivalence is claimed.
+These equal numerical outputs do not erase the original access-model race.
+
+All thirteen [fully rehashed numerical controls](results/numerical-controls-v1/results.json)
+are rejected, including one wrong value, a missed final store in each of the
+three methods, widened tolerance, missing methods/trials, changed inputs,
+occupied-GPU records and unsupported proof/completion claims. The strict GPU
+check requires at least 98% free memory and 0% activity. The
+[prelaunch history](results/native-gpu-v1/mi350-prelaunch-history.json) records
+two `mi350` attempts stopped at 1% activity before source-kernel execution.
+The successful attempt initializes the runtime first, observes three idle
+samples, and executes the unchanged frozen runner in that same process;
+its own strict guard also passes.
+
+The [four release assets](https://github.com/harsh-nod/lark/releases/tag/native-sglang-rmsnorm-evidence-20261112)
+retain all frozen FP16 operands, all three complete output streams per host,
+compiled binaries, every compiler-reported source/header, independent audit
+sources and numerical controls. Repository
+[metadata and hashes](results/native-gpu-v1/results.json) bind every asset.
+Numerical checks issue zero source certificates and make no original paper
+model/token-cost or NVIDIA reproduction claim.
+
+`results/native-wave-entry-publication-v1` binds all 110 frozen proof-source
+files to commit `6b2850ffa5fe73de8ac8a1345be46b064554f71c` and records five
+anonymous public downloads whose bytes match the committed packets.
 
 The earlier `results/first-shuffle-v1` stage proves successful native scalar
 execution from the standard initializer through PC44, the first logical32 XOR

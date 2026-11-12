@@ -77,9 +77,10 @@ the original has 15,872 conflicting shared-write pairs per row in the access mod
 Fresh Lean proofs now execute all 64 physical wave lanes and the first logical32
 XOR snapshot, preserving both half caches, both logical partitions and arbitrary
 earlier trace, with 356 axiom audits and independent frozen-source replay.
-The three-method HIP comparison compiles on both AMD hosts. The remaining
-reduction steps, partial shared stores, barriers, whole-launch correctness,
-numerical GPU validation and real-reference equality remain outstanding;
+Both AMD hosts pass 190,513,152 CPU float64 comparisons across 144 three-method
+launches, with complete frozen output packets and recorded Torch FP32 bit
+differences. The remaining reduction steps, partial shared stores, barriers,
+whole-launch correctness and real-reference equality remain outstanding;
 this intermediate study issues no source certificate.
 
 The separate [in-place fused add RMSNorm study](reproduction/production_fused_rmsnorm/README.md)
