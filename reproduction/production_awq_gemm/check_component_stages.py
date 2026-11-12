@@ -26,7 +26,8 @@ def main():
     packet, out = args.packet.resolve(), args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
     original = json.loads((packet/'results.json').read_text())
-    assert original['stage'] == 'a-staging-v3'
+    stage = original['stage']
+    assert stage in ('a-staging-v3', 'lane-staging-v4')
     manifest = json.loads((packet/'manifest.json').read_text())
     for name, digest in manifest.items():
         assert sha(packet/name) == digest
@@ -34,7 +35,10 @@ def main():
     for name in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
                  'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
         controls.append(('invented-'+name, name, True, 'Unsupported component claim'))
-    for name in ('b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
+    later = ('matrix_execution_proved', 'k_loop_execution_proved')
+    later += (('b_staging_execution_proved',) if stage == 'a-staging-v3' else
+              ('block_staging_execution_proved', 'middle_block_barrier_resumption_proved'))
+    for name in later:
         controls.append(('invented-'+name, name, True, 'Unsupported later-stage claim'))
     controls += [
         ('invented-certificate', 'source_certificates', 1, 'Component packet scope'),
@@ -42,8 +46,8 @@ def main():
         ('invented-model-call', 'model_calls', 1, 'Component packet scope'),
         ('boolean-model-call-count', 'model_calls', False, 'Component packet scope'),
         ('invented-gpu-trial', 'gpu_trials', 1, 'Component packet scope'),
-        ('invented-audit-count', 'axiom_audit_occurrences', 257, 'Component packet scope'),
-        ('wrong-owned-module-count', 'owned_lean_modules', 19, 'Component packet scope'),
+        ('invented-audit-count', 'axiom_audit_occurrences', original['axiom_audit_occurrences']+1, 'Component packet scope'),
+        ('wrong-owned-module-count', 'owned_lean_modules', original['owned_lean_modules']-1, 'Component packet scope'),
         ('wrong-a-stage-cell-count', 'a_staging_cells_per_lane', 7, 'A staging shape/count scope'),
         ('wrong-a-stage-step-count', 'a_staging_scalar_steps', [36, 36], 'A staging shape/count scope'),
         ('erased-a-stage-values', 'a_staging_shared_values_proved', False, 'A staging claim'),
@@ -51,6 +55,18 @@ def main():
         ('missing-library-audit', 'drop-library', None, 'Stage audit coverage'),
         ('missing-source-stage-audit', 'rename-source', None, 'Stage audit coverage'),
     ]
+    if stage == 'lane-staging-v4':
+        controls += [
+            ('wrong-b-chunk-count', 'b_staging_chunks_per_lane', [4, 9], 'Lane staging shape/count/order scope'),
+            ('wrong-b-cell-count', 'b_staging_cells_per_chunk', 7, 'Lane staging shape/count/order scope'),
+            ('wrong-b-step-count', 'b_staging_scalar_steps', [157, 314], 'Lane staging shape/count/order scope'),
+            ('raised-lane-fuel', 'lane_staging_fuel', 513, 'Lane staging shape/count/order scope'),
+            ('wrong-lane-step-count', 'lane_staging_scalar_steps', [194, 350], 'Lane staging shape/count/order scope'),
+            ('regrouped-staging-order', 'lane_staging_order', 'all-a-then-all-b', 'Lane staging shape/count/order scope'),
+            ('erased-b-values', 'b_staging_shared_values_proved', False, 'Lane staging claim'),
+            ('erased-lane-execution', 'lane_staging_source_execution_proved', False, 'Lane staging claim'),
+            ('erased-middle-barrier', 'middle_barrier_reached_per_lane_proved', False, 'Lane staging claim'),
+        ]
     checks = []
     reader = Path(__file__).with_name('replay_components.py')
     for name, field, value, expected in controls:
@@ -63,7 +79,8 @@ def main():
             metadata['library_axiom_audits'].pop(next(iter(metadata['library_axiom_audits'])))
         elif field == 'rename-source':
             audit = metadata['source_axiom_audits']['m17_k32_n64']
-            audit['AwqSource.unrelated_claim'] = audit.pop('AwqSource.a_staging_execution')
+            audit['AwqSource.unrelated_claim'] = audit.pop(
+                'AwqSource.lane_staging_execution' if stage == 'lane-staging-v4' else 'AwqSource.a_staging_execution')
         else:
             metadata[field] = value
         write(folder/'results.json', metadata)
@@ -78,7 +95,7 @@ def main():
         (out/(name+'.log')).write_text(log)
         checks.append({'name': name, 'accepted': False, 'fully_rehashed': True,
                        'expected_refusal': expected, 'refused_before_project_creation': True})
-    report = {'schema': 1, 'status': 'native-awq-a-staging-scope-guards-checked', 'stage': 'a-staging-v3',
+    report = {'schema': 1, 'status': 'native-awq-'+stage+'-scope-guards-checked', 'stage': stage,
               'rejected': len(checks), 'all_refused_before_extraction': True, 'proof_builds_started': 0,
               'source_certificates': 0, 'gpu_trials': 0, 'model_calls': 0,
               'original_paper_fully_reproduced': False, 'checks': checks}

@@ -87,12 +87,12 @@ recorded Torch FP32 bit differences. These independent adaptation results do
 not recover the paper authors' source, model outcomes or NVIDIA measurements.
 
 The [native FP16 AWQ GEMM development](reproduction/production_awq_gemm/INITIAL_EXECUTION.md)
-now proves the first native block visit and complete guarded per-lane A staging,
+now proves the first native block visit and complete per-lane A-then-B staging,
 including every staged value, input preservation and outside-memory frames.
-Four complete source bindings and independent replays pass 256 axiom audits;
-21 rehashed stage claims are rejected before extraction. Paired MI350 runs retain
+Four complete source bindings and independent replays pass 363 axiom audits;
+31 rehashed stage claims are rejected before extraction. Paired MI350 runs retain
 820,224 output comparisons over 120 launches with no tolerance failures or host
-bit differences. B staging, matrix/K-loop execution, final outputs, whole-trace
+bit differences. Whole-block staging, matrix/K-loop execution, final outputs, whole-trace
 race freedom and dense-reference equality remain unfinished. This development
 stage issues zero AWQ source certificates.
 

@@ -21,6 +21,9 @@ INITIAL_MODELS = ('NativeAwqGemmIndexEval', 'NativeAwqGemmIndices', 'NativeAwqGe
                   'NativeAwqGemmInitial', 'NativeAwqGemmInitialBlock')
 A_MODELS = ('NativeAwqGemmMemory', 'NativeAwqGemmAIndex', 'NativeAwqGemmAStore', 'NativeAwqGemmARound',
             'NativeAwqGemmALoop', 'NativeAwqGemmAStage', 'NativeAwqGemmAValues')
+B_MODELS = ('NativeAwqGemmBIndex', 'NativeAwqGemmBStore', 'NativeAwqGemmBRound', 'NativeAwqGemmBLoop',
+            'NativeAwqGemmBEntry', 'NativeAwqGemmBChunk', 'NativeAwqGemmBStage', 'NativeAwqGemmBValues',
+            'NativeAwqGemmStaging')
 BASE_SOURCE_AUDITS = {'AwqSource.'+name for name in ('source_binding', 'layout_binding', 'geometry_binding', 'fuel_binding',
                       'first_barrier', 'middle_barrier', 'halt_site', 'matrix_sites', 'source_length')}
 INITIAL_SOURCE_AUDITS = {'AwqSource.initial_execution', 'AwqSource.initial_block_execution'}
@@ -33,6 +36,10 @@ STAGES = {
     'a-staging-v3': {'models': BASE_MODELS+INITIAL_MODELS+A_MODELS, 'audits': 256, 'library_audits': 208,
                      'steps': [31, 47], 'root': 'NativeAwqGemmAValues',
                      'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|{'AwqSource.a_staging_execution'}},
+    'lane-staging-v4': {'models': BASE_MODELS+INITIAL_MODELS+A_MODELS+B_MODELS, 'audits': 363, 'library_audits': 311,
+                       'steps': [31, 47], 'root': 'NativeAwqGemmStaging',
+                       'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|
+                           {'AwqSource.a_staging_execution', 'AwqSource.lane_staging_execution'}},
 }
 
 
@@ -81,20 +88,36 @@ def main():
         raise ValueError('Stage audit coverage')
     if len(recorded['library_axiom_audits'])+sum(map(len, recorded['source_axiom_audits'].values())) != stage['audits']:
         raise ValueError('Derived audit count')
-    if stage_name == 'a-staging-v3':
+    if stage_name in ('a-staging-v3', 'lane-staging-v4'):
         for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved'):
             if recorded[field] is not True:
                 raise ValueError('A staging claim: '+field)
         if recorded['a_staging_cells_per_lane'] != 8 or recorded['a_staging_scalar_steps'] != [35, 36]:
             raise ValueError('A staging shape/count scope')
-        for field in ('b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
-            if recorded[field] is not False:
-                raise ValueError('Unsupported later-stage claim: '+field)
     else:
         for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved',
                       'b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
             if recorded.get(field, False) is not False:
                 raise ValueError('Unsupported later-stage claim: '+field)
+    if stage_name == 'lane-staging-v4':
+        for field in ('b_staging_execution_proved', 'b_staging_shared_values_proved', 'b_staging_outside_memory_preserved',
+                      'lane_staging_source_execution_proved', 'middle_barrier_reached_per_lane_proved'):
+            if recorded[field] is not True:
+                raise ValueError('Lane staging claim: '+field)
+        if (recorded['b_staging_chunks_per_lane'] != [4, 8] or recorded['b_staging_cells_per_chunk'] != 8
+                or recorded['b_staging_scalar_steps'] != [158, 314] or recorded['lane_staging_fuel'] != 512
+                or recorded['lane_staging_scalar_steps'] != [193, 194, 349, 350]
+                or recorded['lane_staging_order'] != 'a-then-b-per-lane'):
+            raise ValueError('Lane staging shape/count/order scope')
+    else:
+        for field in ('b_staging_execution_proved', 'b_staging_shared_values_proved', 'b_staging_outside_memory_preserved',
+                      'lane_staging_source_execution_proved', 'middle_barrier_reached_per_lane_proved'):
+            if recorded.get(field, False) is not False:
+                raise ValueError('Unsupported later-stage claim: '+field)
+    for field in ('matrix_execution_proved', 'k_loop_execution_proved', 'block_staging_execution_proved',
+                  'middle_block_barrier_resumption_proved'):
+        if recorded.get(field, False) is not False:
+            raise ValueError('Unsupported later-stage claim: '+field)
     for field in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
                   'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
         if recorded[field] is not False:
