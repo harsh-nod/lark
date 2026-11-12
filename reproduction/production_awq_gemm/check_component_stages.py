@@ -27,7 +27,7 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     original = json.loads((packet/'results.json').read_text())
     stage = original['stage']
-    assert stage in ('a-staging-v3', 'lane-staging-v4')
+    assert stage in ('a-staging-v3', 'lane-staging-v4', 'block-staging-v5')
     manifest = json.loads((packet/'manifest.json').read_text())
     for name, digest in manifest.items():
         assert sha(packet/name) == digest
@@ -36,8 +36,12 @@ def main():
                  'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
         controls.append(('invented-'+name, name, True, 'Unsupported component claim'))
     later = ('matrix_execution_proved', 'k_loop_execution_proved')
-    later += (('b_staging_execution_proved',) if stage == 'a-staging-v3' else
-              ('block_staging_execution_proved', 'middle_block_barrier_resumption_proved'))
+    if stage == 'a-staging-v3':
+        later += ('b_staging_execution_proved',)
+    elif stage == 'lane-staging-v4':
+        later += ('block_staging_execution_proved', 'middle_block_barrier_resumption_proved')
+    else:
+        later += ('matrix_fragment_scalar_loads_executed',)
     for name in later:
         controls.append(('invented-'+name, name, True, 'Unsupported later-stage claim'))
     controls += [
@@ -55,7 +59,7 @@ def main():
         ('missing-library-audit', 'drop-library', None, 'Stage audit coverage'),
         ('missing-source-stage-audit', 'rename-source', None, 'Stage audit coverage'),
     ]
-    if stage == 'lane-staging-v4':
+    if stage in ('lane-staging-v4', 'block-staging-v5'):
         controls += [
             ('wrong-b-chunk-count', 'b_staging_chunks_per_lane', [4, 9], 'Lane staging shape/count/order scope'),
             ('wrong-b-cell-count', 'b_staging_cells_per_chunk', 7, 'Lane staging shape/count/order scope'),
@@ -67,6 +71,11 @@ def main():
             ('erased-lane-execution', 'lane_staging_source_execution_proved', False, 'Lane staging claim'),
             ('erased-middle-barrier', 'middle_barrier_reached_per_lane_proved', False, 'Lane staging claim'),
         ]
+    if stage == 'block-staging-v5':
+        for field in ('block_staging_execution_proved', 'middle_block_barrier_resumption_proved',
+                      'actual_initial_through_middle_barrier_proved', 'staging_dense_shared_tiles_proved',
+                      'native_fragment_shared_values_proved'):
+            controls.append(('erased-'+field, field, False, 'Block staging claim'))
     checks = []
     reader = Path(__file__).with_name('replay_components.py')
     for name, field, value, expected in controls:
@@ -80,6 +89,7 @@ def main():
         elif field == 'rename-source':
             audit = metadata['source_axiom_audits']['m17_k32_n64']
             audit['AwqSource.unrelated_claim'] = audit.pop(
+                'AwqSource.initial_through_staging' if stage == 'block-staging-v5' else
                 'AwqSource.lane_staging_execution' if stage == 'lane-staging-v4' else 'AwqSource.a_staging_execution')
         else:
             metadata[field] = value

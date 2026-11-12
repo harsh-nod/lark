@@ -1,11 +1,11 @@
-# Initial block execution and complete per-lane staging
+# Actual block execution through both staging barriers
 
-The `lane-staging-v4` development stage checks four complete source instances
+The `block-staging-v5` development stage checks four complete source instances
 against the fixed 138/226-instruction template, then applies universal Lean
-execution theorems to each instance. Its standalone archive contains 29 owned
-modules. Fresh builds and independent replays reproduce 311 library and 52
+execution theorems to each instance. Its standalone archive contains 34 owned
+modules. Fresh builds and independent replays reproduce 358 library and 60
 source audits, with only `propext`, `Classical.choice` and `Quot.sound`.
-Six changed sources fail on their false identity claims, and 31 fully rehashed
+Six changed sources fail on their false identity claims, and 35 fully rehashed
 scope claims fail before a proof project is extracted. The same reader also
 replays the historical first-decode archive and its 90 audits.
 
@@ -46,15 +46,33 @@ guard. Both shared value families survive, both input matrices are preserved,
 and the accumulators and ordering epochs are unchanged. The four complete
 source instances each instantiate this theorem, including the output state,
 pointwise values, outside-memory frame and exact trace length.
-The remaining block proof must fold these combined per-lane states in the
-existing scheduler's order, then establish convergence and resume the barrier.
+`NativeAwqGemmStagingFrame` proves that executing a lane preserves all other
+lanes' PCs and scalar indices. `NativeAwqGemmStagingFold` identifies the actual
+64-lane monadic scheduler with the combined per-lane state transformers, in
+source order. Every lane reaches the middle block barrier.
+`NativeAwqGemmStagingBlock` proves convergence of the native wave64, resumes
+that barrier and rewrites the current `runBlock` visit to its remaining
+continuation. It also composes the first two block visits, from the source's
+initial PC0 through the second barrier in the first K32 chunk.
 
-Current packets are [source checks](results/lane-staging-v1),
-[standalone replay](results/lane-staging-replay-v1),
-[scope guards](results/lane-staging-scope-guards-v1) and
-[wheel resource checks](results/lane-staging-package-v1).
-The source-only archive is `results/lane-staging-v1/source-project.tar.gz`.
-The same bytes are available in the
+`NativeAwqGemmStagingMemory` uses the shared writer inverses to preserve
+earlier lanes' cells during later lanes' execution. It proves all lanes' A/B
+values, both input matrices and memory outside the block's staged cells remain
+as specified. The accumulators are unchanged; epochs are exactly the existing
+machine's block-barrier update.
+`NativeAwqGemmStagingTiles` covers every dense shared cell: the 16×32 A tile
+with correct row-tail zero padding and the 32×tileN B tile. Their values match
+the independent dense global input coordinates. It also identifies every
+native fragment's shared value. Executing the scalar fragment loads and the
+MFMA instructions remains future work.
+
+Current packets are [source checks](results/block-staging-v1),
+[standalone replay](results/block-staging-replay-v1),
+[scope guards](results/block-staging-scope-guards-v1) and
+[wheel resource checks](results/block-staging-package-v1).
+The source-only archive is `results/block-staging-v1/source-project.tar.gz`.
+
+The earlier `lane-staging-v4` archive remains available in the
 [per-lane staging release](https://github.com/harsh-nod/lark/releases/tag/native-awq-lane-staging-20261112).
 An anonymous download matched the independently replayed archive; all 29
 owned model files and 95 source files were bound to commit `c961103`, and the
@@ -80,7 +98,7 @@ No source kernel, shape contract, numerical tolerance or machine limit changed.
 Explicit state arguments and proved frame properties avoid repeated expansion
 of the functional loop states during composition.
 
-Whole-block staging, matrix execution, the complete K loop, final output stores,
+Scalar matrix loads, MFMA execution, the complete K loop, final output stores,
 whole-trace race freedom and dense-reference equality remain unfinished.
 This stage issues **zero AWQ source certificates** and does not increase the
 eight accepted independent production-family count. It adds no model calls or

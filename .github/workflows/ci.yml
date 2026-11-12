@@ -25,7 +25,7 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_native_awq_gemm.py -v
       - name: Check all four finite source executions and traffic
         run: python3 reproduction/production_awq_gemm/run_symbolic.py --output /tmp/lark-awq-finite
-      - name: Check complete source identity, initial block execution and per-lane A/B staging
+      - name: Check complete source identity and block execution through both staging barriers
         run: |
           python3 reproduction/production_awq_gemm/check_components.py \
             --output /tmp/lark-awq-components --lean-bin "$HOME/.elan/bin"

@@ -1,4 +1,4 @@
-"""Check AWQ source identity, initial block execution and per-lane A/B staging."""
+"""Check AWQ source identity and actual block execution through both staging barriers."""
 
 import argparse
 from datetime import datetime, timezone
@@ -26,7 +26,9 @@ MODELS = ("Nonlinear", "MFMA", "NativeAwqGemmAddress", "NativeAwqGemmGlobal", "N
           "NativeAwqGemmMemory", "NativeAwqGemmAIndex", "NativeAwqGemmAStore", "NativeAwqGemmARound",
           "NativeAwqGemmALoop", "NativeAwqGemmAStage", "NativeAwqGemmAValues", "NativeAwqGemmBIndex",
           "NativeAwqGemmBStore", "NativeAwqGemmBRound", "NativeAwqGemmBLoop", "NativeAwqGemmBEntry",
-          "NativeAwqGemmBChunk", "NativeAwqGemmBStage", "NativeAwqGemmBValues", "NativeAwqGemmStaging")
+          "NativeAwqGemmBChunk", "NativeAwqGemmBStage", "NativeAwqGemmBValues", "NativeAwqGemmStaging",
+          "NativeAwqGemmStagingFrame", "NativeAwqGemmStagingFold", "NativeAwqGemmStagingBlock",
+          "NativeAwqGemmStagingMemory", "NativeAwqGemmStagingTiles")
 
 
 def sha(path):
@@ -39,7 +41,7 @@ def write(path, value):
 
 def render(task, tr):
     p = native.shape_of(task)
-    return f'''import Lark.NativeAwqGemmStaging
+    return f'''import Lark.NativeAwqGemmStagingTiles
 namespace AwqSource
 open LarkNonlinear
 set_option maxRecDepth 10000
@@ -47,6 +49,7 @@ set_option maxHeartbeats 2000000
 set_option autoImplicit false
 attribute [local irreducible] LarkNativeAwqGemm.aLoopState LarkNativeAwqGemm.aRoundState LarkNativeAwqGemm.aBodyState
 attribute [local irreducible] LarkNativeAwqGemm.bChunksState LarkNativeAwqGemm.bChunkState LarkNativeAwqGemm.bChunkBody LarkNativeAwqGemm.bLoopState LarkNativeAwqGemm.bRoundState LarkNativeAwqGemm.bBodyState
+attribute [local irreducible] LarkNativeAwqGemm.stagingState LarkNativeAwqGemm.stagingFold
 def shape : LarkNativeAwqGemm.Shape := ⟨{p.m},{p.k},{p.n},by decide,by decide,by decide,by decide,by decide,by decide,by decide,by decide⟩
 def sourceProgram : List LarkMFMA.Instr := {lean_list(mfma.emit(i) for i in tr.program)}
 def sourceLayout : Layout := ⟨[⟨.input,{p.m*p.k}⟩,⟨.input,{p.k*p.n}⟩,⟨.output,{p.m*p.n}⟩],{lean_list(str(size) for _,size in tr.shared)},[]⟩
@@ -126,6 +129,49 @@ theorem lane_staging_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat
     LarkNativeAwqGemm.staging_frames shape ops input tile t s⟩
   rw [layout_binding,geometry_binding,source_binding,fuel_binding]
   exact LarkNativeAwqGemm.staging_run shape ops input tile t s hk setup ki reads hp
+theorem block_staging_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat → α)
+    (s : State α) (tile b extra : Nat) (hk : tile<shape.k/32)
+    (reads : LarkNativeAwqGemm.Reads shape input s)
+    (starts : ∀ t∈blockThreads sourceGeometry b, LarkNativeAwqGemm.StagingStart shape tile t s) :
+    LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b (extra+1) s=
+      LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b extra
+        (LarkNativeAwqGemm.afterMiddleBarrier shape ops input tile b s) := by
+  rw [layout_binding,geometry_binding,fuel_binding,source_binding]
+  exact LarkNativeAwqGemm.block_staging_step shape ops input tile b extra s hk reads
+    (by simpa only [geometry_binding] using starts)
+theorem initial_through_staging {{α : Type}} (ops : Ops α) (input : Nat → Nat → α)
+    (s : State α) (b extra : Nat) (hb : b<sourceGeometry.grid)
+    (reads : LarkNativeAwqGemm.Reads shape input s) (hp : ∀ t∈blockThreads sourceGeometry b, s.pc t=0) :
+    let entered := LarkNativeAwqGemm.afterFirstBarrier shape ops b s
+    let final := LarkNativeAwqGemm.afterMiddleBarrier shape ops input 0 b entered
+    (LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b (extra+2) s=
+      LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b extra final) ∧
+    (∀ t∈blockThreads sourceGeometry b, final.pc t=LarkNativeAwqGemm.middleBarrier shape+1) ∧
+    LarkNativeAwqGemm.Reads shape input final ∧ final.regs=entered.regs ∧
+    final.epochs=(resume (blockThreads sourceGeometry b) .block entered).epochs ∧
+    (∀ row, row<16 → ∀ col, col<32 → final.memory (LarkNativeAwqGemm.tileCell b 0 (row*40+col))=
+      some (if (b/LarkNativeAwqGemm.columnTiles shape)*16+row<shape.m then
+        input 0 (((b/LarkNativeAwqGemm.columnTiles shape)*16+row)*shape.k+0*32+col)
+        else ops.toHalf (ops.literal 0 1))) ∧
+    (∀ row, row<32 → ∀ col, col<LarkNativeAwqGemm.tileN shape →
+      final.memory (LarkNativeAwqGemm.tileCell b 1 (row*(LarkNativeAwqGemm.tileN shape+8)+col))=
+        some (input 1 ((0*32+row)*shape.n+(b%LarkNativeAwqGemm.columnTiles shape)*LarkNativeAwqGemm.tileN shape+col))) ∧
+    (∀ loc, (∀ t∈blockThreads sourceGeometry b, ∀ e, e<8 → loc≠LarkNativeAwqGemm.aCell t e) →
+      (∀ t∈blockThreads sourceGeometry b, ∀ chunk, chunk<LarkNativeAwqGemm.banks shape → ∀ e, e<8 →
+        loc≠LarkNativeAwqGemm.bCell shape t chunk e) → final.memory loc=entered.memory loc) := by
+  rw [geometry_binding] at hb hp ⊢
+  refine ⟨?_,?_,LarkNativeAwqGemm.after_middle_reads shape ops input 0 b _
+    (LarkNativeAwqGemm.after_first_reads shape ops b s input reads),
+    (LarkNativeAwqGemm.after_middle_frames shape ops input 0 b _).1,
+    (LarkNativeAwqGemm.after_middle_frames shape ops input 0 b _).2,
+    fun row hr col hc => LarkNativeAwqGemm.after_middle_a_tile shape ops input 0 b row col _ hr hc,
+    fun row hr col hc => LarkNativeAwqGemm.after_middle_b_tile shape ops input 0 b row col _ hr hc,
+    fun loc ha hb => LarkNativeAwqGemm.after_middle_memory_outside shape ops input 0 b _ loc ha hb⟩
+  · rw [layout_binding,fuel_binding,source_binding]
+    exact LarkNativeAwqGemm.initial_through_staging shape ops input b extra s hb reads hp
+  · intro t ht
+    exact (LarkNativeAwqGemm.after_middle_ready shape ops input 0 b t _ ht
+      (fun u hu => LarkNativeAwqGemm.after_first_staging_start shape ops b u s hu)).1
 #print axioms source_binding
 #print axioms layout_binding
 #print axioms geometry_binding
@@ -139,6 +185,8 @@ theorem lane_staging_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat
 #print axioms initial_block_execution
 #print axioms a_staging_execution
 #print axioms lane_staging_execution
+#print axioms block_staging_execution
+#print axioms initial_through_staging
 end AwqSource
 '''
 
@@ -188,8 +236,8 @@ def main():
                        "exit_code": result.returncode, "seconds": time.monotonic()-before, "timed_out": False})
         return log
 
-    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmStaging"], True))
-    assert len(library) == 311
+    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmStagingTiles"], True))
+    assert len(library) == 358
     source_audits = {}
     for name in CASES:
         case = HERE/"cases"/name
@@ -198,7 +246,7 @@ def main():
         tr = native.translate((case/"kernel.hip").read_text(), task)
         (project/(name+".lean")).write_text(render(task, tr))
         source_audits[name] = audits(run(name, [str(lean_bin/"lake"), "env", "lean", name+".lean"], True))
-        assert len(source_audits[name]) == 13
+        assert len(source_audits[name]) == 15
     case = HERE/"cases/m33_k64_n192"
     source = (case/"kernel.hip").read_text()
     task = native.parse_task((case/"task.json").read_text())
@@ -223,8 +271,8 @@ def main():
     with tarfile.open(out/"source-project.tar.gz", "w:gz") as archive:
         for name in sorted(hashes):
             archive.add(project/name, arcname=name, recursive=False)
-    result = {"schema": 1, "stage": "lane-staging-v4",
-              "status": "native-awq-source-bound-initial-block-and-lane-staging-checked",
+    result = {"schema": 1, "stage": "block-staging-v5",
+              "status": "native-awq-source-bound-block-staging-through-middle-barrier-checked",
               "checked_at_utc": datetime.now(timezone.utc).isoformat(), "owned_lean_modules": len(MODELS),
               "library_axiom_audits": library, "source_axiom_audits": source_audits,
               "axiom_audit_occurrences": len(library)+sum(map(len,source_audits.values())),
@@ -248,7 +296,10 @@ def main():
               "lane_staging_source_execution_proved": True, "lane_staging_order": "a-then-b-per-lane",
               "lane_staging_fuel": 512, "lane_staging_scalar_steps": [193, 194, 349, 350],
               "middle_barrier_reached_per_lane_proved": True,
-              "middle_block_barrier_resumption_proved": False, "block_staging_execution_proved": False,
+              "middle_block_barrier_resumption_proved": True, "block_staging_execution_proved": True,
+              "actual_initial_through_middle_barrier_proved": True,
+              "staging_dense_shared_tiles_proved": True, "native_fragment_shared_values_proved": True,
+              "matrix_fragment_scalar_loads_executed": False,
               "matrix_execution_proved": False,
               "k_loop_execution_proved": False,
               "whole_kernel_execution_proved": False, "actual_whole_trace_race_freedom_proved": False,
