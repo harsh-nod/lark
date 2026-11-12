@@ -5,14 +5,15 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261111-v19/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261112-v20/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
 exact missing inputs. These overlapping items do not define a completion percentage.
 It includes production SiLU, wave reduction, complete native weighted and fused
-RMSNorm, complete native online attention, and the source-bound softmax
-race/repair studies. It binds published evidence at commit `7437374` and can be
+RMSNorm, complete native online attention, complete native RoPE and both fused
+QK/RoPE layouts, and the source-bound softmax race/repair studies. It binds 1,588
+published evidence files at commit `5e3b331` and can be
 replayed after later documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
 
@@ -169,27 +170,38 @@ and fresh rechecks pass with 157 library and 80 source axiom audits, eight false
 Lean claims and eight rehashed integrity/scope controls. Earlier complete finite
 traces at one and three rows check 40,960 symbolic values. Both AMD hosts pass
 79,626,240 fresh CPU float64/Torch FP32 comparisons, with zero tolerance or bit
-differences. This evidence is outside the immutable v19 ledger and does not add
-an original accepted production kernel. IEEE/error guarantees remain outside
+differences. This evidence is included in the immutable v20 ledger and does not
+replace an original accepted production kernel. IEEE/error guarantees remain outside
 the paper's formal scope.
 
 The separate [fused Q/K normalization and RoPE development](production_qknorm_rope/README.md)
 retains the native block256, Q32/K8/V8 heads, width128 and logical32 reductions
 inside physical wave64. It follows the paper's out-of-place and gathered-cache
-departures and covers both rotary layouts. Six Std modules and eight source
-instances pass 103 axiom audits and nine false Lean controls, with independent
-archive replay and ten rehashed scope guards. Complete finite traces check 40,960
-expressions; both hosts pass 79,626,240 fresh CPU-reference comparisons with zero
-tolerance failures or adapted/upstream bit differences. Complete native execution,
-actual-trace classification and dense-reference equality remain pending. This
-development issues zero certificates and is outside the immutable v19 ledger.
+departures and proves both complete native launches, actual-trace race freedom,
+full output extraction and equality to independent dense exact-real references.
+Four interleaved v20 and four split-half v21 source-bound certificates are
+published. The independent replays rebuild without Git or an owned compiled
+proof cache; split-half reproduces 69 owned modules, 582 axiom audits, four row
+specializations and twelve false Lean claims. All twelve latest CI jobs pass.
+Both hosts retain 79,626,240 CPU-reference comparisons with zero tolerance
+failures or adapted/upstream bit differences; the 3,948 FP16-word disagreements
+with rounded Torch FP32 remain explicit. Historical component/prefix packets
+retain their earlier scope. Full evidence is included in the immutable v20 ledger.
+
+The manuscript's ten-case production inventory now has independent scoped
+coverage for six accepted families and the rejected original softmax race case.
+The three native adaptations still outstanding are SGLang RMSNorm, FlashInfer
+RMSNorm and AWQ GEMM. The paper's AWQ adaptation removes int4 dequantization,
+uses FP16 weights and one split-K iteration; dequantization is not required for
+that case. Original sources, model runs and hardware measurements remain separate
+missing inputs.
 
 | Paper result | Available evidence | Remaining work or dependency |
 | --- | --- | --- |
 | Level-1 pass rates and per-task results (§5.1, A.4.1) | Independent reduced CUDA/HIP certificates; four tiny scalar PTX certificates; full-size independent CUDA/HIP proofs and exact-source MI350X checks for all twelve Level-1 families | Authors' pinned kernels/registry and harness, original model endpoints/runs, optimized PTX and broader instruction support |
 | Five Level-2 PTX proofs (Table 3) | Five independent reduced HIP proofs; full-size HIP/CUDA RoPE, two-launch FFN, four-launch SwiGLU and three-launch dense SDPA/GQA certificates; independent native tiled online attention now has complete execution/race proofs and four canonical-real exports | Original PTX kernels/GQA project, original optimized attention adaptations, NVIDIA launches and collectives |
 | All 42 original mutants and rejection channels (§5.2, Tables 4/15) | Independent 28-mutant nonlinear CUDA/HIP study, prior scalar/proxy mutants, six full-length arithmetic mutants and four tiny PTX controls checked directly in Lean | Original mutants/harness, original PTX coverage, model-based diagnosis and second opinions. Independent sets are not the original 42 |
-| Nine accepted production kernels (§5.3, Table 5) | Independent upstream-derived SiLU-and-mul, weighted RMSNorm, fused add RMSNorm, online attention and in-place RoPE: eight [native activation HIP/CUDA certificates](production_silu/RESULTS.md), four [canonical-real native RMSNorm certificates](production_rmsnorm/RESULTS.md), four [fused in-place canonical-real exports](production_fused_rmsnorm/README.md), four [canonical-real native attention exports](online_attention/WHOLE_LAUNCH.md) and eight [native in-place RoPE certificates](production_rope/README.md), backed by both-host numerical comparisons within their declared scopes | All original adapted files, revisions, signatures/departures and production proofs. Packed vector fast paths and other optimized collective kernels remain; these independent families do not reproduce the original nine |
+| Nine accepted production kernels (§5.3, Table 5) | Six independent upstream-derived families: SiLU-and-mul, weighted RMSNorm, fused add RMSNorm, online attention, in-place RoPE and fused QK/RoPE. Their respective fixed profiles publish 8, 4, 4, 4, 8 and 8 source-bound exports, with standalone replays and both-host numerical checks | SGLang RMSNorm, FlashInfer RMSNorm and the paper's FP16 single-split-K AWQ GEMM adaptations; all original adapted files, revisions, signatures/departures, proof projects and model outcomes. These independent families do not reproduce the original nine |
 | llm.c data race | Full-source native HIP binding, actual reached conflicting accesses, complete original one-row launch counterexample, repaired whole-grid execution/race freedom and canonical-real softmax, complete finite traces and paired both-host numerical checks | Exact paper registry revision/author-adapted PTX and original NVIDIA experiments |
 | Failure-analysis ablations and costs (§5.4, A.4.9) | Deterministic diagnostics, failed proof artifacts, and a separate comments-only replay of two refused DeepSeek candidates (both still unproved) | Original models, prompts, budgets and failures; offline/free constraint excludes paid endpoint calls |
 | Segmentation/flat ablation (§5.4, A.4.8) | Pointwise and counted-loop GEMV/GEMM/BMM induction concluding existing machine `Correct`; same-source pointwise and GEMV flat/induction timing comparisons (GEMV flat verified through K=16, timed out at K=32/64/128; induction verified/rechecked all eight sizes) | Original kernels, agent prompts and LLM runs; scalable profiles use one-thread blocks |

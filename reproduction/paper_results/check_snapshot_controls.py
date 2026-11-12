@@ -83,16 +83,25 @@ def main():
         if code or "frozen-snapshot-replayed" not in log:
             raise RuntimeError("Standalone replay failed: " + log)
         results.append({"name": "outside-checkout-no-git", "accepted": True, "git_on_path": False})
-        for name in ("global-completion-claim", "original-production-claim"):
+        names = ["global-completion-claim", "original-production-claim"]
+        has_production_cases = "production_cases" in read(snapshot / "targets.json")
+        if has_production_cases:
+            names.append("invented-native-awq-coverage")
+        for name in names:
             altered = root / name
             shutil.copytree(snapshot, altered)
             report = read(altered / "results/audit.json")
             if name == "global-completion-claim":
                 report["original_paper_fully_reproduced"] = True
                 report["completion_percentage"] = 100
-            else:
+            elif name == "original-production-claim":
                 row = next(r for r in report["floats"] if r["label"] == "tab:lib-kernels")
                 row["original_result_reproduced"] = True
+            else:
+                row = next(r for r in report["production_cases"]
+                           if r["paper_case"] == "vllm-awq-gemm")
+                row["independent_status"] = "complete-scoped-proof"
+                row["registered_source_certificates"] = 4
             write(altered / "results/audit.json", report)
             rehash(altered)
             code, log = execute(name, altered)
@@ -106,6 +115,36 @@ def main():
                     "gate": "frozen report regeneration",
                 }
             )
+        if has_production_cases:
+            altered = root / "missing-production-case"
+            shutil.copytree(snapshot, altered)
+            targets = read(altered / "targets.json")
+            targets["production_cases"] = [
+                row for row in targets["production_cases"]
+                if row["paper_case"] != "vllm-awq-gemm"
+            ]
+            write(altered / "targets.json", targets)
+            target_name = "reproduction/paper_results/targets.json"
+            with tarfile.open(altered / "evidence.tar.gz") as archive:
+                entries = [(m.name, archive.extractfile(m).read()) for m in archive]
+            with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+                for name, data in entries:
+                    if name == target_name:
+                        data = (altered / "targets.json").read_bytes()
+                    info = tarfile.TarInfo(name)
+                    info.size = len(data)
+                    archive.addfile(info, io.BytesIO(data))
+            hashes = read(altered / "evidence-manifest.json")
+            hashes[target_name] = sha(altered / "targets.json")
+            write(altered / "evidence-manifest.json", hashes)
+            rehash(altered, archive_changed=True)
+            code, log = execute("missing-production-case", altered)
+            if code == 0 or "Production case inventory differs from manuscript" not in log:
+                raise RuntimeError("Production inventory control failed: " + log)
+            results.append({
+                "name": "missing-production-case", "accepted": False,
+                "fully_rehashed": True, "gate": "actual manuscript production table",
+            })
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         with tarfile.open(altered / "evidence.tar.gz") as archive:
@@ -146,7 +185,7 @@ def main():
             "status": "passed",
             "checks": results,
             "positive_replays": 1,
-            "negative_controls": 4,
+            "negative_controls": sum(not row["accepted"] for row in results),
             "source_snapshot_manifest_sha256": sha(snapshot / "manifest.json"),
             "replayer_sha256": sha(Path(__file__).with_name("replay_snapshot.py")),
             "control_runner_sha256": sha(Path(__file__)),
@@ -163,7 +202,7 @@ def main():
                 "status": "passed",
                 "outside_checkout_without_git": True,
                 "positive_replays": 1,
-                "negative_controls": 4,
+                "negative_controls": sum(not row["accepted"] for row in results),
                 "fresh_lean_checks": 0,
                 "fresh_gpu_trials": 0,
                 "model_calls": 0,

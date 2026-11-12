@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261111-v19/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261112-v20/results/RESULTS.md) ·
+[earlier v19 ledger](snapshots/20261111-v19/results/RESULTS.md) ·
 [earlier v18 ledger](snapshots/20261110-v18/results/RESULTS.md) ·
 [earlier v17 ledger](snapshots/20261110-v17/results/RESULTS.md) ·
 [earlier v16 ledger](snapshots/20261110-v16/results/RESULTS.md) ·
@@ -12,33 +13,42 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
-The [updated snapshot](snapshots/20261111-v19/results/RESULTS.md) freezes 586
-published evidence files at commit `7437374`. It includes complete weighted and
-seeded in-place fused RMSNorm, complete native online attention, and the native
-llm.c HIP softmax race/repair studies. The repaired softmax has whole-grid and
-canonical-real correctness proofs; the original has reached conflicting
-accesses and a complete supported one-row launch counterexample. Source/replay
-checks and all eight CI jobs pass. Softmax uses a development checker with zero
-registered frontend source certificates. Paired AMD numerical results retain
-their measured floating-point differences. As in the paper, IEEE/rounding
-guarantees are outside the formal claims. The evidence and auditor are frozen
-for replay without a historical checkout, and study links target that exact
-Git commit:
+The [updated snapshot](snapshots/20261112-v20/results/RESULTS.md) freezes 1,588
+published evidence files at commit `5e3b331`. It adds complete native rotary
+embedding and both fused QK-normalization/RoPE layouts to the earlier weighted
+and seeded in-place fused RMSNorm, online attention, and llm.c softmax
+race/repair studies. Native RoPE has eight source-bound certificates; fused
+QK/RoPE has four interleaved and four split-half exact-real certificates.
+Both native rotary studies each retain 79,626,240 paired-host CPU-reference
+comparisons with zero tolerance failures. All twelve latest CI jobs pass.
+Softmax retains its development-checker scope and zero registered frontend
+source certificates. Paired AMD numerical results retain measured floating-point
+differences. As in the paper, IEEE/rounding guarantees are outside formal claims.
+
+A ten-case production inventory is checked against the manuscript table.
+Six accepted families and the rejected original softmax race case have
+independent scoped coverage. SGLang RMSNorm, FlashInfer RMSNorm and the paper's
+FP16, single-split-K AWQ GEMM remain native-adaptation work. The paper removes
+AWQ int4 dequantization. No original experimental row is relabeled reproduced.
+The evidence and auditor are frozen for replay without a historical checkout,
+and study links target that exact Git commit:
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
-  --snapshot reproduction/paper_results/snapshots/20261111-v19 \
+  --snapshot reproduction/paper_results/snapshots/20261112-v20 \
   --source-archive /path/to/2611.02028v1.tar
 ```
 
-The [validation records](snapshot-v19-validation/results.json) include replay
-outside the checkout with Git unavailable, two fully rehashed false-completion
-claims, a fully rehashed traversal entry and a wrong-manuscript control. Repeat
+The [validation records](snapshot-v20-validation/results.json) include replay
+outside the checkout with Git unavailable and six rejected controls: global and
+original-result completion, invented AWQ proof coverage, omission of AWQ from
+the manuscript inventory, an unsafe archive path and the wrong manuscript.
+All but the wrong-manuscript control fully rehash the changed packet. Repeat
 them with a fresh output directory:
 
 ```bash
 python3 reproduction/paper_results/check_snapshot_controls.py \
-  --snapshot reproduction/paper_results/snapshots/20261111-v19 \
+  --snapshot reproduction/paper_results/snapshots/20261112-v20 \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-snapshot-controls
 ```
 
