@@ -2,8 +2,9 @@
 
 The independent AMD FP16 adaptation passes paired numerical validation and
 finite symbolic execution. Its Lean proofs currently cover complete source
-identity, addresses, ownership, launch bounds and the first six scalar
-instructions. **The complete AWQ execution, whole-trace race-freedom and
+identity, addresses, ownership, launch bounds, the complete first native block
+visit and the guarded per-lane A-staging phase, including every staged value.
+**The complete AWQ execution, whole-trace race-freedom and
 dense-reference proofs are unfinished; this checkpoint issues zero AWQ source
 certificates.** The accepted production-family count remains eight.
 
@@ -27,10 +28,12 @@ generic shared-memory limit is unchanged.
 | Check | Result |
 | --- | --- |
 | Complete source binding | Four 138/226-instruction sources match the fixed Lean template, including every matrix site, barrier and store |
-| Lean components | Eight owned modules, 54 library audits and 36 source audits; only `propext`, `Classical.choice`, `Quot.sound` |
+| Lean components | Twenty owned modules in the current source archive, 208 library audits and 48 source audits; only `propext`, `Classical.choice`, `Quot.sound` |
 | Universal arithmetic | Shared/global bounds, writer inversion, fragment coordinates, signed scalar bounds and `grid*64 ≤ M*N` |
-| Initial execution | Actual full-program `runLane` executes its first six instructions for every accepted shape and thread |
+| Initial execution | Actual full-program `runLane` executes all 31/47 setup instructions; all 64 lanes converge and the first block barrier resumes through the existing scheduler |
+| Guarded A staging | Both complete eight-iteration loops, row guard and join: 35/36 scalar instructions; all eight shared values, input preservation, outside-memory frame and exact 8/16-event trace length |
 | Logical controls | Six altered sources fail on false source identity, without exhausting proof budgets |
+| Stage controls | Twenty-one fully rehashed false claims are rejected before extracting a proof project |
 | Finite complete execution | Four launches, 18,048 independent output expressions, 359,424 actual trace events; no conflicts, one output writer and unchanged inputs |
 | Finite semantic controls | Wrong matrix operand, missing reuse barrier, missing staging barrier, shortened K loop, aliased output and missing half conversion are detected |
 | Native compilation | Both tile paths disassemble to 8/16 native MFMA sites, wave64 and expected shared sizes |
@@ -38,7 +41,7 @@ generic shared-memory limit is unchanged.
 | Host agreement | Zero FP16 bit differences between `mi350` and `mi350-2`; 380 total FP16-word differences against separately rounded CPU Torch FP32 |
 | Memory preservation | Every input matrix and allocation guard unchanged; every output initialized to NaN before launch |
 | Numerical controls | Ten fully rehashed false packets rejected, including a wrong output, missing final store, changed read-only input and false proof claims |
-| Packaging | All six AWQ Lean resources and the Python reader match the built wheel byte for byte |
+| Packaging | All eighteen AWQ Lean resources and the Python reader match the current built wheel byte for byte; the source archive also contains its two fixed machine dependencies |
 
 The numerical study covers ten `(M,K,N)` shapes:
 `(1,32,64)`, `(15,32,128)`, `(16,64,192)`, `(17,32,64)`, `(17,32,128)`,
@@ -61,8 +64,12 @@ fuel remains lane512, warp9/17, block`2*(K/32)+1`, grid1. Every new Lean module
 uses `maxRecDepth=10000` and `maxHeartbeats=2000000`. No proof option, machine
 fuel or shape limit was raised to close these components.
 
-Evidence is under [results](results), with standalone source and GPU archives
-in the [public checkpoint release](https://github.com/harsh-nod/lark/releases/tag/native-awq-gemm-checkpoint-20261112).
+The [initial execution and A-staging proof](INITIAL_EXECUTION.md) records the
+current source-bound scope. Historical `source-components-v1` and its release
+retain the earlier first-six-instruction result; `a-staging-v1` records the
+later 256-audit result. Evidence is under [results](results), with standalone
+source and GPU archives in the
+[original checkpoint release](https://github.com/harsh-nod/lark/releases/tag/native-awq-gemm-checkpoint-20261112).
 The source replay rebuilds outside Git without an owned compiled cache. GPU
 archives include frozen operands, exact kernel sources, raw outputs, compiler
 commands, dependency hashes and captured compiler-input files. They establish
@@ -81,7 +88,6 @@ python3 reproduction/production_awq_gemm/replay_components.py \
   --output /tmp/awq-replay --lean-bin /path/to/lean-4.19.0/bin
 ```
 
-The next proof steps are the remaining scalar preparation, both shared staging
-loops, barrier resumptions, matrix operand loads and MFMA updates, K-loop
-induction, final stores, whole-grid trace classification and dense exact-real
-reference equality.
+The next proof steps are B staging, the combined per-lane staging visit and
+second barrier, matrix operand loads and MFMA updates, K-loop induction, final
+stores, whole-grid trace classification and dense exact-real reference equality.

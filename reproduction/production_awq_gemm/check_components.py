@@ -1,4 +1,4 @@
-"""Check full AWQ source identity and address components, not execution."""
+"""Check AWQ source identity, initial block execution and guarded A staging."""
 
 import argparse
 from datetime import datetime, timezone
@@ -21,7 +21,10 @@ from lark_kernels.ir import lean_list  # noqa: E402
 HERE = Path(__file__).resolve().parent
 CASES = ("m17_k32_n64", "m17_k32_n128", "m33_k64_n192", "m33_k64_n256")
 MODELS = ("Nonlinear", "MFMA", "NativeAwqGemmAddress", "NativeAwqGemmGlobal", "NativeAwqGemmProgram",
-          "NativeAwqGemmGeometry", "NativeAwqGemmState", "NativeAwqGemmPrefix")
+          "NativeAwqGemmGeometry", "NativeAwqGemmState", "NativeAwqGemmPrefix", "NativeAwqGemmIndexEval",
+          "NativeAwqGemmIndices", "NativeAwqGemmInitRegisters", "NativeAwqGemmInitial", "NativeAwqGemmInitialBlock",
+          "NativeAwqGemmMemory", "NativeAwqGemmAIndex", "NativeAwqGemmAStore", "NativeAwqGemmARound",
+          "NativeAwqGemmALoop", "NativeAwqGemmAStage", "NativeAwqGemmAValues")
 
 
 def sha(path):
@@ -34,12 +37,13 @@ def write(path, value):
 
 def render(task, tr):
     p = native.shape_of(task)
-    return f'''import Lark.NativeAwqGemmPrefix
+    return f'''import Lark.NativeAwqGemmAValues
 namespace AwqSource
 open LarkNonlinear
 set_option maxRecDepth 10000
 set_option maxHeartbeats 2000000
 set_option autoImplicit false
+attribute [local irreducible] LarkNativeAwqGemm.aLoopState LarkNativeAwqGemm.aRoundState LarkNativeAwqGemm.aBodyState
 def shape : LarkNativeAwqGemm.Shape := ⟨{p.m},{p.k},{p.n},by decide,by decide,by decide,by decide,by decide,by decide,by decide,by decide⟩
 def sourceProgram : List LarkMFMA.Instr := {lean_list(mfma.emit(i) for i in tr.program)}
 def sourceLayout : Layout := ⟨[⟨.input,{p.m*p.k}⟩,⟨.input,{p.k*p.n}⟩,⟨.output,{p.m*p.n}⟩],{lean_list(str(size) for _,size in tr.shared)},[]⟩
@@ -54,6 +58,44 @@ theorem middle_barrier : sourceProgram[LarkNativeAwqGemm.middleBarrier shape]?=s
 theorem halt_site : sourceProgram[LarkNativeAwqGemm.haltPC shape]?=some (.scalar .halt) := by decide
 theorem matrix_sites : (sourceProgram.filter (fun inst => match inst with | .mfma .. => true | _ => false)).length={p.tile_n//8} := by decide
 theorem source_length : sourceProgram.length={50+22*(p.tile_n//16)} := by decide
+theorem initial_execution {{α : Type}} (ops : Ops α) (s : State α) (t : Nat)
+    (ht : t<sourceGeometry.grid*64) (hp : s.pc t=0) :
+    ∃ final, LarkMFMA.runLane ops sourceLayout sourceGeometry sourceProgram t sourceFuel.lane s=some final ∧
+      final.pc t=LarkNativeAwqGemm.firstBarrier shape ∧ final.trace=s.trace ∧
+        ∀ r, r<4*LarkNativeAwqGemm.banks shape → final.regs t r=some (ops.literal 0 1) := by
+  refine ⟨LarkNativeAwqGemm.prefixState shape ops t s,?_,LarkNativeAwqGemm.prefix_pc shape ops t s,
+    (LarkNativeAwqGemm.prefix_frames shape ops t s).2.1,fun r hr => LarkNativeAwqGemm.prefix_accumulators shape ops t r s hr⟩
+  rw [layout_binding,geometry_binding,source_binding,fuel_binding]
+  exact LarkNativeAwqGemm.initial_prefix_run shape ops t s (by simpa only [geometry_binding] using ht) hp
+theorem initial_block_execution {{α : Type}} (ops : Ops α) (s : State α) (b extra : Nat)
+    (hb : b<sourceGeometry.grid) (hp : ∀ t∈blockThreads sourceGeometry b, s.pc t=0) :
+    LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b (extra+1) s=
+      LarkMFMA.runBlock ops sourceLayout sourceGeometry sourceFuel sourceProgram b extra
+        (resume (blockThreads sourceGeometry b) .block (LarkNativeAwqGemm.blockPrefix shape ops b s)) := by
+  rw [layout_binding,geometry_binding,source_binding,fuel_binding]
+  exact LarkNativeAwqGemm.initial_block_step shape ops b extra s
+    (by simpa only [geometry_binding] using hb) (by simpa only [geometry_binding] using hp)
+theorem a_staging_execution {{α : Type}} (ops : Ops α) (input : Nat → Nat → α)
+    (s : State α) (tile t extra : Nat) (hk : tile<shape.k/32)
+    (setup : LarkNativeAwqGemm.SetupIndices shape t s) (ki : s.indices t 13=some (tile : Int))
+    (reads : LarkNativeAwqGemm.Reads shape input s) (hp : s.pc t=LarkNativeAwqGemm.firstBarrier shape+1) :
+    let final := LarkNativeAwqGemm.aStageState shape ops input tile t s
+    (LarkMFMA.runLane ops sourceLayout sourceGeometry sourceProgram t
+      (extra+LarkNativeAwqGemm.aStageCost shape t) s=
+        LarkMFMA.runLane ops sourceLayout sourceGeometry sourceProgram t extra final) ∧
+    final.pc t=LarkNativeAwqGemm.firstBarrier shape+12 ∧ LarkNativeAwqGemm.Reads shape input final ∧
+    (∀ e, e<8 → final.memory (LarkNativeAwqGemm.aCell t e)=
+      some (if LarkNativeAwqGemm.inputRow shape t<shape.m then
+        input 0 (LarkNativeAwqGemm.aSourceOffset shape tile t e) else ops.toHalf (ops.literal 0 1))) ∧
+    (∀ loc, (∀ e, e<8 → loc≠LarkNativeAwqGemm.aCell t e) → final.memory loc=s.memory loc) ∧
+    final.trace.length=s.trace.length+(if LarkNativeAwqGemm.inputRow shape t<shape.m then 16 else 8) := by
+  refine ⟨?_,LarkNativeAwqGemm.a_stage_pc shape ops input tile t s,
+    LarkNativeAwqGemm.a_stage_reads shape ops input tile t s reads,
+    fun e he => LarkNativeAwqGemm.a_stage_value shape ops input tile t e s he,
+    fun loc hl => LarkNativeAwqGemm.a_stage_memory_outside shape ops input tile t s loc hl,
+    LarkNativeAwqGemm.a_stage_trace_length shape ops input tile t s⟩
+  rw [layout_binding,geometry_binding,source_binding]
+  exact LarkNativeAwqGemm.a_stage_eq shape ops input tile t extra s hk setup ki reads hp
 #print axioms source_binding
 #print axioms layout_binding
 #print axioms geometry_binding
@@ -63,6 +105,9 @@ theorem source_length : sourceProgram.length={50+22*(p.tile_n//16)} := by decide
 #print axioms halt_site
 #print axioms matrix_sites
 #print axioms source_length
+#print axioms initial_execution
+#print axioms initial_block_execution
+#print axioms a_staging_execution
 end AwqSource
 '''
 
@@ -112,8 +157,8 @@ def main():
                        "exit_code": result.returncode, "seconds": time.monotonic()-before, "timed_out": False})
         return log
 
-    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmPrefix"], True))
-    assert len(library) == 54
+    library = audits(run("fresh-library-build", [str(lean_bin/"lake"), "build", "Lark.NativeAwqGemmAValues"], True))
+    assert len(library) == 208
     source_audits = {}
     for name in CASES:
         case = HERE/"cases"/name
@@ -122,7 +167,7 @@ def main():
         tr = native.translate((case/"kernel.hip").read_text(), task)
         (project/(name+".lean")).write_text(render(task, tr))
         source_audits[name] = audits(run(name, [str(lean_bin/"lake"), "env", "lean", name+".lean"], True))
-        assert len(source_audits[name]) == 9
+        assert len(source_audits[name]) == 12
     case = HERE/"cases/m33_k64_n192"
     source = (case/"kernel.hip").read_text()
     task = native.parse_task((case/"task.json").read_text())
@@ -147,7 +192,8 @@ def main():
     with tarfile.open(out/"source-project.tar.gz", "w:gz") as archive:
         for name in sorted(hashes):
             archive.add(project/name, arcname=name, recursive=False)
-    result = {"schema": 1, "status": "native-awq-complete-source-identity-and-address-components-checked",
+    result = {"schema": 1, "stage": "a-staging-v3",
+              "status": "native-awq-source-bound-initial-block-and-a-staging-checked",
               "checked_at_utc": datetime.now(timezone.utc).isoformat(), "owned_lean_modules": len(MODELS),
               "library_axiom_audits": library, "source_axiom_audits": source_audits,
               "axiom_audit_occurrences": len(library)+sum(map(len,source_audits.values())),
@@ -156,7 +202,16 @@ def main():
               "shared_ownership_and_matrix_fragment_coordinates_proved": True,
               "universal_launch_and_scalar_parameter_bounds_proved": True,
               "actual_initial_lane_and_block_decode_execution_proved": True,
-              "initial_scalar_instructions_executed": 6,
+              "initial_scalar_instructions_executed": [31, 47],
+              "source_bound_initial_lane_execution_proved": True,
+              "source_bound_initial_block_execution_proved": True,
+              "initial_block_barrier_resumption_proved": True,
+              "a_staging_source_execution_proved": True,
+              "a_staging_shared_values_proved": True,
+              "a_staging_outside_memory_preserved": True,
+              "a_staging_cells_per_lane": 8, "a_staging_scalar_steps": [35, 36],
+              "b_staging_execution_proved": False, "matrix_execution_proved": False,
+              "k_loop_execution_proved": False,
               "whole_kernel_execution_proved": False, "actual_whole_trace_race_freedom_proved": False,
               "source_reference_equality_proved": False, "source_certificates": 0,
               "git_available_on_proof_path": False, "owned_compiled_cache_seeded": False,

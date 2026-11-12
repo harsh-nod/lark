@@ -25,7 +25,7 @@ jobs:
         run: python3 -m unittest discover -s tests -p test_native_awq_gemm.py -v
       - name: Check all four finite source executions and traffic
         run: python3 reproduction/production_awq_gemm/run_symbolic.py --output /tmp/lark-awq-finite
-      - name: Check complete source identity, address ownership and initial decode
+      - name: Check complete source identity, initial block execution and guarded A staging
         run: |
           python3 reproduction/production_awq_gemm/check_components.py \
             --output /tmp/lark-awq-components --lean-bin "$HOME/.elan/bin"
@@ -34,6 +34,17 @@ jobs:
           python3 reproduction/production_awq_gemm/replay_components.py \
             --packet /tmp/lark-awq-components --archive /tmp/lark-awq-components/source-project.tar.gz \
             --output /tmp/lark-awq-component-replay --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed false stage claims before extraction
+        run: |
+          python3 reproduction/production_awq_gemm/check_component_stages.py \
+            --packet /tmp/lark-awq-components --output /tmp/lark-awq-component-stages \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Replay the historical first-decode source archive
+        run: |
+          python3 reproduction/production_awq_gemm/replay_components.py \
+            --packet reproduction/production_awq_gemm/results/source-components-v1 \
+            --archive reproduction/production_awq_gemm/results/source-components-v1/source-project.tar.gz \
+            --output /tmp/lark-awq-legacy-replay --lean-bin "$HOME/.elan/bin"
   native-sglang-real:
     runs-on: ubuntu-latest
     timeout-minutes: 40

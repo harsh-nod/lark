@@ -64,9 +64,80 @@ theorem eval_nat_mod (g : Geometry) (t value divisor : Nat) (s : State α) (inde
     else some ((value : Int)%(divisor : Int))) = _
   rw [if_neg (by omega),←Int.ofNat_emod]
 
+theorem eval_nat_const (g : Geometry) (t value : Nat) (s : State α)
+    (hb : value<2147483648) : evalIndex g t s (c value)=some (value : Int) := by
+  change int32 (value : Int)=some (value : Int)
+  exact int32_nat value hb
+
+theorem eval_int_add (g : Geometry) (t : Nat) (s : State α) (a b : Index) (x y z : Int)
+    (ha : evalIndex g t s a=some x) (hb : evalIndex g t s b=some y)
+    (hs : int32 (x+y)=some z) : evalIndex g t s (.add a b)=some z := by
+  change (do
+    let x ← evalIndex g t s a
+    let y ← evalIndex g t s b
+    int32 (x+y)) = _
+  rw [ha,hb]
+  exact hs
+
+theorem eval_int_mul (g : Geometry) (t : Nat) (s : State α) (a b : Index) (x y z : Int)
+    (ha : evalIndex g t s a=some x) (hb : evalIndex g t s b=some y)
+    (hs : int32 (x*y)=some z) : evalIndex g t s (.mul a b)=some z := by
+  change (do
+    let x ← evalIndex g t s a
+    let y ← evalIndex g t s b
+    int32 (x*y)) = _
+  rw [ha,hb]
+  exact hs
+
+theorem eval_nat_add (g : Geometry) (t left right : Nat) (s : State α) (a b : Index)
+    (ha : evalIndex g t s a=some (left : Int))
+    (hb : evalIndex g t s b=some (right : Int)) (hs : left+right<2147483648) :
+    evalIndex g t s (.add a b)=some ((left+right : Nat) : Int) :=
+  eval_int_add g t s a b (left : Int) (right : Int) ((left+right : Nat) : Int) ha hb
+    ((congrArg int32 (Int.natCast_add left right).symm).trans (int32_nat _ hs))
+
+theorem eval_nat_mul (g : Geometry) (t left right : Nat) (s : State α) (a b : Index)
+    (ha : evalIndex g t s a=some (left : Int))
+    (hb : evalIndex g t s b=some (right : Int)) (hs : left*right<2147483648) :
+    evalIndex g t s (.mul a b)=some ((left*right : Nat) : Int) :=
+  eval_int_mul g t s a b (left : Int) (right : Int) ((left*right : Nat) : Int) ha hb
+    ((congrArg int32 (Int.natCast_mul left right).symm).trans (int32_nat _ hs))
+
+theorem execute_pure_of (ops : Ops α) (p : Shape) (t r pc : Nat)
+    (expression : Expr) (s : State α) (value : α)
+    (he : evalExpr ops (layout p) (geometry p) t expression s=some (value,s))
+    (hp : s.pc t+1=pc) :
+    execute ops (layout p) (geometry p) t (.assign r expression) s=some (setReg s t r value pc) := by
+  simp only [execute,he,hp,bind,pure,Option.bind]
+  rfl
+
+theorem eval_int_lt_true (g : Geometry) (t : Nat) (s : State α) (a b : Index) (x y : Int)
+    (ha : evalIndex g t s a=some x) (hb : evalIndex g t s b=some y) (hlt : x<y) :
+    evalPredicate g t s (.lt a b)=some true := by
+  change (do
+    let left ← evalIndex g t s a
+    let right ← evalIndex g t s b
+    pure (decide (left<right))) = _
+  rw [ha,hb]
+  simp [hlt]
+
+theorem execute_branch_true (ops : Ops α) (p : Shape) (t target : Nat)
+    (condition : Predicate) (s : State α) (he : evalPredicate (geometry p) t s condition=some true) :
+    execute ops (layout p) (geometry p) t (.branch condition target) s=
+      some (advance s t (s.pc t+1)) := by
+  simp only [execute,he,bind,pure,Option.bind,ite_true]
+
 #print axioms int32_nat
 #print axioms execute_index_of
 #print axioms scalar_step
 #print axioms eval_nat_div
 #print axioms eval_nat_mod
+#print axioms eval_nat_const
+#print axioms eval_int_add
+#print axioms eval_int_mul
+#print axioms eval_nat_add
+#print axioms eval_nat_mul
+#print axioms execute_pure_of
+#print axioms eval_int_lt_true
+#print axioms execute_branch_true
 end LarkNativeAwqGemm

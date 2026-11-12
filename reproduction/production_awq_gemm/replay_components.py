@@ -15,6 +15,25 @@ CASES = ('m17_k32_n64', 'm17_k32_n128', 'm33_k64_n192', 'm33_k64_n256')
 CONTROLS = ('wrong-matrix-operand', 'missing-first-barrier', 'missing-middle-barrier',
             'wrong-shared-a-stride', 'wrong-shared-b-stride', 'aliased-output-column')
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
+BASE_MODELS = ('Nonlinear', 'MFMA', 'NativeAwqGemmAddress', 'NativeAwqGemmGlobal', 'NativeAwqGemmProgram',
+               'NativeAwqGemmGeometry', 'NativeAwqGemmState', 'NativeAwqGemmPrefix')
+INITIAL_MODELS = ('NativeAwqGemmIndexEval', 'NativeAwqGemmIndices', 'NativeAwqGemmInitRegisters',
+                  'NativeAwqGemmInitial', 'NativeAwqGemmInitialBlock')
+A_MODELS = ('NativeAwqGemmMemory', 'NativeAwqGemmAIndex', 'NativeAwqGemmAStore', 'NativeAwqGemmARound',
+            'NativeAwqGemmALoop', 'NativeAwqGemmAStage', 'NativeAwqGemmAValues')
+BASE_SOURCE_AUDITS = {'AwqSource.'+name for name in ('source_binding', 'layout_binding', 'geometry_binding', 'fuel_binding',
+                      'first_barrier', 'middle_barrier', 'halt_site', 'matrix_sites', 'source_length')}
+INITIAL_SOURCE_AUDITS = {'AwqSource.initial_execution', 'AwqSource.initial_block_execution'}
+STAGES = {
+    'initial-decode-v1': {'models': BASE_MODELS, 'audits': 90, 'library_audits': 54, 'steps': 6,
+                          'root': 'NativeAwqGemmPrefix', 'source_audits': BASE_SOURCE_AUDITS},
+    'initial-block-v2': {'models': BASE_MODELS+INITIAL_MODELS, 'audits': 166, 'library_audits': 122,
+                         'steps': [31, 47], 'root': 'NativeAwqGemmInitialBlock',
+                         'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS},
+    'a-staging-v3': {'models': BASE_MODELS+INITIAL_MODELS+A_MODELS, 'audits': 256, 'library_audits': 208,
+                     'steps': [31, 47], 'root': 'NativeAwqGemmAValues',
+                     'source_audits': BASE_SOURCE_AUDITS|INITIAL_SOURCE_AUDITS|{'AwqSource.a_staging_execution'}},
+}
 
 
 def sha(path):
@@ -45,11 +64,37 @@ def main():
         if not path.is_relative_to(packet) or sha(path) != expected:
             raise ValueError('Packet hash: '+name)
     recorded = json.loads((packet/'results.json').read_text())
-    if (recorded['owned_lean_modules'] != 8 or recorded['axiom_audit_occurrences'] != 90
+    stage_name = recorded.get('stage', 'initial-decode-v1')
+    if stage_name not in STAGES:
+        raise ValueError('Unknown component stage')
+    stage = STAGES[stage_name]
+    if (recorded['owned_lean_modules'] != len(stage['models']) or recorded['axiom_audit_occurrences'] != stage['audits']
             or type(recorded['source_certificates']) is not int or recorded['source_certificates'] != 0
-            or recorded['model_calls'] != 0 or recorded['gpu_trials'] != 0
-            or recorded['initial_scalar_instructions_executed'] != 6):
+            or type(recorded['model_calls']) is not int or recorded['model_calls'] != 0
+            or type(recorded['gpu_trials']) is not int or recorded['gpu_trials'] != 0
+            or recorded['source_instances'] != 4 or recorded['false_source_identity_claims_rejected'] != 6
+            or recorded['initial_scalar_instructions_executed'] != stage['steps']):
         raise ValueError('Component packet scope')
+    if (len(recorded['library_axiom_audits']) != stage['library_audits']
+            or set(recorded['source_axiom_audits']) != set(CASES)
+            or any(set(recorded['source_axiom_audits'][case]) != stage['source_audits'] for case in CASES)):
+        raise ValueError('Stage audit coverage')
+    if len(recorded['library_axiom_audits'])+sum(map(len, recorded['source_axiom_audits'].values())) != stage['audits']:
+        raise ValueError('Derived audit count')
+    if stage_name == 'a-staging-v3':
+        for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved'):
+            if recorded[field] is not True:
+                raise ValueError('A staging claim: '+field)
+        if recorded['a_staging_cells_per_lane'] != 8 or recorded['a_staging_scalar_steps'] != [35, 36]:
+            raise ValueError('A staging shape/count scope')
+        for field in ('b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
+            if recorded[field] is not False:
+                raise ValueError('Unsupported later-stage claim: '+field)
+    else:
+        for field in ('a_staging_source_execution_proved', 'a_staging_shared_values_proved', 'a_staging_outside_memory_preserved',
+                      'b_staging_execution_proved', 'matrix_execution_proved', 'k_loop_execution_proved'):
+            if recorded.get(field, False) is not False:
+                raise ValueError('Unsupported later-stage claim: '+field)
     for field in ('whole_kernel_execution_proved', 'actual_whole_trace_race_freedom_proved',
                   'source_reference_equality_proved', 'ieee_equivalence_proved', 'original_paper_fully_reproduced'):
         if recorded[field] is not False:
@@ -68,6 +113,9 @@ def main():
         expected = json.loads((packet/'source-sha256.json').read_text())
         if names != set(expected):
             raise ValueError('Archive source closure differs')
+        if {name for name in names if name.startswith('Lark/') and name.endswith('.lean')} != {
+                'Lark/'+name+'.lean' for name in stage['models']}:
+            raise ValueError('Stage model closure differs')
         archive.extractall(project, filter='data')
     for name, digest in expected.items():
         if sha(project/name) != digest:
@@ -97,17 +145,20 @@ def main():
                        'seconds': time.monotonic()-start})
         return log
 
-    library = audits(run('fresh-library-build', [str(lean/'lake'), 'build', 'Lark.NativeAwqGemmPrefix'], True))
+    library = audits(run('fresh-library-build', [str(lean/'lake'), 'build', 'Lark.'+stage['root']], True))
     if library != recorded['library_axiom_audits']:
         raise ValueError('Library audits differ')
+    source_audits = {}
     for case in CASES:
         source = audits(run(case, [str(lean/'lake'), 'env', 'lean', case+'.lean'], True))
         if source != recorded['source_axiom_audits'][case]:
             raise ValueError('Source audit differs: '+case)
+        source_audits[case] = source
     for case in CONTROLS:
         run(case, [str(lean/'lake'), 'env', 'lean', case+'.lean'], False)
-    result = {'schema': 1, 'status': 'native-awq-standalone-source-components-replayed',
-              'source_instances': 4, 'false_source_claims_rejected': 6, 'axiom_audit_occurrences': 90,
+    result = {'schema': 1, 'stage': stage_name, 'status': 'native-awq-standalone-source-components-replayed',
+              'source_instances': len(source_audits), 'false_source_claims_rejected': len(CONTROLS),
+              'axiom_audit_occurrences': len(library)+sum(map(len, source_audits.values())),
               'archive_sha256': sha(args.archive), 'git_available_on_proof_path': False,
               'owned_compiled_cache_seeded': False, 'source_certificates': 0,
               'whole_kernel_execution_proved': False, 'actual_whole_trace_race_freedom_proved': False,

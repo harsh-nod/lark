@@ -26,7 +26,7 @@ def middleBarrier (p : Shape) : Nat := 38+4*banks p
 def outputPC (p : Shape) : Nat := 49+14*banks p
 def haltPC (p : Shape) : Nat := 49+22*banks p
 
-def initialInstructions (p : Shape) : List Instruction :=
+def indexInstructions (p : Shape) : List Instruction :=
   [ix 0 .tid,
    ix 1 (.mod (v 0) (c 32)),
    ix 2 (.div (v 0) (c 32)),
@@ -37,7 +37,10 @@ def initialInstructions (p : Shape) : List Instruction :=
    ix 7 (.mul (.mod (v 1) (c 4)) (c 8)),
    ix 8 (.add (.mul (.add (.mul (v 2) (c 8)) (.div (v 1) (c 4))) (c 40)) (v 7))] ++
   (List.range 4).map (fun e =>
-    ix (9+e) (.add (.add (.mul (v 4) (c 16)) (.mul (.div (v 0) (c 16)) (c 4))) (c e))) ++
+    ix (9+e) (.add (.add (.mul (v 4) (c 16)) (.mul (.div (v 0) (c 16)) (c 4))) (c e)))
+
+def initialInstructions (p : Shape) : List Instruction :=
+  indexInstructions p ++
   (List.range (4*banks p)).map (fun r => put r (.lit 0 1)) ++
   [ix 13 (c 0),branch (.lt (v 13) (c (p.k/32))) (outputPC p),blockBarrier]
 
@@ -103,11 +106,15 @@ theorem banks_cases (p : Shape) : banks p=4 ∨ banks p=8 := by
   · exact Or.inr (by simp [banks,h])
 
 theorem initial_length (p : Shape) : (initialInstructions p).length=16+4*banks p := by
-  simp [initialInstructions,Nat.add_assoc] <;> omega
+  simp [initialInstructions,indexInstructions,Nat.add_assoc] <;> omega
+
+theorem index_instructions_length (p : Shape) : (indexInstructions p).length=13 := by
+  simp [indexInstructions]
 
 theorem staging_length (p : Shape) : (stagingInstructions p).length=23 := rfl
 
 #print axioms banks_cases
 #print axioms initial_length
+#print axioms index_instructions_length
 #print axioms staging_length
 end LarkNativeAwqGemm
