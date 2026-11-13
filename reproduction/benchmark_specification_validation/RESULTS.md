@@ -79,8 +79,12 @@ reused; this is not a cold rebuild of all proof libraries or Mathlib.
 The [anonymous publication check](results/benchmark-float64-publication-v1/results.json)
 downloaded eight public files totaling 68,902,340 bytes from commit `548b8a5`,
 matched every byte against its committed blob, and passed the packet audit and
-all 41 mutations with TLS verification enabled. The exact-source CI/main gate
-is pending.
+all 41 mutations with TLS verification enabled. All eighteen jobs in the
+[exact-source CI run](https://github.com/harsh-nod/lark/actions/runs/43348512291)
+passed at `548b8a5`. The
+[main receipt](results/benchmark-float64-ci-main-v1/results.json) records the
+checked fast-forward to `e7ea523`; the intervening changes contain documentation
+and recorded evidence, with SDK, Lean, tests, workflows and audit drivers unchanged.
 
 The authors' original registry, formalizations, validation dataset, model pass
 rates, token history and NVIDIA measurements remain unreproduced. This protocol

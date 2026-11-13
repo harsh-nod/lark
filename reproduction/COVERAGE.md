@@ -41,7 +41,9 @@ artifact mutation controls passed. This is independent numerical evidence with
 no new certificate, GPU/model call, IEEE theorem or original-paper result claim.
 Its fresh-source replay reproduced all inputs, Mains and sampled/score values
 identically. The anonymous public packet passed verification and all 41
-mutations. Exact-source CI/main promotion is tracked separately.
+mutations. All eighteen exact-source CI jobs passed; its
+[main receipt](benchmark_specification_validation/results/benchmark-float64-ci-main-v1/results.json)
+records the checked fast-forward.
 
 [Offline model experiment preparation](local_models/README.md) now identifies
 official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
