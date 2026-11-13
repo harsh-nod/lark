@@ -965,6 +965,77 @@ theorem runTerms_execute (ops : Ops α) (input : Nat → Nat → α) (t c j n : 
       rw [he]
       exact tail.2
 
+structure LoopInvariant (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α) : Prop where
+  pc : s.pc = if c < 16 then 47 else 165
+  stopped : s.registers.stopped = false
+  a : s.registers.pointer 47 = some (aBase c)
+  b : s.registers.pointer 48 = some (bBase c)
+  strides : ∀ k, k < 16 → s.registers.i64 (strideRegister k) = some (bStride t k)
+  accumulator : s.registers.scalar 68 = some acc
+  reads : Reads input s
+  thread : s.registers.i32 1 = some (t : Int)
+  counter : s.registers.i32 27 = some ((16*c : Nat) : Int)
+  output : s.registers.pointer 24 = some ⟨2, 0, false⟩
+  rowOffset : s.registers.i64 19 = some ((t/512*512 : Nat) : Int)
+
+def bodyStart (t c : Nat) (s : Machine α) : Machine α := setPointer s 27 (aPointer t c)
+
+theorem body_entry (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α)
+    (ht : t < 32768) (hc : c < 16) (h : LoopInvariant input t c acc s) :
+    Steps ops layout geometry t program s (bodyStart t c s) ∧
+    BodyInvariant input t c 0 acc (bodyStart t c s) := by
+  have hr : t/512 < 64 := by omega
+  have hp : s.pc = 47 := by simpa only [if_pos hc] using h.pc
+  have hbound : signed64 ((t/512*512 : Nat) : Int) ∧
+      signed64 ((aBase c).offset+((t/512*512 : Nat) : Int)) := by
+    unfold aBase signed64
+    simp only [Int.natCast_mul]; omega
+  have e := pointer_add_step ops layout geometry t 27 47 (.reg 19) (aBase c)
+    ((t/512*512 : Nat) : Int) s (pointer_values _ _ _ h.a) h.rowOffset hbound
+  have heq : { aBase c with offset := (aBase c).offset+((t/512*512 : Nat) : Int) } =
+      aPointer t c := by
+    have he : ((32*c : Nat) : Int)+((t/512*512 : Nat) : Int) =
+        ((t/512*512+32*c : Nat) : Int) := by
+      simp only [Int.natCast_add]; omega
+    simp only [aBase, aPointer, he]
+  rw [heq] at e
+  have hexe : Steps ops layout geometry t program s (bodyStart t c s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program s (.base (.addSigned64 27 47 (.reg 19)))
+      h.stopped (by rw [hp]; rfl), base_step]
+    exact e
+  refine ⟨hexe, ?_⟩
+  constructor
+  · simp only [bodyStart, setPointer_pc, hp]
+  · simpa only [bodyStart, setPointer_stopped] using h.stopped
+  · simp [bodyStart]
+  · simpa only [bodyStart, setPointer_pointer, if_neg (by decide : 48 ≠ 27)] using h.b
+  · intro k hk
+    have hkb := stride_register_bound k
+    simpa only [bodyStart, setPointer_i64, if_neg (by omega : strideRegister k ≠ 27)] using h.strides k hk
+  · simpa only [bodyStart, setPointer_scalar, accumulatorRegister, if_pos (by decide : 0 = 0 ∨ 0 = 16)]
+      using h.accumulator
+  · exact h.reads
+  · simpa only [bodyStart, setPointer_i32] using h.thread
+  · simpa only [bodyStart, setPointer_i32] using h.counter
+  · simpa only [bodyStart, setPointer_pointer, if_neg (by decide : 24 ≠ 27)] using h.output
+  · simpa only [bodyStart, setPointer_pointer, if_neg (by decide : 47 ≠ 27)] using h.a
+  · simpa only [bodyStart, setPointer_i64, if_neg (by decide : 19 ≠ 27)] using h.rowOffset
+
+def chunkValue (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) : α :=
+  foldTerms ops input t c 0 16 acc
+
+def bodyEnd (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α)
+    (s : Machine α) : Machine α := runTerms ops input t c 0 16 acc (bodyStart t c s)
+
+theorem body_execute (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α)
+    (s : Machine α) (ht : t < 32768) (hc : c < 16) (h : LoopInvariant input t c acc s) :
+    Steps ops layout geometry t program s (bodyEnd ops input t c acc s) ∧
+    BodyInvariant input t c 16 (chunkValue ops input t c acc) (bodyEnd ops input t c acc s) := by
+  have head := body_entry ops input t c acc s ht hc h
+  have tail := runTerms_execute ops input t c 0 16 acc (bodyStart t c s) ht hc (by decide) head.2
+  exact ⟨steps_trans _ _ _ _ _ _ _ _ head.1 tail.1, tail.2⟩
+
 end Gemm
 
 #print axioms steps_trans
@@ -989,4 +1060,6 @@ end Gemm
 #print axioms Gemm.term_execute
 #print axioms Gemm.chunk_step
 #print axioms Gemm.runTerms_execute
+#print axioms Gemm.body_entry
+#print axioms Gemm.body_execute
 end LarkPtxMatrix
