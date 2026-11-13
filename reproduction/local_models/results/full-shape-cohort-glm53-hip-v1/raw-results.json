@@ -1,0 +1,1432 @@
+{
+  "schema": 1,
+  "status": "finished",
+  "protocol": {
+    "version": "full-shape-bounded-library-reads-v1",
+    "request_budget": 16,
+    "proof_check_budget": 3,
+    "library_read_budget": 8,
+    "max_read_lines": 120,
+    "max_tokens": 16384,
+    "thinking_token_budget": 4096,
+    "seed": 261102028,
+    "temperature": 0,
+    "reasoning_effort": "low",
+    "context_limit": 65536,
+    "context_margin": 256,
+    "model_timeout_seconds": 1800,
+    "lean_timeout_seconds": 180,
+    "feedback_chars": 12000,
+    "last_response_chars": 8000
+  },
+  "model": "zai-org/GLM-5.3",
+  "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+  "selected_cases": [
+    "relu",
+    "silu",
+    "gelu",
+    "rmsnorm",
+    "layernorm",
+    "softmax",
+    "gemv",
+    "gemm",
+    "bmm",
+    "linear",
+    "conv2d",
+    "depthwise_conv",
+    "rope",
+    "ffn",
+    "swiglu",
+    "attention",
+    "gqa"
+  ],
+  "planned_17_case_cohort": true,
+  "complete_17_case_cohort": true,
+  "test_stub": false,
+  "started_at_utc": "2026-11-13T03:46:49.881288+00:00",
+  "runner_sha256": "0e49b6ce519a2af91c81ee60419adcf37357a71fdf904a772dab0cd279368aef",
+  "client_sha256": "866637873ab84c2fe5ad2f0dd74e21de6dfee21e6ce34e26259727ce304d35fe",
+  "server_record_sha256": "2b2827d1b706072abd2c2b4e9d004c5eb2d4cf7eec93205a2287a3855765570a",
+  "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+  "external_api_spend_usd": 0,
+  "new_source_certificates": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false,
+  "cases": [
+    {
+      "case": "relu",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "bcf90d7d4b3529f83e63fb32d1268175f6d95285b5b38295f4bcde966b0acb18",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 1626.0333773460006
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "5e769691f5230dcd761179dc1607bae773eb7827c77b1cf5c37c083cda4f75e1",
+          "status": "library-read",
+          "elapsed_seconds": 15.891570811043493
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0df10e782c82a4016ee6fff3760b543a5fd4aef79eab5170b1fb48367d90886d",
+          "status": "library-read",
+          "elapsed_seconds": 4.6559691010043025
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "d567e04f9d9a5e11298c571c0b5f9d5d3fbdfce9f3caefac5583cf8d976abe6f",
+          "status": "library-read",
+          "elapsed_seconds": 5.765309893991798
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "eea2f9aa18311a193c637fdb4df435bb6f0eb550a436e35d08601387174fae11",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "ae2d0948ca3444a13e4f083674f8f9abe340dff78f0ed69adc296145877534eb",
+          "lean_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "elapsed_seconds": 103.81937766796909
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "2b2b562fbaab3732bde111e3b8374fae5e7f1045d99c5634dfba608fb87ef8a9"
+    },
+    {
+      "case": "silu",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "7650c60dea8bd38dd0974ef55ccd13229c66487ccc182b5c4158ec0d9df271e7",
+          "status": "library-read",
+          "elapsed_seconds": 5.2425463469699025
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "448f946f1ee5d9b1acb249464b1287045af6f5ea72fe6b3ac1282db4fd951f45",
+          "status": "library-read",
+          "elapsed_seconds": 4.269471482955851
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "79902f4adce6993d21e90c8dee374283821361d37964bb332dccb340625ebf54",
+          "status": "library-read",
+          "elapsed_seconds": 5.719859256991185
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "02cadebe30f5a08a7e655f1737d1967525d1722c60b6ea7e8b220881fc7a975f",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "6247763c45eba54607c5530c639502e22d21553581cd309b0b1d490d8ee7d222",
+          "lean_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "elapsed_seconds": 151.00476353196427
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "02afa46cadf8196c8d6db72da3bc204b20571530ceef221957ac6763c46a6e99"
+    },
+    {
+      "case": "gelu",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "93ee8f351129ca116e41f7fddb5366661b92733ce98717f03c9768b49812bd34",
+          "status": "library-read",
+          "elapsed_seconds": 5.328365697991103
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "fd62b28e13e882e09f7698689be30ddd42bcd076ac7debda925166d23dea045c",
+          "status": "library-read",
+          "elapsed_seconds": 4.173273157910444
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "fbe7f461ae5b95acdd8ca45b320de43f8c4193766a281f470d8d1d256af6bc17",
+          "status": "library-read",
+          "elapsed_seconds": 5.70928333606571
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "1bb69a72b143ddc2d9d0c2e62f421d6c60e7d561e97c815a5b5d9abba17c0a9e",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "d536a91f94a26161dd68a35fcc3be9c0a297d345fc7660636478d9783419e8fb",
+          "lean_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "elapsed_seconds": 230.7347360959975
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "afa59935a38950524efe686ce0c9edb01b7d4802025755ad7cc192fec5cb6f13"
+    },
+    {
+      "case": "rmsnorm",
+      "status": "budget-exhausted",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "df52ee8363a774c64fa4c87ece87c0fc48e2990a87c7b2326536b2671b8f99e8",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 84 (char 83)",
+          "elapsed_seconds": 233.00405051198322
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "51bee9a5c367a86ec0015c1fb92733d5a0d52dce322790c4967cd1228d3256f7",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "aeaff8ae72cc32da6a3d84bdae03613ed16b4ba13b54b25cb162b0e8ab6650ef",
+          "lean_log_sha256": "0d940dd16a4296c4310fe38336932927936b8a5e857993cea03524a8ca16f13e",
+          "lean_timed_out": false,
+          "elapsed_seconds": 162.2719631899381
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "220e23a30393ffb63c62c77cc28d9a302a6a2d57eec1c1c5eb8e53f1447e2620",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 102.98869426397141
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "34baa9a3b60c742d66bb45523cedd6e46ad70b184678e728c1900d72532aec5f",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "74a56e7be6192f6774a3b2b21d3e69c87c58b05375f0f8a513ade934c99ff626",
+          "lean_log_sha256": "46145f095f65ac0bb8e2801bce50f9fe45601fb3c68689bf005a601eed0939ed",
+          "lean_timed_out": false,
+          "elapsed_seconds": 23.41768570698332
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "22311d1589fea6ace7c42175772a67144f3b556755199d41bd8d7fb85d6ad60f",
+          "status": "library-read",
+          "elapsed_seconds": 4.939663858036511
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "68f0dfe1e4d361fac4c4a1e92ae912fefff755eb4694f300d874693003a706e0",
+          "status": "library-read",
+          "elapsed_seconds": 6.629886798909865
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "68d00d286d835e7d8edf130c8937a8be1cbc51503a853766945d27b7b717c5cd",
+          "status": "library-read",
+          "elapsed_seconds": 8.676656950963661
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "a6a9200381f8620df5fded16435f0891aea054f9c71c3b3ee81a8e3ab4b4334e",
+          "status": "library-read",
+          "elapsed_seconds": 10.059731096960604
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e0abeb3a7330d47656eaae8147fa9f3719f75b90f0b022cae26ad353b5d24978",
+          "status": "library-read",
+          "elapsed_seconds": 79.46217864600476
+        },
+        {
+          "request": 10,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "89be8258f26ed4ba443c1dcf72244f42c498211512acedeccc917091a49c1ce2",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "c95f675ef34f77712a96f02548a44bbab8c9c17c2553721118de66a9e7e69283",
+          "lean_log_sha256": "429ce1c7e175fb837fbaf413d941b0d4ea2ee774ee391f146ce73c714099a49e",
+          "lean_timed_out": false,
+          "elapsed_seconds": 163.49171752901748
+        }
+      ],
+      "proof_checks": 3,
+      "library_reads": 5,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "20fd5eea2e07ccff7234cc2ce9caefb4e40c270f81456e56410cd7018aac4333"
+    },
+    {
+      "case": "layernorm",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0b2807bbfc6cc332b20282336702051a43302af2d7ad255cf7e0313468a3a46e",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 84 (char 83)",
+          "elapsed_seconds": 23.096599641954526
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "7030034d3fb7173fba52497bd23c581bbd648c355bad74f4242b0e09db355021",
+          "status": "library-read",
+          "elapsed_seconds": 11.350901399971917
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e2f3d219c6630312e3b55ebce53f76406399da0159b80ce33a49d8cc453febce",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 85 (char 84)",
+          "elapsed_seconds": 35.63370710401796
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "4e244cddf178b3f4c2a56c8f70f18dfdc1cdc1ae7214c4204d5616039c75e0da",
+          "status": "library-read",
+          "elapsed_seconds": 6.829426520969719
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ce570a970d8cb3489a0321d441de1f230a7e6e263e97633f70f95b507803c61f",
+          "status": "library-read",
+          "elapsed_seconds": 33.58713503903709
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "24d3879ac14f5bd54e92fd6db75bc347a241826413934e2a5286660115a4c59e",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "cc7dd760ed3da5a76fb507ad3ae450fb0644b1355a6523114769d0d564f719dd",
+          "lean_log_sha256": "5e36d4a2e262151695e8b50e8bf6397b5892e109202b7c34c8c64f79eaeb2377",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "5e36d4a2e262151695e8b50e8bf6397b5892e109202b7c34c8c64f79eaeb2377",
+          "elapsed_seconds": 211.68325111595914
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "002526d3c36adfc2ba797f8df762bf77edd90286796c7a08a4a77d53b20f9a05"
+    },
+    {
+      "case": "softmax",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "f46ab0aaaa8984b517cdb961240702dd0c481dafc284651e01cef3d39da0810d",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 84 (char 83)",
+          "elapsed_seconds": 70.99477509688586
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "b57fd4391e94a02d11927833a7ef1830c445e6a4032ecfb620ff7c4bb1a3492b",
+          "status": "library-read",
+          "elapsed_seconds": 5.102058155927807
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "bc4c02aebd0c2b1bd4ac5341c82e9307a24cf835ba973dc08ed6a3f7c53ac1d6",
+          "status": "library-read",
+          "elapsed_seconds": 11.671618133084849
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "1f1e6dbbf9c64dcb060998dce51033f06d7c4b8f5846312c7b1928d8d37a6ea8",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 1582.4019335809862
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "fbb3fa013ea4bfb870df1c724671a6af538d23d62fdba042a8483797e597c25f",
+          "status": "library-read",
+          "elapsed_seconds": 19.996460878988728
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "71a97dc633c3fbab3c9d466139c6abd2a83733817a361057db5b6410ebb0c263",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 84 (char 83)",
+          "elapsed_seconds": 1562.753872586065
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0c91c06059cf0ffd5a5c4445efff7374b96fe301afc54b97e366f2524db3459d",
+          "status": "library-read",
+          "elapsed_seconds": 40.42910618300084
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "8283eb4d329705e8d517deffcba48a6f8c84773f7e498b8f6a1077ed1d17fccb",
+          "status": "library-read",
+          "elapsed_seconds": 77.2973915010225
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "f3494e76145cf9260e0b14d93cb4a4c9394e8daeb542580c7e6a884e4dc895ca",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "54c333a2c6fe1a515a6d5cf59f6a9bd982fcd44a8db786fd63204105c52ba464",
+          "lean_log_sha256": "5e36d4a2e262151695e8b50e8bf6397b5892e109202b7c34c8c64f79eaeb2377",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "5e36d4a2e262151695e8b50e8bf6397b5892e109202b7c34c8c64f79eaeb2377",
+          "elapsed_seconds": 240.1403837709222
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 5,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "f39d402fa59ffa2c781d10c57833437c9d5fe00a06d5927327c04df748520214"
+    },
+    {
+      "case": "gemv",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "a64a6d5cd46f065a2f0c8dd59213ed2f565e6a4ee5a1e9df0bc4bee636751cf1",
+          "status": "library-read",
+          "elapsed_seconds": 11.865659305942245
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "3a8ddf514dadeadf42c32baa12f5b8a8a893f7861f9baea9b203963ab30dc8a9",
+          "status": "library-read",
+          "elapsed_seconds": 63.001504170009866
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0112f2cda9e1e9a2500d7e7711d223006e0341536f2629b5a1ccf33bdd7f0491",
+          "proof_syntax_accepted": false,
+          "status": "invalid-proposal",
+          "error": "Proof-term parser refused the candidate; see recorded proof-syntax.log",
+          "elapsed_seconds": 126.4852709689876
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "848d46121a2e9d4596d809dbb8b28fe423262af1ed495a60153c0d38d3a6e083",
+          "status": "library-read",
+          "elapsed_seconds": 21.050181959057227
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "bffd056dc5a1a1d88e7b2476dd2ad18457cf1ca2e10159c241929a3de97d4e35",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "127c8ddf0f1c244351c3eb4c508c1b488dc45c4f58ab07d4f3b0440004dffa90",
+          "lean_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "4a9adc4b90dfb11bfa5a0f0b6930df7537d1753795fd9a92e5f7f85d54e0b366",
+          "elapsed_seconds": 134.1083887469722
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 2,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "bcabbd65a94aaf99b74a861f9db8e58e99b25ca2feaabfef86a78e7ab853782b"
+    },
+    {
+      "case": "gemm",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "2874067356077a436feb09a0780313cee25f58a84baf003c9cc541123b1fa8e3",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 77 (char 76)",
+          "elapsed_seconds": 29.8141041980125
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "9f036bb6f43efbbe360783b4abcd1a7d33dfc803b48abede6a5877622e937396",
+          "status": "library-read",
+          "elapsed_seconds": 8.709113769000396
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "457b6893d837b24fb6c2e280abfb023054e574925e22961ceaee92fb00d5d1a8",
+          "status": "library-read",
+          "elapsed_seconds": 58.118224509991705
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "781119fcef78da0d237c254445f462f1ca74d38a421cad06f73300d746a72f1f",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 1636.4969537080033
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "c457eab384ae306ca7978acfc3d4e8933c1300717a94ac85ca82f1c0350d0193",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 79 (char 78)",
+          "elapsed_seconds": 157.3882202289533
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "eaf77463fa6ea10033545fcf7b713e5353c0666e4cc45f1515159f21ecbd6abc",
+          "status": "library-read",
+          "elapsed_seconds": 11.572534563951194
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "2b0e7666bba1faa5e55a5be8fb6ad5e2f2aa8189d182b48305e7e95902b456df",
+          "status": "invalid-proposal",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "elapsed_seconds": 196.45332833507564
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "282592e489bb8fce4a4687f123d65f93ae4a274080d7b12912831b0ea22c34e9",
+          "status": "library-read",
+          "elapsed_seconds": 8.18011033302173
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ac2ab9e02c2e8eab3ca306db228ace2735783279e6ee044e5053b0cb4482e7dd",
+          "status": "library-read",
+          "elapsed_seconds": 152.64167960104533
+        },
+        {
+          "request": 10,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "d91bb58d1a3f13388269d4e25c335e7307a2de1a8bfb92e54c44ec65ed0df048",
+          "status": "library-read",
+          "elapsed_seconds": 247.11671331804246
+        },
+        {
+          "request": 11,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e3b51a0f74ad1ef44c6b73b808af13d83e605b047ea57052d6a58efc07d3611f",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "01e32f455996ea557fac1e985741b075db27aec60fecbe61a0025033ff6d9a4d",
+          "lean_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "elapsed_seconds": 146.0003592830617
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 6,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "050f22e734cf2f93f7054d15afc769f38e61629bdf38c2e23e4673fa54051c7a"
+    },
+    {
+      "case": "bmm",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e00035eec0f53e8e851dcfcd1ac30f66cc5e440e04e11aa6e1932590c3dbf625",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 78 (char 77)",
+          "elapsed_seconds": 1599.909089293913
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "eb2b6e471a343caaa4baa4a358714a090f31698774d7002dfff28b88df6db642",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 78 (char 77)",
+          "elapsed_seconds": 1588.1092906490667
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "47d53088b88474a565801a4d1b6b06a3648cfb24f6af85f36692be21c360a3f8",
+          "status": "library-read",
+          "elapsed_seconds": 105.74910312402062
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "1349f6e4e9c4e1b3d0a43eae366789a43dae400174dec69740ce87eac84a668e",
+          "status": "library-read",
+          "elapsed_seconds": 35.16466437501367
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "f4c1f406026bb3280e179722b209c11a312e8c469eefbe893e9675a571cac650",
+          "status": "library-read",
+          "elapsed_seconds": 76.11297190398909
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "5fb49282b552a122897361052a37c6e2b53bf3a55bd8253c229f4a4edc006980",
+          "status": "library-read",
+          "elapsed_seconds": 125.45783087494783
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "17bcf97221146f7fab1fb72ff056153229595a05a4c5676be055076c44888fa7",
+          "status": "library-read",
+          "elapsed_seconds": 188.63178324396722
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "1af3920f6bf51cd87fa79b1872dd2497d5972b8f18630a8247ac1170366e8c95",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "f90c8431d46f127ded0e710c1d5673f839d2fd7cb4257070cc7b369044b118e1",
+          "lean_log_sha256": "3a6d303b95489a36d429517b6968662e6bf3d4e34788d5fb5b8a5bec9c1eab49",
+          "lean_timed_out": false,
+          "elapsed_seconds": 151.35704705200624
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "606f05321d82e772d0f5f20b1448e8505d330eb30945fdafc560330238ee85e8",
+          "status": "library-read",
+          "elapsed_seconds": 15.707894788938574
+        },
+        {
+          "request": 10,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "7e167151838e5f70135098fa7884168f30fd52972ca485079204aab1f37af180",
+          "status": "library-read",
+          "elapsed_seconds": 257.4314573709853
+        },
+        {
+          "request": 11,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "9b63ef57fa07f052e3d5ff2769fd7f54a13e04f203544befbf401e4c0fd7adf6",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "7bb898908735eed535e551f4dbbe690497a94ed9e4c673c741ab3ceaf1e0638b",
+          "lean_log_sha256": "3b03c7626833beb17e513caefd1b491ded5fb1e0201709029bb4a9624da64960",
+          "lean_timed_out": false,
+          "elapsed_seconds": 116.28514916007407
+        },
+        {
+          "request": 12,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "1823bd8910a3710a4f4d4f2e9759c82468d5e5de363fd4d363a619ac3ae854dc",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "44333d1d39e7032444a262efa532071bb5a0d37a8c083995f1d0329d7453496e",
+          "lean_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "elapsed_seconds": 27.399381589028053
+        }
+      ],
+      "proof_checks": 3,
+      "library_reads": 7,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "ec3b277a0ee4d022e6349f674a6c7f2cf6bcf59e77355745bd6ec4d4477c6838"
+    },
+    {
+      "case": "linear",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ef0a763e9608ac506aa19c0f0dadbcb050e7bfad7fa57b652e28535a24c7c62f",
+          "status": "invalid-proposal",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "elapsed_seconds": 1595.1273523590062
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "cd080a38dfa9caa317d0f17667705b304809e9238b9648e48f0a402389f94d08",
+          "status": "library-read",
+          "elapsed_seconds": 16.01587264391128
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "5ac7eef54693d92fcb645a35801c017bfb85182880e3214422c9b48f7b785eca",
+          "status": "library-read",
+          "elapsed_seconds": 31.670068219071254
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "3165be2394af0b285935073a3710a129008ef45ed9236914acf1466f47863149",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 77 (char 76)",
+          "elapsed_seconds": 97.41209092794452
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "138d1201333f78d6caea646f400503ed3b501c83531b71f200a55a89cda46c65",
+          "status": "library-read",
+          "elapsed_seconds": 6.079886470921338
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "2228dbce4e765b5949c4abeeceb0f886b2097f8568b47702037c89144be4afbe",
+          "proof_syntax_accepted": false,
+          "status": "invalid-proposal",
+          "error": "Proof-term parser refused the candidate; see recorded proof-syntax.log",
+          "elapsed_seconds": 163.31682713108603
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "172dbe27383d0a6f71122661b5b95b7d994be7d3ce5931c4d705275f081cef98",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "209e58e3bc3dfe95bef6dd2edaccc5711ec81c0272624ec396362942be1e4797",
+          "lean_log_sha256": "ec371e5af0ae8747ae8094697a4f1ea0e9d562eeedaad08a589792fa750ea569",
+          "lean_timed_out": false,
+          "elapsed_seconds": 67.57591578108259
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "a168b99cf904058083d5a75cdfc77b9cd972a24ab5d57665bd1d960d7e16ae63",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "96717c073792c3ffb3b9ab31d803cc6dc330c9ac0913eec0752e39fb83b0dbd7",
+          "lean_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "8d3b9263928f33ff4800d0dbf205071ce1fc9a3b3cbc00e8b83298ef925840e5",
+          "elapsed_seconds": 55.020777269033715
+        }
+      ],
+      "proof_checks": 2,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "3c2a3b7e08a75b675a1882010f607c9b5fff08a011277af04a81a3aa8000396c"
+    },
+    {
+      "case": "conv2d",
+      "status": "budget-exhausted",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "a7dabd34ae9063d9d341b95eb811a4e94fa300b86dd31db316091ffe698e50c3",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 88.42429937899578
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "f0b47007ba67132ada56f0bcb0abfb10579342f4421a714b70252e9ab9ec66f6",
+          "status": "library-read",
+          "elapsed_seconds": 13.821795345982537
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "3c30a2b9a686d7ab676435ba087bf664a8ac91b2ef686824491f120fec775729",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 82 (char 81)",
+          "elapsed_seconds": 93.71525731100701
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e5a1e2fd24d927e54317d4960f428e20dc51aa8966be91610f6abf5141bdf3d0",
+          "status": "invalid-proposal",
+          "error": "Expecting ',' delimiter: line 1 column 81 (char 80)",
+          "elapsed_seconds": 9.051064915023744
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "08bc295e461e31d4e269316f6bd49ea8802e9c8f67622ba4609294734e9b9170",
+          "status": "library-read",
+          "elapsed_seconds": 7.157463802024722
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0ef000d25eff610073e3ec335060e4dd46d73aae7c4802db2dfb8d74d852b375",
+          "status": "library-read",
+          "elapsed_seconds": 18.383986062952317
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "6b865627532a83dafb31e2a7a7cf467a967d3d080d1322acf73de248096373c5",
+          "status": "library-read",
+          "elapsed_seconds": 16.584230366977863
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "0a0941d68d18a6a88672fd6d5abc44489fe68e3581fa578e9fea4f25c7f32f45",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "5e4c4908ab055e532fe5df9d8a47579f7168317fe3c5f8078e14a7d572346a79",
+          "lean_log_sha256": "99d5413a2389d45588a823a6513b70eeec81be894e2d21999bd9f30d716bde77",
+          "lean_timed_out": false,
+          "elapsed_seconds": 172.8680011210963
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "f40496a8dc9631b0b71c8414664edddd802b08f31ff18dcd74206bf342560a13",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "ed812f35404fdf66eea3f5adc2f408254f816fd6cacbbaea31e174d4e55d6229",
+          "lean_log_sha256": "e4bd49be226cef1c0a0fceba48ff85fed119a45cf3121ee6430c7240d93c23b2",
+          "lean_timed_out": false,
+          "elapsed_seconds": 21.794363506953232
+        },
+        {
+          "request": 10,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "9e5b3592cf0833f34e800962eb0ec12eb9c2f0501bb854af5b9a1a9ae9dd8ed7",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "3babbb3e6a1ef3ec9e49155057c53c1cd922a53f116270ec2adda7ad634abc0d",
+          "lean_log_sha256": "50bbdd942ec1bdf3fc6f77daf1a3beb4ff8c0a1d742f24766cdd2bdcf8618dcd",
+          "lean_timed_out": false,
+          "elapsed_seconds": 46.9641772400355
+        }
+      ],
+      "proof_checks": 3,
+      "library_reads": 4,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "5df5929226fc056a649ac34908311d191fabcf794730efa4f425f46dac2c8486"
+    },
+    {
+      "case": "depthwise_conv",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "4aa506b3cd17669beac3ab513ac768cab8ba9bac9650a59372fa4e2c593100f8",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 80 (char 79)",
+          "elapsed_seconds": 1305.7801864839857
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "3aa0cf84bb9e8ccbf92a1653c7018e542e747945a685b2ef53939f38ec38b9a2",
+          "status": "library-read",
+          "elapsed_seconds": 192.38630569004454
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e3ffd6bbe4ee47e23a454f417dbb17302043e9b3d522d29b7a555f804fcaa8dc",
+          "status": "library-read",
+          "elapsed_seconds": 94.5742202809779
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "5d377e79c99f0bfbb6422e4925ff7ee7c48a8b26cf15d2a885ad8ddafb7c326a",
+          "status": "library-read",
+          "elapsed_seconds": 80.01450976496562
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "62d9ef5406ab16dcbab7e7b15c662d990d8a0a46f8107c9c07d9f5bc9995a38d",
+          "status": "library-read",
+          "elapsed_seconds": 259.49240195099264
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "620796f32d1cd957dfece0a6593fafec4643a58a01007bb480b9b27e6398e14c",
+          "status": "library-read",
+          "elapsed_seconds": 255.9982502940111
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "cd6076a38c5d5f6fb7b49d800c4f069375403b0c5ff5e52bf37e141e90dc4871",
+          "status": "library-read",
+          "elapsed_seconds": 397.45333968801424
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "94d51fd9b57dbb84a772a198eddaaf694d551a442705e7d6680f37b63eed4e14",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "7b826e2ec01edc820972af4801faf5043cf9aa54dc3c7a414011eed190534dec",
+          "lean_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "elapsed_seconds": 432.7194012630498
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 6,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "6935d7d80157e92f27865f8bf971566cb12a90d8538a1396a4f04badff306fa3"
+    },
+    {
+      "case": "rope",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "b54309da7863f1a6e013d4f011fd8e1b3339bcad0eabfab923c6caadfeaf6531",
+          "status": "library-read",
+          "elapsed_seconds": 6.539554129936732
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "615d8c6c96cc444f41f045fa00952fa8e9bc3a7259ac5c7e2231521bf593a3f1",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 4 column 1 (char 81)",
+          "elapsed_seconds": 178.37082648696378
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ef3c4c84341a6bf120f8594dfdc00449c9726777a05eb8f689a1247d57b1e44b",
+          "status": "library-read",
+          "elapsed_seconds": 15.697300588944927
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "31dc2610d485a33a3c804aa71d82e2e73aceca480ab42aa83eca646f23f781c3",
+          "status": "invalid-proposal",
+          "error": "Expecting ',' delimiter: line 1 column 77 (char 76)",
+          "elapsed_seconds": 8.333321711048484
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "57063f336ac43d1c0845f53bd72ff9e0b8dea395efb4c39a358e79e6172b96a8",
+          "status": "library-read",
+          "elapsed_seconds": 4.594646712066606
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "a6ca4695db7d1681058e6eb445ad0a714cf891f8e585dc677cc98e6d172e9350",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "e7ad98b952a07974c2b8b25d4ad6bbd721dba943310b06532e9c09b92122906c",
+          "lean_log_sha256": "41958bef812a7ff00f97e8276b23a1926fb95e9ebdf0163878ce9a3f2d71b610",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "41958bef812a7ff00f97e8276b23a1926fb95e9ebdf0163878ce9a3f2d71b610",
+          "elapsed_seconds": 137.26168614299968
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "5e86bd01a9b3b80e435ef16007ed345e0a0d4ce0beb2efd8788bc950820bbd28"
+    },
+    {
+      "case": "ffn",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ed015b4a5dc9d0c7b21808552b3dfd2e235b51e9f1bbdb37d08b80f4f773f9d4",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 81 (char 80)",
+          "elapsed_seconds": 189.98276584304404
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e5a97d8a59c83d4684476fb4b9bcff9f91d93effdb19677c4f7a2ac47e2b9c71",
+          "status": "library-read",
+          "elapsed_seconds": 8.214114723959938
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "80d5dde70b70a33b5d797424fe37e4bc24859250abcc26e558a6d18cb1d53a7f",
+          "status": "invalid-proposal",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "elapsed_seconds": 18.39690736006014
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "cc251ddab1f0a6264b9e88afe8c72d5829b309bd86376a60e5303ab4d8ff0c98",
+          "status": "library-read",
+          "elapsed_seconds": 3.3811380569823086
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "eb7aae00423d914e0439c25be4d1e8b6f59e94a9d16366ab94067805e7336efc",
+          "status": "library-read",
+          "elapsed_seconds": 136.9650425139116
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "269166e7ba73af4d89b1e42bc9e4636bbfebef1009ae8c3854c823bcbe5f8435",
+          "status": "library-read",
+          "elapsed_seconds": 95.7035419200547
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "dbb3e8fc88657845feccb2271139ea07b5f0eacd36d113ac782c06046194a83a",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "1968d431c195b82bc0063a859e53ddfb51b9faf168aaf4687e6eb594c32a2183",
+          "lean_log_sha256": "ce5f98e173d4b0193a79919b60e6f3890bfcd909b6fc5263d2efe219f733ef19",
+          "lean_timed_out": false,
+          "elapsed_seconds": 332.72744978999253
+        },
+        {
+          "request": 8,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "bef579433b00a0c1c3a7dca9619ee1f6c9fc3253925b43f78a8f83a8b5e4d9fb",
+          "status": "library-read",
+          "elapsed_seconds": 20.92498530098237
+        },
+        {
+          "request": 9,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "3c5be7d6c849eece9a4c02a933581f5dfbc6f4b0dc0487c3c7db9566773e59af",
+          "proof_syntax_accepted": true,
+          "status": "unproved",
+          "main_sha256": "f55551373d56f413903751dfa2e03eb3b1ae9533a3638e78a37057b84ca9b6a6",
+          "lean_log_sha256": "671a2166e7cf4b39f54f544da71fcf7e07b786fdae625aed82fd06a03d8b5ab5",
+          "lean_timed_out": false,
+          "elapsed_seconds": 320.4129650059622
+        },
+        {
+          "request": 10,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "2acb5497dddd67afd43433af303bc9caa777a3ceba9a0b640a1bc733e1c264f2",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "dc5c69d0602bea29568b070a1c643f497e50e1f517d17363d8347ea32af9ad06",
+          "lean_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "elapsed_seconds": 165.5685310070403
+        }
+      ],
+      "proof_checks": 3,
+      "library_reads": 5,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "8211a4af77ba2ea0f473ab2e3158c8d699e6d4e7234eaae603e85f89889deab4"
+    },
+    {
+      "case": "swiglu",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "52af3d68945eb8e9c65c95f64970ddb07a30dbccb7115985dfa756674f34c11d",
+          "status": "invalid-proposal",
+          "error": "Library read must request 1..120 lines",
+          "elapsed_seconds": 13.396503333002329
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "5bad07ff66c705a5284f936975288e71165d15e13f5f0424e097bd13c2377aac",
+          "status": "library-read",
+          "elapsed_seconds": 4.528570668073371
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "af88f49de2ff35e450c30a96bdaf2bf46df5c68f079bb5e2cde8777266dc79bf",
+          "status": "library-read",
+          "elapsed_seconds": 10.711080287001096
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "7374f8be2fd972bbe253e90e70338e380a7d8a9210e5a801f0323de93118fbc1",
+          "status": "library-read",
+          "elapsed_seconds": 21.91480230097659
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "42ab9620b86cdc47dc37d360fa87aebb8a072bdaafd3184b284753c2b8ab79a4",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "4867eef649a0179042dcbd0b830fb694dba2578f114495e9d881f33372f1f6a2",
+          "lean_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "elapsed_seconds": 371.36393377697095
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "02abe9a987e75ca545ca7eff16cc3e4bdb5e745f369c184d6ac2f8262666630b"
+    },
+    {
+      "case": "attention",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "4c3ab9a28ece505c858a63df49c8c3234f37d46c5df39c68b1a75e6cb9fec272",
+          "status": "invalid-proposal",
+          "error": "Library read must request 1..120 lines",
+          "elapsed_seconds": 27.778307473054156
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "ff0e5bceacdd7cf67c1e4592b1fab844925fd84197bc413977b6c88ef03e70a4",
+          "status": "library-read",
+          "elapsed_seconds": 6.529625755967572
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "71020683a928e0393d2ab4632ff311f65d26a58a6719fed234c5055e8bd8f370",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "8dcc50b62197ddc15576dba00628b7600cadc2e07a8a9924bacda5095ff74c40",
+          "lean_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "elapsed_seconds": 179.1127342939144
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 1,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "5672bb55655f5a39000c8b17fb4c7013ef2c18312942b15d2faa14dd14c36157"
+    },
+    {
+      "case": "gqa",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "066f75d9f4d58de10ab091ef4ac0926001a111cc52d54b3b07ac791000271837",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 88 (char 87)",
+          "elapsed_seconds": 1573.5385820100782
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "42b579ea46bb738a88d289ea469c976afa94582c83ff3fc6e0bc27bb31a42edb",
+          "status": "library-read",
+          "elapsed_seconds": 35.1645076420391
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "dc78590d8bdfed63594be461682481dccd51d259e8a89205a2918c2e673f0932",
+          "status": "invalid-proposal",
+          "error": "Extra data: line 1 column 87 (char 86)",
+          "elapsed_seconds": 183.15445512789302
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "e84c4c83e6b493cefe71ba81a71c583e449a95f09c183518948bd50d4ad6e6a1",
+          "status": "library-read",
+          "elapsed_seconds": 83.6781058749184
+        },
+        {
+          "request": 5,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "d7416ccb8cccd534e84f80f3ad0b6e8c8478e7d3367df8c485a34f723da8fa34",
+          "proof_syntax_accepted": false,
+          "status": "invalid-proposal",
+          "error": "Proof-term parser refused the candidate; see recorded proof-syntax.log",
+          "elapsed_seconds": 186.42427992203739
+        },
+        {
+          "request": 6,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "50989027ab673a5be558ab441449eafc425e36a2fbcc17ed8b0d5af4f747239a",
+          "proof_syntax_accepted": false,
+          "status": "invalid-proposal",
+          "error": "Proof-term parser refused the candidate; see recorded proof-syntax.log",
+          "elapsed_seconds": 80.68158328300342
+        },
+        {
+          "request": 7,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "673031c1f00f0a064bb496c865b9f4f370e7f762e7beb06f8254101f44f19219",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "66dfeef2b85ed3609009d75149a75dc7f5325b90d291967fa1f5755f327f9610",
+          "lean_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "0ef047e762d930c1f4575e2ade84f5b76ff0d8dcc135c51eb8e878ec3d4ff090",
+          "elapsed_seconds": 163.7591804380063
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 2,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 3,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "bc73badb5bb1950926bac6bc4eba78ef3a2f562f8b76fb5b5eb58f4718a280d0"
+    }
+  ],
+  "scope": "Independent full-size HIP proof-slot/library-read experiment. No original registry/harness/stage-cost or historical pass-rate reproduction. SDK controls are not model successes.",
+  "runner_source_sha256": {
+    "checkpoint.py": "66a3e0a35b936ea9b7aec0dae1102ef1c348ca8318c600ac92ff9bdf768261a3",
+    "full_shape.py": "afeb250f9b4a8a0f94fed862e792f5608c685aee126adf8ea994ec5c3d9a8cfe"
+  },
+  "request_attempts": 123,
+  "response_files": 123,
+  "usage_incomplete": false,
+  "reported_usage": {
+    "prompt_tokens": 2090532,
+    "completion_tokens": 245080,
+    "total_tokens": 2335612
+  },
+  "model_inference_calls": 123,
+  "verified_model_proofs": 15
+}

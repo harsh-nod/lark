@@ -20,7 +20,6 @@ Zero first responses verified a proof; five tasks verified at their first
 actual Lean check, which is a separate metric. Full protocol replay bound every
 request, and all twelve accepted proofs passed 24 additional fresh kernel/axiom
 checks. Its exact owned, drained two-GPU service was stopped with exit code zero.
-GLM HIP and the GLM and DeepSeek CUDA-source cohorts remain unfinished experiments.
 
 The [completed full-size Flash CUDA cohort](results/full-shape-cohort-flash-cuda-v1/results.json)
 verified nine of seventeen tasks. ReLU, RMSNorm, Softmax, GEMM, BMM, Conv2D,
@@ -32,6 +31,16 @@ and the nine accepted proofs passed 18 additional fresh kernel/axiom checks.
 The exact owned, drained two-GPU service was stopped with exit code zero.
 CUDA identifies the proof-task source language; serving used MI350X GPUs and
 Lean checks ran on CPU. These are independent fixed-scaffold model outcomes.
+
+The [completed full-size GLM HIP cohort](results/full-shape-cohort-glm53-hip-v1/results.json)
+verified fifteen of seventeen tasks. RMSNorm and Conv2D exhausted their budgets.
+All 123 requests and responses remain archived: 2,090,532 prompt and 245,080
+completion tokens, 2,335,612 total. Zero first responses verified a proof;
+twelve tasks verified at their first actual Lean check. Complete protocol replay
+regenerated every request and bound accepted proofs to 30 additional fresh
+kernel/axiom checks. The exact owned service was observed drained with unchanged
+configuration and retained for the separate CUDA-source cohort after the HIP
+audit. GLM and DeepSeek CUDA-source cohorts remain unfinished experiments.
 
 The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
 costs from the archived responses and applies success-only input/output token
@@ -63,6 +72,15 @@ model/language cohorts remain missing. All eight failed tasks remain in total
 spending. This report adds no model, GPU or Lean experiment and supplies no
 original-paper model result.
 
+The [updated four-cohort comparison](results/full-shape-comparison-four-cohorts-v1/RESULTS.md)
+adds GLM HIP while preserving all three earlier frozen reports. GLM HIP verified
+ten of twelve Level-1 and all five Level-2 tasks. Its success-only mean
+prompt/completion costs are 0.108794M/0.018695M and 0.137481M/0.009095M tokens,
+with denominators ten and five respectively. Two independent model/language
+cohorts remain missing from this report; both budget-exhausted GLM HIP tasks
+remain in spending totals. It adds no model, GPU or Lean experiment and claims
+no original-paper model result.
+
 The [comparison publication receipt](results/full-shape-comparison-publication-v1/results.json)
 checks its original eight public files over TLS without authentication. The
 [comparison main receipt](results/full-shape-comparison-ci-main-v1/results.json)
@@ -72,6 +90,9 @@ retain all nineteen successful exact-source CI jobs for those prior changes.
 The [Flash HIP main receipt](results/full-shape-flash-hip-ci-main-v1/results.json)
 also retains its checked non-force fast-forward and all nineteen successful
 jobs on the actual resulting main commit. The
+[Flash CUDA main receipt](results/full-shape-flash-cuda-ci-main-v1/results.json)
+records the same checks for the three-cohort publication, including all nineteen
+successful jobs on its actual resulting main. The
 [bounded PTX implementation review](results/ptx-verifier-implementation-review-v1/results.json)
 binds thirteen inspected `ptx_verifier` source/fixture files to their Git blobs
 and records its explicit PTX CTA-zero analysis and exported-output proof
@@ -95,8 +116,8 @@ within the common 65,536-token limit. The
 [full-size ReLU pilot](results/full-shape-pilot-glm53-v1/binding.json) verified its
 first proof submission after three library reads. All four requests and two
 fresh Lean checks are archived: 36,503 prompt and 1,064 completion tokens.
-This single pilot is separate from the seventeen-task cohort, which is still
-running. The [recorded-protocol replay](results/full-shape-pilot-replay-v1/binding.json)
+This single pilot is separate from the completed seventeen-task HIP cohort above.
+The [recorded-protocol replay](results/full-shape-pilot-replay-v1/binding.json)
 binds all four requests to the fixed tasks and source reads, then checks the
 existing successful model proof in two more fresh Lean processes. It adds no
 model calls, model trial or registered source certificate.
@@ -121,6 +142,15 @@ configuration and exact controller. Their prompts were regenerated from the
 frozen tasks before publication. Setup claims no model proof successes or GPU
 kernel trials; CUDA identifies the proof-task source language, without NVIDIA
 execution evidence.
+
+The [DeepSeek CUDA-task runtime](results/full-shape-runtime-deepseek-cuda-v1/results.json)
+records its one guarded four-GPU launch, separate 69-token non-proof warmup and
+all seventeen tokenizer checks. Its largest initial prompt uses 23,001 tokens
+within the common 65,536-token limit. The archive binds eighty runtime/source/log
+files and regenerated prompts; its [validation controls](results/full-shape-runtime-deepseek-cuda-validation-v1/results.json)
+refused fully rehashed prompt and warmup-usage changes. Runtime capture made no
+model, Lean or GPU calls and claims no proof successes. The live CUDA cohort
+remains separate from this setup evidence.
 
 The [paired specification identity main receipt](results/hip-cuda-reference-identity-ci-main-v1/results.json)
 records all nineteen exact-source CI jobs passing, including a fresh full

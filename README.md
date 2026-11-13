@@ -211,9 +211,14 @@ completed all seventeen tasks: nine verified and eight exhausted the fixed
 budget. Its 108 requests used 2,005,842 reported tokens, with all accepted
 proofs passing 18 additional fresh checks. CUDA names the proof-task source
 language; serving used AMD GPUs and Lean ran on CPU.
-The [three-cohort comparison](reproduction/local_models/results/full-shape-comparison-three-cohorts-v1/RESULTS.md)
+The [full-size GLM HIP cohort](reproduction/local_models/results/full-shape-cohort-glm53-hip-v1/results.json)
+completed all seventeen tasks: fifteen verified and two exhausted the fixed
+budget. Its 123 requests used 2,335,612 reported tokens, with all accepted
+proofs passing 30 additional fresh checks. The same drained service was retained
+for the separate CUDA-source cohort after the HIP audit.
+The [four-cohort comparison](reproduction/local_models/results/full-shape-comparison-four-cohorts-v1/RESULTS.md)
 keeps unsuccessful attempts in total spending and computes per-level token
-means over successful tasks. Three independent model/language cohorts remain
+means over successful tasks. Two independent model/language cohorts remain
 unfinished; the paper's original model results remain missing.
 The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
 certificates and 170 exact-source trials per host.
