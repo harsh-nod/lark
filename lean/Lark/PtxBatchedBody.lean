@@ -807,6 +807,65 @@ theorem source_lane (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base 
     rfl
   · rw [exitReturned_memory, memory]
 
+def referenceTerm (ops : Ops α) (input : Nat → Nat → α) (t k : Nat) (acc : α) : α :=
+  ops.add acc (ops.mul (ops.fromHalf (input 0 (aIndex t k))) (ops.fromHalf (input 1 (bIndex t k))))
+
+def referenceFold (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | k, r+1, acc => referenceFold ops input t (k+1) r (referenceTerm ops input t k acc)
+
+theorem foldTerms_reference (ops : Ops α) (input : Nat → Nat → α) (t c j r : Nat) (acc : α) :
+    foldTerms ops input t c j r acc = referenceFold ops input t (16*c+j) r acc := by
+  induction r generalizing j acc with
+  | zero => rfl
+  | succ r ih =>
+      simp only [foldTerms, ih, referenceFold, nextValue, referenceTerm, Nat.add_assoc]
+
+theorem chunkValue_reference (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) :
+    chunkValue ops input t c acc = referenceFold ops input t (16*c) 16 acc := by
+  rw [chunkValue, foldTerms_reference]
+  rfl
+
+theorem referenceFold_append (ops : Ops α) (input : Nat → Nat → α) (t k m n : Nat) (acc : α) :
+    referenceFold ops input t k (m+n) acc =
+      referenceFold ops input t (k+m) n (referenceFold ops input t k m acc) := by
+  induction m generalizing k acc with
+  | zero => simp [referenceFold]
+  | succ m ih =>
+      have he : m+1+n = (m+n)+1 := by omega
+      simp only [he, referenceFold, ih]
+      have hk : k+1+m = k+(m+1) := by omega
+      rw [hk]
+
+theorem foldChunks_reference (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat) (acc : α) :
+    foldChunks ops input t c r acc = referenceFold ops input t (16*c) (16*r) acc := by
+  induction r generalizing c acc with
+  | zero => rfl
+  | succ r ih =>
+      rw [foldChunks, ih, chunkValue_reference]
+      have he : 16*(r+1) = 16+16*r := by omega
+      rw [he, referenceFold_append]
+      have hc : 16*(c+1) = 16*c+16 := by omega
+      simp only [hc]
+
+def reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  ops.toHalf (referenceFold ops input t 0 256 (ops.literal 0 1))
+
+theorem dotValue_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) :
+    ops.toHalf (dotValue ops input t) = reference ops input t := by
+  unfold dotValue reference
+  rw [foldChunks_reference]
+
+theorem source_lane_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base : State α)
+    (ht : t < 1048576) (hreads : Reads input (start base)) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧
+      final.registers.stopped = true ∧ final.pc = 138 ∧
+      final.registers.base.memory =
+        fun l => if l = outputCell t then some (reference ops input t) else base.memory l := by
+  obtain ⟨final, execution, stopped, pc, memory⟩ := source_lane ops input t base ht hreads
+  refine ⟨final, execution, stopped, pc, ?_⟩
+  simpa only [dotValue_reference] using memory
+
 end LarkPtxBatched.Bmm.Body
 
 #print axioms LarkPtxBatched.Bmm.Body.a_address
@@ -852,3 +911,9 @@ end LarkPtxBatched.Bmm.Body
 #print axioms LarkPtxBatched.Bmm.Body.exitReturned_stopped
 #print axioms LarkPtxBatched.Bmm.Body.exitReturned_pc
 #print axioms LarkPtxBatched.Bmm.Body.source_lane
+#print axioms LarkPtxBatched.Bmm.Body.foldTerms_reference
+#print axioms LarkPtxBatched.Bmm.Body.chunkValue_reference
+#print axioms LarkPtxBatched.Bmm.Body.referenceFold_append
+#print axioms LarkPtxBatched.Bmm.Body.foldChunks_reference
+#print axioms LarkPtxBatched.Bmm.Body.dotValue_reference
+#print axioms LarkPtxBatched.Bmm.Body.source_lane_reference
