@@ -3,6 +3,16 @@
 The [frozen proof packet](results/full-size-gemv-proof-v1/RESULTS.md) retains four
 positive Main checks and four direct Lean negative controls. Source-only and
 isolated installed-wheel replay passed without model calls or GPU trials.
+The [anonymous publication check](results/full-size-gemv-proof-publication-v1/results.json)
+matched all 33 changed files (16,674,158 bytes) to source `acd61f0` with TLS
+verification enabled. It also checked all five archives, 358 archive members
+and 52 wheel/source bindings. This repeated no proof, model or GPU experiment.
+The [actual source CI record](results/full-size-gemv-proof-ci-v1/results.json)
+records all twenty jobs passing at source `acd61f0`, including the complete
+GEMV export/replay and tampering tests and the unchanged paper-ledger checks.
+The later receipt commit changes only this document and recorded receipts;
+all SDK, Lean, tests, workflow and frozen-snapshot bytes retain the exact
+tested source identities.
 
 This development profile checks the independently implemented scalar GEMV's
 actual NVRTC-generated PTX, with the unchanged 512×1024 FP16 matrix, 1024×1 FP16
