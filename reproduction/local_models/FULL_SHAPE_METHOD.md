@@ -138,3 +138,29 @@ The auditor checks that dependency and refuses a CUDA label attached to an old
 HIP preparation or to a controller that only supported HIP. Historical HIP
 records remain supported. The active HIP cohorts continue with their original
 frozen controller and inputs. No CUDA model success is claimed by preparation.
+
+The [paired-reference check](results/hip-cuda-reference-identity-v1/binding.json)
+proves equality of the actual generated HIP/CUDA specification functions for all
+seventeen families. Each new Main retains both SDK blocks inside separate
+namespaces and checks their twelve original obligations plus the function-equality
+theorem. All 221 axiom audits passed. The paired Torch reference files are also
+byte-identical. This establishes shared formal specifications at the existing
+shapes; the earlier CPU numerical sample counts remain unchanged.
+
+```bash
+LARK_REAL_PROJECT=/path/to/configured/lean-real \
+python3 reproduction/local_models/reference_identity.py \
+  --hip-prepared /tmp/extracted-hip-preparation \
+  --cuda-prepared /tmp/extracted-cuda-preparation \
+  --lean /path/to/lean-4.19.0/bin/lean --output /tmp/reference-identities
+```
+
+The wrong-operator control pairs the ReLU and GELU specifications. Its reflexivity
+attempt reaches the fixed recursion limit only in the final identity proof,
+after both original source-proof audits pass. It is refused without a certificate;
+this resource refusal is not a semantic inequality proof. The development draft
+misclassified that diagnostic; the final run corrects the classification while
+retaining identical Main bytes, shapes, fuels and limits. The study adds no
+model calls, numerical samples, GPU executions or registered source certificates.
+A separate CPU CI job repeats all seventeen identities and the refusal while
+retaining the eighteen existing jobs.

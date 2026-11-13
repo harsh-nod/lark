@@ -8,6 +8,55 @@ permissions:
   contents: read
 
 jobs:
+  reference-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      LARK_REAL_PROJECT: ${{ github.workspace }}/lean-real
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Extract the two independently pinned full-size preparations as data
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import tarfile
+          for name, destination in [('full-shape-preparation-v2','/tmp/lark-reference-hip'),
+                                    ('full-shape-cuda-preparation-v1','/tmp/lark-reference-cuda')]:
+              root = Path(destination)
+              root.mkdir(exist_ok=False)
+              with tarfile.open('reproduction/local_models/results/'+name+'/preparation.tar.gz') as archive:
+                  for member in archive:
+                      relative = PurePosixPath(member.name)
+                      assert member.isfile() and not relative.is_absolute() and '..' not in relative.parts
+                      path = root / relative
+                      path.parent.mkdir(parents=True, exist_ok=True)
+                      path.write_bytes(archive.extractfile(member).read())
+          PY
+      - name: Recheck all seventeen source-specification identities and wrong-operator refusal on CPU
+        run: |
+          python3 reproduction/local_models/reference_identity.py \
+            --hip-prepared /tmp/lark-reference-hip --cuda-prepared /tmp/lark-reference-cuda \
+            --output /tmp/lark-reference-identities --lean "$HOME/.elan/bin/lean"
   native-awq-real:
     runs-on: ubuntu-latest
     timeout-minutes: 25
