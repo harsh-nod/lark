@@ -63,8 +63,9 @@ def main():
     validation = json.loads((out/'validation/results.json').read_text())
     targets = json.loads((downloaded/snapshot/'targets.json').read_text())
     expected_controls = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
-                         + 16*('numerical_studies' in targets))
-    expected_positives = 2 if 'numerical_studies' in targets else 1
+                         + 16*('numerical_studies' in targets)
+                         + 17*('full_shape_models' in targets))
+    expected_positives = (2 if 'numerical_studies' in targets else 1) + ('full_shape_models' in targets)
     assert validation['positive_replays'] == expected_positives and validation['negative_controls'] == expected_controls
     assert validation['replayer_sha256'] == sha(downloaded/relative/'replay_snapshot.py')
     assert validation['control_runner_sha256'] == sha(downloaded/relative/'check_snapshot_controls.py')
