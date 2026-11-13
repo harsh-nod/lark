@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import re
+import secrets
 import sys
 import time
 import traceback
@@ -59,7 +60,7 @@ def render(source, reference, contract):
     )
 
 
-def run(output, lean_path):
+def run(output, lean_path, owner_token):
     output = common.fresh_output(output)
     lean, version = common.toolchain(lean_path)
     folder = ROOT / "reproduction/ptx/full-size/linear"
@@ -73,6 +74,7 @@ def run(output, lean_path):
     sources["reproduction/ptx/linear_frontend.py"] = (ROOT / "reproduction/ptx/linear_frontend.py").read_bytes()
     sources = dict(sorted(sources.items()))
     output.mkdir(parents=True)
+    common.write(output / "owner.json", {"pid": os.getpid(), "token": owner_token})
     (output / "driver.py").write_bytes(Path(__file__).read_bytes())
     for name, content in inputs.items():
         (output / name).write_bytes(content)
@@ -171,11 +173,16 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--lean", type=Path, required=True)
     args = parser.parse_args()
+    owner_token = secrets.token_hex(16)
     try:
-        result = run(args.output, args.lean)
+        result = run(args.output, args.lean, owner_token)
     except Exception as error:
         output = args.output.resolve()
-        if output.is_dir() and (output / "driver.py").exists():
+        try:
+            owned = common.read(output / "owner.json") == {"pid": os.getpid(), "token": owner_token}
+        except (OSError, ValueError):
+            owned = False
+        if owned:
             (output / "exception.txt").write_text(traceback.format_exc())
             path = output / "results.json"
             failed = common.read(path) if path.exists() else {}
