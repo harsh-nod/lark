@@ -114,6 +114,136 @@ theorem produce_float (ops : Ops α) (t : Nat) (base : State α) (s : Machine α
   change s.pc+1 = pc+1
   rw [hpc]
 
+theorem row_sign (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 14) (ht : t < 1048576) :
+    Result ops t base s 14 (fun m => setIndex32 m 13 0) := by
+  have hb : signed32 (t : Int) := by unfold signed32; omega
+  have e := LarkPtxMatrix.signed_right_step ops layout geometry t 13 11 31
+    (t : Int) s h.lane hb
+  have hp : (2 : Int)^min 31 32 = 2147483648 := by decide
+  have hz : (t : Int)/2147483648 = 0 := by omega
+  rw [hp, hz] at e
+  exact produce32 ops t base s 14 13 0 (.shiftRightSigned32 13 11 31)
+    h hpc (by rfl) e (by decide)
+
+theorem row_correction (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 15) (h13 : s.registers.i32 13 = some 0) :
+    Result ops t base s 15 (fun m => setIndex32 m 14 0) := by
+  have e := LarkPtxMatrix.unsigned_right_step ops layout geometry t 14 13 26
+    0 s h13 (by decide)
+  have hz : (0 : Int)/(2 : Int)^min 26 32 = 0 := by decide
+  rw [hz] at e
+  exact produce32 ops t base s 15 14 0 (.shiftRightUnsigned32 14 13 26)
+    h hpc (by rfl) e (by decide)
+
+theorem prefix16_execute (ops : Ops α) (t : Nat) (base : State α) (ht : t < 1048576) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧ Frame t base final ∧
+      final.pc = 16 ∧ final.registers.i32 14 = some 0 := by
+  obtain ⟨s15, first, f15, pc15, eq15⟩ :=
+    row_sign ops t base (globalRow t base) (prefix_frame t base) (prefix_rows_pc t base) ht
+  have r13 : s15.registers.i32 13 = some 0 := by rw [eq15]; simp
+  obtain ⟨s16, second, f16, pc16, eq16⟩ := row_correction ops t base s15 f15 pc15 r13
+  refine ⟨s16, ?_, f16, pc16, ?_⟩
+  · exact LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ (prefix_rows_execute ops t base ht)
+      (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ first second)
+  · rw [eq16]; simp
+
+theorem row_adjust (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 16) (ht : t < 1048576)
+    (h14 : s.registers.i32 14 = some 0) :
+    Result ops t base s 16 (fun m => setIndex32 m 15 ((t/512 : Nat) : Int)) := by
+  have hb : signed32 ((t/512 : Nat) : Int) ∧ signed32 0 ∧
+      signed32 (((t/512 : Nat) : Int)+0) := by unfold signed32; omega
+  have e := LarkPtxDot.add32_step ops layout geometry t 15 12 (.reg 14) s
+    ((t/512 : Nat) : Int) 0 h.row h14 hb
+  simp only [Int.add_zero] at e
+  exact produce32 ops t base s 16 15 ((t/512 : Nat) : Int) (.base (.addSigned32 15 12 (.reg 14)))
+    h hpc (by rfl) e (by decide)
+
+theorem row_mask (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 17) (ht : t < 1048576)
+    (h15 : s.registers.i32 15 = some ((t/512 : Nat) : Int)) :
+    Result ops t base s 17 (fun m => setIndex32 m 16 ((t/512/64*64 : Nat) : Int)) := by
+  have hb : unsigned32 ((t/512 : Nat) : Int) ∧ signed32 16777152 := by
+    unfold unsigned32 signed32; omega
+  have e := LarkPtxMatrix.and_step ops layout geometry t 16 15 (.imm 16777152)
+    ((t/512 : Nat) : Int) 16777152 s h15 (by rfl) hb
+  have hbits : LarkPtxMatrix.bits32 ((t/512 : Nat) : Int) = t/512 := by
+    unfold LarkPtxMatrix.bits32
+    have he : ((t/512 : Nat) : Int) % 4294967296 = ((t/512 : Nat) : Int) := by omega
+    rw [he]; simp
+  have hmask : LarkPtxMatrix.bits32 16777152 = 16777152 := by decide
+  rw [hbits, hmask, clear_low6 (t/512) (by omega)] at e
+  exact produce32 ops t base s 17 16 ((t/512/64*64 : Nat) : Int) (.andBits32 16 15 (.imm 16777152))
+    h hpc (by rfl) e (by decide)
+
+theorem local_row (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 18) (ht : t < 1048576)
+    (h16 : s.registers.i32 16 = some ((t/512/64*64 : Nat) : Int)) :
+    Result ops t base s 18 (fun m => setIndex32 m 17 (((t/512)%64 : Nat) : Int)) := by
+  have hb : signed32 ((t/512 : Nat) : Int) ∧ signed32 ((t/512/64*64 : Nat) : Int) ∧
+      signed32 (((t/512 : Nat) : Int)-((t/512/64*64 : Nat) : Int)) := by
+    unfold signed32; simp only [Int.natCast_mul]; omega
+  have e := LarkPtxMatrix.sub_step ops layout geometry t 17 12 (.reg 16)
+    ((t/512 : Nat) : Int) ((t/512/64*64 : Nat) : Int) s h.row h16 hb
+  have he : ((t/512 : Nat) : Int)-((t/512/64*64 : Nat) : Int) = (((t/512)%64 : Nat) : Int) := by
+    simp only [Int.natCast_mul]; omega
+  rw [he] at e
+  exact produce32 ops t base s 18 17 (((t/512)%64 : Nat) : Int) (.subSigned32 17 12 (.reg 16))
+    h hpc (by rfl) e (by decide)
+
+theorem local_a_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 19)
+    (h17 : s.registers.i32 17 = some (((t/512)%64 : Nat) : Int)) :
+    Result ops t base s 19 (fun m => setIndex32 m 18 (((t/512)%64*256 : Nat) : Int)) := by
+  have hb : unsigned32 (((t/512)%64 : Nat) : Int) := by unfold unsigned32; omega
+  have e := LarkPtxDot.shiftLeft_step ops layout geometry t 18 17 8 s
+    (((t/512)%64 : Nat) : Int) h17 hb
+  have hp : (2 : Int)^min 8 32 = 256 := by decide
+  have he : ((((t/512)%64 : Nat) : Int)*256) % 4294967296 = (((t/512)%64*256 : Nat) : Int) := by
+    simp only [Int.natCast_mul]; omega
+  rw [hp, he] at e
+  exact produce32 ops t base s 19 18 (((t/512)%64*256 : Nat) : Int) (.base (.shiftLeft32 18 17 8))
+    h hpc (by rfl) e (by decide)
+
+theorem column_mask (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 20) (ht : t < 1048576) :
+    Result ops t base s 20 (fun m => setIndex32 m 19 ((t/512*512 : Nat) : Int)) := by
+  have hb : unsigned32 (t : Int) ∧ signed32 (-512) := by unfold unsigned32 signed32; omega
+  have e := LarkPtxMatrix.and_step ops layout geometry t 19 11 (.imm (-512))
+    (t : Int) (-512) s h.lane (by rfl) hb
+  have hbits : LarkPtxMatrix.bits32 (t : Int) = t := by
+    unfold LarkPtxMatrix.bits32
+    have he : (t : Int) % 4294967296 = (t : Int) := by omega
+    rw [he]; simp
+  rw [hbits, LarkPtxMatrix.bits32_negative512, LarkPtxMatrix.clear_low9 t (by omega)] at e
+  exact produce32 ops t base s 20 19 ((t/512*512 : Nat) : Int) (.andBits32 19 11 (.imm (-512)))
+    h hpc (by rfl) e (by decide)
+
+theorem prefix21_execute (ops : Ops α) (t : Nat) (base : State α) (ht : t < 1048576) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧ Frame t base final ∧
+      final.pc = 21 ∧
+      final.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int) ∧
+      final.registers.i32 19 = some ((t/512*512 : Nat) : Int) := by
+  obtain ⟨s16, first, f16, pc16, r14⟩ := prefix16_execute ops t base ht
+  obtain ⟨s17, e17, f17, pc17, eq17⟩ := row_adjust ops t base s16 f16 pc16 ht r14
+  have r15 : s17.registers.i32 15 = some ((t/512 : Nat) : Int) := by rw [eq17]; simp
+  obtain ⟨s18, e18, f18, pc18, eq18⟩ := row_mask ops t base s17 f17 pc17 ht r15
+  have r16 : s18.registers.i32 16 = some ((t/512/64*64 : Nat) : Int) := by rw [eq18]; simp
+  obtain ⟨s19, e19, f19, pc19, eq19⟩ := local_row ops t base s18 f18 pc18 ht r16
+  have r17 : s19.registers.i32 17 = some (((t/512)%64 : Nat) : Int) := by rw [eq19]; simp
+  obtain ⟨s20, e20, f20, pc20, eq20⟩ := local_a_offset ops t base s19 f19 pc19 r17
+  have r18 : s20.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int) := by rw [eq20]; simp
+  obtain ⟨s21, e21, f21, pc21, eq21⟩ := column_mask ops t base s20 f20 pc20 ht
+  refine ⟨s21, ?_, f21, pc21, ?_, ?_⟩
+  · exact LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ first
+      (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e17
+        (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e18
+          (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e19
+            (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e20 e21))))
+  · rw [eq21]; simpa using r18
+  · rw [eq21]; simp
+
 end LarkPtxBatched.Bmm.Init
 
 #print axioms LarkPtxBatched.Bmm.Init.prefix_frame
@@ -123,3 +253,12 @@ end LarkPtxBatched.Bmm.Init
 #print axioms LarkPtxBatched.Bmm.Init.produce32
 #print axioms LarkPtxBatched.Bmm.Init.produce64
 #print axioms LarkPtxBatched.Bmm.Init.produce_float
+#print axioms LarkPtxBatched.Bmm.Init.row_sign
+#print axioms LarkPtxBatched.Bmm.Init.row_correction
+#print axioms LarkPtxBatched.Bmm.Init.prefix16_execute
+#print axioms LarkPtxBatched.Bmm.Init.row_adjust
+#print axioms LarkPtxBatched.Bmm.Init.row_mask
+#print axioms LarkPtxBatched.Bmm.Init.local_row
+#print axioms LarkPtxBatched.Bmm.Init.local_a_offset
+#print axioms LarkPtxBatched.Bmm.Init.column_mask
+#print axioms LarkPtxBatched.Bmm.Init.prefix21_execute
