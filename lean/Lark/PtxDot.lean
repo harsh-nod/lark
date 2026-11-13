@@ -301,6 +301,54 @@ theorem read_location (layout : Layout) (g : Geometry) (t b i : Nat) (buffer : B
     location layout g t .global b (i : Int) false = some ⟨.global, 0, b, i⟩ := by
   simp [location, hb, hi]
 
+def setPointer (s : Machine α) (d : Nat) (p : Pointer) : Machine α :=
+  advance s (putPointer s.registers d p)
+
+def setIndex32 (s : Machine α) (d : Nat) (v : Int) : Machine α :=
+  advance s (putI32 s.registers d v)
+
+def setPredicate (s : Machine α) (d : Nat) (v : Bool) : Machine α :=
+  { s with predicates := fun r => if r = d then some v else s.predicates r, pc := s.pc+1 }
+
+@[simp] theorem setPointer_pointer (s : Machine α) (d r : Nat) (p : Pointer) :
+    (setPointer s d p).registers.pointer r = if r = d then some p else s.registers.pointer r := by
+  by_cases h : r = d <;> simp [setPointer, advance, putPointer, putValue, Registers.pointer, h]
+
+@[simp] theorem setIndex32_i32 (s : Machine α) (d r : Nat) (v : Int) :
+    (setIndex32 s d v).registers.i32 r = if r = d then some v else s.registers.i32 r := by
+  by_cases h : r = d <;> simp [setIndex32, advance, putI32, putValue, Registers.i32, h]
+
+@[simp] theorem setPointer_pc (s : Machine α) (d : Nat) (p : Pointer) :
+    (setPointer s d p).pc = s.pc+1 := rfl
+@[simp] theorem setIndex32_pc (s : Machine α) (d : Nat) (v : Int) :
+    (setIndex32 s d v).pc = s.pc+1 := rfl
+@[simp] theorem setPredicate_pc (s : Machine α) (d : Nat) (v : Bool) :
+    (setPredicate s d v).pc = s.pc+1 := rfl
+
+theorem pointer_values (s : Registers α) (a : Nat) (p : Pointer) (h : s.pointer a = some p) :
+    s.values (.int64 a) = some (.address p) := by
+  cases hv : s.values (.int64 a) with
+  | none => simp [Registers.pointer, hv] at h
+  | some v =>
+      cases v with
+      | integer n => simp [Registers.pointer, hv] at h
+      | number x => simp [Registers.pointer, hv] at h
+      | address q =>
+          have he : q = p := by simpa [Registers.pointer, hv] using h
+          simp [he]
+
+theorem add32_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat) (b : Operand)
+    (s : Machine α) (x y : Int) (hx : s.registers.i32 a = some x)
+    (hy : operand32 s.registers b = some y) (hb : signed32 x ∧ signed32 y ∧ signed32 (x+y)) :
+    execute ops layout g t (.addSigned32 d a b) s = some (setIndex32 s d (x+y)) := by
+  simp [execute, hx, hy, hb, setIndex32]
+
+theorem compare_ne_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat) (b : Operand)
+    (s : Machine α) (x y : Int) (hx : s.registers.i32 a = some x)
+    (hy : operand32 s.registers b = some y) (hb : signed32 x ∧ signed32 y) :
+    execute ops layout g t (.compareNeSigned32 d a b) s = some (setPredicate s d (x != y)) := by
+  simp [execute, hx, hy, hb, setPredicate]
+
 namespace Gemv
 
 def layout (rows : Nat) : Layout :=
@@ -584,6 +632,129 @@ theorem unroll_memory (ops : Ops α) (input : Nat → Nat → α) (t c r j : Nat
       rw [ih]
       rfl
 
+def matrixAdvanced (t c : Nat) (s : Machine α) : Machine α :=
+  setPointer s 17 (matrixPointer t (c+1))
+
+def vectorAdvanced (t c : Nat) (s : Machine α) : Machine α :=
+  setPointer (matrixAdvanced t c s) 16 (vectorPointer (c+1))
+
+def countedState (t c : Nat) (s : Machine α) : Machine α :=
+  setIndex32 (vectorAdvanced t c s) 6 ((16*(c+1) : Nat) : Int)
+
+def comparedState (t c : Nat) (s : Machine α) : Machine α :=
+  setPredicate (countedState t c s) 1 (((16*(c+1) : Nat) : Int) != 1024)
+
+def controlResult (t c : Nat) (s : Machine α) : Machine α :=
+  { comparedState t c s with pc := if (((16*(c+1) : Nat) : Int) != 1024)
+      then 12 else (comparedState t c s).pc+1 }
+
+theorem matrix_control_pointer (t c : Nat) :
+    { matrixPointer t c with offset := (matrixPointer t c).offset+32 } =
+      matrixPointer t (c+1) := by
+  have ho : ((t*2048+16+32*c : Nat) : Int)+32 =
+      ((t*2048+16+32*(c+1) : Nat) : Int) := by
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  exact congrArg (fun off : Int => (⟨0, off, true⟩ : Pointer)) ho
+
+theorem vector_control_pointer (c : Nat) :
+    { vectorPointer c with offset := (vectorPointer c).offset+32 } =
+      vectorPointer (c+1) := by
+  have ho : ((32*c : Nat) : Int)+32 = ((32*(c+1) : Nat) : Int) := by
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  exact congrArg (fun off : Int => (⟨1, off, true⟩ : Pointer)) ho
+
+theorem control_execute (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (hc : c < 64) (h : BodyInvariant input t c 16 acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (controlResult t c s) := by
+  have hpc : s.pc = 108 := h.pc
+  have hgA : signed64 32 ∧ signed64 ((matrixPointer t c).offset + 32) := by
+    unfold signed64 matrixPointer
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  have heA : { matrixPointer t c with offset := (matrixPointer t c).offset+32 } =
+      matrixPointer t (c+1) := matrix_control_pointer t c
+  have e1 := pointer_add_step ops (layout 512) (geometry 512) t 17 17 (.imm 32)
+    (matrixPointer t c) 32 s (pointer_values _ _ _ h.matrix) (by rfl) hgA
+  rw [heA] at e1
+  have h1 : Steps ops (layout 512) (geometry 512) t program s (matrixAdvanced t c s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program s (.addSigned64 17 17 (.imm 32))
+      h.stopped (by rw [hpc]; rfl)]
+    exact e1
+  have hpB : (matrixAdvanced t c s).registers.pointer 16 = some (vectorPointer c) := by
+    simpa [matrixAdvanced] using h.vector
+  have hgB : signed64 32 ∧ signed64 ((vectorPointer c).offset+32) := by
+    unfold signed64 vectorPointer
+    simp only [Int.natCast_mul]
+    omega
+  have heB : { vectorPointer c with offset := (vectorPointer c).offset+32 } =
+      vectorPointer (c+1) := vector_control_pointer c
+  have e2 := pointer_add_step ops (layout 512) (geometry 512) t 16 16 (.imm 32)
+    (vectorPointer c) 32 (matrixAdvanced t c s) (pointer_values _ _ _ hpB) (by rfl) hgB
+  rw [heB] at e2
+  have h2 : Steps ops (layout 512) (geometry 512) t program (matrixAdvanced t c s) (vectorAdvanced t c s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (matrixAdvanced t c s)
+      (.addSigned64 16 16 (.imm 32))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by simp only [matrixAdvanced, setPointer_pc, hpc]; rfl)]
+    exact e2
+  have hcounter : (vectorAdvanced t c s).registers.i32 6 = some ((16*c : Nat) : Int) := by
+    change s.registers.i32 6 = _
+    exact h.counter
+  have hgC : signed32 ((16*c : Nat) : Int) ∧ signed32 16 ∧ signed32 (((16*c : Nat) : Int)+16) := by
+    unfold signed32
+    simp only [Int.natCast_mul]
+    omega
+  have heC : ((16*c : Nat) : Int)+16 = ((16*(c+1) : Nat) : Int) := by
+    simp only [Int.natCast_mul, Int.natCast_add]
+    omega
+  have e3 := add32_step ops (layout 512) (geometry 512) t 6 6 (.imm 16)
+    (vectorAdvanced t c s) ((16*c : Nat) : Int) 16 hcounter (by rfl) hgC
+  rw [heC] at e3
+  have h3 : Steps ops (layout 512) (geometry 512) t program (vectorAdvanced t c s) (countedState t c s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (vectorAdvanced t c s)
+      (.addSigned32 6 6 (.imm 16))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by simp only [vectorAdvanced, matrixAdvanced, setPointer_pc, hpc]; rfl)]
+    exact e3
+  have hgP : signed32 ((16*(c+1) : Nat) : Int) ∧ signed32 1024 := by
+    unfold signed32
+    simp only [Int.natCast_mul, Int.natCast_add]
+    omega
+  have e4 := compare_ne_step ops (layout 512) (geometry 512) t 1 6 (.imm 1024)
+    (countedState t c s) ((16*(c+1) : Nat) : Int) 1024 (by simp [countedState]) (by rfl) hgP
+  have h4 : Steps ops (layout 512) (geometry 512) t program (countedState t c s) (comparedState t c s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (countedState t c s)
+      (.compareNeSigned32 1 6 (.imm 1024))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by simp only [countedState, vectorAdvanced, matrixAdvanced, setIndex32_pc, setPointer_pc, hpc]; rfl)]
+    exact e4
+  have h5 : Steps ops (layout 512) (geometry 512) t program (comparedState t c s) (controlResult t c s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (comparedState t c s) (.branch 1 12)
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by simp only [comparedState, countedState, vectorAdvanced, matrixAdvanced,
+          setPredicate_pc, setIndex32_pc, setPointer_pc, hpc]; rfl)]
+    simp only [execute, comparedState, setPredicate, bind, pure, Option.bind]
+    rfl
+  apply steps_trans _ _ _ _ _ _ _ _ h1
+  apply steps_trans _ _ _ _ _ _ _ _ h2
+  apply steps_trans _ _ _ _ _ _ _ _ h3
+  exact steps_trans _ _ _ _ _ _ _ _ h4 h5
+
+theorem control_pc (t c : Nat) (s : Machine α) (hc : c < 64) (hpc : s.pc = 108) :
+    (controlResult t c s).pc = if c+1 < 64 then 12 else 113 := by
+  by_cases hnext : c+1 < 64
+  · have hn : (16 : Int) * ((c : Int)+1) ≠ 1024 := by omega
+    simp [controlResult, hn, hnext]
+  · have he : c+1 = 64 := by omega
+    simp [controlResult, comparedState, countedState, vectorAdvanced, matrixAdvanced, he, hnext, hpc]
+
 def start (s : State α) : Machine α := { registers := { base := s } }
 
 def parameterA (s : State α) : Machine α :=
@@ -771,4 +942,11 @@ end Gemv
 #print axioms Gemv.chunk_step
 #print axioms Gemv.unroll_execute
 #print axioms Gemv.unroll_memory
+#print axioms pointer_values
+#print axioms add32_step
+#print axioms compare_ne_step
+#print axioms Gemv.control_execute
+#print axioms Gemv.control_pc
+#print axioms Gemv.matrix_control_pointer
+#print axioms Gemv.vector_control_pointer
 end LarkPtxDot
