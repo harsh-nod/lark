@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "status": "full-size-PTX-ReLU-source-controls-passed",
+  "checked_at_utc": "2026-11-13T14:22:37.000042+00:00",
+  "recording_manifest_sha256": "6ed1f929f52c91fed83b144031e6b0e1c194f539fc84c04f6f3bcb33ec33d877",
+  "driver_sha256": "7ac9c03914e211d3e318cfd5d591084ddad720601e353d8daa06bcf4769b3066",
+  "positive_controls": 1,
+  "positive": {
+    "schema": 1,
+    "status": "fresh-source-only-PTX-proof-replay-passed",
+    "recording_manifest_sha256": "6ed1f929f52c91fed83b144031e6b0e1c194f539fc84c04f6f3bcb33ec33d877",
+    "fresh_export_manifest_sha256": "1097c1d09889e28de9e62b430923c4e30deaa5e83a55e5229802c419ead69c57",
+    "main_sha256": "38a8c57bc1904f6f9eed224f109783b82323b36033646e8c576022f55b95b92c",
+    "main_regenerated_identically": true,
+    "owned_modules_freshly_compiled": 3,
+    "old_owned_olean_cache_used": false,
+    "fresh_export_axiom_audits": {
+      "LarkPtxCertificate.source_program": [],
+      "LarkPtxCertificate.reference_body": [],
+      "LarkPtxCertificate.launch": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxCertificate.race_free": [
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxCertificate.segment_equivalence": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxCertificate.kernel_eq_spec": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "model_calls": 0,
+    "gpu_trials": 0,
+    "nvidia_execution": false,
+    "new_registered_source_certificates": 0,
+    "original_paper_fully_reproduced": false,
+    "scope": "Exact-source regeneration and three fresh owned-module compilations followed by a new kernel/axiom check. Captured Python/Lean/oleans are data; trusted current source identities must match before fresh compilation. The Lean standard library comes from the checked toolchain. No NVIDIA experiment."
+  },
+  "negative_controls": [
+    {
+      "control": "wrong-arithmetic",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "11b767ccd24c164a5abe91d7dbee8963106da03cf4e1546c43db880ed4b66043",
+      "main_sha256": "0edc8c7ac27a2b471727cd071e2216898d5abc47db47b7c6f9de0db74ccb586d",
+      "PTX_instructions": 15,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.43270755698904395,
+        "log_sha256": "b76e353cd8c27c98ebd3c26da3b24a39d94e934813b16326a34c955e943df876",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "misaligned-byte-stride",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "da240b24940a61680b1592af8c08cc173e8c01376cb16f912385abc8b170f950",
+      "main_sha256": "d7b84b248c06fd08536784e0c47c6114a330e7789d7324cf1d79a760799c388c",
+      "PTX_instructions": 15,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.444731354014948,
+        "log_sha256": "b76e353cd8c27c98ebd3c26da3b24a39d94e934813b16326a34c955e943df876",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "wrong-output-address",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "05a25ec063bc957822f09803b10c75eea49553679488ecb6b02d659d467266f9",
+      "main_sha256": "90349fb4e16a8a9be05f8c562d2eed75dfd9e69aa74ca9bb14ce8fb30a00fdf1",
+      "PTX_instructions": 15,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.43891996005550027,
+        "log_sha256": "b76e353cd8c27c98ebd3c26da3b24a39d94e934813b16326a34c955e943df876",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "skipped-half-conversion",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "725999a54d7b5be32c95f21ae5aa1947627b4342beb99dd57e185808ea6355dd",
+      "main_sha256": "e30d45e4b8b420d0af89bbf7689c73713aaebb9aed02cccf1e7931291eedfdfc",
+      "PTX_instructions": 14,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.4670935020549223,
+        "log_sha256": "b76e353cd8c27c98ebd3c26da3b24a39d94e934813b16326a34c955e943df876",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    }
+  ],
+  "source_bound_proofs_added": 0,
+  "new_registered_source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "nvidia_execution": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "A new source-only replay compiles all three trusted owned modules and checks the positive Main. Four accepted-grammar PTX mutations then pass through the actual reader and immutable renderer and are rejected directly by Lean at the source-program equality proof, using those freshly compiled imports. Shapes, dtypes, geometry and original CUDA contract fuel remain unchanged. These are fixed-profile binding controls, not a general kernel-falsity classifier or the paper's original42 mutants.",
+  "direct_Lean_negative_controls": 4,
+  "timeouts": 0,
+  "owned_modules_freshly_compiled": 3,
+  "old_owned_olean_cache_used": false,
+  "negative_control_imports": "source-checked imports from the fresh positive replay"
+}

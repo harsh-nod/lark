@@ -14,6 +14,16 @@ program: three at its FP32-only type gate and 22 during tokenization. These are
 first refusals, not exhaustive feature diagnoses or counterexamples. The study
 adds no formal PTX certificates, model outcomes or NVIDIA measurements.
 
+The subsequent [finite FP16 pointwise study](POINTWISE.md) adds a separate
+development checker for the actual compiled 16,384-element ReLU source. Its
+15-instruction execution, entire grid, actual memory-event race freedom and
+every reference output have a Lean proof under declared abstract scalar
+semantics. The source-bound export, three fresh rechecks and four direct Lean
+source-binding controls passed. This does not change the frozen assembly
+study's legacy-reader refusals or existing SDK/model counts. It establishes no
+IEEE/error-bound or NVIDIA execution/conformance result. See the
+[proof packet](results/full-size-relu-proof-v1/RESULTS.md).
+
 NVIDIA's [NVRTC documentation](https://docs.nvidia.com/cuda/nvrtc/) describes
 compilation without a GPU. The separate compiler utility downloads fixed
 NVRTC 12.9.86/runtime 12.9.79/CCCL 12.9.27 wheels with verified TLS and SHA-256
@@ -31,8 +41,8 @@ python3 reproduction/ptx/compile_full_shape.py \
 The [CUDA preparation archive](../local_models/results/full-shape-cuda-preparation-v1/preparation.tar.gz)
 supplies the required frozen inputs. The compiler checks its complete inventory
 and current SDK/source identity before compiling; it changes no existing proof
-profile. Its full generated programs still need a broader PTX frontend and
-whole-launch certificates. Assembly alone establishes neither compiler
+profile. The other full-size generated families still need broader PTX frontend
+and whole-launch proof support. Assembly alone establishes neither compiler
 refinement nor the generated program's semantic correctness or conformance.
 
 The accepted subset is explicitly pinned to `.version 8.0`, `.target sm_80`,

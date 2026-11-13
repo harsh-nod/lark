@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "profile": "ptx-fp16-pointwise-finite-v1",
+  "status": "verified-source-bound-finite-PTX",
+  "created_at_utc": "2026-11-13T14:20:18.563780+00:00",
+  "scope": "Direct source-bound finite PTX FP16 pointwise proof against the closed reference AST. Every parsed instruction executes in the declared abstract model; all grid blocks, actual memory-event race freedom and every reference output are covered. The original scalar CUDA contract, shapes, dtypes, geometry and CUDA fuel remain unchanged. PTX execution is structurally finite and consumes every instruction; the CUDA fuel is data for its separate model, not a bound of four PTX instructions. Python parsing/reference formalization, pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, NVIDIA execution/conformance, original optimized kernel or original model-result claim. This separate development checker registers no new legacy SDK profile or model success.",
+  "source_language": "ptx",
+  "reference_contract_language": "cuda",
+  "elements": 16384,
+  "launch": {
+    "grid": 16384,
+    "block": 1,
+    "warp": 32
+  },
+  "unchanged_CUDA_contract_fuel": [
+    4,
+    1,
+    1,
+    1
+  ],
+  "PTX_instructions": 15,
+  "input_bindings": {
+    "kernel.ptx": "7796e78074f76e2955dee35860c6ca3cb0dcc3263e9115480c9d57b66b676848",
+    "reference.py": "b13620a151f3ca39b16eea83ea8330e140385b5344e3dc940f17417026c69241",
+    "contract.json": "63815c7d03596dc7ae001fb39ce3bf27f6bd05573655f0b4505782685778d979"
+  },
+  "main_sha256": "38a8c57bc1904f6f9eed224f109783b82323b36033646e8c576022f55b95b92c",
+  "source_bindings_sha256": "8118fd02e3cdcdbca461117f9e42a05d7652357cfc96c5f534103355340b5e52",
+  "lean_version": "Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)",
+  "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+  "limits": {
+    "maxRecDepth": 10000,
+    "maxHeartbeats": 2000000,
+    "per_Lean_process_seconds": 180,
+    "source_import_build_seconds": 600
+  },
+  "old_owned_olean_cache_used": false,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "nvidia_execution": false,
+  "new_registered_source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "module_checks": [
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 3.976643731002696,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/Nonlinear.olean",
+        "Lark/Nonlinear.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.Nonlinear"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 2.567332135979086,
+      "log_sha256": "d538fab26dda9b6a28029f431c7bbbf25ed8626bc4bf82d97feb7171a698156f",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/Pointwise.olean",
+        "Lark/Pointwise.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.Pointwise"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 3.3899842309765518,
+      "log_sha256": "d0055ea61d05ee9f3dd77a943d10750a8e619f00d6b3e8d16fc46df065c8b403",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/PtxPointwise.olean",
+        "Lark/PtxPointwise.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.PtxPointwise"
+    }
+  ],
+  "library_axiom_audits": {
+    "LarkPtxPointwise.mulWide_step": [],
+    "LarkPtxPointwise.addPointer_step": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.storeHalf_step": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.steps_append": [
+      "propext"
+    ],
+    "LarkPtxPointwise.halfAddress_at": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.parameters_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.addresses_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.loads_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.arithmetic_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_address_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_memory_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_ret_eq": [],
+    "LarkPtxPointwise.stores_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.lane_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.partial_memory_eq": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.partial_input": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.partial_owned": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.blocks_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.launch_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.race_free": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.final_extract": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.kernel_eq_spec": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "main_check": {
+    "exit_code": 0,
+    "timed_out": false,
+    "seconds": 0.46644469595048577,
+    "log_sha256": "883528ebb859444528988826fcff0da7db0434a44e653a9f608cced4f91c29c6",
+    "command": [
+      "/tmp/lean-4.19.0-linux/bin/lean",
+      "Main.lean"
+    ],
+    "timeout_seconds": 180
+  },
+  "axiom_audits": {
+    "LarkPtxCertificate.source_program": [],
+    "LarkPtxCertificate.reference_body": [],
+    "LarkPtxCertificate.launch": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxCertificate.race_free": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxCertificate.segment_equivalence": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxCertificate.kernel_eq_spec": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "source_bound_proof_accepted": true,
+  "owned_Lean_modules_freshly_compiled": 3,
+  "import_build_seconds": 9.944932027137838
+}
