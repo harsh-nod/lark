@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "two-backend-controller-final-validation-passed",
+  "source_checkpoint": "1b22551bc295431707dc81288a57ac9a2e6f9475",
+  "source_sha256": {
+    "reproduction/local_models/cuda_shape.py": "e1cffbfdcec8f543b04f1318c987616e9849829bd94adb9e305ef60b4941e461",
+    "reproduction/local_models/full_shape_run.py": "05438858483e7f0369e6342ecb9ab0d1f6a6820b982a8dcea270ddb3813f34b1",
+    "reproduction/local_models/audit_full_shape.py": "9dca817c6de0ae82a294274ae6525db6714fe74b43e54c4e709850c793d26487",
+    "tests/test_cuda_model_preparation.py": "74034f9161976156e1803fbae012e06ae719f59dbea5b56b1aa8667f0c0c9a9e",
+    "tests/test_full_shape_models.py": "856ef37f371b977ca71a2375f949feb82f7bc5f4386c3fcb869aa68a6afffef9",
+    "tests/test_full_shape_audit.py": "6a5f839c98786e97c1cf5ba7dd25a8cfd44b84cd1384563a1409317f2c67a9ab"
+  },
+  "final_test_command": "LARK_LEAN=/path/to/lean LARK_REAL_PROJECT=/path/to/lean-real python3 -m pytest tests/test_full_shape_models.py tests/test_full_shape_audit.py tests/test_cuda_model_preparation.py -q",
+  "final_test_methods_passed": 21,
+  "final_test_seconds": 40.81,
+  "explicit_stub_integration_backends": [
+    "hip",
+    "cuda"
+  ],
+  "real_model_inference_calls": 0,
+  "historical_pilot_replayed_requests": 4,
+  "historical_model_proofs_freshly_rechecked": 1,
+  "historical_fresh_kernel_checks": 2,
+  "new_cuda_model_proofs": 0,
+  "new_registered_certificates": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Final-source tests include two real Lean checks for each explicit fake-model integration backend, both tokenizer HTTP503 refusals and12recorded-protocol controls. A separate fresh replay validates the existing HIP pilot, not a new model trial. The CUDA17positive/17negative preparation remains a separate control experiment."
+}

@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "status": "all-seventeen-full-size-cuda-initial-contexts-fit",
+  "source_checkpoint": "1b22551bc295431707dc81288a57ac9a2e6f9475",
+  "source_language": "cuda",
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "server_record_sha256": "39a6a9567391e590ef7b1dcc64b2a95527754dafe1846e0c833f028a35c1a203",
+  "controller_sha256": "05438858483e7f0369e6342ecb9ab0d1f6a6820b982a8dcea270ddb3813f34b1",
+  "driver_sha256": "59157939c8513d3571ac81038fab4f12d7cadbe7dbaa99c58862c89afd7ca5fa",
+  "preparation_manifest_sha256": "6476ec66614e412a122654036b6bd66fab67b23007d7fc26181cdff7571f34c2",
+  "cases": [
+    {
+      "case": "relu",
+      "input_tokens": 6063,
+      "reported_context": 65536,
+      "messages_sha256": "74520ac9307a493140ee38ee93056742c46d63926f0d1cfe1283841f886ce9bb"
+    },
+    {
+      "case": "silu",
+      "input_tokens": 6187,
+      "reported_context": 65536,
+      "messages_sha256": "9db984d0d377c24ca2a6558729f97c63fa2b4eb7ea6a65f48c3cd5292c5058a6"
+    },
+    {
+      "case": "gelu",
+      "input_tokens": 6356,
+      "reported_context": 65536,
+      "messages_sha256": "2e12c863d17a0b75a74ba5021996945e58378f1537295fabfe7e489deb0a306e"
+    },
+    {
+      "case": "rmsnorm",
+      "input_tokens": 12702,
+      "reported_context": 65536,
+      "messages_sha256": "04e21f69a16a20d8ffa10147008be3e0c26e519834fef58d4976d7085ddcfb72"
+    },
+    {
+      "case": "layernorm",
+      "input_tokens": 12770,
+      "reported_context": 65536,
+      "messages_sha256": "4e8ed38b99f773127c9f6d620a60edfaf7facf094174fefbba14c81d4b4d21ef"
+    },
+    {
+      "case": "softmax",
+      "input_tokens": 12686,
+      "reported_context": 65536,
+      "messages_sha256": "c3b8dee0ac53aff297e1e5378d59917f4a03d0d93528d681acbda408d1db7ffa"
+    },
+    {
+      "case": "gemv",
+      "input_tokens": 11659,
+      "reported_context": 65536,
+      "messages_sha256": "d7561859f477f8e192199b00c8d23484099837ff7f6c051f56d4c10b1be4e38b"
+    },
+    {
+      "case": "gemm",
+      "input_tokens": 12642,
+      "reported_context": 65536,
+      "messages_sha256": "9cd196786afe8c9e38feb78ba53c01b9f83b698adbccea4ce6af8efbcdb6774a"
+    },
+    {
+      "case": "bmm",
+      "input_tokens": 12746,
+      "reported_context": 65536,
+      "messages_sha256": "d54723a6872c1d360a74c288e9830cf40eaaf69c31e5be4317ecae3aac8e0f4d"
+    },
+    {
+      "case": "linear",
+      "input_tokens": 15425,
+      "reported_context": 65536,
+      "messages_sha256": "ef555fc8cbee007e7f74f53e81139b53dcc72e830f05b45ffa3a8234b160bf06"
+    },
+    {
+      "case": "conv2d",
+      "input_tokens": 13330,
+      "reported_context": 65536,
+      "messages_sha256": "7c3c934eb5556adb1510d61ba08858a459b4fa6648cca2404a8260ddea48737e"
+    },
+    {
+      "case": "depthwise_conv",
+      "input_tokens": 13328,
+      "reported_context": 65536,
+      "messages_sha256": "28c7a64547b5dc6c9d04b8678fcff398347ed7d78936a9ff35f6729f3b76fbce"
+    },
+    {
+      "case": "rope",
+      "input_tokens": 17127,
+      "reported_context": 65536,
+      "messages_sha256": "b79fb5b81c364487b36b771bb3e1aec7de9ba077bb8d428eefe929c2b0da3798"
+    },
+    {
+      "case": "ffn",
+      "input_tokens": 17047,
+      "reported_context": 65536,
+      "messages_sha256": "cf8072d4856259a77bb336fd03aa2bfe4830f552d72031214748b8a805dbbb75"
+    },
+    {
+      "case": "swiglu",
+      "input_tokens": 20617,
+      "reported_context": 65536,
+      "messages_sha256": "fc868f8bdd0a81d1ef004327b359164945956a40a0c56863645b14662448f278"
+    },
+    {
+      "case": "attention",
+      "input_tokens": 22981,
+      "reported_context": 65536,
+      "messages_sha256": "dc4673f45f6468d8da3c07d128fa57f3e48f214cf1ba48c9b75a665ccd6673f1"
+    },
+    {
+      "case": "gqa",
+      "input_tokens": 23001,
+      "reported_context": 65536,
+      "messages_sha256": "4a8517a3a971daa8de6208ec1266356beeb3aeebd1408e26738c89bdb3dd4282"
+    }
+  ],
+  "max_initial_prompt_tokens": 23001,
+  "context_limit": 65536,
+  "tokenization_requests": 17,
+  "model_inference_calls": 0,
+  "gpu_trials": 0,
+  "new_source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "CUDA prompt tokenization only on an already-owned MI350 runtime. No generation, proof attempt, CUDA execution or NVIDIA measurement."
+}
