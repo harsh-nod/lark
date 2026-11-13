@@ -1110,19 +1110,25 @@ def evaluateReference (ops : Ops α) (input : Nat → Nat → α) : TensorRefere
 theorem evaluate_reference_body (ops : Ops α) (input : Nat → Nat → α) :
     evaluateReference ops input referenceBody = some (referenceSpec ops input) := rfl
 
-theorem extract_outputs (s : State α) (values : Nat → α)
-    (h : ∀ i, i < 1048576 → s.memory (outputCell i) = some (values i)) :
-    extract layout s = some ((List.range 1048576).map values) := by
-  simp only [extract, layout, List.zipIdx_cons, List.zipIdx_nil, List.flatMap_cons,
+theorem extract_outputs_sized (aSize bSize n : Nat) (s : State α) (values : Nat → α)
+    (h : ∀ i, i < n → s.memory (outputCell i) = some (values i)) :
+    extract ⟨[⟨.input, aSize⟩, ⟨.input, bSize⟩, ⟨.output, n⟩], [], []⟩ s =
+      some ((List.range n).map values) := by
+  simp only [extract, List.zipIdx_cons, List.zipIdx_nil, List.flatMap_cons,
     List.flatMap_nil, List.nil_append]
   simp only [List.map_cons, List.map_nil, show Role.input ≠ Role.output by decide,
     ↓reduceIte, List.nil_append, List.append_nil]
-  change (((List.range 1048576).map (fun i => (2, i))).mapM
+  change (((List.range n).map (fun i => (2, i))).mapM
     (fun bi => s.memory ⟨.global, 0, bi.1, bi.2⟩) : Option (List α)) = _
   rw [LarkPointwise.mapM_map]
-  exact LarkPointwise.mapM_some (List.range 1048576) _ _ (by
+  exact LarkPointwise.mapM_some (List.range n) _ _ (by
     intro i hi
     exact h i (List.mem_range.mp hi))
+
+theorem extract_outputs (s : State α) (values : Nat → α)
+    (h : ∀ i, i < 1048576 → s.memory (outputCell i) = some (values i)) :
+    extract layout s = some ((List.range 1048576).map values) :=
+  extract_outputs_sized (32*64*256) (32*256*512) 1048576 s values h
 
 def Correct (ops : Ops α) (p : List LarkPtxMatrix.Instruction)
     (spec : (Nat → Nat → α) → List α) : Prop :=
@@ -1215,4 +1221,5 @@ end LarkPtxBatched.Bmm.Body
 #print axioms LarkPtxBatched.Bmm.Body.launch_exists_safe
 #print axioms LarkPtxBatched.Bmm.Body.evaluate_reference_body
 #print axioms LarkPtxBatched.Bmm.Body.extract_outputs
+#print axioms LarkPtxBatched.Bmm.Body.extract_outputs_sized
 #print axioms LarkPtxBatched.Bmm.Body.kernel_correct
