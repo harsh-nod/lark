@@ -1498,6 +1498,169 @@ theorem laneResult_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) 
       fun l => if l = outputCell t then some (ops.toHalf (dotValue ops input t)) else s.memory l := by
   rw [laneResult, exitReturned_memory, loopExit_memory]
 
+def referenceTerm (ops : Ops α) (input : Nat → Nat → α) (t k : Nat) (acc : α) : α :=
+  ops.add acc (ops.mul (ops.fromHalf (input 0 (t/512*256+k))) (ops.fromHalf (input 1 (k*512+t%512))))
+
+def referenceFold (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | k, r+1, acc => referenceFold ops input t (k+1) r (referenceTerm ops input t k acc)
+
+theorem foldTerms_reference (ops : Ops α) (input : Nat → Nat → α) (t c j r : Nat) (acc : α) :
+    foldTerms ops input t c j r acc = referenceFold ops input t (16*c+j) r acc := by
+  induction r generalizing j acc with
+  | zero => rfl
+  | succ r ih =>
+      simp only [foldTerms, ih, referenceFold, nextValue, referenceTerm, Nat.add_assoc]
+
+theorem referenceFold_append (ops : Ops α) (input : Nat → Nat → α) (t k m n : Nat) (acc : α) :
+    referenceFold ops input t k (m+n) acc =
+      referenceFold ops input t (k+m) n (referenceFold ops input t k m acc) := by
+  induction m generalizing k acc with
+  | zero => simp [referenceFold]
+  | succ m ih =>
+      have he : m+1+n = (m+n)+1 := by omega
+      simp only [he, referenceFold, ih]
+      have hk : k+1+m = k+(m+1) := by omega
+      rw [hk]
+
+theorem foldChunks_reference (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat) (acc : α) :
+    foldChunks ops input t c r acc = referenceFold ops input t (16*c) (16*r) acc := by
+  induction r generalizing c acc with
+  | zero => rfl
+  | succ r ih =>
+      rw [foldChunks, chunkValue, ih, foldTerms_reference]
+      have he : 16*(r+1) = 16+16*r := by omega
+      rw [he, referenceFold_append]
+      have hc : 16*(c+1) = 16*c+16 := by omega
+      simp only [hc, Nat.add_zero]
+
+def reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  ops.toHalf (referenceFold ops input t 0 256 (ops.literal 0 1))
+
+theorem dotValue_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) :
+    ops.toHalf (dotValue ops input t) = reference ops input t := by
+  unfold dotValue reference
+  rw [foldChunks_reference]
+
+theorem laneResult_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (laneResult ops input t s).registers.base.memory =
+      fun l => if l = outputCell t then some (reference ops input t) else s.memory l := by
+  rw [laneResult_memory, dotValue_reference]
+
+def afterLane (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : State α :=
+  (laneResult ops input t s).registers.base
+
+theorem afterLane_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (afterLane ops input t s).memory =
+      fun l => if l = outputCell t then some (reference ops input t) else s.memory l :=
+  laneResult_reference ops input t s
+
+theorem afterLane_reads (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (h : Reads input (start s)) : Reads input (start (afterLane ops input t s)) := by
+  constructor
+  · intro i hi
+    change (afterLane ops input t s).memory ⟨.global, 0, 0, i⟩ = _
+    rw [afterLane_memory]
+    simpa [outputCell] using h.1 i hi
+  · intro i hi
+    change (afterLane ops input t s).memory ⟨.global, 0, 1, i⟩ = _
+    rw [afterLane_memory]
+    simpa [outputCell] using h.2 i hi
+
+inductive LaneSequence (ops : Ops α) (p : List Instruction) : Nat → Nat → State α → State α → Prop where
+  | nil (k : Nat) (s : State α) : LaneSequence ops p k 0 s s
+  | next {k r : Nat} {s final : State α} {m : Machine α} :
+      Steps ops layout geometry k p (start s) m →
+      m.registers.stopped = true →
+      LaneSequence ops p (k+1) r m.registers.base final →
+      LaneSequence ops p k (r+1) s final
+
+def runLanes (ops : Ops α) (input : Nat → Nat → α) : Nat → Nat → State α → State α
+  | _, 0, s => s
+  | k, r+1, s => runLanes ops input (k+1) r (afterLane ops input k s)
+
+theorem runLanes_execute (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (hcount : k+r ≤ 32768) (hreads : Reads input (start s)) :
+    LaneSequence ops program k r s (runLanes ops input k r s) := by
+  induction r generalizing k s with
+  | zero => exact .nil k s
+  | succ r ih =>
+      have lane := source_lane ops input k s (by omega) hreads
+      have rest := ih (k+1) (afterLane ops input k s) (by omega) (afterLane_reads ops input k s hreads)
+      exact .next lane.1 lane.2.1 rest
+
+theorem runLanes_reads (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (hreads : Reads input (start s)) : Reads input (start (runLanes ops input k r s)) := by
+  induction r generalizing k s with
+  | zero => exact hreads
+  | succ r ih => exact ih (k+1) (afterLane ops input k s) (afterLane_reads ops input k s hreads)
+
+theorem runLanes_output_memory (ops : Ops α) (input : Nat → Nat → α) (k r i : Nat) (s : State α) :
+    (runLanes ops input k r s).memory (outputCell i) =
+      if k ≤ i ∧ i < k+r then some (reference ops input i) else s.memory (outputCell i) := by
+  induction r generalizing k s with
+  | zero =>
+      have hn : ¬ (k ≤ i ∧ i < k) := by omega
+      simp [runLanes, hn]
+  | succ r ih =>
+      rw [runLanes, ih]
+      by_cases hi : i = k
+      · subst i
+        have hrest : ¬ (k+1 ≤ k ∧ k < k+1+r) := by omega
+        have hwhole : k ≤ k ∧ k < k+(r+1) := by omega
+        simp [afterLane_memory, hrest, hwhole]
+      · have hloc : outputCell i ≠ outputCell k := by
+          intro he
+          exact hi (congrArg Location.offset he)
+        have hrange : (k+1 ≤ i ∧ i < k+1+r) ↔ (k ≤ i ∧ i < k+(r+1)) := by omega
+        rw [afterLane_memory]
+        simp only [hloc, if_false, hrange]
+
+theorem runLanes_other_memory (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (l : Location) (h : ∀ i, k ≤ i → i < k+r → l ≠ outputCell i) :
+    (runLanes ops input k r s).memory l = s.memory l := by
+  induction r generalizing k s with
+  | zero => rfl
+  | succ r ih =>
+      have htail : ∀ i, k+1 ≤ i → i < k+1+r → l ≠ outputCell i := by
+        intro i hi hj
+        exact h i (by omega) (by omega)
+      rw [runLanes, ih (k+1) (afterLane ops input k s) htail, afterLane_memory]
+      simp only [if_neg (h k (by omega) (by omega))]
+
+theorem initial_reads (input : Nat → Nat → α) (outside : Location → Option α) :
+    Reads input (start (initial layout input outside)) := by
+  constructor
+  · intro i hi
+    change (initial layout input outside).memory ⟨.global, 0, 0, i⟩ = _
+    simp [initial, layout, hi]
+  · intro i hi
+    change (initial layout input outside).memory ⟨.global, 0, 1, i⟩ = _
+    simp [initial, layout, hi]
+
+def finalState (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) : State α :=
+  runLanes ops input 0 32768 (initial layout input outside)
+
+theorem launch_execution (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    LaneSequence ops program 0 32768 (initial layout input outside) (finalState ops input outside) :=
+  runLanes_execute ops input 0 32768 _ (by decide) (initial_reads input outside)
+
+theorem launch_outputs (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α)
+    (i : Nat) (hi : i < 32768) : (finalState ops input outside).memory (outputCell i) =
+      some (reference ops input i) := by
+  unfold finalState
+  rw [runLanes_output_memory]
+  simp [hi]
+
+theorem launch_other_memory (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) (l : Location)
+    (h : ∀ i, i < 32768 → l ≠ outputCell i) :
+    (finalState ops input outside).memory l = (initial layout input outside).memory l := by
+  unfold finalState
+  have hp : ∀ i, 0 ≤ i → i < 0+32768 → l ≠ outputCell i := fun i _ hi => h i hi
+  rw [runLanes_other_memory ops input 0 32768 (initial layout input outside) l hp]
+
+
 end Gemm
 
 #print axioms steps_trans
@@ -1532,4 +1695,19 @@ end Gemm
 #print axioms Gemm.epilogue_execute
 #print axioms Gemm.source_lane
 #print axioms Gemm.laneResult_memory
+#print axioms Gemm.foldTerms_reference
+#print axioms Gemm.referenceFold_append
+#print axioms Gemm.foldChunks_reference
+#print axioms Gemm.dotValue_reference
+#print axioms Gemm.laneResult_reference
+#print axioms Gemm.afterLane_memory
+#print axioms Gemm.afterLane_reads
+#print axioms Gemm.runLanes_execute
+#print axioms Gemm.runLanes_reads
+#print axioms Gemm.runLanes_output_memory
+#print axioms Gemm.runLanes_other_memory
+#print axioms Gemm.initial_reads
+#print axioms Gemm.launch_execution
+#print axioms Gemm.launch_outputs
+#print axioms Gemm.launch_other_memory
 end LarkPtxMatrix
