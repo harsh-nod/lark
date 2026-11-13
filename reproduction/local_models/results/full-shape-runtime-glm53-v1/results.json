@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "status": "pinned-glm53-runtime-and-full-size-context-preflight-passed",
+  "host": "mi350",
+  "model": "zai-org/GLM-5.3",
+  "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+  "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd",
+  "container_id": "167544c9b247f421ab5747d75c6dd8b2a5b63ed1554e7dfa10857cd956a7b886",
+  "gpu_ids": [
+    "0",
+    "1",
+    "6",
+    "7"
+  ],
+  "tensor_parallel": 4,
+  "max_model_len": 65536,
+  "precision": "official native FP8 checkpoint; FP8 KV cache",
+  "checkpoint_weights_rehashed": 141,
+  "checkpoint_support_files_rehashed": 8,
+  "checkpoint_downloaded_bytes": 0,
+  "context_preflight_cases": 17,
+  "max_initial_prompt_tokens": 22489,
+  "warmup_generation_requests": 1,
+  "warmup_reported_tokens": {
+    "prompt_tokens": 22,
+    "total_tokens": 27,
+    "completion_tokens": 5,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "tokenization_requests": 17,
+  "proof_experiment_results_included": false,
+  "external_api_spend_usd": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Owned offline model runtime, one protocol warmup and all17 initial prompt context checks. Runtime cache reused. No kernel-validation GPU trials or model-proof successes are claimed by this runtime receipt. Ready polling duration is not cold startup latency."
+}

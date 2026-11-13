@@ -6,6 +6,10 @@ controls and 17 missing-proof negatives passed under the fixed new Lean limits.
 The recorded library-read controller checks four complete proof terms before
 elaboration and independently rechecks successful candidates. Its preparation
 controls are separate from model-generated proofs and the earlier reduced cohorts.
+The [new pinned GLM runtime](results/full-shape-runtime-glm53-v1/results.json)
+passes its recorded warmup and all seventeen initial context checks. Every cached
+checkpoint file was rehashed. The largest initial prompt uses 22,489 tokens
+within the common 65,536-token limit. Its proof pilot is recorded separately.
 
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real model
