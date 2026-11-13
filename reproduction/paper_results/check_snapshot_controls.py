@@ -1,6 +1,7 @@
 """Check standalone replay and fully rehashed false-completion controls."""
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import io
 import json
@@ -57,6 +58,48 @@ MODEL_CONTROLS = (
     ("model-context-budget-increased", "comparison roster/protocol differs"),
     ("model-forged-extra-fresh-check", "cohort/replay counters differ"),
 )
+
+PTX_CONTROLS = (
+    ("ptx-rechecks-counted-as-kernels", "kernel/recheck/execution counters differ"),
+    ("ptx-boolean-kernel-counter", "kernel/recheck/execution counters differ"),
+    ("ptx-original-result-overclaim", "proof contract/original scope differs"),
+    ("ptx-nvidia-execution-overclaim", "proof contract/original scope differs"),
+    ("ptx-proof-budget-increased", "proof contract/original scope differs"),
+    ("ptx-launch-geometry-changed", "proof contract/original scope differs"),
+    ("ptx-CUDA-contract-fuel-changed", "proof contract/original scope differs"),
+    ("ptx-source-CI-wrong-commit", "actual source CI differs"),
+)
+
+
+def mutate_ptx_evidence(entries, config, control):
+    """Change actual copied proof metadata and synchronize its packet manifest."""
+    spec = config["ptx_pointwise_proof"]
+    prefix = spec["ci_prefix"] if control == "ptx-source-CI-wrong-commit" else spec["prefix"]
+    name = "run.json" if control == "ptx-source-CI-wrong-commit" else "results.json"
+    record = json.loads(entries[prefix + "/" + name])
+    if control == "ptx-rechecks-counted-as-kernels":
+        record["independent_source_bound_development_proofs"] = 4
+    elif control == "ptx-boolean-kernel-counter":
+        record["independent_source_bound_development_proofs"] = True
+    elif control == "ptx-original-result-overclaim":
+        record["original_paper_fully_reproduced"] = True
+    elif control == "ptx-nvidia-execution-overclaim":
+        record["nvidia_execution"] = True
+    elif control == "ptx-proof-budget-increased":
+        record["limits"]["maxHeartbeats"] += 1
+    elif control == "ptx-launch-geometry-changed":
+        record["launch"]["block"] = 32
+    elif control == "ptx-CUDA-contract-fuel-changed":
+        record["unchanged_CUDA_contract_fuel"][0] = 15
+    elif control == "ptx-source-CI-wrong-commit":
+        record["head_sha"] = "0" * 40
+    else:
+        raise ValueError("Unknown PTX control: " + control)
+    entries[prefix + "/" + name] = (json.dumps(record, indent=2) + "\n").encode()
+    manifest = json.loads(entries[prefix + "/manifest.json"])
+    for member in manifest:
+        manifest[member] = hashlib.sha256(entries[prefix + "/" + member]).hexdigest()
+    entries[prefix + "/manifest.json"] = (json.dumps(manifest, indent=2) + "\n").encode()
 
 
 def mutate_model_evidence(entries, config, control):
@@ -395,7 +438,8 @@ def main():
             results.append({"name": "positive-after-numerical-controls", "accepted": True,
                             "git_on_path": False})
         if "full_shape_models" in read(snapshot / "targets.json"):
-            for control_name, expected_gate in MODEL_CONTROLS:
+            def model_control(item):
+                control_name, expected_gate = item
                 altered = root / control_name
                 shutil.copytree(snapshot, altered)
                 with tarfile.open(altered / "evidence.tar.gz") as archive:
@@ -414,13 +458,47 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "Full-shape model " + expected_gate not in log:
                     raise RuntimeError("Full-shape model control failed: " + control_name + "\n" + log)
-                results.append({"name": control_name, "accepted": False, "fully_rehashed": True,
-                                "inner_report_and_configuration_pins_synchronized": True,
-                                "gate": "frozen model summary, metric and recorded replay consistency"})
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_report_and_configuration_pins_synchronized": True,
+                        "gate": "frozen model summary, metric and recorded replay consistency"}
+            # Each worker mutates and executes only its own copied snapshot/log.
+            # Per-replay limits remain 120 seconds; the public aggregate remains 300.
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(model_control, MODEL_CONTROLS))
             code, log = execute("positive-after-model-controls", isolated)
             if code or "frozen-snapshot-replayed" not in log:
                 raise RuntimeError("Post-model-control standalone replay failed: " + log)
             results.append({"name": "positive-after-model-controls", "accepted": True,
+                            "git_on_path": False})
+        if "ptx_pointwise_proof" in read(snapshot / "targets.json"):
+            def ptx_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                with tarfile.open(altered / "evidence.tar.gz") as archive:
+                    entries = {member.name: archive.extractfile(member).read() for member in archive}
+                config = read(altered / "targets.json")
+                mutate_ptx_evidence(entries, config, control_name)
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
+                    for name, data in entries.items():
+                        info = tarfile.TarInfo(name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+                write(altered / "evidence-manifest.json", {
+                    name: hashlib.sha256(data).hexdigest() for name, data in entries.items()})
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX pointwise " + expected_gate not in log:
+                    raise RuntimeError("PTX pointwise control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"}
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(ptx_control, PTX_CONTROLS))
+            code, log = execute("positive-after-ptx-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-PTX-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-ptx-controls", "accepted": True,
                             "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)

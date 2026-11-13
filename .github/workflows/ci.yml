@@ -26,12 +26,19 @@ jobs:
           targets = json.loads((snapshot / 'targets.json').read_text())
           report = json.loads((snapshot / 'results/audit.json').read_text())
           models = report.get('full_shape_model_evidence_checks', {})
+          ptx = report.get('ptx_pointwise_evidence_checks', {})
           assert targets.get('full_shape_models', {}).get('required_cohorts') == 6, 'Final ledger must require all six cohorts'
           assert models.get('complete_independent_cohorts') == 6 and len(models.get('cohorts', [])) == 6
           assert models.get('all_six_independent_cohorts_present') is True and models.get('missing_independent_cohorts') == []
           assert report['counts'] == {'tables': 17, 'outer_figure_groups': 7, 'narrative_anchors': 16}
           assert report['original_paper_fully_reproduced'] is False and report['completion_percentage'] is None
           assert models['original_paper_fully_reproduced'] is False and models['fresh_experiments_by_ledger'] is False
+          assert targets.get('ptx_pointwise_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-relu-proof-v1'
+          assert ptx.get('independent_source_bound_development_proofs') == 1
+          assert ptx.get('retained_positive_Main_checks') == 4 and ptx.get('positive_rechecks') == 3
+          assert ptx.get('direct_Lean_negative_controls') == 4 and ptx.get('successful_source_CI_jobs') == 19
+          assert ptx.get('new_registered_source_certificates') == 0
+          assert ptx.get('original_paper_fully_reproduced') is ptx.get('nvidia_execution') is False
           assert all(report[name] == 0 for name in ('fresh_lean_checks', 'fresh_gpu_trials', 'model_calls'))
           assert all(row['original_result_reproduced'] is False for row in report['floats'] + report['narrative']
                      if row['role'] in ('experiment', 'history'))
