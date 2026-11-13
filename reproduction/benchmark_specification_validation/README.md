@@ -3,15 +3,15 @@
 **The original paper is not fully reproduced.** This CPU protocol validates the
 repository's independently reconstructed mathematical references. It adds no
 kernel certificate, GPU trial, model call, IEEE equivalence theorem or
-floating-point error bound. Publication and a complete frozen measurement from
-these sources are pending.
+floating-point error bound. The [complete measurement](RESULTS.md) and its
+source-bound packet are recorded; fresh replay and publication checks are pending.
 
 The complete protocol covers all seventeen benchmark families at their existing
 HIP-case shapes. Four input strata and five output positions give 340 sampled
 final-output comparisons. It additionally checks every materialized attention
 score: 65,536 dense-attention scores and 524,288 GQA scores across the four strata.
-These are protocol sizes, not a claim that a published result packet already
-exists.
+The frozen packet records these comparisons separately from the original paper's
+unreproduced results.
 
 The SDK validates each owned source, task and Torch reference, then renders its
 actual polymorphic `LarkCertificate.spec`. The auditor checks the full reference
@@ -56,6 +56,19 @@ python3 reproduction/benchmark_specification_validation/study.py \
 For a short execution, append `--case relu --stratum dyadic`. A subset run is
 labelled with its actual case and stratum selection. Output must be outside a Git
 checkout and must not already exist.
+
+The checked-in packet can be audited with Python's standard library:
+
+```sh
+python3 reproduction/benchmark_specification_validation/packet.py verify \
+  --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1
+```
+
+`packet.py replay` accepts the same packet plus `--lean` and a fresh `--output`
+directory. It recompiles the auditors from the frozen sources, reruns the full
+protocol and compares every recorded input, generated Main, sampled value and
+score value. Source-checked SDK import caches are reused. Verification checks
+integrity and numerical consistency; replay checks the computations.
 
 The output contains a source-only snapshot, source and compiled-module bindings,
 generated Mains, input bit patterns, logs, numerical results and control receipts.

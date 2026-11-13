@@ -749,6 +749,16 @@ jobs:
           python3 reproduction/specification_validation/check_packet.py \
             --packet reproduction/specification_validation/results/production-real-v1 \
             --output /tmp/lark-elaborated-reference-packet-controls
+      - name: Audit all seventeen benchmark reference families and complete score tensors
+        run: |
+          python3 reproduction/benchmark_specification_validation/packet.py verify \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-verified
+      - name: Reject altered benchmark scope, samples, controls and score oracles
+        run: |
+          python3 reproduction/benchmark_specification_validation/check_packet.py \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-controls
       - name: Install pinned Lean toolchain
         run: |
           curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh

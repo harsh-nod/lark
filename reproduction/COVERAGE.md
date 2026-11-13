@@ -31,6 +31,16 @@ This is additional evidence for the tested specification formalizations, with
 zero new source certificates, GPU trials or model calls. It is separate from
 the immutable v21 ledger and does not recover the authors' registry or results.
 
+The [benchmark-reference CPU study](benchmark_specification_validation/RESULTS.md)
+adds 340 sampled output comparisons across all seventeen independent families
+and four strata. It also compares every materialized attention score: 589,824
+Float64 values matched the unchanged Torch references bit-for-bit. Its fixed
+checked Float64 interpretation evaluates the actual polymorphic Lean references;
+storage conversions are identities. All 24 numerical negative controls and 41
+artifact mutation controls passed. This is independent numerical evidence with
+no new certificate, GPU/model call, IEEE theorem or original-paper result claim.
+Its fresh-source replay and CI/publication receipts are tracked separately.
+
 [Offline model experiment preparation](local_models/README.md) now identifies
 official open weights for GLM-5.3, GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017.
 This makes local adaptations possible; it does not recover the original harness
