@@ -191,6 +191,18 @@ theorem branch_uninitialized (ops : Ops α) (layout : Layout) (g : Geometry) (t 
     execute ops layout g t (.branch p target) s = none := by
   simp [execute, h]
 
+theorem transition_at (ops : Ops α) (layout : Layout) (g : Geometry) (t : Nat)
+    (program : List Instruction) (s : Machine α) (instruction : Instruction)
+    (hstop : s.registers.stopped = false) (hfetch : program[s.pc]? = some instruction) :
+    transition ops layout g t program s = execute ops layout g t instruction s := by
+  simp [transition, hstop, hfetch]
+
+theorem blockId_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d : Nat)
+    (s : Machine α) (h : 0 < g.block ∧ t / g.block < 4294967296) :
+    execute ops layout g t (.blockId d) s =
+      some (advance s (putI32 s.registers d ((t / g.block : Nat) : Int))) := by
+  simp [execute, h]
+
 namespace Gemv
 
 def layout (rows : Nat) : Layout :=
@@ -251,6 +263,30 @@ theorem parameterState_memory (s : State α) :
 
 theorem parameterState_pc (s : State α) : (parameterState s).pc = 3 := rfl
 
+def vectorState (s : State α) : Machine α :=
+  advance (parameterState s) (putPointer (parameterState s).registers 16 ⟨1, 0, true⟩)
+
+def indexedState (t : Nat) (s : State α) : Machine α :=
+  advance (vectorState s) (putI32 (vectorState s).registers 1 t)
+
+theorem vector_execute (ops : Ops α) (rows t : Nat) (s : State α) :
+    Steps ops (layout rows) (geometry rows) t program (parameterState s) (vectorState s) :=
+  .next (by rfl) (.refl _)
+
+theorem index_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (vectorState s) (indexedState t s) := by
+  have hblock : 0 < (geometry rows).block ∧ t / (geometry rows).block < 4294967296 := by
+    simp only [geometry, Nat.div_one]
+    omega
+  have h := blockId_step ops (layout rows) (geometry rows) t 1 (vectorState s) hblock
+  have hnormalized : execute ops (layout rows) (geometry rows) t (.blockId 1) (vectorState s) =
+      some (indexedState t s) := by
+    simpa only [indexedState, geometry, Nat.div_one] using h
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program (vectorState s) (.blockId 1)
+      (by rfl) (by rfl)]
+  exact hnormalized
+
 end Gemv
 
 #print axioms steps_trans
@@ -259,4 +295,8 @@ end Gemv
 #print axioms branch_uninitialized
 #print axioms Gemv.program_length
 #print axioms Gemv.parameters_execute
+#print axioms transition_at
+#print axioms blockId_step
+#print axioms Gemv.vector_execute
+#print axioms Gemv.index_execute
 end LarkPtxDot
