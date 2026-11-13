@@ -5,10 +5,12 @@ This development profile proves the unchanged compiled scalar BMM task:
 grid 1,048,576, block 1, warp 32 and original CUDA fuel `[1030,1,1,1]`.
 The inputs are retained under [full-size/bmm](full-size/bmm).
 
-The pure Lean theorem and the first complete source-bound export have passed.
-The final exporter revision, fresh replay, direct source controls, installed-wheel
-validation and public CI packet are still being completed. This is an independent
-development kernel, not an original optimized program or model-cohort result.
+The pure Lean theorem, complete source-bound export and matching fresh replay
+have passed. The current export and replay each rebuild all eight owned modules;
+the generated certificate checks in under two seconds on the recorded machine.
+Direct source controls, installed-wheel validation and the public CI packet are
+still being completed. This is one independent development kernel, not an
+original optimized program or model-cohort result.
 
 The checked source has 138 static instructions and 149 declared registers. Its
 29-instruction prologue computes the batch, local row and column addresses. The
