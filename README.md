@@ -195,6 +195,13 @@ algorithm or the original optimized PTX kernel.
 The [completed offline model comparison](reproduction/local_models/results/model-comparison-20261109/README.md)
 audits all 17 reduced fixtures for GLM, Flash and DeepSeek, including every
 failed attempt, reported token counts and freshly rechecked model proofs.
+The separate [full-size DeepSeek HIP cohort](reproduction/local_models/results/full-shape-cohort-deepseek-v1/results.json)
+completed all 17 fixed-scaffold tasks, with 16 verified proofs and one budget
+exhaustion. Its 175 recorded requests used 3,844,318 reported tokens; a complete
+protocol replay checked every prompt and independently rechecked all accepted
+proofs. The [full-size protocol](reproduction/local_models/FULL_SHAPE_METHOD.md)
+uses four fixed proof slots and existing generic libraries. These results remain
+separate from the reduced-fixture comparison and the paper's original model results.
 The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
 certificates and 170 exact-source trials per host.
 Every profile has separate CUDA/HIP certificates and exact-source HIP checks on

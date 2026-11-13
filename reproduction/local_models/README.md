@@ -35,11 +35,27 @@ model calls, model trial or registered source certificate.
 The [new DeepSeek runtime](results/full-shape-runtime-deepseek-v1/results.json)
 rehashes all 48 cached weight files and 31 support files, passes a separate
 69-token warmup, and fits all seventeen initial prompts. Its largest uses
-22,979 input tokens within the same 65,536-token budget. The full GLM and
-DeepSeek cohorts run separately from these setup receipts; completed results
-will retain every unsuccessful response and reported token count. All eighteen
+22,979 input tokens within the same 65,536-token budget. The full DeepSeek
+cohort is complete above; setup receipts remain separate from its proof results.
+All eighteen
 exact-source CI jobs passed before the checker, preparation and original pilot
 were [fast-forwarded to main](results/full-shape-source-ci-main-v1/results.json).
+
+The [Flash HIP runtime](results/full-shape-runtime-flash-hip-v1/results.json) and
+separate [Flash CUDA-task runtime](results/full-shape-runtime-flash-cuda-v1/results.json)
+use two GPUs each and the same pinned checkpoint and inference settings.
+Each passed a separate 31-token non-proof warmup and all seventeen initial
+context checks, with largest prompts of 22,489 and 22,496 tokens respectively.
+Both reuse the same recorded revalidation of 62 weight files and nine support
+files. The packets retain every warmup/tokenizer request and response, serving
+configuration and exact controller. Their prompts were regenerated from the
+frozen tasks before publication. Setup claims no model proof successes or GPU
+kernel trials; CUDA identifies the proof-task source language, without NVIDIA
+execution evidence.
+
+The [paired specification identity main receipt](results/hip-cuda-reference-identity-ci-main-v1/results.json)
+records all nineteen exact-source CI jobs passing, including a fresh full
+seventeen-pair identity study, before the checked non-force main fast-forward.
 
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real model

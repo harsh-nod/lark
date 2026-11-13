@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "status": "recorded-flash-runtime-warmup-and-seventeen-contexts-bound",
+  "packaged_at_utc": "2026-11-13T06:15:25.024166+00:00",
+  "source_language": "hip",
+  "model": "zai-org/GLM-5.3-Flash",
+  "revision": "46a050bec13002ad29ee795c16e61cf4fa3c4a9c",
+  "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd",
+  "container_id": "324b3f46004bac687d261c1ce9ca08c8d02591cdc67210b5f30726bcb9ee8f1b",
+  "gpu_ids": [
+    "2",
+    "3"
+  ],
+  "host": "mi350",
+  "tensor_parallel": 2,
+  "endpoint": "http://127.0.0.1:19087/v1/chat/completions",
+  "ready_utc": "2026-11-13T05:44:28.928354+00:00",
+  "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+  "controller_source_checkpoint": "bb114d8ae61183320242fa5f4463d0cfc727bcd1",
+  "controller_sha256": "0e49b6ce519a2af91c81ee60419adcf37357a71fdf904a772dab0cd279368aef",
+  "checkpoint_record_sha256": "e759495059daa07f704628bf6fc6e8d5594d97083b1199398a08bc80afe84e7c",
+  "checkpoint_weight_files": 62,
+  "checkpoint_support_files": 9,
+  "shared_checkpoint_revalidation_seconds": 38.30169642297551,
+  "weight_bytes_downloaded_by_recorded_revalidation": 0,
+  "warmup_generation_requests": 1,
+  "warmup_usage": {
+    "prompt_tokens": 26,
+    "total_tokens": 31,
+    "completion_tokens": 5,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "warmup_excluded_from_proof_metrics": true,
+  "context_cases": 17,
+  "max_initial_prompt_tokens": 22489,
+  "common_proof_context_limit": 65536,
+  "advertised_server_context_limit": 131072,
+  "all_recorded_context_prompts_regenerated_from_frozen_tasks": true,
+  "source_checked_archive_files": 70,
+  "archive_uncompressed_bytes": 1847707,
+  "model_calls_by_archival": 0,
+  "gpu_kernel_trials": 0,
+  "fresh_lean_checks_by_archival": 0,
+  "new_registered_source_certificates": 0,
+  "model_proof_successes_claimed_by_setup": 0,
+  "external_api_spend_usd": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Historical ready-service, one non-proof warmup, tokenizer records and cached checkpoint revalidation. Two TP2 replicas share the same already-revalidated weights; this archive does not rehash GPU-host weights again. Proof results and later service lifecycle remain in separate complete cohort packets. CUDA denotes proof-task source language; no CUDA kernel execution or NVIDIA measurement."
+}
