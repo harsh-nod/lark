@@ -20,7 +20,18 @@ Zero first responses verified a proof; five tasks verified at their first
 actual Lean check, which is a separate metric. Full protocol replay bound every
 request, and all twelve accepted proofs passed 24 additional fresh kernel/axiom
 checks. Its exact owned, drained two-GPU service was stopped with exit code zero.
-GLM HIP and the three CUDA-source cohorts remain separate unfinished experiments.
+GLM HIP and the GLM and DeepSeek CUDA-source cohorts remain unfinished experiments.
+
+The [completed full-size Flash CUDA cohort](results/full-shape-cohort-flash-cuda-v1/results.json)
+verified nine of seventeen tasks. ReLU, RMSNorm, Softmax, GEMM, BMM, Conv2D,
+depthwise convolution and GQA exhausted their budgets. All 108 requests and
+responses remain archived: 1,841,471 prompt and 164,371 completion tokens,
+2,005,842 total. Zero first responses verified a proof; three tasks verified at
+their first actual Lean check. Complete protocol replay bound every request,
+and the nine accepted proofs passed 18 additional fresh kernel/axiom checks.
+The exact owned, drained two-GPU service was stopped with exit code zero.
+CUDA identifies the proof-task source language; serving used MI350X GPUs and
+Lean checks ran on CPU. These are independent fixed-scaffold model outcomes.
 
 The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
 costs from the archived responses and applies success-only input/output token
@@ -43,11 +54,33 @@ success-only mean prompt/completion costs are 0.081640M/0.005264M and
 cohorts remain missing; this is not a paper-completion denominator. All failed
 tasks remain in spending totals. The comparison reruns no experiment.
 
+The [updated three-cohort comparison](results/full-shape-comparison-three-cohorts-v1/RESULTS.md)
+adds Flash CUDA and preserves both earlier frozen reports. Flash CUDA verified
+five of twelve Level-1 and four of five Level-2 tasks. Its success-only mean
+prompt/completion costs are 0.072328M/0.006827M and 0.106352M/0.005578M tokens,
+with denominators five and four respectively. Three of six independent
+model/language cohorts remain missing. All eight failed tasks remain in total
+spending. This report adds no model, GPU or Lean experiment and supplies no
+original-paper model result.
+
 The [comparison publication receipt](results/full-shape-comparison-publication-v1/results.json)
 checks its original eight public files over TLS without authentication. The
 [comparison main receipt](results/full-shape-comparison-ci-main-v1/results.json)
 and [Flash-runtime main CI record](results/full-shape-flash-runtime-main-ci-v1/results.json)
 retain all nineteen successful exact-source CI jobs for those prior changes.
+
+The [Flash HIP main receipt](results/full-shape-flash-hip-ci-main-v1/results.json)
+also retains its checked non-force fast-forward and all nineteen successful
+jobs on the actual resulting main commit. The
+[bounded PTX implementation review](results/ptx-verifier-implementation-review-v1/results.json)
+binds thirteen inspected `ptx_verifier` source/fixture files to their Git blobs
+and records its explicit PTX CTA-zero analysis and exported-output proof
+boundary. It establishes no whole-launch LARK bridge or new certificate.
+The [fresh artifact check](../paper_results/original-artifact-refresh-20261113-0900/results.json)
+records an empty KernelCraft endpoint, no releases and no repository search
+matches for the exact paper ID; its separate official-arXiv observation showed
+v1 only. These are bounded observations, with no author contact or assertion
+that all possible artifact locations were searched.
 
 The [full-size protocol](FULL_SHAPE_METHOD.md) now validates all seventeen
 existing HIP benchmark shapes with four fixed proof slots. Its 17 SDK positive

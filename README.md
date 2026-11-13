@@ -205,10 +205,15 @@ separate from the reduced-fixture comparison and the paper's original model resu
 The [full-size Flash HIP cohort](reproduction/local_models/results/full-shape-cohort-flash-hip-v1/results.json)
 also completed all seventeen tasks: twelve verified and five exhausted the
 fixed budget. Its 93 requests used 1,678,730 reported tokens, with all accepted
-proofs passing 24 additional fresh checks. The
-[two-cohort comparison](reproduction/local_models/results/full-shape-comparison-deepseek-flash-hip-v1/RESULTS.md)
+proofs passing 24 additional fresh checks.
+The [full-size Flash CUDA cohort](reproduction/local_models/results/full-shape-cohort-flash-cuda-v1/results.json)
+completed all seventeen tasks: nine verified and eight exhausted the fixed
+budget. Its 108 requests used 2,005,842 reported tokens, with all accepted
+proofs passing 18 additional fresh checks. CUDA names the proof-task source
+language; serving used AMD GPUs and Lean ran on CPU.
+The [three-cohort comparison](reproduction/local_models/results/full-shape-comparison-three-cohorts-v1/RESULTS.md)
 keeps unsuccessful attempts in total spending and computes per-level token
-means over successful tasks. Four independent model/language cohorts remain
+means over successful tasks. Three independent model/language cohorts remain
 unfinished; the paper's original model results remain missing.
 The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
 certificates and 170 exact-source trials per host.
