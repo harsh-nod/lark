@@ -5,7 +5,9 @@ positions. Parsing is not a certificate; the source-bound loop/kernel proof is
 a separate requirement. The legacy and published pointwise readers are unchanged.
 """
 
+import ast
 from dataclasses import dataclass
+import json
 import re
 
 from . import gemv, ptx_pointwise
@@ -255,3 +257,75 @@ def translate(source, cuda_task_source):
     if result.readback().encode() != source.encode():
         raise Refusal("ptx-dot-readback", "lossless source readback differs")
     return task, result
+
+
+PROFILE = "source-bound-compiled-gemv-fp16-v1"
+TAGS = ("source_program", "reference_body", "launch", "race_free",
+        "segment_equivalence", "kernel_eq_spec")
+REFERENCE = ("toHalf", ("matmul", ("fromHalf", ("input", 0)), ("fromHalf", ("input", 1))))
+
+
+def prepare(source, reference, cuda_task_source):
+    task, translation = translate(source, cuda_task_source)
+    if ([buffer.shape for buffer in task.buffers] != [(512, 1024), (1024, 1), (512, 1)]
+            or [buffer.name for buffer in task.buffers] != ["a", "b", "out"]):
+        raise Refusal("ptx-dot-contract", "the unchanged 512x1024 FP16 GEMV contract is required")
+    canonical = ast.parse("import torch\ndef reference(a, b):\n    return (a.float() @ b.float()).half()\n")
+    try:
+        actual = ast.parse(reference)
+    except SyntaxError as error:
+        raise Refusal("ptx-dot-reference", "invalid Python reference syntax") from error
+    if ast.dump(actual) != ast.dump(canonical):
+        raise Refusal("ptx-dot-reference", "the complete closed FP16 matrix-vector reference AST is required")
+    return task, translation, json.loads(json.dumps(REFERENCE))
+
+
+def lean_reference(body):
+    try:
+        encoded = json.dumps(body, separators=(",", ":"), allow_nan=False)
+    except (TypeError, ValueError) as error:
+        raise Refusal("ptx-dot-reference", "a closed JSON tensor reference AST is required") from error
+    if encoded != json.dumps(REFERENCE, separators=(",", ":")):
+        raise Refusal("ptx-dot-reference", "unsupported closed tensor reference AST")
+    return "(.toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1))))"
+
+
+def render(task, translation, reference_body):
+    if ([buffer.shape for buffer in task.buffers] != [(512, 1024), (1024, 1), (512, 1)]
+            or (task.grid, task.block, task.warp) != (512, 1, 32)
+            or tuple(task.fuel) != (4102, 1, 1, 1)):
+        raise Refusal("ptx-dot-contract", "fixed source proof dimensions, geometry or CUDA fuel differ")
+    return f"""import Lark.PtxDot
+set_option maxRecDepth 10000
+set_option maxHeartbeats 2000000
+namespace LarkPtxDotCertificate
+open LarkNonlinear
+def program : List LarkPtxDot.Instruction := {translation.lean_program()}
+def referenceBody : LarkPtxDot.Gemv.TensorReference := {lean_reference(reference_body)}
+def spec (ops : Ops α) (input : Nat → Nat → α) : List α :=
+  (LarkPtxDot.Gemv.evaluateReference ops input referenceBody).getD []
+theorem source_program : program = LarkPtxDot.Gemv.program := by rfl
+theorem reference_body : referenceBody = LarkPtxDot.Gemv.referenceBody := by rfl
+theorem launch (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    LarkPtxDot.Gemv.LaneSequence ops program 0 512
+      (initial (LarkPtxDot.Gemv.layout 512) input outside)
+      (LarkPtxDot.Gemv.finalState ops input outside) := by
+  rw [source_program]
+  exact LarkPtxDot.Gemv.launch_execution ops input outside
+theorem race_free (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    raceFree (LarkPtxDot.Gemv.geometry 512)
+      (LarkPtxDot.Gemv.finalState ops input outside).trace = true :=
+  LarkPtxDot.Gemv.launch_raceFree ops input outside
+theorem segment_equivalence (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) :
+    extract (LarkPtxDot.Gemv.layout 512) (LarkPtxDot.Gemv.finalState ops input outside) =
+      some (spec ops input) := by
+  unfold spec
+  rw [reference_body, LarkPtxDot.Gemv.evaluate_reference_body]
+  exact LarkPtxDot.Gemv.final_extract ops input outside
+theorem kernel_eq_spec (ops : Ops α) : LarkPtxDot.Gemv.Correct ops program (spec ops) := by
+  intro input outside
+  exact ⟨LarkPtxDot.Gemv.finalState ops input outside, launch ops input outside,
+    race_free ops input outside, segment_equivalence ops input outside⟩
+""" + "".join("#print axioms LarkPtxDotCertificate." + tag + "\n" for tag in TAGS) + (
+        "end LarkPtxDotCertificate\n")

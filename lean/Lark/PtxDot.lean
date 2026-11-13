@@ -1414,6 +1414,24 @@ theorem launch_raceFree (ops : Ops α) (input : Nat → Nat → α) (outside : L
 def referenceSpec (ops : Ops α) (input : Nat → Nat → α) : List α :=
   (List.range 512).map (reference ops input)
 
+inductive TensorReference where
+  | input : Nat → TensorReference
+  | fromHalf : TensorReference → TensorReference
+  | matmul : TensorReference → TensorReference → TensorReference
+  | toHalf : TensorReference → TensorReference
+  deriving DecidableEq, Repr
+
+def referenceBody : TensorReference :=
+  .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1)))
+
+/-- Closed 512×1024 FP16 matrix-vector reference interpretation; other ASTs refuse. -/
+def evaluateReference (ops : Ops α) (input : Nat → Nat → α) : TensorReference → Option (List α)
+  | .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1))) => some (referenceSpec ops input)
+  | _ => none
+
+theorem evaluate_reference_body (ops : Ops α) (input : Nat → Nat → α) :
+    evaluateReference ops input referenceBody = some (referenceSpec ops input) := rfl
+
 theorem extract_outputs (rows : Nat) (s : State α) (values : Nat → α)
     (h : ∀ i, i < rows → s.memory (outputCell i) = some (values i)) :
     extract (layout rows) s = some ((List.range rows).map values) := by
@@ -1523,4 +1541,5 @@ end Gemv
 #print axioms Gemv.final_extract
 #print axioms Gemv.kernel_correct
 #print axioms Gemv.extract_outputs
+#print axioms Gemv.evaluate_reference_body
 end LarkPtxDot
