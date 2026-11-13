@@ -157,6 +157,8 @@ def setIndex64 (s : Machine α) (d : Nat) (v : Int) : Machine α :=
     (setIndex32 s d v).registers.base = s.registers.base := rfl
 @[simp] theorem setFloat_base (s : Machine α) (d : Nat) (v : α) :
     (setFloat s d v).registers.base = s.registers.base := rfl
+@[simp] theorem setPointer_base (s : Machine α) (d : Nat) (p : Pointer) :
+    (setPointer s d p).registers.base = s.registers.base := rfl
 
 theorem bits32_negative512 : bits32 (-512) = 4294966784 := by decide
 
@@ -467,66 +469,70 @@ theorem addressPairs_row_offset (t j : Nat) (s : State α) :
 theorem addressPairs_base (t j : Nat) (s : State α) :
     (addressPairs t s j).registers.base = s := by
   induction j with
-  | zero => rfl
+  | zero =>
+      simp only [addressPairs, coordinates, masked, rowOffset, row, adjusted, corrected,
+        signed, indexed, globals, globalB, parameters, parameterB, parameterA, start,
+        setIndex32_base, setPointer_base]
   | succ j ih =>
-      change (addressPairs t s j).registers.base = s
-      exact ih
+      simpa only [addressPairs, addressPair, setIndex64_base, setIndex32_base] using ih
 
-def columnWide (t : Nat) (s : State α) : Machine α :=
-  setIndex64 (addressPairs t s 14) 17 ((t%512*2 : Nat) : Int)
-def nextColumn (t : Nat) (s : State α) : Machine α :=
+def columnWide (t : Nat) (s : Machine α) : Machine α :=
+  setIndex64 s 17 ((t%512*2 : Nat) : Int)
+def nextColumn (t : Nat) (s : Machine α) : Machine α :=
   setIndex32 (columnWide t s) 26 ((t%512+512 : Nat) : Int)
-def nextWide (t : Nat) (s : State α) : Machine α :=
+def nextWide (t : Nat) (s : Machine α) : Machine α :=
   setIndex64 (nextColumn t s) 18 (((t%512+512)*2 : Nat) : Int)
-def matrixWide (t : Nat) (s : State α) : Machine α :=
+def matrixWide (t : Nat) (s : Machine α) : Machine α :=
   setIndex64 (nextWide t s) 19 (((t/512*256)*2 : Nat) : Int)
-def zeroAccumulator (ops : Ops α) (t : Nat) (s : State α) : Machine α :=
+def zeroAccumulator (ops : Ops α) (t : Nat) (s : Machine α) : Machine α :=
   setFloat (matrixWide t s) 68 (ops.literal 0 1)
-def initialized (ops : Ops α) (t : Nat) (s : State α) : Machine α :=
+def initializedSuffix (ops : Ops α) (t : Nat) (s : Machine α) : Machine α :=
   setIndex32 (zeroAccumulator ops t s) 27 0
 
-theorem column_wide_execute (ops : Ops α) (t : Nat) (s : State α) :
-    Steps ops layout geometry t program (addressPairs t s 14) (columnWide t s) := by
+theorem column_wide_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (hpc : s.pc = 41) (hs : s.registers.stopped = false)
+    (hcol : s.registers.i32 11 = some ((t%512 : Nat) : Int)) :
+    Steps ops layout geometry t program s (columnWide t s) := by
   have hc : t%512 < 512 := Nat.mod_lt _ (by decide)
   have hb : signed32 ((t%512 : Nat) : Int) ∧ signed32 2 ∧
       signed64 (((t%512 : Nat) : Int)*2) := by unfold signed32 signed64; omega
-  have e := wide_step ops layout geometry t 17 11 2 ((t%512 : Nat) : Int)
-    (addressPairs t s 14) (addressPairs_column t 14 s) hb
-  have e' : LarkPtxDot.execute ops layout geometry t (.mulWideSigned32 17 11 2)
-      (addressPairs t s 14) = some (columnWide t s) := by
+  have e := wide_step ops layout geometry t 17 11 2 ((t%512 : Nat) : Int) s hcol hb
+  have e' : LarkPtxDot.execute ops layout geometry t (.mulWideSigned32 17 11 2) s =
+      some (columnWide t s) := by
     simpa only [columnWide, setIndex64, Int.natCast_mul] using e
   apply one_step
-  rw [transition_at ops layout geometry t program (addressPairs t s 14)
-    (.base (.mulWideSigned32 17 11 2)) (addressPairs_stopped t 14 s)
-    (by rw [addressPairs_pc]; rfl), base_step]
+  rw [transition_at ops layout geometry t program s (.base (.mulWideSigned32 17 11 2))
+    hs (by rw [hpc]; rfl), base_step]
   exact e'
 
 #print axioms LarkPtxMatrix.Gemm.column_wide_execute
 
-theorem next_column_execute (ops : Ops α) (t : Nat) (s : State α) :
+theorem next_column_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (hpc : s.pc = 41) (hs : s.registers.stopped = false)
+    (hcol : s.registers.i32 11 = some ((t%512 : Nat) : Int)) :
     Steps ops layout geometry t program (columnWide t s) (nextColumn t s) := by
   have hc : t%512 < 512 := Nat.mod_lt _ (by decide)
   have hb : signed32 ((t%512 : Nat) : Int) ∧ signed32 512 ∧
       signed32 (((t%512 : Nat) : Int)+512) := by unfold signed32; omega
   have hx : (columnWide t s).registers.i32 11 = some ((t%512 : Nat) : Int) := by
-    simpa only [columnWide, setIndex64_i32] using addressPairs_column t 14 s
+    simpa only [columnWide, setIndex64_i32] using hcol
   have e := add32_step ops layout geometry t 26 11 (.imm 512) (columnWide t s)
     ((t%512 : Nat) : Int) 512 hx (by rfl) hb
   have e' : LarkPtxDot.execute ops layout geometry t (.addSigned32 26 11 (.imm 512))
       (columnWide t s) = some (nextColumn t s) := by
     simpa only [nextColumn, Int.natCast_add] using e
-  apply one_step
   have hp : (columnWide t s).pc = 42 := by
-    simp only [columnWide, setIndex64_pc, addressPairs_pc]
+    simp only [columnWide, setIndex64_pc, hpc]
+  apply one_step
   rw [transition_at ops layout geometry t program (columnWide t s)
     (.base (.addSigned32 26 11 (.imm 512)))
-    (by simpa only [columnWide, setIndex64_stopped] using addressPairs_stopped t 14 s)
-    (by rw [hp]; rfl), base_step]
+    (by simpa only [columnWide, setIndex64_stopped] using hs) (by rw [hp]; rfl), base_step]
   exact e'
 
 #print axioms LarkPtxMatrix.Gemm.next_column_execute
 
-theorem next_wide_execute (ops : Ops α) (t : Nat) (s : State α) :
+theorem next_wide_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (hpc : s.pc = 41) (hs : s.registers.stopped = false) :
     Steps ops layout geometry t program (nextColumn t s) (nextWide t s) := by
   have hc : t%512 < 512 := Nat.mod_lt _ (by decide)
   have hb : unsigned32 ((t%512+512 : Nat) : Int) ∧ unsigned32 2 ∧
@@ -537,89 +543,109 @@ theorem next_wide_execute (ops : Ops α) (t : Nat) (s : State α) :
   have e' : execute ops layout geometry t (.mulWideUnsigned32 18 26 2) (nextColumn t s) =
       some (nextWide t s) := by
     simpa only [nextWide, setIndex64, Int.natCast_mul] using e
-  apply one_step
   have hp : (nextColumn t s).pc = 43 := by
-    simp only [nextColumn, columnWide, setIndex32_pc, setIndex64_pc, addressPairs_pc]
+    simp only [nextColumn, columnWide, setIndex32_pc, setIndex64_pc, hpc]
+  apply one_step
   rw [transition_at ops layout geometry t program (nextColumn t s) (.mulWideUnsigned32 18 26 2)
-    (by simpa only [nextColumn, columnWide, setIndex32_stopped, setIndex64_stopped]
-      using addressPairs_stopped t 14 s)
+    (by simpa only [nextColumn, columnWide, setIndex32_stopped, setIndex64_stopped] using hs)
     (by rw [hp]; rfl)]
   exact e'
 
 #print axioms LarkPtxMatrix.Gemm.next_wide_execute
 
-theorem matrix_wide_execute (ops : Ops α) (t : Nat) (s : State α) (ht : t < 32768) :
+theorem matrix_wide_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (ht : t < 32768) (hpc : s.pc = 41) (hs : s.registers.stopped = false)
+    (hrow : s.registers.i32 9 = some ((t/512*256 : Nat) : Int)) :
     Steps ops layout geometry t program (nextWide t s) (matrixWide t s) := by
   have hr : t/512 < 64 := by omega
   have hb : signed32 ((t/512*256 : Nat) : Int) ∧ signed32 2 ∧
       signed64 (((t/512*256 : Nat) : Int)*2) := by
     unfold signed32 signed64; simp only [Int.natCast_mul]; omega
   have hx : (nextWide t s).registers.i32 9 = some ((t/512*256 : Nat) : Int) := by
-    simpa only [nextWide, nextColumn, columnWide, setIndex64_i32, setIndex32_i32]
-      using addressPairs_row_offset t 14 s
+    simpa only [nextWide, nextColumn, columnWide, setIndex64_i32, setIndex32_i32] using hrow
   have e := wide_step ops layout geometry t 19 9 2 ((t/512*256 : Nat) : Int) (nextWide t s) hx hb
   have e' : LarkPtxDot.execute ops layout geometry t (.mulWideSigned32 19 9 2) (nextWide t s) =
       some (matrixWide t s) := by
     simpa only [matrixWide, setIndex64, Int.natCast_mul] using e
-  apply one_step
   have hp : (nextWide t s).pc = 44 := by
-    simp only [nextWide, nextColumn, columnWide, setIndex32_pc, setIndex64_pc, addressPairs_pc]
+    simp only [nextWide, nextColumn, columnWide, setIndex32_pc, setIndex64_pc, hpc]
+  apply one_step
   rw [transition_at ops layout geometry t program (nextWide t s) (.base (.mulWideSigned32 19 9 2))
-    (by simpa only [nextWide, nextColumn, columnWide, setIndex32_stopped, setIndex64_stopped]
-      using addressPairs_stopped t 14 s)
+    (by simpa only [nextWide, nextColumn, columnWide, setIndex32_stopped, setIndex64_stopped] using hs)
     (by rw [hp]; rfl), base_step]
   exact e'
 
 #print axioms LarkPtxMatrix.Gemm.matrix_wide_execute
 
-theorem zero_execute (ops : Ops α) (t : Nat) (s : State α) :
+theorem zero_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (hpc : s.pc = 41) (hs : s.registers.stopped = false) :
     Steps ops layout geometry t program (matrixWide t s) (zeroAccumulator ops t s) := by
   have hp : (matrixWide t s).pc = 45 := by
-    simp only [matrixWide, nextWide, nextColumn, columnWide, setIndex32_pc,
-      setIndex64_pc, addressPairs_pc]
-  have hs : (matrixWide t s).registers.stopped = false := by
-    simpa only [matrixWide, nextWide, nextColumn, columnWide, setIndex32_stopped,
-      setIndex64_stopped] using addressPairs_stopped t 14 s
+    simp only [matrixWide, nextWide, nextColumn, columnWide, setIndex32_pc, setIndex64_pc, hpc]
+  have hstop : (matrixWide t s).registers.stopped = false := by
+    simpa only [matrixWide, nextWide, nextColumn, columnWide, setIndex32_stopped, setIndex64_stopped] using hs
   apply one_step
   rw [transition_at ops layout geometry t program (matrixWide t s) (.base (.literalFloat 68 0 1))
-    hs (by rw [hp]; rfl), base_step]
+    hstop (by rw [hp]; rfl), base_step]
   exact zero_float_step ops layout geometry t 68 (matrixWide t s)
 
 #print axioms LarkPtxMatrix.Gemm.zero_execute
 
-theorem initialize_execute (ops : Ops α) (t : Nat) (s : State α) :
-    Steps ops layout geometry t program (zeroAccumulator ops t s) (initialized ops t s) := by
+theorem initialize_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (hpc : s.pc = 41) (hs : s.registers.stopped = false) :
+    Steps ops layout geometry t program (zeroAccumulator ops t s) (initializedSuffix ops t s) := by
   have hp : (zeroAccumulator ops t s).pc = 46 := by
     simp only [zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
-      setFloat_pc, setIndex32_pc, setIndex64_pc, addressPairs_pc]
-  have hs : (zeroAccumulator ops t s).registers.stopped = false := by
+      setFloat_pc, setIndex32_pc, setIndex64_pc, hpc]
+  have hstop : (zeroAccumulator ops t s).registers.stopped = false := by
     simpa only [zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
-      setFloat_stopped, setIndex32_stopped, setIndex64_stopped] using addressPairs_stopped t 14 s
+      setFloat_stopped, setIndex32_stopped, setIndex64_stopped] using hs
   apply one_step
   rw [transition_at ops layout geometry t program (zeroAccumulator ops t s) (.base (.literal32 27 0))
-    hs (by rw [hp]; rfl), base_step]
+    hstop (by rw [hp]; rfl), base_step]
   exact zero_index_step ops layout geometry t 27 (zeroAccumulator ops t s)
 
 #print axioms LarkPtxMatrix.Gemm.initialize_execute
 
+theorem suffix_execute (ops : Ops α) (t : Nat) (s : Machine α)
+    (ht : t < 32768) (hpc : s.pc = 41) (hs : s.registers.stopped = false)
+    (hcol : s.registers.i32 11 = some ((t%512 : Nat) : Int))
+    (hrow : s.registers.i32 9 = some ((t/512*256 : Nat) : Int)) :
+    Steps ops layout geometry t program s (initializedSuffix ops t s) := by
+  apply steps_trans _ _ _ _ _ _ _ _ (column_wide_execute ops t s hpc hs hcol)
+  apply steps_trans _ _ _ _ _ _ _ _ (next_column_execute ops t s hpc hs hcol)
+  apply steps_trans _ _ _ _ _ _ _ _ (next_wide_execute ops t s hpc hs)
+  apply steps_trans _ _ _ _ _ _ _ _ (matrix_wide_execute ops t s ht hpc hs hrow)
+  exact steps_trans _ _ _ _ _ _ _ _ (zero_execute ops t s hpc hs) (initialize_execute ops t s hpc hs)
+
+def initialized (ops : Ops α) (t : Nat) (s : State α) : Machine α :=
+  initializedSuffix ops t (addressPairs t s 14)
+
 theorem prologue_execute (ops : Ops α) (t : Nat) (s : State α) (ht : t < 32768) :
     Steps ops layout geometry t program (start s) (initialized ops t s) := by
-  apply steps_trans _ _ _ _ _ _ _ _ (addressPairs_execute ops t 14 s ht (by decide))
-  apply steps_trans _ _ _ _ _ _ _ _ (column_wide_execute ops t s)
-  apply steps_trans _ _ _ _ _ _ _ _ (next_column_execute ops t s)
-  apply steps_trans _ _ _ _ _ _ _ _ (next_wide_execute ops t s)
-  apply steps_trans _ _ _ _ _ _ _ _ (matrix_wide_execute ops t s ht)
-  exact steps_trans _ _ _ _ _ _ _ _ (zero_execute ops t s) (initialize_execute ops t s)
+  have hp := addressPairs_execute ops t 14 s ht (by decide)
+  have hs := suffix_execute ops t (addressPairs t s 14) ht
+    (by simp only [addressPairs_pc])
+    (addressPairs_stopped t 14 s) (addressPairs_column t 14 s) (addressPairs_row_offset t 14 s)
+  exact steps_trans _ _ _ _ _ _ _ _ hp hs
+
+theorem initializedSuffix_pc (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).pc = s.pc+6 := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
+    setFloat_pc, setIndex32_pc, setIndex64_pc]
 
 theorem initialized_pc (ops : Ops α) (t : Nat) (s : State α) :
     (initialized ops t s).pc = 47 := by
-  simp only [initialized, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
-    setFloat_pc, setIndex32_pc, setIndex64_pc, addressPairs_pc]
+  simp only [initialized, initializedSuffix_pc, addressPairs_pc]
+
+theorem initializedSuffix_base (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.base = s.registers.base := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
+    setIndex32_base, setFloat_base, setIndex64_base]
 
 theorem initialized_base (ops : Ops α) (t : Nat) (s : State α) :
     (initialized ops t s).registers.base = s := by
-  simpa only [initialized, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
-    setIndex32_base, setFloat_base, setIndex64_base] using addressPairs_base t 14 s
+  simp only [initialized, initializedSuffix_base, addressPairs_base]
 
 end Gemm
 
