@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 259, in <module>
+    main()
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 255, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 192, in replay
+    require(
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-snapshot-r_at8tr5/reproduction/paper_results/audit.py", line 700, in <module>
+    main()
+  File "/tmp/lark-paper-snapshot-r_at8tr5/reproduction/paper_results/audit.py", line 628, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-snapshot-r_at8tr5/reproduction/paper_results/full_shape_evidence.py", line 87, in check_full_shape_evidence
+    require(type(count) is int and 1 <= count <= 6 and len(spec["packets"]) == count,
+  File "/tmp/lark-paper-snapshot-r_at8tr5/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model declared cohort count differs
+

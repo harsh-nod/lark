@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 259, in <module>
+    main()
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 255, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 192, in replay
+    require(
+  File "/tmp/lark-snapshot-controls-qguko3ms/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-snapshot-i9grdi03/reproduction/paper_results/audit.py", line 700, in <module>
+    main()
+  File "/tmp/lark-paper-snapshot-i9grdi03/reproduction/paper_results/audit.py", line 625, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-snapshot-i9grdi03/reproduction/paper_results/audit.py", line 249, in check_numerical_evidence
+    require(report["families"] == 10 and report["variants"] == 12 and
+  File "/tmp/lark-paper-snapshot-i9grdi03/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study arithmetic scope differs: production
+
