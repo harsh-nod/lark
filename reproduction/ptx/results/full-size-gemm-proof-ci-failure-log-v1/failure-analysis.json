@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "failed_source": "c9ea6a844b427fe506311eb94caf8e19ff125ba1",
+  "failed_run": 43495402456,
+  "successful_jobs": 20,
+  "failed_jobs": [
+    "proof-tests"
+  ],
+  "actual_test_summary": {
+    "ran": 324,
+    "errors": 2,
+    "skipped": 11
+  },
+  "cause": "The newly pinned full-size GEMM fixture was inside the four tiny legacy PTX fixtures directory. Both legacy directory-enumerating tests sent it to Task.parse, whose existing <=256thread/4096cell guard correctly refused it. Dedicated full-source GEMM CI passed.",
+  "correction": "Move all5 full-size GEMM input files byte-identically from cases/full-size-gemm to full-size/gemm and update documentation, frontend fixture and the dedicated CI command paths. The four bounded cases and generic legacy tests are retained.",
+  "all55SDK_and_Lean_source_bindings_unchanged": true,
+  "all5_moved_input_files_byte_identical": true,
+  "limits_raised": false,
+  "tests_dropped": 0,
+  "corrective_local_tests": {
+    "session": 84433,
+    "exit_code": 0,
+    "tests": 16,
+    "seconds": 144.566,
+    "status": "OK"
+  },
+  "CI_reruns": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Failed source CI is retained. A new corrected source commit must pass its own fresh workflow; the failed workflow is never relabeled successful."
+}
