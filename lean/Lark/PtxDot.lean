@@ -1223,6 +1223,107 @@ theorem laneResult_reference (ops : Ops α) (input : Nat → Nat → α) (t : Na
       fun l => if l = outputCell t then some (reference ops input t) else s.memory l := by
   rw [laneResult_memory, dotValue_reference]
 
+def afterLane (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : State α :=
+  (laneResult ops input t s).registers.base
+
+theorem afterLane_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (afterLane ops input t s).memory =
+      fun l => if l = outputCell t then some (reference ops input t) else s.memory l :=
+  laneResult_reference ops input t s
+
+theorem afterLane_reads (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (h : Reads input (start s)) : Reads input (start (afterLane ops input t s)) := by
+  constructor
+  · intro i hi
+    change (afterLane ops input t s).memory ⟨.global, 0, 0, i⟩ = _
+    rw [afterLane_memory]
+    simpa [outputCell] using h.1 i hi
+  · intro i hi
+    change (afterLane ops input t s).memory ⟨.global, 0, 1, i⟩ = _
+    rw [afterLane_memory]
+    simpa [outputCell] using h.2 i hi
+
+inductive LaneSequence (ops : Ops α) : Nat → Nat → State α → State α → Prop where
+  | nil (k : Nat) (s : State α) : LaneSequence ops k 0 s s
+  | next {k r : Nat} {s final : State α} {m : Machine α} :
+      Steps ops (layout 512) (geometry 512) k program (start s) m →
+      m.registers.stopped = true →
+      LaneSequence ops (k+1) r m.registers.base final →
+      LaneSequence ops k (r+1) s final
+
+def runLanes (ops : Ops α) (input : Nat → Nat → α) : Nat → Nat → State α → State α
+  | _, 0, s => s
+  | k, r+1, s => runLanes ops input (k+1) r (afterLane ops input k s)
+
+theorem runLanes_execute (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (hcount : k+r ≤ 512) (hreads : Reads input (start s)) :
+    LaneSequence ops k r s (runLanes ops input k r s) := by
+  induction r generalizing k s with
+  | zero => exact .nil k s
+  | succ r ih =>
+      have lane := source_to_return ops input k s (by omega) hreads
+      have rest := ih (k+1) (afterLane ops input k s) (by omega) (afterLane_reads ops input k s hreads)
+      exact .next lane.1 lane.2 rest
+
+theorem runLanes_reads (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (hreads : Reads input (start s)) : Reads input (start (runLanes ops input k r s)) := by
+  induction r generalizing k s with
+  | zero => exact hreads
+  | succ r ih => exact ih (k+1) (afterLane ops input k s) (afterLane_reads ops input k s hreads)
+
+theorem runLanes_output_memory (ops : Ops α) (input : Nat → Nat → α) (k r i : Nat) (s : State α) :
+    (runLanes ops input k r s).memory (outputCell i) =
+      if k ≤ i ∧ i < k+r then some (reference ops input i) else s.memory (outputCell i) := by
+  induction r generalizing k s with
+  | zero =>
+      have hn : ¬ (k ≤ i ∧ i < k) := by omega
+      simp [runLanes, hn]
+  | succ r ih =>
+      rw [runLanes, ih]
+      by_cases hi : i = k
+      · subst i
+        have hrest : ¬ (k+1 ≤ k ∧ k < k+1+r) := by omega
+        have hwhole : k ≤ k ∧ k < k+(r+1) := by omega
+        simp [afterLane_memory, hrest, hwhole]
+      · have hloc : outputCell i ≠ outputCell k := by
+          intro he
+          exact hi (congrArg Location.offset he)
+        have hrange : (k+1 ≤ i ∧ i < k+1+r) ↔ (k ≤ i ∧ i < k+(r+1)) := by omega
+        rw [afterLane_memory]
+        simp only [hloc, if_false, hrange]
+
+theorem runLanes_other_memory (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (l : Location) (h : ∀ i, l ≠ outputCell i) : (runLanes ops input k r s).memory l = s.memory l := by
+  induction r generalizing k s with
+  | zero => rfl
+  | succ r ih =>
+      rw [runLanes, ih, afterLane_memory]
+      simp only [if_neg (h k)]
+
+theorem initial_reads (input : Nat → Nat → α) (outside : Location → Option α) :
+    Reads input (start (initial (layout 512) input outside)) := by
+  constructor
+  · intro i hi
+    change (initial (layout 512) input outside).memory ⟨.global, 0, 0, i⟩ = _
+    simp [initial, layout, hi]
+  · intro i hi
+    change (initial (layout 512) input outside).memory ⟨.global, 0, 1, i⟩ = _
+    simp [initial, layout, hi]
+
+def finalState (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) : State α :=
+  runLanes ops input 0 512 (initial (layout 512) input outside)
+
+theorem launch_execution (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    LaneSequence ops 0 512 (initial (layout 512) input outside) (finalState ops input outside) :=
+  runLanes_execute ops input 0 512 _ (by decide) (initial_reads input outside)
+
+theorem launch_outputs (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α)
+    (i : Nat) (hi : i < 512) : (finalState ops input outside).memory (outputCell i) =
+      some (reference ops input i) := by
+  unfold finalState
+  rw [runLanes_output_memory]
+  simp [hi]
+
 end Gemv
 
 #print axioms steps_trans
@@ -1282,4 +1383,13 @@ end Gemv
 #print axioms Gemv.foldChunks_reference
 #print axioms Gemv.dotValue_reference
 #print axioms Gemv.laneResult_reference
+#print axioms Gemv.afterLane_memory
+#print axioms Gemv.afterLane_reads
+#print axioms Gemv.runLanes_execute
+#print axioms Gemv.runLanes_reads
+#print axioms Gemv.runLanes_output_memory
+#print axioms Gemv.runLanes_other_memory
+#print axioms Gemv.initial_reads
+#print axioms Gemv.launch_execution
+#print axioms Gemv.launch_outputs
 end LarkPtxDot
