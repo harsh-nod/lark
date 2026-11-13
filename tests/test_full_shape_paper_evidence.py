@@ -9,6 +9,7 @@ import unittest
 
 from reproduction.paper_results.full_shape_evidence import check_full_shape_evidence
 from reproduction.paper_results.prepare_full_shape_snapshot import augment_auditor, prepare_snapshot
+from reproduction.paper_results.ptx_pointwise_evidence import PREFIX, check_recording_packet
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -127,6 +128,7 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
         exec(compile(draft, "frozen-model-ledger-auditor.py", "exec"), namespace)
         report = read(ROOT / "reproduction/paper_results/snapshots/20261112-v22/results/audit.json")
         report["full_shape_model_evidence_checks"] = check_full_shape_evidence(self.config, root=self.root)
+        report["ptx_pointwise_evidence_checks"] = check_recording_packet(ROOT / PREFIX)
         report["evidence_groups"]["full_shape_models"] = [COMPARISON + "/RESULTS.md"]
         linked = [COMPARISON + "/RESULTS.md",
                   "reproduction/paper_results/original-artifact-full-query-20261112/results.json",
@@ -137,6 +139,9 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
         for name in ("reproduction/ptx/results/full-size-compilation-v1/RESULTS.md",
                      "reproduction/paper_results/level2-cost-arithmetic-v1/RESULTS.md"):
             report["evidence_links"][name] = "https://github.com/harsh-nod/lark/blob/12e5cff5207ba6899f9e8a4e6eddcb2e3dc1e5c6/" + name
+        report["evidence_links"][PREFIX + "/RESULTS.md"] = (
+            "https://github.com/harsh-nod/lark/blob/bc96d41eaa397e9d51aa15c0b36124039fc2241f/"
+            + PREFIX + "/RESULTS.md")
         rendered = namespace["render"](report, self.root).decode()
         self.assertIn("5 complete independent model/language cohorts, 69 verified proofs and 659 recorded responses.", rendered)
         lines = rendered.splitlines()
@@ -144,7 +149,9 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
         self.assertTrue(lines[header + 1].startswith("| ---"))
         self.assertTrue(lines[header + 2].startswith("| "))
         self.assertIn("original paper is not fully reproduced", rendered)
-        self.assertIn("no full-size PTX proof, model success or NVIDIA execution is added", rendered)
+        self.assertIn("legacy reader refused all generated programs at that capture", rendered)
+        self.assertIn("1 independent 16,384-element FP16 development proof, 3 positive rechecks and 4 direct Lean", rendered)
+        self.assertIn("not four independent proofs or a model success", rendered)
         self.assertIn("successful-task rule in the caption", rendered)
 
     def test_global_original_result_overclaim(self):

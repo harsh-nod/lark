@@ -17,6 +17,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from reproduction.paper_results.full_shape_evidence import check_full_shape_evidence  # noqa: E402
+from reproduction.paper_results.ptx_pointwise_evidence import (  # noqa: E402
+    CI, PREFIX, PUBLICATION, check_ptx_pointwise_evidence,
+)
 
 BASELINE = "reproduction/paper_results/snapshots/20261112-v22"
 DEFAULT_COMPARISON = "reproduction/local_models/results/full-shape-comparison-six-cohorts-v1"
@@ -30,6 +33,7 @@ LATER_ARTIFACTS = (
     "reproduction/ptx/results/full-size-compilation-publication-v1",
     "reproduction/ptx/results/full-size-compilation-ci-v1",
     "reproduction/paper_results/level2-cost-arithmetic-v1",
+    PREFIX, PUBLICATION, CI,
 )
 
 
@@ -52,12 +56,16 @@ def augment_auditor(source):
         ("    numerical_checks = check_numerical_evidence(config)\n",
          "    numerical_checks = check_numerical_evidence(config)\n"
          "    from full_shape_evidence import check_full_shape_evidence\n"
-         "    model_checks = check_full_shape_evidence(config)\n"),
+         "    from ptx_pointwise_evidence import check_ptx_pointwise_evidence\n"
+         "    model_checks = check_full_shape_evidence(config)\n"
+         "    ptx_checks = check_ptx_pointwise_evidence(config)\n"),
         ('        "numerical_evidence_checks": numerical_checks,\n',
          '        "numerical_evidence_checks": numerical_checks,\n'
-         '        "full_shape_model_evidence_checks": model_checks,\n'),
+         '        "full_shape_model_evidence_checks": model_checks,\n'
+         '        "ptx_pointwise_evidence_checks": ptx_checks,\n'),
         ('    text = [\n',
          '    models = report["full_shape_model_evidence_checks"]\n'
+         '    ptx = report["ptx_pointwise_evidence_checks"]\n'
          '    verified = sum(row["counts"]["verified_within_budget"] for row in models["cohorts"])\n'
          '    requests = sum(row["counts"]["model_requests"] for row in models["cohorts"])\n'
          '    text = [\n'),
@@ -87,8 +95,14 @@ def augment_auditor(source):
          '        link("reproduction/ptx/results/full-size-compilation-v1/RESULTS.md",\n'
          '             "Full-size CPU PTX assembly")\n'
          '        + " records 25 assembled source stages across 17 independent tasks. "\n'
-         '        + "The current reader refuses every generated program; no full-size PTX "\n'
-         '        + "proof, model success or NVIDIA execution is added.\\n",\n'
+         '        + "The legacy reader refused all generated programs at that capture.\\n",\n'
+         '        link("reproduction/ptx/results/full-size-relu-proof-v1/RESULTS.md",\n'
+         '             "Subsequent exact-source finite PTX ReLU proof")\n'
+         '        + " adds " + str(ptx["independent_source_bound_development_proofs"])\n'
+         '        + " independent 16,384-element FP16 development proof, "\n'
+         '        + str(ptx["positive_rechecks"]) + " positive rechecks and "\n'
+         '        + str(ptx["direct_Lean_negative_controls"]) + " direct Lean source-binding controls. "\n'
+         '        + ptx["scope"] + "\\n",\n'
          '        link("reproduction/paper_results/level2-cost-arithmetic-v1/RESULTS.md",\n'
          '             "Published Level-2 table arithmetic")\n'
          '        + " records GLM totals that match all-task means rather than the "\n'
@@ -147,7 +161,14 @@ def prepare_snapshot(*, evidence_commit, comparison_prefix, source_archive, snap
     require(all(any(name.startswith(prefix + "/") for name in later)
                 for prefix in LATER_ARTIFACTS), "Later artifact observations missing")
     config["evidence_groups"]["later_artifacts"] = later
+    config["ptx_pointwise_proof"] = {"prefix": PREFIX, "publication_prefix": PUBLICATION, "ci_prefix": CI}
+    config["evidence_groups"]["ptx_pointwise_proof"] = [
+        "reproduction/paper_results/ptx_pointwise_evidence.py",
+        *[name for name in later if any(name.startswith(prefix + "/")
+                                       for prefix in (PREFIX, PUBLICATION, CI))],
+    ]
     model_checks = check_full_shape_evidence(config, root=root)
+    check_ptx_pointwise_evidence(config, root=root)
     from reproduction.local_models import compare_full_shape
     fresh = compare_full_shape.compare([root / item["prefix"] for item in packets])
     require({k: v for k, v in fresh.items() if k != "created_at_utc"}
@@ -183,6 +204,30 @@ def prepare_snapshot(*, evidence_commit, comparison_prefix, source_archive, snap
         row = config["floats"][label]
         row["available_evidence"] = description
         row["evidence_groups"] = list(dict.fromkeys([*row["evidence_groups"], "full_shape_models"]))
+    ptx_descriptions = {
+        "tab:instr-cats": "A separate finite FP16 PTX development checker covers the actual 15-instruction "
+            "compiled scalar ReLU program, including typed registers, half loads/stores and conversions. "
+            "The other full-size generated families remain unsupported.",
+        "tab:task-configs": "The compiled PTX ReLU proof retains 16,384 FP16 elements, one thread per block, "
+            "the unchanged full grid and the original independent CUDA contract fuel as separate data.",
+        "tab:retarget": "The exact-source PTX ReLU model is separate from the legacy scalar reader and "
+            "registers no legacy SDK profile. Its proof and three rechecks establish no code-sharing "
+            "percentage, original implementation history or original model outcome.",
+        "tab:trust": "The finite PTX ReLU packet binds the actual parsed instructions/reference and "
+            "checks all launch blocks, actual memory events and outputs. Four direct Lean controls "
+            "test fixed-profile source binding. Parsing, abstract scalar/ABI correspondence and aligned "
+            "disjoint non-wrapping allocations remain trusted; no NVIDIA conformance claim is made.",
+    }
+    for label, description in ptx_descriptions.items():
+        row = config["floats"][label]
+        row["available_evidence"] += " " + description
+        row["evidence_groups"] = list(dict.fromkeys([*row["evidence_groups"], "ptx_pointwise_proof"]))
+    config["dependencies"]["semantics"] += (
+        " The subsequent independent finite PTX ReLU development checker now proves the actual "
+        "15-instruction compiled program, entire scalar launch, actual-trace race freedom and all "
+        "16,384 FP16 reference outputs under its declared abstract semantics. Three fresh rechecks "
+        "and four source-binding controls are separate from model/registered-profile counts. "
+        "This does not supply the remaining full-size PTX families or original optimized programs.")
     config["dependencies"]["runs"] = (
         "Original request/response and checker traces, original model revisions and hosted-model outcomes. "
         "Six independent fixed-scaffold open-model cohorts on AMD are additional evidence; offline/free "
