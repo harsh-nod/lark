@@ -9,9 +9,12 @@ The pure Lean theorem, complete source-bound export and matching fresh replay
 have passed. The current export and replay each rebuild all eight owned modules;
 the generated certificate checks in under two seconds on the recorded machine.
 Four direct source controls and isolated installed-wheel validation also passed.
-The public evidence packet and actual source CI are still being completed. This
-is one independent development kernel, not an original optimized program or
-model-cohort result.
+The [complete evidence packet](results/full-size-bmm-proof-v1/RESULTS.md) retains
+all four current-SDK positive recordings, the earlier successful renderer,
+the actual failed intermediate export and selected development history. Anonymous
+publication and actual source CI are still being completed. This is one
+independent development kernel, not an original optimized program or model-cohort
+result.
 
 The checked source has 138 static instructions and 149 declared registers. Its
 29-instruction prologue computes the batch, local row and column addresses. The

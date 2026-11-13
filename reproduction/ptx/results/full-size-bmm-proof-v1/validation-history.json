@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "initial_success": {
+    "producer": "65928f01c164802ee11322f5cd863b6356778641",
+    "Main_sha256": "4824c755eac049df7da255d92b203bce3db704ffe7a10f504b6c9f705ee0ed48",
+    "Main_seconds": 91.77448303496931,
+    "fresh_owned_modules": 8
+  },
+  "failed_v2": {
+    "Main_seconds": 1.8132474819431081,
+    "accepted": false,
+    "cause": "spec_eq rfl normalized optional million-element reference and reached existing maxRecDepth 10000"
+  },
+  "final_current_source": {
+    "producer": "8f381dbe0dc8a0213237566ca3520baa73ff6034",
+    "main_sha256": "ebeca77b0ac1ec7aedc5f84b9aa760805732bde1aa23754cb100f33d049e49f0",
+    "source_bindings_sha256": "5584d353057d134617177d547707150a892258d1c4aaeedab8deca31467592bf",
+    "current_pipeline_checks": 4,
+    "same_independent_kernel": true
+  },
+  "selected_development_history": [
+    "library-kernel-v1",
+    "library-kernel-v2",
+    "cached-main-spec-v1",
+    "cached-main-spec-v2-failed",
+    "cached-main-profile-v1",
+    "cached-main-direct-reference-v1"
+  ],
+  "cached_development_positive_Main_checks": 3,
+  "cached_development_failed_Main_checks": 1,
+  "cached_development_fresh_owned_imports": 0,
+  "pure_library_development_checks": 2,
+  "cached_development_counts_as_source_only_export": false,
+  "explanation": "Both SDK revisions prove the same concrete full-size program. The initial successful SDK used an optional reference wrapper and took 91.77 seconds. A genuine intermediate export failed at maxRecDepth 10000. Profiling found type checking expanded the optional reference list; the final SDK checks AST denotation directly and retains every proof obligation. No cap/shape/fuel changed. Selected cached development Main checks and library checks are retained separately, including the failed unavailable congrArg\u2082 prototype; none is counted as a fresh source-only export."
+}
