@@ -35,6 +35,13 @@ source-binding controls passed, including isolated installed-wheel replay.
 This is a second independent development proof under abstract scalar semantics,
 with the same original-result and NVIDIA limitations.
 
+A subsequent [compiled FP16 PTX GEMM development](reproduction/ptx/MATRIX.md)
+proves the complete 64×256 by 256×512 source, including its actual backward
+loop, all 32,768 active lanes, memory-trace race freedom, every reference output
+and preservation outside the output footprint. Its separate source-bound
+checker uses abstract scalar semantics and fresh owned imports. It adds no
+original model outcome or NVIDIA execution result.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X

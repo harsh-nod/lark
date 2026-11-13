@@ -1,5 +1,10 @@
 # Bounded scalar PTX extension
 
+The later [complete compiled FP16 GEMM development](MATRIX.md) checks all 171
+instructions of the independent 64×256 by 256×512 kernel and its full launch,
+race freedom and reference outputs. It preserves the original shape, geometry
+and CUDA fuel, and registers no legacy SDK profile or model outcome.
+
 This adds a third source reader to the existing Lean machine. Four independent
 tiny float32 PTX programs have source-bound certificates: copy with a full CTA
 barrier, vector addition with a padded launch, ReLU, and a two-term GEMV.
