@@ -1174,6 +1174,55 @@ theorem laneResult_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) 
       fun l => if l = outputCell t then some (ops.toHalf (dotValue ops input t)) else s.memory l := by
   simp only [laneResult, exitReturned_memory, loopExit_memory]
 
+def referenceTerm (ops : Ops α) (input : Nat → Nat → α) (t k : Nat) (acc : α) : α :=
+  ops.add acc (ops.mul (ops.fromHalf (input 0 (t*1024+k))) (ops.fromHalf (input 1 k)))
+
+def referenceFold (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | k, r+1, acc => referenceFold ops input t (k+1) r (referenceTerm ops input t k acc)
+
+theorem foldTerms_reference (ops : Ops α) (input : Nat → Nat → α) (t c j r : Nat) (acc : α) :
+    foldTerms ops input t c j r acc = referenceFold ops input t (16*c+j) r acc := by
+  induction r generalizing j acc with
+  | zero => rfl
+  | succ r ih =>
+      simp only [foldTerms, ih, referenceFold, nextValue, referenceTerm, Nat.add_assoc]
+
+theorem referenceFold_append (ops : Ops α) (input : Nat → Nat → α) (t k m n : Nat) (acc : α) :
+    referenceFold ops input t k (m+n) acc =
+      referenceFold ops input t (k+m) n (referenceFold ops input t k m acc) := by
+  induction m generalizing k acc with
+  | zero => simp [referenceFold]
+  | succ m ih =>
+      have he : m+1+n = (m+n)+1 := by omega
+      simp only [he, referenceFold, ih]
+      have hk : k+1+m = k+(m+1) := by omega
+      rw [hk]
+
+theorem foldChunks_reference (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat) (acc : α) :
+    foldChunks ops input t c r acc = referenceFold ops input t (16*c) (16*r) acc := by
+  induction r generalizing c acc with
+  | zero => rfl
+  | succ r ih =>
+      rw [foldChunks, ih, foldTerms_reference]
+      have he : 16*(r+1) = 16+16*r := by omega
+      rw [he, referenceFold_append]
+      have hc : 16*(c+1) = 16*c+16 := by omega
+      simp only [hc, Nat.add_zero]
+
+def reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  ops.toHalf (referenceFold ops input t 0 1024 (ops.literal 0 1))
+
+theorem dotValue_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) :
+    ops.toHalf (dotValue ops input t) = reference ops input t := by
+  unfold dotValue reference
+  rw [foldChunks_reference]
+
+theorem laneResult_reference (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (laneResult ops input t s).registers.base.memory =
+      fun l => if l = outputCell t then some (reference ops input t) else s.memory l := by
+  rw [laneResult_memory, dotValue_reference]
+
 end Gemv
 
 #print axioms steps_trans
@@ -1228,4 +1277,9 @@ end Gemv
 #print axioms Gemv.exitReturned_memory
 #print axioms Gemv.source_to_return
 #print axioms Gemv.laneResult_memory
+#print axioms Gemv.foldTerms_reference
+#print axioms Gemv.referenceFold_append
+#print axioms Gemv.foldChunks_reference
+#print axioms Gemv.dotValue_reference
+#print axioms Gemv.laneResult_reference
 end LarkPtxDot
