@@ -86,6 +86,9 @@ def verify_toolchain(root):
                         and digest(path.read_bytes()) == expected_file,
                         "Changed extracted compiler/header file: " + name)
                 bindings[name] = expected_file
+    actual = {str(path.relative_to(root / "packages"))
+              for path in (root / "packages/nvidia").rglob("*") if path.is_file()}
+    require(actual == set(bindings), "Unexpected extracted compiler/header files")
     return downloads, dict(sorted(bindings.items()))
 
 
