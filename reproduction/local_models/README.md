@@ -243,3 +243,5 @@ weight needs its official LFS SHA-256; configuration/tokenizer/support files are
 checked against their LFS digests or Git blob IDs, with SHA-256 also recorded.
 The readiness record cannot become `verified-download` until all selected files
 pass these checks. Same-length altered weights or configuration files are refused.
+
+The [paired reference publication receipt](results/hip-cuda-reference-identity-publication-v1/results.json) verifies all four packet files (249,551 bytes) against their immutable public Git blobs over TLS without authentication. The [DeepSeek main receipt](results/full-shape-deepseek-ci-main-v1/results.json) records its checked, non-force fast-forward after all eighteen source CI jobs passed. These receipts add no model, GPU or numerical trials.
