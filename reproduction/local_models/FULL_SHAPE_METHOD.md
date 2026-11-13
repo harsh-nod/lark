@@ -94,3 +94,26 @@ zero real inference calls and zero model-generated proof successes.
 The frozen v1 preparation remains available at its original source checkpoint.
 V2 incorporates the checker boundary fix. All 85 case requests, source bindings,
 SDK blocks and positive/negative Main files match v1 byte-for-byte.
+
+`audit_full_shape.py` replays a completed recording through the same fixed
+protocol with recorded model/tokenizer responses. It regenerates every prompt,
+bounded source read and submitted Main from the frozen preparation. Captured
+Python remains data. A recording validation refusal stops acceptance even if a
+record labels it as a transport failure. Model calls, tokenizer requests and
+new registered source certificates from the audit are zero.
+
+```bash
+LARK_REAL_PROJECT=/path/to/configured/lean-real \
+python3 reproduction/local_models/audit_full_shape.py \
+  --recording /tmp/full-shape-glm --prepared /tmp/extracted-preparation \
+  --output /tmp/full-shape-audit --lean /path/to/lean-4.19.0/bin/lean \
+  --require-full-cohort
+```
+
+The full-cohort requirement rejects a pilot or partial recording. Omit it only
+when explicitly auditing that narrower scope. `--lean` runs a fresh proof-term
+syntax check and two real kernel/axiom checks for every recorded success. Without
+it the audit checks protocol and recorded-log consistency, reports zero freshly
+verified proofs, and makes no fresh theorem-validation claim. Failed candidates
+retain their recorded outcomes; this auditor does not rerun their Lean checks.
+Reported model tokens remain distinct from the audit's zero model calls.
