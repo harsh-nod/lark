@@ -64,6 +64,17 @@ passed two positive replays and all 24 legacy controls in 142.72 seconds. Both
 records retain the exact executed reader and control-runner sources, logs and
 resource observations outside the frozen snapshot. These checks regenerate
 recorded evidence; they perform no fresh Lean checks, model calls or GPU trials.
+The [anonymous v23 publication check](snapshot-v23-publication/results.json)
+downloaded all eleven files, totaling 50,530,069 bytes, from source `e931a9e`
+with TLS verification enabled. Every byte matched the pinned Git commit, and
+the downloaded snapshot passed all four positive replays and 49 negative
+controls outside Git.
+The [actual v23 source CI record](snapshot-v23-source-ci-v1/results.json)
+records all twenty jobs passing at source `e931a9e`, including raw six-cohort
+regeneration, the frozen ledger controls and the complete proof-test job.
+The subsequent publication/CI receipt commit changes only this README and
+recorded receipts; source code, Lean libraries, tests, workflow definitions
+and every frozen snapshot retain the exact tested source bytes.
 
 The original registry, optimized PTX, original harness and model histories,
 closed-model runs, original mutants and H100/MI300X timing cells remain missing.
