@@ -8,9 +8,10 @@ The inputs are retained under [full-size/bmm](full-size/bmm).
 The pure Lean theorem, complete source-bound export and matching fresh replay
 have passed. The current export and replay each rebuild all eight owned modules;
 the generated certificate checks in under two seconds on the recorded machine.
-Direct source controls, installed-wheel validation and the public CI packet are
-still being completed. This is one independent development kernel, not an
-original optimized program or model-cohort result.
+Four direct source controls and isolated installed-wheel validation also passed.
+The public evidence packet and actual source CI are still being completed. This
+is one independent development kernel, not an original optimized program or
+model-cohort result.
 
 The checked source has 138 static instructions and 149 declared registers. Its
 29-instruction prologue computes the batch, local row and column addresses. The

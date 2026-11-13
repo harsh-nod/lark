@@ -1,5 +1,11 @@
 # Bounded scalar PTX extension
 
+The later [complete compiled FP16 batched GEMM development](BATCHED.md)
+covers all 138 instructions and all 1,048,576 output lanes of the unchanged
+32-batch task, including actual-loop execution, trace race freedom, closed
+reference extraction and preservation outside the output allocation. It has
+separate source-only and installed-wheel replays and four direct Lean controls.
+
 The later [complete compiled FP16 GEMM development](MATRIX.md) checks all 171
 instructions of the independent 64×256 by 256×512 kernel and its full launch,
 race freedom and reference outputs. It preserves the original shape, geometry

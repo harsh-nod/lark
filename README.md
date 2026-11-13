@@ -42,6 +42,14 @@ and preservation outside the output footprint. Its separate source-bound
 checker uses abstract scalar semantics and fresh owned imports. It adds no
 original model outcome or NVIDIA execution result.
 
+A fourth [compiled FP16 PTX development proof](reproduction/ptx/BATCHED.md)
+covers the full 32-batch GEMM task and all 1,048,576 output lanes. All 138
+instructions, sixteen actual loop iterations, closed reference extraction,
+memory-event race freedom and preservation outside the output are checked.
+Fresh source export/replay, four direct Lean source-binding controls and isolated
+installed-wheel replay passed. This remains an independent abstract scalar proof;
+it adds no original model outcome or NVIDIA execution measurement.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X
