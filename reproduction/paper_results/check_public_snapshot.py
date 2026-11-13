@@ -20,7 +20,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True)
-    parser.add_argument('--snapshot', default='20261112-v21')
+    parser.add_argument('--snapshot', default='20261112-v22')
     parser.add_argument('--source-archive', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--proxy', required=True)
@@ -42,13 +42,14 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         url = 'https://raw.githubusercontent.com/harsh-nod/lark/'+args.commit+'/'+name.as_posix()
         run = subprocess.run([
-            'curl','--silent','--show-error','--fail','--location','--proto','=https',
+            'curl','--disable','--silent','--show-error','--fail','--location','--proto','=https',
             '--proto-redir','=https','--proxy',args.proxy,'--noproxy','',
-            '--output',str(destination),'--write-out','%{http_code}',url,
+            '--output',str(destination),'--write-out','%{http_code} %{ssl_verify_result}',url,
         ],capture_output=True,text=True,timeout=120)
-        assert run.returncode == 0 and run.stdout == '200', str(name)+'\n'+run.stderr
+        assert run.returncode == 0 and run.stdout == '200 0', str(name)+'\n'+run.stderr
         assert destination.read_bytes() == expected, 'Public bytes differ: '+str(name)
-        records.append({'path':name.as_posix(),'bytes':len(expected),'sha256':sha(destination),'http_status':200})
+        records.append({'path':name.as_posix(),'bytes':len(expected),'sha256':sha(destination),'http_status':200,
+                        'tls_verification':True,'curl_ssl_verify_result':0,'authorization_header':False})
     env = dict(os.environ, PATH='/nonexistent', PYTHONNOUSERSITE='1')
     env.pop('PYTHONPATH', None)
     env.pop('LEAN_PATH', None)
@@ -60,7 +61,11 @@ def main():
     (out/'public-replay.log').write_text(result.stdout+result.stderr)
     assert result.returncode == 0, result.stdout+result.stderr
     validation = json.loads((out/'validation/results.json').read_text())
-    assert validation['positive_replays'] == 1 and validation['negative_controls'] == 8
+    targets = json.loads((downloaded/snapshot/'targets.json').read_text())
+    expected_controls = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
+                         + 16*('numerical_studies' in targets))
+    expected_positives = 2 if 'numerical_studies' in targets else 1
+    assert validation['positive_replays'] == expected_positives and validation['negative_controls'] == expected_controls
     assert validation['replayer_sha256'] == sha(downloaded/relative/'replay_snapshot.py')
     assert validation['control_runner_sha256'] == sha(downloaded/relative/'check_snapshot_controls.py')
     report = {
@@ -70,7 +75,7 @@ def main():
         'total_downloaded_bytes':sum(r['bytes'] for r in records),
         'authenticated_download_requests':False,'tls_verification':True,
         'all_downloads_match_committed_bytes':True,'git_on_replay_path':False,
-        'outside_original_checkout':True,'positive_replays':1,'negative_controls':8,
+        'outside_original_checkout':True,'positive_replays':expected_positives,'negative_controls':expected_controls,
         'fresh_lean_checks':0,'fresh_gpu_trials':0,'model_calls':0,
         'original_paper_fully_reproduced':False,'validation':validation,
         'checker_sha256':sha(Path(__file__)),

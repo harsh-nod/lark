@@ -5,7 +5,7 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261112-v21/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261112-v22/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
@@ -14,7 +14,8 @@ It includes production SiLU, wave reduction, complete native weighted and fused
 RMSNorm, complete native online attention, complete native RoPE and both fused
 QK/RoPE layouts, complete FlashInfer and guarded SGLang RMSNorm, native FP16
 single-split-K AWQ GEMM, and the source-bound softmax race/repair studies. It
-binds 3,312 published evidence files at commit `3eab929` and can be
+binds 3,378 published evidence files at commit `e7ea523`, including both numerical
+reference studies and the explicit v21 semantics correction, and can be
 replayed after later documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
 
@@ -29,7 +30,7 @@ Torch modules on CPU, with explicit identity storage casts in its float64 track.
 Its fourteen numerical negative controls and 26 packet mutation controls passed.
 This is additional evidence for the tested specification formalizations, with
 zero new source certificates, GPU trials or model calls. It is separate from
-the immutable v21 ledger and does not recover the authors' registry or results.
+the formal certificate count and does not recover the authors' registry or results.
 
 The [benchmark-reference CPU study](benchmark_specification_validation/RESULTS.md)
 adds 340 sampled output comparisons across all seventeen independent families

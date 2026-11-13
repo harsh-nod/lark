@@ -187,6 +187,83 @@ def main():
                     "name": name, "accepted": False, "fully_rehashed": True,
                     "gate": "frozen study scope consistency",
                 })
+        if "numerical_studies" in read(snapshot / "targets.json"):
+            production = "reproduction/specification_validation/results/production-real"
+            benchmark = "reproduction/benchmark_specification_validation/results/benchmark-float64"
+            cases = [
+                ("numerical-benchmark-ieee-overclaim", benchmark+"-v1/results.json",
+                 ["ieee_equivalence_theorem"], True, "arithmetic/resource scope differs: benchmark"),
+                ("numerical-production-ieee-overclaim", production+"-v1/results.json",
+                 ["formal_ieee_or_error_theorem"], True, "arithmetic scope differs: production"),
+                ("numerical-changed-heartbeat-cap", benchmark+"-v1/results.json",
+                 ["maxHeartbeats"], 2000001, "arithmetic/resource scope differs: benchmark"),
+                ("numerical-duplicate-case", benchmark+"-v1/results.json",
+                 ["checks", 1, "stratum"], "dyadic", "case coverage differs: benchmark"),
+                ("numerical-incomplete-score-total", benchmark+"-v1/results.json",
+                 ["score_comparison_count"], 589823, "replay/score binding differs: benchmark"),
+                ("numerical-score-bit-disagreement", benchmark+"-v1/results.json",
+                 ["checks", 60, "score_tensor_comparison", "bit_identical"], 16383,
+                 "score coverage differs: benchmark"),
+                ("numerical-changed-sampled-value", benchmark+"-v1/results.json",
+                 ["checks", 0, "samples", 0, "lean_float64"], 123.0, "sampled value differs: benchmark"),
+                ("numerical-false-cold-rebuild", benchmark+"-source-replay-v1/results.json",
+                 ["cold_import_rebuild"], True, "replay/score binding differs: benchmark"),
+                ("numerical-incomplete-sample-replay", benchmark+"-source-replay-v1/results.json",
+                 ["identical_scalar_values"], 339, "replay/score binding differs: benchmark"),
+                ("numerical-production-replay-bit-difference", production+"-source-replay-v1/results.json",
+                 ["lean_float64_bit_differences"], 1, "replay differs: production"),
+                ("numerical-false-certificate", production+"-v1/results.json",
+                 ["new_certificates"], 1, "execution/proof scope differs: production"),
+                ("numerical-unverified-download-tls", benchmark+"-publication-v1/results.json",
+                 ["observations", 0, "tls_verification"], False, "anonymous publication differs: benchmark"),
+                ("numerical-missing-download-observations", benchmark+"-publication-v1/results.json",
+                 ["observations"], [], "anonymous publication differs: benchmark"),
+                ("numerical-changed-source-pin", benchmark+"-source-replay-v1/results.json",
+                 ["source_bindings_sha256"], "0"*64, "replay/score binding differs: benchmark"),
+                ("numerical-missing-artifact-control", production+"-packet-controls-v1/results.json",
+                 ["negative_controls"], 25, "counts differ: production"),
+                ("numerical-original-result-overclaim", benchmark+"-v1/results.json",
+                 ["original_paper_fully_reproduced"], True, "original-result overclaim: benchmark"),
+            ]
+            for control_name, selected, keys, value, expected_gate in cases:
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                with tarfile.open(altered / "evidence.tar.gz") as archive:
+                    entries = {m.name: archive.extractfile(m).read() for m in archive}
+                record = json.loads(entries[selected])
+                parent = record
+                for key in keys[:-1]:
+                    parent = parent[key]
+                parent[keys[-1]] = value
+                if control_name == "numerical-changed-sampled-value":
+                    import struct
+                    parent["float64_bits"] = str(struct.unpack(">Q", struct.pack(">d", value))[0])
+                entries[selected] = (json.dumps(record, indent=2)+"\n").encode()
+                manifest_name = str(Path(selected).with_name("manifest.json"))
+                if manifest_name in entries:
+                    manifest = json.loads(entries[manifest_name])
+                    manifest.get("files", manifest)[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
+                    entries[manifest_name] = (json.dumps(manifest, indent=2)+"\n").encode()
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+                    for entry_name, data in entries.items():
+                        info = tarfile.TarInfo(entry_name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+                write(altered / "evidence-manifest.json", {
+                    entry_name: hashlib.sha256(data).hexdigest() for entry_name, data in entries.items()
+                })
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "Numerical study " + expected_gate not in log:
+                    raise RuntimeError("Numerical study control failed: " + control_name + "\n" + log)
+                results.append({"name": control_name, "accepted": False, "fully_rehashed": True,
+                                "inner_receipt_hash_synchronized": True,
+                                "gate": "frozen numerical report and receipt consistency"})
+            code, log = execute("positive-after-numerical-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-numerical-controls", "accepted": True,
+                            "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         with tarfile.open(altered / "evidence.tar.gz") as archive:
@@ -226,7 +303,7 @@ def main():
         {
             "status": "passed",
             "checks": results,
-            "positive_replays": 1,
+            "positive_replays": sum(row["accepted"] for row in results),
             "negative_controls": sum(not row["accepted"] for row in results),
             "source_snapshot_manifest_sha256": sha(snapshot / "manifest.json"),
             "replayer_sha256": sha(Path(__file__).with_name("replay_snapshot.py")),
@@ -243,7 +320,7 @@ def main():
             {
                 "status": "passed",
                 "outside_checkout_without_git": True,
-                "positive_replays": 1,
+                "positive_replays": sum(row["accepted"] for row in results),
                 "negative_controls": sum(not row["accepted"] for row in results),
                 "fresh_lean_checks": 0,
                 "fresh_gpu_trials": 0,
