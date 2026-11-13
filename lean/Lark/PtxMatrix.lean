@@ -159,6 +159,16 @@ def setIndex64 (s : Machine α) (d : Nat) (v : Int) : Machine α :=
     (setFloat s d v).registers.base = s.registers.base := rfl
 @[simp] theorem setPointer_base (s : Machine α) (d : Nat) (p : Pointer) :
     (setPointer s d p).registers.base = s.registers.base := rfl
+@[simp] theorem setPointer_stopped (s : Machine α) (d : Nat) (p : Pointer) :
+    (setPointer s d p).registers.stopped = s.registers.stopped := rfl
+@[simp] theorem setPointer_scalar (s : Machine α) (d r : Nat) (p : Pointer) :
+    (setPointer s d p).registers.scalar r = s.registers.scalar r := rfl
+@[simp] theorem setPointer_half (s : Machine α) (d r : Nat) (p : Pointer) :
+    (setPointer s d p).registers.half r = s.registers.half r := rfl
+@[simp] theorem setFloat_i64 (s : Machine α) (d r : Nat) (v : α) :
+    (setFloat s d v).registers.i64 r = s.registers.i64 r := rfl
+@[simp] theorem loadedHalf_i64 (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.i64 r = s.registers.i64 r := rfl
 
 theorem bits32_negative512 : bits32 (-512) = 4294966784 := by decide
 
@@ -683,6 +693,135 @@ theorem b_address (t c j : Nat) (hc : c < 16) (hj : j < 16) :
   rw [aligned_address layout geometry t 1 ((16*c+j)*512+t%512) _ 0 false he hs]
   exact read_location layout geometry t 1 _ ⟨.input, 256*512⟩ (by rfl) hb
 
+def inputRegister (j : Nat) : Nat := if j = 0 then 68 else 35+2*j
+def sumRegister (j : Nat) : Nat := if j = 15 then 68 else 37+2*j
+def strideRegister (j : Nat) : Nat := if j = 0 then 17 else if j = 1 then 18 else 18-j
+
+def term (j : Nat) : List Instruction :=
+  [.base (.loadHalf (2*j+1) 27 ((2*j : Nat) : Int)),
+   .base (.fromHalf (4+2*j) (2*j+1)),
+   .base (.addSigned64 (28+j) 48 (.reg (strideRegister j))),
+   .base (.loadHalf (2*j+2) (28+j) 0),
+   .base (.fromHalf (5+2*j) (2*j+2)),
+   .base (.binaryFloat (36+2*j) .mul (4+2*j) (5+2*j)),
+   .base (.binaryFloat (sumRegister j) .add (inputRegister j) (36+2*j))]
+
+theorem program_term : ∀ (j : Fin 16) (q : Fin 7),
+    program[48+7*j.val+q.val]? = (term j.val)[q.val]? := by decide
+
+theorem base_step_in_term (ops : Ops α) (t j q : Nat) (s u : Machine α)
+    (instruction : LarkPtxDot.Instruction) (hj : j < 16) (hq : q < 7)
+    (hpc : s.pc = 48+7*j+q) (hs : s.registers.stopped = false)
+    (hi : (term j)[q]? = some (.base instruction))
+    (he : LarkPtxDot.execute ops layout geometry t instruction s = some u) :
+    Steps ops layout geometry t program s u := by
+  have hf := program_term ⟨j, hj⟩ ⟨q, hq⟩
+  rw [hi] at hf
+  apply one_step
+  rw [transition_at ops layout geometry t program s (.base instruction) hs
+    (by rw [hpc]; exact hf), base_step]
+  exact he
+
+def termLoadA (t c j : Nat) (a : α) (s : Machine α) : Machine α :=
+  loadedHalf s t (2*j+1) (aCell t c j) a
+def termCastA (ops : Ops α) (t c j : Nat) (a : α) (s : Machine α) : Machine α :=
+  setFloat (termLoadA t c j a s) (4+2*j) (ops.fromHalf a)
+def termAddressB (ops : Ops α) (t c j : Nat) (a : α) (s : Machine α) : Machine α :=
+  setPointer (termCastA ops t c j a s) (28+j) (bPointer t c j)
+def termLoadB (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  loadedHalf (termAddressB ops t c j a s) t (2*j+2) (bCell t c j) b
+def termCastB (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  setFloat (termLoadB ops t c j a b s) (5+2*j) (ops.fromHalf b)
+def termProduct (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  setFloat (termCastB ops t c j a b s) (36+2*j) (ops.mul (ops.fromHalf a) (ops.fromHalf b))
+def termResult (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) : Machine α :=
+  setFloat (termProduct ops t c j a b s) (sumRegister j)
+    (ops.add acc (ops.mul (ops.fromHalf a) (ops.fromHalf b)))
+
+theorem term_execute (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α)
+    (ht : t < 32768) (hc : c < 16) (hj : j < 16)
+    (hpc : s.pc = 48+7*j) (hs : s.registers.stopped = false)
+    (hpA : s.registers.pointer 27 = some (aPointer t c))
+    (hpB : s.registers.pointer 48 = some (bBase c))
+    (hstride : s.registers.i64 (strideRegister j) = some (bStride t j))
+    (ha : s.registers.base.memory (aCell t c j) = some a)
+    (hb : s.registers.base.memory (bCell t c j) = some b)
+    (hacc : s.registers.scalar (inputRegister j) = some acc) :
+    Steps ops layout geometry t program s (termResult ops t c j a b acc s) := by
+  have h1 := base_step_in_term ops t j 0 s (termLoadA t c j a s)
+    (.loadHalf (2*j+1) 27 ((2*j : Nat) : Int)) hj (by decide)
+    (by simpa only [Nat.add_zero] using hpc) hs (by rfl)
+    (loadHalf_step ops layout geometry t (2*j+1) 27 _ s _ _ a hpA (a_address t c j ht hc hj) ha)
+  have h2 := base_step_in_term ops t j 1 (termLoadA t c j a s) (termCastA ops t c j a s)
+    (.fromHalf (4+2*j) (2*j+1)) hj (by decide)
+    (by simp only [termLoadA, loadedHalf_pc]; omega)
+    (by simpa only [termLoadA, loadedHalf_stopped] using hs) (by rfl)
+    (fromHalf_step ops layout geometry t (4+2*j) (2*j+1) _ a (by simp [termLoadA]))
+  have hptr : (termCastA ops t c j a s).registers.values (.int64 48) = some (.address (bBase c)) := by
+    apply pointer_values
+    simpa only [termCastA, termLoadA, setFloat_pointer, loadedHalf_pointer] using hpB
+  have hval : operand64 (termCastA ops t c j a s).registers (.reg (strideRegister j)) =
+      some (bStride t j) := by
+    simpa only [operand64, termCastA, termLoadA, setFloat_i64, loadedHalf_i64] using hstride
+  have hcol : t%512 < 512 := Nat.mod_lt _ (by decide)
+  have hbound : signed64 (bStride t j) ∧ signed64 ((bBase c).offset+bStride t j) := by
+    unfold bStride bBase signed64
+    simp only [Int.natCast_add, Int.natCast_mul]; omega
+  have e3 := pointer_add_step ops layout geometry t (28+j) 48 (.reg (strideRegister j))
+    (bBase c) (bStride t j) (termCastA ops t c j a s) hptr hval hbound
+  have heq : { bBase c with offset := (bBase c).offset+bStride t j } = bPointer t c j := by
+    simp only [bBase, bStride, bPointer, Int.natCast_add]
+  rw [heq] at e3
+  have h3 := base_step_in_term ops t j 2 (termCastA ops t c j a s) (termAddressB ops t c j a s)
+    (.addSigned64 (28+j) 48 (.reg (strideRegister j))) hj (by decide)
+    (by simp only [termCastA, termLoadA, setFloat_pc, loadedHalf_pc]; omega)
+    (by simpa only [termCastA, termLoadA, setFloat_stopped, loadedHalf_stopped] using hs)
+    (by rfl) e3
+  have h4 := base_step_in_term ops t j 3 (termAddressB ops t c j a s) (termLoadB ops t c j a b s)
+    (.loadHalf (2*j+2) (28+j) 0) hj (by decide)
+    (by simp only [termAddressB, termCastA, termLoadA, setPointer_pc, setFloat_pc, loadedHalf_pc]; omega)
+    (by simpa only [termAddressB, termCastA, termLoadA, setPointer_stopped, setFloat_stopped,
+      loadedHalf_stopped] using hs) (by rfl)
+    (loadHalf_step ops layout geometry t (2*j+2) (28+j) 0 _ _ _ b
+      (by simp [termAddressB]) (b_address t c j hc hj)
+      (by simpa only [termAddressB, termCastA, termLoadA, setPointer_base, setFloat_memory,
+        loadedHalf_memory] using hb))
+  have h5 := base_step_in_term ops t j 4 (termLoadB ops t c j a b s) (termCastB ops t c j a b s)
+    (.fromHalf (5+2*j) (2*j+2)) hj (by decide)
+    (by simp only [termLoadB, termAddressB, termCastA, termLoadA, setPointer_pc, setFloat_pc,
+      loadedHalf_pc]; omega)
+    (by simpa only [termLoadB, termAddressB, termCastA, termLoadA, loadedHalf_stopped,
+      setPointer_stopped, setFloat_stopped] using hs) (by rfl)
+    (fromHalf_step ops layout geometry t (5+2*j) (2*j+2) _ b (by simp [termLoadB]))
+  have hrAB : 4+2*j ≠ 5+2*j := by omega
+  have h6 := base_step_in_term ops t j 5 (termCastB ops t c j a b s) (termProduct ops t c j a b s)
+    (.binaryFloat (36+2*j) .mul (4+2*j) (5+2*j)) hj (by decide)
+    (by simp only [termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+      setPointer_pc, setFloat_pc, loadedHalf_pc]; omega)
+    (by simpa only [termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+      setPointer_stopped, setFloat_stopped, loadedHalf_stopped] using hs) (by rfl)
+    (binaryFloat_step ops layout geometry t (36+2*j) (4+2*j) (5+2*j) .mul _ _ _
+      (by simp [termCastB, termLoadB, termAddressB, termCastA, hrAB])
+      (by simp [termCastB]))
+  have hrA : inputRegister j ≠ 4+2*j := by unfold inputRegister; split <;> omega
+  have hrB : inputRegister j ≠ 5+2*j := by unfold inputRegister; split <;> omega
+  have hrP : inputRegister j ≠ 36+2*j := by unfold inputRegister; split <;> omega
+  have h7 := base_step_in_term ops t j 6 (termProduct ops t c j a b s) (termResult ops t c j a b acc s)
+    (.binaryFloat (sumRegister j) .add (inputRegister j) (36+2*j)) hj (by decide)
+    (by simp only [termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+      setPointer_pc, setFloat_pc, loadedHalf_pc]; omega)
+    (by simpa only [termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+      setPointer_stopped, setFloat_stopped, loadedHalf_stopped] using hs) (by rfl)
+    (binaryFloat_step ops layout geometry t (sumRegister j) (inputRegister j) (36+2*j) .add _ _ _
+      (by simp [termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+        hrA, hrB, hrP, hacc]) (by simp [termProduct]))
+  apply steps_trans _ _ _ _ _ _ _ _ h1
+  apply steps_trans _ _ _ _ _ _ _ _ h2
+  apply steps_trans _ _ _ _ _ _ _ _ h3
+  apply steps_trans _ _ _ _ _ _ _ _ h4
+  apply steps_trans _ _ _ _ _ _ _ _ h5
+  exact steps_trans _ _ _ _ _ _ _ _ h6 h7
+
 end Gemm
 
 #print axioms steps_trans
@@ -703,4 +842,6 @@ end Gemm
 #print axioms Gemm.initialized_base
 #print axioms Gemm.a_address
 #print axioms Gemm.b_address
+#print axioms Gemm.program_term
+#print axioms Gemm.term_execute
 end LarkPtxMatrix
