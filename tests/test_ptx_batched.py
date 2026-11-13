@@ -122,7 +122,7 @@ class PtxBatchedProofTests(unittest.TestCase):
             self.assertEqual(first["owned_Lean_modules_freshly_compiled"], 8)
             self.assertEqual(first["source_bound_development_proofs"], 1)
             self.assertEqual(len(first["axiom_audits"]), 6)
-            self.assertEqual(len(first["library_axiom_audits"]), 272)
+            self.assertEqual(len(first["library_axiom_audits"]), 271)
             result = checker.check_export(recording, replay, LEAN)
             self.assertEqual(result["status"], "fresh-source-only-PTX-BMM-proof-replay-passed")
             self.assertEqual(result["owned_modules_freshly_compiled"], 8)

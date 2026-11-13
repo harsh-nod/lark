@@ -67,16 +67,24 @@ def spec (ops : Ops α) (input : Nat → Nat → α) : List α :=
   (LarkPtxBatched.Bmm.Body.evaluateReference ops input referenceBody).getD []
 theorem source_program : program = LarkPtxBatched.Bmm.program := by decide
 theorem reference_body : referenceBody = LarkPtxBatched.Bmm.Body.referenceBody := by rfl
+theorem spec_eq (ops : Ops α) (input : Nat → Nat → α) :
+    spec ops input = LarkPtxBatched.Bmm.Body.referenceSpec ops input := by
+  unfold spec
+  rw [reference_body, LarkPtxBatched.Bmm.Body.evaluate_reference_body]
+  rfl
+theorem kernel_eq_spec (ops : Ops α) :
+    LarkPtxBatched.Bmm.Body.Correct ops program (spec ops) := by
+  have hspec : spec ops = LarkPtxBatched.Bmm.Body.referenceSpec ops := funext (spec_eq ops)
+  rw [source_program, hspec]
+  exact LarkPtxBatched.Bmm.Body.kernel_correct ops
 theorem launch (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
     ∃ final, LarkPtxBatched.Bmm.Body.LaneSequence ops program 0 1048576
       (initial LarkPtxBatched.Bmm.layout input outside) final ∧
     raceFree LarkPtxBatched.Bmm.geometry final.trace = true ∧
     extract LarkPtxBatched.Bmm.layout final = some (spec ops input) ∧
     (∀ l, (∀ i, i < 1048576 → l ≠ LarkPtxBatched.Bmm.Body.outputCell i) →
-      final.memory l = (initial LarkPtxBatched.Bmm.layout input outside).memory l) := by
-  rw [source_program]
-  simpa only [spec, reference_body, LarkPtxBatched.Bmm.Body.evaluate_reference_body,
-    Option.getD_some] using LarkPtxBatched.Bmm.Body.kernel_correct ops input outside
+      final.memory l = (initial LarkPtxBatched.Bmm.layout input outside).memory l) :=
+  kernel_eq_spec ops input outside
 theorem race_free (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
     ∃ final, LarkPtxBatched.Bmm.Body.LaneSequence ops program 0 1048576
       (initial LarkPtxBatched.Bmm.layout input outside) final ∧
@@ -90,9 +98,5 @@ theorem segment_equivalence (ops : Ops α) (input : Nat → Nat → α)
       extract LarkPtxBatched.Bmm.layout final = some (spec ops input) := by
   obtain ⟨final, execution, race, values, preserved⟩ := launch ops input outside
   exact ⟨final, execution, values⟩
-theorem kernel_eq_spec (ops : Ops α) :
-    LarkPtxBatched.Bmm.Body.Correct ops program (spec ops) := by
-  intro input outside
-  exact launch ops input outside
 """ + "".join("#print axioms LarkPtxBatchedCertificate." + tag + "\n" for tag in TAGS) + (
         "end LarkPtxBatchedCertificate\n")
