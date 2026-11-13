@@ -9,3 +9,7 @@ The development reader preserves all 138 instructions and the real backward
 branch to instruction 29. Grammar acceptance is not a kernel proof, registered
 certificate, model outcome or NVIDIA execution. Complete actual-source launch,
 reference and race proofs remain required.
+
+Initial Lean lemmas check the program length, backward branch and final ret,
+and derive batch/row/column addressing and valid input indices for every output
+lane and all 256 reduction indices. They do not establish complete execution.

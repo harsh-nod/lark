@@ -4,7 +4,8 @@ set_option maxRecDepth 10000
 set_option maxHeartbeats 2000000
 
 /- Exact original-size 32-batch compiled source. These initial lemmas bind the
-program data only; a complete execution/reference/race theorem is still needed. -/
+program data and full-shape address arithmetic. Complete instruction execution,
+reference extraction and race theorems are still needed. -/
 namespace LarkPtxBatched
 open LarkPtxMatrix
 namespace Bmm
@@ -17,9 +18,53 @@ theorem program_branch : program[131]? = some (.base (.branch 1 29)) := by decid
 
 theorem program_ret : program[137]? = some (.base .ret) := by decide
 
+theorem clear_low6 (n : Nat) (hn : n < 16777216) :
+    n &&& 16777152 = (n / 64) * 64 := by
+  have hd : (n &&& 16777152) / 64 = n / 64 := by
+    have hdiv : n / 64 < 262144 := by omega
+    change (n &&& 16777152) / 2^6 = n / 64
+    rw [Nat.and_div_two_pow]
+    change n / 64 &&& (2^18-1) = n / 64
+    exact Nat.and_two_pow_sub_one_of_lt_two_pow hdiv
+  have hm : (n &&& 16777152) % 64 = 0 := by
+    change (n &&& 16777152) % 2^6 = 0
+    rw [Nat.and_mod_two_pow]
+    change n % 64 &&& 0 = 0
+    simp
+  have hs := Nat.mod_add_div (n &&& 16777152) 64
+  rw [hm, hd] at hs
+  omega
+
+theorem row_decomposition (t : Nat) :
+    t / 32768 * 64 + (t / 512) % 64 = t / 512 := by omega
+
+def aIndex (t k : Nat) : Nat := t / 32768 * 16384 + ((t / 512) % 64) * 256 + k
+def bIndex (t k : Nat) : Nat := t / 32768 * 131072 + k * 512 + t % 512
+
+theorem aIndex_flat (t k : Nat) : aIndex t k = (t / 512) * 256 + k := by
+  unfold aIndex
+  have h := row_decomposition t
+  omega
+
+theorem coordinates_bounds (t : Nat) (ht : t < 1048576) :
+    t / 32768 < 32 ∧ (t / 512) % 64 < 64 ∧ t % 512 < 512 ∧
+    t / 32768 * 16384 + ((t / 512) % 64) * 256 < 524288 ∧
+    t / 32768 * 131072 + t % 512 < 4194304 := by omega
+
+theorem input_indices_valid (t k : Nat) (ht : t < 1048576) (hk : k < 256) :
+    aIndex t k < 524288 ∧ bIndex t k < 4194304 := by
+  rw [aIndex_flat]
+  unfold bIndex
+  omega
+
 end Bmm
 end LarkPtxBatched
 
 #print axioms LarkPtxBatched.Bmm.program_length
 #print axioms LarkPtxBatched.Bmm.program_branch
 #print axioms LarkPtxBatched.Bmm.program_ret
+#print axioms LarkPtxBatched.Bmm.clear_low6
+#print axioms LarkPtxBatched.Bmm.row_decomposition
+#print axioms LarkPtxBatched.Bmm.aIndex_flat
+#print axioms LarkPtxBatched.Bmm.coordinates_bounds
+#print axioms LarkPtxBatched.Bmm.input_indices_valid
