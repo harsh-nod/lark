@@ -10,6 +10,8 @@ import tarfile
 import tempfile
 import unittest
 
+from reproduction.paper_results.check_snapshot_controls import GEMV_CONTROLS, mutate_gemv_evidence
+from reproduction.paper_results.prepare_ptx_dot_snapshot import augment_auditor, prepare_snapshot
 from reproduction.paper_results.ptx_dot_evidence import (
     CI, PREFIX, PUBLICATION, check_ptx_dot_evidence, check_recording_packet,
 )
@@ -208,6 +210,60 @@ class PtxDotPaperEvidenceTests(unittest.TestCase):
 
     def test_actual_other_twenty_job_ci_cannot_replace_gemv_source_ci(self):
         self.wrong_ci("reproduction/paper_results/snapshot-v23-source-ci-v1")
+
+    def complete_config(self):
+        shutil.copytree(ROOT / CI, self.root / CI)
+        declared = [str(p.relative_to(self.root)) for p in self.root.rglob("*") if p.is_file()]
+        return {"evidence_groups": {"ptx_dot_proof": declared},
+                "ptx_dot_proof": {"prefix": PREFIX, "publication_prefix": PUBLICATION, "ci_prefix": CI}}
+
+    def test_actual_complete_publication_and_twenty_job_ci(self):
+        report = check_ptx_dot_evidence(self.complete_config(), self.root)
+        self.assertEqual(report["anonymous_publication_files"], 33)
+        self.assertEqual(report["successful_source_CI_jobs"], 20)
+        self.assertIs(report["original_paper_fully_reproduced"], False)
+
+    def test_all_eight_complete_packet_mutations_reject_at_the_semantic_gate(self):
+        config = self.complete_config()
+        baseline = {name: (self.root / name).read_bytes()
+                    for name in config["evidence_groups"]["ptx_dot_proof"]}
+        for name, gate in GEMV_CONTROLS:
+            with self.subTest(name=name):
+                entries = baseline.copy()
+                mutate_gemv_evidence(entries, config, name)
+                changed = [path for path in entries if entries[path] is not baseline[path]]
+                self.assertEqual(len(changed), 2)
+                for path in changed:
+                    (self.root / path).write_bytes(entries[path])
+                with self.assertRaisesRegex(ValueError, "PTX dot " + gate):
+                    check_ptx_dot_evidence(config, self.root)
+                for path in changed:
+                    (self.root / path).write_bytes(baseline[path])
+        self.assertEqual(check_ptx_dot_evidence(config, self.root)["successful_source_CI_jobs"], 20)
+
+    def test_augmented_v23_auditor_renders_gemv_as_one_development_kernel(self):
+        gemv = check_ptx_dot_evidence(self.complete_config(), self.root)
+        source = (ROOT / "reproduction/paper_results/snapshots/20261113-v23/auditor.py").read_text()
+        namespace = {"__name__": "isolated_gemv_ledger_renderer",
+                     "__file__": str(ROOT / "reproduction/paper_results/audit.py")}
+        exec(compile(augment_auditor(source), "frozen-gemv-ledger-auditor.py", "exec"), namespace)
+        report = read(ROOT / "reproduction/paper_results/snapshots/20261113-v23/results/audit.json")
+        report["ptx_dot_evidence_checks"] = gemv
+        for path in (PREFIX + "/RESULTS.md",
+                     "reproduction/paper_results/original-artifact-refresh-20261113-1745/results.json"):
+            report["evidence_links"][path] = "https://github.com/harsh-nod/lark/blob/" + "0" * 40 + "/" + path
+        rendered = namespace["render"](report, self.root).decode()
+        self.assertIn("one independent 512x1024 development proof covering all 119 instructions", rendered)
+        self.assertIn("actual 64-iteration backward loop, all 512 active lanes", rendered)
+        self.assertIn("3 positive rechecks and 4 direct Lean source-binding controls", rendered)
+        self.assertIn("original paper is not fully reproduced", rendered)
+
+    def test_snapshot_builder_requires_actual_completed_receipts_before_creating_output(self):
+        snapshot = self.root / "must-not-be-created"
+        with self.assertRaisesRegex(ValueError, "Complete actual GEMV publication, twenty-job CI"):
+            prepare_snapshot(evidence_commit="0" * 40, source_archive=self.root / "must-not-be-read",
+                             snapshot=snapshot, root=self.root)
+        self.assertFalse(snapshot.exists())
 
 
 if __name__ == "__main__":
