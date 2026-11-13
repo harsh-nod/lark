@@ -23,8 +23,9 @@ from lark_kernels.proof_syntax import check_terms  # noqa: E402
 from reproduction.local_models import full_shape_run as run  # noqa: E402
 
 RUNNERS = {
-    "f3ed2e693ec1f04f17fe52c82e14d71975bd11f7868a8b48339b2bcb7a53b172",  # pilot
-    "0e49b6ce519a2af91c81ee60419adcf37357a71fdf904a772dab0cd279368aef",  # cohort
+    "f3ed2e693ec1f04f17fe52c82e14d71975bd11f7868a8b48339b2bcb7a53b172": {"hip"},
+    "0e49b6ce519a2af91c81ee60419adcf37357a71fdf904a772dab0cd279368aef": {"hip"},
+    "05438858483e7f0369e6342ecb9ab0d1f6a6820b982a8dcea270ddb3813f34b1": {"hip", "cuda"},
 }
 require = run.require
 
@@ -46,23 +47,31 @@ def audit(recording, prepared, output, lean=None, require_full=False):
     require(not output.exists(), "Audit output must be fresh")
     require(not any(p.is_symlink() for p in recording.rglob("*")), "Recording contains symlinks")
     sources = run.verify_preparation(prepared)
+    preparation_sha = run.sha(prepared / "manifest.json")
+    language = run.PREPARATIONS[preparation_sha]
     report = read(recording / "results.json")
     require(report["runner_sha256"] in RUNNERS
             and run.sha(recording / "runner.py") == report["runner_sha256"],
             "Unknown or changed recorded controller")
+    require(language in RUNNERS[report["runner_sha256"]],
+            "Recorded controller does not support this source language")
     require(report["client_sha256"] == run.sha(Path(run.client.__file__))
             == run.sha(recording / "client.py"), "Recorded client differs")
+    dependencies = {"full_shape.py", "checkpoint.py"}
+    if language == "cuda":
+        dependencies.add("cuda_shape.py")
     for name, digest in report["runner_source_sha256"].items():
-        require(name in {"full_shape.py", "checkpoint.py"}
+        require(name in dependencies
                 and run.sha(recording / "runner-sources" / name) == digest
                 == run.sha(Path(run.__file__).with_name(name)), "Runner dependency differs")
-    require(set(report["runner_source_sha256"]) == {"full_shape.py", "checkpoint.py"},
+    require(set(report["runner_source_sha256"]) == dependencies,
             "Runner dependency inventory differs")
     require(report["protocol"] == run.PROTOCOL and report["test_stub"] is False,
             "Protocol differs or recording is a test stub")
     require(report["status"] in {"finished", "runtime-uncertain", "infrastructure-error"},
             "A live recording cannot be frozen as completed evidence")
-    require(report["preparation_manifest_sha256"] == run.PREPARATION_SHA256
+    require(report["preparation_manifest_sha256"] == preparation_sha
+            and report.get("source_language", "hip") == language
             and report["external_api_spend_usd"] == report["new_source_certificates"]
             == report["gpu_trials"] == 0 and report["original_paper_fully_reproduced"] is False,
             "Unsupported result scope")
@@ -235,7 +244,8 @@ def audit(recording, prepared, output, lean=None, require_full=False):
             return ok, log
 
         args = SimpleNamespace(prepared=prepared, url=server["endpoint"], server=server,
-                               model=server["model"], lean="recorded-only", allow_test_stub=False)
+                               model=server["model"], lean="recorded-only", allow_test_stub=False,
+                               source_language=language, preparation_manifest_sha256=preparation_sha)
         with patch.object(run, "tokenize", side_effect=guarded(recorded_tokenize)), \
              patch.object(run.client, "call", side_effect=guarded(recorded_call)), \
              patch.object(run, "check_terms", side_effect=guarded(recorded_syntax)), \
@@ -279,7 +289,7 @@ def audit(recording, prepared, output, lean=None, require_full=False):
                 fresh.append(str(folder.relative_to(output)))
     result = {"schema": 1, "status": "recorded-full-size-protocol-replayed",
               "recording_results_sha256": run.sha(recording / "results.json"),
-              "preparation_manifest_sha256": run.PREPARATION_SHA256,
+              "preparation_manifest_sha256": preparation_sha, "source_language": language,
               "controller_sha256": run.sha(Path(run.__file__)),
               "auditor_sha256": run.sha(Path(__file__)), "model": report["model"],
               "selected_cases": selected, "replayed_cases": [c["case"] for c in cases],

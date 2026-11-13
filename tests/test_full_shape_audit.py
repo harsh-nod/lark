@@ -79,6 +79,20 @@ class FullShapeAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "stub"):
             self.check()
 
+    def test_frontend_label_cannot_override_frozen_hip_preparation(self):
+        report = audit.read(self.report_path)
+        report["source_language"] = "cuda"
+        audit.run.write(self.report_path, report)
+        with self.assertRaisesRegex(ValueError, "scope"):
+            self.check()
+
+    def test_legacy_hip_controller_cannot_claim_cuda_preparation(self):
+        prepared = self.root / "cuda-prepared"
+        extract(ROOT / "reproduction/local_models/results/full-shape-cuda-preparation-v1/preparation.tar.gz",
+                prepared)
+        with self.assertRaisesRegex(ValueError, "does not support"):
+            audit.audit(self.recording, prepared, self.root / "audit")
+
     def test_false_proof_and_usage_counts_are_refused(self):
         for key in ("verified_model_proofs", "model_inference_calls", "request_attempts"):
             with self.subTest(key=key):

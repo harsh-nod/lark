@@ -26,6 +26,8 @@ from reproduction.local_models.checkpoint import MODELS  # noqa: E402
 from reproduction.specification_validation.study import owned_sources  # noqa: E402
 
 PREPARATION_SHA256 = "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8"
+CUDA_PREPARATION_SHA256 = "6476ec66614e412a122654036b6bd66fab67b23007d7fc26181cdff7571f34c2"
+PREPARATIONS = {PREPARATION_SHA256: "hip", CUDA_PREPARATION_SHA256: "cuda"}
 IMAGE = (
     "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd"
 )
@@ -107,7 +109,8 @@ def safe_file(root, name):
 
 
 def verify_preparation(root):
-    require(sha(root / "manifest.json") == PREPARATION_SHA256, "Unrecognized frozen preparation")
+    manifest_sha = sha(root / "manifest.json")
+    require(manifest_sha in PREPARATIONS, "Unrecognized frozen preparation")
     manifest = json.loads((root / "manifest.json").read_text())
     require(
         {str(p.relative_to(root)) for p in root.rglob("*") if p.is_file()}
@@ -130,7 +133,8 @@ def verify_preparation(root):
     report = json.loads((root / "results.json").read_text())
     require(
         report["status"] == "full-shape-model-fixtures-prepared-and-baselines-checked"
-        and report["positive_lean_checks"] == report["masked_negative_lean_checks"] == 17,
+        and report["positive_lean_checks"] == report["masked_negative_lean_checks"] == 17
+        and report.get("language", "hip") == PREPARATIONS[manifest_sha],
         "Incomplete preparation",
     )
     return sources
@@ -302,6 +306,8 @@ def run_case(case, args, sources, environment, folder):
     folder.mkdir()
     original = args.prepared / "cases" / case
     request = json.loads((original / "request.json").read_text())
+    require(request.get("language", "hip") == getattr(args, "source_language", "hip"),
+            "Task language differs from the pinned preparation")
     block = (original / "sdk-block.lean.txt").read_text()
     masked = {n: "by fail" for n in full_shape.SLOTS}
     require(
@@ -320,7 +326,7 @@ def run_case(case, args, sources, environment, folder):
         "test_stub": args.allow_test_stub,
         "new_source_certificates": 0,
         "syntax_checks": 0,
-        "preparation_manifest_sha256": PREPARATION_SHA256,
+        "preparation_manifest_sha256": getattr(args, "preparation_manifest_sha256", PREPARATION_SHA256),
         "fixed_request_sha256": sha(original / "request.json"),
     }
     feedback = (
@@ -512,6 +518,8 @@ def main():
     args.output = args.output.resolve()
     args.lean = Path(certificate.lean_binary(str(args.lean)))
     sources = verify_preparation(args.prepared)
+    args.preparation_manifest_sha256 = sha(args.prepared / "manifest.json")
+    args.source_language = PREPARATIONS[args.preparation_manifest_sha256]
     args.server = json.loads(args.server_record.read_text())
     require(
         args.server.get("status") == "ready"
@@ -544,7 +552,10 @@ def main():
     shutil.copyfile(Path(client.__file__), args.output / "client.py")
     captured = args.output / "runner-sources"
     captured.mkdir()
-    for name in ("full_shape.py", "checkpoint.py"):
+    dependencies = ["full_shape.py", "checkpoint.py"]
+    if args.source_language == "cuda":
+        dependencies.append("cuda_shape.py")
+    for name in dependencies:
         shutil.copyfile(Path(__file__).with_name(name), captured / name)
     selected = [c[0] for c in full_shape.benchmark.CASES if not args.case or c[0] in args.case]
     report = {
@@ -552,6 +563,7 @@ def main():
         "status": "in-progress",
         "protocol": PROTOCOL,
         "model": args.model,
+        "source_language": args.source_language,
         "revision": args.server.get("revision"),
         "selected_cases": selected,
         "planned_17_case_cohort": len(selected) == 17,
@@ -561,13 +573,13 @@ def main():
         "runner_sha256": sha(Path(__file__)),
         "client_sha256": sha(Path(client.__file__)),
         "server_record_sha256": sha(args.server_record),
-        "preparation_manifest_sha256": PREPARATION_SHA256,
+        "preparation_manifest_sha256": args.preparation_manifest_sha256,
         "external_api_spend_usd": 0,
         "new_source_certificates": 0,
         "gpu_trials": 0,
         "original_paper_fully_reproduced": False,
         "cases": [],
-        "scope": "Independent full-size HIP proof-slot/library-read experiment. No original registry/harness/stage-cost or historical pass-rate reproduction. SDK controls are not model successes.",
+        "scope": f"Independent full-size {args.source_language.upper()} proof-slot/library-read experiment. No original registry/harness/stage-cost or historical pass-rate reproduction. SDK controls are not model successes.",
     }
     write(args.output / "results.json", report)
     report["runner_source_sha256"] = {p.name: sha(p) for p in captured.iterdir()}

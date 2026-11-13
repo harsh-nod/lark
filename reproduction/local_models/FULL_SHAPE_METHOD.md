@@ -117,3 +117,24 @@ it the audit checks protocol and recorded-log consistency, reports zero freshly
 verified proofs, and makes no fresh theorem-validation claim. Failed candidates
 retain their recorded outcomes; this auditor does not rerun their Lean checks.
 Reported model tokens remain distinct from the audit's zero model calls.
+
+The controller also recognizes the separately pinned
+[CUDA preparation](results/full-shape-cuda-preparation-v1/results.json). Its
+seventeen existing CUDA fixtures retain their original buffer shapes, dtypes,
+fuels and native warp width of 32. Seventeen SDK positive checks and seventeen
+all-masked negative checks passed on CPU under the same Lean limits. This adds
+no CUDA execution, NVIDIA measurements, model calls or source certificates.
+
+```bash
+LARK_REAL_PROJECT=/path/to/configured/lean-real \
+python3 reproduction/local_models/cuda_shape.py \
+  --lean /path/to/lean-4.19.0/bin/lean --output /tmp/full-shape-cuda-preparation
+```
+
+Use that frozen preparation with the same `full_shape_run.py` command and model
+budgets. The known manifest fixes the source language; new run reports label it
+explicitly and capture the CUDA preparation driver as an additional dependency.
+The auditor checks that dependency and refuses a CUDA label attached to an old
+HIP preparation or to a controller that only supported HIP. Historical HIP
+records remain supported. The active HIP cohorts continue with their original
+frozen controller and inputs. No CUDA model success is claimed by preparation.

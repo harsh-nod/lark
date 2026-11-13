@@ -81,13 +81,21 @@ class FullShapeProtocolTests(unittest.TestCase):
 )
 class FullShapeStubIntegrationTests(unittest.TestCase):
     def test_library_read_syntax_refusal_and_two_real_proof_checks(self):
+        self.roundtrip("hip")
+
+    def test_cuda_library_read_syntax_refusal_and_two_real_proof_checks(self):
+        self.roundtrip("cuda")
+
+    def roundtrip(self, language):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             prepared = root / "prepared"
             prepared.mkdir()
             archive = (
                 ROOT
-                / "reproduction/local_models/results/full-shape-preparation-v2/preparation.tar.gz"
+                / ("reproduction/local_models/results/" +
+                   ("full-shape-cuda-preparation-v1" if language == "cuda"
+                    else "full-shape-preparation-v2") + "/preparation.tar.gz")
             )
             with tarfile.open(archive) as bundle:
                 for member in bundle:
@@ -201,6 +209,9 @@ class FullShapeStubIntegrationTests(unittest.TestCase):
                 self.assertEqual(report["model_inference_calls"], 0)
                 self.assertEqual(report["verified_model_proofs"], 0)
                 self.assertTrue(report["test_stub"])
+                self.assertEqual(report["source_language"], language)
+                self.assertEqual(report["preparation_manifest_sha256"],
+                                 run.sha(prepared / "manifest.json"))
                 case = report["cases"][0]
                 self.assertEqual(case["library_reads"], 1)
                 self.assertEqual(case["syntax_checks"], 2)
