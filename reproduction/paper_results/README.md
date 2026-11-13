@@ -68,8 +68,20 @@ passed four positive replays and all 49 earlier controls in 260.22 seconds using
 its recorded runner revision. Both receipts retain their exact executed sources
 and logs. These are evidence replays, with no new model calls, Lean checks or
 GPU experiments. The original paper remains incomplete; the registry, original
-optimized programs and harness, model histories, Triton coverage, closed-model
+optimized programs and harness, model histories, full-size PTX coverage, closed-model
 runs, original mutants and H100/MI300X timing cells remain missing.
+
+The [anonymous v24 publication check](snapshot-v24-publication/results.json)
+downloaded all eleven files, totaling 66,801,049 bytes, from source `a49569c`
+with TLS verification enabled. Every byte matched the pinned Git commit, and
+the downloaded snapshot passed all five positive replays and 57 negative
+controls outside Git.
+The [actual v24 source CI record](snapshot-v24-source-ci-v1/results.json)
+records all twenty jobs passing at source `a49569c`, including raw six-cohort
+regeneration, the frozen ledger controls and the complete proof-test job.
+The subsequent publication/CI receipt commit changes only this README and
+recorded receipts; source code, Lean libraries, tests, workflow definitions
+and every frozen snapshot retain the exact tested source bytes.
 
 The earlier v23 snapshot freezes **3,512 evidence files** at commit `44b414f`, plus its
 auditor and targets. All six independent full-size HIP/CUDA model cohorts are
