@@ -37,6 +37,21 @@ successful Main checks, 20 fresh owned-module builds, four direct Lean
 source-binding refusals and an offline installed-wheel replay. These repeated
 checks cover one independent development kernel.
 
+The [anonymous publication check](results/full-size-gemm-proof-publication-v2/results.json)
+matched all 59 changed files (22,753,879 bytes) to corrected source `a2100f3`
+with TLS verification enabled. It checked all five archives, 382 archive
+members and 55 wheel/source bindings. The initial failed CI record and
+fixture-layout correction are retained. This check repeated no proof, model
+or GPU experiment.
+
+The [actual corrected-source CI record](results/full-size-gemm-proof-ci-v2/results.json)
+records all twenty-one jobs passing at source `a2100f3`, including the separate
+complete GEMM cold export/replay and four direct controls, integration and
+tampering tests, the four bounded PTX fixtures and all existing ledger checks.
+The later receipt commit changes only this document and recorded receipts.
+All SDK, Lean, tests, workflow and frozen snapshots retain their exact tested
+source identities.
+
 Lean 4.19.0 is pinned by its binary hash. Export and replay compile all five
 owned modules from matched trusted source in a fresh import root and check six
 Main obligations. Captured Python, Lean and oleans are hash-bound data. They are
