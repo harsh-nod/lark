@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-snapshot-controls-apcfmosf/isolated/bin/replay_snapshot.py", line 259, in <module>
+    main()
+  File "/tmp/lark-snapshot-controls-apcfmosf/isolated/bin/replay_snapshot.py", line 255, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-snapshot-controls-apcfmosf/isolated/bin/replay_snapshot.py", line 192, in replay
+    require(
+  File "/tmp/lark-snapshot-controls-apcfmosf/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-snapshot-4fd02rp0/reproduction/paper_results/audit.py", line 713, in <module>
+    main()
+  File "/tmp/lark-paper-snapshot-4fd02rp0/reproduction/paper_results/audit.py", line 635, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-snapshot-4fd02rp0/reproduction/paper_results/audit.py", line 274, in check_numerical_evidence
+    require(score["comparisons"] == score["bit_identical"] == count and
+  File "/tmp/lark-paper-snapshot-4fd02rp0/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study score coverage differs: benchmark
+

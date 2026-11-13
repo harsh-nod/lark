@@ -74,6 +74,17 @@ with no new Lean checks, model calls or GPU experiments. The original registry,
 optimized programs, harness, model histories, original mutants, broader PTX
 coverage and H100/MI300X measurements remain unreproduced.
 
+The [anonymous v25 publication check](snapshot-v25-publication/results.json)
+downloaded all eleven source/snapshot files, totaling 88,810,099 bytes,
+from commit `63aabf3` over verified TLS. Every byte matched the pinned Git
+commit, and all six positive replays and 65 negative controls passed
+outside Git. The [actual source CI record](snapshot-v25-source-ci-v1/results.json)
+records all twenty-one jobs passing at that same source, including the
+three-proof ledger, complete proof tests and GEMM export/replay job.
+Only this README and recorded publication/CI receipts follow the tested
+source; code, workflows, tests, Lean libraries and all snapshots retain
+their exact tested bytes.
+
 The earlier v24 snapshot freezes **3,565 evidence files** at commit `48aa4ae`, plus
 its auditor and targets. It preserves all earlier evidence and all six independent
 full-size model cohorts: 85 verified task outcomes across 102 tasks, 782 responses
