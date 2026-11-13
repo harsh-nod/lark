@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-snapshot-controls-532rkg53/isolated/bin/replay_snapshot.py", line 259, in <module>
+    main()
+  File "/tmp/lark-snapshot-controls-532rkg53/isolated/bin/replay_snapshot.py", line 255, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-snapshot-controls-532rkg53/isolated/bin/replay_snapshot.py", line 192, in replay
+    require(
+  File "/tmp/lark-snapshot-controls-532rkg53/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-snapshot-ksf_vp5d/reproduction/paper_results/audit.py", line 639, in <module>
+    main()
+  File "/tmp/lark-paper-snapshot-ksf_vp5d/reproduction/paper_results/audit.py", line 572, in main
+    production_checks = check_new_production_evidence(config, production_cases)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-snapshot-ksf_vp5d/reproduction/paper_results/audit.py", line 169, in check_new_production_evidence
+    require(report["model_profile"] == expected["profile"]
+  File "/tmp/lark-paper-snapshot-ksf_vp5d/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: New production replay scope differs: vllm-awq-gemm
+

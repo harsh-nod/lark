@@ -1,6 +1,7 @@
 """Check standalone replay and fully rehashed false-completion controls."""
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import io
 import json
@@ -14,6 +15,10 @@ import tempfile
 import uuid
 
 from replay_snapshot import DEFAULT, file_set, read, write
+
+
+# Temporary false-control archives preserve member bytes at faster compression.
+CONTROL_COMPRESSION_LEVEL = 1
 
 
 def sha(path):
@@ -32,6 +37,174 @@ def rehash(snapshot, *, archive_changed=False):
         snapshot / "manifest.json",
         {n: sha(snapshot / n) for n in sorted(file_set(snapshot)) if n != "manifest.json"},
     )
+
+
+MODEL_CONTROLS = (
+    ("model-declared-cohort-count", "declared cohort count differs"),
+    ("model-false-missing-roster", "complete/missing cohort roster differs"),
+    ("model-original-result-overclaim", "comparison execution/original scope differs"),
+    ("model-changed-checkpoint-revision", "model/language/revision identity differs"),
+    ("model-stub-cohort", "complete non-stub fixed protocol differs"),
+    ("model-partial-audit-roster", "case roster/summary differs"),
+    ("model-case-only-stub", "case stub/execution scope differs"),
+    ("model-source-certificate-overclaim", "cohort execution/original scope differs"),
+    ("model-first-response-relabeled", "case counters/first-attempt metrics differ"),
+    ("model-boolean-numeric-counter", "cohort/replay counters differ"),
+    ("model-mismatched-accepted-Main", "recorded accepted-Main replay binding differs"),
+    ("model-failed-candidates-falsely-rechecked", "recorded proof/protocol binding differs"),
+    ("model-mean-denominator-changed", "successful-task token means/denominators differ"),
+    ("model-case-cost-reconciliation", "cohort usage reconciliation differs"),
+    ("model-premature-failed-case-stop", "case completion/budget differs"),
+    ("model-context-budget-increased", "comparison roster/protocol differs"),
+    ("model-forged-extra-fresh-check", "cohort/replay counters differ"),
+)
+
+PTX_CONTROLS = (
+    ("ptx-rechecks-counted-as-kernels", "kernel/recheck/execution counters differ"),
+    ("ptx-boolean-kernel-counter", "kernel/recheck/execution counters differ"),
+    ("ptx-original-result-overclaim", "proof contract/original scope differs"),
+    ("ptx-nvidia-execution-overclaim", "proof contract/original scope differs"),
+    ("ptx-proof-budget-increased", "proof contract/original scope differs"),
+    ("ptx-launch-geometry-changed", "proof contract/original scope differs"),
+    ("ptx-CUDA-contract-fuel-changed", "proof contract/original scope differs"),
+    ("ptx-source-CI-wrong-commit", "actual source CI differs"),
+)
+
+
+def mutate_ptx_evidence(entries, config, control):
+    """Change actual copied proof metadata and synchronize its packet manifest."""
+    spec = config["ptx_pointwise_proof"]
+    prefix = spec["ci_prefix"] if control == "ptx-source-CI-wrong-commit" else spec["prefix"]
+    name = "run.json" if control == "ptx-source-CI-wrong-commit" else "results.json"
+    record = json.loads(entries[prefix + "/" + name])
+    if control == "ptx-rechecks-counted-as-kernels":
+        record["independent_source_bound_development_proofs"] = 4
+    elif control == "ptx-boolean-kernel-counter":
+        record["independent_source_bound_development_proofs"] = True
+    elif control == "ptx-original-result-overclaim":
+        record["original_paper_fully_reproduced"] = True
+    elif control == "ptx-nvidia-execution-overclaim":
+        record["nvidia_execution"] = True
+    elif control == "ptx-proof-budget-increased":
+        record["limits"]["maxHeartbeats"] += 1
+    elif control == "ptx-launch-geometry-changed":
+        record["launch"]["block"] = 32
+    elif control == "ptx-CUDA-contract-fuel-changed":
+        record["unchanged_CUDA_contract_fuel"][0] = 15
+    elif control == "ptx-source-CI-wrong-commit":
+        record["head_sha"] = "0" * 40
+    else:
+        raise ValueError("Unknown PTX control: " + control)
+    entries[prefix + "/" + name] = (json.dumps(record, indent=2) + "\n").encode()
+    manifest = json.loads(entries[prefix + "/manifest.json"])
+    for member in manifest:
+        manifest[member] = hashlib.sha256(entries[prefix + "/" + member]).hexdigest()
+    entries[prefix + "/manifest.json"] = (json.dumps(manifest, indent=2) + "\n").encode()
+
+
+def mutate_model_evidence(entries, config, control):
+    """Change copied metadata and synchronize every inner report/pin binding."""
+    def get(name):
+        return json.loads(entries[name])
+
+    def put(name, value):
+        entries[name] = (json.dumps(value, indent=2) + "\n").encode()
+
+    def digest(name):
+        return hashlib.sha256(entries[name]).hexdigest()
+
+    spec = config["full_shape_models"]
+    comparison = spec["comparison_prefix"]
+    report, bound = get(comparison + "/results.json"), get(comparison + "/binding.json")
+    if control == "model-declared-cohort-count":
+        spec["required_cohorts"] -= 1
+    elif control == "model-false-missing-roster":
+        report["missing_cohorts"] = [{"model": "zai-org/GLM-5.3", "source_language": "hip"}]
+    elif control == "model-original-result-overclaim":
+        report["original_paper_fully_reproduced"] = True
+    elif control == "model-context-budget-increased":
+        report["protocol"]["context_limit"] += 1
+        for item in spec["packets"]:
+            for name in ("results.json", "raw-results.json"):
+                path = item["prefix"] + "/" + name
+                data = get(path)
+                data["protocol"] = dict(report["protocol"])
+                put(path, data)
+    else:
+        index = 0
+        if control == "model-premature-failed-case-stop":
+            index = next(i for i, item in enumerate(spec["packets"])
+                         if any(case["status"] == "budget-exhausted"
+                                for case in get(item["prefix"] + "/raw-results.json")["cases"]))
+        packet = spec["packets"][index]["prefix"]
+        summary, raw, audit, proof = (get(packet + "/" + name) for name in
+                                     ("results.json", "raw-results.json", "audit-results.json", "binding.json"))
+        row = report["inputs"][index]
+        if control == "model-changed-checkpoint-revision":
+            summary["revision"] = "0" * 40
+        elif control == "model-stub-cohort":
+            summary["test_stub"] = True
+        elif control == "model-partial-audit-roster":
+            audit["selected_cases"] = [raw["cases"][0]["case"]]
+        elif control == "model-case-only-stub":
+            raw["cases"][0]["test_stub"] = True
+        elif control == "model-source-certificate-overclaim":
+            summary["new_registered_source_certificates"] = 1
+        elif control == "model-first-response-relabeled":
+            case = summary["cases"][0]
+            case["first_response_verified"] = not case["first_response_verified"]
+            row["cases"] = summary["cases"]
+        elif control == "model-boolean-numeric-counter":
+            summary["counts"]["first_response_verified"] = bool(summary["counts"]["first_response_verified"])
+            row["recorded_counts"] = summary["counts"]
+        elif control == "model-mismatched-accepted-Main":
+            inventory = get(packet + "/audit-files.json")
+            inventory[audit["fresh_accepted_proof_kernel_checks"][0] + "/Main.lean"] = "0" * 64
+            put(packet + "/audit-files.json", inventory)
+        elif control == "model-failed-candidates-falsely-rechecked":
+            proof["failed_lean_candidates_freshly_rechecked"] = True
+        elif control == "model-mean-denominator-changed":
+            row["levels"]["level1"]["mean_denominator_verified_tasks"] += 1
+        elif control == "model-case-cost-reconciliation":
+            summary["cases"][0]["reported_usage"]["prompt_tokens"] += 1
+            summary["cases"][0]["reported_usage"]["total_tokens"] += 1
+            row["cases"] = summary["cases"]
+        elif control == "model-premature-failed-case-stop":
+            case = next(case for case in raw["cases"] if case["status"] == "budget-exhausted")
+            case["calls"].pop()
+            case["proof_checks"] = sum(call["status"] in ("unproved", "verified-proof") for call in case["calls"])
+            case["library_reads"] = sum(call["status"] == "library-read" for call in case["calls"])
+        elif control == "model-forged-extra-fresh-check":
+            summary["counts"]["additional_fresh_kernel_checks"] += 1
+            row["recorded_counts"] = summary["counts"]
+        else:
+            raise ValueError("Unknown model control: " + control)
+        for name, value in (("results.json", summary), ("raw-results.json", raw),
+                            ("audit-results.json", audit), ("binding.json", proof)):
+            put(packet + "/" + name, value)
+    names = ("results.json", "raw-results.json", "audit-results.json", "binding.json",
+             "cohort-files.json", "audit-files.json")
+    for expected, row, binding in zip(spec["packets"], report["inputs"], bound["inputs"], strict=True):
+        packet = expected["prefix"]
+        audit, proof = get(packet + "/audit-results.json"), get(packet + "/binding.json")
+        audit["recording_results_sha256"] = digest(packet + "/raw-results.json")
+        put(packet + "/audit-results.json", audit)
+        proof["raw_results_sha256"] = digest(packet + "/raw-results.json")
+        proof["audit_results_sha256"] = digest(packet + "/audit-results.json")
+        put(packet + "/binding.json", proof)
+        manifest = get(packet + "/manifest.json")
+        for name in names:
+            manifest[name] = digest(packet + "/" + name)
+        put(packet + "/manifest.json", manifest)
+        value = digest(packet + "/manifest.json")
+        expected["manifest_sha256"] = row["packet_manifest_sha256"] = binding["manifest_sha256"] = value
+    put(comparison + "/results.json", report)
+    put(comparison + "/binding.json", bound)
+    manifest = get(comparison + "/manifest.json")
+    for name in manifest:
+        manifest[name] = digest(comparison + "/" + name)
+    put(comparison + "/manifest.json", manifest)
+    put("reproduction/paper_results/targets.json", config)
 
 
 def main():
@@ -133,7 +306,7 @@ def main():
             target_name = "reproduction/paper_results/targets.json"
             with tarfile.open(altered / "evidence.tar.gz") as archive:
                 entries = [(m.name, archive.extractfile(m).read()) for m in archive]
-            with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+            with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
                 for name, data in entries:
                     if name == target_name:
                         data = (altered / "targets.json").read_bytes()
@@ -171,7 +344,7 @@ def main():
                     hashes = json.loads(entries[inner_manifest])
                     hashes[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[inner_manifest] = (json.dumps(hashes, indent=2) + "\n").encode()
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
                     for entry_name, data in entries.items():
                         info = tarfile.TarInfo(entry_name)
                         info.size = len(data)
@@ -244,7 +417,7 @@ def main():
                     manifest = json.loads(entries[manifest_name])
                     manifest.get("files", manifest)[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[manifest_name] = (json.dumps(manifest, indent=2)+"\n").encode()
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
                     for entry_name, data in entries.items():
                         info = tarfile.TarInfo(entry_name)
                         info.size = len(data)
@@ -264,13 +437,76 @@ def main():
                 raise RuntimeError("Post-control standalone replay failed: " + log)
             results.append({"name": "positive-after-numerical-controls", "accepted": True,
                             "git_on_path": False})
+        if "full_shape_models" in read(snapshot / "targets.json"):
+            def model_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                with tarfile.open(altered / "evidence.tar.gz") as archive:
+                    entries = {member.name: archive.extractfile(member).read() for member in archive}
+                config = read(altered / "targets.json")
+                mutate_model_evidence(entries, config, control_name)
+                write(altered / "targets.json", config)
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
+                    for name, data in entries.items():
+                        info = tarfile.TarInfo(name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+                write(altered / "evidence-manifest.json", {
+                    name: hashlib.sha256(data).hexdigest() for name, data in entries.items()})
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "Full-shape model " + expected_gate not in log:
+                    raise RuntimeError("Full-shape model control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_report_and_configuration_pins_synchronized": True,
+                        "gate": "frozen model summary, metric and recorded replay consistency"}
+            # Each worker mutates and executes only its own copied snapshot/log.
+            # Per-replay limits remain 120 seconds; the public aggregate remains 300.
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(model_control, MODEL_CONTROLS))
+            code, log = execute("positive-after-model-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-model-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-model-controls", "accepted": True,
+                            "git_on_path": False})
+        if "ptx_pointwise_proof" in read(snapshot / "targets.json"):
+            def ptx_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                with tarfile.open(altered / "evidence.tar.gz") as archive:
+                    entries = {member.name: archive.extractfile(member).read() for member in archive}
+                config = read(altered / "targets.json")
+                mutate_ptx_evidence(entries, config, control_name)
+                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
+                    for name, data in entries.items():
+                        info = tarfile.TarInfo(name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+                write(altered / "evidence-manifest.json", {
+                    name: hashlib.sha256(data).hexdigest() for name, data in entries.items()})
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX pointwise " + expected_gate not in log:
+                    raise RuntimeError("PTX pointwise control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"}
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(ptx_control, PTX_CONTROLS))
+            code, log = execute("positive-after-ptx-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-PTX-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-ptx-controls", "accepted": True,
+                            "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         with tarfile.open(altered / "evidence.tar.gz") as archive:
             entries = [(m.name, archive.extractfile(m).read()) for m in archive]
         unsafe = "../lark-paper-control-" + uuid.uuid4().hex
         entries.append((unsafe, b"must not be extracted"))
-        with tarfile.open(altered / "evidence.tar.gz", "w:gz") as archive:
+        with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
             for name, data in entries:
                 info = tarfile.TarInfo(name)
                 info.size = len(data)

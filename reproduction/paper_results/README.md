@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261112-v22/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261113-v23/results/RESULTS.md) ·
+[earlier v22 ledger](snapshots/20261112-v22/results/RESULTS.md) ·
 [earlier v21 ledger](snapshots/20261112-v21/results/RESULTS.md) ·
 [earlier v20 ledger](snapshots/20261112-v20/results/RESULTS.md) ·
 [earlier v19 ledger](snapshots/20261111-v19/results/RESULTS.md) ·
@@ -28,7 +29,59 @@ python3 reproduction/paper_results/audit_level2_costs.py \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-level2-cost-check
 ```
 
-The v22 snapshot freezes **3,378 published evidence files** at commit `e7ea523`,
+The v23 snapshot freezes **3,512 evidence files** at commit `44b414f`, plus its
+auditor and targets. All six independent full-size HIP/CUDA model cohorts are
+included: 85 verified proofs across 102 tasks, 782 recorded responses and
+15,509,481 reported tokens. The auditor checks their complete rosters, fixed
+protocol, successful-task token means, failed-task spending, accepted-Main and
+recorded fresh-check bindings. Its six-of-six roster is not paper completion.
+
+It also checks the separate exact-source compiled FP16 PTX ReLU proof packet:
+one 16,384-element kernel, three positive rechecks and four direct Lean
+source-binding controls. Source-only and isolated installed-wheel replay,
+standard-axiom audits, anonymous publication and actual nineteen-job source CI
+are recorded. These are repeated checks of one development proof; they add no
+model success, registered legacy SDK profile or NVIDIA execution claim. The
+full-size CPU compilation/assembly study and fresh bounded original-artifact
+observations are frozen separately, with their original scopes preserved.
+
+Replay v23 without Git, SDK, Lean, model calls or GPU access:
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --source-archive /path/to/2611.02028v1.tar
+python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v23 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v23-controls
+```
+
+The [v23 validation](snapshot-v23-validation/results.json) passed four positive
+replays outside Git and rejected **49 negative controls**, including seventeen
+model-report and eight PTX-proof mutations. The full run took 277.26 seconds
+within the unchanged 300-second aggregate limit. Each individual replay retains
+its 120-second limit. The [v22 compatibility check](snapshot-v23-v22-compatibility/results.json)
+passed two positive replays and all 24 legacy controls in 142.72 seconds. Both
+records retain the exact executed reader and control-runner sources, logs and
+resource observations outside the frozen snapshot. These checks regenerate
+recorded evidence; they perform no fresh Lean checks, model calls or GPU trials.
+The [anonymous v23 publication check](snapshot-v23-publication/results.json)
+downloaded all eleven files, totaling 50,530,069 bytes, from source `e931a9e`
+with TLS verification enabled. Every byte matched the pinned Git commit, and
+the downloaded snapshot passed all four positive replays and 49 negative
+controls outside Git.
+The [actual v23 source CI record](snapshot-v23-source-ci-v1/results.json)
+records all twenty jobs passing at source `e931a9e`, including raw six-cohort
+regeneration, the frozen ledger controls and the complete proof-test job.
+The subsequent publication/CI receipt commit changes only this README and
+recorded receipts; source code, Lean libraries, tests, workflow definitions
+and every frozen snapshot retain the exact tested source bytes.
+
+The original registry, optimized PTX, original harness and model histories,
+closed-model runs, original mutants and H100/MI300X timing cells remain missing.
+The following older snapshots and their validation/publication records retain
+their original bytes and observations.
+
+The earlier v22 snapshot freezes **3,378 published evidence files** at commit `e7ea523`,
 plus its auditor and targets. It incorporates the independent CPU reference
 studies: 240 sampled production outputs across twelve variants and 340 sampled
 benchmark outputs across seventeen families, each using four input strata.

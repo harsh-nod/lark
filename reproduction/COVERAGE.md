@@ -5,7 +5,7 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261112-v22/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261113-v23/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
@@ -14,10 +14,28 @@ It includes production SiLU, wave reduction, complete native weighted and fused
 RMSNorm, complete native online attention, complete native RoPE and both fused
 QK/RoPE layouts, complete FlashInfer and guarded SGLang RMSNorm, native FP16
 single-split-K AWQ GEMM, and the source-bound softmax race/repair studies. It
-binds 3,378 published evidence files at commit `e7ea523`, including both numerical
-reference studies and the explicit v21 semantics correction, and can be
-replayed after later documentation changes. The
+binds 3,512 evidence files at commit `44b414f`, including both numerical
+reference studies, all six full-size model cohorts, the finite compiled PTX ReLU
+proof and the explicit v21 semantics correction. It can be replayed after later
+documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
+The [standalone v23 checks](paper_results/snapshot-v23-validation/results.json)
+passed four positive replays and rejected all 49 tampering controls; these are
+evidence checks, separate from the underlying experiments.
+
+The [six-cohort comparison](local_models/results/full-shape-comparison-six-cohorts-v1/RESULTS.md)
+contains 85 verified proofs across 102 full-size fixed-scaffold tasks, with 782
+responses and 15,509,481 reported tokens. Three pinned open checkpoints ran on
+HIP and CUDA sources through free local inference. Failed-task spending remains
+in the totals; successful-task means and first-response/first-Lean metrics remain
+separate. These do not reproduce the original model/harness/language matrix.
+
+The [compiled FP16 PTX ReLU study](ptx/POINTWISE.md) adds one exact-source
+16,384-element development proof under declared abstract scalar semantics.
+The export and three rechecks include fresh source-only and installed-wheel
+replay; four accepted-grammar source mutations fail directly in Lean. These
+check source binding, not general kernel falsity or the paper's original 42
+mutants. There is no new registered legacy SDK profile or NVIDIA measurement.
 
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe

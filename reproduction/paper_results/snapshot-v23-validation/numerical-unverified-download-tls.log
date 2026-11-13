@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-snapshot-controls-ygtwlb0c/isolated/bin/replay_snapshot.py", line 259, in <module>
+    main()
+  File "/tmp/lark-snapshot-controls-ygtwlb0c/isolated/bin/replay_snapshot.py", line 255, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-snapshot-controls-ygtwlb0c/isolated/bin/replay_snapshot.py", line 192, in replay
+    require(
+  File "/tmp/lark-snapshot-controls-ygtwlb0c/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-snapshot-7kctydif/reproduction/paper_results/audit.py", line 683, in <module>
+    main()
+  File "/tmp/lark-paper-snapshot-7kctydif/reproduction/paper_results/audit.py", line 611, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-snapshot-7kctydif/reproduction/paper_results/audit.py", line 242, in check_numerical_evidence
+    require(publication["downloaded_files"] == len(publication["observations"]) == 8 and
+  File "/tmp/lark-paper-snapshot-7kctydif/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study anonymous publication differs: benchmark
+

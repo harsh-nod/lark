@@ -40,7 +40,7 @@ twelve tasks verified at their first actual Lean check. Complete protocol replay
 regenerated every request and bound accepted proofs to 30 additional fresh
 kernel/axiom checks. The exact owned service was observed drained with unchanged
 configuration and retained for the separate CUDA-source cohort after the HIP
-audit. The GLM CUDA-source cohort remains unfinished.
+audit. Its separate CUDA-source cohort has now completed, as recorded below.
 
 The [completed full-size DeepSeek CUDA cohort](results/full-shape-cohort-deepseek-cuda-v1/results.json)
 verified all seventeen tasks within the unchanged common budget. All 160 requests
@@ -52,6 +52,16 @@ all seventeen proofs passed 34 additional fresh kernel/axiom checks. Its exact
 owned, drained four-GPU service was stopped with exit code zero after the audit.
 These are independent fixed-scaffold proof completions on AMD serving, with zero
 new registered certificates or NVIDIA execution measurements.
+
+The [completed full-size GLM CUDA cohort](results/full-shape-cohort-glm53-cuda-v1/results.json)
+verified sixteen of seventeen tasks; ReLU exhausted its unchanged proof budget.
+All 123 requests and responses remain archived: 2,060,353 prompt and 201,751
+completion tokens, 2,262,104 total. Zero first responses verified a proof;
+eleven tasks verified at their first actual Lean check, a separate metric from
+original-paper Pass@1. Complete protocol replay regenerated every request and
+accepted Main, and all sixteen proofs passed 32 additional fresh kernel/axiom
+checks. The exact owned, drained four-GPU service was stopped with exit code
+zero after the audit. These remain independent fixed-scaffold proof completions.
 
 The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
 costs from the archived responses and applies success-only input/output token
@@ -102,6 +112,19 @@ cohorts the comparison binds 659 recorded responses, 5,725 raw files and 2,098
 audit files. It adds no model, GPU or Lean experiment and supplies no original
 paper result.
 
+The [complete six-cohort comparison](results/full-shape-comparison-six-cohorts-v1/RESULTS.md)
+adds GLM CUDA while preserving all five earlier frozen reports. GLM CUDA verified
+eleven of twelve Level-1 and all five Level-2 tasks. Its success-only mean
+prompt/completion costs are 0.121216M/0.014779M and 0.133170M/0.007562M tokens,
+with denominators eleven and five respectively. The failed ReLU task's 62,500
+tokens remain in all-task spending. Across six independent cohorts the report
+binds 85 verified proofs across 102 tasks, 782 responses, 6,784 raw files,
+2,493 audit files and 170 recorded additional fresh kernel checks. All-task
+reported usage totals 15,509,481 tokens. The comparison runs no model, Lean or
+GPU experiment. Its six-of-six roster is not a paper-completion denominator;
+the original registry, harness, PTX and closed-model histories, original 144-cell
+Level-1 matrix and NVIDIA measurements remain unreproduced.
+
 The [comparison publication receipt](results/full-shape-comparison-publication-v1/results.json)
 checks its original eight public files over TLS without authentication. The
 [comparison main receipt](results/full-shape-comparison-ci-main-v1/results.json)
@@ -114,6 +137,10 @@ jobs on the actual resulting main commit. The
 [Flash CUDA main receipt](results/full-shape-flash-cuda-ci-main-v1/results.json)
 records the same checks for the three-cohort publication, including all nineteen
 successful jobs on its actual resulting main. The
+[GLM HIP main receipt](results/full-shape-glm53-hip-ci-main-v1/results.json)
+and [DeepSeek CUDA main receipt](results/full-shape-deepseek-cuda-ci-main-v1/results.json)
+retain their checked promotions and all nineteen successful jobs on their
+actual resulting main commits. The
 [bounded PTX implementation review](results/ptx-verifier-implementation-review-v1/results.json)
 binds thirteen inspected `ptx_verifier` source/fixture files to their Git blobs
 and records its explicit PTX CTA-zero analysis and exported-output proof
