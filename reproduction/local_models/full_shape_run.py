@@ -482,6 +482,18 @@ def usage(output):
     }
 
 
+def cohort_complete(report):
+    expected = [case[0] for case in full_shape.benchmark.CASES]
+    return (
+        report["status"] == "finished"
+        and report["selected_cases"] == expected
+        and [case["case"] for case in report["cases"]] == expected
+        and all(
+            case["status"] in ("verified-proof", "budget-exhausted") for case in report["cases"]
+        )
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("prepared", "server-record", "output", "lean"):
@@ -542,7 +554,8 @@ def main():
         "model": args.model,
         "revision": args.server.get("revision"),
         "selected_cases": selected,
-        "complete_17_case_cohort": len(selected) == 17,
+        "planned_17_case_cohort": len(selected) == 17,
+        "complete_17_case_cohort": False,
         "test_stub": args.allow_test_stub,
         "started_at_utc": datetime.now(timezone.utc).isoformat(),
         "runner_sha256": sha(Path(__file__)),
@@ -593,6 +606,7 @@ def main():
     report["verified_model_proofs"] = (
         0 if args.allow_test_stub else sum(c["status"] == "verified-proof" for c in report["cases"])
     )
+    report["complete_17_case_cohort"] = cohort_complete(report)
     write(args.output / "results.json", report)
     print(
         json.dumps(

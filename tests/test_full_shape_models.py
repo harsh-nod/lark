@@ -21,6 +21,19 @@ PROJECT = os.environ.get("LARK_REAL_PROJECT")
 
 
 class FullShapeProtocolTests(unittest.TestCase):
+    def test_full_cohort_completion_requires_every_finished_case(self):
+        expected = [case[0] for case in full_shape.benchmark.CASES]
+        report = {"status": "in-progress", "selected_cases": expected, "cases": []}
+        self.assertFalse(run.cohort_complete(report))
+        report["cases"] = [{"case": name, "status": "budget-exhausted"} for name in expected]
+        self.assertFalse(run.cohort_complete(report))
+        report["status"] = "finished"
+        self.assertTrue(run.cohort_complete(report))
+        report["cases"][-1]["status"] = "runtime-uncertain"
+        self.assertFalse(run.cohort_complete(report))
+        report["cases"][-1] = {"case": expected[0], "status": "verified-proof"}
+        self.assertFalse(run.cohort_complete(report))
+
     def test_source_reads_cannot_reach_controls_renderers_or_other_paths(self):
         libraries = {"Lark/Owned.lean": b"namespace Owned\ndef value := 1\nend Owned\n"}
         result = run.read_library(

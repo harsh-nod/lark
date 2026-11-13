@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "status": "finished",
+  "protocol": {
+    "version": "full-shape-bounded-library-reads-v1",
+    "request_budget": 16,
+    "proof_check_budget": 3,
+    "library_read_budget": 8,
+    "max_read_lines": 120,
+    "max_tokens": 16384,
+    "thinking_token_budget": 4096,
+    "seed": 261102028,
+    "temperature": 0,
+    "reasoning_effort": "low",
+    "context_limit": 65536,
+    "context_margin": 256,
+    "model_timeout_seconds": 1800,
+    "lean_timeout_seconds": 180,
+    "feedback_chars": 12000,
+    "last_response_chars": 8000
+  },
+  "model": "zai-org/GLM-5.3",
+  "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+  "selected_cases": [
+    "relu"
+  ],
+  "complete_17_case_cohort": false,
+  "test_stub": false,
+  "started_at_utc": "2026-11-13T03:34:42.360990+00:00",
+  "runner_sha256": "f3ed2e693ec1f04f17fe52c82e14d71975bd11f7868a8b48339b2bcb7a53b172",
+  "client_sha256": "866637873ab84c2fe5ad2f0dd74e21de6dfee21e6ce34e26259727ce304d35fe",
+  "server_record_sha256": "2b2827d1b706072abd2c2b4e9d004c5eb2d4cf7eec93205a2287a3855765570a",
+  "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+  "external_api_spend_usd": 0,
+  "new_source_certificates": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false,
+  "cases": [
+    {
+      "case": "relu",
+      "status": "verified-proof",
+      "calls": [
+        {
+          "request": 1,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "bcf90d7d4b3529f83e63fb32d1268175f6d95285b5b38295f4bcde966b0acb18",
+          "status": "library-read",
+          "elapsed_seconds": 6.510330533026718
+        },
+        {
+          "request": 2,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "d02eba045208d15cce4111fa99b20b1502da4503b5637aba1105f0d98ecb8948",
+          "status": "library-read",
+          "elapsed_seconds": 4.80327458307147
+        },
+        {
+          "request": 3,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "148efb4bc952cf7ee6d55e9799e789153e1960205c2f14735e74f9ad7919f64c",
+          "status": "library-read",
+          "elapsed_seconds": 5.573188191046938
+        },
+        {
+          "request": 4,
+          "test_stub": false,
+          "context_compactions": [],
+          "messages_sha256": "905c867e53dfc75967bb00279ea93e6f5d817845090e8c51053e8b3633ae3dd8",
+          "proof_syntax_accepted": true,
+          "status": "verified-proof",
+          "main_sha256": "727675f34646dad23bba96f3b005623c612f33edcc74f039aa2e3f0ef4f831c1",
+          "lean_log_sha256": "41958bef812a7ff00f97e8276b23a1926fb95e9ebdf0163878ce9a3f2d71b610",
+          "lean_timed_out": false,
+          "recheck_log_sha256": "41958bef812a7ff00f97e8276b23a1926fb95e9ebdf0163878ce9a3f2d71b610",
+          "elapsed_seconds": 107.61540421203244
+        }
+      ],
+      "proof_checks": 1,
+      "library_reads": 3,
+      "test_stub": false,
+      "new_source_certificates": 0,
+      "syntax_checks": 1,
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "fixed_request_sha256": "2b2b562fbaab3732bde111e3b8374fae5e7f1045d99c5634dfba608fb87ef8a9"
+    }
+  ],
+  "scope": "Independent full-size HIP proof-slot/library-read experiment. No original registry/harness/stage-cost or historical pass-rate reproduction. SDK controls are not model successes.",
+  "runner_source_sha256": {
+    "checkpoint.py": "66a3e0a35b936ea9b7aec0dae1102ef1c348ca8318c600ac92ff9bdf768261a3",
+    "full_shape.py": "afeb250f9b4a8a0f94fed862e792f5608c685aee126adf8ea994ec5c3d9a8cfe"
+  },
+  "request_attempts": 4,
+  "response_files": 4,
+  "usage_incomplete": false,
+  "reported_usage": {
+    "prompt_tokens": 36503,
+    "completion_tokens": 1064,
+    "total_tokens": 37567
+  },
+  "model_inference_calls": 4,
+  "verified_model_proofs": 1
+}

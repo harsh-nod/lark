@@ -9,7 +9,11 @@ controls are separate from model-generated proofs and the earlier reduced cohort
 The [new pinned GLM runtime](results/full-shape-runtime-glm53-v1/results.json)
 passes its recorded warmup and all seventeen initial context checks. Every cached
 checkpoint file was rehashed. The largest initial prompt uses 22,489 tokens
-within the common 65,536-token limit. Its proof pilot is recorded separately.
+within the common 65,536-token limit. The
+[full-size ReLU pilot](results/full-shape-pilot-glm53-v1/binding.json) verified its
+first proof submission after three library reads. All four requests and two
+fresh Lean checks are archived: 36,503 prompt and 1,064 completion tokens.
+This single pilot is separate from the complete seventeen-task cohort.
 
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real model
