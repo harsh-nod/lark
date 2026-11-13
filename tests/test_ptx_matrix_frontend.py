@@ -9,7 +9,7 @@ from lark_kernels.ir import Refusal
 from reproduction.ptx.matrix_frontend import lean_instruction, prepare
 
 
-FIXTURE = Path(__file__).resolve().parents[1] / 'reproduction/ptx/cases/full-size-gemm'
+FIXTURE = Path(__file__).resolve().parents[1] / 'reproduction/ptx/full-size/gemm'
 
 
 class PtxMatrixFrontendTests(unittest.TestCase):

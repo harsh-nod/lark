@@ -871,9 +871,9 @@ jobs:
       - name: Prove the exact full-size compiled GEMM with five fresh owned modules
         run: |
           python3 -m lark_kernels.ptx_matrix_certificate verify \
-            --source reproduction/ptx/cases/full-size-gemm/kernel.ptx \
-            --reference reproduction/ptx/cases/full-size-gemm/reference.py \
-            --contract reproduction/ptx/cases/full-size-gemm/task.json \
+            --source reproduction/ptx/full-size/gemm/kernel.ptx \
+            --reference reproduction/ptx/full-size/gemm/reference.py \
+            --contract reproduction/ptx/full-size/gemm/task.json \
             --output /tmp/lark-ptx-gemm-ci-export --lean "$HOME/.elan/bin/lean"
       - name: Replay from trusted source and refuse four accepted-grammar mutations in Lean
         run: |
