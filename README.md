@@ -50,6 +50,15 @@ Fresh source export/replay, four direct Lean source-binding controls and isolate
 installed-wheel replay passed. This remains an independent abstract scalar proof;
 it adds no original model outcome or NVIDIA execution measurement.
 
+A fifth [compiled FP16 PTX development proof](reproduction/ptx/LINEAR.md)
+covers the original 64×256 by 256×512 matrix product plus 512-element bias.
+All 179 instructions, the actual sixteen-iteration loop, bias-before-half
+epilogue, all 32,768 lanes, closed reference extraction, actual memory-trace
+race freedom and preservation outside the output are proved. Fresh source
+export/replay, four direct source-binding controls, the SDK adversarial test
+and isolated installed-wheel replay passed. Publication and source CI are
+still being completed; this adds no original model or NVIDIA result.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X

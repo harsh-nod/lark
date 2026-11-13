@@ -1,5 +1,12 @@
 # Bounded scalar PTX extension
 
+The later [complete compiled FP16 Linear development](LINEAR.md) covers the
+original matrix product plus bias: all 179 instructions, all 32,768 lanes,
+the actual loop and bias-before-half epilogue, closed reference extraction,
+memory-trace race freedom and preservation outside the output. Fresh source
+export/replay, four source-binding controls and installed-wheel replay passed.
+It adds no original model outcome or NVIDIA execution measurement.
+
 The later [complete compiled FP16 batched GEMM development](BATCHED.md)
 covers all 138 instructions and all 1,048,576 output lanes of the unchanged
 32-batch task, including actual-loop execution, trace race freedom, closed
