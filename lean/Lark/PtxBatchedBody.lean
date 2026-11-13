@@ -866,6 +866,96 @@ theorem source_lane_reference (ops : Ops α) (input : Nat → Nat → α) (t : N
   refine ⟨final, execution, stopped, pc, ?_⟩
   simpa only [dotValue_reference] using memory
 
+inductive LaneSequence (ops : Ops α) (p : List LarkPtxMatrix.Instruction) :
+    Nat → Nat → State α → State α → Prop where
+  | nil (k : Nat) (s : State α) : LaneSequence ops p k 0 s s
+  | next {k r : Nat} {s final : State α} {m : Machine α} :
+      Steps ops layout geometry k p (start s) m →
+      m.registers.stopped = true →
+      LaneSequence ops p (k+1) r m.registers.base final →
+      LaneSequence ops p k (r+1) s final
+
+theorem lane_reads (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base : State α)
+    (s : Machine α) (hreads : Reads input (start base))
+    (memory : s.registers.base.memory =
+      fun l => if l = outputCell t then some (reference ops input t) else base.memory l) :
+    Reads input (start s.registers.base) := by
+  constructor
+  · intro i hi
+    change s.registers.base.memory ⟨.global, 0, 0, i⟩ = _
+    rw [memory]
+    simpa [outputCell] using hreads.1 i hi
+  · intro i hi
+    change s.registers.base.memory ⟨.global, 0, 1, i⟩ = _
+    rw [memory]
+    simpa [outputCell] using hreads.2 i hi
+
+theorem launch_exists (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (base : State α)
+    (hcount : k+r ≤ 1048576) (hreads : Reads input (start base)) :
+    ∃ final, LaneSequence ops program k r base final ∧ Reads input (start final) ∧
+      (∀ i, final.memory (outputCell i) =
+        if k ≤ i ∧ i < k+r then some (reference ops input i) else base.memory (outputCell i)) ∧
+      (∀ l, (∀ i, k ≤ i → i < k+r → l ≠ outputCell i) → final.memory l = base.memory l) := by
+  induction r generalizing k base with
+  | zero =>
+      refine ⟨base, .nil k base, hreads, ?_, ?_⟩
+      · intro i
+        have hn : ¬ (k ≤ i ∧ i < k+0) := by omega
+        simp only [if_neg hn]
+      · intro l _
+        rfl
+  | succ r ih =>
+      obtain ⟨lane, execution, stopped, pc, memory⟩ := source_lane_reference ops input k base (by omega) hreads
+      have nextReads := lane_reads ops input k base lane hreads memory
+      obtain ⟨final, tail, finalReads, outputs, outside⟩ := ih (k+1) lane.registers.base (by omega) nextReads
+      refine ⟨final, .next execution stopped tail, finalReads, ?_, ?_⟩
+      · intro i
+        rw [outputs]
+        by_cases hi : i = k
+        · subst i
+          have hrest : ¬ (k+1 ≤ k ∧ k < k+1+r) := by omega
+          have hwhole : k ≤ k ∧ k < k+(r+1) := by omega
+          rw [if_neg hrest, memory]
+          simp [hwhole]
+        · have hloc : outputCell i ≠ outputCell k := by
+            intro he
+            exact hi (congrArg Location.offset he)
+          have hrange : (k+1 ≤ i ∧ i < k+1+r) ↔ (k ≤ i ∧ i < k+(r+1)) := by omega
+          rw [memory]
+          simp only [hloc, if_false, hrange]
+      · intro l h
+        have htail : ∀ i, k+1 ≤ i → i < k+1+r → l ≠ outputCell i := by
+          intro i hi hj
+          exact h i (by omega) (by omega)
+        rw [outside l htail, memory]
+        simp only [if_neg (h k (by omega) (by omega))]
+
+theorem initial_reads (input : Nat → Nat → α) (outside : Location → Option α) :
+    Reads input (start (initial layout input outside)) := by
+  constructor
+  · intro i hi
+    change (initial layout input outside).memory ⟨.global, 0, 0, i⟩ = _
+    simp [initial, layout, hi]
+  · intro i hi
+    change (initial layout input outside).memory ⟨.global, 0, 1, i⟩ = _
+    simp [initial, layout, hi]
+
+theorem source_launch_outputs (ops : Ops α) (input : Nat → Nat → α)
+    (outside : Location → Option α) :
+    ∃ final, LaneSequence ops program 0 1048576 (initial layout input outside) final ∧
+      (∀ i, i < 1048576 → final.memory (outputCell i) = some (reference ops input i)) ∧
+      (∀ l, (∀ i, i < 1048576 → l ≠ outputCell i) →
+        final.memory l = (initial layout input outside).memory l) := by
+  obtain ⟨final, execution, reads, outputs, preserved⟩ :=
+    launch_exists ops input 0 1048576 (initial layout input outside) (by decide) (initial_reads input outside)
+  refine ⟨final, execution, ?_, ?_⟩
+  · intro i hi
+    simpa only [Nat.zero_le, true_and, Nat.zero_add, if_pos hi] using outputs i
+  · intro l h
+    apply preserved l
+    intro i _ hi
+    exact h i (by simpa using hi)
+
 end LarkPtxBatched.Bmm.Body
 
 #print axioms LarkPtxBatched.Bmm.Body.a_address
@@ -917,3 +1007,7 @@ end LarkPtxBatched.Bmm.Body
 #print axioms LarkPtxBatched.Bmm.Body.foldChunks_reference
 #print axioms LarkPtxBatched.Bmm.Body.dotValue_reference
 #print axioms LarkPtxBatched.Bmm.Body.source_lane_reference
+#print axioms LarkPtxBatched.Bmm.Body.lane_reads
+#print axioms LarkPtxBatched.Bmm.Body.launch_exists
+#print axioms LarkPtxBatched.Bmm.Body.initial_reads
+#print axioms LarkPtxBatched.Bmm.Body.source_launch_outputs
