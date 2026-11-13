@@ -239,6 +239,9 @@ class PtxMatrixPublicationTests(EvidenceFixture):
     def test_actual_other_twenty_job_ci_cannot_replace_gemm_source_ci(self):
         self.wrong_ci("reproduction/paper_results/snapshot-v23-source-ci-v1")
 
+    def test_actual_failed_twenty_one_job_ci_cannot_replace_corrected_source_ci(self):
+        self.wrong_ci("reproduction/ptx/results/full-size-gemm-proof-ci-failed-v1")
+
     def complete_config(self):
         shutil.copytree(ROOT / CI, self.root / CI)
         declared = [str(p.relative_to(self.root)) for p in self.root.rglob("*") if p.is_file()]
@@ -247,7 +250,7 @@ class PtxMatrixPublicationTests(EvidenceFixture):
 
     def test_actual_complete_publication_and_twenty_one_job_ci(self):
         report = check_ptx_matrix_evidence(self.complete_config(), self.root)
-        self.assertEqual(report["anonymous_publication_files"], 44)
+        self.assertEqual(report["anonymous_publication_files"], 59)
         self.assertEqual(report["successful_source_CI_jobs"], 21)
         self.assertIs(report["original_paper_fully_reproduced"], False)
 

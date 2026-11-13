@@ -25,7 +25,10 @@ from reproduction.paper_results.ptx_matrix_evidence import (  # noqa: E402
 BASELINE = "reproduction/paper_results/snapshots/20261113-v24"
 MAIN_RECEIPT = "reproduction/ptx/results/full-size-gemm-proof-ci-main-v1"
 REQUIRED = (PREFIX, PUBLICATION, CI, MAIN_RECEIPT,
-            "reproduction/paper_results/snapshot-v24-ci-main-v1")
+            "reproduction/paper_results/snapshot-v24-ci-main-v1",
+            "reproduction/ptx/results/full-size-gemm-proof-publication-v1",
+            "reproduction/ptx/results/full-size-gemm-proof-ci-failed-v1",
+            "reproduction/ptx/results/full-size-gemm-proof-ci-failure-log-v1")
 
 
 def require(condition, message):

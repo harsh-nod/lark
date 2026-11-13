@@ -15,10 +15,10 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 PREFIX = "reproduction/ptx/results/full-size-gemm-proof-v1"
-PUBLICATION = "reproduction/ptx/results/full-size-gemm-proof-publication-v1"
-CI = "reproduction/ptx/results/full-size-gemm-proof-ci-v1"
+PUBLICATION = "reproduction/ptx/results/full-size-gemm-proof-publication-v2"
+CI = "reproduction/ptx/results/full-size-gemm-proof-ci-v2"
 PRODUCER = "c1f6e9220c36df38152dd738fa812288bec64eb7"
-PUBLISHED = "c9ea6a844b427fe506311eb94caf8e19ff125ba1"
+PUBLISHED = "a2100f361d451fafd9babb853319a3fcd6bf5c82"
 LEAN = "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023"
 MAIN = "9d074157e0e7a818e8b90b0e2dea8062ec370dbd287371f9a3236f57cbb7f3f4"
 SOURCE_BINDINGS = "c9f22b9a308ebe6854c50d4e881357ac234fe8727b3ffd70b6822a1afeef0288"
@@ -332,16 +332,22 @@ def check_ptx_matrix_evidence(config, root=ROOT):
                     "lean/Lark/PtxMatrix.lean", "reproduction/ptx/MATRIX.md", "reproduction/ptx/README.md",
                     "reproduction/ptx/matrix_frontend.py", "reproduction/ptx/check_matrix_controls.py",
                     "tests/test_ptx_matrix.py", "tests/test_ptx_matrix_frontend.py"}
-    source_files.update("reproduction/ptx/cases/full-size-gemm/" + name for name in
+    source_files.update("reproduction/ptx/full-size/gemm/" + name for name in
                         ("README.md", "kernel.ptx", "reference.py", "source-bindings.json", "task.json"))
     source_files.update("reproduction/paper_results/snapshot-v24-ci-main-v1/" + name for name in
                         ("manifest.json", "promotion-driver.py", "promotion.json", "results.json", "source-ci.json"))
+    source_files.update("reproduction/ptx/results/full-size-gemm-proof-publication-v1/" + name for name in
+                        ("manifest.json", "binding.json", "results.json", "verifier.py"))
+    source_files.update("reproduction/ptx/results/full-size-gemm-proof-ci-failed-v1/" + name for name in
+                        ("manifest.json", "observer.py", "progress.json", "results.json", "run.json", "jobs.json"))
+    source_files.update("reproduction/ptx/results/full-size-gemm-proof-ci-failure-log-v1/" + name for name in
+                        ("manifest.json", "failed.log", "failure-analysis.json", "observation.json", "stderr.log"))
     packet_files = {PREFIX + "/" + p.name for p in (root / PREFIX).iterdir() if p.is_file()}
     require(publication["status"] == "anonymous-exact-source-full-size-PTX-GEMM-proof-publication-verified"
             and publication["source_commit"] == PUBLISHED
             and publication["all_downloads_match_committed_bytes"] is True
             and publication["tls_verification"] is True and publication["authorization_header"] is False
-            and len(publication["downloaded_files"]) == 44
+            and len(publication["downloaded_files"]) == 59
             and {row["path"] for row in publication["downloaded_files"]} == source_files | packet_files
             and publication["total_downloaded_bytes"]
             == sum(row["bytes"] for row in publication["downloaded_files"])
@@ -353,9 +359,9 @@ def check_ptx_matrix_evidence(config, root=ROOT):
                     for row in publication["downloaded_files"]),
             "anonymous publication scope differs")
     counters(publication, {"model_calls": 0, "gpu_trials": 0, "fresh_lean_checks": 0,
-                           "new_registered_certificates": 0, "total_downloaded_bytes": 22488873,
+                           "new_registered_certificates": 0, "total_downloaded_bytes": 22753879,
                            "archives_checked": 5, "archive_members_checked": 382,
-                           "owned_source_bindings_checked": 55}, "publication execution counters differ")
+                           "owned_source_bindings_checked": 55, "prior_failed_source_CI_runs_retained": 1}, "publication execution counters differ")
     require(publication["original_paper_fully_reproduced"] is False, "publication original scope differs")
     binding = read(PUBLICATION, "binding.json")
     require(binding["source_commit"] == PUBLISHED and binding["TLS_verified"] is True and binding["authorization_header"] is False
@@ -364,12 +370,12 @@ def check_ptx_matrix_evidence(config, root=ROOT):
             and binding["proof_packet_manifest_sha256"] == sha((root / PREFIX / "manifest.json").read_bytes())
             and binding["original_paper_fully_reproduced"] is False,
             "publication verifier/result/source binding differs")
-    counters(binding, {"model_calls": 0, "fresh_Lean_checks": 0, "gpu_trials": 0, "downloaded_files": 44, "downloaded_bytes": 22488873},
+    counters(binding, {"model_calls": 0, "fresh_Lean_checks": 0, "gpu_trials": 0, "downloaded_files": 59, "downloaded_bytes": 22753879, "observed_exit_code": 0, "prior_failed_source_CI_runs_retained": 1},
              "publication binding execution counters differ")
     summary, run, response = (read(CI, name) for name in ("results.json", "run.json", "jobs.json"))
     jobs = response["jobs"]
     require(summary["status"] == "exact-source-CI-all-21-passed" and summary["source_commit"] == PUBLISHED
-            and summary["run_id"] == run["id"] == 43495402456
+            and summary["run_id"] == run["id"] == 43500937594
             and summary["successful_jobs"] == 21 and set(summary["expected_jobs"]) == JOBS
             and run["head_sha"] == PUBLISHED and run["event"] == "push" and run["name"] == "Verify"
             and run["head_branch"] == "reproduction/ptx-matrix-refinement"
@@ -380,6 +386,6 @@ def check_ptx_matrix_evidence(config, root=ROOT):
                     and j["run_id"] == run["id"] for j in jobs)
             and summary["original_paper_fully_reproduced"] is False, "actual source CI differs")
     counters(summary, {"model_calls": 0, "gpu_trials": 0, "CI_reruns": 0, "successful_jobs": 21,
-                       "new_registered_source_certificates": 0}, "source CI execution counters differ")
-    report.update(anonymous_publication_files=44, successful_source_CI_jobs=21)
+                       "new_registered_source_certificates": 0, "prior_failed_source_CI_runs_retained": 1}, "source CI execution counters differ")
+    report.update(anonymous_publication_files=59, successful_source_CI_jobs=21)
     return report
