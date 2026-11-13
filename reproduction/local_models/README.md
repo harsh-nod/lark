@@ -13,6 +13,19 @@ These are model proof completions for the owned full-size fixtures, with zero
 new registered source certificates or original-paper result claims. GLM and
 Flash full-size cohorts remain separate ongoing experiments.
 
+The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
+costs from the archived responses and applies success-only input/output token
+averages separately to twelve Level-1 and five Level-2 tasks. It keeps failed-task
+costs in cohort totals and requires an explicit partial-roster flag until all
+three models on both source languages are supplied. See the
+[protocol and command](FULL_SHAPE_METHOD.md) for its evidence checks and limits.
+The [initial partial-roster report](results/full-shape-comparison-deepseek-v1/RESULTS.md)
+uses the complete DeepSeek HIP cohort. Its success-only Level-1 means are
+0.142809M prompt and 0.021233M completion tokens over eleven verified tasks;
+the failed depthwise task's 332,130 tokens remain in cohort totals. Five of
+the six independent model/language cohorts are still missing from that frozen
+comparison. It adds no model, GPU or Lean experiment.
+
 The [full-size protocol](FULL_SHAPE_METHOD.md) now validates all seventeen
 existing HIP benchmark shapes with four fixed proof slots. Its 17 SDK positive
 controls and 17 missing-proof negatives passed under the fixed new Lean limits.

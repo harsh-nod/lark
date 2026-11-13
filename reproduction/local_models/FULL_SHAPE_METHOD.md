@@ -118,6 +118,31 @@ verified proofs, and makes no fresh theorem-validation claim. Failed candidates
 retain their recorded outcomes; this auditor does not rerun their Lean checks.
 Reported model tokens remain distinct from the audit's zero model calls.
 
+`compare_full_shape.py` aggregates complete, archived seventeen-task cohort
+packets. It checks both archive inventories, receipt/response token usage,
+per-case outcomes and the recorded fresh accepted-proof bindings. It applies
+the paper's cost definition separately to the twelve Level-1 and five Level-2
+families: mean input/output tokens over tasks that eventually verify. Each
+successful task's cost includes its source reads and unsuccessful proposals.
+Failed-task spending remains in the separately reported all-task totals.
+With zero verified tasks, the success-only mean is undefined, rather than zero.
+
+```bash
+python3 reproduction/local_models/compare_full_shape.py \
+  --packet reproduction/local_models/results/full-shape-cohort-deepseek-v1 \
+  --allow-partial-roster --output /tmp/full-shape-comparison
+```
+
+The complete independent roster is three pinned open models on two source
+languages. A smaller roster requires the explicit flag above; duplicate
+model/language inputs, partial cohorts and stubs are refused. JSON preserves
+the missing inputs and separates first-response from first-actual-Lean-check
+success. This report makes no model calls and reruns no protocol, Lean or GPU
+experiment. Its recorded proof counts refer to the separate bound replay,
+not fresh checks by this aggregation. These metrics describe the independent
+fixed-scaffold tasks; they do not recover the paper's original 144 cells,
+closed models or PTX results. The Level-2 attention fixture is dense SDPA.
+
 The controller also recognizes the separately pinned
 [CUDA preparation](results/full-shape-cuda-preparation-v1/results.json). Its
 seventeen existing CUDA fixtures retain their original buffer shapes, dtypes,

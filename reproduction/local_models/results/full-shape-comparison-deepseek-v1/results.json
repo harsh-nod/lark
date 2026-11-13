@@ -1,0 +1,491 @@
+{
+  "schema": 1,
+  "status": "partial-independent-full-size-comparison",
+  "created_at_utc": "2026-11-13T06:52:29.170237+00:00",
+  "comparison_driver_sha256": "7cbe3affd0b2db3be6b419e7b8410bc06e51e94dcfa7bcdad579abd789a6c5a0",
+  "protocol": {
+    "version": "full-shape-bounded-library-reads-v1",
+    "request_budget": 16,
+    "proof_check_budget": 3,
+    "library_read_budget": 8,
+    "max_read_lines": 120,
+    "max_tokens": 16384,
+    "thinking_token_budget": 4096,
+    "seed": 261102028,
+    "temperature": 0,
+    "reasoning_effort": "low",
+    "context_limit": 65536,
+    "context_margin": 256,
+    "model_timeout_seconds": 1800,
+    "lean_timeout_seconds": 180,
+    "feedback_chars": 12000,
+    "last_response_chars": 8000
+  },
+  "expected_independent_cohorts": 6,
+  "complete_independent_cohorts": 1,
+  "all_six_independent_cohorts_present": false,
+  "missing_cohorts": [
+    {
+      "model": "zai-org/GLM-5.3",
+      "source_language": "hip"
+    },
+    {
+      "model": "zai-org/GLM-5.3",
+      "source_language": "cuda"
+    },
+    {
+      "model": "zai-org/GLM-5.3-Flash",
+      "source_language": "hip"
+    },
+    {
+      "model": "zai-org/GLM-5.3-Flash",
+      "source_language": "cuda"
+    },
+    {
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "source_language": "cuda"
+    }
+  ],
+  "inputs": [
+    {
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+      "source_language": "hip",
+      "packet_id": "full-shape-cohort-deepseek-v1",
+      "packet_manifest_sha256": "9c38f89f52ddb37431b94f34b5ac7a1ace74148b6e1d6a3905a7da7ad3e3fde4",
+      "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+      "cohort_reported_usage": {
+        "prompt_tokens": 3361778,
+        "completion_tokens": 482540,
+        "total_tokens": 3844318
+      },
+      "recorded_counts": {
+        "cases": 17,
+        "verified_within_budget": 16,
+        "budget_exhausted": 1,
+        "first_response_verified": 0,
+        "first_actual_lean_check_verified": 14,
+        "actual_lean_checks": 21,
+        "model_requests": 175,
+        "response_files": 175,
+        "raw_files": 1426,
+        "audit_files": 459,
+        "additional_fresh_kernel_checks": 32
+      },
+      "cases": [
+        {
+          "case": "relu",
+          "status": "verified-proof",
+          "model_requests": 5,
+          "library_reads": 3,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 42960,
+            "completion_tokens": 5240,
+            "total_tokens": 48200
+          },
+          "call_status_counts": {
+            "library-read": 3,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "silu",
+          "status": "verified-proof",
+          "model_requests": 6,
+          "library_reads": 3,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 57755,
+            "completion_tokens": 23231,
+            "total_tokens": 80986
+          },
+          "call_status_counts": {
+            "invalid-proposal": 2,
+            "library-read": 3,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "gelu",
+          "status": "verified-proof",
+          "model_requests": 11,
+          "library_reads": 5,
+          "actual_lean_checks": 2,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": false,
+          "reported_usage": {
+            "prompt_tokens": 117316,
+            "completion_tokens": 69828,
+            "total_tokens": 187144
+          },
+          "call_status_counts": {
+            "invalid-proposal": 4,
+            "library-read": 5,
+            "unproved": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "rmsnorm",
+          "status": "verified-proof",
+          "model_requests": 8,
+          "library_reads": 5,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 133130,
+            "completion_tokens": 11744,
+            "total_tokens": 144874
+          },
+          "call_status_counts": {
+            "invalid-proposal": 2,
+            "library-read": 5,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "layernorm",
+          "status": "verified-proof",
+          "model_requests": 13,
+          "library_reads": 7,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 203033,
+            "completion_tokens": 27830,
+            "total_tokens": 230863
+          },
+          "call_status_counts": {
+            "invalid-proposal": 4,
+            "library-read": 7,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "softmax",
+          "status": "verified-proof",
+          "model_requests": 8,
+          "library_reads": 5,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 129714,
+            "completion_tokens": 8318,
+            "total_tokens": 138032
+          },
+          "call_status_counts": {
+            "invalid-proposal": 1,
+            "library-read": 5,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "gemv",
+          "status": "verified-proof",
+          "model_requests": 7,
+          "library_reads": 3,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 98922,
+            "completion_tokens": 8483,
+            "total_tokens": 107405
+          },
+          "call_status_counts": {
+            "invalid-proposal": 2,
+            "library-read": 3,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "gemm",
+          "status": "verified-proof",
+          "model_requests": 10,
+          "library_reads": 7,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 181928,
+            "completion_tokens": 19421,
+            "total_tokens": 201349
+          },
+          "call_status_counts": {
+            "invalid-proposal": 2,
+            "library-read": 7,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "bmm",
+          "status": "verified-proof",
+          "model_requests": 13,
+          "library_reads": 8,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 250891,
+            "completion_tokens": 20847,
+            "total_tokens": 271738
+          },
+          "call_status_counts": {
+            "invalid-proposal": 4,
+            "library-read": 8,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "linear",
+          "status": "verified-proof",
+          "model_requests": 8,
+          "library_reads": 5,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 157046,
+            "completion_tokens": 8527,
+            "total_tokens": 165573
+          },
+          "call_status_counts": {
+            "invalid-proposal": 1,
+            "library-read": 5,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "conv2d",
+          "status": "verified-proof",
+          "model_requests": 11,
+          "library_reads": 7,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 198206,
+            "completion_tokens": 30092,
+            "total_tokens": 228298
+          },
+          "call_status_counts": {
+            "invalid-proposal": 2,
+            "library-read": 7,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "depthwise_conv",
+          "status": "budget-exhausted",
+          "model_requests": 16,
+          "library_reads": 5,
+          "actual_lean_checks": 2,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": false,
+          "reported_usage": {
+            "prompt_tokens": 306496,
+            "completion_tokens": 25634,
+            "total_tokens": 332130
+          },
+          "call_status_counts": {
+            "invalid-proposal": 8,
+            "library-read": 5,
+            "no-proof-content": 1,
+            "unproved": 2
+          }
+        },
+        {
+          "case": "rope",
+          "status": "verified-proof",
+          "model_requests": 7,
+          "library_reads": 4,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 144789,
+            "completion_tokens": 8191,
+            "total_tokens": 152980
+          },
+          "call_status_counts": {
+            "invalid-proposal": 1,
+            "library-read": 4,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "ffn",
+          "status": "verified-proof",
+          "model_requests": 14,
+          "library_reads": 8,
+          "actual_lean_checks": 3,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": false,
+          "reported_usage": {
+            "prompt_tokens": 306138,
+            "completion_tokens": 45221,
+            "total_tokens": 351359
+          },
+          "call_status_counts": {
+            "invalid-proposal": 3,
+            "library-read": 8,
+            "unproved": 2,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "swiglu",
+          "status": "verified-proof",
+          "model_requests": 6,
+          "library_reads": 4,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 138720,
+            "completion_tokens": 15105,
+            "total_tokens": 153825
+          },
+          "call_status_counts": {
+            "invalid-proposal": 1,
+            "library-read": 4,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "attention",
+          "status": "verified-proof",
+          "model_requests": 16,
+          "library_reads": 8,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 452929,
+            "completion_tokens": 110847,
+            "total_tokens": 563776
+          },
+          "call_status_counts": {
+            "invalid-proposal": 6,
+            "library-read": 8,
+            "no-proof-content": 1,
+            "verified-proof": 1
+          }
+        },
+        {
+          "case": "gqa",
+          "status": "verified-proof",
+          "model_requests": 16,
+          "library_reads": 8,
+          "actual_lean_checks": 1,
+          "first_response_verified": false,
+          "first_actual_lean_check_verified": true,
+          "reported_usage": {
+            "prompt_tokens": 441805,
+            "completion_tokens": 43981,
+            "total_tokens": 485786
+          },
+          "call_status_counts": {
+            "invalid-proposal": 7,
+            "library-read": 8,
+            "verified-proof": 1
+          }
+        }
+      ],
+      "levels": {
+        "level1": {
+          "tasks": 12,
+          "verified_within_budget": 11,
+          "budget_exhausted": 1,
+          "pass_rate": 0.9166666666666666,
+          "all_task_reported_usage": {
+            "prompt_tokens": 1877397,
+            "completion_tokens": 259195,
+            "total_tokens": 2136592
+          },
+          "successful_task_reported_usage": {
+            "prompt_tokens": 1570901,
+            "completion_tokens": 233561,
+            "total_tokens": 1804462
+          },
+          "mean_over_verified_tasks_tokens": {
+            "prompt_tokens": 142809.18181818182,
+            "completion_tokens": 21232.81818181818,
+            "total_tokens": 164042.0
+          },
+          "mean_denominator_verified_tasks": 11,
+          "first_response_verified": 0,
+          "first_actual_lean_check_verified": 10
+        },
+        "level2": {
+          "tasks": 5,
+          "verified_within_budget": 5,
+          "budget_exhausted": 0,
+          "pass_rate": 1.0,
+          "all_task_reported_usage": {
+            "prompt_tokens": 1484381,
+            "completion_tokens": 223345,
+            "total_tokens": 1707726
+          },
+          "successful_task_reported_usage": {
+            "prompt_tokens": 1484381,
+            "completion_tokens": 223345,
+            "total_tokens": 1707726
+          },
+          "mean_over_verified_tasks_tokens": {
+            "prompt_tokens": 296876.2,
+            "completion_tokens": 44669.0,
+            "total_tokens": 341545.2
+          },
+          "mean_denominator_verified_tasks": 5,
+          "first_response_verified": 0,
+          "first_actual_lean_check_verified": 4
+        }
+      }
+    }
+  ],
+  "level1_cases": [
+    "relu",
+    "silu",
+    "gelu",
+    "rmsnorm",
+    "layernorm",
+    "softmax",
+    "gemv",
+    "gemm",
+    "bmm",
+    "linear",
+    "conv2d",
+    "depthwise_conv"
+  ],
+  "level2_cases": [
+    "rope",
+    "ffn",
+    "swiglu",
+    "attention",
+    "gqa"
+  ],
+  "model_calls_by_comparison": 0,
+  "fresh_lean_checks_by_comparison": 0,
+  "gpu_trials_by_comparison": 0,
+  "new_registered_source_certificates": 0,
+  "external_api_spend_usd": 0,
+  "original_paper_fully_reproduced": false,
+  "metric_definition": "Mean input/output token costs include all responses, reads and failed proposals of each eventually verified task; budget-exhausted tasks are excluded from those means. All-task cohort totals retain failed-task costs. First response and first actual Lean check are separate metrics.",
+  "scope": "Independent fixed-scaffold tasks and existing generic proof libraries, three pinned open models and HIP/CUDA sources. Level2 includes dense SDPA, not the original FlashAttention algorithm. Packet hashes and recorded fresh-check bindings are checked here; no model/protocol/Lean/GPU experiment is rerun. This is not the original registry, PTX, closed-model histories, 144-cell result or NVIDIA measurement."
+}
