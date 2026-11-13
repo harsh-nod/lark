@@ -12,9 +12,28 @@ Four direct source controls and isolated installed-wheel validation also passed.
 The [complete evidence packet](results/full-size-bmm-proof-v1/RESULTS.md) retains
 all four current-SDK positive recordings, the earlier successful renderer,
 the actual failed intermediate export and selected development history. Anonymous
-publication and actual source CI are still being completed. This is one
-independent development kernel, not an original optimized program or model-cohort
-result.
+publication and all twenty-two source CI jobs passed. This is one independent
+development kernel, not an original optimized program or model-cohort result.
+
+The [anonymous publication record](results/full-size-bmm-proof-publication-v1/results.json)
+matched all 58 changed files (55,129,306 bytes) to source `6978f09`, with TLS
+verification enabled. All nine archives, 702 archive members and 60 current
+SDK/Lean source bindings were checked, including the wheel and earlier
+renderer at its own source revision. Publication repeated no Lean, model or
+GPU experiment.
+
+The [actual source CI record](results/full-size-bmm-proof-ci-v1/results.json)
+records all twenty-two jobs passing at source `6978f09`, including the
+separate complete BMM cold export/replay, four direct source controls, SDK
+adversarial tests and all existing checks. The later receipt commit changes
+only this document and recorded receipts; all SDK, Lean, tests, workflow
+and frozen snapshots retain their exact tested source identities.
+
+A [bounded original-artifact observation](../paper_results/original-artifact-observation-bmm-20261113-v1/results.json)
+still found the named KernelCraft repository empty and the abstract page
+listing manuscript v1. It retains the initial anonymous-search rate limit
+and a read-only authenticated fallback. These observations do not establish
+global artifact absence or reproduce any scientific result.
 
 The checked source has 138 static instructions and 149 declared registers. Its
 29-instruction prologue computes the batch, local row and column addresses. The
