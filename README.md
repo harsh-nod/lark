@@ -217,6 +217,11 @@ can reject a candidate; acceptance requires Lean, successful proofs, and an
 axiom audit. Proofs quantify over **all input values** at the declared shapes,
 and all initial contents of memory outside the input regions.
 
+Before candidate elaboration, the SDK parses every proof body as one complete
+Lean tactic term. Proof strings are supplied as JSON data to the parser;
+trailing commands and forbidden metaprogramming executors are refused. The
+subsequent kernel proof checks and axiom audits establish acceptance.
+
 ```mermaid
 flowchart LR
   K[CUDA / HIP / bounded PTX source] --> T[Strict reader + fixed lowering]

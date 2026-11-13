@@ -1,0 +1,116 @@
+{
+  "status": "passed",
+  "positive_syntax_controls": 1,
+  "negative_controls": 9,
+  "masked_requests_checked": 17,
+  "checks": [
+    {
+      "name": "admission",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by sorry",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "resource-override",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by set_option maxHeartbeats 3000000 in exact False.elim (by fail)",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "unchecked-evaluation",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by native_decide",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "declaration",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by\naxiom bad : False",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "non-proof",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": 17,
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: expected a bounded tactic proof beginning with 'by'"
+    },
+    {
+      "name": "missing-slot",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "Exactly four full-shape proof slots are required"
+    },
+    {
+      "name": "extra-slot",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by fail",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail",
+        "other": "by rfl"
+      },
+      "rejected": true,
+      "reason": "Exactly four full-shape proof slots are required"
+    },
+    {
+      "name": "meta-command",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by rfl\nrun_meta Lean.logInfo \"UNREACHABLE\"",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "elaborator-command",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by rfl\nrun_elab pure ()",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    }
+  ],
+  "validator_source_sha256": "afeb250f9b4a8a0f94fed862e792f5608c685aee126adf8ea994ec5c3d9a8cfe",
+  "driver_sha256": "baa8ae774fe9030dea060d6ae3a8b530dcacdaa310ec6f17a0fb76ec34fc5bac",
+  "preparation_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "new_certificates": 0,
+  "fresh_lean_checks": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Proposal syntax and frozen request integrity only; baseline Lean checks are recorded separately."
+}

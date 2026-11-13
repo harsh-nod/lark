@@ -129,10 +129,19 @@ def run_case(case, output, args, server):
             current = candidate
             (destination / "Main.lean").write_text(lean_source)
             write(destination / "proposal.json", current)
-            ok, feedback = certificate.run_lean(destination, binary, args.lean_timeout)
+            from lark_kernels.proof_syntax import check_terms
+
+            syntax_ok, feedback = check_terms(current["proofs"], binary, args.lean_timeout)
+            (destination / "proof-syntax.log").write_text(feedback)
+            if syntax_ok:
+                ok, feedback = certificate.run_lean(destination, binary, args.lean_timeout)
+            else:
+                ok = False
             (destination / "lean.log").write_text(feedback)
             row.update(
-                status="proved" if ok else "unproved", lean_timeout="Lean timed out" in feedback
+                status=("proved" if ok else "unproved") if syntax_ok else "invalid-proposal",
+                proof_term_syntax_accepted=syntax_ok,
+                lean_timeout="Lean timed out" in feedback,
             )
             if ok:
                 # Independent second invocation constructs/rechecks the public

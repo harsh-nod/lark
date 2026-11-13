@@ -103,10 +103,10 @@ def lean_binary(explicit=None):
 
 
 def validate_proofs(proofs):
-    if set(proofs) != set(DEFAULT_PROOFS):
+    if not isinstance(proofs, dict) or set(proofs) != set(DEFAULT_PROOFS):
         raise Refusal("proposal", "proof proposal must contain the three fixed proof slots")
     forbidden = re.compile(
-        r"\b(sorry|admit|axiom|constant|unsafe|native_decide|run_tac|elab|macro|syntax|"
+        r"\b(sorry|admit|axiom|constant|unsafe|native_decide|run_tac|run_meta|run_elab|run_cmd|run_io|elab|macro|syntax|"
         r"def|abbrev|theorem|example|instance|inductive|structure|namespace|end|section|"
         r"variable|import|set_option|attribute|opaque|initialize)\b|#|/-|--"
     )
@@ -347,7 +347,14 @@ def verify(
     for attempt in range(attempts):
         validate_proofs(proposal["proofs"])
         (output / "Main.lean").write_text(render(task, translation, spec, proposal))
-        success, log = run_lean(output, binary, timeout)
+        from .proof_syntax import check_terms
+
+        syntax_ok, syntax_log = check_terms(proposal["proofs"], binary, timeout)
+        (output / f"proof-syntax-{attempt + 1}.log").write_text(syntax_log)
+        if syntax_ok:
+            success, log = run_lean(output, binary, timeout)
+        else:
+            success, log = False, syntax_log
         (output / f"lean-{attempt + 1}.log").write_text(log)
         history.append({"attempt": attempt + 1, "accepted": success})
         if success or not provider or attempt + 1 == attempts:
@@ -565,7 +572,13 @@ def check(directory, *, lean=None, timeout=120):
             "integrity",
             "theorem source does not match the fixed statement generated from the artifacts",
         )
-    ok, log = run_lean(directory, lean_binary(lean), timeout)
+    binary = lean_binary(lean)
+    from .proof_syntax import check_terms
+
+    syntax_ok, syntax_log = check_terms(proposal["proofs"], binary, timeout)
+    if not syntax_ok:
+        raise Refusal("proposal", syntax_log)
+    ok, log = run_lean(directory, binary, timeout)
     if not ok:
         raise Refusal("proof", log)
     return log

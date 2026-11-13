@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "full-size-controller-and-proof-term-boundary-validation-passed",
+  "source_sha256": {
+    "lark_kernels/certificate.py": "504b39be240ca3d882863f1b2c0dfa9d77eaf4bfd213665959010ffee62e99aa",
+    "lark_kernels/proof_syntax.py": "9d21a163be1aa3d8ac4ff525be91af3746fc67d93d4f40debdd709899dbbc80f",
+    "lean/Lark/ProofSyntax.lean": "327826822b6e1be7457167df296900f9f1fb4e4262213cb45e767f2865cff3d9",
+    "reproduction/local_models/run.py": "cb17e3f43be8ce13fc2b31efe303aa28cf8967a0943eca329b6fe7cce69dff05",
+    "reproduction/local_models/full_shape.py": "afeb250f9b4a8a0f94fed862e792f5608c685aee126adf8ea994ec5c3d9a8cfe",
+    "reproduction/local_models/full_shape_run.py": "f3ed2e693ec1f04f17fe52c82e14d71975bd11f7868a8b48339b2bcb7a53b172",
+    "tests/test_proof_syntax.py": "440784d786628521aeeeb9ae01310c80ec168a0faef369fcaa18ec28c70ddabf",
+    "tests/test_full_shape_models.py": "d3be8cfa2819278273eb5da490b9272b70ef8ca25f20d8cf5e2a7eaabd934d19",
+    "pyproject.toml": "4898a7f8a47ff3d5a315f9cbc3fb3040aff181c22105a0fae5e48f7019827a7d"
+  },
+  "selected_sdk_and_model_regression_tests": {
+    "passed": 39,
+    "command": "LARK_LEAN=/path/to/lean python3 -m pytest tests/test_lark.py tests/test_local_models.py tests/test_model_comparison.py tests/test_proof_syntax.py -q"
+  },
+  "controller_protocol_and_explicit_stub_tests": {
+    "passed": 4,
+    "command": "LARK_LEAN=/path/to/lean LARK_REAL_PROJECT=/path/to/lean-real python3 -m pytest tests/test_full_shape_models.py -q",
+    "real_inference_calls": 0,
+    "scope": "Bounded library reads; duplicate/policy refusals; context compaction preserves fixed task; real Lean syntax refusal plus proof/recheck; tokenizer HTTP503 preserves partial status and makes no model request."
+  },
+  "installed_wheel_check": "passed outside checkout; parser resource and certificate verify/recheck",
+  "historical_three_model_audit": "passed; same GLM first-attempt and DeepSeek later-retry successes, zero new inference",
+  "harmless_command_control": {
+    "extra_command_executed_before_fix": true,
+    "six_axiom_audits_passed_before_fix": true,
+    "invalid_kernel_theorem_demonstrated": false,
+    "scope": "Valid ReLU proof plus an appended logInfo command demonstrates the missing command boundary, not a false theorem."
+  },
+  "resource_limits": {
+    "new_lean_module_maxRecDepth": 10000,
+    "new_lean_module_maxHeartbeats": 2000000,
+    "model_proof_process_seconds": 180,
+    "existing_import_build_seconds": 600
+  },
+  "preparation_v2_manifest_sha256": "82f84eec835c0deb27e618ddd6e3d75d9b1d3b8827bd1a4f1982de0d4e029db8",
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "new_model_proofs": 0,
+  "original_paper_fully_reproduced": false
+}
