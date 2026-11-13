@@ -169,6 +169,15 @@ def setIndex64 (s : Machine α) (d : Nat) (v : Int) : Machine α :=
     (setFloat s d v).registers.i64 r = s.registers.i64 r := rfl
 @[simp] theorem loadedHalf_i64 (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
     (loadedHalf s t d l v).registers.i64 r = s.registers.i64 r := rfl
+@[simp] theorem setFloat_i32 (s : Machine α) (d r : Nat) (v : α) :
+    (setFloat s d v).registers.i32 r = s.registers.i32 r := rfl
+@[simp] theorem loadedHalf_i32 (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.i32 r = s.registers.i32 r := rfl
+@[simp] theorem setPointer_i32 (s : Machine α) (d r : Nat) (p : Pointer) :
+    (setPointer s d p).registers.i32 r = s.registers.i32 r := rfl
+@[simp] theorem setPointer_i64 (s : Machine α) (d r : Nat) (p : Pointer) :
+    (setPointer s d p).registers.i64 r = if r = d then none else s.registers.i64 r := by
+  by_cases h : r = d <;> simp [setPointer, LarkPtxDot.advance, putPointer, putValue, Registers.i64, h]
 
 theorem bits32_negative512 : bits32 (-512) = 4294966784 := by decide
 
@@ -822,6 +831,140 @@ theorem term_execute (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α
   apply steps_trans _ _ _ _ _ _ _ _ h5
   exact steps_trans _ _ _ _ _ _ _ _ h6 h7
 
+theorem termResult_pc (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).pc = s.pc+7 := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_pc, loadedHalf_pc, setPointer_pc]
+
+theorem termResult_stopped (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.stopped = s.registers.stopped := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_stopped, loadedHalf_stopped, setPointer_stopped]
+
+theorem termResult_i32 (ops : Ops α) (t c j r : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.i32 r = s.registers.i32 r := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_i32, loadedHalf_i32, setPointer_i32]
+
+theorem termResult_pointer (ops : Ops α) (t c j r : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.pointer r =
+      if r = 28+j then some (bPointer t c j) else s.registers.pointer r := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_pointer, loadedHalf_pointer, setPointer_pointer]
+
+theorem termResult_i64 (ops : Ops α) (t c j r : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.i64 r =
+      if r = 28+j then none else s.registers.i64 r := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_i64, loadedHalf_i64, setPointer_i64]
+
+theorem termResult_memory (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.base.memory = s.registers.base.memory := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termAddressB, termCastA, termLoadA,
+    setFloat_memory, loadedHalf_memory, setPointer_base]
+
+theorem termResult_scalar (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.scalar (sumRegister j) =
+      some (ops.add acc (ops.mul (ops.fromHalf a) (ops.fromHalf b))) := by
+  simp [termResult]
+
+def accumulatorRegister (j : Nat) : Nat := if j = 0 ∨ j = 16 then 68 else 35+2*j
+
+theorem source_accumulator : ∀ j : Fin 16,
+    inputRegister j.val = accumulatorRegister j.val ∧
+    sumRegister j.val = accumulatorRegister (j.val+1) := by decide
+
+theorem stride_register_bound (j : Nat) : strideRegister j < 19 := by
+  unfold strideRegister
+  split <;> try omega
+  split <;> omega
+
+def Reads (input : Nat → Nat → α) (s : Machine α) : Prop :=
+  (∀ i, i < 64*256 → s.registers.base.memory ⟨.global, 0, 0, i⟩ = some (input 0 i)) ∧
+  (∀ i, i < 256*512 → s.registers.base.memory ⟨.global, 0, 1, i⟩ = some (input 1 i))
+
+structure BodyInvariant (input : Nat → Nat → α) (t c j : Nat) (acc : α) (s : Machine α) : Prop where
+  pc : s.pc = 48+7*j
+  stopped : s.registers.stopped = false
+  a : s.registers.pointer 27 = some (aPointer t c)
+  b : s.registers.pointer 48 = some (bBase c)
+  strides : ∀ k, k < 16 → s.registers.i64 (strideRegister k) = some (bStride t k)
+  accumulator : s.registers.scalar (accumulatorRegister j) = some acc
+  reads : Reads input s
+  thread : s.registers.i32 1 = some (t : Int)
+  counter : s.registers.i32 27 = some ((16*c : Nat) : Int)
+  output : s.registers.pointer 24 = some ⟨2, 0, false⟩
+  abase : s.registers.pointer 47 = some (aBase c)
+  rowOffset : s.registers.i64 19 = some ((t/512*512 : Nat) : Int)
+
+def nextValue (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α) : α :=
+  ops.add acc (ops.mul (ops.fromHalf (input 0 (t/512*256+16*c+j)))
+    (ops.fromHalf (input 1 ((16*c+j)*512+t%512))))
+
+def chunkStep (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α)
+    (s : Machine α) : Machine α :=
+  termResult ops t c j (input 0 (t/512*256+16*c+j)) (input 1 ((16*c+j)*512+t%512)) acc s
+
+theorem chunk_step (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α)
+    (s : Machine α) (ht : t < 32768) (hc : c < 16) (hj : j < 16)
+    (h : BodyInvariant input t c j acc s) :
+    Steps ops layout geometry t program s (chunkStep ops input t c j acc s) ∧
+    BodyInvariant input t c (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s) := by
+  have hr : t/512 < 64 := by omega
+  have hcol : t%512 < 512 := Nat.mod_lt _ (by decide)
+  have hreg := source_accumulator ⟨j, hj⟩
+  have e := term_execute ops t c j _ _ acc s ht hc hj h.pc h.stopped h.a h.b (h.strides j hj)
+    (h.reads.1 _ (by omega)) (h.reads.2 _ (by omega)) (by rw [hreg.1]; exact h.accumulator)
+  refine ⟨e, ?_⟩
+  constructor
+  · rw [chunkStep, termResult_pc, h.pc]; omega
+  · simpa only [chunkStep, termResult_stopped] using h.stopped
+  · simpa only [chunkStep, termResult_pointer, if_neg (by omega : 27 ≠ 28+j)] using h.a
+  · simpa only [chunkStep, termResult_pointer, if_neg (by omega : 48 ≠ 28+j)] using h.b
+  · intro k hk
+    have hkb := stride_register_bound k
+    simpa only [chunkStep, termResult_i64, if_neg (by omega : strideRegister k ≠ 28+j)]
+      using h.strides k hk
+  · rw [← hreg.2]
+    exact termResult_scalar ops t c j _ _ acc s
+  · constructor
+    · intro i hi
+      rw [chunkStep, termResult_memory]
+      exact h.reads.1 i hi
+    · intro i hi
+      rw [chunkStep, termResult_memory]
+      exact h.reads.2 i hi
+  · simpa only [chunkStep, termResult_i32] using h.thread
+  · simpa only [chunkStep, termResult_i32] using h.counter
+  · simpa only [chunkStep, termResult_pointer, if_neg (by omega : 24 ≠ 28+j)] using h.output
+  · simpa only [chunkStep, termResult_pointer, if_neg (by omega : 47 ≠ 28+j)] using h.abase
+  · simpa only [chunkStep, termResult_i64, if_neg (by omega : 19 ≠ 28+j)] using h.rowOffset
+
+def foldTerms (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) : Nat → α → α
+  | 0, acc => acc
+  | n+1, acc => foldTerms ops input t c (j+1) n (nextValue ops input t c j acc)
+
+def runTerms (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) : Nat → α → Machine α → Machine α
+  | 0, _, s => s
+  | n+1, acc, s => runTerms ops input t c (j+1) n (nextValue ops input t c j acc)
+      (chunkStep ops input t c j acc s)
+
+theorem runTerms_execute (ops : Ops α) (input : Nat → Nat → α) (t c j n : Nat) (acc : α)
+    (s : Machine α) (ht : t < 32768) (hc : c < 16) (hjn : j+n ≤ 16)
+    (h : BodyInvariant input t c j acc s) :
+    Steps ops layout geometry t program s (runTerms ops input t c j n acc s) ∧
+    BodyInvariant input t c (j+n) (foldTerms ops input t c j n acc) (runTerms ops input t c j n acc s) := by
+  induction n generalizing j acc s with
+  | zero => exact ⟨.refl _, h⟩
+  | succ n ih =>
+      have head := chunk_step ops input t c j acc s ht hc (by omega) h
+      have tail := ih (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s)
+        (by omega) head.2
+      refine ⟨steps_trans _ _ _ _ _ _ _ _ head.1 tail.1, ?_⟩
+      have he : j+(n+1) = (j+1)+n := by omega
+      rw [he]
+      exact tail.2
+
 end Gemm
 
 #print axioms steps_trans
@@ -844,4 +987,6 @@ end Gemm
 #print axioms Gemm.b_address
 #print axioms Gemm.program_term
 #print axioms Gemm.term_execute
+#print axioms Gemm.chunk_step
+#print axioms Gemm.runTerms_execute
 end LarkPtxMatrix
