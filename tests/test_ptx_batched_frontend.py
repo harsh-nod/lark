@@ -9,7 +9,7 @@ from lark_kernels import ptx_matrix
 from lark_kernels.ir import Refusal
 from reproduction.ptx.batched_frontend import prepare
 
-CASE = Path(__file__).resolve().parents[1] / "reproduction/ptx/cases/full-size-bmm"
+CASE = Path(__file__).resolve().parents[1] / "reproduction/ptx/full-size/bmm"
 
 
 def inputs():
