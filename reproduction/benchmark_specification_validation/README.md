@@ -4,8 +4,10 @@
 repository's independently reconstructed mathematical references. It adds no
 kernel certificate, GPU trial, model call, IEEE equivalence theorem or
 floating-point error bound. The [complete measurement](RESULTS.md) and its
-source-bound packet, fresh replay and anonymous publication checks are recorded;
-the CI/main gate is pending.
+source-bound packet, fresh replay and anonymous publication checks are recorded.
+All eighteen exact-source CI jobs passed; the
+[checked main receipt](results/benchmark-float64-ci-main-v1/results.json) records
+the non-force remote and local fast-forwards.
 
 The complete protocol covers all seventeen benchmark families at their existing
 HIP-case shapes. Four input strata and five output positions give 340 sampled
