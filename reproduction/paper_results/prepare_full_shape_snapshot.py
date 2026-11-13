@@ -30,6 +30,8 @@ LATER_ARTIFACTS = (
     "reproduction/paper_results/original-artifact-refresh-20261113-0900",
     "reproduction/paper_results/original-artifact-refresh-20261113-1540",
     "reproduction/local_models/results/ptx-verifier-implementation-review-v1",
+    "reproduction/local_models/results/full-shape-glm53-cuda-publication-v1",
+    "reproduction/local_models/results/full-shape-glm53-cuda-ci-main-v1",
     "reproduction/ptx/results/full-size-compilation-v1",
     "reproduction/ptx/results/full-size-compilation-publication-v1",
     "reproduction/ptx/results/full-size-compilation-ci-v1",
