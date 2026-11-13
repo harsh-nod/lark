@@ -134,6 +134,9 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
                   "reproduction/local_models/results/ptx-verifier-implementation-review-v1/results.json"]
         for name in linked:
             report["evidence_links"][name] = "https://github.com/harsh-nod/lark/blob/253f40923cafcaeb23829e4f1f1322fc59302efd/" + name
+        for name in ("reproduction/ptx/results/full-size-compilation-v1/RESULTS.md",
+                     "reproduction/paper_results/level2-cost-arithmetic-v1/RESULTS.md"):
+            report["evidence_links"][name] = "https://github.com/harsh-nod/lark/blob/12e5cff5207ba6899f9e8a4e6eddcb2e3dc1e5c6/" + name
         rendered = namespace["render"](report, self.root).decode()
         self.assertIn("5 complete independent model/language cohorts, 69 verified proofs and 659 recorded responses.", rendered)
         lines = rendered.splitlines()
@@ -141,6 +144,8 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
         self.assertTrue(lines[header + 1].startswith("| ---"))
         self.assertTrue(lines[header + 2].startswith("| "))
         self.assertIn("original paper is not fully reproduced", rendered)
+        self.assertIn("no full-size PTX proof, model success or NVIDIA execution is added", rendered)
+        self.assertIn("successful-task rule in the caption", rendered)
 
     def test_global_original_result_overclaim(self):
         self.update(COMPARISON, "results.json", lambda value: value.update(original_paper_fully_reproduced=True))

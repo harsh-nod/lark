@@ -26,6 +26,9 @@ LATER_ARTIFACTS = (
     "reproduction/paper_results/original-artifact-full-query-20261112",
     "reproduction/paper_results/original-artifact-refresh-20261113-0900",
     "reproduction/local_models/results/ptx-verifier-implementation-review-v1",
+    "reproduction/ptx/results/full-size-compilation-v1",
+    "reproduction/ptx/results/full-size-compilation-publication-v1",
+    "reproduction/paper_results/level2-cost-arithmetic-v1",
 )
 
 
@@ -78,6 +81,19 @@ def augment_auditor(source):
          '        + link("reproduction/local_models/results/ptx-verifier-implementation-review-v1/results.json",\n'
          '               "PTX implementation review")\n'
          '        + " retain their separate source/observation scopes; no whole-launch LARK bridge is established.\\n",\n'),
+        ('    text += ["\\n## Concrete dependencies\\n"]\n',
+         '    text += [\n'
+         '        link("reproduction/ptx/results/full-size-compilation-v1/RESULTS.md",\n'
+         '             "Full-size CPU PTX assembly")\n'
+         '        + " records 25 assembled source stages across 17 independent tasks. "\n'
+         '        + "The current reader refuses every generated program; no full-size PTX "\n'
+         '        + "proof, model success or NVIDIA execution is added.\\n",\n'
+         '        link("reproduction/paper_results/level2-cost-arithmetic-v1/RESULTS.md",\n'
+         '             "Published Level-2 table arithmetic")\n'
+         '        + " records GLM totals that match all-task means rather than the "\n'
+         '        + "successful-task rule in the caption; no original model logs are recovered.\\n",\n'
+         '        "\\n## Concrete dependencies\\n",\n'
+         '    ]\n'),
     )
     for old, new in substitutions:
         require(source.count(old) == 1, "Frozen v22 auditor integration point differs")
@@ -144,7 +160,9 @@ def prepare_snapshot(*, evidence_commit, comparison_prefix, source_archive, snap
             "generic libraries differ from the original registry, agent and model matrix.",
         "tab:verify-model": "The five independent Level-2 shapes now have complete model outcomes for three "
             "checkpoints and both source languages. Attention remains dense SDPA; original FlashAttention, "
-            "optimized Level-2 PTX and original model histories are unavailable.",
+            "optimized Level-2 PTX and original model histories are unavailable. A separate arithmetic "
+            "check finds that displayed GLM totals match all-task means rather than the caption's "
+            "successful-task rule; both calculations are retained without changing manuscript values.",
         "tab:kernelcraft-model-budgets": "The independent protocol uses sixteen responses, eight source reads "
             "and three actual Lean checks per task, with explicit context/output/time limits. Original "
             "settings remain manuscript metadata; no original hosted-model dollar ceiling is simulated.",
