@@ -1,0 +1,94 @@
+{
+  "status": "passed",
+  "positive_syntax_controls": 1,
+  "negative_controls": 7,
+  "masked_requests_checked": 17,
+  "checks": [
+    {
+      "name": "admission",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by sorry",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "resource-override",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by set_option maxHeartbeats 3000000 in exact False.elim (by fail)",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "unchecked-evaluation",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by native_decide",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "declaration",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by\naxiom bad : False",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: declarations, unchecked evaluation, and admission are forbidden"
+    },
+    {
+      "name": "non-proof",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": 17,
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "proposal: segmentation_data: expected a bounded tactic proof beginning with 'by'"
+    },
+    {
+      "name": "missing-slot",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail"
+      },
+      "rejected": true,
+      "reason": "Exactly four full-shape proof slots are required"
+    },
+    {
+      "name": "extra-slot",
+      "proposal": {
+        "segmentation_data": "by fail",
+        "segmentation": "by fail",
+        "race_free": "by fail",
+        "segment_equivalence": "by fail",
+        "other": "by rfl"
+      },
+      "rejected": true,
+      "reason": "Exactly four full-shape proof slots are required"
+    }
+  ],
+  "validator_source_sha256": "13ce54d1831f42020c5c4b27caef49da0897ae32587df88e8331b1363b074832",
+  "driver_sha256": "f18a4a6edcd22129983165cf1f0d998dbf06f4251e14631a763fe386341543d4",
+  "preparation_manifest_sha256": "6e06960497187719779ae819a0e324e4053422d5c375fd767c66f572f6e43002",
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "new_certificates": 0,
+  "fresh_lean_checks": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Proposal syntax and frozen request integrity only; baseline Lean checks are recorded separately."
+}

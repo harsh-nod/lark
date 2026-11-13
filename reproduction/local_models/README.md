@@ -1,5 +1,11 @@
 # Offline local-model experiments
 
+The [full-size task preparation](FULL_SHAPE_METHOD.md) now validates all seventeen
+existing HIP benchmark shapes with four fixed proof slots. Its 17 SDK positive
+controls and 17 missing-proof negatives passed under the fixed new Lean limits.
+This prepares a separate offline experiment; no new inference has run and its
+SDK controls are not model-generated proofs.
+
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real model
 responses, including unsuccessful attempts, are archived separately from client
