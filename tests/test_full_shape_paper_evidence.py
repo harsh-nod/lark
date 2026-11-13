@@ -8,6 +8,7 @@ import tempfile
 import unittest
 
 from reproduction.paper_results.full_shape_evidence import check_full_shape_evidence
+from reproduction.paper_results.prepare_full_shape_snapshot import augment_auditor, prepare_snapshot
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -109,6 +110,37 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
     def test_five_cannot_satisfy_six_required_cohorts(self):
         self.config["full_shape_models"]["required_cohorts"] = 6
         self.refused("declared cohort count differs")
+
+    def test_snapshot_builder_refuses_actual_five_before_creating_output(self):
+        snapshot = self.root / "must-not-be-created"
+        with self.assertRaisesRegex(ValueError, "All six complete independent cohorts are required"):
+            prepare_snapshot(evidence_commit="0" * 40, comparison_prefix=COMPARISON,
+                             source_archive=self.root / "must-not-be-read",
+                             snapshot=snapshot, root=self.root)
+        self.assertFalse(snapshot.exists())
+
+    def test_augmented_frozen_auditor_renders_actual_recorded_models(self):
+        source = (ROOT / "reproduction/paper_results/snapshots/20261112-v22/auditor.py").read_text()
+        draft = augment_auditor(source)
+        namespace = {"__name__": "isolated_model_ledger_renderer",
+                     "__file__": str(ROOT / "reproduction/paper_results/audit.py")}
+        exec(compile(draft, "frozen-model-ledger-auditor.py", "exec"), namespace)
+        report = read(ROOT / "reproduction/paper_results/snapshots/20261112-v22/results/audit.json")
+        report["full_shape_model_evidence_checks"] = check_full_shape_evidence(self.config, root=self.root)
+        report["evidence_groups"]["full_shape_models"] = [COMPARISON + "/RESULTS.md"]
+        linked = [COMPARISON + "/RESULTS.md",
+                  "reproduction/paper_results/original-artifact-full-query-20261112/results.json",
+                  "reproduction/paper_results/original-artifact-refresh-20261113-0900/results.json",
+                  "reproduction/local_models/results/ptx-verifier-implementation-review-v1/results.json"]
+        for name in linked:
+            report["evidence_links"][name] = "https://github.com/harsh-nod/lark/blob/253f40923cafcaeb23829e4f1f1322fc59302efd/" + name
+        rendered = namespace["render"](report, self.root).decode()
+        self.assertIn("5 complete independent model/language cohorts, 69 verified proofs and 659 recorded responses.", rendered)
+        lines = rendered.splitlines()
+        header = next(i for i, line in enumerate(lines) if line.startswith("| Paper item / source label |"))
+        self.assertTrue(lines[header + 1].startswith("| ---"))
+        self.assertTrue(lines[header + 2].startswith("| "))
+        self.assertIn("original paper is not fully reproduced", rendered)
 
     def test_global_original_result_overclaim(self):
         self.update(COMPARISON, "results.json", lambda value: value.update(original_paper_fully_reproduced=True))
