@@ -69,8 +69,18 @@ refusal controls and changed source pins.
 The [frozen packet](results/benchmark-float64-v1/manifest.json) binds **145 source
 files and 450 evidence files** in two archives. Including the standalone verifier
 and result records, it is approximately 68.9 MB. Its audit checks source binding,
-protocol scope and numerical consistency. Fresh source replay is running;
-its receipt, anonymous publication check and exact-source CI/main gate are pending.
+protocol scope and numerical consistency.
+
+The [fresh source replay](results/benchmark-float64-source-replay-v1/results.json)
+compiled the numerical auditors anew, reran all cases and controls, and reproduced
+all 68 input files, 68 generated Mains, 340 sampled values, 589,824 scores and
+589,824 oracle score values identically. Source-checked SDK import caches were
+reused; this is not a cold rebuild of all proof libraries or Mathlib.
+The [anonymous publication check](results/benchmark-float64-publication-v1/results.json)
+downloaded eight public files totaling 68,902,340 bytes from commit `548b8a5`,
+matched every byte against its committed blob, and passed the packet audit and
+all 41 mutations with TLS verification enabled. The exact-source CI/main gate
+is pending.
 
 The authors' original registry, formalizations, validation dataset, model pass
 rates, token history and NVIDIA measurements remain unreproduced. This protocol
