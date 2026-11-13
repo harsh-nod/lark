@@ -1,5 +1,18 @@
 # Offline local-model experiments
 
+The [completed full-size DeepSeek HIP cohort](results/full-shape-cohort-deepseek-v1/results.json)
+verified sixteen of seventeen fixed-scaffold tasks within the common budget.
+Depthwise convolution exhausted its budget. All 175 requests and responses are
+retained: 3,361,778 prompt tokens and 482,540 completion tokens, 3,844,318 total.
+The first response verified zero proofs; fourteen cases verified at their first
+actual Lean check. The latter excludes earlier policy/syntax refusals and source
+reads and is not original-paper Pass@1. The complete protocol replay regenerated
+all prompts, actions and Main files; accepted proofs passed 32 additional fresh
+Lean kernel/axiom checks. Failed candidates retain their recorded outcomes.
+These are model proof completions for the owned full-size fixtures, with zero
+new registered source certificates or original-paper result claims. GLM and
+Flash full-size cohorts remain separate ongoing experiments.
+
 The [full-size protocol](FULL_SHAPE_METHOD.md) now validates all seventeen
 existing HIP benchmark shapes with four fixed proof slots. Its 17 SDK positive
 controls and 17 missing-proof negatives passed under the fixed new Lean limits.
