@@ -28,6 +28,7 @@ METADATA = ("results.json", "raw-results.json", "audit-results.json", "binding.j
 LATER_ARTIFACTS = (
     "reproduction/paper_results/original-artifact-full-query-20261112",
     "reproduction/paper_results/original-artifact-refresh-20261113-0900",
+    "reproduction/paper_results/original-artifact-refresh-20261113-1540",
     "reproduction/local_models/results/ptx-verifier-implementation-review-v1",
     "reproduction/ptx/results/full-size-compilation-v1",
     "reproduction/ptx/results/full-size-compilation-publication-v1",
@@ -86,7 +87,9 @@ def augment_auditor(source):
          '        link("reproduction/paper_results/original-artifact-full-query-20261112/results.json",\n'
          '             "Complete pages for that bounded query") + ".\\n",\n'
          '        link("reproduction/paper_results/original-artifact-refresh-20261113-0900/results.json",\n'
-         '             "November13 bounded observations") + " and "\n'
+         '             "November13 earlier bounded observations") + ", "\n'
+         '        + link("reproduction/paper_results/original-artifact-refresh-20261113-1540/results.json",\n'
+         '               "November13 later bounded refresh") + " and "\n'
          '        + link("reproduction/local_models/results/ptx-verifier-implementation-review-v1/results.json",\n'
          '               "PTX implementation review")\n'
          '        + " retain their separate source/observation scopes; no whole-launch LARK bridge is established.\\n",\n'),

@@ -133,6 +133,7 @@ class FullShapePaperEvidenceTests(unittest.TestCase):
         linked = [COMPARISON + "/RESULTS.md",
                   "reproduction/paper_results/original-artifact-full-query-20261112/results.json",
                   "reproduction/paper_results/original-artifact-refresh-20261113-0900/results.json",
+                  "reproduction/paper_results/original-artifact-refresh-20261113-1540/results.json",
                   "reproduction/local_models/results/ptx-verifier-implementation-review-v1/results.json"]
         for name in linked:
             report["evidence_links"][name] = "https://github.com/harsh-nod/lark/blob/253f40923cafcaeb23829e4f1f1322fc59302efd/" + name
