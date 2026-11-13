@@ -956,6 +956,199 @@ theorem source_launch_outputs (ops : Ops α) (input : Nat → Nat → α)
     intro i _ hi
     exact h i (by simpa using hi)
 
+abbrev TraceSafe := LarkPtxMatrix.Gemm.TraceSafe
+
+theorem control_trace (c : Nat) (s : Machine α) :
+    (controlResult c s).registers.base.trace = s.registers.base.trace := rfl
+
+theorem termResult_trace_safe (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α)
+    (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (termResult ops t c j a b acc s).registers.base.trace := by
+  intro access ha
+  change access ∈ (⟨t, bCell t c j, false, s.registers.base.epochs t⟩ ::
+    ⟨t, aCell t c j, false, s.registers.base.epochs t⟩ :: s.registers.base.trace) at ha
+  simp only [List.mem_cons] at ha
+  rcases ha with rfl | rfl | ha
+  · simp [LarkPtxMatrix.Gemm.AccessSafe, bCell]
+  · simp [LarkPtxMatrix.Gemm.AccessSafe, aCell]
+  · exact h access ha
+
+theorem firstResult_trace_safe (ops : Ops α) (t c : Nat) (a b acc : α) (s : Machine α)
+    (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (firstResult ops t c a b acc s).registers.base.trace := by
+  intro access ha
+  change access ∈ (⟨t, bCell t c 0, false, s.registers.base.epochs t⟩ ::
+    ⟨t, aCell t c 0, false, s.registers.base.epochs t⟩ :: s.registers.base.trace) at ha
+  simp only [List.mem_cons] at ha
+  rcases ha with rfl | rfl | ha
+  · simp [LarkPtxMatrix.Gemm.AccessSafe, bCell]
+  · simp [LarkPtxMatrix.Gemm.AccessSafe, aCell]
+  · exact h access ha
+
+theorem runTerms_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c j r : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (runTerms ops input t c j r acc s).registers.base.trace := by
+  induction r generalizing j acc s with
+  | zero => exact h
+  | succ r ih =>
+      exact ih (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s)
+        (termResult_trace_safe ops t c j _ _ acc s h)
+
+theorem iteration_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (iteration ops input t c acc s).registers.base.trace := by
+  rw [iteration, control_trace]
+  unfold bodyEnd
+  exact runTerms_trace_safe ops input t c 1 15 (nextValue ops input t c 0 acc)
+    (firstChunk ops input t c acc s) (firstResult_trace_safe ops t c _ _ acc s h)
+
+theorem runChunks_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (runChunks ops input t c r acc s).registers.base.trace := by
+  induction r generalizing c acc s with
+  | zero => exact h
+  | succ r ih =>
+      exact ih (c+1) (chunkValue ops input t c acc) (iteration ops input t c acc s)
+        (iteration_trace_safe ops input t c acc s h)
+
+theorem exitReturned_trace_safe (ops : Ops α) (t : Nat) (acc : α) (s : Machine α)
+    (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (exitReturned ops t acc s).registers.base.trace := by
+  intro access ha
+  change access ∈ (⟨t, outputCell t, true, s.registers.base.epochs t⟩ :: s.registers.base.trace) at ha
+  rcases List.mem_cons.mp ha with rfl | ha
+  · rfl
+  · exact h access ha
+
+theorem source_lane_safe (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base : State α)
+    (ht : t < 1048576) (hreads : Reads input (start base)) (hsafe : TraceSafe base.trace) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧
+      final.registers.stopped = true ∧ final.pc = 138 ∧
+      final.registers.base.memory =
+        (fun l => if l = outputCell t then some (reference ops input t) else base.memory l) ∧
+      TraceSafe final.registers.base.trace := by
+  obtain ⟨initial, initialSteps, ready⟩ := Init.prefix29_execute ops t base ht
+  have entry := initial_loop ops input t base initial ready hreads
+  have loop := runChunks_execute ops input t 0 16 (ops.literal 0 1) initial ht (by decide) entry
+  let exited := runChunks ops input t 0 16 (ops.literal 0 1) initial
+  have invariant : LoopInvariant input t 16 (dotValue ops input t) exited := loop.2
+  have tail := epilogue_execute ops input t (dotValue ops input t) exited ht invariant
+  have memory : exited.registers.base.memory = base.memory := by
+    rw [runChunks_memory, ready.frame.memory]
+  have initialSafe : TraceSafe initial.registers.base.trace := by
+    rw [ready.frame.memory]
+    exact hsafe
+  have exitedSafe : TraceSafe exited.registers.base.trace :=
+    runChunks_trace_safe ops input t 0 16 (ops.literal 0 1) initial initialSafe
+  refine ⟨exitReturned ops t (dotValue ops input t) exited,
+    steps_trans _ _ _ _ _ _ _ _ initialSteps (steps_trans _ _ _ _ _ _ _ _ loop.1 tail),
+    exitReturned_stopped _ _ _ _, ?_, ?_, exitReturned_trace_safe _ _ _ _ exitedSafe⟩
+  · rw [exitReturned_pc, invariant.pc]
+    rfl
+  · rw [exitReturned_memory, memory, dotValue_reference]
+
+theorem launch_exists_safe (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (base : State α)
+    (hcount : k+r ≤ 1048576) (hreads : Reads input (start base)) (hsafe : TraceSafe base.trace) :
+    ∃ final, LaneSequence ops program k r base final ∧ Reads input (start final) ∧ TraceSafe final.trace ∧
+      (∀ i, final.memory (outputCell i) =
+        if k ≤ i ∧ i < k+r then some (reference ops input i) else base.memory (outputCell i)) ∧
+      (∀ l, (∀ i, k ≤ i → i < k+r → l ≠ outputCell i) → final.memory l = base.memory l) := by
+  induction r generalizing k base with
+  | zero =>
+      refine ⟨base, .nil k base, hreads, hsafe, ?_, ?_⟩
+      · intro i
+        have hn : ¬ (k ≤ i ∧ i < k+0) := by omega
+        simp only [if_neg hn]
+      · intro l _
+        rfl
+  | succ r ih =>
+      obtain ⟨lane, execution, stopped, pc, memory, laneSafe⟩ := source_lane_safe ops input k base (by omega) hreads hsafe
+      have nextReads := lane_reads ops input k base lane hreads memory
+      obtain ⟨final, tail, finalReads, finalSafe, outputs, outside⟩ := ih (k+1) lane.registers.base (by omega) nextReads laneSafe
+      refine ⟨final, .next execution stopped tail, finalReads, finalSafe, ?_, ?_⟩
+      · intro i
+        rw [outputs]
+        by_cases hi : i = k
+        · subst i
+          have hrest : ¬ (k+1 ≤ k ∧ k < k+1+r) := by omega
+          have hwhole : k ≤ k ∧ k < k+(r+1) := by omega
+          rw [if_neg hrest, memory]
+          simp [hwhole]
+        · have hloc : outputCell i ≠ outputCell k := by
+            intro he
+            exact hi (congrArg Location.offset he)
+          have hrange : (k+1 ≤ i ∧ i < k+1+r) ↔ (k ≤ i ∧ i < k+(r+1)) := by omega
+          rw [memory]
+          simp only [hloc, if_false, hrange]
+      · intro l h
+        have htail : ∀ i, k+1 ≤ i → i < k+1+r → l ≠ outputCell i := by
+          intro i hi hj
+          exact h i (by omega) (by omega)
+        rw [outside l htail, memory]
+        simp only [if_neg (h k (by omega) (by omega))]
+
+def referenceSpec (ops : Ops α) (input : Nat → Nat → α) : List α :=
+  (List.range 1048576).map (reference ops input)
+
+inductive TensorReference where
+  | input : Nat → TensorReference
+  | fromHalf : TensorReference → TensorReference
+  | matmul : TensorReference → TensorReference → TensorReference
+  | toHalf : TensorReference → TensorReference
+  deriving DecidableEq, Repr
+
+def referenceBody : TensorReference :=
+  .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1)))
+
+/-- Closed [32,64,256] @ [32,256,512] FP16 batched reference; other ASTs refuse.
+The scalar operations and reference formalization retain their declared trust
+boundary. This does not establish IEEE or backend conformance. -/
+def evaluateReference (ops : Ops α) (input : Nat → Nat → α) : TensorReference → Option (List α)
+  | .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1))) => some (referenceSpec ops input)
+  | _ => none
+
+theorem evaluate_reference_body (ops : Ops α) (input : Nat → Nat → α) :
+    evaluateReference ops input referenceBody = some (referenceSpec ops input) := rfl
+
+theorem extract_outputs (s : State α) (values : Nat → α)
+    (h : ∀ i, i < 1048576 → s.memory (outputCell i) = some (values i)) :
+    extract layout s = some ((List.range 1048576).map values) := by
+  simp only [extract, layout, List.zipIdx_cons, List.zipIdx_nil, List.flatMap_cons,
+    List.flatMap_nil, List.nil_append]
+  simp only [List.map_cons, List.map_nil, show Role.input ≠ Role.output by decide,
+    ↓reduceIte, List.nil_append, List.append_nil]
+  change (((List.range 1048576).map (fun i => (2, i))).mapM
+    (fun bi => s.memory ⟨.global, 0, bi.1, bi.2⟩) : Option (List α)) = _
+  rw [LarkPointwise.mapM_map]
+  exact LarkPointwise.mapM_some (List.range 1048576) _ _ (by
+    intro i hi
+    exact h i (List.mem_range.mp hi))
+
+def Correct (ops : Ops α) (p : List LarkPtxMatrix.Instruction)
+    (spec : (Nat → Nat → α) → List α) : Prop :=
+  ∀ input outside, ∃ final,
+    LaneSequence ops p 0 1048576 (initial layout input outside) final ∧
+    raceFree geometry final.trace = true ∧ extract layout final = some (spec input) ∧
+    (∀ l, (∀ i, i < 1048576 → l ≠ outputCell i) →
+      final.memory l = (initial layout input outside).memory l)
+
+theorem kernel_correct (ops : Ops α) : Correct ops program (referenceSpec ops) := by
+  intro input outside
+  have initialSafe : TraceSafe (initial layout input outside).trace := by
+    simp [LarkPtxMatrix.Gemm.TraceSafe, initial]
+  obtain ⟨final, execution, reads, safe, outputs, preserved⟩ :=
+    launch_exists_safe ops input 0 1048576 (initial layout input outside)
+      (by decide) (initial_reads input outside) initialSafe
+  have everyOutput : ∀ i, i < 1048576 → final.memory (outputCell i) = some (reference ops input i) := by
+    intro i hi
+    simpa only [Nat.zero_le, true_and, Nat.zero_add, if_pos hi] using outputs i
+  refine ⟨final, execution, LarkPtxMatrix.Gemm.trace_safe_raceFree geometry final.trace safe,
+    extract_outputs final (reference ops input) everyOutput, ?_⟩
+  intro l h
+  apply preserved l
+  intro i _ hi
+  exact h i (by simpa using hi)
+
 end LarkPtxBatched.Bmm.Body
 
 #print axioms LarkPtxBatched.Bmm.Body.a_address
@@ -1011,3 +1204,15 @@ end LarkPtxBatched.Bmm.Body
 #print axioms LarkPtxBatched.Bmm.Body.launch_exists
 #print axioms LarkPtxBatched.Bmm.Body.initial_reads
 #print axioms LarkPtxBatched.Bmm.Body.source_launch_outputs
+#print axioms LarkPtxBatched.Bmm.Body.control_trace
+#print axioms LarkPtxBatched.Bmm.Body.termResult_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.firstResult_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.runTerms_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.iteration_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.runChunks_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.exitReturned_trace_safe
+#print axioms LarkPtxBatched.Bmm.Body.source_lane_safe
+#print axioms LarkPtxBatched.Bmm.Body.launch_exists_safe
+#print axioms LarkPtxBatched.Bmm.Body.evaluate_reference_body
+#print axioms LarkPtxBatched.Bmm.Body.extract_outputs
+#print axioms LarkPtxBatched.Bmm.Body.kernel_correct
