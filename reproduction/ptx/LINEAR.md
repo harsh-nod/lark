@@ -6,8 +6,9 @@ grid 32,768, block 1, warp 32 and original CUDA fuel `[1030,1,1,1]`.
 The reference converts all three inputs to float, performs the matrix product,
 adds bias, then converts the result to half. Its cast order is preserved.
 
-This is an incomplete development study. Four complete independent PTX kernel
-proofs remain published; this work adds no completed kernel or model success.
+The pure complete-source theorem has passed. SDK export/replay, packaging and
+publication checks remain. Four complete independent PTX kernel proofs remain
+published; this additional library theorem adds no model success.
 The original shapes, input bytes, launch geometry and CUDA fuel are unchanged.
 The CUDA fuel remains separate data; actual PTX execution uses finite inductive
 sequences of successful source transitions and introduces no new execution fuel.
@@ -43,13 +44,25 @@ sequences of successful source transitions and introduces no new execution fuel.
   its raw development output is retained locally at
   `/tmp/lark-ptx-linear-loop-v1-20261113` (10.1781 seconds, 28 library and two
   generated-proof axiom audits). This is not a cold complete-kernel export.
+- The complete 11-instruction bias epilogue, output store and return passed
+  in `PtxLinearExit.lean`: every original lane stops at PC 179 and changes only
+  its own output. The same witness performs all 179 actual source instructions,
+  including the real loop, and adds the bias before the final half conversion.
+  The local development record `/tmp/lark-ptx-linear-exit-v1-20261113` retains
+  eight verified cached imports, one fresh module, 12 library plus two generated
+  axiom audits and the actual 4.3339-second check.
+- `PtxLinearLaunch.lean` composes the complete 32,768-lane source launch and
+  proves closed matrix-plus-bias reference extraction, actual access-trace race
+  freedom and preservation outside the output for one shared launch witness.
+  `/tmp/lark-ptx-linear-launch-v1-20261113` retains nine verified cached imports,
+  one fresh module, 18 library plus six generated-proof axiom audits and the
+  actual 4.2616-second development check. Full fresh export/replay is next.
 
 The four one-fragment controls change a product, conversion source register,
 bias shift amount or bias operation. Each is accepted by the grammar and
 rejected at the generated exact-source equality, without timing out. They test
-binding to this fixed development program; they do not establish correctness
-of the unfinished bias epilogue, form a general kernel verifier or reproduce
-the paper's original mutation experiment.
+binding to this fixed development program. They do not form a general kernel
+verifier or reproduce the paper's original mutation experiment.
 
 The earlier failed development checks and the first cold driver's audit-name
 failure remain retained under their original versioned local directories.
@@ -61,12 +74,11 @@ overwritten during exception capture; it changes no Lean proof or input bytes.
 
 ## Remaining work
 
-The actual bias-reading/addition epilogue, output store, return, whole-launch
-composition, reference AST extraction, preservation outside the output and
-actual access-trace race proof are required. A complete profile must receive
-fresh source export/replay, adversarial and installed-package checks, retained
-raw evidence, anonymous publication verification and actual source CI before
-promotion. No SDK certificate or registered legacy profile exists for Linear.
+The complete profile must receive fresh source export/replay, adversarial and
+installed-package checks, retained raw evidence, anonymous publication
+verification and actual source CI before promotion. The complete theorem alone
+does not establish those pipeline/publication checks or any original model
+result. No registered legacy profile exists for Linear.
 
 For a fresh initialization-only check:
 
