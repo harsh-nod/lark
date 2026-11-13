@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "pinned-deepseek-runtime-and-full-size-context-preflight-passed",
+  "source_checkpoint": "a582d6da15afd2ff1dba0a1a9fded4ac1bb07e37",
+  "host": "mi350",
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "revision": "1bae0e1088993b9b82de08f59de5be5a34e42170",
+  "image": "vllm/vllm-openai-rocm@sha256:71a5d125b10a594752014b917a00cb1743387d1be9ee188aa1862af0b143c7dd",
+  "container_id": "a8c5b078b9fc7ea4c74685cbf6cef3f8eb99150ba3fcfd205a252896be3b81b3",
+  "gpu_ids": [
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "tensor_parallel": 4,
+  "max_model_len": 65536,
+  "precision": "official native mixed MXFP4/MXFP8 checkpoint; CPU Engram offload, text-only",
+  "checkpoint_weights_rehashed": 48,
+  "checkpoint_support_files_rehashed": 31,
+  "checkpoint_downloaded_bytes": 0,
+  "context_preflight_cases": 17,
+  "max_initial_prompt_tokens": 22979,
+  "context_archive_files": 51,
+  "warmup_generation_requests": 1,
+  "warmup_reported_tokens": {
+    "prompt_tokens": 47,
+    "total_tokens": 69,
+    "completion_tokens": 22,
+    "completion_tokens_details": {
+      "reasoning_tokens": 15
+    }
+  },
+  "tokenization_requests": 17,
+  "proof_experiment_results_included": false,
+  "external_api_spend_usd": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Owned offline runtime, fresh cached-checkpoint validation, separate69token warmup and all17 initial prompt context checks. Runtime caches reused. No model-proof result, kernel-validation GPU trial, cold-start or controlled latency claim."
+}

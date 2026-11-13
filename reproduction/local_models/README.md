@@ -13,7 +13,20 @@ within the common 65,536-token limit. The
 [full-size ReLU pilot](results/full-shape-pilot-glm53-v1/binding.json) verified its
 first proof submission after three library reads. All four requests and two
 fresh Lean checks are archived: 36,503 prompt and 1,064 completion tokens.
-This single pilot is separate from the complete seventeen-task cohort.
+This single pilot is separate from the seventeen-task cohort, which is still
+running. The [recorded-protocol replay](results/full-shape-pilot-replay-v1/binding.json)
+binds all four requests to the fixed tasks and source reads, then checks the
+existing successful model proof in two more fresh Lean processes. It adds no
+model calls, model trial or registered source certificate.
+
+The [new DeepSeek runtime](results/full-shape-runtime-deepseek-v1/results.json)
+rehashes all 48 cached weight files and 31 support files, passes a separate
+69-token warmup, and fits all seventeen initial prompts. Its largest uses
+22,979 input tokens within the same 65,536-token budget. The full GLM and
+DeepSeek cohorts run separately from these setup receipts; completed results
+will retain every unsuccessful response and reported token count. All eighteen
+exact-source CI jobs passed before the checker, preparation and original pilot
+were [fast-forwarded to main](results/full-shape-source-ci-main-v1/results.json).
 
 This is an **independent proof-slot experiment**, not the paper's original agent
 harness, kernels, model endpoints or reported pass rates/token costs. Real model
