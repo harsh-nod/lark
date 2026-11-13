@@ -55,7 +55,12 @@ are separate from the frozen snapshot and the experiments it cites. The
 [anonymous publication check](snapshot-v22-publication/results.json) downloaded
 eleven files totaling 39,282,190 bytes from `4f647f9`, matched every committed
 byte with TLS verification enabled, and repeated both positive replays and all
-24 controls outside Git. The exact-source CI/main gate is pending.
+24 controls outside Git. The
+[CI/main receipt](snapshot-v22-ci-main-v1/results.json) records all eighteen
+jobs passing at source `4f647f9` and the checked non-force remote/local
+fast-forward to `1da8a64`. The intervening merge and publication changes contain
+documentation and recorded receipts; SDK, Lean, tests, workflows, ledger readers
+and frozen snapshots remain identical to the tested source.
 
 **v21 correction:** the frozen `dependencies.semantics` paragraph mistakenly
 retains an older statement that FlashInfer, SGLang RMSNorm and AWQ are
