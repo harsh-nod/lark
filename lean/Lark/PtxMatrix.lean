@@ -647,6 +647,42 @@ theorem initialized_base (ops : Ops α) (t : Nat) (s : State α) :
     (initialized ops t s).registers.base = s := by
   simp only [initialized, initializedSuffix_base, addressPairs_base]
 
+def aCell (t c j : Nat) : Location := ⟨.global, 0, 0, t/512*256+16*c+j⟩
+def bCell (t c j : Nat) : Location := ⟨.global, 0, 1, (16*c+j)*512+t%512⟩
+def aBase (c : Nat) : Pointer := ⟨0, ((32*c : Nat) : Int), true⟩
+def bBase (c : Nat) : Pointer := ⟨1, ((16384*c : Nat) : Int), true⟩
+def aPointer (t c : Nat) : Pointer := ⟨0, ((t/512*512+32*c : Nat) : Int), true⟩
+def bStride (t j : Nat) : Int := (( (t%512+j*512)*2 : Nat) : Int)
+def bPointer (t c j : Nat) : Pointer :=
+  ⟨1, ((16384*c+(t%512+j*512)*2 : Nat) : Int), true⟩
+
+theorem a_address (t c j : Nat) (ht : t < 32768) (hc : c < 16) (hj : j < 16) :
+    address layout geometry t (aPointer t c) ((2*j : Nat) : Int) false =
+      some (aCell t c j) := by
+  have hr : t/512 < 64 := by omega
+  have he : ((t/512*512+32*c : Nat) : Int) + ((2*j : Nat) : Int) =
+      ((t/512*256+16*c+j : Nat) : Int)*2 := by
+    simp only [Int.natCast_add, Int.natCast_mul]; omega
+  have hs : signed64 (((t/512*256+16*c+j : Nat) : Int)*2) := by
+    unfold signed64; simp only [Int.natCast_add, Int.natCast_mul]; omega
+  have hb : t/512*256+16*c+j < 64*256 := by omega
+  unfold aPointer
+  rw [aligned_address layout geometry t 0 (t/512*256+16*c+j) _ _ false he hs]
+  exact read_location layout geometry t 0 _ ⟨.input, 64*256⟩ (by rfl) hb
+
+theorem b_address (t c j : Nat) (hc : c < 16) (hj : j < 16) :
+    address layout geometry t (bPointer t c j) 0 false = some (bCell t c j) := by
+  have hcol : t%512 < 512 := Nat.mod_lt _ (by decide)
+  have he : ((16384*c+(t%512+j*512)*2 : Nat) : Int)+0 =
+      (((16*c+j)*512+t%512 : Nat) : Int)*2 := by
+    simp only [Int.natCast_add, Int.natCast_mul]; omega
+  have hs : signed64 ((((16*c+j)*512+t%512 : Nat) : Int)*2) := by
+    unfold signed64; simp only [Int.natCast_add, Int.natCast_mul]; omega
+  have hb : (16*c+j)*512+t%512 < 256*512 := by omega
+  unfold bPointer
+  rw [aligned_address layout geometry t 1 ((16*c+j)*512+t%512) _ 0 false he hs]
+  exact read_location layout geometry t 1 _ ⟨.input, 256*512⟩ (by rfl) hb
+
 end Gemm
 
 #print axioms steps_trans
@@ -665,4 +701,6 @@ end Gemm
 #print axioms Gemm.prologue_execute
 #print axioms Gemm.initialized_pc
 #print axioms Gemm.initialized_base
+#print axioms Gemm.a_address
+#print axioms Gemm.b_address
 end LarkPtxMatrix
