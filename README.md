@@ -19,8 +19,13 @@ outside its supported subset.
 
 A separate [CPU-only full-size assembly study](reproduction/ptx/results/full-size-compilation-v1/RESULTS.md)
 compiles all 25 stages of the seventeen independent CUDA tasks to PTX and
-assembles them for `sm_80`. The current PTX reader refuses these generated
-programs; this adds assembly evidence and no PTX proofs or model successes.
+assembles them for `sm_80`. The legacy PTX reader refused all generated programs
+in that recorded study. A subsequent [finite FP16 PTX checker](reproduction/ptx/POINTWISE.md)
+proves the exact compiled 16,384-element ReLU source, whole-launch race freedom
+and every reference output under abstract scalar semantics. Fresh source-only
+and installed-wheel replays and four direct Lean binding controls passed.
+This is one independent development proof; it adds no model successes,
+registered legacy SDK profile or NVIDIA execution result.
 
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
