@@ -28,6 +28,7 @@ LATER_ARTIFACTS = (
     "reproduction/local_models/results/ptx-verifier-implementation-review-v1",
     "reproduction/ptx/results/full-size-compilation-v1",
     "reproduction/ptx/results/full-size-compilation-publication-v1",
+    "reproduction/ptx/results/full-size-compilation-ci-v1",
     "reproduction/paper_results/level2-cost-arithmetic-v1",
 )
 
