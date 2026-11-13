@@ -216,10 +216,14 @@ completed all seventeen tasks: fifteen verified and two exhausted the fixed
 budget. Its 123 requests used 2,335,612 reported tokens, with all accepted
 proofs passing 30 additional fresh checks. The same drained service was retained
 for the separate CUDA-source cohort after the HIP audit.
-The [four-cohort comparison](reproduction/local_models/results/full-shape-comparison-four-cohorts-v1/RESULTS.md)
+The [full-size DeepSeek CUDA cohort](reproduction/local_models/results/full-shape-cohort-deepseek-cuda-v1/results.json)
+verified all seventeen fixed-scaffold tasks within the common budget. Its 160
+requests used 3,382,875 reported tokens, and the accepted proofs passed 34
+additional fresh checks. The exact owned service was stopped after the audit.
+The [five-cohort comparison](reproduction/local_models/results/full-shape-comparison-five-cohorts-v1/RESULTS.md)
 keeps unsuccessful attempts in total spending and computes per-level token
-means over successful tasks. Two independent model/language cohorts remain
-unfinished; the paper's original model results remain missing.
+means over successful tasks. GLM CUDA remains unfinished; the paper's original
+model results remain missing.
 The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
 certificates and 170 exact-source trials per host.
 Every profile has separate CUDA/HIP certificates and exact-source HIP checks on

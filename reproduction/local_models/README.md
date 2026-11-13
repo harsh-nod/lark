@@ -40,7 +40,18 @@ twelve tasks verified at their first actual Lean check. Complete protocol replay
 regenerated every request and bound accepted proofs to 30 additional fresh
 kernel/axiom checks. The exact owned service was observed drained with unchanged
 configuration and retained for the separate CUDA-source cohort after the HIP
-audit. GLM and DeepSeek CUDA-source cohorts remain unfinished experiments.
+audit. The GLM CUDA-source cohort remains unfinished.
+
+The [completed full-size DeepSeek CUDA cohort](results/full-shape-cohort-deepseek-cuda-v1/results.json)
+verified all seventeen tasks within the unchanged common budget. All 160 requests
+and responses remain archived: 2,925,108 prompt and 457,767 completion tokens,
+3,382,875 total. Zero first responses verified a proof; twelve tasks verified
+at their first actual Lean check, a separate metric from original-paper Pass@1.
+Complete protocol replay bound every request and regenerated the accepted Mains;
+all seventeen proofs passed 34 additional fresh kernel/axiom checks. Its exact
+owned, drained four-GPU service was stopped with exit code zero after the audit.
+These are independent fixed-scaffold proof completions on AMD serving, with zero
+new registered certificates or NVIDIA execution measurements.
 
 The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
 costs from the archived responses and applies success-only input/output token
@@ -80,6 +91,16 @@ with denominators ten and five respectively. Two independent model/language
 cohorts remain missing from this report; both budget-exhausted GLM HIP tasks
 remain in spending totals. It adds no model, GPU or Lean experiment and claims
 no original-paper model result.
+
+The [updated five-cohort comparison](results/full-shape-comparison-five-cohorts-v1/RESULTS.md)
+adds DeepSeek CUDA while preserving all four earlier frozen reports. DeepSeek
+CUDA verified twelve of twelve Level-1 and five of five Level-2 tasks. Its
+mean prompt/completion costs are 0.157094M/0.027157M and
+0.207996M/0.026377M tokens, with denominators twelve and five respectively.
+The GLM CUDA cohort is missing from this frozen report. Across five complete
+cohorts the comparison binds 659 recorded responses, 5,725 raw files and 2,098
+audit files. It adds no model, GPU or Lean experiment and supplies no original
+paper result.
 
 The [comparison publication receipt](results/full-shape-comparison-publication-v1/results.json)
 checks its original eight public files over TLS without authentication. The
@@ -149,8 +170,18 @@ all seventeen tokenizer checks. Its largest initial prompt uses 23,001 tokens
 within the common 65,536-token limit. The archive binds eighty runtime/source/log
 files and regenerated prompts; its [validation controls](results/full-shape-runtime-deepseek-cuda-validation-v1/results.json)
 refused fully rehashed prompt and warmup-usage changes. Runtime capture made no
-model, Lean or GPU calls and claims no proof successes. The live CUDA cohort
-remains separate from this setup evidence.
+model, Lean or GPU calls and claims no proof successes. The completed CUDA cohort
+above remains separate from this setup evidence.
+
+The [GLM CUDA-task runtime](results/full-shape-runtime-glm53-cuda-v1/results.json)
+archives seventy-five source/runtime/log files. It binds the fresh unchanged
+configuration and drained-service observation after completed audited HIP to
+the original loaded service, with zero additional launches. Its separate
+55-token non-proof warmup and all seventeen initial CUDA contexts passed;
+the largest initial prompt uses 22,496 tokens within the common 65,536 limit.
+The [archive controls](results/full-shape-runtime-glm53-cuda-validation-v1/results.json)
+accept the actual recording and refuse fully rehashed prompt and warmup-usage
+changes. Capture makes no model, Lean or GPU calls and claims no proof successes.
 
 The [paired specification identity main receipt](results/hip-cuda-reference-identity-ci-main-v1/results.json)
 records all nineteen exact-source CI jobs passing, including a fresh full

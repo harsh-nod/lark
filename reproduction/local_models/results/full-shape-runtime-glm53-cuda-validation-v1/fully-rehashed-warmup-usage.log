@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 133, in <module>
+    main()
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 107, in main
+    server, context, warmup, weights = validate(runtime)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 69, in validate
+    require(warmup['status'] == 'warmup-passed' and warmup['content'] == 'LARK_READY' and warmup['usage'] == usage and warmup['actual_generation_requests'] == 1 and warmup['model_proof_attempts'] == warmup['external_api_spend_usd'] == 0, 'Recorded non-proof warmup differs')
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 27, in require
+    raise ValueError(message)
+ValueError: Recorded non-proof warmup differs

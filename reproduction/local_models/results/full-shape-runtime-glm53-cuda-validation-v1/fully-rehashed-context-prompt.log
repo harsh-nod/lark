@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 133, in <module>
+    main()
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 107, in main
+    server, context, warmup, weights = validate(runtime)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 82, in validate
+    require(req == {'model': server['model'], 'messages': messages, 'add_generation_prompt': True} and row['messages_sha256'] == sha(run.encoded(messages)), 'Context prompt does not regenerate: ' + row['case'])
+  File "/tmp/lark-package-glm-cuda-runtime-20261113.py", line 27, in require
+    raise ValueError(message)
+ValueError: Context prompt does not regenerate: relu

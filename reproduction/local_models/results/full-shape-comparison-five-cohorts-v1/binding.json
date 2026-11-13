@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "status": "five-complete-independent-cohorts-cost-comparison-bound",
+  "driver_source_checkpoint": "c0bca86265d3c769d96ff5191a2f8952e8cf5527",
+  "driver_source_path": "reproduction/local_models/compare_full_shape.py",
+  "driver_sha256": "7cbe3affd0b2db3be6b419e7b8410bc06e51e94dcfa7bcdad579abd789a6c5a0",
+  "inputs": [
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-deepseek-v1",
+      "manifest_sha256": "9c38f89f52ddb37431b94f34b5ac7a1ace74148b6e1d6a3905a7da7ad3e3fde4",
+      "raw_files": 1426,
+      "audit_files": 459,
+      "response_usage_records": 175,
+      "recorded_additional_fresh_kernel_checks": 32
+    },
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-flash-hip-v1",
+      "manifest_sha256": "ddcb2a443066e63671fb6841b34d381314a1b6e015bd347462a1f9db60fbb33d",
+      "raw_files": 887,
+      "audit_files": 383,
+      "response_usage_records": 93,
+      "recorded_additional_fresh_kernel_checks": 24
+    },
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-flash-cuda-v1",
+      "manifest_sha256": "f6ba9dfcfc353797fb3627373daff5f54cac6fe29b2f9f2aa427294ae68c75e2",
+      "raw_files": 1009,
+      "audit_files": 399,
+      "response_usage_records": 108,
+      "recorded_additional_fresh_kernel_checks": 18
+    },
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-glm53-hip-v1",
+      "manifest_sha256": "f43cfe4890f0e5a7f9e3f2138e269b8cf74dbf7edad5df5128a60f94aaa3e426",
+      "raw_files": 1070,
+      "audit_files": 401,
+      "response_usage_records": 123,
+      "recorded_additional_fresh_kernel_checks": 30
+    },
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-deepseek-cuda-v1",
+      "manifest_sha256": "5f332e1ab3bfc2ab876c827e29a3bfe4a69f95e76688a3e59b39525a4478055d",
+      "raw_files": 1333,
+      "audit_files": 456,
+      "response_usage_records": 160,
+      "recorded_additional_fresh_kernel_checks": 34
+    }
+  ],
+  "complete_independent_cohorts": 5,
+  "missing_cohorts": 1,
+  "input_response_usage_records_checked": 659,
+  "input_raw_files_checked": 5725,
+  "input_audit_files_checked": 2098,
+  "recorded_additional_fresh_kernel_checks": 138,
+  "paper_metric_source": {
+    "paper": "https://arxiv.org/abs/2611.02028v1",
+    "source_member": "tables/main_results.tex",
+    "source_archive_sha256": "095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2"
+  },
+  "fresh_lean_checks_by_comparison": 0,
+  "model_calls_by_comparison": 0,
+  "gpu_trials_by_comparison": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Adds complete DeepSeek CUDA to the four earlier independent cohorts. Full raw/audit Main and response-usage bindings checked; accepted proofs retain their recorded fresh audit checks. Successful-task means exclude budget failures; cohort totals retain them. GLM CUDA is missing from this frozen report. Original registry/harness/closed-model histories/PTX/NVIDIA results remain missing."
+}

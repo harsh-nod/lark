@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "status": "runtime-archive-semantic-rehash-controls-passed",
+  "helper_sha256": "5618b8fc0772bf8f9b72f87e56c16c5eb6fa0bf499d5edc3813a556d4d310f6d",
+  "control_driver_sha256": "83b0acadb97a1b7fbecbaaff59530d3b59559fdf5671bca8ad98b3f23cb495e1",
+  "positive_actual_runtime_preflight_passed": true,
+  "controls": [
+    {
+      "name": "fully-rehashed-context-prompt",
+      "refused": true,
+      "packet_not_created": true,
+      "exit_code": 1
+    },
+    {
+      "name": "fully-rehashed-warmup-usage",
+      "refused": true,
+      "packet_not_created": true,
+      "exit_code": 1
+    }
+  ],
+  "model_calls": 0,
+  "GPU_actions": 0,
+  "fresh_lean_checks": 0,
+  "scope": "Original recorded runtime passes; two fully rehashed prompt/warmup metadata mutations are refused at the named fixed-protocol gates before packet creation. Actual source/runtime remains unchanged."
+}
