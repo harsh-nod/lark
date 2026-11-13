@@ -180,6 +180,16 @@ def setIndex64 (s : Machine α) (d : Nat) (v : Int) : Machine α :=
   by_cases h : r = d <;> simp [setPointer, LarkPtxDot.advance, putPointer, putValue, Registers.i64, h]
 @[simp] theorem setIndex32_i64 (s : Machine α) (d r : Nat) (v : Int) :
     (setIndex32 s d v).registers.i64 r = s.registers.i64 r := rfl
+@[simp] theorem setIndex64_i64 (s : Machine α) (d r : Nat) (v : Int) :
+    (setIndex64 s d v).registers.i64 r = if r = d then some v else s.registers.i64 r := by
+  by_cases h : r = d <;> simp [setIndex64, LarkPtxDot.advance, putI64, putValue, Registers.i64, h]
+@[simp] theorem setIndex64_pointer (s : Machine α) (d r : Nat) (v : Int) :
+    (setIndex64 s d v).registers.pointer r = if r = d then none else s.registers.pointer r := by
+  by_cases h : r = d <;> simp [setIndex64, LarkPtxDot.advance, putI64, putValue, Registers.pointer, h]
+@[simp] theorem setIndex32_pointer (s : Machine α) (d r : Nat) (v : Int) :
+    (setIndex32 s d v).registers.pointer r = s.registers.pointer r := rfl
+@[simp] theorem setIndex32_scalar (s : Machine α) (d r : Nat) (v : Int) :
+    (setIndex32 s d v).registers.scalar r = s.registers.scalar r := rfl
 @[simp] theorem setPredicate_registers (s : Machine α) (d : Nat) (v : Bool) :
     (setPredicate s d v).registers = s.registers := rfl
 
@@ -1201,6 +1211,153 @@ theorem runChunks_execute (ops : Ops α) (input : Nat → Nat → α) (t c n : N
       rw [he]
       exact tail.2
 
+theorem addressPairs_i64 (t n r : Nat) (s : State α) (hn : n ≤ 14) :
+    (addressPairs t s n).registers.i64 r =
+      if 3 ≤ r ∧ r < 3+n then some (((t%512+(18-r)*512)*2 : Nat) : Int)
+      else (coordinates t s).registers.i64 r := by
+  induction n with
+  | zero => simp only [addressPairs, Nat.add_zero, if_neg (by omega : ¬(3 ≤ r ∧ r < 3))]
+  | succ n ih =>
+      simp only [addressPairs, addressPair, setIndex64_i64, setIndex32_i64]
+      by_cases he : r = 3+n
+      · subst r
+        rw [if_pos rfl, if_pos (by omega)]
+        have hs : 18-(3+n) = 15-n := by omega
+        rw [hs]
+      · rw [if_neg he, ih (by omega)]
+        have hs : (3 ≤ r ∧ r < 3+(n+1)) ↔ (3 ≤ r ∧ r < 3+n) := by omega
+        simp only [hs]
+
+theorem addressPairs_pointer (t n r : Nat) (s : State α) (hn : n ≤ 14) (hr : 17 ≤ r) :
+    (addressPairs t s n).registers.pointer r = (coordinates t s).registers.pointer r := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      simp only [addressPairs, addressPair, setIndex64_pointer, setIndex32_pointer]
+      rw [if_neg (by omega)]
+      exact ih (by omega)
+
+theorem addressPairs_thread (t n : Nat) (s : State α) :
+    (addressPairs t s n).registers.i32 1 = some (t : Int) := by
+  induction n with
+  | zero =>
+      simp only [addressPairs, coordinates, masked, rowOffset, row, adjusted, corrected,
+        signed, indexed, setIndex32_i32, if_neg (by decide : 1 ≠ 11),
+        if_neg (by decide : 1 ≠ 10), if_neg (by decide : 1 ≠ 9), if_neg (by decide : 1 ≠ 8),
+        if_neg (by decide : 1 ≠ 7), if_neg (by decide : 1 ≠ 6), if_neg (by decide : 1 ≠ 5),
+        if_pos rfl, ite_true]
+  | succ n ih =>
+      simp only [addressPairs, addressPair, setIndex64_i32, setIndex32_i32]
+      rw [if_neg (by omega)]
+      exact ih
+
+theorem coordinates_pointer (t r : Nat) (s : State α) :
+    (coordinates t s).registers.pointer r = (globals s).registers.pointer r := by
+  simp only [coordinates, masked, rowOffset, row, adjusted, corrected, signed, indexed,
+    setIndex32_pointer]
+
+theorem initializedSuffix_i64 (ops : Ops α) (t r : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.i64 r =
+      if r = 19 then some (((t/512*256)*2 : Nat) : Int)
+      else if r = 18 then some (((t%512+512)*2 : Nat) : Int)
+      else if r = 17 then some ((t%512*2 : Nat) : Int) else s.registers.i64 r := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
+    setIndex32_i64, setFloat_i64, setIndex64_i64]
+
+theorem initializedSuffix_pointer (ops : Ops α) (t r : Nat) (s : Machine α) (hr : 20 ≤ r) :
+    (initializedSuffix ops t s).registers.pointer r = s.registers.pointer r := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
+    setIndex32_pointer, setFloat_pointer, setIndex64_pointer,
+    if_neg (by omega : r ≠ 19), if_neg (by omega : r ≠ 18), if_neg (by omega : r ≠ 17)]
+
+theorem initializedSuffix_stopped (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.stopped = s.registers.stopped := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn, columnWide,
+    setIndex32_stopped, setFloat_stopped, setIndex64_stopped]
+
+theorem initializedSuffix_accumulator (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.scalar 68 = some (ops.literal 0 1) := by
+  simp [initializedSuffix, zeroAccumulator]
+
+theorem initializedSuffix_thread (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.i32 1 = s.registers.i32 1 := by
+  simp only [initializedSuffix, zeroAccumulator, matrixWide, nextWide, nextColumn,
+    columnWide, setIndex32_i32, setFloat_i32, setIndex64_i32,
+    if_neg (by decide : 1 ≠ 27), if_neg (by decide : 1 ≠ 26)]
+
+theorem initializedSuffix_counter (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.i32 27 = some 0 := by
+  simp [initializedSuffix]
+
+theorem initializedSuffix_row_offset (ops : Ops α) (t : Nat) (s : Machine α) :
+    (initializedSuffix ops t s).registers.i64 19 = some ((t/512*512 : Nat) : Int) := by
+  rw [initializedSuffix_i64, if_pos rfl]
+  simp only [Int.natCast_mul]
+  congr 1
+  omega
+
+theorem initialized_strides (ops : Ops α) (t k : Nat) (s : State α) (hk : k < 16) :
+    (initialized ops t s).registers.i64 (strideRegister k) = some (bStride t k) := by
+  rw [initialized, initializedSuffix_i64]
+  by_cases h0 : k = 0
+  · subst k
+    simp [strideRegister, bStride]
+  · by_cases h1 : k = 1
+    · subst k
+      simp [strideRegister, bStride]
+    · have hreg : strideRegister k = 18-k := by simp only [strideRegister, if_neg h0, if_neg h1]
+      rw [hreg, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
+      rw [addressPairs_i64 t 14 (18-k) s (by decide), if_pos (by omega)]
+      have he : 18-(18-k) = k := by omega
+      rw [he]
+      rfl
+
+theorem initialized_pointer (ops : Ops α) (t r : Nat) (s : State α) (hr : 20 ≤ r) :
+    (initialized ops t s).registers.pointer r = (globals s).registers.pointer r := by
+  rw [initialized, initializedSuffix_pointer ops t r _ hr,
+    addressPairs_pointer t 14 r s (by decide) (by omega), coordinates_pointer]
+
+theorem initialized_loop (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (hreads : Reads input (start s)) :
+    LoopInvariant input t 0 (ops.literal 0 1) (initialized ops t s) := by
+  constructor
+  · exact initialized_pc ops t s
+  · rw [initialized, initializedSuffix_stopped]
+    exact addressPairs_stopped t 14 s
+  · rw [initialized_pointer ops t 47 s (by decide)]
+    rfl
+  · rw [initialized_pointer ops t 48 s (by decide)]
+    rfl
+  · exact fun k hk => initialized_strides ops t k s hk
+  · exact initializedSuffix_accumulator ops t (addressPairs t s 14)
+  · constructor
+    · intro i hi
+      rw [initialized_base]
+      exact hreads.1 i hi
+    · intro i hi
+      rw [initialized_base]
+      exact hreads.2 i hi
+  · rw [initialized, initializedSuffix_thread]
+    exact addressPairs_thread t 14 s
+  · exact initializedSuffix_counter ops t (addressPairs t s 14)
+  · rw [initialized_pointer ops t 24 s (by decide)]
+    rfl
+  · exact initializedSuffix_row_offset ops t (addressPairs t s 14)
+
+def dotValue (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  foldChunks ops input t 0 16 (ops.literal 0 1)
+
+def loopExit (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : Machine α :=
+  runChunks ops input t 0 16 (ops.literal 0 1) (initialized ops t s)
+
+theorem source_to_loop_exit (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (ht : t < 32768) (hreads : Reads input (start s)) :
+    Steps ops layout geometry t program (start s) (loopExit ops input t s) ∧
+    LoopInvariant input t 16 (dotValue ops input t) (loopExit ops input t s) := by
+  have he := runChunks_execute ops input t 0 16 (ops.literal 0 1) (initialized ops t s) ht
+    (by decide) (initialized_loop ops input t s hreads)
+  exact ⟨steps_trans _ _ _ _ _ _ _ _ (prologue_execute ops t s ht) he.1, he.2⟩
+
 end Gemm
 
 #print axioms steps_trans
@@ -1230,4 +1387,6 @@ end Gemm
 #print axioms Gemm.control_execute
 #print axioms Gemm.control_invariant
 #print axioms Gemm.runChunks_execute
+#print axioms Gemm.initialized_loop
+#print axioms Gemm.source_to_loop_exit
 end LarkPtxMatrix
