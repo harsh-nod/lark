@@ -450,6 +450,109 @@ theorem lane_eq (ops : Ops α) (n t : Nat) (s : State α) (x : α)
     exact stores_eq ops n t s x ht hb
   exact runLane_of_steps ops n t program s (storeState ops t x s) h rfl
 
+def partialState (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) : Nat → State α
+  | 0 => initial (LarkPointwise.layout n) input outside
+  | k + 1 => after ops k (input 0 k) (partialState ops n input outside k)
+
+theorem after_memory (ops : Ops α) (t : Nat) (x : α) (s : State α) :
+    (after ops t x s).memory = fun l =>
+      if l = LarkPointwise.outputCell t then some (LarkPointwise.result ops body x)
+      else s.memory l := rfl
+
+theorem reference_after_memory (ops : Ops α) (t : Nat) (x : α) (s : State α) :
+    (LarkPointwise.after ops body t x s).memory = fun l =>
+      if l = LarkPointwise.outputCell t then some (LarkPointwise.result ops body x)
+      else s.memory l := rfl
+
+theorem partial_memory_eq (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) (k : Nat) :
+    (partialState ops n input outside k).memory =
+      (LarkPointwise.partialState ops body n input outside k).memory := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+      change (after ops k (input 0 k) (partialState ops n input outside k)).memory =
+        (LarkPointwise.after ops body k (input 0 k)
+          (LarkPointwise.partialState ops body n input outside k)).memory
+      rw [after_memory, reference_after_memory]
+      funext l
+      rw [ih]
+
+theorem partial_input (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) (k t : Nat) (ht : t < n) :
+    (partialState ops n input outside k).memory (LarkPointwise.inputCell t) =
+      some (input 0 t) := by
+  rw [partial_memory_eq]
+  exact LarkPointwise.partialState_input ops body n input outside k t ht
+
+theorem partial_owned (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) (k : Nat) :
+    LarkPointwise.Owned (partialState ops n input outside k).trace := by
+  induction k with
+  | zero => simp [LarkPointwise.Owned, partialState, initial]
+  | succ k ih =>
+      intro a ha
+      simp only [partialState, after, record, List.mem_cons] at ha
+      rcases ha with rfl | rfl | ha
+      · rfl
+      · rfl
+      · exact ih a ha
+
+def launch (ops : Ops α) (n : Nat) (p : List Instruction)
+    (input : Nat → Nat → α) (outside : Location → Option α) : Option (State α) :=
+  (List.range n).foldlM (fun s t => runLane ops n t p s)
+    (initial (LarkPointwise.layout n) input outside)
+
+theorem blocks_eq (ops : Ops α) (n k : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) (hk : k ≤ n) (hn : n ≤ 2147483648) :
+    (List.range k).foldlM (fun s t => runLane ops n t program s)
+      (initial (LarkPointwise.layout n) input outside) =
+      some (partialState ops n input outside k) := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+      rw [List.range_succ, List.foldlM_append, ih (by omega)]
+      have hl := lane_eq ops n k (partialState ops n input outside k) (input 0 k)
+        (by omega) (by omega) (partial_input ops n input outside k k (by omega))
+      simp only [List.foldlM_cons, List.foldlM_nil, bind, pure, Option.bind, hl]
+      rfl
+
+theorem launch_eq (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) (hn : n ≤ 2147483648) :
+    launch ops n program input outside = some (partialState ops n input outside n) :=
+  blocks_eq ops n n input outside (Nat.le_refl n) hn
+
+theorem race_free (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) :
+    raceFree (LarkPointwise.geometry n 32) (partialState ops n input outside n).trace = true :=
+  LarkPointwise.owned_raceFree _ _ (partial_owned ops n input outside n)
+
+theorem extract_of_memory_eq (layout : Layout) (s t : State α) (h : s.memory = t.memory) :
+    extract layout s = extract layout t := by
+  unfold extract
+  rw [h]
+
+theorem final_extract (ops : Ops α) (n : Nat) (input : Nat → Nat → α)
+    (outside : Location → Option α) :
+    extract (LarkPointwise.layout n) (partialState ops n input outside n) =
+      some (LarkPointwise.spec ops body n input) := by
+  rw [extract_of_memory_eq _ _ _ (partial_memory_eq ops n input outside n)]
+  exact LarkPointwise.partialState_extract ops body n input outside
+
+def Correct (ops : Ops α) (n : Nat) (p : List Instruction)
+    (spec : (Nat → Nat → α) → List α) : Prop :=
+  ∀ input outside, ∃ final,
+    launch ops n p input outside = some final ∧
+    raceFree (LarkPointwise.geometry n 32) final.trace = true ∧
+    extract (LarkPointwise.layout n) final = some (spec input)
+
+theorem kernel_eq_spec (ops : Ops α) (n : Nat) (hn : n ≤ 2147483648) :
+    Correct ops n program (LarkPointwise.spec ops body n) := by
+  intro input outside
+  exact ⟨partialState ops n input outside n, launch_eq ops n input outside hn,
+    race_free ops n input outside, final_extract ops n input outside⟩
+
 #print axioms LarkPtxPointwise.mulWide_step
 #print axioms LarkPtxPointwise.addPointer_step
 #print axioms LarkPtxPointwise.storeHalf_step
@@ -464,5 +567,13 @@ theorem lane_eq (ops : Ops α) (n t : Nat) (s : State α) (x : α)
 #print axioms LarkPtxPointwise.store_ret_eq
 #print axioms LarkPtxPointwise.stores_eq
 #print axioms LarkPtxPointwise.lane_eq
+#print axioms LarkPtxPointwise.partial_memory_eq
+#print axioms LarkPtxPointwise.partial_input
+#print axioms LarkPtxPointwise.partial_owned
+#print axioms LarkPtxPointwise.blocks_eq
+#print axioms LarkPtxPointwise.launch_eq
+#print axioms LarkPtxPointwise.race_free
+#print axioms LarkPtxPointwise.final_extract
+#print axioms LarkPtxPointwise.kernel_eq_spec
 
 end LarkPtxPointwise
