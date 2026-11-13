@@ -51,8 +51,11 @@ provenance and outer manifests are synchronized; rejection must reach the named
 semantic consistency gate. The
 [v21 compatibility check](snapshot-v22-v21-compatibility/results.json) also
 repeats its unchanged eight controls with the updated reader. These records
-are separate from the frozen snapshot and the experiments it cites. Anonymous
-publication and exact-source CI/main gates are pending.
+are separate from the frozen snapshot and the experiments it cites. The
+[anonymous publication check](snapshot-v22-publication/results.json) downloaded
+eleven files totaling 39,282,190 bytes from `4f647f9`, matched every committed
+byte with TLS verification enabled, and repeated both positive replays and all
+24 controls outside Git. The exact-source CI/main gate is pending.
 
 **v21 correction:** the frozen `dependencies.semantics` paragraph mistakenly
 retains an older statement that FlashInfer, SGLang RMSNorm and AWQ are
