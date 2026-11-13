@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "status": "bounded-public-original-artifact-refresh",
+  "checked_at_utc": "2026-11-13T06:17:33.435767+00:00",
+  "observations": [
+    {
+      "name": "kernelcraft-metadata",
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft"
+      ],
+      "exit_code": 0,
+      "size": 0,
+      "pushed_at": "2026-05-28T14:28:08Z",
+      "default_branch": "main",
+      "archived": false,
+      "url": "https://github.com/AICrossSim/KernelCraft"
+    },
+    {
+      "name": "kernelcraft-releases",
+      "command": [
+        "gh",
+        "api",
+        "repos/AICrossSim/KernelCraft/releases"
+      ],
+      "exit_code": 0,
+      "releases": []
+    },
+    {
+      "name": "arxiv-repositories",
+      "command": [
+        "gh",
+        "api",
+        "--method",
+        "GET",
+        "search/repositories",
+        "-f",
+        "q=\"2611.02028\" in:readme",
+        "-f",
+        "per_page=30"
+      ],
+      "exit_code": 0,
+      "total_count": 0,
+      "incomplete_results": false,
+      "repositories": []
+    },
+    {
+      "name": "title-repositories",
+      "command": [
+        "gh",
+        "api",
+        "--method",
+        "GET",
+        "search/repositories",
+        "-f",
+        "q=\"Lean-Assisted Reasoning\" in:readme",
+        "-f",
+        "per_page=30"
+      ],
+      "exit_code": 0,
+      "total_count": 1,
+      "incomplete_results": false,
+      "repositories": [
+        {
+          "full_name": "harsh-nod/lark",
+          "html_url": "https://github.com/harsh-nod/lark"
+        }
+      ]
+    }
+  ],
+  "author_contact_attempted": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Read-only bounded public endpoint observations. Search absence is not proof that no private/unindexed author artifact exists. No source or model result inferred from search counts."
+}

@@ -188,3 +188,5 @@ stage costs and supplementary GQA project remain missing inputs. Original H100
 measurements require NVIDIA hardware. Historical development effort cannot be
 regenerated independently. Broader optimized/tiled/online kernel support also
 remains software work; all independent AMD evidence keeps its narrower scope.
+
+The [2026-11-13 bounded artifact refresh](original-artifact-refresh-20261113/results.json) records fresh public repository metadata, release and exact-title/arXiv searches. The inspected KernelCraft repository still reports size zero and no releases; no new author implementation was identified through these endpoints. This does not establish the absence of private or unindexed artifacts and does not alter the frozen ledgers.

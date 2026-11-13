@@ -261,3 +261,5 @@ The readiness record cannot become `verified-download` until all selected files
 pass these checks. Same-length altered weights or configuration files are refused.
 
 The [paired reference publication receipt](results/hip-cuda-reference-identity-publication-v1/results.json) verifies all four packet files (249,551 bytes) against their immutable public Git blobs over TLS without authentication. The [DeepSeek main receipt](results/full-shape-deepseek-ci-main-v1/results.json) records its checked, non-force fast-forward after all eighteen source CI jobs passed. These receipts add no model, GPU or numerical trials.
+
+The [Flash runtime publication receipt](results/full-shape-flash-runtimes-publication-v1/results.json) verifies both complete setup packets and the reference identity main receipt: thirteen files, 770,126 bytes, downloaded anonymously over TLS and matched to their immutable Git blobs. It adds no model or proof trials.
