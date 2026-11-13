@@ -658,6 +658,155 @@ theorem runChunks_execute (ops : Ops α) (input : Nat → Nat → α) (t c n : N
       rw [he]
       exact tail.2
 
+open LarkPtxDot (setHalf storedHalf returned global_step half_step wide_step store_step return_step operand64)
+open LarkPtxMatrix (setIndex64 setIndex64_i64 setPointer_scalar)
+
+def outputCell (t : Nat) : Location := ⟨.global, 0, 2, t⟩
+def exitGlobal (s : Machine α) : Machine α := setPointer s 14 ⟨2, 0, true⟩
+def exitHalf (ops : Ops α) (acc : α) (s : Machine α) : Machine α :=
+  setHalf (exitGlobal s) 33 (ops.toHalf acc)
+def exitWide (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  setIndex64 (exitHalf ops acc s) 15 ((t*2 : Nat) : Int)
+def exitAddress (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  setPointer (exitWide ops t acc s) 16 ⟨2, ((t*2 : Nat) : Int), true⟩
+def exitStored (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  storedHalf (exitAddress ops t acc s) t (outputCell t) (ops.toHalf acc)
+def exitReturned (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  returned (exitStored ops t acc s)
+
+theorem output_address (t : Nat) (ht : t < 1048576) :
+    address layout geometry t ⟨2, ((t*2 : Nat) : Int), true⟩ 0 true = some (outputCell t) := by
+  have hs : signed64 ((t : Int)*2) := by unfold signed64; omega
+  have hr : (Role.output == Role.input) = false := rfl
+  rw [aligned_address layout geometry t 2 t _ 0 true (by simp) hs]
+  simp [location, layout, ht, outputCell, hr]
+
+theorem epilogue_execute (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (acc : α)
+    (s : Machine α) (ht : t < 1048576) (h : LoopInvariant input t 16 acc s) :
+    Steps ops layout geometry t program s (exitReturned ops t acc s) := by
+  have hpc : s.pc = 132 := h.pc
+  have e1 := global_step ops layout geometry t 14 9 s ⟨2, 0, false⟩ h.output
+  have h1 : Steps ops layout geometry t program s (exitGlobal s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program s (.base (.toGlobal 14 9))
+      h.stopped (by rw [hpc]; rfl), base_step]
+    exact e1
+  have e2 := half_step ops layout geometry t 33 68 (exitGlobal s) acc
+    (by simpa only [exitGlobal, setPointer_scalar] using h.accumulator)
+  have h2 : Steps ops layout geometry t program (exitGlobal s) (exitHalf ops acc s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program (exitGlobal s) (.base (.toHalf 33 68))
+      (by simpa only [exitGlobal, setPointer_stopped] using h.stopped)
+      (by simp only [exitGlobal, setPointer_pc, hpc]; rfl), base_step]
+    exact e2
+  have hb : signed32 (t : Int) ∧ signed32 2 ∧ signed64 ((t : Int)*2) := by
+    unfold signed32 signed64; omega
+  have hx : (exitHalf ops acc s).registers.i32 1 = some (t : Int) := by
+    change s.registers.i32 1 = some (t : Int)
+    exact h.thread
+  have e3 := wide_step ops layout geometry t 15 1 2 (t : Int) (exitHalf ops acc s) hx hb
+  have he : (t : Int)*2 = ((t*2 : Nat) : Int) := by simp
+  rw [he] at e3
+  have h3 : Steps ops layout geometry t program (exitHalf ops acc s) (exitWide ops t acc s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program (exitHalf ops acc s) (.base (.mulWideSigned32 15 1 2))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[(s.pc+1)+1]? = _; rw [hpc]; rfl), base_step]
+    exact e3
+  have hp : signed64 ((t*2 : Nat) : Int) ∧ signed64 (0+((t*2 : Nat) : Int)) := by
+    unfold signed64; simp only [Int.natCast_mul]; omega
+  have e4 := pointer_add_step ops layout geometry t 16 14 (.reg 15) ⟨2, 0, true⟩
+    ((t*2 : Nat) : Int) (exitWide ops t acc s) (by rfl) (by simp [operand64, exitWide, setIndex64_i64]) hp
+  simp only [Int.zero_add] at e4
+  have h4 : Steps ops layout geometry t program (exitWide ops t acc s) (exitAddress ops t acc s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program (exitWide ops t acc s) (.base (.addSigned64 16 14 (.reg 15)))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[((s.pc+1)+1)+1]? = _; rw [hpc]; rfl), base_step]
+    exact e4
+  have e5 := store_step ops layout geometry t 16 33 0 (exitAddress ops t acc s)
+    ⟨2, ((t*2 : Nat) : Int), true⟩ (outputCell t) (ops.toHalf acc) (by rfl)
+    (output_address t ht) (by rfl)
+  have h5 : Steps ops layout geometry t program (exitAddress ops t acc s) (exitStored ops t acc s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program (exitAddress ops t acc s) (.base (.storeHalf 16 0 33))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[(((s.pc+1)+1)+1)+1]? = _; rw [hpc]; rfl), base_step]
+    exact e5
+  have h6 : Steps ops layout geometry t program (exitStored ops t acc s) (exitReturned ops t acc s) := by
+    apply one_step
+    rw [transition_at ops layout geometry t program (exitStored ops t acc s) (.base .ret)
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[((((s.pc+1)+1)+1)+1)+1]? = _; rw [hpc]; rfl), base_step]
+    exact return_step ops layout geometry t _
+  apply steps_trans _ _ _ _ _ _ _ _ h1
+  apply steps_trans _ _ _ _ _ _ _ _ h2
+  apply steps_trans _ _ _ _ _ _ _ _ h3
+  apply steps_trans _ _ _ _ _ _ _ _ h4
+  exact steps_trans _ _ _ _ _ _ _ _ h5 h6
+
+theorem runTerms_memory (ops : Ops α) (input : Nat → Nat → α) (t c j n : Nat) (acc : α)
+    (s : Machine α) :
+    (runTerms ops input t c j n acc s).registers.base.memory = s.registers.base.memory := by
+  induction n generalizing j acc s with
+  | zero => rfl
+  | succ n ih => simp only [runTerms, ih, chunkStep, termResult_memory]
+
+theorem bodyEnd_memory (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α)
+    (s : Machine α) :
+    (bodyEnd ops input t c acc s).registers.base.memory = s.registers.base.memory := by
+  simp only [bodyEnd, runTerms_memory, firstChunk, firstResult_memory]
+
+theorem iteration_memory (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α)
+    (s : Machine α) :
+    (iteration ops input t c acc s).registers.base.memory = s.registers.base.memory := by
+  simp only [iteration, control_memory, bodyEnd_memory]
+
+theorem runChunks_memory (ops : Ops α) (input : Nat → Nat → α) (t c n : Nat) (acc : α)
+    (s : Machine α) :
+    (runChunks ops input t c n acc s).registers.base.memory = s.registers.base.memory := by
+  induction n generalizing c acc s with
+  | zero => rfl
+  | succ n ih => simp only [runChunks, ih, iteration_memory]
+
+def dotValue (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  foldChunks ops input t 0 16 (ops.literal 0 1)
+
+theorem source_to_loop_exit (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base : State α)
+    (ht : t < 1048576) (hreads : Reads input (start base)) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧
+      LoopInvariant input t 16 (dotValue ops input t) final ∧ final.registers.base.memory = base.memory := by
+  obtain ⟨initial, initialSteps, ready⟩ := Init.prefix29_execute ops t base ht
+  have entry := initial_loop ops input t base initial ready hreads
+  have loop := runChunks_execute ops input t 0 16 (ops.literal 0 1) initial ht (by decide) entry
+  refine ⟨runChunks ops input t 0 16 (ops.literal 0 1) initial,
+    steps_trans _ _ _ _ _ _ _ _ initialSteps loop.1, loop.2, ?_⟩
+  rw [runChunks_memory, ready.frame.memory]
+
+theorem exitReturned_memory (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) :
+    (exitReturned ops t acc s).registers.base.memory =
+      fun l => if l = outputCell t then some (ops.toHalf acc) else s.registers.base.memory l := rfl
+
+theorem exitReturned_stopped (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) :
+    (exitReturned ops t acc s).registers.stopped = true := rfl
+
+theorem exitReturned_pc (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) :
+    (exitReturned ops t acc s).pc = s.pc+6 := rfl
+
+theorem source_lane (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (base : State α)
+    (ht : t < 1048576) (hreads : Reads input (start base)) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧
+      final.registers.stopped = true ∧ final.pc = 138 ∧
+      final.registers.base.memory =
+        fun l => if l = outputCell t then some (ops.toHalf (dotValue ops input t)) else base.memory l := by
+  obtain ⟨exited, initialSteps, invariant, memory⟩ := source_to_loop_exit ops input t base ht hreads
+  have tail := epilogue_execute ops input t (dotValue ops input t) exited ht invariant
+  refine ⟨exitReturned ops t (dotValue ops input t) exited,
+    steps_trans _ _ _ _ _ _ _ _ initialSteps tail, exitReturned_stopped _ _ _ _, ?_, ?_⟩
+  · rw [exitReturned_pc, invariant.pc]
+    rfl
+  · rw [exitReturned_memory, memory]
+
 end LarkPtxBatched.Bmm.Body
 
 #print axioms LarkPtxBatched.Bmm.Body.a_address
@@ -692,3 +841,14 @@ end LarkPtxBatched.Bmm.Body
 #print axioms LarkPtxBatched.Bmm.Body.control_invariant
 #print axioms LarkPtxBatched.Bmm.Body.iteration_execute
 #print axioms LarkPtxBatched.Bmm.Body.runChunks_execute
+#print axioms LarkPtxBatched.Bmm.Body.output_address
+#print axioms LarkPtxBatched.Bmm.Body.epilogue_execute
+#print axioms LarkPtxBatched.Bmm.Body.runTerms_memory
+#print axioms LarkPtxBatched.Bmm.Body.bodyEnd_memory
+#print axioms LarkPtxBatched.Bmm.Body.iteration_memory
+#print axioms LarkPtxBatched.Bmm.Body.runChunks_memory
+#print axioms LarkPtxBatched.Bmm.Body.source_to_loop_exit
+#print axioms LarkPtxBatched.Bmm.Body.exitReturned_memory
+#print axioms LarkPtxBatched.Bmm.Body.exitReturned_stopped
+#print axioms LarkPtxBatched.Bmm.Body.exitReturned_pc
+#print axioms LarkPtxBatched.Bmm.Body.source_lane
