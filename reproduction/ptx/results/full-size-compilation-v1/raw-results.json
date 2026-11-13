@@ -1,0 +1,2085 @@
+{
+  "schema": 1,
+  "status": "full-size-PTX-compiled-and-assembled-only",
+  "scope": "CPU-only compilation/assembly of the existing independent full-size CUDA sources. Original source, reference and task bytes, shapes, dtypes, launch and fuel are retained. Generated PTX has no source-bound LARK certificate, formal compiler-refinement proof, NVIDIA execution, numerical conformance or timing claim. No model calls or Lean runs. The reader-only probe constructs task attributes directly, without claiming bounded Task.parse acceptance or capacity validation; its outcome is not a proof result.",
+  "created_at_utc": "2026-11-13T12:52:12.348770+00:00",
+  "driver_sha256": "895db713755dc20f555661579da81f53000d52f76a1385dc1f2b092c53c240dd",
+  "driver_sources": {
+    "lark_kernels/frontend.py": "0dfae584fdc2d5262b361926f04f66ef9aa58ab9376d6f8a929945bbab8187dd",
+    "lark_kernels/ptx.py": "81a36c69f3620e550ce1c42b4f59aeae78ead745c0656a33b45069ad22e6be75",
+    "lark_kernels/ir.py": "a4a893014efc5c62546e310184346621dd76e3ca130a5cf6b9ef8d2a2b4a2551",
+    "reproduction/local_models/full_shape_run.py": "05438858483e7f0369e6342ecb9ab0d1f6a6820b982a8dcea270ddb3813f34b1",
+    "reproduction/ptx/compile_full_shape.py": "895db713755dc20f555661579da81f53000d52f76a1385dc1f2b092c53c240dd"
+  },
+  "preparation_manifest_sha256": "6476ec66614e412a122654036b6bd66fab67b23007d7fc26181cdff7571f34c2",
+  "preparation_source_manifest_sha256": "d76d9046b0b67c0baa7129ba3f73d1600240403cb8941629551def904ab6b335",
+  "toolchain_files_sha256": "eef7f7845c62c052b109f8be0efcf5e4e5a100d8e94f8d81d9a686553e1c9163",
+  "ptxas": {
+    "sha256": "983b0e9283855979f42cebfd80d43f9b6e786eb84f03f7570bf941c4d3a3c461",
+    "version": "ptxas: NVIDIA (R) Ptx optimizing assembler\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Tue_May_27_02:18:05_PDT_2025\nCuda compilation tools, release 12.9, V12.9.86\nBuild cuda_12.9.r12.9/compiler.36037853_0\n"
+  },
+  "compiler_options": [
+    "--gpu-architecture=compute_80",
+    "--std=c++17",
+    "--fmad=false",
+    "--ftz=false",
+    "--prec-div=true",
+    "--prec-sqrt=true"
+  ],
+  "per_process_timeout_seconds": 180,
+  "original_paper_fully_reproduced": false,
+  "nvidia_execution": false,
+  "new_registered_source_certificates": 0,
+  "model_calls": 0,
+  "lean_checks": 0,
+  "gpu_trials": 0,
+  "cases": [
+    {
+      "case": "relu",
+      "request_sha256": "1d4e8c6131c170fdf31af4cb8314a9cde94c5b54be803876344aa3493db60f0b",
+      "source_bindings": {
+        "reproduction/pointwise/cases/cuda/relu/kernel.cu": "ca38a09ff6191240fdc4268e54462cf5337e496d063f847fc39cee7dbf85a0d9",
+        "reproduction/pointwise/cases/cuda/relu/reference.py": "b13620a151f3ca39b16eea83ea8330e140385b5344e3dc940f17417026c69241",
+        "reproduction/pointwise/cases/cuda/relu/task.json": "63815c7d03596dc7ae001fb39ce3bf27f6bd05573655f0b4505782685778d979"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/pointwise/cases/cuda/relu/kernel.cu",
+          "task_path": "reproduction/pointwise/cases/cuda/relu/task.json",
+          "task": {
+            "name": "pointwise_relu_cuda_16384",
+            "entry": "pointwise_relu_cuda",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.235428960993886,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/relu/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "865f3c67a6fb17e78c7480f7336c373b52fd32bd588e2c85746b17b976c0ef00",
+          "ptx_sha256": "7796e78074f76e2955dee35860c6ca3cb0dcc3263e9115480c9d57b66b676848",
+          "ptx_bytes": 978,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/relu/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/relu/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-type",
+            "detail": "this PTX subset requires float32 buffers",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "silu",
+      "request_sha256": "9172d129edb3221a308c719dc0eb429dd7309862f32e2510442a8f9e4a6e9b51",
+      "source_bindings": {
+        "reproduction/pointwise/cases/cuda/silu/kernel.cu": "03086d29950f0132055e54f2014a6215ed2c6a15c0dc5612f2fd284cebb6ab45",
+        "reproduction/pointwise/cases/cuda/silu/reference.py": "c2eb463113d66296b982429cd7e003a5d571ea60810703f442fe779bfc74a19b",
+        "reproduction/pointwise/cases/cuda/silu/task.json": "f106b6e1883ebbf143cb34efba387e25f89737f62a7a98b6b431dc645ca89092"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/pointwise/cases/cuda/silu/kernel.cu",
+          "task_path": "reproduction/pointwise/cases/cuda/silu/task.json",
+          "task": {
+            "name": "pointwise_silu_cuda_16384",
+            "entry": "pointwise_silu_cuda",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2094095479696989,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/silu/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "107bf36e1b4606223efc17fe66bd5235e386f95cbfcb9dfa623c80ac80e0f658",
+          "ptx_sha256": "c1f86664a03520c2df93a8762869b494754400bd546414fd4bee6e9eb0c2c3f5",
+          "ptx_bytes": 1595,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/silu/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/silu/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-type",
+            "detail": "this PTX subset requires float32 buffers",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "gelu",
+      "request_sha256": "9ac60f2f81a6bf19fc28fc0277a7e0f10c3410467c342dd2a700bb6733dcc8dd",
+      "source_bindings": {
+        "reproduction/pointwise/cases/cuda/gelu/kernel.cu": "b237f9c304c19debc2e361920eed518b4aa77acee06d40456070780d687c80a5",
+        "reproduction/pointwise/cases/cuda/gelu/reference.py": "29bb946e276ad839079c04d6bf8fb01810d51b3a6872e85115125da4e719378f",
+        "reproduction/pointwise/cases/cuda/gelu/task.json": "00975d10f56a21101ff9452db27f87339e47c9ca9d81b0d538995e174218f6bf"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/pointwise/cases/cuda/gelu/kernel.cu",
+          "task_path": "reproduction/pointwise/cases/cuda/gelu/task.json",
+          "task": {
+            "name": "pointwise_gelu_cuda_16384",
+            "entry": "pointwise_gelu_cuda",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21095090196467936,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gelu/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "4afa07b095031ce8ca2d923e3258fdb4bfbc7057ea370658ca028e1212f1a44b",
+          "ptx_sha256": "f803aa0005743ca3fdbd95ebcea2297e9407422f18d2f900c9cba9ceffae7a11",
+          "ptx_bytes": 2073,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gelu/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gelu/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1386",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "rmsnorm",
+      "request_sha256": "688bffaad3a883d175e207322c4b345ad4e49be1221d1172010d1f297b2dcae8",
+      "source_bindings": {
+        "reproduction/normalization/cases/rms/cuda/kernel.cu": "0d369967f02a82fd8c7da3e39f4898408a88196e502da16dd0106ad7483eeac9",
+        "reproduction/normalization/cases/rms/cuda/reference.py": "040e1a36e17afe52cd7319661f1afd069de0e70ae499a11ed0e5a90147bd7eeb",
+        "reproduction/normalization/cases/rms/cuda/task.json": "36f56fc28d28479c5db5db560c6e68fbf1760de7dc546b8eb3d90924bf50fb27"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/normalization/cases/rms/cuda/kernel.cu",
+          "task_path": "reproduction/normalization/cases/rms/cuda/task.json",
+          "task": {
+            "name": "induction_rms_cuda_16384",
+            "entry": "induction_rms_cuda_16384",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              81933,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21962441806681454,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rmsnorm/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "ffa37d7c4156467e48ee6c6cb1f5b2df7dfbd7be6b12ca6681d044f66e672b22",
+          "ptx_sha256": "6a16e3caca84e8bdeaa12247cf927b88d5f3141a081516455017bb0375ed66c0",
+          "ptx_bytes": 6654,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rmsnorm/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rmsnorm/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 697",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "layernorm",
+      "request_sha256": "1aef9536ba1dcf740e4f36f231ea63ccaf3e9e43ff7fdddc49a27dd2fb049e16",
+      "source_bindings": {
+        "reproduction/normalization/cases/layer/cuda/kernel.cu": "27e0a86dc8bd9e3f7eb68537a98f43bf3c4008ed58886e81cfab2f37b11ba626",
+        "reproduction/normalization/cases/layer/cuda/reference.py": "faaa42d2080bfc7184d54b00127704cf2427d42917060bf1571ac5a75b6b163c",
+        "reproduction/normalization/cases/layer/cuda/task.json": "b63441afd7260eca76cdd740f51584067725d3da8debe89f4bdad485f14fa577"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/normalization/cases/layer/cuda/kernel.cu",
+          "task_path": "reproduction/normalization/cases/layer/cuda/task.json",
+          "task": {
+            "name": "induction_layer_cuda_16384",
+            "entry": "induction_layer_cuda_16384",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              163853,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22439665195997804,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/layernorm/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "c48f107c10d5961a9c927dd1ada5bfb784ee60f167587305ea81020850ec20bb",
+          "ptx_sha256": "af622d8b30e555d5981db5ed5b418488d1c61b577cf0aa34c15f0b6ae032b1b0",
+          "ptx_bytes": 9192,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/layernorm/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/layernorm/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 710",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "softmax",
+      "request_sha256": "97f4cf153253d263b85a805ca787107e1bcb1ddf2c5b2f97f1a1286a635ea6b2",
+      "source_bindings": {
+        "reproduction/normalization/cases/softmax/cuda/kernel.cu": "55d3b1c7804500afef9889202cb3455afb73438e43eedd8e62ad6e6cf7ed4e94",
+        "reproduction/normalization/cases/softmax/cuda/reference.py": "47e125898fc4ed846bf6e1d88eea6674fef384a05f53bc93c4e46a97ab160cbf",
+        "reproduction/normalization/cases/softmax/cuda/task.json": "18ca8b1eb92ed91009b7695dd500b12dc7403c11d9399989059c5a2e1c3c5463"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/normalization/cases/softmax/cuda/kernel.cu",
+          "task_path": "reproduction/normalization/cases/softmax/cuda/task.json",
+          "task": {
+            "name": "induction_softmax_cuda_16384",
+            "entry": "induction_softmax_cuda_16384",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  16384
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              163848,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22303563391324133,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/softmax/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "7bbfaeb19e78c32a86f49a2258315d01dd618ad52b066c5caecedc08d980b1f8",
+          "ptx_sha256": "08cf51830b1bb93ea42dbd4ae13c73cc3b6d600ab9a891ae79f2f7bf5c8da6b0",
+          "ptx_bytes": 7027,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/softmax/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/softmax/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 804",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "gemv",
+      "request_sha256": "8649eedf1b4b3dfbdf958d46ab2e63b32a7c50c2502a27cfc8b2490d82fe410a",
+      "source_bindings": {
+        "reproduction/reduction/cases/cuda/kernel.cu": "26b92f3baf7c6819c263c4aea27265498fb47d01e2b20194430681f6696e7a70",
+        "reproduction/reduction/cases/cuda/reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+        "reproduction/reduction/cases/cuda/task.json": "2cd47c1c652ddad9b4ea027bf1c4523c3b8cc72c28f04684a1d906eeeba1ce71"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/reduction/cases/cuda/kernel.cu",
+          "task_path": "reproduction/reduction/cases/cuda/task.json",
+          "task": {
+            "name": "gemv_cuda_512_1024",
+            "entry": "induction_gemv_cuda_512_1024",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "a",
+                "role": "input",
+                "shape": [
+                  512,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "b",
+                "role": "input",
+                "shape": [
+                  1024,
+                  1
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  512,
+                  1
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 512,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4102,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2175111290998757,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemv/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "8a3094499dc82662c2a18bd37cb5d839418517f0539d93faa289be6765b85f40",
+          "ptx_sha256": "79afeb989948bd8e36278f7b12836e1920727197d6662ddf8b1a642a53a1354c",
+          "ptx_bytes": 5680,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemv/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemv/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 981",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "gemm",
+      "request_sha256": "127d74e874ac283bf567dc9437e684837b2ae1995cb88dad3497d44acb69ad73",
+      "source_bindings": {
+        "reproduction/matrix/cases/cuda/gemm/kernel.cu": "13a289961a7d3429e603b4b9038e5bddb299be80d5e68c5f6fce574e830137ba",
+        "reproduction/matrix/cases/cuda/gemm/reference.py": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "reproduction/matrix/cases/cuda/gemm/task.json": "2a2eb23fa4daf7b7a97bb7024e2e53648952698b0f6747e5609e89f3b4309f41"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/matrix/cases/cuda/gemm/kernel.cu",
+          "task_path": "reproduction/matrix/cases/cuda/gemm/task.json",
+          "task": {
+            "name": "induction_gemm_cuda_1_64_256_512",
+            "entry": "induction_gemm_cuda_1_64_256_512",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "a",
+                "role": "input",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "b",
+                "role": "input",
+                "shape": [
+                  256,
+                  512
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  64,
+                  512
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 32768,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22179202095139772,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemm/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "5ae597e2e41ab16acf98ec8defe5363f072c43adac061b3da8b10975909c0797",
+          "ptx_sha256": "896f2337328f9bb0b62975117174405f0eab90560fe91c672beb31094e86c74c",
+          "ptx_bytes": 7199,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemm/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gemm/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1000",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "bmm",
+      "request_sha256": "f28f6c82f6e585930d1d1b137e0e3915da1559ed4fc3af5a485e5d92e9129c93",
+      "source_bindings": {
+        "reproduction/matrix/cases/cuda/bmm/kernel.cu": "fb3ffb27ab145895f9f4edad97008915dec79ec44fafbf0cbd3cf99abb725bd4",
+        "reproduction/matrix/cases/cuda/bmm/reference.py": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "reproduction/matrix/cases/cuda/bmm/task.json": "babf31898308958c10e664b63bfb2b03ad13bb1736e259fd857d40640d98fadc"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/matrix/cases/cuda/bmm/kernel.cu",
+          "task_path": "reproduction/matrix/cases/cuda/bmm/task.json",
+          "task": {
+            "name": "induction_bmm_cuda_32_64_256_512",
+            "entry": "induction_bmm_cuda_32_64_256_512",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "a",
+                "role": "input",
+                "shape": [
+                  32,
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "b",
+                "role": "input",
+                "shape": [
+                  32,
+                  256,
+                  512
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  32,
+                  64,
+                  512
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 1048576,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2245304600801319,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/bmm/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "2a5d33dda3f11ba80f885df5b1242c1850f711f102ff757c56ad668d0f8fbc6c",
+          "ptx_sha256": "df13d4a76ce01ff72fb71eeeca866c5750885bb29d036c652ec9036c7c97cd81",
+          "ptx_bytes": 6266,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/bmm/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/bmm/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1245",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "linear",
+      "request_sha256": "91617fa716dd3c7d53ba6b2d41152a14d6bcf43ea98fb996edbb28b360693a9d",
+      "source_bindings": {
+        "reproduction/linear/cases/cuda/kernel.cu": "0056547133b6023d8ccb9747e5c8b57019608d330b1f94b4ca5fc8fff0e2c43e",
+        "reproduction/linear/cases/cuda/reference.py": "e9be42251e3c805b12dab2b8cdf23a8a8d30999c4733ced7a46d7da88c13aa68",
+        "reproduction/linear/cases/cuda/task.json": "78eef07eb3d9a315e87f3bb8bbb6e8a253d6d90a5ada37b1e48351c31dc93dd3"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/linear/cases/cuda/kernel.cu",
+          "task_path": "reproduction/linear/cases/cuda/task.json",
+          "task": {
+            "name": "induction_linear_cuda_64_256_512",
+            "entry": "induction_linear_cuda_64_256_512",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "a",
+                "role": "input",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "b",
+                "role": "input",
+                "shape": [
+                  256,
+                  512
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "bias",
+                "role": "input",
+                "shape": [
+                  512
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  64,
+                  512
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 32768,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.23289373598527163,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/linear/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "e93d63a1887796a515d2d22b9157367a9792fe7507b6432e30a9d94a2028ed20",
+          "ptx_sha256": "5ae52a2a03b700ffebe4de2d10c69e9fc3f34dea2d99e1bd3ad1c2472ef6e273",
+          "ptx_bytes": 7574,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/linear/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/linear/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1155",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "conv2d",
+      "request_sha256": "42b65ab5db3ab8b171cde70775887186ff61f72688947b1718d98a2e880e54e2",
+      "source_bindings": {
+        "reproduction/convolution/cases/cuda/conv2d/kernel.cu": "ab62a8afbc0a438137d72e1f11e9c0efdb529bd5578eba5f0c50a9fac3bddc65",
+        "reproduction/convolution/cases/cuda/conv2d/reference.py": "b621bd896afc1dd7efba66cda927a84a14c9d3f76cd53d30d31a9f5250dcc3fe",
+        "reproduction/convolution/cases/cuda/conv2d/task.json": "14ef6a9354655a6a276afd62905b91710027b5a7501f0dd67eafa3ee5f7d7e08"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/convolution/cases/cuda/conv2d/kernel.cu",
+          "task_path": "reproduction/convolution/cases/cuda/conv2d/task.json",
+          "task": {
+            "name": "induction_conv2d_cuda_32_8_8_3",
+            "entry": "induction_conv2d_cuda_32_8_8_3",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  1,
+                  32,
+                  8,
+                  8
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "w",
+                "role": "input",
+                "shape": [
+                  8,
+                  32,
+                  3,
+                  3
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  1,
+                  8,
+                  6,
+                  6
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 288,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1158,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22766902693547308,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/conv2d/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "c6e28228140281c79c519c566dcf93e8d43ae8ba0923abfd43daaa2a7f233c2f",
+          "ptx_sha256": "4986527b340d71a0256d0a79911767aa0ea1380f12d68159cbba0809a185df80",
+          "ptx_bytes": 4393,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/conv2d/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/conv2d/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1527",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "depthwise_conv",
+      "request_sha256": "1e1ec76451772b631bc995da6611e26ae840a12c80983f2e8a628c90330a5155",
+      "source_bindings": {
+        "reproduction/convolution/cases/cuda/depthwise_conv/kernel.cu": "db453ca7ffbfc6b5898f1aa2cf31631b77369d8ed8632af48f4e2abf5cf56a7c",
+        "reproduction/convolution/cases/cuda/depthwise_conv/reference.py": "698ac46124318abcf29d148a494fbdb154cd148ac8d9e4f7748f4ec5f83d5c00",
+        "reproduction/convolution/cases/cuda/depthwise_conv/task.json": "dfbf36682b5a84340b3e9b610a58de883d6cb96e1d0f96f0f462fd732aaaafda"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/convolution/cases/cuda/depthwise_conv/kernel.cu",
+          "task_path": "reproduction/convolution/cases/cuda/depthwise_conv/task.json",
+          "task": {
+            "name": "induction_depthwise_conv_cuda_32_32_16_5",
+            "entry": "induction_depthwise_conv_cuda_32_32_16_5",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  1,
+                  32,
+                  16,
+                  16
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "w",
+                "role": "input",
+                "shape": [
+                  32,
+                  1,
+                  5,
+                  5
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  1,
+                  32,
+                  12,
+                  12
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 4608,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              106,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2221762239933014,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/depthwise_conv/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "ed302db6dec92a5edc500ef5c378b13bdaa5772c8bc00ad532fd5a2c8d9f0393",
+          "ptx_sha256": "02f4cb20edbc39b671ff7d5074daa760102f1372a40725eb7dd62f5f7f612c3d",
+          "ptx_bytes": 5520,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/depthwise_conv/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/depthwise_conv/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1589",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "rope",
+      "request_sha256": "f89df76438ac82180611c2f106eada3cc12058f8ad03addebbe7caa4a2bbc3a9",
+      "source_bindings": {
+        "reproduction/rotary/cases/cuda/kernel.cu": "5d08f778e0265004644645cff418a2f17ab112e2c34dc45eb7413b4a09f3b5c1",
+        "reproduction/rotary/cases/cuda/reference.py": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381",
+        "reproduction/rotary/cases/cuda/task.json": "a27753ffd11c6f360ae49d670328c258ea1cadca0c0c3ca275a30591390587bc"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/rotary/cases/cuda/kernel.cu",
+          "task_path": "reproduction/rotary/cases/cuda/task.json",
+          "task": {
+            "name": "induction_rotary_cuda_256_128",
+            "entry": "induction_rotary_cuda_256_128",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  256,
+                  128
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "cosine",
+                "role": "input",
+                "shape": [
+                  256,
+                  64
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "sine",
+                "role": "input",
+                "shape": [
+                  256,
+                  64
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  256,
+                  128
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 32768,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              8,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21622438193298876,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rope/kernel/compiler-input.json"
+          ],
+          "wrapper_sha256": "4f69071b6328459b453eddd1827b9e94a57d8934f7bc483e86cd73da6308e5a0",
+          "ptx_sha256": "7bb0398eebef5e3b4a196f9caae8da45f439a6b076c4d5bdb1e37222f7924180",
+          "ptx_bytes": 2522,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rope/kernel/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/rope/kernel/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1000",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "ffn",
+      "request_sha256": "c275233527d50034c330c890b3362fd25961af3695004d1c57b38d19bbb229fc",
+      "source_bindings": {
+        "reproduction/feedforward/cases/cuda/down-task.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9",
+        "reproduction/feedforward/cases/cuda/down.cu": "1e921e5c27d7a95c8e0c1b9f6fb1387fc7a10b2d41a49548e579273591bcfc91",
+        "reproduction/feedforward/cases/cuda/reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "reproduction/feedforward/cases/cuda/up-task.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "reproduction/feedforward/cases/cuda/up.cu": "70c69ec5a19c264e7d0bff2517fd8e8e3144698f5bc14d318e28944d117a2207"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/feedforward/cases/cuda/down.cu",
+          "task_path": "reproduction/feedforward/cases/cuda/down-task.json",
+          "task": {
+            "name": "ffn_down_cuda_64_256_1024_256",
+            "entry": "ffn_down_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "hidden",
+                "role": "input",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "down",
+                "role": "input",
+                "shape": [
+                  1024,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4102,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.233892280026339,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/down/compiler-input.json"
+          ],
+          "wrapper_sha256": "1f70cf9b845c776fc2c3ce06fa4a6536ddfb09c9566869655828ae7e1085a25e",
+          "ptx_sha256": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+          "ptx_bytes": 7163,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/down/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/down/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 929",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/feedforward/cases/cuda/up.cu",
+          "task_path": "reproduction/feedforward/cases/cuda/up-task.json",
+          "task": {
+            "name": "ffn_up_cuda_64_256_1024_256",
+            "entry": "ffn_up_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "w1",
+                "role": "input",
+                "shape": [
+                  256,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "hidden",
+                "role": "output",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 65536,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22503018903080374,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/up/compiler-input.json"
+          ],
+          "wrapper_sha256": "ba17bbd80f158e4df1cc48a5d6c57c6c76e5928fbf2f893c5586d876c577aaf2",
+          "ptx_sha256": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+          "ptx_bytes": 7224,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/up/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/ffn/up/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 961",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "swiglu",
+      "request_sha256": "cffd7bb0fd61ebfe0ba85a83eb936065e26c8102a2041998f1aa228eadb26ad2",
+      "source_bindings": {
+        "reproduction/swiglu/cases/cuda/combine-task.json": "1de7e49d19166a602ea36a28d62b604e48702808729dc16c9bf7deb44a5d3311",
+        "reproduction/swiglu/cases/cuda/combine.cu": "bcb3ac90b2f8614e2efbfdfaaea15aee1abf521c952f20f6a9a4994c732d0eea",
+        "reproduction/swiglu/cases/cuda/down-task.json": "ffd8059aa1cc9300709aed0703f6c3960a297c3a4dc7ee7af0daab3d370f01f4",
+        "reproduction/swiglu/cases/cuda/down.cu": "72636a230c9b7d7be0ce405d0f8dd252a5a5257955c20cede9fc35d479a0abf5",
+        "reproduction/swiglu/cases/cuda/gate-task.json": "64b3dc1a68cf1b22408e717c19dc6331bdc8d927668d2b3659f4b1a6f18b8313",
+        "reproduction/swiglu/cases/cuda/gate.cu": "1ff6bcf3f8f0f968f8b6fe7416ee08345a73d0e40e36dbf76754d7e830527c76",
+        "reproduction/swiglu/cases/cuda/reference.py": "a025af54caa0ee72e3647e8c0c92c8c06b290d5c8dc05f965778a3aad36b008f",
+        "reproduction/swiglu/cases/cuda/up-task.json": "061b28e9b6dcde8abe3aa1460f6ff8eb467647691c3563f7055873f3a25b0c4d",
+        "reproduction/swiglu/cases/cuda/up.cu": "cb19f916bd5e6da4f5555e24ddf61476c8fc7321bc1f2dc2272826f7972c748a"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/swiglu/cases/cuda/combine.cu",
+          "task_path": "reproduction/swiglu/cases/cuda/combine-task.json",
+          "task": {
+            "name": "swiglu_combine_cuda_64_256_1024_256",
+            "entry": "swiglu_combine_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "gate",
+                "role": "input",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "up",
+                "role": "input",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "hidden",
+                "role": "output",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 65536,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              5,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21028407104313374,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/combine/compiler-input.json"
+          ],
+          "wrapper_sha256": "a400f244e271d0ee78c6a235d6bb61450719127c246a111b15f28691cb336b0c",
+          "ptx_sha256": "7ec61d84977fd6394cb49131c0d4891adae3c314577eda1e607b95ccb5d3291e",
+          "ptx_bytes": 1903,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/combine/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/combine/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-type",
+            "detail": "this PTX subset requires float32 buffers",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/swiglu/cases/cuda/down.cu",
+          "task_path": "reproduction/swiglu/cases/cuda/down-task.json",
+          "task": {
+            "name": "swiglu_down_cuda_64_256_1024_256",
+            "entry": "swiglu_down_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "hidden",
+                "role": "input",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "down",
+                "role": "input",
+                "shape": [
+                  1024,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              4102,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.23595572204794735,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/down/compiler-input.json"
+          ],
+          "wrapper_sha256": "2c706165e88e81f056ff2ba720badcb99556776fc5ac57450e5e22c985d902b1",
+          "ptx_sha256": "ddab35ae79042b2d49fa97aa7d66ebbb768daf0dcafd5822e81274a8a199eab7",
+          "ptx_bytes": 7187,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/down/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/down/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 953",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/swiglu/cases/cuda/gate.cu",
+          "task_path": "reproduction/swiglu/cases/cuda/gate-task.json",
+          "task": {
+            "name": "swiglu_gate_cuda_64_256_1024_256",
+            "entry": "swiglu_gate_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "wgate",
+                "role": "input",
+                "shape": [
+                  256,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "gate",
+                "role": "output",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 65536,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22348459798377007,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/gate/compiler-input.json"
+          ],
+          "wrapper_sha256": "0863d338668218d7d002e9bbb78606829ef0da951cbce96af1bc1761649681f0",
+          "ptx_sha256": "4aaceb13cdf67e4f6baa3dec05b20ba4c5807e3f03b3cce5a67cf684e597d414",
+          "ptx_bytes": 7133,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/gate/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/gate/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1001",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/swiglu/cases/cuda/up.cu",
+          "task_path": "reproduction/swiglu/cases/cuda/up-task.json",
+          "task": {
+            "name": "swiglu_up_cuda_64_256_1024_256",
+            "entry": "swiglu_up_cuda_64_256_1024_256",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "x",
+                "role": "input",
+                "shape": [
+                  64,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "wup",
+                "role": "input",
+                "shape": [
+                  256,
+                  1024
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "up",
+                "role": "output",
+                "shape": [
+                  64,
+                  1024
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 65536,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2286103469086811,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/up/compiler-input.json"
+          ],
+          "wrapper_sha256": "4af5b39217667533740471e474a6c8510ad6ff2086ff85cac3517b8721580696",
+          "ptx_sha256": "d1a204970c342150f59e0ba54226af97b98d20f2ca4fc83e5e3682e1f21c2f57",
+          "ptx_bytes": 7117,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/up/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/swiglu/up/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 985",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "attention",
+      "request_sha256": "2cc77d95391ad24c2fdfef74e2c52a3380e4a0beb9941d339bdd91487c5dc0e5",
+      "source_bindings": {
+        "reproduction/attention/cases/dense/cuda/reference.py": "5de6ce1537b90316e0b68639e0bc428e1078b11158b053113b4a0d4548229cf0",
+        "reproduction/attention/cases/dense/cuda/score-task.json": "14f79f416dd31614c55fb88c5ab5a9c4908deb4f44f61c0aa2199c9d2727287c",
+        "reproduction/attention/cases/dense/cuda/score.cu": "de671d2eb5cfe19d6616e6d2aae134c173f9d4370eb69ecc17b8d155264a14c3",
+        "reproduction/attention/cases/dense/cuda/softmax-task.json": "ce297cc580ed32ff801c2615b4517233278ead1d6d3b3390dc202633f1e8fa0e",
+        "reproduction/attention/cases/dense/cuda/softmax.cu": "1caaf068b73ea6f7d7e77e198a3a109cf91845852b0e1ee3c4ae656b0dc362e0",
+        "reproduction/attention/cases/dense/cuda/value-task.json": "49d31e24fce76cb6817b20d6c81db241d6a5ab1a8069a4fd543579fe0b7ac6ba",
+        "reproduction/attention/cases/dense/cuda/value.cu": "0d523be7156011996c8e870674f0ac0313a35c370306610bec1226593e8b5ce8"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/attention/cases/dense/cuda/score.cu",
+          "task_path": "reproduction/attention/cases/dense/cuda/score-task.json",
+          "task": {
+            "name": "attention_cuda_1_1_128_256_score",
+            "entry": "attention_cuda_1_1_128_256_score",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "q",
+                "role": "input",
+                "shape": [
+                  1,
+                  128,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "k",
+                "role": "input",
+                "shape": [
+                  1,
+                  128,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "scores",
+                "role": "output",
+                "shape": [
+                  1,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1030,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21895224205218256,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/score/compiler-input.json"
+          ],
+          "wrapper_sha256": "1aecd487b4e0f15233d6ad038ac11e4eb6d5cdb0efcef960eb72e86cdc380c8a",
+          "ptx_sha256": "b606ab423b1606a59842852af8d66ffc4650c6e8a333349fe3c278cfb7b91fa8",
+          "ptx_bytes": 6192,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/score/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/score/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 975",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/attention/cases/dense/cuda/softmax.cu",
+          "task_path": "reproduction/attention/cases/dense/cuda/softmax-task.json",
+          "task": {
+            "name": "attention_cuda_1_1_128_256_softmax",
+            "entry": "attention_cuda_1_1_128_256_softmax",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "scores",
+                "role": "input",
+                "shape": [
+                  1,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "probabilities",
+                "role": "output",
+                "shape": [
+                  1,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 16384,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1289,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21950746199581772,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/softmax/compiler-input.json"
+          ],
+          "wrapper_sha256": "48e3c46fcdf468f503eb62c9929619583f0b3d8dd74a95e0297c4d5511891462",
+          "ptx_sha256": "efd0a18f57a9c58a0fa0cb45e49a32d0acb2e2cfa22341bb03b37bdbcdc73a7a",
+          "ptx_bytes": 6179,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/softmax/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/softmax/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 788",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/attention/cases/dense/cuda/value.cu",
+          "task_path": "reproduction/attention/cases/dense/cuda/value-task.json",
+          "task": {
+            "name": "attention_cuda_1_1_128_256_value",
+            "entry": "attention_cuda_1_1_128_256_value",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "probabilities",
+                "role": "input",
+                "shape": [
+                  1,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "v",
+                "role": "input",
+                "shape": [
+                  1,
+                  128,
+                  256
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  1,
+                  128,
+                  256
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 32768,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              518,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22753390402067453,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/value/compiler-input.json"
+          ],
+          "wrapper_sha256": "a6fb868aa1f03ed9780cd095509a3ed3050a7c911032f850358c8257428008d8",
+          "ptx_sha256": "2caa32a194f21dd9e6348ec7cc3cade37156a6c86d723f5bbb2516594007d7cc",
+          "ptx_bytes": 5113,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/value/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/attention/value/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1244",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "gqa",
+      "request_sha256": "d4d18b215607bcffe6d8c18c7ca4ed7983640347cbf3f9a37367b17daf3fdbfe",
+      "source_bindings": {
+        "reproduction/attention/cases/gqa/cuda/reference.py": "e7be760e1f7b118669c2fed1ed980ce042adb22c73459caf284e1a0604daa4df",
+        "reproduction/attention/cases/gqa/cuda/score-task.json": "bcaaedc0f006bf042c5f7a6a466add066c9102245d6df5ec77c1859d289ec94c",
+        "reproduction/attention/cases/gqa/cuda/score.cu": "9f3c0d3eb5ab820b8b840270f70735ea0b830f776e0357ee210703de90456b48",
+        "reproduction/attention/cases/gqa/cuda/softmax-task.json": "690c978d378b0d529a4ccd447e262c2d929e74a26cea17c0bfb32b4721b80cf9",
+        "reproduction/attention/cases/gqa/cuda/softmax.cu": "4a0b06b1d2cf62041c0537ec900fcc31c79a10bf30a87abcc990a4d4ec7daabb",
+        "reproduction/attention/cases/gqa/cuda/value-task.json": "f31dbbd07817d18c5427cc2f57b576be37f60f5f2293df158af20f4fde4dff92",
+        "reproduction/attention/cases/gqa/cuda/value.cu": "5e53a065d1c7cdf3076da281e61a5fc0c8399e48fa7ecd0c819cc8de084cac50"
+      },
+      "stages": [
+        {
+          "source_path": "reproduction/attention/cases/gqa/cuda/score.cu",
+          "task_path": "reproduction/attention/cases/gqa/cuda/score-task.json",
+          "task": {
+            "name": "attention_cuda_2_4_128_64_score",
+            "entry": "attention_cuda_2_4_128_64_score",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "q",
+                "role": "input",
+                "shape": [
+                  8,
+                  128,
+                  64
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "k",
+                "role": "input",
+                "shape": [
+                  2,
+                  128,
+                  64
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "scores",
+                "role": "output",
+                "shape": [
+                  8,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 131072,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              262,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.2277229669271037,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/score/compiler-input.json"
+          ],
+          "wrapper_sha256": "b2d6ec52e4d510ff814e4d635ddd5008cdd9ab4493673b06d4961b3ce20caea9",
+          "ptx_sha256": "90d5901d0f8ae93b48f0a577a54486b44e389b70478f4c8aad5aa8af850519e6",
+          "ptx_bytes": 6284,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/score/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/score/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 1566",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/attention/cases/gqa/cuda/softmax.cu",
+          "task_path": "reproduction/attention/cases/gqa/cuda/softmax-task.json",
+          "task": {
+            "name": "attention_cuda_2_4_128_64_softmax",
+            "entry": "attention_cuda_2_4_128_64_softmax",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "scores",
+                "role": "input",
+                "shape": [
+                  8,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "probabilities",
+                "role": "output",
+                "shape": [
+                  8,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              }
+            ],
+            "launch": {
+              "grid": 131072,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              1289,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.21672834700439125,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/softmax/compiler-input.json"
+          ],
+          "wrapper_sha256": "ecb0bb05cf6c25b04dab59f6e20c31a4da7c83b43008f507f24027343e7de07d",
+          "ptx_sha256": "3f86281161540d04dd645e917d31c875a1bf34994854e2544dc034fe07a0a643",
+          "ptx_bytes": 6173,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/softmax/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/softmax/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 782",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        },
+        {
+          "source_path": "reproduction/attention/cases/gqa/cuda/value.cu",
+          "task_path": "reproduction/attention/cases/gqa/cuda/value-task.json",
+          "task": {
+            "name": "attention_cuda_2_4_128_64_value",
+            "entry": "attention_cuda_2_4_128_64_value",
+            "language": "cuda",
+            "buffers": [
+              {
+                "name": "probabilities",
+                "role": "input",
+                "shape": [
+                  8,
+                  128,
+                  128
+                ],
+                "dtype": "float32"
+              },
+              {
+                "name": "v",
+                "role": "input",
+                "shape": [
+                  2,
+                  128,
+                  64
+                ],
+                "dtype": "float16"
+              },
+              {
+                "name": "out",
+                "role": "output",
+                "shape": [
+                  8,
+                  128,
+                  64
+                ],
+                "dtype": "float16"
+              }
+            ],
+            "launch": {
+              "grid": 65536,
+              "block": 1,
+              "warp": 32
+            },
+            "fuel": [
+              518,
+              1,
+              1,
+              1
+            ]
+          },
+          "compile_return_code": 0,
+          "compile_seconds": 0.22842957091052085,
+          "compiler_command": [
+            "/usr/bin/python3",
+            "/tmp/lark-full-shape-ptx-compile-20261113/reproduction/ptx/compile_full_shape.py",
+            "_compile-one",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/value/compiler-input.json"
+          ],
+          "wrapper_sha256": "e04bc763c90c4e88358d6bc39f53d963b4c6731495e5795eb6c074399ca1be7d",
+          "ptx_sha256": "bd0b583b9f7b0ff3f24a06315c63ab1e552bb8d244c0bf7b0ba44ac1df701eb8",
+          "ptx_bytes": 5176,
+          "assembly_command": [
+            "/tmp/lark-ptx-tools-20261109/lib/python3.12/site-packages/nvidia/cuda_nvcc/bin/ptxas",
+            "-arch=sm_80",
+            "-o",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/value/kernel.cubin",
+            "/tmp/lark-full-shape-ptx-compiled-v2-20261113/cases/gqa/value/kernel.ptx"
+          ],
+          "assembly_return_code": 0,
+          "reader_probe": {
+            "status": "reader-refused",
+            "code": "ptx-syntax",
+            "detail": "unsupported source at character 967",
+            "certificate_profile_validated": false,
+            "formal_proof": false
+          }
+        }
+      ]
+    }
+  ],
+  "cases_count": 17,
+  "stages_count": 25,
+  "compiled_stages": 25,
+  "assembled_stages": 25,
+  "reader_refused_stages": 25
+}

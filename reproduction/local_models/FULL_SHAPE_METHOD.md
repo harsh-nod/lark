@@ -127,6 +127,13 @@ successful task's cost includes its source reads and unsuccessful proposals.
 Failed-task spending remains in the separately reported all-task totals.
 With zero verified tasks, the success-only mean is undefined, rather than zero.
 
+The separate [manuscript arithmetic check](../paper_results/level2-cost-arithmetic-v1/RESULTS.md)
+finds a discrepancy in the published Level-2 GLM totals: displayed input/output
+means of 373.90M/9.29M match all five tasks, whereas the caption's successful-task
+rule gives 71.90M/2.70M. The independent comparison uses the caption's definition
+and keeps failed-task costs in its all-task totals. This observation concerns
+the displayed cells, without access to the authors' unrounded usage or logs.
+
 ```bash
 python3 reproduction/local_models/compare_full_shape.py \
   --packet reproduction/local_models/results/full-shape-cohort-deepseek-v1 \

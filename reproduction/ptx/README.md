@@ -5,6 +5,36 @@ tiny float32 PTX programs have source-bound certificates: copy with a full CTA
 barrier, vector addition with a padded launch, ReLU, and a two-term GEMV.
 These are not the paper's original PTX programs or Level-2 results.
 
+The later [full-size assembly study](results/full-size-compilation-v1/RESULTS.md)
+compiled all 25 source stages across the seventeen independent CUDA tasks to
+PTX 8.8 and assembled them for `sm_80` on CPU. Both recorded builds produce
+identical PTX/cubin pairs. Original sources, references and task shapes, dtypes,
+fuels and launches are retained. The existing reader refused every generated
+program: three at its FP32-only type gate and 22 during tokenization. These are
+first refusals, not exhaustive feature diagnoses or counterexamples. The study
+adds no formal PTX certificates, model outcomes or NVIDIA measurements.
+
+NVIDIA's [NVRTC documentation](https://docs.nvidia.com/cuda/nvrtc/) describes
+compilation without a GPU. The separate compiler utility downloads fixed
+NVRTC 12.9.86/runtime 12.9.79/CCCL 12.9.27 wheels with verified TLS and SHA-256
+pins; it installs no packages. Repeat with the existing frozen CUDA preparation
+and ptxas 12.9.86 (whose executable hash is also pinned):
+
+```bash
+python3 reproduction/ptx/fetch_compiler.py --output /tmp/lark-ptx-compiler
+python3 reproduction/ptx/compile_full_shape.py \
+  --prepared /tmp/full-shape-cuda-preparation \
+  --toolchain /tmp/lark-ptx-compiler --ptxas /path/to/ptxas-12.9.86 \
+  --output /tmp/full-size-ptx-compilation
+```
+
+The [CUDA preparation archive](../local_models/results/full-shape-cuda-preparation-v1/preparation.tar.gz)
+supplies the required frozen inputs. The compiler checks its complete inventory
+and current SDK/source identity before compiling; it changes no existing proof
+profile. Its full generated programs still need a broader PTX frontend and
+whole-launch certificates. Assembly alone establishes neither compiler
+refinement nor the generated program's semantic correctness or conformance.
+
 The accepted subset is explicitly pinned to `.version 8.0`, `.target sm_80`,
 64-bit addressing and one entry with named `.param .u64` buffer arguments.
 Declarations, comments and whitespace are preserved in lossless token data.

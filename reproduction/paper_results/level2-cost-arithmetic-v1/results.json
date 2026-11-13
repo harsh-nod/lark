@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "status": "pinned-Level-2-table-arithmetic-checked",
+  "checked_at_utc": "2026-11-13T12:51:07.594454+00:00",
+  "source_archive_sha256": "095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2",
+  "member": "tables/opus_veri.tex",
+  "member_sha256": "3d5135a796af430e059f8e4ff8acb99fdd967d0867aa9e7c5ca2512eb506a6b5",
+  "paper_label": "tab:verify-model",
+  "caption_rule": "exclude failed/stopped tasks",
+  "scope": "Arithmetic of the displayed rounded table cells only; no original logs or unrounded costs were available. Both reported GLM totals match the all-task means at the displayed precision and disagree with the stated success-only rule. This does not identify which values or caption the authors intended.",
+  "rows": [
+    {
+      "model": "Opus 5.5",
+      "metric": "input",
+      "unit": "millions of tokens",
+      "tasks": [
+        {
+          "task": "ffn",
+          "verified": true,
+          "cost_M": "78.20"
+        },
+        {
+          "task": "swiglu",
+          "verified": true,
+          "cost_M": "66.60"
+        },
+        {
+          "task": "rope",
+          "verified": true,
+          "cost_M": "15.50"
+        },
+        {
+          "task": "flash_attention",
+          "verified": true,
+          "cost_M": "172.50"
+        },
+        {
+          "task": "gqa",
+          "verified": true,
+          "cost_M": "203.90"
+        }
+      ],
+      "successful_tasks": 5,
+      "all_tasks": 5,
+      "displayed_total_M": "107.34",
+      "success_only_mean_M": "107.34",
+      "success_only_mean_rounded_M": "107.34",
+      "all_task_mean_M": "107.34",
+      "all_task_mean_rounded_M": "107.34",
+      "displayed_matches_caption_rule_at_reported_precision": true,
+      "displayed_matches_all_task_mean_at_reported_precision": true
+    },
+    {
+      "model": "Opus 5.5",
+      "metric": "output",
+      "unit": "millions of tokens",
+      "tasks": [
+        {
+          "task": "ffn",
+          "verified": true,
+          "cost_M": "1.43"
+        },
+        {
+          "task": "swiglu",
+          "verified": true,
+          "cost_M": "1.01"
+        },
+        {
+          "task": "rope",
+          "verified": true,
+          "cost_M": "0.37"
+        },
+        {
+          "task": "flash_attention",
+          "verified": true,
+          "cost_M": "2.77"
+        },
+        {
+          "task": "gqa",
+          "verified": true,
+          "cost_M": "3.09"
+        }
+      ],
+      "successful_tasks": 5,
+      "all_tasks": 5,
+      "displayed_total_M": "1.73",
+      "success_only_mean_M": "1.734",
+      "success_only_mean_rounded_M": "1.73",
+      "all_task_mean_M": "1.734",
+      "all_task_mean_rounded_M": "1.73",
+      "displayed_matches_caption_rule_at_reported_precision": true,
+      "displayed_matches_all_task_mean_at_reported_precision": true
+    },
+    {
+      "model": "GLM 5.3",
+      "metric": "input",
+      "unit": "millions of tokens",
+      "tasks": [
+        {
+          "task": "ffn",
+          "verified": false,
+          "cost_M": "459.60"
+        },
+        {
+          "task": "swiglu",
+          "verified": false,
+          "cost_M": "512.30"
+        },
+        {
+          "task": "rope",
+          "verified": true,
+          "cost_M": "71.90"
+        },
+        {
+          "task": "flash_attention",
+          "verified": false,
+          "cost_M": "214.10"
+        },
+        {
+          "task": "gqa",
+          "verified": false,
+          "cost_M": "611.60"
+        }
+      ],
+      "successful_tasks": 1,
+      "all_tasks": 5,
+      "displayed_total_M": "373.90",
+      "success_only_mean_M": "71.90",
+      "success_only_mean_rounded_M": "71.90",
+      "all_task_mean_M": "373.90",
+      "all_task_mean_rounded_M": "373.90",
+      "displayed_matches_caption_rule_at_reported_precision": false,
+      "displayed_matches_all_task_mean_at_reported_precision": true
+    },
+    {
+      "model": "GLM 5.3",
+      "metric": "output",
+      "unit": "millions of tokens",
+      "tasks": [
+        {
+          "task": "ffn",
+          "verified": false,
+          "cost_M": "9.13"
+        },
+        {
+          "task": "swiglu",
+          "verified": false,
+          "cost_M": "15.96"
+        },
+        {
+          "task": "rope",
+          "verified": true,
+          "cost_M": "2.70"
+        },
+        {
+          "task": "flash_attention",
+          "verified": false,
+          "cost_M": "4.49"
+        },
+        {
+          "task": "gqa",
+          "verified": false,
+          "cost_M": "14.16"
+        }
+      ],
+      "successful_tasks": 1,
+      "all_tasks": 5,
+      "displayed_total_M": "9.29",
+      "success_only_mean_M": "2.70",
+      "success_only_mean_rounded_M": "2.70",
+      "all_task_mean_M": "9.288",
+      "all_task_mean_rounded_M": "9.29",
+      "displayed_matches_caption_rule_at_reported_precision": false,
+      "displayed_matches_all_task_mean_at_reported_precision": true
+    }
+  ],
+  "caption_mismatches": 2,
+  "driver_sha256": "f7a09b6f47024f5d97d88c2fb7df9ba5eedac8a4cdef2b1edbc9ca03972e4056",
+  "model_calls": 0,
+  "lean_checks": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}

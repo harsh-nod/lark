@@ -15,6 +15,19 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
+A separate [Level-2 cost-table arithmetic check](level2-cost-arithmetic-v1/RESULTS.md)
+binds the original v1 source archive and checks all four displayed token means.
+Opus's totals match the caption's successful-task rule at the displayed
+precision. GLM's 373.90M input and 9.29M output instead match means over all
+five tasks; the one successful task gives 71.90M/2.70M. This records a table/
+caption discrepancy without deciding which the authors intended or recovering
+any original model logs. Repeat the arithmetic without model or GPU calls:
+
+```bash
+python3 reproduction/paper_results/audit_level2_costs.py \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-level2-cost-check
+```
+
 The v22 snapshot freezes **3,378 published evidence files** at commit `e7ea523`,
 plus its auditor and targets. It incorporates the independent CPU reference
 studies: 240 sampled production outputs across twelve variants and 340 sampled
