@@ -349,6 +349,36 @@ theorem compare_ne_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a :
     execute ops layout g t (.compareNeSigned32 d a b) s = some (setPredicate s d (x != y)) := by
   simp [execute, hx, hy, hb, setPredicate]
 
+def setHalf (s : Machine α) (d : Nat) (v : α) : Machine α :=
+  advance s (putHalf s.registers d v)
+
+def storedHalf (s : Machine α) (t : Nat) (l : Location) (v : α) : Machine α :=
+  advance s { s.registers with base := { record s.registers.base t l true with
+    memory := fun k => if k = l then some v else s.registers.base.memory k } }
+
+def returned (s : Machine α) : Machine α :=
+  advance s { s.registers with stopped := true }
+
+theorem global_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat)
+    (s : Machine α) (p : Pointer) (hp : s.registers.pointer a = some p) :
+    execute ops layout g t (.toGlobal d a) s = some (setPointer s d { p with isGlobal := true }) := by
+  simp [execute, hp, setPointer]
+
+theorem half_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat)
+    (s : Machine α) (v : α) (hv : s.registers.scalar a = some v) :
+    execute ops layout g t (.toHalf d a) s = some (setHalf s d (ops.toHalf v)) := by
+  simp [execute, hv, setHalf]
+
+theorem store_step (ops : Ops α) (layout : Layout) (g : Geometry) (t a b : Nat) (offset : Int)
+    (s : Machine α) (p : Pointer) (l : Location) (v : α)
+    (hp : s.registers.pointer a = some p) (ha : address layout g t p offset true = some l)
+    (hv : s.registers.half b = some v) :
+    execute ops layout g t (.storeHalf a offset b) s = some (storedHalf s t l v) := by
+  simp [execute, hp, ha, hv, storedHalf]
+
+theorem return_step (ops : Ops α) (layout : Layout) (g : Geometry) (t : Nat) (s : Machine α) :
+    execute ops layout g t .ret s = some (returned s) := rfl
+
 namespace Gemv
 
 def layout (rows : Nat) : Layout :=
@@ -1028,6 +1058,122 @@ theorem loopExit_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s
   simp only [loopExit, runChunks_memory]
   rfl
 
+def outputCell (t : Nat) : Location := ⟨.global, 0, 2, t⟩
+
+def exitGlobal (s : Machine α) : Machine α := setPointer s 13 ⟨2, 0, true⟩
+
+def exitHalf (ops : Ops α) (acc : α) (s : Machine α) : Machine α :=
+  setHalf (exitGlobal s) 33 (ops.toHalf acc)
+
+def exitWide (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  advance (exitHalf ops acc s) (putI64 (exitHalf ops acc s).registers 14 ((t*2 : Nat) : Int))
+
+def exitAddress (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  setPointer (exitWide ops t acc s) 15 ⟨2, ((t*2 : Nat) : Int), true⟩
+
+def exitStored (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  storedHalf (exitAddress ops t acc s) t (outputCell t) (ops.toHalf acc)
+
+def exitReturned (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) : Machine α :=
+  returned (exitStored ops t acc s)
+
+theorem output_address (t : Nat) (ht : t < 512) :
+    address (layout 512) (geometry 512) t ⟨2, ((t*2 : Nat) : Int), true⟩ 0 true =
+      some (outputCell t) := by
+  have hs : signed64 ((t : Int)*2) := by unfold signed64; omega
+  have hrole : (Role.output == Role.input) = false := rfl
+  rw [aligned_address (layout 512) (geometry 512) t 2 t _ 0 true (by simp) hs]
+  simp [location, layout, ht, outputCell, hrole]
+
+theorem epilogue_execute (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (h : LoopInvariant input t 64 acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (exitReturned ops t acc s) := by
+  have hpc : s.pc = 113 := by simpa using h.pc
+  have e1 := global_step ops (layout 512) (geometry 512) t 13 7 s ⟨2, 0, false⟩ h.output
+  have h1 : Steps ops (layout 512) (geometry 512) t program s (exitGlobal s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program s (.toGlobal 13 7)
+      h.stopped (by rw [hpc]; rfl)]
+    exact e1
+  have e2 := half_step ops (layout 512) (geometry 512) t 33 68 (exitGlobal s) acc
+    (by change s.registers.scalar 68 = some acc; exact h.accumulator)
+  have h2 : Steps ops (layout 512) (geometry 512) t program (exitGlobal s) (exitHalf ops acc s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (exitGlobal s) (.toHalf 33 68)
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[s.pc+1]? = _; rw [hpc]; rfl)]
+    exact e2
+  have hb : signed32 (t : Int) ∧ signed32 2 ∧ signed64 ((t : Int)*2) := by
+    unfold signed32 signed64
+    omega
+  have e3 := wide_step ops (layout 512) (geometry 512) t 14 1 2 (t : Int) (exitHalf ops acc s)
+    (by change s.registers.i32 1 = some (t : Int); exact h.row) hb
+  have he : (t : Int)*2 = ((t*2 : Nat) : Int) := by simp
+  rw [he] at e3
+  have h3 : Steps ops (layout 512) (geometry 512) t program (exitHalf ops acc s) (exitWide ops t acc s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (exitHalf ops acc s)
+      (.mulWideSigned32 14 1 2)
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[(s.pc+1)+1]? = _; rw [hpc]; rfl)]
+    exact e3
+  have hp : signed64 ((t*2 : Nat) : Int) ∧ signed64 (0+((t*2 : Nat) : Int)) := by
+    unfold signed64
+    simp only [Int.natCast_mul]
+    omega
+  have e4 := pointer_add_step ops (layout 512) (geometry 512) t 15 13 (.reg 14) ⟨2, 0, true⟩
+    ((t*2 : Nat) : Int) (exitWide ops t acc s) (by rfl) (by rfl) hp
+  simp only [Int.zero_add] at e4
+  have h4 : Steps ops (layout 512) (geometry 512) t program (exitWide ops t acc s) (exitAddress ops t acc s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (exitWide ops t acc s)
+      (.addSigned64 15 13 (.reg 14))
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[((s.pc+1)+1)+1]? = _; rw [hpc]; rfl)]
+    exact e4
+  have e5 := store_step ops (layout 512) (geometry 512) t 15 33 0 (exitAddress ops t acc s)
+    ⟨2, ((t*2 : Nat) : Int), true⟩ (outputCell t) (ops.toHalf acc) (by rfl) (output_address t ht) (by rfl)
+  have h5 : Steps ops (layout 512) (geometry 512) t program (exitAddress ops t acc s) (exitStored ops t acc s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (exitAddress ops t acc s)
+      (.storeHalf 15 0 33)
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[(((s.pc+1)+1)+1)+1]? = _; rw [hpc]; rfl)]
+    exact e5
+  have h6 : Steps ops (layout 512) (geometry 512) t program (exitStored ops t acc s) (exitReturned ops t acc s) := by
+    apply one_step
+    rw [transition_at ops (layout 512) (geometry 512) t program (exitStored ops t acc s) .ret
+      (by change s.registers.stopped = false; exact h.stopped)
+      (by change program[((((s.pc+1)+1)+1)+1)+1]? = _; rw [hpc]; rfl)]
+    exact return_step ops (layout 512) (geometry 512) t _
+  apply steps_trans _ _ _ _ _ _ _ _ h1
+  apply steps_trans _ _ _ _ _ _ _ _ h2
+  apply steps_trans _ _ _ _ _ _ _ _ h3
+  apply steps_trans _ _ _ _ _ _ _ _ h4
+  exact steps_trans _ _ _ _ _ _ _ _ h5 h6
+
+theorem exitReturned_stopped (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) :
+    (exitReturned ops t acc s).registers.stopped = true := rfl
+
+theorem exitReturned_memory (ops : Ops α) (t : Nat) (acc : α) (s : Machine α) :
+    (exitReturned ops t acc s).registers.base.memory =
+      fun l => if l = outputCell t then some (ops.toHalf acc) else s.registers.base.memory l := rfl
+
+def laneResult (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : Machine α :=
+  exitReturned ops t (dotValue ops input t) (loopExit ops input t s)
+
+theorem source_to_return (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (ht : t < 512) (hreads : Reads input (start s)) :
+    Steps ops (layout 512) (geometry 512) t program (start s) (laneResult ops input t s) ∧
+    (laneResult ops input t s).registers.stopped = true := by
+  have loop := source_to_loop_exit ops input t s ht hreads
+  exact ⟨steps_trans _ _ _ _ _ _ _ _ loop.1 (epilogue_execute ops input t _ _ ht loop.2), rfl⟩
+
+theorem laneResult_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (laneResult ops input t s).registers.base.memory =
+      fun l => if l = outputCell t then some (ops.toHalf (dotValue ops input t)) else s.memory l := by
+  simp only [laneResult, exitReturned_memory, loopExit_memory]
+
 end Gemv
 
 #print axioms steps_trans
@@ -1072,4 +1218,14 @@ end Gemv
 #print axioms Gemv.initialized_loop
 #print axioms Gemv.source_to_loop_exit
 #print axioms Gemv.loopExit_memory
+#print axioms global_step
+#print axioms half_step
+#print axioms store_step
+#print axioms return_step
+#print axioms Gemv.output_address
+#print axioms Gemv.epilogue_execute
+#print axioms Gemv.exitReturned_stopped
+#print axioms Gemv.exitReturned_memory
+#print axioms Gemv.source_to_return
+#print axioms Gemv.laneResult_memory
 end LarkPtxDot
