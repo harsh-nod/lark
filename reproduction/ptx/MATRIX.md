@@ -4,7 +4,7 @@ This separate checker proves the exact independently compiled 64×256 by
 256×512 matrix multiplication. It preserves the original FP16 buffers,
 grid 32768, block one, warp 32 and CUDA contract fuel `[1030,1,1,1]`.
 The compiler study's complete 171-instruction PTX source is retained in
-[the pinned case](cases/full-size-gemm/README.md).
+[the pinned case](full-size/gemm/README.md).
 
 The lossless reader translates all instructions, including the five additional
 integer operations used for row/column addressing. The immutable Main binds the
@@ -18,9 +18,9 @@ instruction transitions; CUDA fuel remains data for its separate semantics.
 
 ```bash
 python3 -m lark_kernels.ptx_matrix_certificate verify \
-  --source reproduction/ptx/cases/full-size-gemm/kernel.ptx \
-  --reference reproduction/ptx/cases/full-size-gemm/reference.py \
-  --contract reproduction/ptx/cases/full-size-gemm/task.json \
+  --source reproduction/ptx/full-size/gemm/kernel.ptx \
+  --reference reproduction/ptx/full-size/gemm/reference.py \
+  --contract reproduction/ptx/full-size/gemm/task.json \
   --output /tmp/lark-ptx-gemm-export --lean /absolute/path/to/lean
 
 python3 -m lark_kernels.ptx_matrix_certificate replay \
