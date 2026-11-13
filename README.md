@@ -220,10 +220,19 @@ The [full-size DeepSeek CUDA cohort](reproduction/local_models/results/full-shap
 verified all seventeen fixed-scaffold tasks within the common budget. Its 160
 requests used 3,382,875 reported tokens, and the accepted proofs passed 34
 additional fresh checks. The exact owned service was stopped after the audit.
-The [five-cohort comparison](reproduction/local_models/results/full-shape-comparison-five-cohorts-v1/RESULTS.md)
+The [full-size GLM CUDA cohort](reproduction/local_models/results/full-shape-cohort-glm53-cuda-v1/results.json)
+verified sixteen of seventeen fixed-scaffold tasks. Its 123 requests used
+2,262,104 reported tokens, and all sixteen accepted proofs passed 32 additional
+fresh checks. ReLU exhausted its budget. The exact owned service was stopped
+after the complete audit.
+The [six-cohort comparison](reproduction/local_models/results/full-shape-comparison-six-cohorts-v1/RESULTS.md)
 keeps unsuccessful attempts in total spending and computes per-level token
-means over successful tasks. GLM CUDA remains unfinished; the paper's original
-model results remain missing.
+means over successful tasks. All six independent model/language cohorts are
+complete: 85 verified proofs across 102 tasks, 782 recorded responses and
+15,509,481 reported tokens. These use three pinned open checkpoints, two source
+languages and fixed proof slots; the paper's original registry, harness,
+PTX/closed-model experiments and NVIDIA measurements remain missing. Completing
+this independent cohort roster does not complete the paper reproduction.
 The [full-shape ledger](reproduction/FULL_SHAPE.md) audits 34 independently rechecked
 certificates and 170 exact-source trials per host.
 Every profile has separate CUDA/HIP certificates and exact-source HIP checks on
