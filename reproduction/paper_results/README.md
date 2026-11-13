@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261112-v21/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261112-v22/results/RESULTS.md) ·
+[earlier v21 ledger](snapshots/20261112-v21/results/RESULTS.md) ·
 [earlier v20 ledger](snapshots/20261112-v20/results/RESULTS.md) ·
 [earlier v19 ledger](snapshots/20261111-v19/results/RESULTS.md) ·
 [earlier v18 ledger](snapshots/20261110-v18/results/RESULTS.md) ·
@@ -14,6 +15,53 @@ anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
 
+The v22 snapshot freezes **3,378 published evidence files** at commit `e7ea523`,
+plus its auditor and targets. It incorporates the independent CPU reference
+studies: 240 sampled production outputs across twelve variants and 340 sampled
+benchmark outputs across seventeen families, each using four input strata.
+The benchmark study also checks all 589,824 recorded attention scores. Fresh
+source replays reproduce the sampled values and scores bit-for-bit; source-checked
+SDK import caches were reused. The numerical studies add no formal certificates,
+GPU trials, model calls or universal floating-point guarantees.
+
+The new auditor checks the complete case/stratum rosters, sampled values and bit
+representations, score counts, resource limits, proof scope, fresh-replay claims
+and anonymous-publication receipts. It checks frozen report consistency without
+rerunning Lean or the study packets' stricter raw-data validators. Large numerical
+archives remain in the separately linked immutable study packets. The snapshot
+also applies the explicit v21 semantics correction below; all older snapshots
+retain their original bytes. The original registry, reference formalizations,
+model/token histories and NVIDIA measurements remain missing inputs.
+
+Replay the snapshot or repeat its controls with fresh output directories:
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261112-v22 \
+  --source-archive /path/to/2611.02028v1.tar
+python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261112-v22 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v22-controls
+```
+
+The [v22 validation](snapshot-v22-validation/results.json) passes two positive
+replays outside Git and rejects **24 negative controls**, including sixteen
+new numerical-report mutations. Changed inner receipt hashes, archive hashes,
+provenance and outer manifests are synchronized; rejection must reach the named
+semantic consistency gate. The
+[v21 compatibility check](snapshot-v22-v21-compatibility/results.json) also
+repeats its unchanged eight controls with the updated reader. These records
+are separate from the frozen snapshot and the experiments it cites. The
+[anonymous publication check](snapshot-v22-publication/results.json) downloaded
+eleven files totaling 39,282,190 bytes from `4f647f9`, matched every committed
+byte with TLS verification enabled, and repeated both positive replays and all
+24 controls outside Git. The
+[CI/main receipt](snapshot-v22-ci-main-v1/results.json) records all eighteen
+jobs passing at source `4f647f9` and the checked non-force remote/local
+fast-forward to `1da8a64`. The intervening merge and publication changes contain
+documentation and recorded receipts; SDK, Lean, tests, workflows, ledger readers
+and frozen snapshots remain identical to the tested source.
+
 **v21 correction:** the frozen `dependencies.semantics` paragraph mistakenly
 retains an older statement that FlashInfer, SGLang RMSNorm and AWQ are
 unimplemented. Its own production inventory and source/replay checks correctly
@@ -23,7 +71,7 @@ assessment; the frozen snapshot, proof sources and experimental results remain
 unchanged. General instruction/signature coverage and the original artifacts
 are still separate gaps.
 
-The [updated snapshot](snapshots/20261112-v21/results/RESULTS.md) freezes 3,312
+The [v21 snapshot](snapshots/20261112-v21/results/RESULTS.md) freezes 3,312
 published evidence files at commit `3eab929`, plus its own auditor and targets.
 It adds complete distinct FlashInfer RMSNorm, guarded packed SGLang RMSNorm
 and native FP16 single-split-K AWQ GEMM to the earlier studies. Each new
