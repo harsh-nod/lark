@@ -203,6 +203,104 @@ theorem blockId_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d : Nat)
       some (advance s (putI32 s.registers d ((t / g.block : Nat) : Int))) := by
   simp [execute, h]
 
+theorem shiftLeft_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a count : Nat)
+    (s : Machine α) (v : Int) (hv : s.registers.i32 a = some v) (hb : unsigned32 v) :
+    execute ops layout g t (.shiftLeft32 d a count) s =
+      some (advance s (putI32 s.registers d ((v * (2 : Int) ^ min count 32) % 4294967296))) := by
+  simp [execute, hv, hb]
+
+theorem wide_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat) (c v : Int)
+    (s : Machine α) (hv : s.registers.i32 a = some v)
+    (hb : signed32 v ∧ signed32 c ∧ signed64 (v * c)) :
+    execute ops layout g t (.mulWideSigned32 d a c) s =
+      some (advance s (putI64 s.registers d (v * c))) := by
+  simp [execute, hv, hb]
+
+theorem pointer_add_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat)
+    (b : Operand) (p : Pointer) (v : Int) (s : Machine α)
+    (hp : s.registers.values (.int64 a) = some (.address p))
+    (hv : operand64 s.registers b = some v) (hb : signed64 v ∧ signed64 (p.offset + v)) :
+    execute ops layout g t (.addSigned64 d a b) s =
+      some (advance s (putPointer s.registers d { p with offset := p.offset + v })) := by
+  simp [execute, hp, hv, hb.1, hb.2]
+
+def setFloat (s : Machine α) (d : Nat) (v : α) : Machine α :=
+  advance s (putScalar s.registers d v)
+
+def loadedHalf (s : Machine α) (t d : Nat) (l : Location) (v : α) : Machine α :=
+  advance s { putHalf s.registers d v with base := record s.registers.base t l false }
+
+@[simp] theorem setFloat_scalar (s : Machine α) (d r : Nat) (v : α) :
+    (setFloat s d v).registers.scalar r = if r = d then some v else s.registers.scalar r := by
+  by_cases h : r = d <;> simp [setFloat, advance, putScalar, putValue, Registers.scalar, h]
+
+@[simp] theorem loadedHalf_half (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.half r = if r = d then some v else s.registers.half r := by
+  by_cases h : r = d <;> simp [loadedHalf, advance, putHalf, putValue, Registers.half, h]
+
+@[simp] theorem setFloat_half (s : Machine α) (d r : Nat) (v : α) :
+    (setFloat s d v).registers.half r = s.registers.half r := rfl
+
+@[simp] theorem loadedHalf_scalar (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.scalar r = s.registers.scalar r := rfl
+
+@[simp] theorem setFloat_pointer (s : Machine α) (d r : Nat) (v : α) :
+    (setFloat s d v).registers.pointer r = s.registers.pointer r := rfl
+
+@[simp] theorem loadedHalf_pointer (s : Machine α) (t d r : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.pointer r = s.registers.pointer r := rfl
+
+@[simp] theorem setFloat_memory (s : Machine α) (d : Nat) (v : α) :
+    (setFloat s d v).registers.base.memory = s.registers.base.memory := rfl
+
+@[simp] theorem loadedHalf_memory (s : Machine α) (t d : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.base.memory = s.registers.base.memory := rfl
+
+@[simp] theorem setFloat_pc (s : Machine α) (d : Nat) (v : α) :
+    (setFloat s d v).pc = s.pc + 1 := rfl
+
+@[simp] theorem loadedHalf_pc (s : Machine α) (t d : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).pc = s.pc + 1 := rfl
+
+@[simp] theorem setFloat_stopped (s : Machine α) (d : Nat) (v : α) :
+    (setFloat s d v).registers.stopped = s.registers.stopped := rfl
+
+@[simp] theorem loadedHalf_stopped (s : Machine α) (t d : Nat) (l : Location) (v : α) :
+    (loadedHalf s t d l v).registers.stopped = s.registers.stopped := rfl
+
+theorem loadHalf_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat)
+    (offset : Int) (s : Machine α) (p : Pointer) (l : Location) (v : α)
+    (hp : s.registers.pointer a = some p) (hl : address layout g t p offset false = some l)
+    (hv : s.registers.base.memory l = some v) :
+    execute ops layout g t (.loadHalf d a offset) s = some (loadedHalf s t d l v) := by
+  simp [execute, hp, hl, hv, loadedHalf]
+
+theorem fromHalf_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a : Nat)
+    (s : Machine α) (v : α) (hv : s.registers.half a = some v) :
+    execute ops layout g t (.fromHalf d a) s = some (setFloat s d (ops.fromHalf v)) := by
+  simp [execute, hv, setFloat]
+
+theorem binaryFloat_step (ops : Ops α) (layout : Layout) (g : Geometry) (t d a b : Nat)
+    (op : Binary) (s : Machine α) (x y : α)
+    (hx : s.registers.scalar a = some x) (hy : s.registers.scalar b = some y) :
+    execute ops layout g t (.binaryFloat d op a b) s =
+      some (setFloat s d (applyBinary ops op x y)) := by
+  simp [execute, hx, hy, setFloat]
+
+theorem aligned_address (layout : Layout) (g : Geometry) (t b i : Nat)
+    (offset delta : Int) (write : Bool)
+    (he : offset + delta = (i : Int) * 2) (hs : signed64 ((i : Int) * 2)) :
+    address layout g t ⟨b, offset, true⟩ delta write =
+      location layout g t .global b (i : Int) write := by
+  simp only [address]
+  rw [he]
+  simp [hs]
+
+theorem read_location (layout : Layout) (g : Geometry) (t b i : Nat) (buffer : Buffer)
+    (hb : layout.global[b]? = some buffer) (hi : i < buffer.size) :
+    location layout g t .global b (i : Int) false = some ⟨.global, 0, b, i⟩ := by
+  simp [location, hb, hi]
+
 namespace Gemv
 
 def layout (rows : Nat) : Layout :=
@@ -240,6 +338,251 @@ def program : List Instruction :=
 
 theorem prologue_length : prologue.length = 12 := rfl
 theorem program_length : program.length = 119 := by decide
+
+theorem program_term : ∀ (j : Fin 16) (q : Fin 6),
+    program[12 + 6*j.val + q.val]? = (term j.val)[q.val]? := by decide
+
+theorem step_in_term (ops : Ops α) (rows t j q : Nat) (hj : j < 16) (hq : q < 6)
+    (s u : Machine α) (instruction : Instruction)
+    (hpc : s.pc = 12 + 6*j + q) (hs : s.registers.stopped = false)
+    (hi : (term j)[q]? = some instruction)
+    (he : execute ops (layout rows) (geometry rows) t instruction s = some u) :
+    Steps ops (layout rows) (geometry rows) t program s u := by
+  have hf := program_term ⟨j, hj⟩ ⟨q, hq⟩
+  rw [hi] at hf
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program s instruction hs]
+  · exact he
+  · rw [hpc]
+    exact hf
+
+def matrixCell (t c j : Nat) : Location := ⟨.global, 0, 0, t*1024+16*c+j⟩
+def vectorCell (c j : Nat) : Location := ⟨.global, 0, 1, 16*c+j⟩
+def matrixPointer (t c : Nat) : Pointer := ⟨0, ((t*2048+16+32*c : Nat) : Int), true⟩
+def vectorPointer (c : Nat) : Pointer := ⟨1, ((32*c : Nat) : Int), true⟩
+
+theorem matrix_address (t c j : Nat) (ht : t < 512) (hc : c < 64) (hj : j < 16) :
+    address (layout 512) (geometry 512) t (matrixPointer t c) (((2*j : Nat) : Int) - 16) false =
+      some (matrixCell t c j) := by
+  have he : ((t*2048+16+32*c : Nat) : Int) + (((2*j : Nat) : Int) - 16) =
+      ((t*1024+16*c+j : Nat) : Int) * 2 := by
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  have hn : 0 ≤ ((t*1024+16*c+j : Nat) : Int) * 2 := by omega
+  have hs : signed64 (((t*1024+16*c+j : Nat) : Int) * 2) := by
+    unfold signed64
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  have hb : t*1024+16*c+j < 512*1024 := by omega
+  unfold matrixPointer
+  rw [aligned_address (layout 512) (geometry 512) t 0 (t*1024+16*c+j) _ _ false he hs]
+  exact read_location _ _ t 0 _ ⟨.input, 512*1024⟩ (by rfl) hb
+
+theorem vector_address (t c j : Nat) (hc : c < 64) (hj : j < 16) :
+    address (layout 512) (geometry 512) t (vectorPointer c) (2*j : Nat) false =
+      some (vectorCell c j) := by
+  have he : ((32*c : Nat) : Int) + ((2*j : Nat) : Int) = ((16*c+j : Nat) : Int) * 2 := by
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  have hn : 0 ≤ ((16*c+j : Nat) : Int) * 2 := by omega
+  have hs : signed64 (((16*c+j : Nat) : Int) * 2) := by
+    unfold signed64
+    simp only [Int.natCast_add, Int.natCast_mul]
+    omega
+  have hb : 16*c+j < 1024 := by omega
+  unfold vectorPointer
+  rw [aligned_address (layout 512) (geometry 512) t 1 (16*c+j) _ _ false he hs]
+  exact read_location _ _ t 1 _ ⟨.input, 1024⟩ (by rfl) hb
+
+def inputRegister (j : Nat) : Nat := if j = 0 then 68 else 2*j+35
+def sumRegister (j : Nat) : Nat := if j = 15 then 68 else 2*j+37
+
+def termLoadA (t c j : Nat) (a : α) (s : Machine α) : Machine α :=
+  loadedHalf s t (2*j+1) (matrixCell t c j) a
+
+def termCastA (ops : Ops α) (t c j : Nat) (a : α) (s : Machine α) : Machine α :=
+  setFloat (termLoadA t c j a s) (2*j+4) (ops.fromHalf a)
+
+def termLoadB (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  loadedHalf (termCastA ops t c j a s) t (2*j+2) (vectorCell c j) b
+
+def termCastB (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  setFloat (termLoadB ops t c j a b s) (2*j+5) (ops.fromHalf b)
+
+def termProduct (ops : Ops α) (t c j : Nat) (a b : α) (s : Machine α) : Machine α :=
+  setFloat (termCastB ops t c j a b s) (2*j+36) (ops.mul (ops.fromHalf a) (ops.fromHalf b))
+
+def termResult (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) : Machine α :=
+  setFloat (termProduct ops t c j a b s) (sumRegister j)
+    (ops.add acc (ops.mul (ops.fromHalf a) (ops.fromHalf b)))
+
+theorem term_execute (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α)
+    (ht : t < 512) (hc : c < 64) (hj : j < 16)
+    (hpc : s.pc = 12 + 6*j) (hs : s.registers.stopped = false)
+    (hpA : s.registers.pointer 17 = some (matrixPointer t c))
+    (hpB : s.registers.pointer 16 = some (vectorPointer c))
+    (ha : s.registers.base.memory (matrixCell t c j) = some a)
+    (hb : s.registers.base.memory (vectorCell c j) = some b)
+    (hacc : s.registers.scalar (inputRegister j) = some acc) :
+    Steps ops (layout 512) (geometry 512) t program s (termResult ops t c j a b acc s) := by
+  have h1 := step_in_term ops 512 t j 0 hj (by decide) s (termLoadA t c j a s)
+    (.loadHalf (2*j+1) 17 (((2*j : Nat) : Int)-16))
+    (by simpa only [Nat.add_zero] using hpc) hs (by rfl)
+    (loadHalf_step ops (layout 512) (geometry 512) t (2*j+1) 17 _ s _ _ a hpA
+      (matrix_address t c j ht hc hj) ha)
+  have h2 := step_in_term ops 512 t j 1 hj (by decide)
+    (termLoadA t c j a s) (termCastA ops t c j a s) (.fromHalf (2*j+4) (2*j+1))
+    (by simp only [termLoadA, loadedHalf_pc]; omega)
+    (by change s.registers.stopped = false; exact hs) (by rfl)
+    (fromHalf_step ops (layout 512) (geometry 512) t (2*j+4) (2*j+1) _ a
+      (by simp [termLoadA]))
+  have h3 := step_in_term ops 512 t j 2 hj (by decide)
+    (termCastA ops t c j a s) (termLoadB ops t c j a b s)
+    (.loadHalf (2*j+2) 16 (2*j : Nat))
+    (by simp only [termCastA, termLoadA, setFloat_pc, loadedHalf_pc]; omega)
+    (by change s.registers.stopped = false; exact hs) (by rfl)
+    (loadHalf_step ops (layout 512) (geometry 512) t (2*j+2) 16 _ _ _ _ b
+      (by simpa only [termCastA, termLoadA, setFloat_pointer, loadedHalf_pointer] using hpB)
+      (vector_address t c j hc hj)
+      (by simpa only [termCastA, termLoadA, setFloat_memory, loadedHalf_memory] using hb))
+  have h4 := step_in_term ops 512 t j 3 hj (by decide)
+    (termLoadB ops t c j a b s) (termCastB ops t c j a b s) (.fromHalf (2*j+5) (2*j+2))
+    (by simp only [termLoadB, termCastA, termLoadA, setFloat_pc, loadedHalf_pc]; omega)
+    (by change s.registers.stopped = false; exact hs) (by rfl)
+    (fromHalf_step ops (layout 512) (geometry 512) t (2*j+5) (2*j+2) _ b
+      (by simp [termLoadB]))
+  have hrAB : 2*j+4 ≠ 2*j+5 := by omega
+  have h5 := step_in_term ops 512 t j 4 hj (by decide)
+    (termCastB ops t c j a b s) (termProduct ops t c j a b s)
+    (.binaryFloat (2*j+36) .mul (2*j+4) (2*j+5))
+    (by simp only [termCastB, termLoadB, termCastA, termLoadA, setFloat_pc, loadedHalf_pc]; omega)
+    (by change s.registers.stopped = false; exact hs) (by rfl)
+    (binaryFloat_step ops (layout 512) (geometry 512) t (2*j+36) (2*j+4) (2*j+5) .mul _ _ _
+      (by simp [termCastB, termLoadB, termCastA, hrAB])
+      (by simp [termCastB]))
+  have hrA : inputRegister j ≠ 2*j+4 := by unfold inputRegister; split <;> omega
+  have hrB : inputRegister j ≠ 2*j+5 := by unfold inputRegister; split <;> omega
+  have hrP : inputRegister j ≠ 2*j+36 := by unfold inputRegister; split <;> omega
+  have h6 := step_in_term ops 512 t j 5 hj (by decide)
+    (termProduct ops t c j a b s) (termResult ops t c j a b acc s)
+    (.binaryFloat (sumRegister j) .add (inputRegister j) (2*j+36))
+    (by simp only [termProduct, termCastB, termLoadB, termCastA, termLoadA, setFloat_pc, loadedHalf_pc]; omega)
+    (by change s.registers.stopped = false; exact hs) (by rfl)
+    (binaryFloat_step ops (layout 512) (geometry 512) t (sumRegister j) (inputRegister j) (2*j+36) .add _ _ _
+      (by simp [termProduct, termCastB, termLoadB, termCastA, termLoadA, hrA, hrB, hrP, hacc])
+      (by simp [termProduct]))
+  apply steps_trans _ _ _ _ _ _ _ _ h1
+  apply steps_trans _ _ _ _ _ _ _ _ h2
+  apply steps_trans _ _ _ _ _ _ _ _ h3
+  apply steps_trans _ _ _ _ _ _ _ _ h4
+  exact steps_trans _ _ _ _ _ _ _ _ h5 h6
+
+theorem termResult_pc (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).pc = s.pc + 6 := by
+  simp only [termResult, termProduct, termCastB, termLoadB, termCastA, termLoadA,
+    setFloat_pc, loadedHalf_pc]
+
+theorem termResult_pointer (ops : Ops α) (t c j r : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.pointer r = s.registers.pointer r := rfl
+
+theorem termResult_memory (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.base.memory = s.registers.base.memory := rfl
+
+theorem termResult_scalar (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α) :
+    (termResult ops t c j a b acc s).registers.scalar (sumRegister j) =
+      some (ops.add acc (ops.mul (ops.fromHalf a) (ops.fromHalf b))) := by
+  simp [termResult]
+
+def accumulatorRegister (j : Nat) : Nat := if j = 0 ∨ j = 16 then 68 else 2*j+35
+
+theorem source_accumulator : ∀ j : Fin 16,
+    inputRegister j.val = accumulatorRegister j.val ∧
+    sumRegister j.val = accumulatorRegister (j.val+1) := by decide
+
+def Reads (input : Nat → Nat → α) (s : Machine α) : Prop :=
+  (∀ i, i < 512*1024 → s.registers.base.memory ⟨.global, 0, 0, i⟩ = some (input 0 i)) ∧
+  (∀ i, i < 1024 → s.registers.base.memory ⟨.global, 0, 1, i⟩ = some (input 1 i))
+
+structure BodyInvariant (input : Nat → Nat → α) (t c j : Nat) (acc : α) (s : Machine α) : Prop where
+  pc : s.pc = 12 + 6*j
+  stopped : s.registers.stopped = false
+  matrix : s.registers.pointer 17 = some (matrixPointer t c)
+  vector : s.registers.pointer 16 = some (vectorPointer c)
+  accumulator : s.registers.scalar (accumulatorRegister j) = some acc
+  reads : Reads input s
+  row : s.registers.i32 1 = some (t : Int)
+  counter : s.registers.i32 6 = some ((16*c : Nat) : Int)
+  output : s.registers.pointer 7 = some ⟨2, 0, false⟩
+
+def nextValue (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α) : α :=
+  ops.add acc (ops.mul (ops.fromHalf (input 0 (t*1024+16*c+j))) (ops.fromHalf (input 1 (16*c+j))))
+
+def chunkStep (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α) (s : Machine α) : Machine α :=
+  termResult ops t c j (input 0 (t*1024+16*c+j)) (input 1 (16*c+j)) acc s
+
+theorem chunk_step (ops : Ops α) (input : Nat → Nat → α) (t c j : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (hc : c < 64) (hj : j < 16) (h : BodyInvariant input t c j acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (chunkStep ops input t c j acc s) ∧
+    BodyInvariant input t c (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s) := by
+  have hreg := source_accumulator ⟨j, hj⟩
+  constructor
+  · apply term_execute ops t c j _ _ acc s ht hc hj h.pc h.stopped h.matrix h.vector
+    · exact h.reads.1 _ (by omega)
+    · exact h.reads.2 _ (by omega)
+    · rw [hreg.1]
+      exact h.accumulator
+  · refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · simp only [chunkStep, termResult_pc]
+      have hp := h.pc
+      omega
+    · change s.registers.stopped = false
+      exact h.stopped
+    · simpa only [chunkStep, termResult_pointer] using h.matrix
+    · simpa only [chunkStep, termResult_pointer] using h.vector
+    · change (termResult ops t c j _ _ acc s).registers.scalar (accumulatorRegister (j+1)) = _
+      rw [← hreg.2]
+      exact termResult_scalar ops t c j _ _ acc s
+    · change Reads input s
+      exact h.reads
+    · change s.registers.i32 1 = some (t : Int)
+      exact h.row
+    · change s.registers.i32 6 = some ((16*c : Nat) : Int)
+      exact h.counter
+    · simpa only [chunkStep, termResult_pointer] using h.output
+
+def foldTerms (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | j, r+1, acc => foldTerms ops input t c (j+1) r (nextValue ops input t c j acc)
+
+def unroll (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) : Nat → Nat → α → Machine α → Machine α
+  | _, 0, _, s => s
+  | j, r+1, acc, s => unroll ops input t c (j+1) r (nextValue ops input t c j acc)
+      (chunkStep ops input t c j acc s)
+
+theorem unroll_execute (ops : Ops α) (input : Nat → Nat → α) (t c r j : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (hc : c < 64) (hcount : j+r ≤ 16) (h : BodyInvariant input t c j acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (unroll ops input t c j r acc s) ∧
+    BodyInvariant input t c (j+r) (foldTerms ops input t c j r acc) (unroll ops input t c j r acc s) := by
+  induction r generalizing j acc s with
+  | zero => exact ⟨.refl _, by simpa only [Nat.add_zero, foldTerms, unroll] using h⟩
+  | succ r ih =>
+      have hj : j < 16 := by omega
+      have first := chunk_step ops input t c j acc s ht hc hj h
+      have rest := ih (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s)
+        (by omega) first.2
+      constructor
+      · exact steps_trans _ _ _ _ _ _ _ _ first.1 rest.1
+      · have he : j+(r+1) = (j+1)+r := by omega
+        simpa only [unroll, foldTerms, he] using rest.2
+
+theorem unroll_memory (ops : Ops α) (input : Nat → Nat → α) (t c r j : Nat) (acc : α) (s : Machine α) :
+    (unroll ops input t c j r acc s).registers.base.memory = s.registers.base.memory := by
+  induction r generalizing j acc s with
+  | zero => rfl
+  | succ r ih =>
+      simp only [unroll]
+      rw [ih]
+      rfl
 
 def start (s : State α) : Machine α := { registers := { base := s } }
 
@@ -287,6 +630,120 @@ theorem index_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512
       (by rfl) (by rfl)]
   exact hnormalized
 
+def rowState (t : Nat) (s : State α) : Machine α :=
+  advance (indexedState t s) (putI32 (indexedState t s).registers 5 ((t*1024 : Nat) : Int))
+
+def matrixGlobalState (t : Nat) (s : State α) : Machine α :=
+  advance (rowState t s) (putPointer (rowState t s).registers 10 ⟨0, 0, true⟩)
+
+def wideState (t : Nat) (s : State α) : Machine α :=
+  advance (matrixGlobalState t s) (putI64 (matrixGlobalState t s).registers 11 ((t*2048 : Nat) : Int))
+
+def matrixState (t : Nat) (s : State α) : Machine α :=
+  advance (wideState t s) (putPointer (wideState t s).registers 12 ⟨0, ((t*2048 : Nat) : Int), true⟩)
+
+def matrixOffsetState (t : Nat) (s : State α) : Machine α :=
+  advance (matrixState t s) (putPointer (matrixState t s).registers 17 ⟨0, ((t*2048+16 : Nat) : Int), true⟩)
+
+def zeroState (ops : Ops α) (t : Nat) (s : State α) : Machine α :=
+  advance (matrixOffsetState t s)
+    (putScalar (matrixOffsetState t s).registers 68 (ops.literal 0 1))
+
+def initializedState (ops : Ops α) (t : Nat) (s : State α) : Machine α :=
+  advance (zeroState ops t s) (putI32 (zeroState ops t s).registers 6 0)
+
+theorem row_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (indexedState t s) (rowState t s) := by
+  have hu : unsigned32 (t : Int) := by unfold unsigned32; omega
+  have hp : (2 : Int) ^ min 10 32 = 1024 := by decide
+  have hm : ((t : Int) * 1024) % 4294967296 = ((t*1024 : Nat) : Int) := by
+    simp only [Int.natCast_mul]
+    omega
+  have h := shiftLeft_step ops (layout rows) (geometry rows) t 5 1 10 (indexedState t s) t
+    (by rfl) hu
+  rw [hp, hm] at h
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program (indexedState t s)
+      (.shiftLeft32 5 1 10) (by rfl) (by rfl)]
+  exact h
+
+theorem matrix_global_execute (ops : Ops α) (rows t : Nat) (s : State α) :
+    Steps ops (layout rows) (geometry rows) t program (rowState t s) (matrixGlobalState t s) :=
+  .next (by rfl) (.refl _)
+
+theorem wide_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (matrixGlobalState t s) (wideState t s) := by
+  have hb : signed32 ((t*1024 : Nat) : Int) ∧ signed32 2 ∧
+      signed64 (((t*1024 : Nat) : Int) * 2) := by
+    unfold signed32 signed64
+    simp only [Int.natCast_mul]
+    omega
+  have hm : (((t*1024 : Nat) : Int) * 2) = ((t*2048 : Nat) : Int) := by
+    simp only [Int.natCast_mul]
+    omega
+  have h := wide_step ops (layout rows) (geometry rows) t 11 5 2 ((t*1024 : Nat) : Int)
+    (matrixGlobalState t s) (by rfl) hb
+  rw [hm] at h
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program (matrixGlobalState t s)
+      (.mulWideSigned32 11 5 2) (by rfl) (by rfl)]
+  exact h
+
+theorem matrix_address_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (wideState t s) (matrixState t s) := by
+  have hb : signed64 ((t*2048 : Nat) : Int) ∧ signed64 (0 + ((t*2048 : Nat) : Int)) := by
+    unfold signed64
+    simp only [Int.natCast_mul]
+    omega
+  have h := pointer_add_step ops (layout rows) (geometry rows) t 12 10 (.reg 11)
+    ⟨0, 0, true⟩ ((t*2048 : Nat) : Int) (wideState t s) (by rfl) (by rfl) hb
+  simp only [Int.zero_add] at h
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program (wideState t s)
+      (.addSigned64 12 10 (.reg 11)) (by rfl) (by rfl)]
+  exact h
+
+theorem matrix_offset_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (matrixState t s) (matrixOffsetState t s) := by
+  have hb : signed64 16 ∧ signed64 (((t*2048 : Nat) : Int) + 16) := by
+    unfold signed64
+    simp only [Int.natCast_mul]
+    omega
+  have h := pointer_add_step ops (layout rows) (geometry rows) t 17 12 (.imm 16)
+    ⟨0, ((t*2048 : Nat) : Int), true⟩ 16 (matrixState t s) (by rfl) (by rfl) hb
+  have he : ((t*2048 : Nat) : Int) + 16 = ((t*2048+16 : Nat) : Int) := by omega
+  rw [he] at h
+  apply one_step
+  rw [transition_at ops (layout rows) (geometry rows) t program (matrixState t s)
+      (.addSigned64 17 12 (.imm 16)) (by rfl) (by rfl)]
+  exact h
+
+theorem zero_execute (ops : Ops α) (rows t : Nat) (s : State α) :
+    Steps ops (layout rows) (geometry rows) t program (matrixOffsetState t s) (zeroState ops t s) :=
+  .next (by rfl) (.refl _)
+
+theorem initialize_execute (ops : Ops α) (rows t : Nat) (s : State α) :
+    Steps ops (layout rows) (geometry rows) t program (zeroState ops t s) (initializedState ops t s) :=
+  .next (by rfl) (.refl _)
+
+theorem prologue_execute (ops : Ops α) (rows t : Nat) (s : State α) (ht : t < 512) :
+    Steps ops (layout rows) (geometry rows) t program (start s) (initializedState ops t s) := by
+  apply steps_trans _ _ _ _ _ _ _ _ (parameters_execute ops rows t s)
+  apply steps_trans _ _ _ _ _ _ _ _ (vector_execute ops rows t s)
+  apply steps_trans _ _ _ _ _ _ _ _ (index_execute ops rows t s ht)
+  apply steps_trans _ _ _ _ _ _ _ _ (row_execute ops rows t s ht)
+  apply steps_trans _ _ _ _ _ _ _ _ (matrix_global_execute ops rows t s)
+  apply steps_trans _ _ _ _ _ _ _ _ (wide_execute ops rows t s ht)
+  apply steps_trans _ _ _ _ _ _ _ _ (matrix_address_execute ops rows t s ht)
+  apply steps_trans _ _ _ _ _ _ _ _ (matrix_offset_execute ops rows t s ht)
+  exact steps_trans _ _ _ _ _ _ _ _ (zero_execute ops rows t s) (initialize_execute ops rows t s)
+
+theorem initialized_pc (ops : Ops α) (t : Nat) (s : State α) :
+    (initializedState ops t s).pc = 12 := rfl
+
+theorem initialized_memory (ops : Ops α) (t : Nat) (s : State α) :
+    (initializedState ops t s).registers.base = s := rfl
+
 end Gemv
 
 #print axioms steps_trans
@@ -299,4 +756,19 @@ end Gemv
 #print axioms blockId_step
 #print axioms Gemv.vector_execute
 #print axioms Gemv.index_execute
+#print axioms shiftLeft_step
+#print axioms wide_step
+#print axioms pointer_add_step
+#print axioms Gemv.prologue_execute
+#print axioms Gemv.program_term
+#print axioms loadHalf_step
+#print axioms fromHalf_step
+#print axioms binaryFloat_step
+#print axioms Gemv.step_in_term
+#print axioms Gemv.matrix_address
+#print axioms Gemv.vector_address
+#print axioms Gemv.term_execute
+#print axioms Gemv.chunk_step
+#print axioms Gemv.unroll_execute
+#print axioms Gemv.unroll_memory
 end LarkPtxDot
