@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "status": "exact-source-full-size-PTX-GEMV-proof-evidence",
+  "packaged_at_utc": "2026-11-13T17:18:10.417039+00:00",
+  "producer_commit": "769e6deebc4d19415d787360d2a5ed5e57c516fd",
+  "profile": "source-bound-compiled-gemv-fp16-v1",
+  "independent_source_bound_development_proofs": 1,
+  "retained_positive_Main_checks": 4,
+  "positive_rechecks": 3,
+  "owned_module_builds_across_four_checks": 16,
+  "direct_Lean_negative_controls": 4,
+  "negative_timeouts": 0,
+  "shapes": [
+    [
+      512,
+      1024
+    ],
+    [
+      1024,
+      1
+    ],
+    [
+      512,
+      1
+    ]
+  ],
+  "dtype": "float16",
+  "PTX_instructions": 119,
+  "library_axiom_audits_per_check": 102,
+  "Main_axiom_audits_per_check": 6,
+  "launch": {
+    "grid": 512,
+    "block": 1,
+    "warp": 32
+  },
+  "unchanged_CUDA_contract_fuel": [
+    4102,
+    1,
+    1,
+    1
+  ],
+  "input_bindings": {
+    "kernel.ptx": "79afeb989948bd8e36278f7b12836e1920727197d6662ddf8b1a642a53a1354c",
+    "reference.py": "f5ef4b758351b5b73d77a49f066383c93324cc39f8d44d183480864f46336f6f",
+    "contract.json": "2cd47c1c652ddad9b4ea027bf1c4523c3b8cc72c28f04684a1d906eeeba1ce71"
+  },
+  "main_sha256": "d96f6d6b4727c8bf773e1a356d1e209633217049019216946daa3fe6e963bf93",
+  "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+  "limits": {
+    "maxRecDepth": 10000,
+    "maxHeartbeats": 2000000,
+    "per_Lean_process_seconds": 180,
+    "source_import_build_seconds": 600
+  },
+  "wheel_sha256": "084fad0a195d446b2fb6436bd5d683ca9a82f5ac3aba32ed087674fb2b338aa4",
+  "archives": {
+    "export": {
+      "files": 74,
+      "uncompressed_bytes": 12213150,
+      "archive_sha256": "443b10d575e5ee3a73550dfc90a296f8d36ad9c60fad880bfa287f6a8fb87087",
+      "inventory_sha256": "e372bdf96e0060f0d08d87ba149c12b06e966a409e670ea1e749209e6029462f"
+    },
+    "replay": {
+      "files": 76,
+      "uncompressed_bytes": 12222717,
+      "archive_sha256": "85b180ecd8b7d28495b097406a334f88a7ebfdfeb7c1bc397f8e503359257898",
+      "inventory_sha256": "b24ed35e2a3034aa3d7c85b5cf75140f27062ddffd9f9cddb65ee7f9f971943c"
+    },
+    "controls": {
+      "files": 111,
+      "uncompressed_bytes": 12503234,
+      "archive_sha256": "833d3ba9f8b8b3da5019157d4eea3f317e5b1aaeb7fc2dcc0d6e4f6c4d38bb7f",
+      "inventory_sha256": "0e2b573be42b6f474095648ccb5a055f97f48c49019309a42eac1509e877a651"
+    },
+    "installed-wheel": {
+      "files": 93,
+      "uncompressed_bytes": 12242867,
+      "archive_sha256": "43b86b81ff7c8517aad8af0385bf74010272a98ead0b68825e70876830b0f1e4",
+      "inventory_sha256": "256cd1844fa49231a08c9a73a4ba340b97fa91dd8b7151c38c5dc5436b01c260"
+    },
+    "wheel-build": {
+      "files": 4,
+      "uncompressed_bytes": 1699062,
+      "archive_sha256": "93ccfb63e7746f5d14c5652e7cc916f95b1a01e6e21756c27ed105836e2c8481",
+      "inventory_sha256": "e24988690cc1836523305fa5406ae48d4da3aefb3e7f0666eff2b0dc548e62af"
+    }
+  },
+  "new_registered_source_certificates": 0,
+  "packaging_driver_sha256": "c175b53b606af4c103b4b5b629df3866228ef2c5682c22cc665775244fb06f4a",
+  "packaging_model_calls": 0,
+  "packaging_Lean_checks": 0,
+  "packaging_gpu_trials": 0,
+  "model_calls_for_this_proof_study": 0,
+  "gpu_trials_for_this_proof_study": 0,
+  "nvidia_execution": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Source-bound complete compiled 512x1024 FP16 GEMV development proof. Every parsed instruction, the real backward branch and all 64 sixteen-term loop iterations, epilogue, ret, all 512 active lanes, actual memory-event race freedom and every extracted reference output are covered under declared abstract scalar semantics. The unchanged CUDA shapes, dtypes, launch and fuel[4102,1,1,1] are retained. Finite PTX execution is an inductive sequence of actual successful transitions; CUDA fuel remains data for its separate model, with no new execution fuel. Python parsing/reference formalization, pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, PyTorch/NVIDIA hardware-conformance, original optimized kernel, original model-result or original-paper-completion claim. This separate development checker registers no new legacy SDK profile or model success."
+}

@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "status": "full-size-PTX-GEMV-source-controls-passed",
+  "checked_at_utc": "2026-11-13T17:08:39.467144+00:00",
+  "recording_manifest_sha256": "a68bc028a1b281a8f33bbfeb66d9d7d2cfa2e30fcd9c67d79a683a024ff9c70f",
+  "driver_sha256": "470a4b8e25ac025ca77705930fb0f00d1342b30f9980aa2d591d17082f95df25",
+  "positive_controls": 1,
+  "positive": {
+    "schema": 1,
+    "status": "fresh-source-only-PTX-GEMV-proof-replay-passed",
+    "recording_manifest_sha256": "a68bc028a1b281a8f33bbfeb66d9d7d2cfa2e30fcd9c67d79a683a024ff9c70f",
+    "fresh_export_manifest_sha256": "30c99a02ad8373f7253284396807a4691909b34ecf97c34c2fc9de39466ccc05",
+    "main_sha256": "d96f6d6b4727c8bf773e1a356d1e209633217049019216946daa3fe6e963bf93",
+    "main_regenerated_identically": true,
+    "owned_modules_freshly_compiled": 4,
+    "old_owned_olean_cache_used": false,
+    "fresh_export_axiom_audits": {
+      "LarkPtxDotCertificate.source_program": [],
+      "LarkPtxDotCertificate.reference_body": [],
+      "LarkPtxDotCertificate.launch": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxDotCertificate.race_free": [
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxDotCertificate.segment_equivalence": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "LarkPtxDotCertificate.kernel_eq_spec": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "positive_rechecks": 1,
+    "source_bound_proofs_added": 0,
+    "model_calls": 0,
+    "gpu_trials": 0,
+    "nvidia_execution": false,
+    "new_registered_source_certificates": 0,
+    "original_paper_fully_reproduced": false,
+    "scope": "Installed trusted SDK regenerates the identical Main from captured inputs and compiles all four owned modules from current matched source, then rechecks the kernel and axioms. Captured Python/Lean/oleans are data and are not executed/loaded. One existing development proof is rechecked, not a new kernel or NVIDIA experiment."
+  },
+  "negative_controls": [
+    {
+      "control": "wrong-product",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "144e693854d12de9ff1ccec2f189c51f909bb5ebc679cdd4b65df0209242dc54",
+      "main_sha256": "7541d332d5b8f6d15d1136b6f0eebca681a1e8830b52db2ae9efcde0805a49d0",
+      "PTX_instructions": 119,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.8119263510452583,
+        "log_sha256": "a6ae7c53ee6e334586edfddc11523b28a50828f01dc9f2e70b2e4cde4b9665b8",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "wrong-loop-counter-stride",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "b0b5a823ace3b02bff07322528312fa7249d4201cf8cea44e89b7780f734aeeb",
+      "main_sha256": "97b4f3b52df3df2c0efa704a74d849084ef01a954c89b21b45c2af8819a397df",
+      "PTX_instructions": 119,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.9033221260178834,
+        "log_sha256": "a6ae7c53ee6e334586edfddc11523b28a50828f01dc9f2e70b2e4cde4b9665b8",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "premature-loop-exit",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "d0e5d509619d9f3da92c06048237bd567153d77bd772224a32468cfaed0fe0df",
+      "main_sha256": "ed8efc81e19ed987a35dbb10dda856845910d20d08b58944acb45eaf3de7e502",
+      "PTX_instructions": 119,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.8380063920048997,
+        "log_sha256": "a6ae7c53ee6e334586edfddc11523b28a50828f01dc9f2e70b2e4cde4b9665b8",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    },
+    {
+      "control": "conflicting-output-address",
+      "reader_accepted": true,
+      "source_fragments_changed": 1,
+      "source_sha256": "9ee60325a161b76b5091b1f25c604766cb4c473cc5977111d1320b9726039ff9",
+      "main_sha256": "4ff514c7035428a6f4ff0b67ebbe611a5ae12e73d34771cb743b959cd494e6f6",
+      "PTX_instructions": 119,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 0.8523795199580491,
+        "log_sha256": "a6ae7c53ee6e334586edfddc11523b28a50828f01dc9f2e70b2e4cde4b9665b8",
+        "command": [
+          "/tmp/lean-4.19.0-linux/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "channel": "source-program-equality-proof-refused",
+      "general_kernel_falsity_claim": false,
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true
+    }
+  ],
+  "source_bound_proofs_added": 0,
+  "new_registered_source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "nvidia_execution": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "One new source-only replay compiles all four trusted owned modules and checks the positive full-size Main. Four accepted-grammar PTX mutations go through the actual lossless reader and immutable renderer and fail directly in Lean at source_program. Negative checks use the just-source-compiled positive imports. The 512x1024 FP16 shapes, 512/1/32 launch and original CUDA fuel[4102,1,1,1] remain unchanged. These are fixed-profile source-binding controls, not a general kernel-falsity classifier, NVIDIA experiment or the paper's original42 mutants.",
+  "direct_Lean_negative_controls": 4,
+  "timeouts": 0,
+  "owned_modules_freshly_compiled": 4,
+  "old_owned_olean_cache_used": false,
+  "negative_control_imports": "source-checked imports from the fresh positive replay"
+}

@@ -1,5 +1,9 @@
 # Full-size compiled FP16 PTX GEMV
 
+The [frozen proof packet](results/full-size-gemv-proof-v1/RESULTS.md) retains four
+positive Main checks and four direct Lean negative controls. Source-only and
+isolated installed-wheel replay passed without model calls or GPU trials.
+
 This development profile checks the independently implemented scalar GEMV's
 actual NVRTC-generated PTX, with the unchanged 512×1024 FP16 matrix, 1024×1 FP16
 vector and 512×1 FP16 output. The launch is 512 blocks, one active thread per

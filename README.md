@@ -27,6 +27,14 @@ and installed-wheel replays and four direct Lean binding controls passed.
 This is one independent development proof; it adds no model successes,
 registered legacy SDK profile or NVIDIA execution result.
 
+The later [compiled FP16 PTX GEMV proof](reproduction/ptx/results/full-size-gemv-proof-v1/RESULTS.md)
+covers all 119 instructions, the real 64-iteration backward loop, all 512 active
+lanes, actual memory-event race freedom and every reference output at the
+unchanged 512×1024 workload. Its export, three rechecks and four direct Lean
+source-binding controls passed, including isolated installed-wheel replay.
+This is a second independent development proof under abstract scalar semantics,
+with the same original-result and NVIDIA limitations.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X

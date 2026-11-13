@@ -37,6 +37,15 @@ replay; four accepted-grammar source mutations fail directly in Lean. These
 check source binding, not general kernel falsity or the paper's original 42
 mutants. There is no new registered legacy SDK profile or NVIDIA measurement.
 
+Published after the v23 ledger, the [compiled FP16 PTX GEMV study](ptx/results/full-size-gemv-proof-v1/RESULTS.md)
+adds a separate 512×1024 development proof. It checks the actual 119-instruction
+program, all 64 loop iterations and 512 active lanes, race freedom and every
+extracted output against the closed reference AST. Four retained Main checks
+rebuild sixteen owned modules in total; four accepted-grammar mutations fail
+directly in Lean. The isolated wheel replay passes, and the older ReLU source
+bindings and Main remain byte-identical. The scalar/ABI interpretation remains
+trusted; there is no IEEE, NVIDIA or original-paper result claim.
+
 [Audited full-shape totals](FULL_SHAPE.md): 34 HIP/CUDA certificates, 170 exact-source
 trials and 19,387,200 scalar comparisons per MI350X host. Those counts describe
 independent adaptations, not completeness of the original paper.
