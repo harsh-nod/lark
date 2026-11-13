@@ -20,7 +20,7 @@ def sha(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True)
-    parser.add_argument('--snapshot', default='20261113-v24')
+    parser.add_argument('--snapshot', default='20261113-v25')
     parser.add_argument('--source-archive', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--proxy', required=True)
@@ -65,10 +65,10 @@ def main():
     expected_controls = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
                          + 16*('numerical_studies' in targets)
                          + 17*('full_shape_models' in targets) + 8*('ptx_pointwise_proof' in targets)
-                         + 8*('ptx_dot_proof' in targets))
+                         + 8*('ptx_dot_proof' in targets) + 8*('ptx_matrix_proof' in targets))
     expected_positives = ((2 if 'numerical_studies' in targets else 1)
                           + ('full_shape_models' in targets) + ('ptx_pointwise_proof' in targets)
-                          + ('ptx_dot_proof' in targets))
+                          + ('ptx_dot_proof' in targets) + ('ptx_matrix_proof' in targets))
     assert validation['positive_replays'] == expected_positives and validation['negative_controls'] == expected_controls
     assert validation['replayer_sha256'] == sha(downloaded/relative/'replay_snapshot.py')
     assert validation['control_runner_sha256'] == sha(downloaded/relative/'check_snapshot_controls.py')

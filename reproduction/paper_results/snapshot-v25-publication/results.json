@@ -1,0 +1,611 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-11-13T21:38:23.616065+00:00",
+  "status": "anonymous-public-snapshot-download-and-no-git-replay-passed",
+  "source_commit": "63aabf370aebd2aa5d45abced22dc5255886d65f",
+  "snapshot": "20261113-v25",
+  "downloaded_files": [
+    {
+      "path": "reproduction/paper_results/replay_snapshot.py",
+      "bytes": 9574,
+      "sha256": "7c6e015e00e6a7cb5522d634d9bbc062e31f8d62f166a35cbf91169f5450b4a7",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/check_snapshot_controls.py",
+      "bytes": 34665,
+      "sha256": "5f5d58928e08b85e6806d488ce55e0cb44a586c0c17f3db052a2cb043c84f25c",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/auditor.py",
+      "bytes": 43298,
+      "sha256": "5dfb6d20e2a3d52654eb24f9a53a5bc7379fca6af2f1e876dcea751dd6df1ab5",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/evidence-manifest.json",
+      "bytes": 592274,
+      "sha256": "144db2e68c0cb61dc0969c3a088a9ae6ed01e71159fe835d8483db0a4b854b54",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/evidence.tar.gz",
+      "bytes": 83490849,
+      "sha256": "f1fc899ec152869ecfe2fd045339ad9c7aa02dd9bec38d8e66fea85f3d9e63de",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/manifest.json",
+      "bytes": 726,
+      "sha256": "e90502aaaedfacbea8c0ded36ad8facd8adf1870c755c3b5a38de321dead572f",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/provenance.json",
+      "bytes": 1083524,
+      "sha256": "2d449cd4d20672b44143fe153696cec30bfc349d71de78a4695d43ce4fb1da8f",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/results/RESULTS.md",
+      "bytes": 97147,
+      "sha256": "542ae20dd465d4f232cfffc4312a3286cb90e328b09e4186afc19a1e7ca50ddb",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/results/audit.json",
+      "bytes": 2044559,
+      "sha256": "fc593c3266af2bd4ec90dd7640f6040ed97f36ef1ff4668ef8e2131eb330fb0b",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/results/manifest.json",
+      "bytes": 171,
+      "sha256": "a6fbf8a59f24f961984805e1012c3bbb10c5ebc0c9e49d57d1a291428b99f77a",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    },
+    {
+      "path": "reproduction/paper_results/snapshots/20261113-v25/targets.json",
+      "bytes": 1413312,
+      "sha256": "2400ac59fd686dc44649d1488b93b347b4009df79afff15927ce5eb0531dacdc",
+      "http_status": 200,
+      "tls_verification": true,
+      "curl_ssl_verify_result": 0,
+      "authorization_header": false
+    }
+  ],
+  "total_downloaded_bytes": 88810099,
+  "authenticated_download_requests": false,
+  "tls_verification": true,
+  "all_downloads_match_committed_bytes": true,
+  "git_on_replay_path": false,
+  "outside_original_checkout": true,
+  "positive_replays": 6,
+  "negative_controls": 65,
+  "fresh_lean_checks": 0,
+  "fresh_gpu_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false,
+  "validation": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "outside-checkout-no-git",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "global-completion-claim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "frozen report regeneration"
+      },
+      {
+        "name": "original-production-claim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "frozen report regeneration"
+      },
+      {
+        "name": "false-native-awq-certificate-count",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "frozen report regeneration"
+      },
+      {
+        "name": "missing-production-case",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "actual manuscript production table"
+      },
+      {
+        "name": "rehashed-study-ieee-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "frozen study scope consistency"
+      },
+      {
+        "name": "rehashed-study-owned-cache-claim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "frozen study scope consistency"
+      },
+      {
+        "name": "numerical-benchmark-ieee-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-production-ieee-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-changed-heartbeat-cap",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-duplicate-case",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-incomplete-score-total",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-score-bit-disagreement",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-changed-sampled-value",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-false-cold-rebuild",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-incomplete-sample-replay",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-production-replay-bit-difference",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-false-certificate",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-unverified-download-tls",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-missing-download-observations",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-changed-source-pin",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-missing-artifact-control",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "numerical-original-result-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_receipt_hash_synchronized": true,
+        "gate": "frozen numerical report and receipt consistency"
+      },
+      {
+        "name": "positive-after-numerical-controls",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "model-declared-cohort-count",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-false-missing-roster",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-original-result-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-changed-checkpoint-revision",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-stub-cohort",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-partial-audit-roster",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-case-only-stub",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-source-certificate-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-first-response-relabeled",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-boolean-numeric-counter",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-mismatched-accepted-Main",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-failed-candidates-falsely-rechecked",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-mean-denominator-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-case-cost-reconciliation",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-premature-failed-case-stop",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-context-budget-increased",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "model-forged-extra-fresh-check",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_report_and_configuration_pins_synchronized": true,
+        "gate": "frozen model summary, metric and recorded replay consistency"
+      },
+      {
+        "name": "positive-after-model-controls",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "ptx-rechecks-counted-as-kernels",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-boolean-kernel-counter",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-original-result-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-nvidia-execution-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-proof-budget-increased",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-launch-geometry-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-CUDA-contract-fuel-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "ptx-source-CI-wrong-commit",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen exact-source PTX proof/replay scope and actual source CI"
+      },
+      {
+        "name": "positive-after-ptx-controls",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "gemv-rechecks-counted-as-kernels",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-boolean-kernel-counter",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-original-result-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-nvidia-execution-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-proof-budget-increased",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-launch-geometry-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-CUDA-contract-fuel-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemv-source-CI-wrong-commit",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"
+      },
+      {
+        "name": "positive-after-gemv-controls",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "gemm-rechecks-counted-as-kernels",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-boolean-kernel-counter",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-original-result-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-nvidia-execution-overclaim",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-proof-budget-increased",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-launch-geometry-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-CUDA-contract-fuel-changed",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "gemm-source-CI-wrong-commit",
+        "accepted": false,
+        "fully_rehashed": true,
+        "inner_packet_inventory_synchronized": true,
+        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"
+      },
+      {
+        "name": "positive-after-gemm-controls",
+        "accepted": true,
+        "git_on_path": false
+      },
+      {
+        "name": "fully-rehashed-traversal",
+        "accepted": false,
+        "fully_rehashed": true,
+        "gate": "safe archive path"
+      },
+      {
+        "name": "wrong-manuscript",
+        "accepted": false,
+        "gate": "pinned manuscript digest"
+      }
+    ],
+    "positive_replays": 6,
+    "negative_controls": 65,
+    "source_snapshot_manifest_sha256": "e90502aaaedfacbea8c0ded36ad8facd8adf1870c755c3b5a38de321dead572f",
+    "replayer_sha256": "7c6e015e00e6a7cb5522d634d9bbc062e31f8d62f166a35cbf91169f5450b4a7",
+    "control_runner_sha256": "5f5d58928e08b85e6806d488ce55e0cb44a586c0c17f3db052a2cb043c84f25c",
+    "fresh_lean_checks": 0,
+    "fresh_gpu_trials": 0,
+    "model_calls": 0,
+    "original_paper_fully_reproduced": false
+  },
+  "checker_sha256": "dd9bef8b724413df8b09fbdf8dca37ae664e187f71cec371a1f01b1008b57f76"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "initial-timeout-retained-and-optimized-complete-suite-passed",
+  "initial_observation": {
+    "schema": 1,
+    "status": "complete-control-suite-failed-or-hit-existing-aggregate-cap",
+    "exit_code": -15,
+    "timed_out": true,
+    "seconds": 300.0361600469332,
+    "limits": {
+      "aggregate_seconds": 300,
+      "per_replay_seconds": 120,
+      "max_independent_replayers": 2
+    },
+    "validation_output": "/tmp/lark-paper-v25-controls-v1-20261113",
+    "model_calls": 0,
+    "Lean_checks": 0,
+    "GPU_trials": 0,
+    "original_paper_fully_reproduced": false
+  },
+  "completed_observation": {
+    "schema": 1,
+    "status": "complete-control-suite-passed",
+    "exit_code": 0,
+    "timed_out": false,
+    "seconds": 277.8584404030116,
+    "limits": {
+      "aggregate_seconds": 300,
+      "per_replay_seconds": 120,
+      "max_independent_replayers": 2
+    },
+    "validation_output": "/tmp/lark-paper-v25-controls-v2-20261113",
+    "model_calls": 0,
+    "Lean_checks": 0,
+    "GPU_trials": 0,
+    "original_paper_fully_reproduced": false,
+    "positive_replays": 6,
+    "negative_controls": 65
+  },
+  "change": "Run the same sixteen independent numerical controls with the existing maximum of two replay workers; phases still join sequentially. Preserve all payloads, controls and existing 120/300-second limits.",
+  "replayer_default_changed": "v24 to v25; both observed commands explicitly selected v25",
+  "initial_source_revision": "c61497b2e23deef37b6dc87aeb8d2c297779133e",
+  "model_calls": 0,
+  "fresh_lean_checks": 0,
+  "gpu_trials": 0,
+  "original_paper_fully_reproduced": false
+}
