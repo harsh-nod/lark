@@ -755,6 +755,93 @@ theorem control_pc (t c : Nat) (s : Machine α) (hc : c < 64) (hpc : s.pc = 108)
   · have he : c+1 = 64 := by omega
     simp [controlResult, comparedState, countedState, vectorAdvanced, matrixAdvanced, he, hnext, hpc]
 
+structure LoopInvariant (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α) : Prop where
+  pc : s.pc = if c < 64 then 12 else 113
+  stopped : s.registers.stopped = false
+  matrix : s.registers.pointer 17 = some (matrixPointer t c)
+  vector : s.registers.pointer 16 = some (vectorPointer c)
+  accumulator : s.registers.scalar 68 = some acc
+  reads : Reads input s
+  row : s.registers.i32 1 = some (t : Int)
+  counter : s.registers.i32 6 = some ((16*c : Nat) : Int)
+  output : s.registers.pointer 7 = some ⟨2, 0, false⟩
+
+theorem control_invariant (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α)
+    (hc : c < 64) (h : BodyInvariant input t c 16 acc s) :
+    LoopInvariant input t (c+1) acc (controlResult t c s) := by
+  refine ⟨control_pc t c s hc h.pc, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · change s.registers.stopped = false
+    exact h.stopped
+  · rfl
+  · rfl
+  · change s.registers.scalar 68 = some acc
+    simpa [accumulatorRegister] using h.accumulator
+  · change Reads input s
+    exact h.reads
+  · change s.registers.i32 1 = some (t : Int)
+    exact h.row
+  · rfl
+  · change s.registers.pointer 7 = some ⟨2, 0, false⟩
+    exact h.output
+
+theorem loop_body (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α)
+    (hc : c < 64) (h : LoopInvariant input t c acc s) :
+    BodyInvariant input t c 0 acc s := by
+  refine ⟨?_, h.stopped, h.matrix, h.vector, ?_, h.reads, h.row, h.counter, h.output⟩
+  · simpa [hc] using h.pc
+  · simpa [accumulatorRegister] using h.accumulator
+
+def iteration (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α) : Machine α :=
+  controlResult t c (unroll ops input t c 0 16 acc s)
+
+theorem iteration_execute (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (hc : c < 64) (h : LoopInvariant input t c acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (iteration ops input t c acc s) ∧
+    LoopInvariant input t (c+1) (foldTerms ops input t c 0 16 acc) (iteration ops input t c acc s) := by
+  have body := unroll_execute ops input t c 16 0 acc s ht hc (by decide) (loop_body input t c acc s hc h)
+  have control := control_execute ops input t c _ _ ht hc body.2
+  exact ⟨steps_trans _ _ _ _ _ _ _ _ body.1 control, control_invariant input t c _ _ hc body.2⟩
+
+theorem control_memory (t c : Nat) (s : Machine α) :
+    (controlResult t c s).registers.base.memory = s.registers.base.memory := rfl
+
+theorem iteration_memory (ops : Ops α) (input : Nat → Nat → α) (t c : Nat) (acc : α) (s : Machine α) :
+    (iteration ops input t c acc s).registers.base.memory = s.registers.base.memory := by
+  simp only [iteration, control_memory, unroll_memory]
+
+def foldChunks (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : Nat → Nat → α → α
+  | _, 0, acc => acc
+  | c, r+1, acc => foldChunks ops input t (c+1) r (foldTerms ops input t c 0 16 acc)
+
+def runChunks (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : Nat → Nat → α → Machine α → Machine α
+  | _, 0, _, s => s
+  | c, r+1, acc, s => runChunks ops input t (c+1) r (foldTerms ops input t c 0 16 acc)
+      (iteration ops input t c acc s)
+
+theorem runChunks_execute (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat) (acc : α) (s : Machine α)
+    (ht : t < 512) (hcount : c+r ≤ 64) (h : LoopInvariant input t c acc s) :
+    Steps ops (layout 512) (geometry 512) t program s (runChunks ops input t c r acc s) ∧
+    LoopInvariant input t (c+r) (foldChunks ops input t c r acc) (runChunks ops input t c r acc s) := by
+  induction r generalizing c acc s with
+  | zero => exact ⟨.refl _, by simpa only [Nat.add_zero, foldChunks, runChunks] using h⟩
+  | succ r ih =>
+      have hc : c < 64 := by omega
+      have first := iteration_execute ops input t c acc s ht hc h
+      have rest := ih (c+1) (foldTerms ops input t c 0 16 acc) (iteration ops input t c acc s)
+        (by omega) first.2
+      constructor
+      · exact steps_trans _ _ _ _ _ _ _ _ first.1 rest.1
+      · have he : c+(r+1) = (c+1)+r := by omega
+        simpa only [runChunks, foldChunks, he] using rest.2
+
+theorem runChunks_memory (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat) (acc : α) (s : Machine α) :
+    (runChunks ops input t c r acc s).registers.base.memory = s.registers.base.memory := by
+  induction r generalizing c acc s with
+  | zero => rfl
+  | succ r ih =>
+      simp only [runChunks]
+      rw [ih, iteration_memory]
+
 def start (s : State α) : Machine α := { registers := { base := s } }
 
 def parameterA (s : State α) : Machine α :=
@@ -915,6 +1002,32 @@ theorem initialized_pc (ops : Ops α) (t : Nat) (s : State α) :
 theorem initialized_memory (ops : Ops α) (t : Nat) (s : State α) :
     (initializedState ops t s).registers.base = s := rfl
 
+theorem initialized_loop (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (hreads : Reads input (start s)) :
+    LoopInvariant input t 0 (ops.literal 0 1) (initializedState ops t s) := by
+  refine ⟨by rfl, by rfl, by rfl, by rfl, by rfl, ?_, by rfl, by rfl, by rfl⟩
+  change Reads input (start s)
+  exact hreads
+
+def dotValue (ops : Ops α) (input : Nat → Nat → α) (t : Nat) : α :=
+  foldChunks ops input t 0 64 (ops.literal 0 1)
+
+def loopExit (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) : Machine α :=
+  runChunks ops input t 0 64 (ops.literal 0 1) (initializedState ops t s)
+
+theorem source_to_loop_exit (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (ht : t < 512) (hreads : Reads input (start s)) :
+    Steps ops (layout 512) (geometry 512) t program (start s) (loopExit ops input t s) ∧
+    LoopInvariant input t 64 (dotValue ops input t) (loopExit ops input t s) := by
+  have loop := runChunks_execute ops input t 0 64 (ops.literal 0 1) (initializedState ops t s)
+    ht (by decide) (initialized_loop ops input t s hreads)
+  exact ⟨steps_trans _ _ _ _ _ _ _ _ (prologue_execute ops 512 t s ht) loop.1, loop.2⟩
+
+theorem loopExit_memory (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α) :
+    (loopExit ops input t s).registers.base.memory = s.memory := by
+  simp only [loopExit, runChunks_memory]
+  rfl
+
 end Gemv
 
 #print axioms steps_trans
@@ -949,4 +1062,14 @@ end Gemv
 #print axioms Gemv.control_pc
 #print axioms Gemv.matrix_control_pointer
 #print axioms Gemv.vector_control_pointer
+#print axioms Gemv.control_invariant
+#print axioms Gemv.loop_body
+#print axioms Gemv.iteration_execute
+#print axioms Gemv.control_memory
+#print axioms Gemv.iteration_memory
+#print axioms Gemv.runChunks_execute
+#print axioms Gemv.runChunks_memory
+#print axioms Gemv.initialized_loop
+#print axioms Gemv.source_to_loop_exit
+#print axioms Gemv.loopExit_memory
 end LarkPtxDot
