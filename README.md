@@ -17,6 +17,11 @@ tiny float32 programs in the same machine. It has CPU-only NVIDIA assembly
 checks and no NVIDIA execution evidence; optimized PTX and collectives remain
 outside its supported subset.
 
+A separate [CPU-only full-size assembly study](reproduction/ptx/results/full-size-compilation-v1/RESULTS.md)
+compiles all 25 stages of the seventeen independent CUDA tasks to PTX and
+assembles them for `sm_80`. The current PTX reader refuses these generated
+programs; this adds assembly evidence and no PTX proofs or model successes.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X
