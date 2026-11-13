@@ -64,18 +64,16 @@ open LarkNonlinear
 def program : List LarkPtxMatrix.Instruction := {translation.lean_program()}
 def referenceBody : LarkPtxBatched.Bmm.Body.TensorReference := {reference}
 def spec (ops : Ops α) (input : Nat → Nat → α) : List α :=
-  (LarkPtxBatched.Bmm.Body.evaluateReference ops input referenceBody).getD []
+  LarkPtxBatched.Bmm.Body.referenceSpec ops input
 theorem source_program : program = LarkPtxBatched.Bmm.program := by decide
 theorem reference_body : referenceBody = LarkPtxBatched.Bmm.Body.referenceBody := by rfl
-theorem spec_eq (ops : Ops α) (input : Nat → Nat → α) :
-    spec ops input = LarkPtxBatched.Bmm.Body.referenceSpec ops input := by
-  unfold spec
-  rw [reference_body, LarkPtxBatched.Bmm.Body.evaluate_reference_body]
-  rfl
+theorem reference_denotation (ops : Ops α) (input : Nat → Nat → α) :
+    LarkPtxBatched.Bmm.Body.evaluateReference ops input referenceBody = some (spec ops input) := by
+  rw [reference_body]
+  exact LarkPtxBatched.Bmm.Body.evaluate_reference_body ops input
 theorem kernel_eq_spec (ops : Ops α) :
     LarkPtxBatched.Bmm.Body.Correct ops program (spec ops) := by
-  have hspec : spec ops = LarkPtxBatched.Bmm.Body.referenceSpec ops := funext (spec_eq ops)
-  rw [source_program, hspec]
+  rw [source_program]
   exact LarkPtxBatched.Bmm.Body.kernel_correct ops
 theorem launch (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
     ∃ final, LarkPtxBatched.Bmm.Body.LaneSequence ops program 0 1048576
@@ -95,8 +93,9 @@ theorem segment_equivalence (ops : Ops α) (input : Nat → Nat → α)
     (outside : Location → Option α) :
     ∃ final, LarkPtxBatched.Bmm.Body.LaneSequence ops program 0 1048576
       (initial LarkPtxBatched.Bmm.layout input outside) final ∧
-      extract LarkPtxBatched.Bmm.layout final = some (spec ops input) := by
+      extract LarkPtxBatched.Bmm.layout final =
+        LarkPtxBatched.Bmm.Body.evaluateReference ops input referenceBody := by
   obtain ⟨final, execution, race, values, preserved⟩ := launch ops input outside
-  exact ⟨final, execution, values⟩
+  exact ⟨final, execution, values.trans (reference_denotation ops input).symm⟩
 """ + "".join("#print axioms LarkPtxBatchedCertificate." + tag + "\n" for tag in TAGS) + (
         "end LarkPtxBatchedCertificate\n")

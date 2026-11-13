@@ -6,10 +6,9 @@ A [32,64,256] times B [32,256,512] produces [32,64,512], all FP16, with
 grid 1048576/block one/warp 32 and unchanged CUDA fuel [1030,1,1,1].
 
 The development reader preserves all 138 instructions and the real backward
-branch to instruction 29. Grammar acceptance is not a kernel proof, registered
-certificate, model outcome or NVIDIA execution. Complete actual-source launch,
-reference and race proofs remain required.
-
-Initial Lean lemmas check the program length, backward branch and final ret,
-and derive batch/row/column addressing and valid input indices for every output
-lane and all 256 reduction indices. They do not establish complete execution.
+branch to instruction 29. The separate [BMM development profile](../../BATCHED.md)
+now has checked Lean proofs for complete actual-source execution of every lane,
+all sixteen iterations, the closed ordered reference, actual-trace race freedom
+and preservation outside the output. Source-only export/replay and publication
+validation are tracked separately there. These independent results add no
+original model outcome, legacy registered profile or NVIDIA execution claim.
