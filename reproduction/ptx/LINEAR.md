@@ -6,9 +6,11 @@ grid 32,768, block 1, warp 32 and original CUDA fuel `[1030,1,1,1]`.
 The reference converts all three inputs to float, performs the matrix product,
 adds bias, then converts the result to half. Its cast order is preserved.
 
-The pure complete-source theorem has passed. SDK export/replay, packaging and
-publication checks remain. Four complete independent PTX kernel proofs remain
-published; this additional library theorem adds no model success.
+The pure complete-source theorem, fresh SDK source export/replay, four direct
+source-binding controls, SDK adversarial test and isolated installed-wheel
+replay have passed. Raw evidence packaging, anonymous publication and actual
+source CI remain. Four independent PTX kernel proofs remain published; this
+additional compiled Linear proof adds no original model success.
 The original shapes, input bytes, launch geometry and CUDA fuel are unchanged.
 The CUDA fuel remains separate data; actual PTX execution uses finite inductive
 sequences of successful source transitions and introduces no new execution fuel.
@@ -74,11 +76,39 @@ overwritten during exception capture; it changes no Lean proof or input bytes.
 
 ## Remaining work
 
-The complete profile must receive fresh source export/replay, adversarial and
-installed-package checks, retained raw evidence, anonymous publication
-verification and actual source CI before promotion. The complete theorem alone
-does not establish those pipeline/publication checks or any original model
-result. No registered legacy profile exists for Linear.
+The complete proof still needs its retained evidence packet, anonymous
+publication verification and actual source CI before promotion. Passing local
+checks establishes none of those publication outcomes or original model results.
+No registered legacy profile exists for Linear.
+
+The new SDK 0.4.0 profile `source-bound-compiled-linear-fp16-v1` has ten owned
+Lean modules and 64 trusted source bindings (54 Python, ten Lean). The first
+fresh export rebuilt all ten in 71.1261 seconds and checked Main in 2.9220
+seconds. Dedicated no-Git source replay, the controls' fresh positive replay
+and isolated installed-wheel replay all passed with identical regenerated Main.
+These are four retained checks of one independent kernel, with 40 fresh module
+builds and three positive rechecks. Earlier cached development checks and the
+initialization-only cold study remain separate history.
+
+The SDK integration test passed in 156.2493 seconds: fresh ten-module export,
+fresh ten-module replay, direct product-source refusal and ten coherently
+rehashed recording/proof/roster/axiom/claim refusals. Its temporary Main files
+are not retained positive recordings. All earlier frozen wheel hashes and
+source/Main identities remain unchanged. Enlarged current rosters correctly
+refuse earlier GEMV, GEMM and BMM recordings before creating output; use their
+matching original frozen SDK wheels.
+
+```bash
+python3 -m lark_kernels.ptx_linear_certificate verify \
+  --source reproduction/ptx/full-size/linear/kernel.ptx \
+  --reference reproduction/ptx/full-size/linear/reference.py \
+  --contract reproduction/ptx/full-size/linear/task.json \
+  --output /tmp/lark-linear-export --lean /path/to/lean-4.19.0/bin/lean
+
+python3 -m lark_kernels.ptx_linear_certificate replay \
+  --recording /tmp/lark-linear-export --output /tmp/lark-linear-replay \
+  --lean /path/to/lean-4.19.0/bin/lean
+```
 
 For a fresh initialization-only check:
 
