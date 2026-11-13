@@ -4,7 +4,6 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 import gzip
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -353,18 +352,9 @@ def main():
             ]
             write(altered / "targets.json", targets)
             target_name = "reproduction/paper_results/targets.json"
-            with tarfile.open(altered / "evidence.tar.gz") as archive:
-                entries = [(m.name, archive.extractfile(m).read()) for m in archive]
-            with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-                for name, data in entries:
-                    if name == target_name:
-                        data = (altered / "targets.json").read_bytes()
-                    info = tarfile.TarInfo(name)
-                    info.size = len(data)
-                    archive.addfile(info, io.BytesIO(data))
-            hashes = read(altered / "evidence-manifest.json")
-            hashes[target_name] = sha(altered / "targets.json")
-            write(altered / "evidence-manifest.json", hashes)
+            entries = packed_controls.entries.copy()
+            entries[target_name] = (altered / "targets.json").read_bytes()
+            packed_controls.write(altered, entries)
             rehash(altered, archive_changed=True)
             code, log = execute("missing-production-case", altered)
             if code == 0 or "Production case inventory differs from manuscript" not in log:
@@ -383,8 +373,7 @@ def main():
             ):
                 altered = root / name
                 shutil.copytree(snapshot, altered)
-                with tarfile.open(altered / "evidence.tar.gz") as archive:
-                    entries = {m.name: archive.extractfile(m).read() for m in archive}
+                entries = packed_controls.entries.copy()
                 record = json.loads(entries[selected])
                 record[field] = value
                 entries[selected] = (json.dumps(record, indent=2) + "\n").encode()
@@ -393,14 +382,7 @@ def main():
                     hashes = json.loads(entries[inner_manifest])
                     hashes[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[inner_manifest] = (json.dumps(hashes, indent=2) + "\n").encode()
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-                    for entry_name, data in entries.items():
-                        info = tarfile.TarInfo(entry_name)
-                        info.size = len(data)
-                        archive.addfile(info, io.BytesIO(data))
-                write(altered / "evidence-manifest.json", {
-                    entry_name: hashlib.sha256(data).hexdigest() for entry_name, data in entries.items()
-                })
+                packed_controls.write(altered, entries)
                 rehash(altered, archive_changed=True)
                 code, log = execute(name, altered)
                 if code == 0 or expected_gate not in log:
@@ -450,8 +432,7 @@ def main():
             for control_name, selected, keys, value, expected_gate in cases:
                 altered = root / control_name
                 shutil.copytree(snapshot, altered)
-                with tarfile.open(altered / "evidence.tar.gz") as archive:
-                    entries = {m.name: archive.extractfile(m).read() for m in archive}
+                entries = packed_controls.entries.copy()
                 record = json.loads(entries[selected])
                 parent = record
                 for key in keys[:-1]:
@@ -466,14 +447,7 @@ def main():
                     manifest = json.loads(entries[manifest_name])
                     manifest.get("files", manifest)[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[manifest_name] = (json.dumps(manifest, indent=2)+"\n").encode()
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-                    for entry_name, data in entries.items():
-                        info = tarfile.TarInfo(entry_name)
-                        info.size = len(data)
-                        archive.addfile(info, io.BytesIO(data))
-                write(altered / "evidence-manifest.json", {
-                    entry_name: hashlib.sha256(data).hexdigest() for entry_name, data in entries.items()
-                })
+                packed_controls.write(altered, entries)
                 rehash(altered, archive_changed=True)
                 code, log = execute(control_name, altered)
                 if code == 0 or "Numerical study " + expected_gate not in log:
@@ -559,18 +533,10 @@ def main():
             results.append({"name": "positive-after-gemv-controls", "accepted": True, "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
-        with tarfile.open(altered / "evidence.tar.gz") as archive:
-            entries = [(m.name, archive.extractfile(m).read()) for m in archive]
+        entries = packed_controls.entries.copy()
         unsafe = "../lark-paper-control-" + uuid.uuid4().hex
-        entries.append((unsafe, b"must not be extracted"))
-        with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-            for name, data in entries:
-                info = tarfile.TarInfo(name)
-                info.size = len(data)
-                archive.addfile(info, io.BytesIO(data))
-        hashes = read(altered / "evidence-manifest.json")
-        hashes[unsafe] = hashlib.sha256(entries[-1][1]).hexdigest()
-        write(altered / "evidence-manifest.json", hashes)
+        entries[unsafe] = b"must not be extracted"
+        packed_controls.write(altered, entries)
         rehash(altered, archive_changed=True)
         code, log = execute("fully-rehashed-traversal", altered)
         if code == 0 or "Unsafe path: " + unsafe not in log:

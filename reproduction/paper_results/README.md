@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261113-v23/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261113-v24/results/RESULTS.md) ·
+[earlier v23 ledger](snapshots/20261113-v23/results/RESULTS.md) ·
 [earlier v22 ledger](snapshots/20261112-v22/results/RESULTS.md) ·
 [earlier v21 ledger](snapshots/20261112-v21/results/RESULTS.md) ·
 [earlier v20 ledger](snapshots/20261112-v20/results/RESULTS.md) ·
@@ -29,7 +30,48 @@ python3 reproduction/paper_results/audit_level2_costs.py \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-level2-cost-check
 ```
 
-The v23 snapshot freezes **3,512 evidence files** at commit `44b414f`, plus its
+The v24 snapshot freezes **3,565 evidence files** at commit `48aa4ae`, plus
+its auditor and targets. It preserves all earlier evidence and all six independent
+full-size model cohorts: 85 verified task outcomes across 102 tasks, 782 responses
+and 15,509,481 reported tokens under the fixed adapted protocol.
+
+Both exact-source compiled FP16 PTX development proofs are now checked by the
+frozen auditor. ReLU covers 16,384 elements. GEMV covers all 119 instructions,
+the actual 64-iteration backward loop and all 512 active lanes at the original
+512x1024 development shape, with actual-trace race freedom and extracted-output
+equality to a closed reference AST. Each kernel has four retained positive Main
+checks and four direct Lean source-binding controls. The three positive rechecks
+per kernel are repeated checks, not extra independent kernels or model successes.
+Their actual source CI records contain nineteen ReLU jobs and twenty GEMV jobs.
+The GEMV packet also retains anonymous publication, installed-wheel replay and
+the checked main promotion. New bounded original-artifact observations are included.
+
+Replay v24 without Git, SDK, Lean, model calls or GPU access:
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --source-archive /path/to/2611.02028v1.tar
+python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v24 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v24-controls
+```
+
+The [v24 validation](snapshot-v24-validation/results.json) passed all five
+positive replays outside Git and rejected **57 negative controls**, including
+all earlier controls and eight added fully rehashed GEMV claims. The complete
+run took 260.74 seconds within the unchanged 300-second aggregate
+limit. Each replay retains its 120-second cap, with at most two independent
+replay workers. The control runner reuses compressed immutable members while
+preserving every member and every changed byte in each independent control.
+The [retained v23 compatibility run](snapshot-v24-v23-compatibility/results.json)
+passed four positive replays and all 49 earlier controls in 260.22 seconds using
+its recorded runner revision. Both receipts retain their exact executed sources
+and logs. These are evidence replays, with no new model calls, Lean checks or
+GPU experiments. The original paper remains incomplete; the registry, original
+optimized programs and harness, model histories, Triton coverage, closed-model
+runs, original mutants and H100/MI300X timing cells remain missing.
+
+The earlier v23 snapshot freezes **3,512 evidence files** at commit `44b414f`, plus its
 auditor and targets. All six independent full-size HIP/CUDA model cohorts are
 included: 85 verified proofs across 102 tasks, 782 recorded responses and
 15,509,481 reported tokens. The auditor checks their complete rosters, fixed

@@ -5,7 +5,7 @@ from the authors' reported results. Kernel studies used zero model calls. Free
 local GLM and DeepSeek inference is recorded as separate adapted experiments; no paid
 model endpoints are used. Hardware evidence is from AMD GPUs.
 
-The [frozen result-by-result audit](paper_results/snapshots/20261113-v23/results/RESULTS.md)
+The [frozen result-by-result audit](paper_results/snapshots/20261113-v24/results/RESULTS.md)
 enumerates all 17 tables, seven outer figure groups and 16 additional narrative
 anchors in the published preprint. It distinguishes measurements from setup and
 method descriptions, binds the published evidence files by hash, and lists the
@@ -14,13 +14,13 @@ It includes production SiLU, wave reduction, complete native weighted and fused
 RMSNorm, complete native online attention, complete native RoPE and both fused
 QK/RoPE layouts, complete FlashInfer and guarded SGLang RMSNorm, native FP16
 single-split-K AWQ GEMM, and the source-bound softmax race/repair studies. It
-binds 3,512 evidence files at commit `44b414f`, including both numerical
-reference studies, all six full-size model cohorts, the finite compiled PTX ReLU
-proof and the explicit v21 semantics correction. It can be replayed after later
+binds 3,565 evidence files at commit `48aa4ae`, including both numerical
+reference studies, all six full-size model cohorts, the complete-source compiled
+PTX ReLU and GEMV development proofs, and the explicit v21 semantics correction. It can be replayed after later
 documentation changes. The
 [historical snapshots](paper_results/README.md) are preserved.
-The [standalone v23 checks](paper_results/snapshot-v23-validation/results.json)
-passed four positive replays and rejected all 49 tampering controls; these are
+The [standalone v24 checks](paper_results/snapshot-v24-validation/results.json)
+passed five positive replays and rejected all 57 tampering controls; these are
 evidence checks, separate from the underlying experiments.
 
 The [six-cohort comparison](local_models/results/full-shape-comparison-six-cohorts-v1/RESULTS.md)
