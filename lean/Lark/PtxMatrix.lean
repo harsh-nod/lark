@@ -1661,6 +1661,152 @@ theorem launch_other_memory (ops : Ops α) (input : Nat → Nat → α)
   rw [runLanes_other_memory ops input 0 32768 (initial layout input outside) l hp]
 
 
+theorem control_trace (c : Nat) (s : Machine α) :
+    (controlResult c s).registers.base.trace = s.registers.base.trace := rfl
+
+def AccessSafe (a : Access) : Prop :=
+  if a.write then a.location = outputCell a.thread
+  else a.location.space = .global ∧ a.location.owner = 0 ∧ a.location.buffer < 2
+
+def TraceSafe (trace : List Access) : Prop := ∀ a ∈ trace, AccessSafe a
+
+theorem termResult_trace_safe (ops : Ops α) (t c j : Nat) (a b acc : α) (s : Machine α)
+    (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (termResult ops t c j a b acc s).registers.base.trace := by
+  intro access ha
+  change access ∈ (⟨t, bCell t c j, false, s.registers.base.epochs t⟩ ::
+    ⟨t, aCell t c j, false, s.registers.base.epochs t⟩ :: s.registers.base.trace) at ha
+  simp only [List.mem_cons] at ha
+  rcases ha with rfl | rfl | ha
+  · simp [AccessSafe, bCell]
+  · simp [AccessSafe, aCell]
+  · exact h access ha
+
+theorem runTerms_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c j r : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (runTerms ops input t c j r acc s).registers.base.trace := by
+  induction r generalizing j acc s with
+  | zero => exact h
+  | succ r ih =>
+      exact ih (j+1) (nextValue ops input t c j acc) (chunkStep ops input t c j acc s)
+        (termResult_trace_safe ops t c j _ _ acc s h)
+
+theorem iteration_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (iteration ops input t c acc s).registers.base.trace := by
+  rw [iteration, control_trace]
+  unfold bodyEnd
+  exact runTerms_trace_safe ops input t c 0 16 acc (bodyStart t c s) h
+
+theorem runChunks_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t c r : Nat)
+    (acc : α) (s : Machine α) (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (runChunks ops input t c r acc s).registers.base.trace := by
+  induction r generalizing c acc s with
+  | zero => exact h
+  | succ r ih =>
+      exact ih (c+1) (foldTerms ops input t c 0 16 acc) (iteration ops input t c acc s)
+        (iteration_trace_safe ops input t c acc s h)
+
+theorem exitReturned_trace_safe (ops : Ops α) (t : Nat) (acc : α) (s : Machine α)
+    (h : TraceSafe s.registers.base.trace) :
+    TraceSafe (exitReturned ops t acc s).registers.base.trace := by
+  intro access ha
+  change access ∈ (⟨t, outputCell t, true, s.registers.base.epochs t⟩ :: s.registers.base.trace) at ha
+  rcases List.mem_cons.mp ha with rfl | ha
+  · rfl
+  · exact h access ha
+
+theorem afterLane_trace_safe (ops : Ops α) (input : Nat → Nat → α) (t : Nat) (s : State α)
+    (h : TraceSafe s.trace) : TraceSafe (afterLane ops input t s).trace := by
+  have hi : TraceSafe (initialized ops t s).registers.base.trace := by
+    rw [initialized_base]
+    exact h
+  exact exitReturned_trace_safe ops t _ _
+    (runChunks_trace_safe ops input t 0 16 (ops.literal 0 1) (initialized ops t s) hi)
+
+theorem runLanes_trace_safe (ops : Ops α) (input : Nat → Nat → α) (k r : Nat) (s : State α)
+    (h : TraceSafe s.trace) : TraceSafe (runLanes ops input k r s).trace := by
+  induction r generalizing k s with
+  | zero => exact h
+  | succ r ih => exact ih (k+1) (afterLane ops input k s) (afterLane_trace_safe ops input k s h)
+
+theorem trace_safe_raceFree (g : Geometry) (trace : List Access) (h : TraceSafe trace) :
+    raceFree g trace = true := by
+  apply List.all_eq_true.mpr
+  intro a ha
+  apply List.all_eq_true.mpr
+  intro b hb
+  have hasafe := h a ha
+  have hbsafe := h b hb
+  by_cases he : a.thread = b.thread
+  · simp [conflict, he]
+  · cases haw : a.write <;> cases hbw : b.write <;>
+      simp [AccessSafe, haw, hbw] at hasafe hbsafe
+    · simp [conflict, haw, hbw]
+    · have hn : a.location.buffer ≠ 2 := by have hi := hasafe.2.2; omega
+      simp [conflict, sameLocation, hbsafe, haw, hbw, outputCell, hn]
+    · have hn : (2 : Nat) ≠ b.location.buffer := by have hi := hbsafe.2.2; omega
+      simp [conflict, sameLocation, hasafe, haw, hbw, outputCell, hn]
+    · simp [conflict, sameLocation, hasafe, hbsafe, outputCell, haw, hbw, he]
+
+theorem launch_raceFree (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    raceFree geometry (finalState ops input outside).trace = true := by
+  apply trace_safe_raceFree
+  unfold finalState
+  exact runLanes_trace_safe ops input 0 32768 (initial layout input outside)
+    (by simp [TraceSafe, initial])
+
+def referenceSpec (ops : Ops α) (input : Nat → Nat → α) : List α :=
+  (List.range 32768).map (reference ops input)
+
+inductive TensorReference where
+  | input : Nat → TensorReference
+  | fromHalf : TensorReference → TensorReference
+  | matmul : TensorReference → TensorReference → TensorReference
+  | toHalf : TensorReference → TensorReference
+  deriving DecidableEq, Repr
+
+def referenceBody : TensorReference :=
+  .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1)))
+
+/-- Closed [64,256] @ [256,512] FP16 matrix reference; other ASTs refuse. -/
+def evaluateReference (ops : Ops α) (input : Nat → Nat → α) : TensorReference → Option (List α)
+  | .toHalf (.matmul (.fromHalf (.input 0)) (.fromHalf (.input 1))) => some (referenceSpec ops input)
+  | _ => none
+
+theorem evaluate_reference_body (ops : Ops α) (input : Nat → Nat → α) :
+    evaluateReference ops input referenceBody = some (referenceSpec ops input) := rfl
+
+theorem extract_outputs (s : State α) (values : Nat → α)
+    (h : ∀ i, i < 32768 → s.memory (outputCell i) = some (values i)) :
+    extract layout s = some ((List.range 32768).map values) := by
+  simp only [extract, layout, List.zipIdx_cons, List.zipIdx_nil, List.flatMap_cons,
+    List.flatMap_nil, List.nil_append]
+  simp only [List.map_cons, List.map_nil, show Role.input ≠ Role.output by decide,
+    ↓reduceIte, List.nil_append, List.append_nil]
+  change (((List.range 32768).map (fun i => (2, i))).mapM
+    (fun bi => s.memory ⟨.global, 0, bi.1, bi.2⟩) : Option (List α)) = _
+  rw [LarkPointwise.mapM_map]
+  exact LarkPointwise.mapM_some (List.range 32768) _ _ (by
+    intro i hi
+    exact h i (List.mem_range.mp hi))
+
+theorem final_extract (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    extract layout (finalState ops input outside) = some (referenceSpec ops input) := by
+  exact extract_outputs (finalState ops input outside) (reference ops input) (launch_outputs ops input outside)
+
+def Correct (ops : Ops α) (p : List Instruction) (spec : (Nat → Nat → α) → List α) : Prop :=
+  ∀ input outside, ∃ final,
+    LaneSequence ops p 0 32768 (initial layout input outside) final ∧
+    raceFree geometry final.trace = true ∧
+    extract layout final = some (spec input) ∧
+    (∀ l, (∀ i, i < 32768 → l ≠ outputCell i) → final.memory l = (initial layout input outside).memory l)
+
+theorem kernel_correct (ops : Ops α) : Correct ops program (referenceSpec ops) := by
+  intro input outside
+  exact ⟨finalState ops input outside, launch_execution ops input outside,
+    launch_raceFree ops input outside, final_extract ops input outside, launch_other_memory ops input outside⟩
+
 end Gemm
 
 #print axioms steps_trans
@@ -1710,4 +1856,18 @@ end Gemm
 #print axioms Gemm.launch_execution
 #print axioms Gemm.launch_outputs
 #print axioms Gemm.launch_other_memory
+#print axioms Gemm.control_trace
+#print axioms Gemm.termResult_trace_safe
+#print axioms Gemm.runTerms_trace_safe
+#print axioms Gemm.iteration_trace_safe
+#print axioms Gemm.runChunks_trace_safe
+#print axioms Gemm.exitReturned_trace_safe
+#print axioms Gemm.afterLane_trace_safe
+#print axioms Gemm.runLanes_trace_safe
+#print axioms Gemm.trace_safe_raceFree
+#print axioms Gemm.launch_raceFree
+#print axioms Gemm.evaluate_reference_body
+#print axioms Gemm.extract_outputs
+#print axioms Gemm.final_extract
+#print axioms Gemm.kernel_correct
 end LarkPtxMatrix
