@@ -10,8 +10,17 @@ reads and is not original-paper Pass@1. The complete protocol replay regenerated
 all prompts, actions and Main files; accepted proofs passed 32 additional fresh
 Lean kernel/axiom checks. Failed candidates retain their recorded outcomes.
 These are model proof completions for the owned full-size fixtures, with zero
-new registered source certificates or original-paper result claims. GLM and
-Flash full-size cohorts remain separate ongoing experiments.
+new registered source certificates or original-paper result claims.
+
+The [completed full-size Flash HIP cohort](results/full-shape-cohort-flash-hip-v1/results.json)
+verified twelve of seventeen tasks. ReLU, LayerNorm, Softmax, RoPE and FFN
+exhausted their budgets; their attempts and costs remain archived. All 93
+requests used 1,563,506 prompt and 115,224 completion tokens, 1,678,730 total.
+Zero first responses verified a proof; five tasks verified at their first
+actual Lean check, which is a separate metric. Full protocol replay bound every
+request, and all twelve accepted proofs passed 24 additional fresh kernel/axiom
+checks. Its exact owned, drained two-GPU service was stopped with exit code zero.
+GLM HIP and the three CUDA-source cohorts remain separate unfinished experiments.
 
 The [full-size comparison tool](compare_full_shape.py) reconstructs per-task
 costs from the archived responses and applies success-only input/output token
@@ -25,6 +34,20 @@ uses the complete DeepSeek HIP cohort. Its success-only Level-1 means are
 the failed depthwise task's 332,130 tokens remain in cohort totals. Five of
 the six independent model/language cohorts are still missing from that frozen
 comparison. It adds no model, GPU or Lean experiment.
+
+The [updated two-cohort comparison](results/full-shape-comparison-deepseek-flash-hip-v1/RESULTS.md)
+adds the complete Flash HIP packet without changing the frozen initial report.
+Flash verified nine of twelve Level-1 and three of five Level-2 tasks. Its
+success-only mean prompt/completion costs are 0.081640M/0.005264M and
+0.120210M/0.005286M tokens respectively. Four of six independent model/language
+cohorts remain missing; this is not a paper-completion denominator. All failed
+tasks remain in spending totals. The comparison reruns no experiment.
+
+The [comparison publication receipt](results/full-shape-comparison-publication-v1/results.json)
+checks its original eight public files over TLS without authentication. The
+[comparison main receipt](results/full-shape-comparison-ci-main-v1/results.json)
+and [Flash-runtime main CI record](results/full-shape-flash-runtime-main-ci-v1/results.json)
+retain all nineteen successful exact-source CI jobs for those prior changes.
 
 The [full-size protocol](FULL_SHAPE_METHOD.md) now validates all seventeen
 existing HIP benchmark shapes with four fixed proof slots. Its 17 SDK positive

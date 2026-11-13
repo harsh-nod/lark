@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "status": "two-complete-independent-HIP-cohorts-cost-comparison-bound",
+  "driver_source_checkpoint": "243b7548e294b13f5e6824958e358fe82be21f5e",
+  "driver_source_path": "reproduction/local_models/compare_full_shape.py",
+  "driver_sha256": "7cbe3affd0b2db3be6b419e7b8410bc06e51e94dcfa7bcdad579abd789a6c5a0",
+  "inputs": [
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-deepseek-v1",
+      "manifest_sha256": "9c38f89f52ddb37431b94f34b5ac7a1ace74148b6e1d6a3905a7da7ad3e3fde4",
+      "raw_files": 1426,
+      "audit_files": 459,
+      "response_usage_records": 175,
+      "recorded_additional_fresh_kernel_checks": 32
+    },
+    {
+      "packet_path": "reproduction/local_models/results/full-shape-cohort-flash-hip-v1",
+      "manifest_sha256": "ddcb2a443066e63671fb6841b34d381314a1b6e015bd347462a1f9db60fbb33d",
+      "raw_files": 887,
+      "audit_files": 383,
+      "response_usage_records": 93,
+      "recorded_additional_fresh_kernel_checks": 24
+    }
+  ],
+  "complete_independent_cohorts": 2,
+  "missing_cohorts": 4,
+  "fresh_lean_checks_by_comparison": 0,
+  "model_calls_by_comparison": 0,
+  "gpu_trials_by_comparison": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "Reconstructs complete recorded response/receipt usage and frozen accepted-proof Main bindings; successful-task means exclude budget failures while cohort totals retain them. Fresh kernel checks belong to the independent audits, not this comparison. Original registry/harness/closed-model histories/PTX/NVIDIA results remain missing."
+}
