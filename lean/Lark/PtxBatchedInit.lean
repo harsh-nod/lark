@@ -244,6 +244,157 @@ theorem prefix21_execute (ops : Ops α) (t : Nat) (base : State α) (ht : t < 10
   · rw [eq21]; simpa using r18
   · rw [eq21]; simp
 
+theorem column (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 21) (ht : t < 1048576)
+    (h19 : s.registers.i32 19 = some ((t/512*512 : Nat) : Int)) :
+    Result ops t base s 21 (fun m => setIndex32 m 20 ((t%512 : Nat) : Int)) := by
+  have hb : signed32 (t : Int) ∧ signed32 ((t/512*512 : Nat) : Int) ∧
+      signed32 ((t : Int)-((t/512*512 : Nat) : Int)) := by
+    unfold signed32; simp only [Int.natCast_mul]; omega
+  have e := LarkPtxMatrix.sub_step ops layout geometry t 20 1 (.reg 19)
+    (t : Int) ((t/512*512 : Nat) : Int) s h.index h19 hb
+  have he : (t : Int)-((t/512*512 : Nat) : Int) = ((t%512 : Nat) : Int) := by
+    simp only [Int.natCast_mul]; omega
+  rw [he] at e
+  exact produce32 ops t base s 21 20 ((t%512 : Nat) : Int) (.subSigned32 20 1 (.reg 19))
+    h hpc (by rfl) e (by decide)
+
+theorem batch_b_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 22) (ht : t < 1048576) :
+    Result ops t base s 22 (fun m => setIndex32 m 21 ((t/32768*131072 : Nat) : Int)) := by
+  have hb : unsigned32 ((t/32768 : Nat) : Int) := by unfold unsigned32; omega
+  have e := LarkPtxDot.shiftLeft_step ops layout geometry t 21 8 17 s
+    ((t/32768 : Nat) : Int) h.batch hb
+  have hp : (2 : Int)^min 17 32 = 131072 := by decide
+  have he : (((t/32768 : Nat) : Int)*131072) % 4294967296 =
+      ((t/32768*131072 : Nat) : Int) := by
+    simp only [Int.natCast_mul]; omega
+  rw [hp, he] at e
+  exact produce32 ops t base s 22 21 ((t/32768*131072 : Nat) : Int)
+    (.base (.shiftLeft32 21 8 17)) h hpc (by rfl) e (by decide)
+
+theorem b_base_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 23) (ht : t < 1048576)
+    (h20 : s.registers.i32 20 = some ((t%512 : Nat) : Int))
+    (h21 : s.registers.i32 21 = some ((t/32768*131072 : Nat) : Int)) :
+    Result ops t base s 23 (fun m => setIndex32 m 22 ((bIndex t 0 : Nat) : Int)) := by
+  have hb : signed32 ((t%512 : Nat) : Int) ∧ signed32 ((t/32768*131072 : Nat) : Int) ∧
+      signed32 (((t%512 : Nat) : Int)+((t/32768*131072 : Nat) : Int)) := by
+    unfold signed32; simp only [Int.natCast_mul]; omega
+  have e := LarkPtxDot.add32_step ops layout geometry t 22 20 (.reg 21) s
+    ((t%512 : Nat) : Int) ((t/32768*131072 : Nat) : Int) h20 h21 hb
+  have he : ((t%512 : Nat) : Int)+((t/32768*131072 : Nat) : Int) =
+      ((bIndex t 0 : Nat) : Int) := by simp [bIndex]; omega
+  rw [he] at e
+  exact produce32 ops t base s 23 22 ((bIndex t 0 : Nat) : Int)
+    (.base (.addSigned32 22 20 (.reg 21))) h hpc (by rfl) e (by decide)
+
+theorem a_base_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 24) (ht : t < 1048576)
+    (h18 : s.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int)) :
+    Result ops t base s 24 (fun m => setIndex32 m 23 ((aIndex t 0 : Nat) : Int)) := by
+  have hb : signed32 ((t/32768*16384 : Nat) : Int) ∧
+      signed32 (((t/512)%64*256 : Nat) : Int) ∧
+      signed32 (((t/32768*16384 : Nat) : Int)+(((t/512)%64*256 : Nat) : Int)) := by
+    unfold signed32; simp only [Int.natCast_mul]; omega
+  have e := LarkPtxDot.add32_step ops layout geometry t 23 9 (.reg 18) s
+    ((t/32768*16384 : Nat) : Int) (((t/512)%64*256 : Nat) : Int) h.batchA h18 hb
+  have he : ((t/32768*16384 : Nat) : Int)+(((t/512)%64*256 : Nat) : Int) =
+      ((aIndex t 0 : Nat) : Int) := by simp [aIndex]
+  rw [he] at e
+  exact produce32 ops t base s 24 23 ((aIndex t 0 : Nat) : Int)
+    (.base (.addSigned32 23 9 (.reg 18))) h hpc (by rfl) e (by decide)
+
+theorem b_wide_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 25) (ht : t < 1048576)
+    (h22 : s.registers.i32 22 = some ((bIndex t 0 : Nat) : Int)) :
+    Result ops t base s 25 (fun m => setIndex64 m 3 (((bIndex t 0 : Nat) : Int)*2)) := by
+  have hb : signed32 ((bIndex t 0 : Nat) : Int) ∧ signed32 2 ∧
+      signed64 (((bIndex t 0 : Nat) : Int)*2) := by
+    have bounds := input_indices_valid t 0 ht (by decide)
+    unfold signed32 signed64; omega
+  have e := LarkPtxDot.wide_step ops layout geometry t 3 22 2
+    ((bIndex t 0 : Nat) : Int) s h22 hb
+  exact produce64 ops t base s 25 3 (((bIndex t 0 : Nat) : Int)*2)
+    (.base (.mulWideSigned32 3 22 2)) h hpc (by rfl) e (by decide)
+
+theorem a_wide_offset (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 26) (ht : t < 1048576)
+    (h23 : s.registers.i32 23 = some ((aIndex t 0 : Nat) : Int)) :
+    Result ops t base s 26 (fun m => setIndex64 m 4 (((aIndex t 0 : Nat) : Int)*2)) := by
+  have hb : signed32 ((aIndex t 0 : Nat) : Int) ∧ signed32 2 ∧
+      signed64 (((aIndex t 0 : Nat) : Int)*2) := by
+    have bounds := input_indices_valid t 0 ht (by decide)
+    unfold signed32 signed64; omega
+  have e := LarkPtxDot.wide_step ops layout geometry t 4 23 2
+    ((aIndex t 0 : Nat) : Int) s h23 hb
+  exact produce64 ops t base s 26 4 (((aIndex t 0 : Nat) : Int)*2)
+    (.base (.mulWideSigned32 4 23 2)) h hpc (by rfl) e (by decide)
+
+theorem zero_accumulator (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 27) :
+    Result ops t base s 27 (fun m => setFloat m 68 (ops.literal 0 1)) := by
+  exact produce_float ops t base s 27 68 (ops.literal 0 1) (.base (.literalFloat 68 0 1))
+    h hpc (by rfl) (LarkPtxMatrix.zero_float_step ops layout geometry t 68 s)
+
+theorem zero_counter (ops : Ops α) (t : Nat) (base : State α) (s : Machine α)
+    (h : Frame t base s) (hpc : s.pc = 28) :
+    Result ops t base s 28 (fun m => setIndex32 m 24 0) := by
+  exact produce32 ops t base s 28 24 0 (.base (.literal32 24 0))
+    h hpc (by rfl) (LarkPtxMatrix.zero_index_step ops layout geometry t 24 s) (by decide)
+
+structure Ready (ops : Ops α) (t : Nat) (base : State α) (s : Machine α) : Prop where
+  frame : Frame t base s
+  pc : s.pc = 29
+  bOffset : s.registers.i64 3 = some (((bIndex t 0 : Nat) : Int)*2)
+  aOffset : s.registers.i64 4 = some (((aIndex t 0 : Nat) : Int)*2)
+  accumulator : s.registers.scalar 68 = some (ops.literal 0 1)
+  counter : s.registers.i32 24 = some 0
+
+theorem prefix29_execute (ops : Ops α) (t : Nat) (base : State α) (ht : t < 1048576) :
+    ∃ final, Steps ops layout geometry t program (start base) final ∧ Ready ops t base final := by
+  obtain ⟨s21, first, f21, pc21, r18, r19⟩ := prefix21_execute ops t base ht
+  obtain ⟨s22, e22, f22, pc22, eq22⟩ := column ops t base s21 f21 pc21 ht r19
+  have r20 : s22.registers.i32 20 = some ((t%512 : Nat) : Int) := by rw [eq22]; simp
+  have a22 : s22.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int) := by
+    rw [eq22]; simpa using r18
+  obtain ⟨s23, e23, f23, pc23, eq23⟩ := batch_b_offset ops t base s22 f22 pc22 ht
+  have r21 : s23.registers.i32 21 = some ((t/32768*131072 : Nat) : Int) := by rw [eq23]; simp
+  have col23 : s23.registers.i32 20 = some ((t%512 : Nat) : Int) := by rw [eq23]; simpa using r20
+  have a23 : s23.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int) := by
+    rw [eq23]; simpa using a22
+  obtain ⟨s24, e24, f24, pc24, eq24⟩ := b_base_offset ops t base s23 f23 pc23 ht col23 r21
+  have r22 : s24.registers.i32 22 = some ((bIndex t 0 : Nat) : Int) := by rw [eq24]; simp
+  have a24 : s24.registers.i32 18 = some (((t/512)%64*256 : Nat) : Int) := by
+    rw [eq24]; simpa using a23
+  obtain ⟨s25, e25, f25, pc25, eq25⟩ := a_base_offset ops t base s24 f24 pc24 ht a24
+  have r23 : s25.registers.i32 23 = some ((aIndex t 0 : Nat) : Int) := by rw [eq25]; simp
+  have b25 : s25.registers.i32 22 = some ((bIndex t 0 : Nat) : Int) := by rw [eq25]; simpa using r22
+  obtain ⟨s26, e26, f26, pc26, eq26⟩ := b_wide_offset ops t base s25 f25 pc25 ht b25
+  have r3 : s26.registers.i64 3 = some (((bIndex t 0 : Nat) : Int)*2) := by rw [eq26]; simp
+  have a26 : s26.registers.i32 23 = some ((aIndex t 0 : Nat) : Int) := by rw [eq26]; simpa using r23
+  obtain ⟨s27, e27, f27, pc27, eq27⟩ := a_wide_offset ops t base s26 f26 pc26 ht a26
+  have r4 : s27.registers.i64 4 = some (((aIndex t 0 : Nat) : Int)*2) := by rw [eq27]; simp
+  have b27 : s27.registers.i64 3 = some (((bIndex t 0 : Nat) : Int)*2) := by rw [eq27]; simpa using r3
+  obtain ⟨s28, e28, f28, pc28, eq28⟩ := zero_accumulator ops t base s27 f27 pc27
+  have acc : s28.registers.scalar 68 = some (ops.literal 0 1) := by rw [eq28]; simp
+  have b28 : s28.registers.i64 3 = some (((bIndex t 0 : Nat) : Int)*2) := by rw [eq28]; simpa using b27
+  have a28 : s28.registers.i64 4 = some (((aIndex t 0 : Nat) : Int)*2) := by rw [eq28]; simpa using r4
+  obtain ⟨s29, e29, f29, pc29, eq29⟩ := zero_counter ops t base s28 f28 pc28
+  refine ⟨s29, ?_, f29, pc29, ?_, ?_, ?_, ?_⟩
+  · exact LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ first
+      (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e22
+        (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e23
+          (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e24
+            (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e25
+              (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e26
+                (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e27
+                  (LarkPtxMatrix.steps_trans _ _ _ _ _ _ _ _ e28 e29)))))))
+  · rw [eq29]; simpa using b28
+  · rw [eq29]; simpa using a28
+  · rw [eq29]; simpa using acc
+  · rw [eq29]; simp
+
 end LarkPtxBatched.Bmm.Init
 
 #print axioms LarkPtxBatched.Bmm.Init.prefix_frame
@@ -262,3 +413,12 @@ end LarkPtxBatched.Bmm.Init
 #print axioms LarkPtxBatched.Bmm.Init.local_a_offset
 #print axioms LarkPtxBatched.Bmm.Init.column_mask
 #print axioms LarkPtxBatched.Bmm.Init.prefix21_execute
+#print axioms LarkPtxBatched.Bmm.Init.column
+#print axioms LarkPtxBatched.Bmm.Init.batch_b_offset
+#print axioms LarkPtxBatched.Bmm.Init.b_base_offset
+#print axioms LarkPtxBatched.Bmm.Init.a_base_offset
+#print axioms LarkPtxBatched.Bmm.Init.b_wide_offset
+#print axioms LarkPtxBatched.Bmm.Init.a_wide_offset
+#print axioms LarkPtxBatched.Bmm.Init.zero_accumulator
+#print axioms LarkPtxBatched.Bmm.Init.zero_counter
+#print axioms LarkPtxBatched.Bmm.Init.prefix29_execute
