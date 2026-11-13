@@ -1,0 +1,804 @@
+{
+  "schema": 1,
+  "profile": "source-bound-compiled-gemm-fp16-v1",
+  "status": "verified-source-bound-full-PTX-GEMM",
+  "created_at_utc": "2026-11-13T19:38:56.748676+00:00",
+  "scope": "Source-bound complete compiled 64x256 times 256x512 FP16 GEMM development proof. All 171 actual parsed instructions, the 47-instruction prologue, all 16 iterations of the real sixteen-term backward loop, the five control instructions, epilogue and ret, all 32768 active lanes, actual access-trace race freedom, every extracted reference output and preservation outside the output footprint are covered under the declared abstract scalar interpretation. The unchanged CUDA shape/dtypes, grid 32768/block 1/warp 32 and fuel [1030,1,1,1] are retained. Finite PTX execution is an inductive sequence of actual successful transitions; CUDA fuel remains separate data, with no new execution fuel. Python parsing/reference formalization, logical pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, PyTorch/NVIDIA hardware-conformance, original optimized kernel, original model-result or original-paper-completion claim. This separate development checker registers no legacy SDK profile or model success.",
+  "source_language": "ptx",
+  "reference_contract_language": "cuda",
+  "shapes": [
+    [
+      64,
+      256
+    ],
+    [
+      256,
+      512
+    ],
+    [
+      64,
+      512
+    ]
+  ],
+  "dtypes": [
+    "float16",
+    "float16",
+    "float16"
+  ],
+  "launch": {
+    "grid": 32768,
+    "block": 1,
+    "warp": 32
+  },
+  "unchanged_CUDA_contract_fuel": [
+    1030,
+    1,
+    1,
+    1
+  ],
+  "PTX_instructions": 171,
+  "input_bindings": {
+    "kernel.ptx": "896f2337328f9bb0b62975117174405f0eab90560fe91c672beb31094e86c74c",
+    "reference.py": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+    "contract.json": "2a2eb23fa4daf7b7a97bb7024e2e53648952698b0f6747e5609e89f3b4309f41"
+  },
+  "main_sha256": "9d074157e0e7a818e8b90b0e2dea8062ec370dbd287371f9a3236f57cbb7f3f4",
+  "reference_ast_sha256": "4fb6db09cc0744016d1554b5add616a6c03d1f6d7577661ae9d0cb2726e60403",
+  "source_bindings_sha256": "c9f22b9a308ebe6854c50d4e881357ac234fe8727b3ffd70b6822a1afeef0288",
+  "lean_version": "Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)",
+  "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+  "limits": {
+    "maxRecDepth": 10000,
+    "maxHeartbeats": 2000000,
+    "per_Lean_process_seconds": 180,
+    "source_import_build_seconds": 600
+  },
+  "old_owned_olean_cache_used": false,
+  "owned_Lean_modules_freshly_compiled": 5,
+  "module_checks": [
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 4.084553668042645,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/Nonlinear.olean",
+        "Lark/Nonlinear.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.Nonlinear"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 3.0289153900230303,
+      "log_sha256": "d538fab26dda9b6a28029f431c7bbbf25ed8626bc4bf82d97feb7171a698156f",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/Pointwise.olean",
+        "Lark/Pointwise.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.Pointwise"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 3.7764304659795016,
+      "log_sha256": "d0055ea61d05ee9f3dd77a943d10750a8e619f00d6b3e8d16fc46df065c8b403",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/PtxPointwise.olean",
+        "Lark/PtxPointwise.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.PtxPointwise"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 15.485539369052276,
+      "log_sha256": "03f8fe57a7f63c9affa0cf1e0568746fe7001f26b26f7bb8eb2615187d4586f2",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/PtxDot.olean",
+        "Lark/PtxDot.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.PtxDot"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 24.88794007198885,
+      "log_sha256": "4b28960b89c2576a2e40b01348967192b84be35475816caf2c9aab4747dbfeca",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/PtxMatrix.olean",
+        "Lark/PtxMatrix.lean"
+      ],
+      "timeout_seconds": 180,
+      "module": "Lark.PtxMatrix"
+    }
+  ],
+  "library_axiom_audits": {
+    "LarkPointwise.correct": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.mulWide_step": [],
+    "LarkPtxPointwise.addPointer_step": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.storeHalf_step": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.steps_append": [
+      "propext"
+    ],
+    "LarkPtxPointwise.halfAddress_at": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.parameters_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.addresses_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.loads_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.arithmetic_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_address_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_memory_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.store_ret_eq": [],
+    "LarkPtxPointwise.stores_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.lane_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.partial_memory_eq": [
+      "Quot.sound"
+    ],
+    "LarkPtxPointwise.partial_input": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.partial_owned": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.blocks_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.launch_eq": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.race_free": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.final_extract": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxPointwise.kernel_eq_spec": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.steps_trans": [],
+    "LarkPtxDot.one_step": [],
+    "LarkPtxDot.transition_halted": [
+      "propext"
+    ],
+    "LarkPtxDot.branch_uninitialized": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.program_length": [],
+    "LarkPtxDot.Gemv.parameters_execute": [],
+    "LarkPtxDot.transition_at": [
+      "propext"
+    ],
+    "LarkPtxDot.blockId_step": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.vector_execute": [],
+    "LarkPtxDot.Gemv.index_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.shiftLeft_step": [
+      "propext"
+    ],
+    "LarkPtxDot.wide_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.pointer_add_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.prologue_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.program_term": [],
+    "LarkPtxDot.loadHalf_step": [
+      "propext"
+    ],
+    "LarkPtxDot.fromHalf_step": [
+      "propext"
+    ],
+    "LarkPtxDot.binaryFloat_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.step_in_term": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.matrix_address": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.vector_address": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.term_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.chunk_step": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.unroll_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.unroll_memory": [],
+    "LarkPtxDot.pointer_values": [
+      "propext"
+    ],
+    "LarkPtxDot.add32_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.compare_ne_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.control_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.control_pc": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.matrix_control_pointer": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.vector_control_pointer": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.control_invariant": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.loop_body": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.iteration_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.control_memory": [],
+    "LarkPtxDot.Gemv.iteration_memory": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runChunks_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runChunks_memory": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.initialized_loop": [],
+    "LarkPtxDot.Gemv.source_to_loop_exit": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.loopExit_memory": [
+      "propext"
+    ],
+    "LarkPtxDot.global_step": [
+      "propext"
+    ],
+    "LarkPtxDot.half_step": [
+      "propext"
+    ],
+    "LarkPtxDot.store_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.return_step": [],
+    "LarkPtxDot.Gemv.output_address": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.epilogue_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.exitReturned_stopped": [],
+    "LarkPtxDot.Gemv.exitReturned_memory": [],
+    "LarkPtxDot.Gemv.source_to_return": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.laneResult_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.foldTerms_reference": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.referenceFold_append": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.foldChunks_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.dotValue_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.laneResult_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.afterLane_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.afterLane_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runLanes_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runLanes_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runLanes_output_memory": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runLanes_other_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.initial_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.launch_execution": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.launch_outputs": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.termResult_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.unroll_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.iteration_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runChunks_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.exitReturned_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.afterLane_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.runLanes_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.trace_safe_raceFree": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.launch_raceFree": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.final_extract": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.kernel_correct": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.extract_outputs": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxDot.Gemv.evaluate_reference_body": [],
+    "LarkPtxMatrix.Gemm.column_wide_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.next_column_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.next_wide_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.matrix_wide_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.zero_execute": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.initialize_execute": [
+      "propext"
+    ],
+    "LarkPtxMatrix.steps_trans": [
+      "propext"
+    ],
+    "LarkPtxMatrix.base_step": [
+      "propext"
+    ],
+    "LarkPtxMatrix.signed_right_step": [
+      "propext"
+    ],
+    "LarkPtxMatrix.unsigned_right_step": [
+      "propext"
+    ],
+    "LarkPtxMatrix.and_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.sub_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.unsigned_wide_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.bits32_negative512": [],
+    "LarkPtxMatrix.clear_low9": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.one_step": [
+      "propext"
+    ],
+    "LarkPtxMatrix.transition_at": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.coordinates_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.addressPairs_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.prologue_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.initialized_pc": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.initialized_base": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.a_address": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.b_address": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.program_term": [],
+    "LarkPtxMatrix.Gemm.term_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.chunk_step": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runTerms_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.body_entry": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.body_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.control_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.control_invariant": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runChunks_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.initialized_loop": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.source_to_loop_exit": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.epilogue_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.source_lane": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.laneResult_memory": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.foldTerms_reference": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.referenceFold_append": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.foldChunks_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.dotValue_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.laneResult_reference": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.afterLane_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.afterLane_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runLanes_execute": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runLanes_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runLanes_output_memory": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runLanes_other_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.initial_reads": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.launch_execution": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.launch_outputs": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.launch_other_memory": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.control_trace": [],
+    "LarkPtxMatrix.Gemm.termResult_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runTerms_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.iteration_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runChunks_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.exitReturned_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.afterLane_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.runLanes_trace_safe": [
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.trace_safe_raceFree": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.launch_raceFree": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.evaluate_reference_body": [],
+    "LarkPtxMatrix.Gemm.extract_outputs": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.final_extract": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrix.Gemm.kernel_correct": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "source_bound_proof_accepted": true,
+  "source_bound_development_proofs": 1,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "nvidia_execution": false,
+  "new_registered_source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "import_build_seconds": 51.33885278203525,
+  "main_check": {
+    "exit_code": 0,
+    "timed_out": false,
+    "seconds": 4.012088748975657,
+    "log_sha256": "63c03dbc2c36d9ee9a86c0547716dd71c488246a2825cf0bab74aebf9875f085",
+    "command": [
+      "/tmp/lean-4.19.0-linux/bin/lean",
+      "Main.lean"
+    ],
+    "timeout_seconds": 180
+  },
+  "axiom_audits": {
+    "LarkPtxMatrixCertificate.source_program": [],
+    "LarkPtxMatrixCertificate.reference_body": [],
+    "LarkPtxMatrixCertificate.launch": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrixCertificate.race_free": [
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrixCertificate.segment_equivalence": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "LarkPtxMatrixCertificate.kernel_eq_spec": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  }
+}

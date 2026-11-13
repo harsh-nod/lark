@@ -32,6 +32,11 @@ python3 reproduction/ptx/check_matrix_controls.py \
   --output /tmp/lark-ptx-gemm-controls --lean /absolute/path/to/lean
 ```
 
+[The retained results](results/full-size-gemm-proof-v1/RESULTS.md) include four
+successful Main checks, 20 fresh owned-module builds, four direct Lean
+source-binding refusals and an offline installed-wheel replay. These repeated
+checks cover one independent development kernel.
+
 Lean 4.19.0 is pinned by its binary hash. Export and replay compile all five
 owned modules from matched trusted source in a fresh import root and check six
 Main obligations. Captured Python, Lean and oleans are hash-bound data. They are

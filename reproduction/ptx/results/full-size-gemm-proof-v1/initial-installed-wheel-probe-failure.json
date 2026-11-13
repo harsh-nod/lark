@@ -1,0 +1,7 @@
+{
+  "status": "failed-before-any-GEMM-replay",
+  "exit_code": 1,
+  "probe_stderr": "Traceback (most recent call last):\n  File \"/tmp/lark-ptx-matrix-wheel-validation-v1-20261113/probe.py\", line 27, in <module>\n    old_dot.check_export(prior_dot,rejected,'/tmp/lean-4.19.0-linux/bin/lean')\n  File \"/tmp/lark-ptx-matrix-wheel-installed-v1-20261113/lib/python3.12/site-packages/lark_kernels/ptx_dot_certificate.py\", line 186, in check_export\n    require(set(read(root / \"manifest.json\")) == expected_paths(sources), \"Exact export file roster differs\")\n  File \"/tmp/lark-ptx-matrix-wheel-installed-v1-20261113/lib/python3.12/site-packages/lark_kernels/ptx_dot_certificate.py\", line 51, in require\n    raise Refusal(\"ptx-dot-certificate\", message)\nlark_kernels.ir.Refusal: ptx-dot-certificate: Exact export file roster differs\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/tmp/lark-ptx-matrix-wheel-validation-v1-20261113/probe.py\", line 29, in <module>\n    assert 'Current trusted SDK/library differs' in str(error),str(error)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ptx-dot-certificate: Exact export file roster differs\n",
+  "probe_stderr_sha256": "9cba5411803bf2a4611d1c6dfb0e400b4aa3473d0808367009a4febece7ab63c",
+  "explanation": "Driver expected later source-binding refusal; actual earliest exact-roster refusal was correct. Only driver expectation fixed in fresh v2. SDK/wheel/limits unchanged; failed v1 never counted."
+}
