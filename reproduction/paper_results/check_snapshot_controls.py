@@ -74,6 +74,7 @@ PTX_CONTROLS = (
 )
 
 GEMV_CONTROLS = tuple(("gemv" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+GEMM_CONTROLS = tuple(("gemm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 
 
 class ControlArchive:
@@ -116,6 +117,12 @@ def mutate_gemv_evidence(entries, config, control):
     """Apply the same complete metadata controls to the separate GEMV packet."""
     selected = {**config, "ptx_pointwise_proof": config["ptx_dot_proof"]}
     mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("gemv"))
+
+
+def mutate_gemm_evidence(entries, config, control):
+    """Preserve the complete GEMM packet while synchronizing false metadata."""
+    selected = {**config, "ptx_pointwise_proof": config["ptx_matrix_proof"]}
+    mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("gemm"))
 
 
 def mutate_ptx_evidence(entries, config, control):
@@ -531,6 +538,28 @@ def main():
             if code or "frozen-snapshot-replayed" not in log:
                 raise RuntimeError("Post-GEMV-control standalone replay failed: " + log)
             results.append({"name": "positive-after-gemv-controls", "accepted": True, "git_on_path": False})
+        if "ptx_matrix_proof" in read(snapshot / "targets.json"):
+            def gemm_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                entries = packed_controls.entries.copy()
+                config = read(altered / "targets.json")
+                mutate_gemm_evidence(entries, config, control_name)
+                packed_controls.write(altered, entries)
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX matrix " + expected_gate not in log:
+                    raise RuntimeError("PTX GEMM control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"}
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(gemm_control, GEMM_CONTROLS))
+            code, log = execute("positive-after-gemm-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-GEMM-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-gemm-controls", "accepted": True, "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         entries = packed_controls.entries.copy()
