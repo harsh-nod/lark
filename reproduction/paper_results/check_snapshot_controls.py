@@ -2,6 +2,7 @@
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+import gzip
 import hashlib
 import io
 import json
@@ -14,7 +15,10 @@ import tarfile
 import tempfile
 import uuid
 
-from replay_snapshot import DEFAULT, file_set, read, write
+if __package__:
+    from .replay_snapshot import DEFAULT, file_set, read, write
+else:
+    from replay_snapshot import DEFAULT, file_set, read, write
 
 
 # Temporary false-control archives preserve member bytes at faster compression.
@@ -69,6 +73,50 @@ PTX_CONTROLS = (
     ("ptx-CUDA-contract-fuel-changed", "proof contract/original scope differs"),
     ("ptx-source-CI-wrong-commit", "actual source CI differs"),
 )
+
+GEMV_CONTROLS = tuple(("gemv" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+
+
+class ControlArchive:
+    """Reuse immutable member bytes while preserving every false snapshot member.
+
+    Concatenated gzip members decode to an ordinary complete tar stream. Each
+    worker owns its metadata mutations, output archive and replay; at most two
+    replayers run concurrently, with the existing resource limits unchanged.
+    """
+
+    def __init__(self, path):
+        with tarfile.open(path) as archive:
+            self.entries = {member.name: archive.extractfile(member).read() for member in archive}
+        self.hashes = {name: hashlib.sha256(data).hexdigest() for name, data in self.entries.items()}
+        self.chunks = {name: self.chunk(name, data) for name, data in self.entries.items()}
+        self.end = gzip.compress(b"\0" * 1024, compresslevel=CONTROL_COMPRESSION_LEVEL, mtime=0)
+
+    @staticmethod
+    def chunk(name, data):
+        info = tarfile.TarInfo(name)
+        info.size = len(data)
+        payload = info.tobuf(format=tarfile.PAX_FORMAT) + data + b"\0" * ((-len(data)) % 512)
+        return gzip.compress(payload, compresslevel=CONTROL_COMPRESSION_LEVEL, mtime=0)
+
+    def write(self, snapshot, entries):
+        hashes = {}
+        with (snapshot / "evidence.tar.gz").open("wb") as output:
+            for name, data in entries.items():
+                if name in self.entries and data is self.entries[name]:
+                    output.write(self.chunks[name])
+                    hashes[name] = self.hashes[name]
+                else:
+                    output.write(self.chunk(name, data))
+                    hashes[name] = hashlib.sha256(data).hexdigest()
+            output.write(self.end)
+        write(snapshot / "evidence-manifest.json", hashes)
+
+
+def mutate_gemv_evidence(entries, config, control):
+    """Apply the same complete metadata controls to the separate GEMV packet."""
+    selected = {**config, "ptx_pointwise_proof": config["ptx_dot_proof"]}
+    mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("gemv"))
 
 
 def mutate_ptx_evidence(entries, config, control):
@@ -227,6 +275,7 @@ def main():
         shutil.copyfile(Path(__file__).with_name("replay_snapshot.py"), script)
         isolated = root / "isolated/snapshot"
         shutil.copytree(snapshot, isolated)
+        packed_controls = ControlArchive(snapshot / "evidence.tar.gz")
         env = dict(os.environ)
         env["PATH"] = "/nonexistent"
         env.pop("PYTHONPATH", None)
@@ -442,18 +491,11 @@ def main():
                 control_name, expected_gate = item
                 altered = root / control_name
                 shutil.copytree(snapshot, altered)
-                with tarfile.open(altered / "evidence.tar.gz") as archive:
-                    entries = {member.name: archive.extractfile(member).read() for member in archive}
+                entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_model_evidence(entries, config, control_name)
                 write(altered / "targets.json", config)
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-                    for name, data in entries.items():
-                        info = tarfile.TarInfo(name)
-                        info.size = len(data)
-                        archive.addfile(info, io.BytesIO(data))
-                write(altered / "evidence-manifest.json", {
-                    name: hashlib.sha256(data).hexdigest() for name, data in entries.items()})
+                packed_controls.write(altered, entries)
                 rehash(altered, archive_changed=True)
                 code, log = execute(control_name, altered)
                 if code == 0 or "Full-shape model " + expected_gate not in log:
@@ -475,17 +517,10 @@ def main():
                 control_name, expected_gate = item
                 altered = root / control_name
                 shutil.copytree(snapshot, altered)
-                with tarfile.open(altered / "evidence.tar.gz") as archive:
-                    entries = {member.name: archive.extractfile(member).read() for member in archive}
+                entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_ptx_evidence(entries, config, control_name)
-                with tarfile.open(altered / "evidence.tar.gz", "w:gz", compresslevel=CONTROL_COMPRESSION_LEVEL) as archive:
-                    for name, data in entries.items():
-                        info = tarfile.TarInfo(name)
-                        info.size = len(data)
-                        archive.addfile(info, io.BytesIO(data))
-                write(altered / "evidence-manifest.json", {
-                    name: hashlib.sha256(data).hexdigest() for name, data in entries.items()})
+                packed_controls.write(altered, entries)
                 rehash(altered, archive_changed=True)
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX pointwise " + expected_gate not in log:
@@ -500,6 +535,28 @@ def main():
                 raise RuntimeError("Post-PTX-control standalone replay failed: " + log)
             results.append({"name": "positive-after-ptx-controls", "accepted": True,
                             "git_on_path": False})
+        if "ptx_dot_proof" in read(snapshot / "targets.json"):
+            def gemv_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                entries = packed_controls.entries.copy()
+                config = read(altered / "targets.json")
+                mutate_gemv_evidence(entries, config, control_name)
+                packed_controls.write(altered, entries)
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX dot " + expected_gate not in log:
+                    raise RuntimeError("PTX GEMV control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"}
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(gemv_control, GEMV_CONTROLS))
+            code, log = execute("positive-after-gemv-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-GEMV-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-gemv-controls", "accepted": True, "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         with tarfile.open(altered / "evidence.tar.gz") as archive:
