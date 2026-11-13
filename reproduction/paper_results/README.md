@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261113-v24/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261113-v25/results/RESULTS.md) ·
+[earlier v24 ledger](snapshots/20261113-v24/results/RESULTS.md) ·
 [earlier v23 ledger](snapshots/20261113-v23/results/RESULTS.md) ·
 [earlier v22 ledger](snapshots/20261112-v22/results/RESULTS.md) ·
 [earlier v21 ledger](snapshots/20261112-v21/results/RESULTS.md) ·
@@ -30,7 +31,50 @@ python3 reproduction/paper_results/audit_level2_costs.py \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-level2-cost-check
 ```
 
-The v24 snapshot freezes **3,565 evidence files** at commit `48aa4ae`, plus
+The v25 snapshot freezes **3,623 evidence files** at commit `c61497b`, plus
+its auditor and targets. Every earlier evidence member is preserved byte for
+byte. The six full-size HIP/CUDA model cohorts retain 85 verified outcomes
+across 102 tasks, 782 responses and 15,509,481 reported tokens under the fixed
+adapted protocol.
+
+The frozen auditor now checks three complete-source compiled FP16 PTX
+development proofs: ReLU, GEMV and GEMM. GEMM covers the canonical
+64x256 by 256x512 inputs and all 32,768 output lanes, every parsed instruction
+and the actual sixteen-iteration backward loop, actual-trace race freedom,
+extracted equality to the closed ordered-fold reference, and preservation of
+memory outside the output allocation. Its four positive Main checks and
+twenty fresh owned-module builds are repeated checks of one independent
+kernel. Four direct Lean source-binding controls, isolated installed-wheel
+replay, anonymous publication and all twenty-one actual source CI jobs at
+`a2100f3` are retained. This abstract scalar proof retains its ABI, parsing,
+pointer-layout and scalar-correspondence assumptions; it establishes no
+universal IEEE guarantee or NVIDIA execution result.
+
+Replay v25 without Git, SDK, Lean, model calls or GPU access:
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v25 \
+  --source-archive /path/to/2611.02028v1.tar
+python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v25 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v25-controls
+```
+
+The [v25 validation](snapshot-v25-validation/results.json) passed all six
+positive replays outside Git and rejected **65 negative controls** in 277.86
+seconds. The [initial attempt](snapshot-v25-validation-timeout-v1/observer/results.json)
+hit the unchanged 300-second aggregate cap and remains recorded as a failure.
+The completed run schedules the same sixteen numerical controls with the
+existing maximum of two independent replay workers; the 120-second per-replay
+cap, 300-second aggregate cap, complete payload and every control remain.
+The [validation history](snapshot-v25-validation/validation-history.json)
+preserves both observations and executed sources. These are evidence replays,
+with no new Lean checks, model calls or GPU experiments. The original registry,
+optimized programs, harness, model histories, original mutants, broader PTX
+coverage and H100/MI300X measurements remain unreproduced.
+
+The earlier v24 snapshot freezes **3,565 evidence files** at commit `48aa4ae`, plus
 its auditor and targets. It preserves all earlier evidence and all six independent
 full-size model cohorts: 85 verified task outcomes across 102 tasks, 782 responses
 and 15,509,481 reported tokens under the fixed adapted protocol.
@@ -50,6 +94,7 @@ Replay v24 without Git, SDK, Lean, model calls or GPU access:
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v24 \
   --source-archive /path/to/2611.02028v1.tar
 python3 reproduction/paper_results/check_snapshot_controls.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v24 \
@@ -103,6 +148,7 @@ Replay v23 without Git, SDK, Lean, model calls or GPU access:
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v23 \
   --source-archive /path/to/2611.02028v1.tar
 python3 reproduction/paper_results/check_snapshot_controls.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v23 \

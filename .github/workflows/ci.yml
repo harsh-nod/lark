@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
-      - name: Require six model cohorts and both complete-source PTX proof packets
+      - name: Require six model cohorts and three complete-source PTX proof packets
         run: |
           python3 - <<'PY'
           import json
@@ -28,6 +28,7 @@ jobs:
           models = report.get('full_shape_model_evidence_checks', {})
           ptx = report.get('ptx_pointwise_evidence_checks', {})
           gemv = report.get('ptx_dot_evidence_checks', {})
+          gemm = report.get('ptx_matrix_evidence_checks', {})
           assert targets.get('full_shape_models', {}).get('required_cohorts') == 6, 'Final ledger must require all six cohorts'
           assert models.get('complete_independent_cohorts') == 6 and len(models.get('cohorts', [])) == 6
           assert models.get('all_six_independent_cohorts_present') is True and models.get('missing_independent_cohorts') == []
@@ -46,6 +47,12 @@ jobs:
           assert gemv.get('direct_Lean_negative_controls') == 4 and gemv.get('successful_source_CI_jobs') == 20
           assert gemv.get('new_registered_source_certificates') == 0
           assert gemv.get('original_paper_fully_reproduced') is gemv.get('nvidia_execution') is False
+          assert targets.get('ptx_matrix_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-gemm-proof-v1'
+          assert gemm.get('independent_source_bound_development_proofs') == 1
+          assert gemm.get('retained_positive_Main_checks') == 4 and gemm.get('positive_rechecks') == 3
+          assert gemm.get('direct_Lean_negative_controls') == 4 and gemm.get('successful_source_CI_jobs') == 21
+          assert gemm.get('new_registered_source_certificates') == 0
+          assert gemm.get('original_paper_fully_reproduced') is gemm.get('nvidia_execution') is False
           assert all(report[name] == 0 for name in ('fresh_lean_checks', 'fresh_gpu_trials', 'model_calls'))
           assert all(row['original_result_reproduced'] is False for row in report['floats'] + report['narrative']
                      if row['role'] in ('experiment', 'history'))
