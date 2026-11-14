@@ -1,4 +1,4 @@
-# Full-size FFN preparation and reference proof
+# Full-size FFN reference and first compiled stage
 
 These are exact inputs from the independently published full-size compiler
 study. `input-bindings.json` binds every file to its original archive member.
@@ -25,6 +25,22 @@ python3 reproduction/ptx/check_ffn_reference.py \
   --lean /path/to/lean-4.19.0-linux/bin/lean --output /new/output/directory
 ```
 
-Neither compiled-stage execution nor the composed PTX pipeline has a new
-correctness proof yet. This reference proof adds no accepted certificate,
-paper result, original optimized program, IEEE guarantee or NVIDIA execution.
+The complete compiled up stage now has a source-bound Lean development proof.
+It covers all 173 parsed instructions, the real 256-term loop, ReLU, FP16 store
+and return, all 65,536 lanes and reference outputs, access-trace race freedom,
+and memory preservation outside the output region. Its specification uses the
+independent tensor interpreter above. The reusable checker also binds the
+complete original reference AST. Its fresh source build checks nine owned
+library modules plus the generated input binding, with 220 axiom audits.
+
+```sh
+python3 reproduction/ptx/check_ffn_up.py \
+  --lean /path/to/lean-4.19.0-linux/bin/lean --output /new/up-stage-directory
+```
+
+The down stage and the shared-intermediate, two-launch composition remain
+unproved. This is one completed stage, zero completed FFN pipelines and zero
+new accepted certificates. Scalar-operation and logical-pointer correspondence
+remain trusted. There is no paper-result, original optimized program,
+IEEE guarantee or NVIDIA-execution claim. Development attempts, including the
+initial failed module, remain in `development/`.

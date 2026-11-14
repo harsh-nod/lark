@@ -1,5 +1,5 @@
 {
-  "status": "full-size-frontend-and-independent-reference-denotation-passed-compiled-stages-unproved",
+  "status": "independent-reference-and-exact-full-size-up-stage-proved-down-stage-and-pipeline-unproved",
   "frontend_guard_tests": 8,
   "guard_seconds": 0.061,
   "Ruff_passed": true,
@@ -111,9 +111,9 @@
     }
   ],
   "reference_proof_attempts_passed": 2,
-  "full_stage_or_pipeline_proofs": 0,
+  "full_stage_or_pipeline_proofs": 1,
   "new_registered_source_certificates": 0,
-  "latest_problem": "Both exact compiled PTX stages and their composition remain unproved.",
+  "latest_problem": "Exact171-instruction full-size down stage and shared FP16 intermediate composition remain unproved.",
   "frozen_snapshot_or_current_main_changes": false,
   "model_calls": 0,
   "GPU_trials": 0,
@@ -128,5 +128,59 @@
     "all_own_imports_cold": true,
     "original_inventory_sha256": "07baa3201b6d9971c68ad2ed4d22883904f335d8e76754e9461ceded84d2e878"
   },
-  "scope": "Independent reference interpreter and full output extraction only; no compiled PTX kernel correctness, accepted certificate, NVIDIA execution, IEEE guarantee or original paper result claim."
+  "scope": "Full independent tensor reference, and complete exact173-instruction FFN up-stage launch, all65536 extracted reference outputs, actual access-trace race freedom and memory frame. Down-stage and shared-intermediate two-launch composition remain unproved. Scalar-operation and logical-pointer correspondence remain trusted; no IEEE/NVIDIA/original-model/paper-result claim.",
+  "up_stage_checks": [
+    {
+      "version": 1,
+      "status": "failed-up-stage-development-check",
+      "seconds": 59.928496447973885,
+      "original_directory_retained_in_full": "/tmp/lark-ptx-ffn-up-check-v1-20261114",
+      "original_manifest_sha256": "7d646eaf4bd0fb272843f6b247c8cae9540acb8433ba6c9a5692fbc7f506ba50",
+      "complete_proof_stage": "failed-module"
+    },
+    {
+      "version": 2,
+      "status": "exact-full-size-FFN-up-prologue-and-loop-passed",
+      "seconds": 67.18196714599617,
+      "original_directory_retained_in_full": "/tmp/lark-ptx-ffn-up-check-v2-20261114",
+      "original_manifest_sha256": "92464417eea3d3f05eeb73bd8f0ce23ae3bc3a30a90374ad6ae76fffe6bfcb8d",
+      "complete_proof_stage": "prologue-and-loop-only"
+    },
+    {
+      "version": 3,
+      "status": "exact-full-size-FFN-up-lane-through-return-passed",
+      "seconds": 73.93438272201456,
+      "original_directory_retained_in_full": "/tmp/lark-ptx-ffn-up-check-v3-20261114",
+      "original_manifest_sha256": "0c69fd6a5f773d19b23f68b9c33cb8a08bd2d1e088a53ba6edb4f437dba8b982",
+      "complete_proof_stage": "complete-lane-through-store-and-return"
+    },
+    {
+      "version": 4,
+      "status": "exact-full-size-FFN-up-launch-reference-race-frame-passed",
+      "seconds": 94.34800602099858,
+      "original_directory_retained_in_full": "/tmp/lark-ptx-ffn-up-check-v4-20261114",
+      "original_manifest_sha256": "f7068d11792a81023aea6c54f7b15ec9d56fd93d8e7004b3ce7588f356fd580b",
+      "complete_proof_stage": "complete-up-stage-launch-reference-race-frame"
+    },
+    {
+      "version": "CLI",
+      "status": "exact-full-size-FFN-up-launch-reference-race-frame-passed",
+      "seconds": 95.00838523299899,
+      "original_directory_retained_in_full": "/tmp/lark-ptx-ffn-up-cli-v1-20261114",
+      "original_manifest_sha256": "00436a97672ec745ec8283095122d51a67a0f674fdad85040c3ffa64643b935a",
+      "complete_proof_stage": "complete-up-stage-and-full-reference-input-binding"
+    }
+  ],
+  "compiled_FFN_up_stage_correctness_proofs": 1,
+  "compiled_FFN_down_stage_correctness_proofs": 0,
+  "compiled_FFN_pipeline_correctness_proofs": 0,
+  "new_complete_compiled_FFN_families": 0,
+  "direct_Lean_negative_controls_for_up_stage": 0,
+  "up_stage_owned_sources": {
+    "lean/Lark/PtxFeedForwardUp.lean": "20680ff127500180225d86059687b883c23a00565bad31e06bdac1b4a8c1cbd2",
+    "lean/Lark/PtxFeedForwardUpExit.lean": "14039fef0c3ad6919af03fe9bfa828ecf5b6f1c8e959a1fbbc193e5cb3c43bec",
+    "lean/Lark/PtxFeedForwardUpLaunch.lean": "8ae2419eed85bb34c8883e5b20d5ec01413e7e61ede3a53357f64546eb1fe400"
+  },
+  "up_stage_cold_CLI_seconds": 95.00838523299899,
+  "up_stage_cold_CLI_axiom_audits": 220
 }
