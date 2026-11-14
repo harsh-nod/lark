@@ -93,6 +93,34 @@ def unpack(path, root):
             target.write_bytes(archive.extractfile(entry).read())
 
 
+def preserved_origins(config, names, local):
+    """Select explicitly pinned earlier bytes without replacing their logical paths."""
+    selected = config.get("preserved_evidence_origins", {})
+    definitions = {"reproduction/paper_results/audit.py", "reproduction/paper_results/targets.json"}
+    require(type(selected) is dict and set(selected) <= names - local - definitions,
+            "Unused or invalid preserved evidence origin")
+    for name, row in selected.items():
+        safe_path(name)
+        require(type(row) is dict and set(row) == {"commit", "sha256"}
+                and type(row["commit"]) is str and re.fullmatch("[0-9a-f]{40}", row["commit"]) is not None
+                and type(row["sha256"]) is str and re.fullmatch("[0-9a-f]{64}", row["sha256"]) is not None,
+                "Concrete preserved commit and SHA256 required")
+    return selected
+
+
+def committed_evidence(name, commit, selected, *, root=ROOT):
+    safe_path(name)
+    row = selected.get(name)
+    origin = commit if row is None else row["commit"]
+    if row is not None:
+        result = subprocess.run(["git", "merge-base", "--is-ancestor", origin, commit],
+                                cwd=root, capture_output=True)
+        require(result.returncode == 0, "Preserved evidence commit is not an ancestor")
+    data = subprocess.check_output(["git", "show", origin + ":" + name], cwd=root)
+    require(row is None or digest(data) == row["sha256"], "Preserved evidence bytes differ")
+    return data, {"kind": "git-blob", "commit": origin, "path": name}
+
+
 def build(snapshot):
     require(snapshot.is_relative_to(ROOT), "Build definitions must be in this repository")
     require(
@@ -119,6 +147,7 @@ def build(snapshot):
     names.add("reproduction/results/paper-source-manifest.json")
     local = set(config["local_evidence"])
     require(local <= names, "Unused local evidence")
+    selected = preserved_origins(config, names, local)
     content, origins = {}, {}
     for name in sorted(names):
         safe_path(name)
@@ -134,8 +163,7 @@ def build(snapshot):
                 "snapshot_path": path.relative_to(snapshot).as_posix(),
             }
         else:
-            content[name] = subprocess.check_output(["git", "show", commit + ":" + name], cwd=ROOT)
-            origins[name] = {"kind": "git-blob", "commit": commit, "path": name}
+            content[name], origins[name] = committed_evidence(name, commit, selected)
     for name, source in (
         ("reproduction/paper_results/audit.py", "auditor.py"),
         ("reproduction/paper_results/targets.json", "targets.json"),
