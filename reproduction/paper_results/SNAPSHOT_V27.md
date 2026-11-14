@@ -54,6 +54,20 @@ unpacker before any archive is read. All twelve archive-guard tests pass.
 The revised complete suite, its new source CI and anonymous publication still
 need to pass. The frozen v27 snapshot bytes remain unchanged.
 
+The [second full attempt](snapshot-v27-validation-mi350-v2/observer/results.json)
+also hit the same cap, at 300.114 seconds with 91 logs. Its complete logs and
+the 58 files left in its interrupted workspaces are retained. The published
+source's [actual ledger CI job](snapshot-v27-paper-ci-timeout-v1/analysis.json)
+failed with exit code 124 at its 300-second cap after writing 46 logs. That
+job is not rerun, and its failure establishes no successful source-CI gate.
+
+The next runtime revision stores temporary control gzip streams at compression
+level 0. These remain complete valid gzip/tar files; most large logical members
+are themselves compressed proof/history archives. Every member, size bound,
+hash, independent replay and control remains required. All ten control-writer
+guard tests pass, including mutation isolation, changed part boundaries and
+complete regular-file fallback. Its complete 98-check run remains pending.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v27 \
