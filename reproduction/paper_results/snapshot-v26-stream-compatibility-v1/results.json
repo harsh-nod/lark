@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "status": "replay-terminal",
+  "source_revision": "d2c22842ce59c3ee07f101c6cf654da6cb00c35b",
+  "source_files_sha256": {
+    "reproduction/paper_results/replay_snapshot.py": "119c2f8d7035f9b7181dcd322e2ba35a557a61a097346fee089669cabd7a76e4",
+    "reproduction/paper_results/snapshot_archives.py": "0a7b899eb8a504560b27d6cd6322adfe4d7ca0f4e308e247bb44b2dda26d2114",
+    "tests/test_snapshot_archives.py": "32542770513ffe52ab1bd66a62c7e908517b4b716cd87fef076a059e85beecc8",
+    "tests/test_paper_control_archive.py": "ac13450bc61a6cce13e050bef68178cf3b2873d9fd77a1ee53ddec63314ac2dc"
+  },
+  "command": [
+    "/usr/bin/python3",
+    "/tmp/lark-paper-v26-20261113/reproduction/paper_results/replay_snapshot.py",
+    "--snapshot",
+    "/tmp/lark-paper-v26-format-compat-v1-20261113/schema2-v25",
+    "--source-archive",
+    "/tmp/lark-reproduction-paper-source.tar"
+  ],
+  "exit_code": 0,
+  "timed_out": false,
+  "seconds": 8.240701731992885,
+  "all_frozen_logical_files": 3625,
+  "all_original_evidence_files": 3623,
+  "archive_parts": [
+    {
+      "path": "evidence-part-0001.tar.gz",
+      "bytes": 34995694,
+      "sha256": "4b9e32b0e33163de4c1021fb6282753b52c5dd4c570026c5eb88ba681f651473"
+    },
+    {
+      "path": "evidence-part-0002.tar.gz",
+      "bytes": 48598737,
+      "sha256": "e8466d3e45745560962a37caba251d8981db5804ba828afe2890fc801ea2bcee"
+    }
+  ],
+  "logical_manifest_sha256": "144db2e68c0cb61dc0969c3a088a9ae6ed01e71159fe835d8483db0a4b854b54",
+  "prototype_manifest_sha256": "648f381cf54555a7ea8a6eb12a90d5bbd9d8fec06f57907b230ddf4867aeccc7",
+  "original_v25_snapshot_unchanged": true,
+  "retained_schema2_prototype_unchanged": true,
+  "max_tar_entry_bytes": 10000000,
+  "per_replay_limit_seconds": 120,
+  "aggregate_limit_seconds": 300,
+  "independent_replayers": 1,
+  "fresh_lean_checks": 0,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "final_v26_snapshot_created": false,
+  "new_paper_results_reproduced": 0,
+  "original_paper_fully_reproduced": false,
+  "scope": "One actual complete schema-two replay of the retained real-v25 prototype with the updated trusted concatenated-gzip reader. No regeneration of prototype data and no repeat of the earlier legacy replay. No BMM/Linear ledger integration or additional paper-result claim."
+}

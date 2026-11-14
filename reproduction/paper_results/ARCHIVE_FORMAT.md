@@ -39,6 +39,14 @@ remain retained locally; this receipt contains the original commands, logs,
 source identity and complete-corpus bindings. This verifies storage compatibility,
 not BMM/Linear ledger integration or a completed v26 snapshot.
 
+After adding concatenated-gzip support, the
+[updated-reader compatibility record](snapshot-v26-stream-compatibility-v1/results.json)
+replays the same retained version 2 prototype with all 3,625 logical files in
+8.2407 seconds. It preserves every prototype and original v25 snapshot byte;
+it does not regenerate the prototype or repeat the earlier legacy replay.
+All 12 version 2 storage tests and all three existing legacy control-archive
+tests passed together in 0.371 seconds.
+
 Standalone version 2 replay requires the trusted sibling
 `snapshot_archives.py`. Version 1 replay does not import that helper. The
 existing 120-second auditor cap and 300-second full control-suite cap, with
