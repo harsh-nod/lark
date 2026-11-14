@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 247, in replay
+    archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes,
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/snapshot_archives.py", line 190, in unpack_parts
+    validate_layout(layout, expected_hashes)
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/snapshot_archives.py", line 64, in validate_layout
+    path = safe_path(name)
+           ^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/snapshot_archives.py", line 43, in safe_path
+    require(bool(path.parts) and not path.is_absolute() and ".." not in path.parts
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/snapshot_archives.py", line 25, in require
+    raise ValueError(message)
+ValueError: Unsafe evidence path

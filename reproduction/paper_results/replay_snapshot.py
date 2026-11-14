@@ -12,6 +12,7 @@ import io
 import json
 from pathlib import Path, PurePosixPath
 import re
+import runpy
 import subprocess
 import sys
 import tarfile
@@ -19,6 +20,9 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v27"
+AUDITOR_STREAM_BUFFER_BYTES = 1024 * 1024
+_TAR_OPEN = tarfile.open
+_DEFAULT_BUFFER = object()
 
 
 def require(condition, message):
@@ -28,6 +32,27 @@ def require(condition, message):
 
 def digest(content):
     return hashlib.sha256(content).hexdigest()
+
+
+def auditor_tar_open(name=None, mode="r", fileobj=None, bufsize=_DEFAULT_BUFFER, **kwargs):
+    """Use larger default stream reads; retain every stdlib parser and check."""
+    if bufsize is _DEFAULT_BUFFER:
+        bufsize = (AUDITOR_STREAM_BUFFER_BYTES if type(mode) is str and mode.startswith("r|")
+                   else tarfile.RECORDSIZE)
+    return _TAR_OPEN(name=name, mode=mode, fileobj=fileobj, bufsize=bufsize, **kwargs)
+
+
+def run_frozen_auditor(script, expected_sha256, arguments):
+    """Execute the same verified authored auditor with buffered tar streams."""
+    script = Path(script)
+    require(not script.is_symlink() and script.is_file()
+            and digest(script.read_bytes()) == expected_sha256, "Frozen auditor bytes differ")
+    tarfile.open = auditor_tar_open
+    # Match direct-script imports and argv. The child starts in isolated mode,
+    # so captured files in its working directory cannot shadow the stdlib.
+    sys.path.insert(0, str(script.parent))
+    sys.argv = [str(script), *arguments]
+    runpy.run_path(str(script), run_name="__main__")
 
 
 def read(path):
@@ -261,7 +286,11 @@ def replay(snapshot, manuscript, *, creating=False):
             )
         command = [
             sys.executable,
+            "-I",
+            str(Path(__file__).resolve()),
+            "--_frozen-auditor",
             str(root / "reproduction/paper_results/audit.py"),
+            digest((root / "reproduction/paper_results/audit.py").read_bytes()),
             "--source-archive",
             str(manuscript),
             "--output",
@@ -337,4 +366,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:2] == ["--_frozen-auditor"]:
+        require(len(sys.argv) >= 4, "Frozen auditor source/hash arguments required")
+        run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+    else:
+        main()

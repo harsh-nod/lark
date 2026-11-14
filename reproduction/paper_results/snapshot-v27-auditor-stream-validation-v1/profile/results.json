@@ -1,0 +1,48 @@
+{
+  "status": "complete-profiled-ledger-replay-passed",
+  "seconds_including_profile_overhead": 30.099264480988495,
+  "commands": [
+    {
+      "original": [
+        "/usr/bin/python3",
+        "-I",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/replay_snapshot.py",
+        "--_frozen-auditor",
+        "/tmp/lark-paper-snapshot-uoublm2c/reproduction/paper_results/audit.py",
+        "544a11675a76bdf2eca245f1a1e289758d9bc8089e2e12a0e8db07f63027dab5",
+        "--source-archive",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/paper-source.tar",
+        "--output",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/snapshot/results",
+        "--check"
+      ],
+      "profiled": [
+        "/usr/bin/python3",
+        "-I",
+        "-m",
+        "cProfile",
+        "-o",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/auditor.prof",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/replay_snapshot.py",
+        "--_frozen-auditor",
+        "/tmp/lark-paper-snapshot-uoublm2c/reproduction/paper_results/audit.py",
+        "544a11675a76bdf2eca245f1a1e289758d9bc8089e2e12a0e8db07f63027dab5",
+        "--source-archive",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/paper-source.tar",
+        "--output",
+        "/tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/snapshot/results",
+        "--check"
+      ],
+      "timeout_seconds": 120
+    }
+  ],
+  "all_snapshot_bytes_unchanged": true,
+  "snapshot_manifest_sha256": "aa23c786cf8a7c2ca059c76beddcb86dc148dc03e3d70096e0bd2f930044fea0",
+  "executed_helpers": {
+    "replay_snapshot.py": "0042d77512529bd4a6734903d8422ef04de6bcc415235cbb472c78c6fceb5cc8",
+    "snapshot_archives.py": "9c888779699708901886561ec4e04f42818dbc71091d443011245080cfc26cef"
+  },
+  "fresh_Lean_GPU_model_experiments": 0,
+  "new_full98_control_suite_claim": false,
+  "original_paper_fully_reproduced": false
+}

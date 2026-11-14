@@ -1,0 +1,313 @@
+﻿2026-11-14T07:59:19.0970841Z Current runner version: '2.338.2'
+2026-11-14T07:59:19.0994192Z ##[group]Runner Image Provisioner
+2026-11-14T07:59:19.0994996Z Hosted Compute Agent
+2026-11-14T07:59:19.0995666Z Version: 20261103.629
+2026-11-14T07:59:19.0996260Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-14T07:59:19.0997052Z Build Date: 2026-11-03T17:26:59Z
+2026-11-14T07:59:19.0997909Z Worker ID: {e1a6cfc4-74c4-4b00-b052-afd3d11dd45f}
+2026-11-14T07:59:19.0998613Z Region: eastus2
+2026-11-14T07:59:19.0999168Z Cloud: Azure
+2026-11-14T07:59:19.0999662Z ##[endgroup]
+2026-11-14T07:59:19.1001350Z ##[group]Operating System
+2026-11-14T07:59:19.1001958Z Ubuntu
+2026-11-14T07:59:19.1002446Z 26.04.1
+2026-11-14T07:59:19.1002941Z LTS
+2026-11-14T07:59:19.1003421Z ##[endgroup]
+2026-11-14T07:59:19.1003993Z ##[group]Runner Image
+2026-11-14T07:59:19.1004556Z Image: ubuntu-26.04
+2026-11-14T07:59:19.1005118Z Version: 20261111.196.1
+2026-11-14T07:59:19.1006350Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-14T07:59:19.1007856Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-14T07:59:19.1008818Z ##[endgroup]
+2026-11-14T07:59:19.1010545Z ##[group]GITHUB_TOKEN Permissions
+2026-11-14T07:59:19.1012624Z Contents: read
+2026-11-14T07:59:19.1013179Z Metadata: read
+2026-11-14T07:59:19.1013724Z ##[endgroup]
+2026-11-14T07:59:19.1015638Z Secret source: Actions
+2026-11-14T07:59:19.1016522Z Cache mode: write
+2026-11-14T07:59:19.1017158Z Prepare workflow directory
+2026-11-14T07:59:19.1352303Z Prepare all required actions
+2026-11-14T07:59:19.1406270Z Getting action download info
+2026-11-14T07:59:19.2958523Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-14T07:59:19.4109032Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-14T07:59:19.5997042Z Complete job name: qknorm-rope-split-real
+2026-11-14T07:59:19.6934826Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-14T07:59:19.6936332Z with:
+2026-11-14T07:59:19.6937140Z   repository: harsh-nod/lark
+2026-11-14T07:59:19.6943912Z   token: ***
+2026-11-14T07:59:19.6944674Z   ssh-strict: true
+2026-11-14T07:59:19.6945618Z   ssh-user: git
+2026-11-14T07:59:19.6946356Z   persist-credentials: true
+2026-11-14T07:59:19.6947177Z   clean: true
+2026-11-14T07:59:19.6947980Z   sparse-checkout-cone-mode: true
+2026-11-14T07:59:19.6948807Z   fetch-depth: 1
+2026-11-14T07:59:19.6949979Z   fetch-tags: false
+2026-11-14T07:59:19.6950740Z   show-progress: true
+2026-11-14T07:59:19.6951925Z   lfs: false
+2026-11-14T07:59:19.6952707Z   submodules: false
+2026-11-14T07:59:19.6953434Z   set-safe-directory: true
+2026-11-14T07:59:19.6954304Z   allow-unsafe-pr-checkout: false
+2026-11-14T07:59:19.6955544Z ##[endgroup]
+2026-11-14T07:59:20.1020430Z Syncing repository: harsh-nod/lark
+2026-11-14T07:59:20.1023541Z ##[group]Getting Git version info
+2026-11-14T07:59:20.1025033Z Working directory is '/home/runner/work/lark/lark'
+2026-11-14T07:59:20.1027139Z [command]/usr/bin/git version
+2026-11-14T07:59:20.1028307Z git version 2.56.1
+2026-11-14T07:59:20.1037819Z ##[endgroup]
+2026-11-14T07:59:20.1052445Z Temporarily overriding HOME='/home/runner/work/_temp/82547822-605e-4c3b-8228-6bd8d63f9693' before making global git config changes
+2026-11-14T07:59:20.1055425Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T07:59:20.1057714Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-14T07:59:20.1134468Z Deleting the contents of '/home/runner/work/lark/lark'
+2026-11-14T07:59:20.1141270Z ##[group]Initializing the repository
+2026-11-14T07:59:20.1145841Z [command]/usr/bin/git init /home/runner/work/lark/lark
+2026-11-14T07:59:20.1268243Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-14T07:59:20.1274091Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-14T07:59:20.1276707Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-14T07:59:20.1278399Z hint: call:
+2026-11-14T07:59:20.1279442Z hint:
+2026-11-14T07:59:20.1281106Z hint: 	git config --global init.defaultBranch <name>
+2026-11-14T07:59:20.1282641Z hint:
+2026-11-14T07:59:20.1284062Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-14T07:59:20.1288321Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-14T07:59:20.1290318Z hint:
+2026-11-14T07:59:20.1291454Z hint: 	git branch -m <name>
+2026-11-14T07:59:20.1292597Z hint:
+2026-11-14T07:59:20.1294969Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-14T07:59:20.1298956Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+2026-11-14T07:59:20.1302965Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+2026-11-14T07:59:20.1362357Z ##[endgroup]
+2026-11-14T07:59:20.1364101Z ##[group]Disabling automatic garbage collection
+2026-11-14T07:59:20.1367715Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-14T07:59:20.1409344Z ##[endgroup]
+2026-11-14T07:59:20.1411295Z ##[group]Setting up auth
+2026-11-14T07:59:20.1417796Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T07:59:20.1455653Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T07:59:20.1891576Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T07:59:20.1964449Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T07:59:20.2194841Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T07:59:20.2224313Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T07:59:20.2441140Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-14T07:59:20.2608615Z ##[endgroup]
+2026-11-14T07:59:20.2610234Z ##[group]Fetching the repository
+2026-11-14T07:59:20.2618644Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3ad117e2b5f2096b079fd21014fe7efeb720dd7d:refs/remotes/origin/reproduction/paper-v27
+2026-11-14T08:00:26.0028099Z From https://github.com/harsh-nod/lark
+2026-11-14T08:00:26.0029311Z  * [new ref]         3ad117e2b5f2096b079fd21014fe7efeb720dd7d -> origin/reproduction/paper-v27
+2026-11-14T08:00:26.0035001Z ##[endgroup]
+2026-11-14T08:00:26.0036019Z ##[group]Determining the checkout info
+2026-11-14T08:00:26.0037373Z ##[endgroup]
+2026-11-14T08:00:26.0045492Z [command]/usr/bin/git sparse-checkout disable
+2026-11-14T08:00:26.0097831Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-14T08:00:26.0129420Z ##[group]Checking out the ref
+2026-11-14T08:00:26.0132715Z [command]/usr/bin/git checkout --progress --force -B reproduction/paper-v27 refs/remotes/origin/reproduction/paper-v27
+2026-11-14T08:00:28.0937575Z Updating files:  43% (5969/13855)
+2026-11-14T08:00:28.1775715Z Updating files:  43% (6006/13855)
+2026-11-14T08:00:28.1861840Z Updating files:  44% (6097/13855)
+2026-11-14T08:00:28.1893147Z Updating files:  45% (6235/13855)
+2026-11-14T08:00:28.1939258Z Updating files:  46% (6374/13855)
+2026-11-14T08:00:28.1984984Z Updating files:  47% (6512/13855)
+2026-11-14T08:00:28.2035014Z Updating files:  48% (6651/13855)
+2026-11-14T08:00:28.2063061Z Updating files:  49% (6789/13855)
+2026-11-14T08:00:28.2094178Z Updating files:  50% (6928/13855)
+2026-11-14T08:00:28.2163618Z Updating files:  51% (7067/13855)
+2026-11-14T08:00:28.2372983Z Updating files:  52% (7205/13855)
+2026-11-14T08:00:28.2436603Z Updating files:  53% (7344/13855)
+2026-11-14T08:00:28.7189429Z Updating files:  54% (7482/13855)
+2026-11-14T08:00:28.7221942Z Updating files:  55% (7621/13855)
+2026-11-14T08:00:28.7267956Z Updating files:  56% (7759/13855)
+2026-11-14T08:00:28.7307621Z Updating files:  57% (7898/13855)
+2026-11-14T08:00:28.7352939Z Updating files:  58% (8036/13855)
+2026-11-14T08:00:28.7396156Z Updating files:  59% (8175/13855)
+2026-11-14T08:00:28.7446703Z Updating files:  60% (8313/13855)
+2026-11-14T08:00:28.7623545Z Updating files:  61% (8452/13855)
+2026-11-14T08:00:28.7665768Z Updating files:  62% (8591/13855)
+2026-11-14T08:00:28.8817636Z Updating files:  63% (8729/13855)
+2026-11-14T08:00:28.8908295Z Updating files:  64% (8868/13855)
+2026-11-14T08:00:28.8963476Z Updating files:  65% (9006/13855)
+2026-11-14T08:00:28.9006145Z Updating files:  66% (9145/13855)
+2026-11-14T08:00:28.9050373Z Updating files:  67% (9283/13855)
+2026-11-14T08:00:28.9093295Z Updating files:  68% (9422/13855)
+2026-11-14T08:00:28.9134450Z Updating files:  69% (9560/13855)
+2026-11-14T08:00:28.9179211Z Updating files:  70% (9699/13855)
+2026-11-14T08:00:28.9209986Z Updating files:  71% (9838/13855)
+2026-11-14T08:00:28.9250735Z Updating files:  72% (9976/13855)
+2026-11-14T08:00:28.9286576Z Updating files:  73% (10115/13855)
+2026-11-14T08:00:28.9633279Z Updating files:  74% (10253/13855)
+2026-11-14T08:00:28.9912147Z Updating files:  75% (10392/13855)
+2026-11-14T08:00:28.9973430Z Updating files:  76% (10530/13855)
+2026-11-14T08:00:29.0014412Z Updating files:  77% (10669/13855)
+2026-11-14T08:00:29.0052820Z Updating files:  78% (10807/13855)
+2026-11-14T08:00:29.0096428Z Updating files:  79% (10946/13855)
+2026-11-14T08:00:29.0340784Z Updating files:  80% (11084/13855)
+2026-11-14T08:00:29.0436499Z Updating files:  80% (11208/13855)
+2026-11-14T08:00:29.0483078Z Updating files:  81% (11223/13855)
+2026-11-14T08:00:29.0539808Z Updating files:  82% (11362/13855)
+2026-11-14T08:00:29.0589701Z Updating files:  83% (11500/13855)
+2026-11-14T08:00:29.0630786Z Updating files:  84% (11639/13855)
+2026-11-14T08:00:29.0694495Z Updating files:  85% (11777/13855)
+2026-11-14T08:00:29.0734272Z Updating files:  86% (11916/13855)
+2026-11-14T08:00:29.0794774Z Updating files:  87% (12054/13855)
+2026-11-14T08:00:29.0845713Z Updating files:  88% (12193/13855)
+2026-11-14T08:00:29.0891859Z Updating files:  89% (12331/13855)
+2026-11-14T08:00:29.0921429Z Updating files:  90% (12470/13855)
+2026-11-14T08:00:29.0976022Z Updating files:  91% (12609/13855)
+2026-11-14T08:00:29.4115110Z Updating files:  92% (12747/13855)
+2026-11-14T08:00:30.0656834Z Updating files:  93% (12886/13855)
+2026-11-14T08:00:30.1878298Z Updating files:  93% (12992/13855)
+2026-11-14T08:00:30.2460146Z Updating files:  94% (13024/13855)
+2026-11-14T08:00:30.8484841Z Updating files:  95% (13163/13855)
+2026-11-14T08:00:31.1673046Z Updating files:  96% (13301/13855)
+2026-11-14T08:00:31.6247690Z Updating files:  96% (13309/13855)
+2026-11-14T08:00:31.6318824Z Updating files:  97% (13440/13855)
+2026-11-14T08:00:31.6660286Z Updating files:  98% (13578/13855)
+2026-11-14T08:00:31.6714048Z Updating files:  99% (13717/13855)
+2026-11-14T08:00:31.6714706Z Updating files: 100% (13855/13855)
+2026-11-14T08:00:31.6715453Z Updating files: 100% (13855/13855), done.
+2026-11-14T08:00:31.8595059Z Switched to a new branch 'reproduction/paper-v27'
+2026-11-14T08:00:31.8596375Z branch 'reproduction/paper-v27' set up to track 'origin/reproduction/paper-v27'.
+2026-11-14T08:00:31.8844962Z ##[endgroup]
+2026-11-14T08:00:31.8885306Z [command]/usr/bin/git log -1 --format=%H
+2026-11-14T08:00:31.8910279Z 3ad117e2b5f2096b079fd21014fe7efeb720dd7d
+2026-11-14T08:00:32.0500004Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-11-14T08:00:32.0500532Z with:
+2026-11-14T08:00:32.0500830Z   python-version: 3.12
+2026-11-14T08:00:32.0501185Z   check-latest: false
+2026-11-14T08:00:32.0503688Z   token: ***
+2026-11-14T08:00:32.0504013Z   update-environment: true
+2026-11-14T08:00:32.0504502Z   allow-prereleases: false
+2026-11-14T08:00:32.0504816Z   freethreaded: false
+2026-11-14T08:00:32.0505106Z ##[endgroup]
+2026-11-14T08:00:32.3010027Z ##[group]Installed versions
+2026-11-14T08:00:32.3138723Z (node:2411) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-14T08:00:32.3140116Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-14T08:00:32.3157312Z Successfully set up CPython (3.12.16)
+2026-11-14T08:00:32.3158246Z ##[endgroup]
+2026-11-14T08:00:32.3856211Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+2026-11-14T08:00:32.3857345Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+2026-11-14T08:00:32.3858171Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+2026-11-14T08:00:32.3858768Z [36;1mbash .github/scripts/materialize-pinned-lean.sh[0m
+2026-11-14T08:00:32.3859198Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+2026-11-14T08:00:32.4382743Z shell: /usr/bin/bash -e {0}
+2026-11-14T08:00:32.4383251Z env:
+2026-11-14T08:00:32.4383642Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:32.4384216Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T08:00:32.4384733Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:32.4385348Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:32.4385821Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:32.4386289Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T08:00:32.4386705Z ##[endgroup]
+2026-11-14T08:00:32.6418719Z info: downloading installer
+2026-11-14T08:00:33.3152638Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+2026-11-14T08:00:33.7958047Z info: downloading https://releases.lean-lang.org/lean4/v4.19.0/lean-4.19.0-linux.tar.zst
+2026-11-14T08:00:38.3404818Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.19.0
+2026-11-14T08:00:41.6754254Z 
+2026-11-14T08:00:41.7132190Z leanprover/lean4:v4.19.0 installed - Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)
+2026-11-14T08:00:41.7133127Z 
+2026-11-14T08:00:41.7521339Z Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)
+2026-11-14T08:00:41.7587646Z ##[group]Run MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+2026-11-14T08:00:41.7588154Z [36;1mMATHLIB_NO_CACHE_ON_UPDATE=1 lake update[0m
+2026-11-14T08:00:41.7588597Z [36;1mgit diff --exit-code -- lake-manifest.json[0m
+2026-11-14T08:00:41.7625098Z shell: /usr/bin/bash -e {0}
+2026-11-14T08:00:41.7625490Z env:
+2026-11-14T08:00:41.7625908Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:41.7626510Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T08:00:41.7627037Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:41.7627505Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:41.7627977Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:00:41.7628465Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T08:00:41.7628900Z ##[endgroup]
+2026-11-14T08:01:14.8438359Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+2026-11-14T08:01:14.8439288Z info: mathlib: checking out revision 'c44e0c8ee63ca166450922a373c7409c5d26b00b'
+2026-11-14T08:01:14.8440234Z info: toolchain not updated; already up-to-date
+2026-11-14T08:01:15.6730262Z warning: lark: ignoring missing manifest './././../lean/lake-manifest.json'
+2026-11-14T08:01:15.9472193Z info: plausible: cloning https://github.com/leanprover-community/plausible
+2026-11-14T08:01:15.9473061Z info: plausible: checking out revision '77e08eddc486491d7b9e470926b3dbe50319451a'
+2026-11-14T08:01:16.1117645Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+2026-11-14T08:01:16.1118417Z info: LeanSearchClient: checking out revision '25078369972d295301f5a1e53c3e5850cf6d9d4c'
+2026-11-14T08:01:16.3209011Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+2026-11-14T08:01:16.3209690Z info: importGraph: checking out revision 'e6a9f0f5ee3ccf7443a0070f92b62f8db12ae82b'
+2026-11-14T08:01:16.7319539Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+2026-11-14T08:01:16.7320444Z info: proofwidgets: checking out revision 'c4919189477c3221e6a204008998b0d724f49904'
+2026-11-14T08:01:17.7510209Z info: aesop: cloning https://github.com/leanprover-community/aesop
+2026-11-14T08:01:17.7510827Z info: aesop: checking out revision '5d50b08dedd7d69b3d9b3176e0d58a23af228884'
+2026-11-14T08:01:17.9684631Z info: Qq: cloning https://github.com/leanprover-community/quote4
+2026-11-14T08:01:17.9685420Z info: Qq: checking out revision 'fa4f7f15d97591a9cf3aa7724ba371c7fc6dda02'
+2026-11-14T08:01:20.3228880Z info: batteries: cloning https://github.com/leanprover-community/batteries
+2026-11-14T08:01:20.3230107Z info: batteries: checking out revision 'f5d04a9c4973d401c8c92500711518f7c656f034'
+2026-11-14T08:01:20.5056513Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+2026-11-14T08:01:20.5057716Z info: Cli: checking out revision '02dbd02bc00ec4916e99b04b2245b30200e200d0'
+2026-11-14T08:01:20.5072352Z info: mathlib: running post-update hooks
+2026-11-14T08:01:21.0160691Z ##[group]Run lake exe cache get Mathlib.Data.Complex.Trigonometric \
+2026-11-14T08:01:21.0161320Z [36;1mlake exe cache get Mathlib.Data.Complex.Trigonometric \[0m
+2026-11-14T08:01:21.0161804Z [36;1m  Mathlib.Analysis.SpecialFunctions.Sqrt \[0m
+2026-11-14T08:01:21.0162460Z [36;1m  Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \[0m
+2026-11-14T08:01:21.0163078Z [36;1m  Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring[0m
+2026-11-14T08:01:21.0196009Z shell: /usr/bin/bash -e {0}
+2026-11-14T08:01:21.0196425Z env:
+2026-11-14T08:01:21.0196899Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:01:21.0197419Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T08:01:21.0197946Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:01:21.0198434Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:01:21.0199078Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T08:01:21.0199555Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T08:01:21.0200179Z ##[endgroup]
+2026-11-14T08:01:21.7291364Z ✔ [2/12] Built Cache.Lean
+2026-11-14T08:01:21.9265927Z ✔ [3/12] Built Cache.Lean:c.o
+2026-11-14T08:01:23.0277078Z ✔ [4/12] Built Cache.IO
+2026-11-14T08:01:23.9287965Z ✔ [5/12] Built Cache.Hashing
+2026-11-14T08:01:25.1332492Z ✔ [6/12] Built Cache.Requests
+2026-11-14T08:01:25.2321469Z ✔ [7/12] Built Cache.Hashing:c.o
+2026-11-14T08:01:25.8311707Z ✔ [8/12] Built Cache.IO:c.o
+2026-11-14T08:01:26.0307339Z ✔ [9/12] Built Cache.Main
+2026-11-14T08:01:26.4311901Z ✔ [10/12] Built Cache.Requests:c.o
+2026-11-14T08:01:26.7307972Z ✔ [11/12] Built Cache.Main:c.o
+2026-11-14T08:01:27.3317468Z ✔ [12/12] Built cache
+2026-11-14T08:01:28.7826529Z   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+2026-11-14T08:01:28.7827273Z                                  Dload  Upload  Total   Spent   Left   Speed
+2026-11-14T08:01:28.7827954Z 
+2026-11-14T08:01:28.7828237Z   0      0   0      0   0      0      0      0                              0
+2026-11-14T08:01:28.7828785Z   0      0   0      0   0      0      0      0                              0
+2026-11-14T08:01:28.7829654Z   0      0   0      0   0      0      0      0                              0
+2026-11-14T08:01:28.7830289Z 
+2026-11-14T08:01:28.7830652Z   0      0   0      0   0      0      0      0                              0
+2026-11-14T08:01:28.7831774Z 100  1.04M 100  1.04M   0      0  6.96M      0                              0
+2026-11-14T08:01:28.7832273Z 100  1.04M 100  1.04M   0      0  6.96M      0                              0
+2026-11-14T08:01:28.7832737Z 100  1.04M 100  1.04M   0      0  6.96M      0                              0
+2026-11-14T08:01:28.7833028Z 
+2026-11-14T08:01:28.8099488Z installing leantar 0.1.15
+2026-11-14T08:01:29.8335574Z Attempting to download 1798 file(s)
+2026-11-14T08:01:30.3354478Z 
+2026-11-14T08:01:30.4387979Z Downloaded: 1 file(s) [attempted 1/1798 = 0%]
+2026-11-14T08:01:30.5388683Z Downloaded: 74 file(s) [attempted 74/1798 = 4%]
+2026-11-14T08:01:30.6392036Z Downloaded: 202 file(s) [attempted 202/1798 = 11%]
+2026-11-14T08:01:30.7393113Z Downloaded: 344 file(s) [attempted 344/1798 = 19%]
+2026-11-14T08:01:30.8409075Z Downloaded: 487 file(s) [attempted 487/1798 = 27%]
+2026-11-14T08:01:30.9413932Z Downloaded: 629 file(s) [attempted 629/1798 = 34%]
+2026-11-14T08:01:31.0436020Z Downloaded: 766 file(s) [attempted 766/1798 = 42%]
+2026-11-14T08:01:31.1432939Z Downloaded: 906 file(s) [attempted 906/1798 = 50%]
+2026-11-14T08:01:31.2437418Z Downloaded: 1048 file(s) [attempted 1048/1798 = 58%]
+2026-11-14T08:01:31.3448556Z Downloaded: 1190 file(s) [attempted 1190/1798 = 66%]
+2026-11-14T08:01:31.4444578Z Downloaded: 1339 file(s) [attempted 1339/1798 = 74%]
+2026-11-14T08:01:31.5444305Z Downloaded: 1474 file(s) [attempted 1474/1798 = 81%]
+2026-11-14T08:01:31.6454587Z Downloaded: 1617 file(s) [attempted 1617/1798 = 89%]
+2026-11-14T08:11:51.4319303Z Downloaded: 1756 file(s) [attempted 1756/1798 = 97%]
+2026-11-14T08:11:51.4346455Z Downloaded: 1797 file(s) [attempted 1797/1798 = 99%]
+2026-11-14T08:11:51.4347057Z Downloaded: 1797 file(s) [attempted 1798/1798 = 100%] (99% success), 1 failed
+2026-11-14T08:11:51.4351041Z Recv failure: Connection timed out
+2026-11-14T08:11:51.4351699Z 1 download(s) failed
+2026-11-14T08:11:51.4476043Z ##[error]Process completed with exit code 1.
+2026-11-14T08:11:51.4641611Z Post job cleanup.
+2026-11-14T08:11:51.5484765Z [command]/usr/bin/git version
+2026-11-14T08:11:51.5532895Z git version 2.56.1
+2026-11-14T08:11:51.5576160Z Temporarily overriding HOME='/home/runner/work/_temp/0f8ae824-7379-40cc-ab61-75c3e01f9090' before making global git config changes
+2026-11-14T08:11:51.5577152Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T08:11:51.5601453Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-14T08:11:51.5627573Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T08:11:51.5661268Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T08:11:51.5934626Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T08:11:51.5958506Z http.https://github.com/.extraheader
+2026-11-14T08:11:51.5968514Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-14T08:11:51.6003412Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T08:11:51.6289632Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T08:11:51.6324188Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T08:11:51.6790761Z Cleaning up orphan processes
+2026-11-14T08:11:51.7139006Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
