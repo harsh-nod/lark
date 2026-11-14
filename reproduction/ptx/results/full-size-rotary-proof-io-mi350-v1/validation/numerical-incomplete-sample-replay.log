@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-xgqgpz9d/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-xgqgpz9d/reproduction/paper_results/audit.py", line 659, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-xgqgpz9d/reproduction/paper_results/audit.py", line 282, in check_numerical_evidence
+    require(report["score_comparison_count"] == scores == 589824 and
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-xgqgpz9d/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study replay/score binding differs: benchmark
+

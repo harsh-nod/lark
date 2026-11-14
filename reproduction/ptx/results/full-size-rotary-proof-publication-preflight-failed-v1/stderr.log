@@ -1,0 +1,16 @@
+fatal: unable to access 'https://github.com/harsh-nod/lark.git/': server certificate verification failed. CAfile: none CRLfile: none
+Traceback (most recent call last):
+  File "/tmp/lark-check-ptx-rotary-publication-v1-20261113.py", line 118, in <module>
+    main()
+  File "/tmp/lark-check-ptx-rotary-publication-v1-20261113.py", line 38, in main
+    remote = call(['git', 'ls-remote', 'origin', 'refs/heads/reproduction/ptx-rotary-refinement']).decode().split()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-check-ptx-rotary-publication-v1-20261113.py", line 31, in call
+    return subprocess.check_output(command, cwd=REPO, timeout=60)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'ls-remote', 'origin', 'refs/heads/reproduction/ptx-rotary-refinement']' returned non-zero exit status 128.
