@@ -141,6 +141,40 @@ class HeaderExecutionTests(unittest.TestCase):
             replay.run_frozen_headers(self.script, "0" * 64)
         check.assert_not_called()
 
+    def test_unchanged_or_unrelated_declared_headers_skip_only_the_optional_preflight(self):
+        results = self.root / "results"
+        results.mkdir()
+        replay.write(self.root / "targets.json", {"ptx_ffn_proof": {}})
+        for hints in ({"header": "same", "other": "changed"}, {"header": "same"}, {}):
+            replay.write(results / "audit.json", {"evidence_sha256": hints})
+            with self.subTest(hints=hints), \
+                    patch.object(replay, "preflight_header_paths", return_value={"header"}), \
+                    patch.object(storage, "unpack_header_files") as optional, \
+                    patch.object(replay.subprocess, "run") as child:
+                replay.preflight_schema2_headers(self.root, {}, {"header": "same", "other": "actual"}, None)
+            optional.assert_not_called()
+            child.assert_not_called()
+
+    def test_changed_declared_header_schedules_a_fresh_optional_read_each_time(self):
+        (self.root / "results").mkdir()
+        replay.write(self.root / "targets.json", {"ptx_ffn_proof": {}})
+        replay.write(self.root / "results/audit.json", {"evidence_sha256": {"header": "old"}})
+        with patch.object(replay, "preflight_header_paths", return_value={"header"}), \
+                patch.object(storage, "unpack_header_files", side_effect=RuntimeError("fresh header read")) as optional:
+            for _ in range(2):
+                with self.assertRaisesRegex(RuntimeError, "fresh header read"):
+                    replay.preflight_schema2_headers(self.root, {}, {"header": "new"}, None)
+        self.assertEqual(optional.call_count, 2)
+
+    def test_dishonest_or_missing_hint_has_no_authority_to_verify_a_header(self):
+        (self.root / "results").mkdir()
+        for report in ({"evidence_sha256": {"header": "forged-binding"}}, {}, {"evidence_sha256": []}):
+            replay.write(self.root / "results/audit.json", report)
+            self.assertFalse(replay.changed_header_hint(self.root, {"header"}, {"header": "forged-binding"}))
+        # Complete verification remains unconditional on either hint result;
+        # test_passing_preflight_unconditionally_repeats_complete_unpack_each_time
+        # exercises that separate enforcement path.
+
     def test_passing_preflight_unconditionally_repeats_complete_unpack_each_time(self):
         snapshot = self.root / "snapshot"
         snapshot.mkdir()

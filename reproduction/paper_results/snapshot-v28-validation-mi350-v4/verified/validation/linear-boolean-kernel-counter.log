@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 590, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 579, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 484, in replay
+    preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 267, in preflight_schema2_headers
+    require(result.returncode == 0, "Frozen audit replay failed: " + result.stdout + result.stderr)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 585, in <module>
+    run_frozen_headers(sys.argv[2], sys.argv[3])
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 224, in run_frozen_headers
+    preflight_frozen_release_headers(script)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 161, in preflight_frozen_release_headers
+    preflight_frozen_ptx(script, config)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 148, in preflight_frozen_ptx
+    reader.counters(report, protocol["counters"], "kernel/recheck/execution counters differ")
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-paper-headers-thlubx8g/reproduction/paper_results/ptx_extended_evidence.py", line 72, in counters
+    self.require(all(type(record.get(k)) is int and record[k] == v
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-paper-headers-thlubx8g/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX linear kernel/recheck/execution counters differ
+

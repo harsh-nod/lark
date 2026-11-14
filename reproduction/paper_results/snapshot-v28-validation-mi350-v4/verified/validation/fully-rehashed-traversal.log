@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 590, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 579, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 484, in replay
+    preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 250, in preflight_schema2_headers
+    archive_storage().unpack_header_files(
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/snapshot_archives.py", line 204, in unpack_header_files
+    return _unpack_part_files(snapshot, layout, root, expected_hashes=expected_hashes,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/snapshot_archives.py", line 212, in _unpack_part_files
+    validate_layout(layout, expected_hashes)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/snapshot_archives.py", line 64, in validate_layout
+    path = safe_path(name)
+           ^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/snapshot_archives.py", line 43, in safe_path
+    require(bool(path.parts) and not path.is_absolute() and ".." not in path.parts
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/snapshot_archives.py", line 25, in require
+    raise ValueError(message)
+ValueError: Unsafe evidence path

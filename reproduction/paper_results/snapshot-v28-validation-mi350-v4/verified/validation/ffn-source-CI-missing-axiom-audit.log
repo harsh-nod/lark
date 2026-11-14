@@ -1,0 +1,29 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 590, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 579, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 484, in replay
+    preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 267, in preflight_schema2_headers
+    require(result.returncode == 0, "Frozen audit replay failed: " + result.stdout + result.stderr)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 585, in <module>
+    run_frozen_headers(sys.argv[2], sys.argv[3])
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 224, in run_frozen_headers
+    preflight_frozen_release_headers(script)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 162, in preflight_frozen_release_headers
+    preflight_frozen_ffn(script, config)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-snapshot-controls-2mtdkp8b/isolated/bin/replay_snapshot.py", line 187, in preflight_frozen_ffn
+    ffn.check_ci(reader, protocol)
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-paper-headers-_6y1ilew/reproduction/paper_results/ptx_ffn_release.py", line 87, in check_ci
+    proofs = [check_ci_build(reader, prefix + name) for name in (
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-paper-headers-_6y1ilew/reproduction/paper_results/ptx_ffn_release.py", line 46, in check_ci_build
+    reader.require(len(library) == 252 and len(main) == 4
+  File "/tmp/lark-paper-v28-controls-mi350-v4-20261114/temporary/lark-paper-headers-_6y1ilew/reproduction/paper_results/ptx_ffn_evidence.py", line 38, in require
+    raise ValueError("PTX ffn " + message)
+ValueError: PTX ffn CI actual axiom audits differ
+

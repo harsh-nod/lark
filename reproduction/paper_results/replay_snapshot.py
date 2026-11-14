@@ -232,6 +232,21 @@ def run_frozen_headers(script, expected_sha256):
             raise
 
 
+def changed_header_hint(snapshot, selected, evidence_hashes):
+    """Use untrusted declared differences to schedule an extra refusal check.
+
+    A matching or dishonest hint skips only the optional early check. It never
+    skips complete unpacking, byte verification or the full frozen auditor.
+    This records no successful verification and retains no bytes or digests.
+    """
+    try:
+        hints = read(snapshot / "results/audit.json")["evidence_sha256"]
+    except (OSError, KeyError, TypeError, ValueError):
+        return False
+    return type(hints) is dict and any(name in hints and hints[name] != evidence_hashes[name]
+                                        for name in selected)
+
+
 def preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives):
     """Refuse contradictory verified headers before unrelated logical payloads.
 
@@ -242,7 +257,7 @@ def preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archiv
     if not (snapshot / "targets.json").is_file():
         return
     selected = preflight_header_paths(layout, read(snapshot / "targets.json"))
-    if not selected:
+    if not selected or not changed_header_hint(snapshot, selected, evidence_hashes):
         return
     with tempfile.TemporaryDirectory(prefix="lark-paper-headers-") as temporary:
         root = Path(temporary)

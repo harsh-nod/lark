@@ -66,12 +66,20 @@ measurements and actual workflow are retained. The separate
 [FFN job at that same source](snapshot-v28-source-CI-FFN-job-v1/results.json)
 passed both fresh 8 MiB certificate builds, all 35 controls and all 4,416
 payload members; that job does not establish a whole-workflow pass.
-The current reader first freshly hashes all physical parts and reads verified
-release headers for necessary refusal predicates. Consistent headers always
-lead to a fresh complete unpack and the unchanged full auditor. This avoids
+When declared release-header bindings differ, the current reader first freshly
+hashes all physical parts and reads verified headers for necessary refusal
+predicates. Matching declared bindings skip only this optional early read;
+they have no authority to verify a snapshot. Consistent headers always lead
+to a fresh complete unpack and the unchanged full auditor. This avoids
 materializing unrelated logical payloads on contradictory headers and adds
 no verification cache. The workflow's final counters now require the complete
 10-positive/98-negative roster and all 97 releasable control copies.
+The [complete fourth MI350 run](snapshot-v28-validation-mi350-v4/source-and-record-comparison.json)
+at `f551fe0` passed all 108 checks in 256.95 seconds. Every check record matches
+the third run, and all four returned readers match that exact Git source.
+The subsequent scheduling revision avoids optional header reads when their
+declared bindings are unchanged. Its 80 snapshot unit tests passed; it needs
+its own complete-suite, source-CI and public-download validation.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
