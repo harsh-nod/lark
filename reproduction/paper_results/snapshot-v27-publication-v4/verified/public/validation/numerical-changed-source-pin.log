@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-ztdzdjas/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-ztdzdjas/reproduction/paper_results/audit.py", line 671, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-ztdzdjas/reproduction/paper_results/audit.py", line 282, in check_numerical_evidence
+    require(report["score_comparison_count"] == scores == 589824 and
+  File "/dev/shm/lark-paper-snapshot-ztdzdjas/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study replay/score binding differs: benchmark
+

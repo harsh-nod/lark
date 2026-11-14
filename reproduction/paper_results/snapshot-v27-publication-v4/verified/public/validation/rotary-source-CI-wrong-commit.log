@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-n1akv7xg/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/audit.py", line 684, in main
+    rotary_checks = check_ptx_rotary_evidence(config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/ptx_rotary_release.py", line 128, in check_ptx_rotary_evidence
+    check_source_ci(reader, summary, run, jobs, p)
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/ptx_rotary_release.py", line 22, in check_source_ci
+    reader.fields(run, {"id": protocol["ci_run"], "head_sha": protocol["published_source"],
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/ptx_rotary_evidence.py", line 67, in fields
+    self.require(type(record) is dict and all(k in record and same_json(record[k], v)
+  File "/dev/shm/lark-paper-snapshot-2lusoksi/reproduction/paper_results/ptx_rotary_evidence.py", line 45, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX rotary actual source CI differs
+

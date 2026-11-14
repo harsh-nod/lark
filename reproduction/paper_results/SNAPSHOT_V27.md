@@ -195,6 +195,22 @@ and post-write checks remain. Nineteen archive guards and twelve control-writer
 guards pass, as do complete immutable v25/v26 replays outside Git. The revised
 reader still requires its own complete 98-check suite and source CI.
 
+That reader's [complete MI350 v6 suite](snapshot-v27-validation-mi350-v6/verified/observer/results.json)
+passed all 98 cases in **228.924 seconds** at `3ad117e`. All 98 records match
+the preceding complete suite, and its four helper files match that exact Git
+source. The [corresponding anonymous publication](snapshot-v27-publication-v4/verified/observer/results.json)
+downloaded all **20 files / 485,437,265 bytes** with TLS verification and no
+authentication and passed all 98 checks. Every downloaded file remains on MI350.
+
+The [hosted x64 ledger attempt](snapshot-v27-paper-ci-timeout-v7/analysis.json)
+at the same source still timed out at 300 seconds after 86 logs. Its complete
+logs are retained, and it is not rerun. A new
+[platform validation](snapshot-v27-CI-arm-platform-v1/results.json) uses the
+standard `ubuntu-24.04-arm` runner for this data-only ledger job. It changes
+no command, case, payload, check or time limit; all other 23 jobs retain their
+existing runners. Its performance and successful completion remain to be
+measured. The full 24-job source-CI gate is still open.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v27 \
