@@ -8,9 +8,10 @@ adds bias, then converts the result to half. Its cast order is preserved.
 
 The pure complete-source theorem, fresh SDK source export/replay, four direct
 source-binding controls, SDK adversarial test and isolated installed-wheel
-replay have passed. Raw evidence packaging, anonymous publication and actual
-source CI remain. Four independent PTX kernel proofs remain published; this
-additional compiled Linear proof adds no original model success.
+replay have passed. The [complete evidence packet](results/full-size-linear-proof-v1/RESULTS.md),
+anonymous publication verification and all twenty-three actual source CI
+jobs passed. This fifth independent compiled PTX development proof adds
+no original model success.
 The original shapes, input bytes, launch geometry and CUDA fuel are unchanged.
 The CUDA fuel remains separate data; actual PTX execution uses finite inductive
 sequences of successful source transitions and introduces no new execution fuel.
@@ -76,10 +77,18 @@ overwritten during exception capture; it changes no Lean proof or input bytes.
 
 ## Remaining work
 
-The complete proof still needs its retained evidence packet, anonymous
-publication verification and actual source CI before promotion. Passing local
-checks establishes none of those publication outcomes or original model results.
-No registered legacy profile exists for Linear.
+The [anonymous publication record](results/full-size-linear-proof-publication-v1/results.json)
+matched all 56 changed files (94,911,615 bytes), seven archives, 960 members
+and 64 SDK/Lean source bindings to source `1e00541`, with TLS verification
+enabled. It retained every development attempt, including all five failures.
+The [actual source CI record](results/full-size-linear-proof-ci-v1/results.json)
+records all twenty-three jobs passing, including the separate complete
+Linear cold export/replay, four controls and SDK adversarial checks.
+The later receipt commit changes only recorded receipts and this document
+and the root README. All SDK, Lean, tests, workflow and frozen snapshots
+retain their exact tested source identities. Publication repeated no
+scientific proof, model or GPU trial. No registered legacy profile or
+original model result is added.
 
 The new SDK 0.4.0 profile `source-bound-compiled-linear-fp16-v1` has ten owned
 Lean modules and 64 trusted source bindings (54 Python, ten Lean). The first

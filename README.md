@@ -56,8 +56,9 @@ All 179 instructions, the actual sixteen-iteration loop, bias-before-half
 epilogue, all 32,768 lanes, closed reference extraction, actual memory-trace
 race freedom and preservation outside the output are proved. Fresh source
 export/replay, four direct source-binding controls, the SDK adversarial test
-and isolated installed-wheel replay passed. Publication and source CI are
-still being completed; this adds no original model or NVIDIA result.
+and isolated installed-wheel replay passed. Anonymous publication verification
+and all twenty-three source CI jobs passed. This adds no original model or
+NVIDIA result.
 
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
