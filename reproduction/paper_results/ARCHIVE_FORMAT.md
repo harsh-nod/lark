@@ -154,3 +154,21 @@ two replay workers remain unchanged. The snapshot manifest is still `251d9b3`.
 The second run's observer, executed sources, all logs and transport bindings
 are retained separately. Anonymous publication and actual updated CI/main gates
 remain pending.
+
+The [first GitHub ledger-job failure](snapshot-v26-paper-ci-timeout-v1/analysis.json)
+is retained as an actual failure: source `411663e` produced 82 completed
+control logs and reached the unchanged 300-second cap with seven checks still
+unrecorded. No workflow was rerun. The executed workflow preserved all completed
+raw logs; the full job response, run observation, failed log and missing-case
+inventory are included.
+
+The next control-runner revision avoids copying original physical containers
+that a false control immediately replaces with a complete archive rewrite.
+Report-only controls still copy the complete original snapshot. Every rewritten
+control still writes every logical evidence byte and all physical parts before
+replay. Four equivalence tests include complete byte-for-byte comparison with
+the previous copy-then-rewrite path for both storage versions, preserved unsafe
+control data and nested metadata with matching archive basenames. Together with
+the workspace/archive regressions, 22 tests passed in 0.745 seconds. No archived
+input, check, proof obligation or limit changes. A new complete run and a new
+source CI gate remain required for this revision.

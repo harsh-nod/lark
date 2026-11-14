@@ -151,6 +151,38 @@ def control_archive(snapshot):
     return ControlArchive(snapshot / "evidence.tar.gz")
 
 
+class ControlSnapshotCopies:
+    """Copy metadata before a complete archive rewrite, or the full snapshot.
+
+    A rewrite replaces every physical container before replay. Avoiding a copy
+    of those immediately overwritten containers changes no final logical or
+    physical input byte. Report-only controls still copy their complete input.
+    """
+
+    def __init__(self, snapshot):
+        self.snapshot = Path(snapshot)
+        schema = read(self.snapshot / "provenance.json")["schema"]
+        if type(schema) is not int or schema not in (1, 2):
+            raise ValueError("Supported source storage schema required")
+        names = (["evidence.tar.gz"] if schema == 1 else
+                 [row["path"] for row in read(self.snapshot / "evidence-layout.json")["archives"]])
+        if not names or any(type(n) is not str or Path(n).name != n or n in ("", ".", "..") for n in names):
+            raise ValueError("Physical archive basenames required")
+        self.archives = frozenset(names)
+        self.archive_bytes = sum((self.snapshot / n).stat().st_size for n in names)
+        self.preparations = []
+
+    def copy(self, target, *, rewrite_archive=False):
+        def ignore(directory, names):
+            return self.archives.intersection(names) if Path(directory) == self.snapshot else set()
+
+        shutil.copytree(self.snapshot, target, ignore=ignore if rewrite_archive else None)
+        self.preparations.append({"name": Path(target).name,
+                                  "complete_archive_rewrite_before_replay": rewrite_archive,
+                                  "redundant_original_container_bytes_not_copied":
+                                      self.archive_bytes if rewrite_archive else 0})
+
+
 def mutate_gemv_evidence(entries, config, control):
     """Apply the same complete metadata controls to the separate GEMV packet."""
     selected = {**config, "ptx_pointwise_proof": config["ptx_dot_proof"]}
@@ -340,6 +372,7 @@ def main():
         isolated = root / "isolated/snapshot"
         shutil.copytree(snapshot, isolated)
         packed_controls = control_archive(snapshot)
+        copies = ControlSnapshotCopies(snapshot)
         env = dict(os.environ)
         env["PATH"] = "/nonexistent"
         env.pop("PYTHONPATH", None)
@@ -378,7 +411,7 @@ def main():
                          else "invented-native-awq-coverage")
         for name in names:
             altered = root / name
-            shutil.copytree(snapshot, altered)
+            copies.copy(altered)
             report = read(altered / "results/audit.json")
             if name == "global-completion-claim":
                 report["original_paper_fully_reproduced"] = True
@@ -410,7 +443,7 @@ def main():
             release(altered)
         if has_production_cases:
             altered = root / "missing-production-case"
-            shutil.copytree(snapshot, altered)
+            copies.copy(altered, rewrite_archive=True)
             targets = read(altered / "targets.json")
             targets["production_cases"] = [
                 row for row in targets["production_cases"]
@@ -439,7 +472,7 @@ def main():
                  "New production replay scope differs: vllm-awq-gemm"),
             ):
                 altered = root / name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 record = json.loads(entries[selected])
                 record[field] = value
@@ -500,7 +533,7 @@ def main():
             def numerical_control(item):
                 control_name, selected, keys, value, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 record = json.loads(entries[selected])
                 parent = record
@@ -536,7 +569,7 @@ def main():
             def model_control(item):
                 control_name, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_model_evidence(entries, config, control_name)
@@ -563,7 +596,7 @@ def main():
             def ptx_control(item):
                 control_name, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_ptx_evidence(entries, config, control_name)
@@ -587,7 +620,7 @@ def main():
             def gemv_control(item):
                 control_name, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_gemv_evidence(entries, config, control_name)
@@ -610,7 +643,7 @@ def main():
             def gemm_control(item):
                 control_name, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_gemm_evidence(entries, config, control_name)
@@ -639,7 +672,7 @@ def main():
             def extended_control(item):
                 control_name, expected_gate = item
                 altered = root / control_name
-                shutil.copytree(snapshot, altered)
+                copies.copy(altered, rewrite_archive=True)
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate(entries, config, control_name)
@@ -661,7 +694,7 @@ def main():
             results.append({"name": "positive-after-" + kind + "-controls", "accepted": True,
                             "git_on_path": False})
         altered = root / "traversal"
-        shutil.copytree(snapshot, altered)
+        copies.copy(altered, rewrite_archive=True)
         entries = packed_controls.entries.copy()
         unsafe = "../lark-paper-control-" + uuid.uuid4().hex
         entries[unsafe] = b"must not be extracted"
@@ -700,6 +733,7 @@ def main():
             "negative_controls": sum(not row["accepted"] for row in results),
             "released_completed_temporary_control_copies": sorted(released),
             "all_control_payloads_complete_during_replay": True,
+            "control_copy_preparation": sorted(copies.preparations, key=lambda row: row["name"]),
             "source_snapshot_manifest_sha256": sha(snapshot / "manifest.json"),
             "replayer_sha256": sha(Path(__file__).with_name("replay_snapshot.py")),
             "control_runner_sha256": sha(Path(__file__)),

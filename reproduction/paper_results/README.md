@@ -66,6 +66,13 @@ all logs; unexpected failures retain their workspace. Sampled temporary storage
 peaked at 1.29 GB, with the same complete payload, all controls and unchanged
 resource limits.
 
+The [first standard-runner CI ledger attempt](snapshot-v26-paper-ci-timeout-v1/analysis.json)
+hit the unchanged 300-second cap after writing 82 control logs. It remains a
+failed source CI gate, with its actual logs retained. The follow-up revision
+removes redundant copies of original archive containers immediately before
+their complete rewrite; equivalence tests verify every final replay input byte
+matches the earlier path. The full 89 checks and all payloads remain required.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v26 \
