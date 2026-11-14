@@ -75,6 +75,8 @@ PTX_CONTROLS = (
 
 GEMV_CONTROLS = tuple(("gemv" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 GEMM_CONTROLS = tuple(("gemm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+BMM_CONTROLS = tuple(("bmm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+LINEAR_CONTROLS = tuple(("linear" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 
 
 class ControlArchive:
@@ -123,6 +125,18 @@ def mutate_gemm_evidence(entries, config, control):
     """Preserve the complete GEMM packet while synchronizing false metadata."""
     selected = {**config, "ptx_pointwise_proof": config["ptx_matrix_proof"]}
     mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("gemm"))
+
+
+def mutate_bmm_evidence(entries, config, control):
+    """Preserve every BMM recording while changing the selected scope claim."""
+    selected = {**config, "ptx_pointwise_proof": config["ptx_batched_proof"]}
+    mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("bmm"))
+
+
+def mutate_linear_evidence(entries, config, control):
+    """Preserve every Linear recording while changing the selected scope claim."""
+    selected = {**config, "ptx_pointwise_proof": config["ptx_linear_proof"]}
+    mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("linear"))
 
 
 def mutate_ptx_evidence(entries, config, control):

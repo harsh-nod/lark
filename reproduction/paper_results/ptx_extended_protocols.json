@@ -1,0 +1,1037 @@
+{
+  "bmm": {
+    "prefix": "reproduction/ptx/results/full-size-bmm-proof-v1",
+    "publication_prefix": "reproduction/ptx/results/full-size-bmm-proof-publication-v1",
+    "ci_prefix": "reproduction/ptx/results/full-size-bmm-proof-ci-v1",
+    "main_prefix": "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1",
+    "identity": {
+      "schema": 1,
+      "status": "exact-source-full-size-PTX-BMM-proof-evidence",
+      "producer_commit": "8f381dbe0dc8a0213237566ca3520baa73ff6034",
+      "packaging_source_commit": "130bc4d571f45409f485b9017a0cb2e5f08e32eb",
+      "profile": "source-bound-compiled-bmm-fp16-v1",
+      "packaging_driver_sha256": "087fd83ac062dc971143385f62e809be22ff5a5cd9d63e84e4317f68de470541"
+    },
+    "counters": {
+      "independent_source_bound_development_proofs": 1,
+      "retained_positive_Main_checks": 5,
+      "positive_rechecks": 4,
+      "current_SDK_positive_Main_checks": 4,
+      "initial_SDK_positive_Main_checks": 1,
+      "owned_module_builds_across_four_current_checks": 32,
+      "owned_module_builds_across_five_successful_official_checks": 40,
+      "retained_failed_official_exports": 1,
+      "failed_export_fresh_owned_modules": 8,
+      "cached_development_positive_Main_checks": 3,
+      "unit_test_positive_Main_recordings_retained": 0,
+      "direct_Lean_negative_controls": 4,
+      "negative_timeouts": 0,
+      "PTX_instructions": 138,
+      "library_axiom_audits_per_check": 271,
+      "Main_axiom_audits_per_check": 6,
+      "owned_source_files": 60,
+      "new_registered_source_certificates": 0,
+      "packaging_model_calls": 0,
+      "packaging_Lean_checks": 0,
+      "packaging_gpu_trials": 0,
+      "model_calls_for_this_proof_study": 0,
+      "gpu_trials_for_this_proof_study": 0
+    },
+    "contract": {
+      "shapes": [
+        [
+          32,
+          64,
+          256
+        ],
+        [
+          32,
+          256,
+          512
+        ],
+        [
+          32,
+          64,
+          512
+        ]
+      ],
+      "dtype": "float16",
+      "launch": {
+        "grid": 1048576,
+        "block": 1,
+        "warp": 32
+      },
+      "unchanged_CUDA_contract_fuel": [
+        1030,
+        1,
+        1,
+        1
+      ],
+      "input_bindings": {
+        "kernel.ptx": "df13d4a76ce01ff72fb71eeeca866c5750885bb29d036c652ec9036c7c97cd81",
+        "reference.py": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "contract.json": "babf31898308958c10e664b63bfb2b03ad13bb1736e259fd857d40640d98fadc"
+      },
+      "main_sha256": "ebeca77b0ac1ec7aedc5f84b9aa760805732bde1aa23754cb100f33d049e49f0",
+      "source_bindings_sha256": "5584d353057d134617177d547707150a892258d1c4aaeedab8deca31467592bf",
+      "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+      "limits": {
+        "maxRecDepth": 10000,
+        "maxHeartbeats": 2000000,
+        "per_Lean_process_seconds": 180,
+        "source_import_build_seconds": 600
+      },
+      "wheel_sha256": "456d0e3f8f2a24c1cb978d0ee6f5455d918387a417f03c39256299106ea10173",
+      "nvidia_execution": false,
+      "original_paper_fully_reproduced": false,
+      "scope": "Source-bound complete compiled 32-batch [32,64,256] times [32,256,512] FP16 BMM development proof. All 138 actual parsed instructions, the 29-instruction prologue, 98-instruction body, all 16 iterations of the real sixteen-term backward loop, five control instructions, epilogue and ret, all 1048576 active lanes, actual access-trace race freedom, every extracted closed batched reference output and preservation outside the output footprint are covered under the declared abstract scalar interpretation. The unchanged CUDA shapes/dtypes, grid 1048576/block 1/warp 32 and fuel [1030,1,1,1] are retained. Finite PTX execution is an inductive sequence of actual successful transitions; CUDA fuel remains separate data, with no new execution fuel. Python parsing/reference formalization, logical pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, PyTorch/NVIDIA hardware-conformance, original optimized kernel, original model-result or original-paper-completion claim. This separate development checker registers no legacy SDK profile or model success."
+    },
+    "report_boolean_fields": {
+      "cached_development_counts_as_official_positive_Main_checks": false,
+      "nvidia_execution": false,
+      "original_paper_fully_reproduced": false
+    },
+    "packet_files": [
+      "RESULTS.md",
+      "controls-files.json",
+      "controls-results.json",
+      "controls.tar.gz",
+      "dedicated-replay-environment.json",
+      "development-history-files.json",
+      "development-history.tar.gz",
+      "export-files.json",
+      "export.tar.gz",
+      "failed-export-results.json",
+      "failed-export-v2-files.json",
+      "failed-export-v2.tar.gz",
+      "initial-export-results.json",
+      "initial-export-v1-files.json",
+      "initial-export-v1.tar.gz",
+      "installed-wheel-files.json",
+      "installed-wheel-results.json",
+      "installed-wheel.tar.gz",
+      "local-test-terminal-observations.json",
+      "manifest.json",
+      "packaging-driver.py",
+      "proof-results.json",
+      "replay-files.json",
+      "replay-results.json",
+      "replay.tar.gz",
+      "results.json",
+      "sdk-test-results.json",
+      "sdk-test-source.py",
+      "sdk-tests-files.json",
+      "sdk-tests.tar.gz",
+      "validation-history.json",
+      "wheel-build-files.json",
+      "wheel-build-results.json",
+      "wheel-build.tar.gz"
+    ],
+    "modules": {
+      "Nonlinear": "LarkNonlinear",
+      "Pointwise": "LarkPointwise",
+      "PtxPointwise": "LarkPtxPointwise",
+      "PtxDot": "LarkPtxDot",
+      "PtxMatrix": "LarkPtxMatrix",
+      "PtxBatched": "LarkPtxBatched",
+      "PtxBatchedInit": "LarkPtxBatched.Bmm.Init",
+      "PtxBatchedBody": "LarkPtxBatched.Bmm.Body"
+    },
+    "certificate_namespace": "LarkPtxBatchedCertificate",
+    "reference_ast": [
+      "toHalf",
+      [
+        "matmul",
+        [
+          "fromHalf",
+          [
+            "input",
+            0
+          ]
+        ],
+        [
+          "fromHalf",
+          [
+            "input",
+            1
+          ]
+        ]
+      ]
+    ],
+    "archive_uncompressed_caps": {
+      "export": 30000000,
+      "replay": 30000000,
+      "controls": 30000000,
+      "installed-wheel": 30000000,
+      "wheel-build": 3000000,
+      "initial-export-v1": 30000000,
+      "failed-export-v2": 30000000,
+      "sdk-tests": 1000000,
+      "development-history": 45000000
+    },
+    "archive_member_counts": {
+      "export": 94,
+      "replay": 96,
+      "controls": 131,
+      "installed-wheel": 113,
+      "wheel-build": 6,
+      "initial-export-v1": 94,
+      "failed-export-v2": 94,
+      "sdk-tests": 6,
+      "development-history": 68
+    },
+    "immutable_inventory_sha256": {
+      "development-history": "dbf6b6becee6c2f4b18d2038f026a8b4e939bd13a30743893b9474520fbf2534",
+      "sdk-tests": "b0a29843711a87fe8e31c0a0b1a52d54d26c7bb8855850c7777f1cdafadfec31"
+    },
+    "validation_history_sha256": "00243184e2d4c89ee1b2983eec7aa4abc7c8e18045e4d6f922087cda4ffa1b71",
+    "sdk_test_source_sha256": "a593f3d46ecbc8fbb1e58258104ce1bfb190a71ec6ac0c9ed80e76ac58f3e6e6",
+    "wheel_build_included_flag": "all_eight_owned_Lean_files_included",
+    "installed_true_flags": [
+      "isolated_mode",
+      "all60_owned_source_bindings_match",
+      "legacy_ReLU_source_and_Main_unchanged",
+      "legacy_GEMV52_source_bytes_and_Main_unchanged",
+      "legacy_GEMM55_source_bytes_and_Main_unchanged",
+      "legacy_GEMV_and_GEMM_enlarged_rosters_refused_before_output",
+      "initial_BMM_renderer_source_change_refused_before_output",
+      "frozen_0_1_and_0_2_wheel_hashes_unchanged"
+    ],
+    "negative_controls": [
+      "wrong-product",
+      "wrong-loop-counter-stride",
+      "wrong-B-pointer-stride",
+      "shifted-output-address"
+    ],
+    "published_source": "6978f098e1f628f9a1507b0858c005624f95f1d2",
+    "publication_bytes": 55129306,
+    "publication_files": {
+      ".github/workflows/ci.yml": {
+        "sha256": "127bcefdd7e879b5fe87bb8e785e8ab24dab97134ef4a71b80d55553716fb2a4",
+        "bytes": 60829
+      },
+      "README.md": {
+        "sha256": "20cd5747aa10d9ef32666fc07ee5632cd3ace8b1822b2fef8e627217e0b9e13d",
+        "bytes": 27277
+      },
+      "lark_kernels/ptx_batched.py": {
+        "sha256": "500ce1079b151ae7d87ca1daccae79b0f9ab189a1c24f95b3640441861cbdc8d",
+        "bytes": 4944
+      },
+      "lark_kernels/ptx_batched_certificate.py": {
+        "sha256": "01771ba6aae95c74113dbf159d663dcd5eab21f6eaf66d55abbaff5c517b15ff",
+        "bytes": 15256
+      },
+      "lean/Lark/PtxBatched.lean": {
+        "sha256": "7bde9a2c0ebac9d61dcded78b228df21a7ba38f9fe9f45f41f7744deff46ef84",
+        "bytes": 15566
+      },
+      "lean/Lark/PtxBatchedBody.lean": {
+        "sha256": "ca8a5543545b4b476abb817879b4d1caf01302d9b355573c518931afb8562a39",
+        "bytes": 66131
+      },
+      "lean/Lark/PtxBatchedInit.lean": {
+        "sha256": "cd9ae675db225c15891224ac8e0358b58759e53246f217eabdd8c6c819dd2ef2",
+        "bytes": 24501
+      },
+      "pyproject.toml": {
+        "sha256": "db4f67192aedcc7f18d337a6bfa31f0b22edcb5ce7d3a7b4ff46218188b723a7",
+        "bytes": 3764
+      },
+      "reproduction/paper_results/snapshot-v25-ci-main-v1/manifest.json": {
+        "sha256": "eac591864beb868ebf7c7ab55d6edfd3bcd5876ba148ddaaf86bc77471a81de2",
+        "bytes": 354
+      },
+      "reproduction/paper_results/snapshot-v25-ci-main-v1/progress.json": {
+        "sha256": "92356447819ab55ba6be79332a03a1849e0a1213197ed9e7a233a06bba3b8495",
+        "bytes": 76350
+      },
+      "reproduction/paper_results/snapshot-v25-ci-main-v1/promotion-driver.py": {
+        "sha256": "2b8fbb71083a6217df16126ab101fb6aad488fda08d1e44aac1971ced3601eb3",
+        "bytes": 11288
+      },
+      "reproduction/paper_results/snapshot-v25-ci-main-v1/results.json": {
+        "sha256": "84545ec9325cb4086a033993229061137df7af338f36a4d1fd70b9d4b1b91b9d",
+        "bytes": 121609
+      },
+      "reproduction/paper_results/snapshot-v25-ci-main-v1/update.json": {
+        "sha256": "05500e5bda19271ac33957edccfe7f6aac5350c6f15e138ec012f63b9824570e",
+        "bytes": 74
+      },
+      "reproduction/ptx/BATCHED.md": {
+        "sha256": "982023e351b82cb4c9788aa6eddb072d3d0b385e76a78f4efdb86f231c41993e",
+        "bytes": 4230
+      },
+      "reproduction/ptx/README.md": {
+        "sha256": "89c15619acd00d4304731a5bd42382b191d72fd6ea680e37cdb6c8a81ddc482c",
+        "bytes": 7059
+      },
+      "reproduction/ptx/batched_frontend.py": {
+        "sha256": "c43b51e403d8f7a60075f987a4f8573006f709b7e87e2018e442bad916c82c4d",
+        "bytes": 1661
+      },
+      "reproduction/ptx/check_batched_source_controls.py": {
+        "sha256": "7401a6e3867b4c4505848d506870cc99ddaaed9cf5c16e126141b8f613f13698",
+        "bytes": 6382
+      },
+      "reproduction/ptx/full-size/bmm/README.md": {
+        "sha256": "2686f26ea2e7f220ba0638de9d4438a3c0888dc69f7717654cd7aa54af7a360d",
+        "bytes": 889
+      },
+      "reproduction/ptx/full-size/bmm/kernel.ptx": {
+        "sha256": "df13d4a76ce01ff72fb71eeeca866c5750885bb29d036c652ec9036c7c97cd81",
+        "bytes": 6266
+      },
+      "reproduction/ptx/full-size/bmm/reference.py": {
+        "sha256": "18cc07d00af098bcc9c2d94fb5b3805f4264c810d64ca9814c07e9e25f0db466",
+        "bytes": 78
+      },
+      "reproduction/ptx/full-size/bmm/source-bindings.json": {
+        "sha256": "65ed0d15ee7bf700a98c071737d4bc90d03cb3f6551e099de7605d853366f28c",
+        "bytes": 504
+      },
+      "reproduction/ptx/full-size/bmm/task.json": {
+        "sha256": "babf31898308958c10e664b63bfb2b03ad13bb1736e259fd857d40640d98fadc",
+        "bytes": 685
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/RESULTS.md": {
+        "sha256": "1dd867005dd34d6b9707340318e5937deb0188f931769e7224cb23b728fa5694",
+        "bytes": 4230
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/controls-files.json": {
+        "sha256": "4ec1452670be2c8aff82ab0d988e0520ec8c3382444d975c5208236dbf608d34",
+        "bytes": 16559
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/controls-results.json": {
+        "sha256": "ad0267a8b20186c5a16201ec242f721d20441ecfb5c1e8f3b58308fa4549eeaa",
+        "bytes": 6476
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/controls.tar.gz": {
+        "sha256": "a4ca507b6a936146250bab1f8b2bbe2f0448066d35c8b0b948800a60ff3f38ae",
+        "bytes": 6703035
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/dedicated-replay-environment.json": {
+        "sha256": "eaa46f8a8fc7535c1552f396316e6f3224b34d99b9697886b85f352ff187f4b2",
+        "bytes": 415
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/development-history-files.json": {
+        "sha256": "dbf6b6becee6c2f4b18d2038f026a8b4e939bd13a30743893b9474520fbf2534",
+        "bytes": 7844
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/development-history.tar.gz": {
+        "sha256": "ee3b5ed839c5a8e4d79295e8c40d06b8073cde8ade9feed595a271f9bf701af2",
+        "bytes": 12950494
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/export-files.json": {
+        "sha256": "15f2ccdb4bd999f250c6b9fb0db6861b38253ceab6351057b4b2657e03a77a95",
+        "bytes": 9982
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/export.tar.gz": {
+        "sha256": "fcfda6f3d3a9930f281ae3871867fac640148e4974851bede49c1e1da6b3f82b",
+        "bytes": 6658852
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/failed-export-results.json": {
+        "sha256": "17307bab42baca4a6d4be3301e2cfa3a3ca17186e62cd2da3dbcfe1d7ff55f2f",
+        "bytes": 29479
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/failed-export-v2-files.json": {
+        "sha256": "12dead0ceb633a33db1c009160ac2754e807938e1ba2584ff7f8cc75aecfb17b",
+        "bytes": 9982
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/failed-export-v2.tar.gz": {
+        "sha256": "fb9bdb71a22a0b22ab6bd057f1f48e1a850640df21724c2422b74d6613c17980",
+        "bytes": 6658962
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/initial-export-results.json": {
+        "sha256": "b03ea55e2ce1e839003f3728c6670f35a8a22551ee01bb062ada664978c45d1b",
+        "bytes": 30074
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/initial-export-v1-files.json": {
+        "sha256": "71b954a8ffc6c7bc6dd6f14b30ec362585ddd73b81633b1d474ab2999aa8783f",
+        "bytes": 9982
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/initial-export-v1.tar.gz": {
+        "sha256": "ab94481ffe2975977117d688595e66a116cda236d538ec19cd5bad8c9255e99b",
+        "bytes": 6658841
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/installed-wheel-files.json": {
+        "sha256": "9d32604b74a5126bc709fe8997e053205694074ffd3ca2e1bba1723176385f41",
+        "bytes": 13446
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/installed-wheel-results.json": {
+        "sha256": "7e790d5c5c0bd2bef87cb8f27390a404e00c2777b26c6e70d8471d6a2df8f9ea",
+        "bytes": 1204
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/installed-wheel.tar.gz": {
+        "sha256": "87916b29091721abe17ca7beec584908ca6afd478be01aeb5357c8675bb479e3",
+        "bytes": 6670656
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/local-test-terminal-observations.json": {
+        "sha256": "2a41c25495f77729a827bdbce1a1c024e4a99dbde1f9870cf0e940841e6131e9",
+        "bytes": 342
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/manifest.json": {
+        "sha256": "e190d3b77b54d4dc57f5d1bf67885af8aec839acbff2aab86645704c466b7bf8",
+        "bytes": 3157
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/packaging-driver.py": {
+        "sha256": "087fd83ac062dc971143385f62e809be22ff5a5cd9d63e84e4317f68de470541",
+        "bytes": 24489
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/proof-results.json": {
+        "sha256": "fc28cc7ea8623951a3c7c38c8e23142b672c60941b9adc26ac6583bd286f93f1",
+        "bytes": 30078
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/replay-files.json": {
+        "sha256": "eacab6a2ab7bd70b812e4b76e799e80bdffea1ffe91dac68f08008acb9c8561f",
+        "bytes": 10167
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/replay-results.json": {
+        "sha256": "a5dd2d802f1b38ee472a7fa9ac918fa512cfce3f3f8a1af63f7904d104ea0ca3",
+        "bytes": 1648
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/replay.tar.gz": {
+        "sha256": "26ffa0e3f5424fecea0519f47e6e685091d665d4e1246a356a9a212c1d272dd7",
+        "bytes": 6662989
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/results.json": {
+        "sha256": "22b2aa6948bfd5b2ce2945b6b8f12208927fea3ca214e8e0ec9d3f2a34b5cf72",
+        "bytes": 6477
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/sdk-test-results.json": {
+        "sha256": "06855aef72359a89d9427733e09f11a2935819ae82a57eb8d91699b9455806ac",
+        "bytes": 693
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/sdk-test-source.py": {
+        "sha256": "a593f3d46ecbc8fbb1e58258104ce1bfb190a71ec6ac0c9ed80e76ac58f3e6e6",
+        "bytes": 11213
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/sdk-tests-files.json": {
+        "sha256": "b0a29843711a87fe8e31c0a0b1a52d54d26c7bb8855850c7777f1cdafadfec31",
+        "bytes": 514
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/sdk-tests.tar.gz": {
+        "sha256": "d1d5fd07ecaa8764449a22216c370bd00eb2e849afe510dc117d75854ff85d3d",
+        "bytes": 2213
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/validation-history.json": {
+        "sha256": "00243184e2d4c89ee1b2983eec7aa4abc7c8e18045e4d6f922087cda4ffa1b71",
+        "bytes": 1860
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/wheel-build-files.json": {
+        "sha256": "a851f6fc59afdad82964f32431d00191a1784481589e03cbb77931a71d7b3fa4",
+        "bytes": 546
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/wheel-build-results.json": {
+        "sha256": "039e41f41382d4d58d4efad0a9965848d5b4dd8e682cbc10e36685d59210bd4c",
+        "bytes": 1006
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-v1/wheel-build.tar.gz": {
+        "sha256": "eb9d954e903649aa007087d5a1a118d4b72c12dfc2dea4a3ccfde4478cb8b978",
+        "bytes": 1460866
+      },
+      "tests/test_ptx_batched.py": {
+        "sha256": "a593f3d46ecbc8fbb1e58258104ce1bfb190a71ec6ac0c9ed80e76ac58f3e6e6",
+        "bytes": 11213
+      },
+      "tests/test_ptx_batched_frontend.py": {
+        "sha256": "6ffd8d0825f3af7cac86ccf1c72704b987da3009b6a17088bcad83a8f3e3f646",
+        "bytes": 3625
+      }
+    },
+    "publication_counters": {
+      "schema": 1,
+      "archive_members_checked": 702,
+      "owned_source_bindings_checked": 60,
+      "archives_checked": 9,
+      "total_downloaded_bytes": 55129306,
+      "model_calls": 0,
+      "gpu_trials": 0,
+      "fresh_lean_checks": 0,
+      "new_registered_certificates": 0,
+      "earlier_failed_official_exports_retained": 1
+    },
+    "ci_jobs": [
+      "exact-real",
+      "fused-real",
+      "native-awq-components",
+      "native-awq-real",
+      "native-flashinfer-real",
+      "native-flashinfer-rmsnorm",
+      "native-qknorm-rope",
+      "native-rope",
+      "native-sglang-real",
+      "native-sglang-rmsnorm",
+      "paper-ledger",
+      "proof-tests",
+      "ptx-batched",
+      "ptx-matrix",
+      "qknorm-rope-real",
+      "qknorm-rope-split-real",
+      "reference-identity",
+      "softmax-block",
+      "softmax-grid",
+      "softmax-race",
+      "softmax-real",
+      "softmax-source"
+    ],
+    "ci_run": 43521648124,
+    "ci_branch": "reproduction/ptx-batched-refinement",
+    "old_main": "f1dd8c2751e1b4f79c55d7e90c6b8466d8c691d8",
+    "promoted_main": "2c0c96ea5aac0df7b8c41aca55b2a3818b98b4a3",
+    "main_checks": [
+      "actual22_BMM_source_jobs_all_success",
+      "all_other_code_Lean_tests_workflow_and_snapshots_identical_to_CI_source",
+      "one_kernel_five_official_Main_checks_four_current_checks32_fresh_modules_bound",
+      "all58_public_changed_files_anonymous_TLS_exact_source_bytes",
+      "nine_public_archives702_members60_wheel_source_bindings_verified",
+      "v25_snapshot_preserved",
+      "bounded_original_artifact_observation_retained",
+      "clean_main_candidate_and_ancestry_checked"
+    ],
+    "post_source_paths": [
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/arxiv-abstract-request.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/arxiv-repositories-authenticated-request.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/arxiv-repositories-authenticated.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/driver.py",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/initial-anonymous-search-rate-limit.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-default-ref-request.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-default-ref.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-metadata-request.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-metadata.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-releases-request.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/kernelcraft-releases.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/manifest.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/manuscript-version-observation.json",
+      "reproduction/paper_results/original-artifact-observation-bmm-20261113-v1/results.json",
+      "reproduction/ptx/BATCHED.md",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/jobs.json",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/manifest.json",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/observer.py",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/progress.json",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/results.json",
+      "reproduction/ptx/results/full-size-bmm-proof-ci-v1/run.json",
+      "reproduction/ptx/results/full-size-bmm-proof-publication-v1/binding.json",
+      "reproduction/ptx/results/full-size-bmm-proof-publication-v1/manifest.json",
+      "reproduction/ptx/results/full-size-bmm-proof-publication-v1/results.json",
+      "reproduction/ptx/results/full-size-bmm-proof-publication-v1/verifier.py"
+    ],
+    "older_official_exports": {
+      "initial-export-v1": {
+        "status": "verified-source-bound-full-PTX-BMM",
+        "main_sha256": "4824c755eac049df7da255d92b203bce3db704ffe7a10f504b6c9f705ee0ed48",
+        "source_bindings_sha256": "6447f678f8247760bfd56a1296470761491c4ad20257c8238947b339ffb23740",
+        "source_bound_proof_accepted": true,
+        "source_bound_development_proofs": 1
+      },
+      "failed-export-v2": {
+        "status": "unproved-source-bound-PTX-BMM",
+        "main_sha256": "22d8090b68cc9d6eeac519b44ea472d057f34f6e2914da2a645381946103000c",
+        "source_bindings_sha256": "4d014f316a7202b1bbb6f59623c25421e26b3bd13696d343763610afef973c62",
+        "source_bound_proof_accepted": false,
+        "source_bound_development_proofs": 0
+      }
+    }
+  },
+  "linear": {
+    "prefix": "reproduction/ptx/results/full-size-linear-proof-v1",
+    "publication_prefix": "reproduction/ptx/results/full-size-linear-proof-publication-v1",
+    "ci_prefix": "reproduction/ptx/results/full-size-linear-proof-ci-v1",
+    "main_prefix": "reproduction/ptx/results/full-size-linear-proof-ci-main-v1",
+    "identity": {
+      "schema": 1,
+      "status": "exact-source-full-size-PTX-LINEAR-proof-evidence",
+      "producer_commit": "fb405c06d6dfd96ca8af965dae0da6888d56b8c6",
+      "packaging_source_commit": "8efb14df662ec0d69187ddc8d1bb8e01b5fca49a",
+      "profile": "source-bound-compiled-linear-fp16-v1",
+      "packaging_driver_sha256": "1f9481213aabbd2f4956416135e6b40c1847058449a046b1d4713768712297ad"
+    },
+    "counters": {
+      "independent_source_bound_development_proofs": 1,
+      "retained_positive_Main_checks": 4,
+      "positive_rechecks": 3,
+      "current_SDK_positive_Main_checks": 4,
+      "owned_module_builds_across_four_checks": 40,
+      "retained_failed_official_exports": 0,
+      "retained_pre_SDK_development_attempts": 12,
+      "accepted_pre_SDK_development_checks": 7,
+      "failed_pre_SDK_development_checks": 5,
+      "unit_test_positive_Main_recordings_retained": 0,
+      "direct_Lean_negative_controls": 4,
+      "negative_timeouts": 0,
+      "PTX_instructions": 179,
+      "library_axiom_audits_per_check": 280,
+      "Main_axiom_audits_per_check": 6,
+      "owned_source_files": 64,
+      "new_registered_source_certificates": 0,
+      "packaging_model_calls": 0,
+      "packaging_Lean_checks": 0,
+      "packaging_gpu_trials": 0,
+      "model_calls_for_this_proof_study": 0,
+      "gpu_trials_for_this_proof_study": 0
+    },
+    "contract": {
+      "shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          512
+        ],
+        [
+          512
+        ],
+        [
+          64,
+          512
+        ]
+      ],
+      "dtype": "float16",
+      "launch": {
+        "grid": 32768,
+        "block": 1,
+        "warp": 32
+      },
+      "unchanged_CUDA_contract_fuel": [
+        1030,
+        1,
+        1,
+        1
+      ],
+      "input_bindings": {
+        "kernel.ptx": "5ae52a2a03b700ffebe4de2d10c69e9fc3f34dea2d99e1bd3ad1c2472ef6e273",
+        "reference.py": "e9be42251e3c805b12dab2b8cdf23a8a8d30999c4733ced7a46d7da88c13aa68",
+        "contract.json": "78eef07eb3d9a315e87f3bb8bbb6e8a253d6d90a5ada37b1e48351c31dc93dd3"
+      },
+      "main_sha256": "78b16e6580c218f489218c56dbcc9a227ce35a38fcf5fc0f7a5fe1edb29a6fa7",
+      "source_bindings_sha256": "bf102c2702883648eaf4629dc469fc2f64566de3113497e1c375efce17164231",
+      "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+      "limits": {
+        "maxRecDepth": 10000,
+        "maxHeartbeats": 2000000,
+        "per_Lean_process_seconds": 180,
+        "source_import_build_seconds": 600
+      },
+      "wheel_sha256": "264c59f4427d3c2d3c0bf3cbd82cd040de484aba54fdb938da759c196dd78f37",
+      "nvidia_execution": false,
+      "original_paper_fully_reproduced": false,
+      "scope": "Source-bound complete compiled [64,256] times [256,512] plus bias[512] FP16 Linear development proof. All179 actual parsed instructions, the50instruction prologue, all16 iterations of the real113instruction matrix body and five control instructions, all11 bias/epilogue instructions including actual64bit shift, output store and ret, all32768 active lanes, actual access-trace race freedom, every extracted closed matrix-plus-bias reference output and preservation outside the output footprint are covered under the declared abstract scalar interpretation. Bias is converted from half and added to the completed float accumulator before the final half conversion. The unchanged CUDA shapes/dtypes, grid32768/block1/warp32 and fuel[1030,1,1,1] are retained. Finite PTX execution uses inductive actual successful transition sequences; CUDA fuel remains separate data, with no new execution fuel. Python parsing/reference formalization, logical pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, PyTorch/NVIDIA hardware-conformance, NVIDIA execution, original optimized kernel, original model result or original-paper-completion claim. This separate development checker registers no legacy SDK profile or model success."
+    },
+    "report_boolean_fields": {
+      "pre_SDK_development_counts_as_official_positive_Main_checks": false,
+      "nvidia_execution": false,
+      "original_paper_fully_reproduced": false
+    },
+    "packet_files": [
+      "RESULTS.md",
+      "controls-files.json",
+      "controls-results.json",
+      "controls.tar.gz",
+      "dedicated-replay-environment.json",
+      "development-history-files.json",
+      "development-history.tar.gz",
+      "export-files.json",
+      "export.tar.gz",
+      "installed-wheel-files.json",
+      "installed-wheel-results.json",
+      "installed-wheel.tar.gz",
+      "local-test-terminal-observations.json",
+      "manifest.json",
+      "packaging-driver.py",
+      "proof-results.json",
+      "replay-files.json",
+      "replay-results.json",
+      "replay.tar.gz",
+      "results.json",
+      "sdk-test-results.json",
+      "sdk-test-source.py",
+      "sdk-tests-files.json",
+      "sdk-tests.tar.gz",
+      "validation-history.json",
+      "wheel-build-files.json",
+      "wheel-build-results.json",
+      "wheel-build.tar.gz"
+    ],
+    "modules": {
+      "Nonlinear": "LarkNonlinear",
+      "Pointwise": "LarkPointwise",
+      "PtxPointwise": "LarkPtxPointwise",
+      "PtxDot": "LarkPtxDot",
+      "PtxMatrix": "LarkPtxMatrix",
+      "PtxLinear": "LarkPtxLinear",
+      "PtxLinearInit": "LarkPtxLinear.Linear.Init",
+      "PtxLinearBody": "LarkPtxLinear.Linear.Body",
+      "PtxLinearExit": "LarkPtxLinear.Linear.Exit",
+      "PtxLinearLaunch": "LarkPtxLinear.Linear.Launch"
+    },
+    "certificate_namespace": "LarkPtxLinearCertificate",
+    "reference_ast": [
+      "toHalf",
+      [
+        "add",
+        [
+          "matmul",
+          [
+            "fromHalf",
+            [
+              "input",
+              0
+            ]
+          ],
+          [
+            "fromHalf",
+            [
+              "input",
+              1
+            ]
+          ]
+        ],
+        [
+          "fromHalf",
+          [
+            "input",
+            2
+          ]
+        ]
+      ]
+    ],
+    "archive_uncompressed_caps": {
+      "export": 30000000,
+      "replay": 30000000,
+      "controls": 30000000,
+      "installed-wheel": 30000000,
+      "wheel-build": 3000000,
+      "sdk-tests": 1000000,
+      "development-history": 225000000
+    },
+    "archive_member_counts": {
+      "export": 104,
+      "replay": 106,
+      "controls": 141,
+      "installed-wheel": 123,
+      "wheel-build": 6,
+      "sdk-tests": 6,
+      "development-history": 474
+    },
+    "immutable_inventory_sha256": {
+      "development-history": "41991a23a180d020ef44c1bd20d0f95805bc38e8d3474668f130150bbcfbd0db",
+      "sdk-tests": "023f3938462c8a058e2971f6e25ae1cd6df7e00d5467b635038074eaca8d05b1"
+    },
+    "validation_history_sha256": "adce4803e8a0aaa1d253b023d1758138d43ad20e77039cdb6797b26bdf614562",
+    "sdk_test_source_sha256": "e490cdcf180544b6a008398db59e20ec138672c9c60614c910aff29f847224a1",
+    "wheel_build_included_flag": "all_ten_owned_Lean_files_included",
+    "installed_true_flags": [
+      "isolated_mode",
+      "all64_owned_source_bindings_match",
+      "legacy_ReLU_source_and_Main_unchanged",
+      "legacy_GEMV52_source_bytes_and_Main_unchanged",
+      "legacy_GEMM55_source_bytes_and_Main_unchanged",
+      "legacy_GEMV_GEMM_and_BMM_enlarged_rosters_refused_before_output",
+      "legacy_BMM60_source_bytes_and_Main_unchanged",
+      "frozen_0_1_0_2_and_0_3_wheel_hashes_unchanged"
+    ],
+    "negative_controls": [
+      "wrong-product",
+      "wrong-sign-extension-source",
+      "wrong-bias-shift",
+      "wrong-bias-operation"
+    ],
+    "published_source": "1e005415a113c69a94a28487803ffdfefa3c0f94",
+    "publication_bytes": 94911615,
+    "publication_files": {
+      ".github/workflows/ci.yml": {
+        "sha256": "c57358377b024d3adf97b1a7140423a9467533198ef9d302de3bda580833862c",
+        "bytes": 62220
+      },
+      "README.md": {
+        "sha256": "2b17a194485adb9c316a9c25896162ae0c502311b37f3aa4bf215af26b8c3669",
+        "bytes": 27875
+      },
+      "lark_kernels/ptx_linear.py": {
+        "sha256": "390bbd6344f8945bbd60bfd41c2893310a7722ee1ae974af8e285dd68384c919",
+        "bytes": 7518
+      },
+      "lark_kernels/ptx_linear_certificate.py": {
+        "sha256": "a7f35709845d088ae50ea0d613267ea8e837a845606ffd08367784bdb470636e",
+        "bytes": 15564
+      },
+      "lean/Lark/PtxLinear.lean": {
+        "sha256": "99ac806732d925eac7c8cb3dd2077194e51f63dd8e201ca3633f4aa6925e4a71",
+        "bytes": 24031
+      },
+      "lean/Lark/PtxLinearBody.lean": {
+        "sha256": "802bb36b0d108a951367728e879032ab5c70d51a791390207d76092983d3ffeb",
+        "bytes": 38133
+      },
+      "lean/Lark/PtxLinearExit.lean": {
+        "sha256": "ae9e58ae71f62c7a1a8c225bad21286dae3cd30057f555b1e306e8260257ce47",
+        "bytes": 19365
+      },
+      "lean/Lark/PtxLinearInit.lean": {
+        "sha256": "f223edf927fb76a2c10380883e55fe30a4a9c41330aaaf1753e5459ffe6923bd",
+        "bytes": 25318
+      },
+      "lean/Lark/PtxLinearLaunch.lean": {
+        "sha256": "c7d5b80bc4b971dcc1b703f535d0339eb4c7b4efba809de667dc642d5fc1ed2f",
+        "bytes": 16602
+      },
+      "pyproject.toml": {
+        "sha256": "a1c7b159091ad6628466727db1758e093d5d2b11f36e8f929d0ac8367b6caa09",
+        "bytes": 3922
+      },
+      "reproduction/ptx/LINEAR.md": {
+        "sha256": "bed304dc23f80e1cb1c459847b56b60855228064d47eef47ae12c0dfe122d1ec",
+        "bytes": 7809
+      },
+      "reproduction/ptx/README.md": {
+        "sha256": "4f40b5c4fca4bc6989ae1135f547b67975e1b0c42c0e287d393718f1cb97a9d4",
+        "bytes": 7509
+      },
+      "reproduction/ptx/check_linear_initialization.py": {
+        "sha256": "307d1b070262047372fcbed227ba03f8638aa5b2c7529da6a8ddbe4d8f8d00c8",
+        "bytes": 11662
+      },
+      "reproduction/ptx/check_linear_source_controls.py": {
+        "sha256": "381d77e48fdff4081e49bdd77fe35452823b63a49c258349d70d89280bd54ffe",
+        "bytes": 6351
+      },
+      "reproduction/ptx/full-size/linear/README.md": {
+        "sha256": "bddd14f0788f5a9e9d961c902dba493c1fac20ca0f5d72e6c43e7a85ccb2bfc6",
+        "bytes": 863
+      },
+      "reproduction/ptx/full-size/linear/input-bindings.json": {
+        "sha256": "cfe0e311b920c4ccedccb63271fb2a89e1b1964ccb13817be703b3fb483dfbb7",
+        "bytes": 890
+      },
+      "reproduction/ptx/full-size/linear/kernel.cu": {
+        "sha256": "0056547133b6023d8ccb9747e5c8b57019608d330b1f94b4ca5fc8fff0e2c43e",
+        "bytes": 369
+      },
+      "reproduction/ptx/full-size/linear/kernel.ptx": {
+        "sha256": "5ae52a2a03b700ffebe4de2d10c69e9fc3f34dea2d99e1bd3ad1c2472ef6e273",
+        "bytes": 7574
+      },
+      "reproduction/ptx/full-size/linear/reference.py": {
+        "sha256": "e9be42251e3c805b12dab2b8cdf23a8a8d30999c4733ced7a46d7da88c13aa68",
+        "bytes": 99
+      },
+      "reproduction/ptx/full-size/linear/task.json": {
+        "sha256": "78eef07eb3d9a315e87f3bb8bbb6e8a253d6d90a5ada37b1e48351c31dc93dd3",
+        "bytes": 768
+      },
+      "reproduction/ptx/linear_frontend.py": {
+        "sha256": "0340757a17f867cba501f709d2df051443dcce5bbf1215e50239ca33f82407c4",
+        "bytes": 3637
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1/manifest.json": {
+        "sha256": "368408c6da5372af7c407570282db01d3ea13b696fa5f19912d0e6e70187db14",
+        "bytes": 354
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1/progress.json": {
+        "sha256": "8c9bc96d8c81ef2c88abeae1af4ade19367d404ee2a9455003356423f25b88d4",
+        "bytes": 134915
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1/promotion-driver.py": {
+        "sha256": "cb1cde7133d15b82bc15f2f0ae4866a51b2d1ca11eb9eb381f056cc6affdfa7e",
+        "bytes": 13803
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1/results.json": {
+        "sha256": "027dd5621aa6411efdfdfe7dd8910a5712d9422fb55886e2f32a7e954d02cb1e",
+        "bytes": 147356
+      },
+      "reproduction/ptx/results/full-size-bmm-proof-ci-main-v1/update.json": {
+        "sha256": "1645c2da6305dd6d8c48cd87fb9a653fd3ffc8c2bdd9d8bdd9c595fb234fb9c0",
+        "bytes": 74
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/RESULTS.md": {
+        "sha256": "f5521f39aa964772a4da28790858d19c1fe08cfe66808258dddfad5f575bf3d9",
+        "bytes": 3630
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/controls-files.json": {
+        "sha256": "97fda9525a196de53e12dce43c129d451a38df60db07c0561682f737d828cdf4",
+        "bytes": 17851
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/controls-results.json": {
+        "sha256": "383960a5fbbd4e065a4e9d82407da9d06e210222b87e574912ac472577a0e5ca",
+        "bytes": 6464
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/controls.tar.gz": {
+        "sha256": "1fc052bcb934fb309711e0ed0f3b43340e793c9f0ccff0dfa0ade12fd2a1f5a0",
+        "bytes": 6992905
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/dedicated-replay-environment.json": {
+        "sha256": "5ceda10886ba1da8e3991342b013d89d76fd63e1cffb1f55ae4b5af9a7a3958d",
+        "bytes": 393
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/development-history-files.json": {
+        "sha256": "41991a23a180d020ef44c1bd20d0f95805bc38e8d3474668f130150bbcfbd0db",
+        "bytes": 55796
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/development-history.tar.gz": {
+        "sha256": "16ddaee15794180f236e82da52fdf231e915236ce7d5a407516989c82f3f8a08",
+        "bytes": 64729527
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/export-files.json": {
+        "sha256": "ebd47e6d90585e6304bbe0bed145be1e0e7d325c968049e1d1234679e13895b8",
+        "bytes": 11042
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/export.tar.gz": {
+        "sha256": "4540da4d646c1e9122a6b662fb9ad94ca94f83a30b1a4a05264be98691c9420f",
+        "bytes": 6940093
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/installed-wheel-files.json": {
+        "sha256": "de015ba63982429098b23b7828207b6c0b3b48e051d4b7b84625ac009ef28dd5",
+        "bytes": 14696
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/installed-wheel-results.json": {
+        "sha256": "e294f4f27fd4f29a213e82ca38d673e6ab319090aa3582b8860f77abc5a4ce62",
+        "bytes": 1202
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/installed-wheel.tar.gz": {
+        "sha256": "75e6d7dde1b8d49458ada361879ba4a671b21f5e73af8148175b0524f128ed76",
+        "bytes": 6955294
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/local-test-terminal-observations.json": {
+        "sha256": "6732f07005d980eef76e9d3b8f0cbe3398a6cd07c33d355646b6fd293264257e",
+        "bytes": 307
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/manifest.json": {
+        "sha256": "651a708c23dc0e4cffb89e2d7ac10af83226e2fa6a3f2de7576296b6827bed32",
+        "bytes": 2558
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/packaging-driver.py": {
+        "sha256": "1f9481213aabbd2f4956416135e6b40c1847058449a046b1d4713768712297ad",
+        "bytes": 23177
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/proof-results.json": {
+        "sha256": "2c3a1ef3b20dc8bf962acffac74b675e3e624ef645e2abc0fc8041c00d7c3a38",
+        "bytes": 31757
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/replay-files.json": {
+        "sha256": "fc51937d80da0fa09ca8134c35fc682bc7eecc34cf6f5b513108b0ced6f17405",
+        "bytes": 11227
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/replay-results.json": {
+        "sha256": "2f248fffc17eb1a69556eb964f6fb7a39295c093474e4019cb3194b230aa317b",
+        "bytes": 1644
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/replay.tar.gz": {
+        "sha256": "1e7ac18c3519ddf7133f19ebdad1f1f00268d873ab2ffb5c2f5cbe56e2ac286b",
+        "bytes": 6944514
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/results.json": {
+        "sha256": "9bb0f0ba92dd81d1ac6075ec8efbbaf530e8f42890667f5e7405382f7f976ea9",
+        "bytes": 5957
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/sdk-test-results.json": {
+        "sha256": "71d61626f0ddcab82a3cc16a6bbae2289363884271bae98af443ac4a61a605e4",
+        "bytes": 695
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/sdk-test-source.py": {
+        "sha256": "e490cdcf180544b6a008398db59e20ec138672c9c60614c910aff29f847224a1",
+        "bytes": 11532
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/sdk-tests-files.json": {
+        "sha256": "023f3938462c8a058e2971f6e25ae1cd6df7e00d5467b635038074eaca8d05b1",
+        "bytes": 514
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/sdk-tests.tar.gz": {
+        "sha256": "dea281b355cba89d5d4bf0d844c941584d7fc898a3a52c75567dc9081612c58f",
+        "bytes": 2208
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/validation-history.json": {
+        "sha256": "adce4803e8a0aaa1d253b023d1758138d43ad20e77039cdb6797b26bdf614562",
+        "bytes": 52988
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/wheel-build-files.json": {
+        "sha256": "f571a2954fc82e5e77f91bf6719c470536ecb945f89f3c984b4c7661ef9e715b",
+        "bytes": 546
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/wheel-build-results.json": {
+        "sha256": "024e2bf1398cabfeb17e3018fb5d9bc330d066fb5f8d6963110ef99aaf6493dc",
+        "bytes": 1006
+      },
+      "reproduction/ptx/results/full-size-linear-proof-v1/wheel-build.tar.gz": {
+        "sha256": "76a984e625d1432ace6dc8c6f97f92e7ab85b21e0dc2c4cd96e37419b947f34d",
+        "bytes": 1491424
+      },
+      "tests/test_ptx_linear.py": {
+        "sha256": "e490cdcf180544b6a008398db59e20ec138672c9c60614c910aff29f847224a1",
+        "bytes": 11532
+      },
+      "tests/test_ptx_linear_frontend.py": {
+        "sha256": "f59622e5c22227969bcbb79deac30d5efb4db62f76f730f4517cd0b6ae353f7b",
+        "bytes": 4555
+      }
+    },
+    "publication_counters": {
+      "schema": 1,
+      "archive_members_checked": 960,
+      "owned_source_bindings_checked": 64,
+      "archives_checked": 7,
+      "total_downloaded_bytes": 94911615,
+      "model_calls": 0,
+      "gpu_trials": 0,
+      "fresh_lean_checks": 0,
+      "new_registered_certificates": 0,
+      "earlier_failed_official_exports_retained": 0,
+      "all_pre_SDK_development_attempts_retained": 12,
+      "failed_pre_SDK_development_attempts_retained": 5
+    },
+    "ci_jobs": [
+      "exact-real",
+      "fused-real",
+      "native-awq-components",
+      "native-awq-real",
+      "native-flashinfer-real",
+      "native-flashinfer-rmsnorm",
+      "native-qknorm-rope",
+      "native-rope",
+      "native-sglang-real",
+      "native-sglang-rmsnorm",
+      "paper-ledger",
+      "proof-tests",
+      "ptx-batched",
+      "ptx-linear",
+      "ptx-matrix",
+      "qknorm-rope-real",
+      "qknorm-rope-split-real",
+      "reference-identity",
+      "softmax-block",
+      "softmax-grid",
+      "softmax-race",
+      "softmax-real",
+      "softmax-source"
+    ],
+    "ci_run": 43531324083,
+    "ci_branch": "reproduction/ptx-linear-refinement",
+    "old_main": "2c0c96ea5aac0df7b8c41aca55b2a3818b98b4a3",
+    "promoted_main": "db1eb9bbb96d365987f685e085ff3e4a314ec128",
+    "main_checks": [
+      "actual23_Linear_source_jobs_all_success",
+      "all_other_code_Lean_tests_workflow_and_snapshots_identical_to_CI_source",
+      "one_kernel_four_Main_checks40_fresh_module_builds4_Lean_controls_bound",
+      "all56_public_changed_files_anonymous_TLS_exact_source_bytes",
+      "seven_public_archives960_members64_wheel_source_bindings_verified",
+      "all12_development_attempts_including5_failures_retained",
+      "v25_snapshot_preserved",
+      "clean_main_candidate_ancestry_checked"
+    ],
+    "post_source_paths": [
+      "README.md",
+      "reproduction/ptx/LINEAR.md",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/jobs.json",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/manifest.json",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/observer.py",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/progress.json",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/results.json",
+      "reproduction/ptx/results/full-size-linear-proof-ci-v1/run.json",
+      "reproduction/ptx/results/full-size-linear-proof-publication-v1/binding.json",
+      "reproduction/ptx/results/full-size-linear-proof-publication-v1/manifest.json",
+      "reproduction/ptx/results/full-size-linear-proof-publication-v1/results.json",
+      "reproduction/ptx/results/full-size-linear-proof-publication-v1/verifier.py"
+    ]
+  }
+}
