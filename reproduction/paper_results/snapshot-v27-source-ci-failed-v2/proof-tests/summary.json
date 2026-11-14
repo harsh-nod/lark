@@ -1,0 +1,28 @@
+{
+  "job": 132359357710,
+  "source_version": 2,
+  "status": "completed",
+  "conclusion": "failure",
+  "diagnostics": [
+    {
+      "line": 1493,
+      "excerpt": "2026-11-14T06:51:32.7279764Z ======================================================================\n2026-11-14T06:51:32.7280676Z ERROR: test_all3792_original_paths_and_hashes_survive_runtime_changes (test_prepare_ptx_rotary_snapshot.RotaryAuditorPreparationTests.test_all3792_original_paths_and_hashes_survive_runtime_changes)\n2026-11-14T06:51:32.7281808Z ----------------------------------------------------------------------\n2026-11-14T06:51:32.7282322Z Traceback (most recent call last):\n2026-11-14T06:51:32.7288803Z   File \"/home/runner/work/lark/lark/tests/test_prepare_ptx_rotary_snapshot.py\", line 49, in test_all3792_original_paths_and_hashes_survive_runtime_changes\n2026-11-14T06:51:32.7289530Z     config[\"preserved_evidence_origins\"] = preservation_plan()\n2026-11-14T06:51:32.7289893Z                                            ^^^^^^^^^^^^^^^^^^^\n2026-11-14T06:51:32.7290477Z   File \"/home/runner/work/lark/lark/reproduction/paper_results/prepare_ptx_rotary_snapshot.py\", line 88, in preservation_plan\n2026-11-14T06:51:32.7291068Z     committed_evidence(name, current, {name: binding}, root=root)\n2026-11-14T06:51:32.7291964Z   File \"/home/runner/work/lark/lark/reproduction/paper_results/replay_snapshot.py\", line 118, in committed_evidence"
+    },
+    {
+      "line": 1502,
+      "excerpt": "2026-11-14T06:51:32.7291964Z   File \"/home/runner/work/lark/lark/reproduction/paper_results/replay_snapshot.py\", line 118, in committed_evidence\n2026-11-14T06:51:32.7292609Z     require(result.returncode == 0, \"Preserved evidence commit is not an ancestor\")\n2026-11-14T06:51:32.7293203Z   File \"/home/runner/work/lark/lark/reproduction/paper_results/replay_snapshot.py\", line 26, in require\n2026-11-14T06:51:32.7293694Z     raise ValueError(message)\n2026-11-14T06:51:32.7294004Z ValueError: Preserved evidence commit is not an ancestor\n2026-11-14T06:51:32.7294490Z \n2026-11-14T06:51:32.7294647Z ----------------------------------------------------------------------\n2026-11-14T06:51:32.7294984Z Ran 463 tests in 998.159s\n2026-11-14T06:51:32.7295140Z \n2026-11-14T06:51:32.7295253Z FAILED (errors=1, skipped=11)"
+    },
+    {
+      "line": 1505,
+      "excerpt": "2026-11-14T06:51:32.7293694Z     raise ValueError(message)\n2026-11-14T06:51:32.7294004Z ValueError: Preserved evidence commit is not an ancestor\n2026-11-14T06:51:32.7294490Z \n2026-11-14T06:51:32.7294647Z ----------------------------------------------------------------------\n2026-11-14T06:51:32.7294984Z Ran 463 tests in 998.159s\n2026-11-14T06:51:32.7295140Z \n2026-11-14T06:51:32.7295253Z FAILED (errors=1, skipped=11)\n2026-11-14T06:51:32.7728207Z ##[error]Process completed with exit code 1.\n2026-11-14T06:51:32.7873516Z Post job cleanup.\n2026-11-14T06:51:32.8735194Z [command]/usr/bin/git version"
+    },
+    {
+      "line": 1508,
+      "excerpt": "2026-11-14T06:51:32.7294647Z ----------------------------------------------------------------------\n2026-11-14T06:51:32.7294984Z Ran 463 tests in 998.159s\n2026-11-14T06:51:32.7295140Z \n2026-11-14T06:51:32.7295253Z FAILED (errors=1, skipped=11)\n2026-11-14T06:51:32.7728207Z ##[error]Process completed with exit code 1.\n2026-11-14T06:51:32.7873516Z Post job cleanup.\n2026-11-14T06:51:32.8735194Z [command]/usr/bin/git version\n2026-11-14T06:51:32.8785401Z git version 2.56.1\n2026-11-14T06:51:32.8831110Z Temporarily overriding HOME='/home/runner/work/_temp/ce060eab-cd5c-47f7-ad2f-0c22b131dc1a' before making global git config changes\n2026-11-14T06:51:32.8832425Z Adding repository directory to the temporary git global config as a safe directory"
+    },
+    {
+      "line": 1510,
+      "excerpt": "2026-11-14T06:51:32.7295140Z \n2026-11-14T06:51:32.7295253Z FAILED (errors=1, skipped=11)\n2026-11-14T06:51:32.7728207Z ##[error]Process completed with exit code 1.\n2026-11-14T06:51:32.7873516Z Post job cleanup.\n2026-11-14T06:51:32.8735194Z [command]/usr/bin/git version\n2026-11-14T06:51:32.8785401Z git version 2.56.1\n2026-11-14T06:51:32.8831110Z Temporarily overriding HOME='/home/runner/work/_temp/ce060eab-cd5c-47f7-ad2f-0c22b131dc1a' before making global git config changes\n2026-11-14T06:51:32.8832425Z Adding repository directory to the temporary git global config as a safe directory\n2026-11-14T06:51:32.8837790Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark\n2026-11-14T06:51:32.8889755Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand"
+    }
+  ]
+}

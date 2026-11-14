@@ -1,0 +1,75 @@
+Sat Nov 14 06:05:38 2026    /tmp/lark-paper-v27-replay-profile-v1-20261113/replay.prof
+
+         6201165 function calls (5981287 primitive calls) in 11.737 seconds
+
+   Ordered by: cumulative time
+   List reduced from 482 to 65 due to restriction <65>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001   11.737   11.737 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/replay_snapshot.py:205(replay)
+        1    0.000    0.000    7.489    7.489 /tmp/lark-paper-v27-replay-profile-v1-20261113/driver.py:26(traced_run)
+        1    0.000    0.000    7.489    7.489 /usr/lib/python3.12/subprocess.py:506(run)
+        1    0.000    0.000    7.488    7.488 /usr/lib/python3.12/subprocess.py:1165(communicate)
+        1    0.000    0.000    7.488    7.488 /usr/lib/python3.12/subprocess.py:2062(_communicate)
+        2    0.000    0.000    7.488    3.744 /usr/lib/python3.12/selectors.py:402(select)
+        2    7.488    3.744    7.488    3.744 {method 'poll' of 'select.poll' objects}
+        1    0.047    0.047    2.831    2.831 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:162(unpack_parts)
+65116/9002    0.317    0.000    1.721    0.000 {method 'read' of '_io.BufferedReader' objects}
+    20595    0.006    0.000    1.491    0.000 /usr/lib/python3.12/tarfile.py:525(read)
+    20595    0.006    0.000    1.483    0.000 /usr/lib/python3.12/tarfile.py:532(_read)
+     8270    0.005    0.000    1.478    0.000 /usr/lib/python3.12/tarfile.py:670(read)
+    20595    0.075    0.000    1.477    0.000 /usr/lib/python3.12/tarfile.py:559(__read)
+    52679    0.015    0.000    1.364    0.000 /usr/lib/python3.12/gzip.py:319(read)
+    68829    0.063    0.000    1.310    0.000 /usr/lib/python3.12/_compression.py:66(readinto)
+    68829    0.049    0.000    1.223    0.000 /usr/lib/python3.12/gzip.py:502(read)
+        2    0.035    0.018    1.083    0.542 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/replay_snapshot.py:72(verify_manifest)
+    68829    1.036    0.000    1.036    0.000 {method 'decompress' of 'zlib._ZlibDecompressor' objects}
+    12475    0.632    0.000    0.632    0.000 {built-in method _hashlib.openssl_sha256}
+     4152    0.001    0.000    0.417    0.000 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/replay_snapshot.py:29(digest)
+     4616    0.410    0.000    0.410    0.000 {method 'update' of '_hashlib.HASH' objects}
+        2    0.025    0.012    0.399    0.200 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:54(validate_layout)
+        2    0.005    0.003    0.333    0.166 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/replay_snapshot.py:63(file_set)
+    91939    0.018    0.000    0.291    0.000 <frozen _collections_abc>:1022(__iter__)
+    87788    0.044    0.000    0.273    0.000 /usr/lib/python3.12/pathlib.py:276(__getitem__)
+     4151    0.009    0.000    0.238    0.000 /usr/lib/python3.12/pathlib.py:663(relative_to)
+        7    0.000    0.000    0.234    0.033 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:30(file_digest)
+     4158    0.002    0.000    0.221    0.000 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:26(digest)
+     4156    0.002    0.000    0.210    0.000 /usr/lib/python3.12/pathlib.py:1017(read_bytes)
+    20744    0.029    0.000    0.197    0.000 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:38(safe_path)
+     8272    0.005    0.000    0.197    0.000 {built-in method builtins.any}
+   117681    0.028    0.000    0.196    0.000 /usr/lib/python3.12/pathlib.py:551(drive)
+    52914    0.019    0.000    0.191    0.000 /tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshot_archives.py:66(<genexpr>)
+    79677    0.027    0.000    0.187    0.000 /usr/lib/python3.12/pathlib.py:420(_from_parsed_parts)
+   105943    0.041    0.000    0.183    0.000 /usr/lib/python3.12/pathlib.py:380(with_segments)
+    45688    0.024    0.000    0.168    0.000 /usr/lib/python3.12/pathlib.py:407(_load_parts)
+     4151    0.003    0.000    0.152    0.000 /usr/lib/python3.12/pathlib.py:690(is_relative_to)
+   140647    0.042    0.000    0.137    0.000 /usr/lib/python3.12/pathlib.py:437(__str__)
+     4165    0.002    0.000    0.127    0.000 /usr/lib/python3.12/tarfile.py:2859(__iter__)
+     4172    0.005    0.000    0.125    0.000 /usr/lib/python3.12/tarfile.py:2718(next)
+   130840    0.078    0.000    0.119    0.000 /usr/lib/python3.12/pathlib.py:357(__init__)
+    49788    0.020    0.000    0.119    0.000 /usr/lib/python3.12/pathlib.py:702(parts)
+        1    0.000    0.000    0.117    0.117 /usr/lib/python3.12/tempfile.py:1083(__exit__)
+        1    0.000    0.000    0.117    0.117 /usr/lib/python3.12/tempfile.py:1087(cleanup)
+        1    0.000    0.000    0.117    0.117 /usr/lib/python3.12/tempfile.py:1029(_rmtree)
+        1    0.000    0.000    0.117    0.117 /usr/lib/python3.12/shutil.py:724(rmtree)
+    442/1    0.004    0.000    0.117    0.117 /usr/lib/python3.12/shutil.py:655(_rmtree_safe_fd)
+     4151    0.007    0.000    0.116    0.000 <frozen _collections_abc>:1032(__contains__)
+    45690    0.060    0.000    0.115    0.000 /usr/lib/python3.12/pathlib.py:387(_parse_path)
+     4158    0.114    0.000    0.114    0.000 {method 'write' of '_io.BufferedWriter' objects}
+     4165    0.003    0.000    0.105    0.000 /usr/lib/python3.12/tarfile.py:1309(fromtarfile)
+     4143    0.102    0.000    0.102    0.000 {built-in method posix.unlink}
+    61302    0.020    0.000    0.081    0.000 /usr/lib/python3.12/pathlib.py:1159(__init__)
+     4165    0.015    0.000    0.080    0.000 /usr/lib/python3.12/tarfile.py:1246(frombuf)
+    68836    0.079    0.000    0.079    0.000 {built-in method zlib.crc32}
+893178/730018    0.061    0.000    0.078    0.000 {built-in method builtins.len}
+   121214    0.032    0.000    0.061    0.000 /usr/lib/python3.12/pathlib.py:429(_format_parsed_parts)
+    17146    0.003    0.000    0.059    0.000 /usr/lib/python3.12/pathlib.py:837(stat)
+    17149    0.023    0.000    0.057    0.000 {built-in method posix.stat}
+     8750    0.003    0.000    0.053    0.000 /usr/lib/python3.12/pathlib.py:911(is_symlink)
+     3657    0.001    0.000    0.051    0.000 /usr/lib/python3.12/gzip.py:89(read)
+     8750    0.002    0.000    0.049    0.000 /usr/lib/python3.12/pathlib.py:844(lstat)
+    26568    0.009    0.000    0.048    0.000 /usr/lib/python3.12/pathlib.py:519(__eq__)
+     8327    0.002    0.000    0.047    0.000 /usr/lib/python3.12/pathlib.py:1007(open)
+     8336    0.036    0.000    0.045    0.000 {built-in method _io.open}
+
+

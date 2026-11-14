@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 320, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 316, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 253, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-4un3tgl_/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-4un3tgl_/reproduction/paper_results/audit.py", line 675, in main
+    ptx_checks = check_ptx_pointwise_evidence(config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-4un3tgl_/reproduction/paper_results/ptx_pointwise_evidence.py", line 255, in check_ptx_pointwise_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-4un3tgl_/reproduction/paper_results/ptx_pointwise_evidence.py", line 107, in check_recording_packet
+    require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-4un3tgl_/reproduction/paper_results/ptx_pointwise_evidence.py", line 53, in require
+    raise ValueError("PTX pointwise " + message)
+ValueError: PTX pointwise proof contract/original scope differs
+

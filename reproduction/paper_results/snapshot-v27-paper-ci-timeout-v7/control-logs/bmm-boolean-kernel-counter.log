@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-8fji4dmw/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-8fji4dmw/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-8fji4dmw/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-8fji4dmw/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/audit.py", line 681, in main
+    bmm_checks = check_ptx_batched_evidence(config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 505, in check_ptx_batched_evidence
+    return check_ptx_extended_evidence(config, kind="bmm", root=root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 417, in check_ptx_extended_evidence
+    report = check_recording_packet(root / p["prefix"], kind=kind, declared=declared_packet)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 384, in check_recording_packet
+    return Recording(root, kind, declared).packet()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 343, in packet
+    self.counters(report, p["counters"], "kernel/recheck/execution counters differ")
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 72, in counters
+    self.require(all(type(record.get(k)) is int and record[k] == v
+  File "/dev/shm/lark-paper-snapshot-f9qc28df/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX bmm kernel/recheck/execution counters differ
+

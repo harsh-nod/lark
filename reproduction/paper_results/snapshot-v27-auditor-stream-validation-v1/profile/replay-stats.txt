@@ -1,0 +1,75 @@
+Sat Nov 14 00:44:01 2026    /tmp/lark-v27-auditor-buffer-profile-v1-20261114/replay.prof
+
+         4173755 function calls (4054680 primitive calls) in 30.062 seconds
+
+   Ordered by: cumulative time
+   List reduced from 499 to 65 due to restriction <65>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.003    0.003   30.061   30.061 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/replay_snapshot.py:230(replay)
+        1    0.000    0.000   17.934   17.934 /tmp/lark-profile-paper-v27-auditor-buffer-v1-20261114.py:38(traced)
+        1    0.000    0.000   17.934   17.934 /usr/lib/python3.12/subprocess.py:506(run)
+        1    0.000    0.000   17.933   17.933 /usr/lib/python3.12/subprocess.py:1165(communicate)
+        1    0.000    0.000   17.933   17.933 /usr/lib/python3.12/subprocess.py:2062(_communicate)
+        2    0.000    0.000   17.932    8.966 /usr/lib/python3.12/selectors.py:402(select)
+        2   17.932    8.966   17.932    8.966 {method 'poll' of 'select.poll' objects}
+        1    0.255    0.255   11.615   11.615 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:188(unpack_parts)
+17247/13066    0.698    0.000    3.910    0.000 {method 'read' of '_io.BufferedReader' objects}
+    20595    0.031    0.000    3.610    0.000 /usr/lib/python3.12/tarfile.py:525(read)
+    20595    0.030    0.000    3.573    0.000 /usr/lib/python3.12/tarfile.py:532(_read)
+    20595    0.602    0.000    3.542    0.000 /usr/lib/python3.12/tarfile.py:559(__read)
+     8270    0.023    0.000    3.311    0.000 /usr/lib/python3.12/tarfile.py:670(read)
+      517    0.002    0.000    2.716    0.005 /usr/lib/python3.12/gzip.py:319(read)
+     4657    0.063    0.000    2.702    0.001 /usr/lib/python3.12/_compression.py:66(readinto)
+     4657    0.030    0.000    2.630    0.001 /usr/lib/python3.12/gzip.py:502(read)
+     4650    2.301    0.000    2.301    0.000 {method 'decompress' of 'zlib._ZlibDecompressor' objects}
+     4131    0.023    0.000    1.337    0.000 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:32(file_digest)
+     4135    0.016    0.000    1.039    0.000 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:164(verify_materialized_file)
+     4743    0.924    0.000    0.924    0.000 {method 'update' of '_hashlib.HASH' objects}
+     8321    0.011    0.000    0.919    0.000 /usr/lib/python3.12/pathlib.py:1007(open)
+     8330    0.869    0.000    0.910    0.000 {built-in method _io.open}
+     4172    0.033    0.000    0.841    0.000 /usr/lib/python3.12/tarfile.py:2746(next)
+     4165    0.012    0.000    0.814    0.000 /usr/lib/python3.12/tarfile.py:2887(__iter__)
+     4158    0.811    0.000    0.811    0.000 {method 'write' of '_io.BufferedWriter' objects}
+     4151    0.040    0.000    0.772    0.000 /usr/lib/python3.12/pathlib.py:663(relative_to)
+    88640    0.096    0.000    0.629    0.000 /usr/lib/python3.12/pathlib.py:551(drive)
+    16586    0.089    0.000    0.615    0.000 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:40(safe_path)
+    65434    0.043    0.000    0.614    0.000 <frozen _collections_abc>:1022(__iter__)
+        1    0.046    0.046    0.606    0.606 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:56(validate_layout)
+    61283    0.093    0.000    0.572    0.000 /usr/lib/python3.12/pathlib.py:276(__getitem__)
+     4165    0.007    0.000    0.569    0.000 /usr/lib/python3.12/tarfile.py:1329(fromtarfile)
+     4165    0.019    0.000    0.562    0.000 /usr/lib/python3.12/tarfile.py:1336(_fromtarfile)
+    37382    0.079    0.000    0.533    0.000 /usr/lib/python3.12/pathlib.py:407(_load_parts)
+     8330    0.529    0.000    0.529    0.000 {method '__exit__' of '_io._IOBase' objects}
+     8840    0.007    0.000    0.498    0.000 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:35(<lambda>)
+    83568    0.111    0.000    0.486    0.000 /usr/lib/python3.12/pathlib.py:380(with_segments)
+4310/4158    0.012    0.000    0.479    0.000 /usr/lib/python3.12/pathlib.py:1308(mkdir)
+     4151    0.013    0.000    0.478    0.000 /usr/lib/python3.12/pathlib.py:690(is_relative_to)
+        1    0.000    0.000    0.430    0.430 /usr/lib/python3.12/tempfile.py:1083(__exit__)
+        1    0.000    0.000    0.430    0.430 /usr/lib/python3.12/tempfile.py:1087(cleanup)
+        1    0.000    0.000    0.430    0.430 /usr/lib/python3.12/tempfile.py:1029(_rmtree)
+        1    0.000    0.000    0.430    0.430 /usr/lib/python3.12/shutil.py:724(rmtree)
+    442/1    0.025    0.000    0.430    0.430 /usr/lib/python3.12/shutil.py:655(_rmtree_safe_fd)
+    57307    0.061    0.000    0.421    0.000 /usr/lib/python3.12/pathlib.py:420(_from_parsed_parts)
+   118292    0.118    0.000    0.417    0.000 /usr/lib/python3.12/pathlib.py:437(__str__)
+     4311    0.396    0.000    0.401    0.000 {built-in method posix.mkdir}
+     4165    0.071    0.000    0.364    0.000 /usr/lib/python3.12/tarfile.py:1261(_frombuf)
+    37384    0.177    0.000    0.355    0.000 /usr/lib/python3.12/pathlib.py:387(_parse_path)
+     4151    0.027    0.000    0.354    0.000 <frozen _collections_abc>:1032(__contains__)
+     4143    0.333    0.000    0.333    0.000 {built-in method posix.unlink}
+    33188    0.041    0.000    0.315    0.000 /usr/lib/python3.12/pathlib.py:702(parts)
+   100166    0.202    0.000    0.302    0.000 /usr/lib/python3.12/pathlib.py:357(__init__)
+    25417    0.012    0.000    0.284    0.000 /usr/lib/python3.12/pathlib.py:837(stat)
+     4137    0.008    0.000    0.283    0.000 {built-in method builtins.any}
+    26457    0.028    0.000    0.275    0.000 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:68(<genexpr>)
+    25422    0.170    0.000    0.272    0.000 {built-in method posix.stat}
+     4187    0.270    0.000    0.270    0.000 {built-in method _hashlib.openssl_sha256}
+    61250    0.070    0.000    0.262    0.000 /usr/lib/python3.12/pathlib.py:1159(__init__)
+       34    0.000    0.000    0.256    0.008 /tmp/lark-v27-auditor-buffer-profile-v1-20261114/isolated/bin/snapshot_archives.py:28(digest)
+    20597    0.220    0.000    0.220    0.000 {method 'join' of 'bytes' objects}
+     8743    0.012    0.000    0.192    0.000 /usr/lib/python3.12/pathlib.py:911(is_symlink)
+     8743    0.005    0.000    0.178    0.000 /usr/lib/python3.12/pathlib.py:844(lstat)
+     8215    0.025    0.000    0.175    0.000 /usr/lib/python3.12/tarfile.py:512(seek)
+     4664    0.166    0.000    0.166    0.000 {built-in method zlib.crc32}
+
+

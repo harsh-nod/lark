@@ -16,6 +16,8 @@ SCHEMA = 2
 MAX_ENTRY_BYTES = 10_000_000
 MAX_TAR_BYTES = 85_000_000
 MAX_ARCHIVE_BYTES = 90_000_000
+# Decode larger blocks without changing any physical/member/logical limit.
+STREAM_BUFFER_BYTES = 1024 * 1024
 
 
 def require(condition, message):
@@ -159,23 +161,57 @@ def build_parts(snapshot, content, *, chunk_bytes=MAX_ENTRY_BYTES, tar_bytes=MAX
     return validate_layout({"schema": SCHEMA, "logical_files": logical, "archives": archives})
 
 
-def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
+def verify_materialized_file(target, row, fragments):
+    """Bind actual read-back bytes to the complete file and every fragment."""
+    if len(fragments) == 1:
+        # Validated contiguous coverage makes the sole fragment the entire
+        # logical file, including the empty-file case. One actual read-back
+        # digest must satisfy both independent expected bindings.
+        actual = file_digest(target)
+        require(actual == row["sha256"], "Reassembled logical evidence differs")
+        require(actual == fragments[0]["sha256"], "Archive fragment bytes differ")
+        return
+    logical, actual_fragments = hashlib.sha256(), []
+    with target.open("rb") as source:
+        for fragment in fragments:
+            data = source.read(fragment["bytes"])
+            require(len(data) == fragment["bytes"], "Reassembled logical evidence differs")
+            logical.update(data)
+            actual_fragments.append(digest(data))
+        require(source.read(1) == b"", "Reassembled logical evidence differs")
+    require(logical.hexdigest() == row["sha256"], "Reassembled logical evidence differs")
+    require(all(actual == fragment["sha256"]
+                for actual, fragment in zip(actual_fragments, fragments, strict=True)),
+            "Archive fragment bytes differ")
+
+
+def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archive_hashes=None):
     snapshot, root = Path(snapshot), Path(root)
     validate_layout(layout, expected_hashes)
     require(root.is_dir() and not root.is_symlink() and not any(root.iterdir()),
             "Fresh empty evidence destination required")
+    if expected_archive_hashes is not None:
+        require(type(expected_archive_hashes) is dict
+                and set(expected_archive_hashes) == {row["path"] for row in layout["archives"]}
+                and all(sha(value) for value in expected_archive_hashes.values()),
+                "Outer archive manifest differs")
     for description in layout["archives"]:
         source = snapshot / description["path"]
-        require(not source.is_symlink() and source.stat().st_size == description["bytes"]
-                and file_digest(source) == description["sha256"], "Archive bytes differ")
-    offsets, hashes, started = {}, {}, set()
+        require(not source.is_symlink() and source.is_file()
+                and source.stat().st_size == description["bytes"], "Archive bytes differ")
+        actual = file_digest(source)
+        require(actual == description["sha256"], "Archive bytes differ")
+        if expected_archive_hashes is not None:
+            require(actual == expected_archive_hashes[description["path"]],
+                    "Snapshot bytes differ: " + description["path"])
+    offsets, started, fragments = {}, set(), {}
     for description in layout["archives"]:
         expected = list(description["entries"])
         count = 0
         # GzipFile decodes every concatenated member used by the complete
         # control writer; tarfile's streaming gzip decoder stops after one.
         with gzip.GzipFile(snapshot / description["path"], mode="rb") as decoded, \
-                tarfile.open(fileobj=decoded, mode="r|") as archive:
+                tarfile.open(fileobj=decoded, mode="r|", bufsize=STREAM_BUFFER_BYTES) as archive:
             for count, entry in enumerate(archive, 1):
                 require(count <= len(expected) and entry.name == expected[count - 1]
                         and entry.isfile() and 0 <= entry.size <= MAX_ENTRY_BYTES,
@@ -183,19 +219,29 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
                 fragment = description["entries"][entry.name]
                 require(entry.size == fragment["bytes"], "Archive fragment size differs")
                 data = archive.extractfile(entry).read()
-                require(len(data) == fragment["bytes"] and digest(data) == fragment["sha256"],
-                        "Archive fragment bytes differ")
+                require(len(data) == fragment["bytes"], "Archive fragment bytes differ")
                 name = fragment["file"]
                 require(fragment["offset"] == offsets.get(name, 0), "Fragment order differs")
                 target = root / safe_path(name)
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with target.open("ab" if name in started else "xb") as destination:
                     destination.write(data)
-                hashes.setdefault(name, hashlib.sha256()).update(data)
                 offsets[name] = offsets.get(name, 0) + len(data)
                 started.add(name)
+                fragments.setdefault(name, []).append(fragment)
         require(count == len(expected), "Missing archive fragments")
     require(started == set(layout["logical_files"]), "Missing evidence files")
     for name, row in layout["logical_files"].items():
-        require(offsets[name] == row["bytes"] and hashes[name].hexdigest() == row["sha256"],
+        target = root / safe_path(name)
+        # Read back the materialized bytes once. Every fragment binding and
+        # the complete logical binding are checked before any frozen code runs.
+        require(offsets[name] == row["bytes"] and not target.is_symlink() and target.is_file()
+                and target.stat().st_size == row["bytes"],
                 "Reassembled logical evidence differs")
+        verify_materialized_file(target, row, fragments[name])
+    actual_files = set()
+    for path in root.rglob("*"):
+        require(not path.is_symlink(), "Snapshot symlink")
+        if path.is_file():
+            actual_files.add(path.relative_to(root).as_posix())
+    require(actual_files == set(layout["logical_files"]), "Unexpected snapshot files")

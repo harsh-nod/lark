@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-tbek2d84/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/audit.py", line 675, in main
+    ptx_checks = check_ptx_pointwise_evidence(config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/ptx_pointwise_evidence.py", line 255, in check_ptx_pointwise_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/ptx_pointwise_evidence.py", line 99, in check_recording_packet
+    counters(report, {"independent_source_bound_development_proofs": 1,
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/ptx_pointwise_evidence.py", line 61, in counters
+    require(all(type(record.get(k)) is int and record[k] == v for k, v in expected.items()), message)
+  File "/dev/shm/lark-paper-snapshot-aj8mgq1g/reproduction/paper_results/ptx_pointwise_evidence.py", line 53, in require
+    raise ValueError("PTX pointwise " + message)
+ValueError: PTX pointwise kernel/recheck/execution counters differ
+

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-_ndyw6hv/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-_ndyw6hv/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-_ndyw6hv/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-_ndyw6hv/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-vrauigw8/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-vrauigw8/reproduction/paper_results/audit.py", line 738, in main
+    require((args.output / name).read_bytes() == value, "Audit differs: " + name)
+  File "/dev/shm/lark-paper-snapshot-vrauigw8/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Audit differs: audit.json
+

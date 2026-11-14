@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-rost37bu/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-rost37bu/reproduction/paper_results/audit.py", line 674, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-rost37bu/reproduction/paper_results/full_shape_evidence.py", line 129, in check_full_shape_evidence
+    require(summary["complete_17_case_cohort"] is raw["complete_17_case_cohort"]
+  File "/dev/shm/lark-paper-snapshot-rost37bu/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model complete non-stub fixed protocol differs
+

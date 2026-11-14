@@ -1,0 +1,126 @@
+{
+  "status": "actual-hosted-ledger-job-passed",
+  "run_id": 43571401930,
+  "job_id": 132376399917,
+  "source_commit": "f305b2acea0beb858164d9c379a61effedee42a0",
+  "diagnostics": [
+    {
+      "line": 497,
+      "text": "2026-11-14T07:37:32.8047915Z \tElapsed (wall clock) time (h:mm:ss or m:ss): 4:47.95"
+    },
+    {
+      "line": 502,
+      "text": "2026-11-14T07:37:32.8049005Z \tMaximum resident set size (kbytes): 1229948"
+    },
+    {
+      "line": 504,
+      "text": "2026-11-14T07:37:32.8049842Z \tMajor (requiring I/O) page faults: 40"
+    },
+    {
+      "line": 506,
+      "text": "2026-11-14T07:37:32.8050202Z \tVoluntary context switches: 9858"
+    },
+    {
+      "line": 515,
+      "text": "2026-11-14T07:37:32.8051387Z \tExit status: 0"
+    },
+    {
+      "line": 519,
+      "text": "2026-11-14T07:37:32.8098727Z {\"control_log\": \"bmm-nvidia-execution-overclaim.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/audit.py\\\", line 681, in main\\n    bmm_checks = check_ptx_batched_evidence(config)\\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 505, in check_ptx_batched_evidence\\n    return check_ptx_extended_evidence(config, kind=\\\"bmm\\\", root=root)\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 417, in check_ptx_extended_evidence\\n    report = check_recording_packet(root / p[\\\"prefix\\\"], kind=kind, declared=declared_packet)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 384, in check_recording_packet\\n    return Recording(root, kind, declared).packet()\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 344, in packet\\n    self.fields(report, {**p[\\\"contract\\\"], **p[\\\"report_boolean_fields\\\"]}, \\\"proof contract/original scope differs\\\")\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 68, in fields\\n    self.require(type(record) is dict and all(k in record and same_json(record[k], v)\\n  File \\\"/dev/shm/lark-paper-snapshot-8lew9mve/reproduction/paper_results/ptx_extended_evidence.py\\\", line 47, in require\\n    raise ValueError(\\\"PTX \\\" + self.kind + \\\" \\\" + message)\\nValueError: PTX bmm proof contract/original scope differs\\n\\n\"}"
+    },
+    {
+      "line": 548,
+      "text": "2026-11-14T07:37:32.8309835Z {\"control_log\": \"linear-proof-budget-increased.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/audit.py\\\", line 682, in main\\n    linear_checks = check_ptx_linear_evidence(config)\\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 509, in check_ptx_linear_evidence\\n    return check_ptx_extended_evidence(config, kind=\\\"linear\\\", root=root)\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 417, in check_ptx_extended_evidence\\n    report = check_recording_packet(root / p[\\\"prefix\\\"], kind=kind, declared=declared_packet)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 384, in check_recording_packet\\n    return Recording(root, kind, declared).packet()\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 344, in packet\\n    self.fields(report, {**p[\\\"contract\\\"], **p[\\\"report_boolean_fields\\\"]}, \\\"proof contract/original scope differs\\\")\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 68, in fields\\n    self.require(type(record) is dict and all(k in record and same_json(record[k], v)\\n  File \\\"/dev/shm/lark-paper-snapshot-bqnbk44q/reproduction/paper_results/ptx_extended_evidence.py\\\", line 47, in require\\n    raise ValueError(\\\"PTX \\\" + self.kind + \\\" \\\" + message)\\nValueError: PTX linear proof contract/original scope differs\\n\\n\"}"
+    },
+    {
+      "line": 572,
+      "text": "2026-11-14T07:37:32.8436482Z {\"control_log\": \"numerical-changed-source-pin.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-k5g3ipv0/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-k5g3ipv0/reproduction/paper_results/audit.py\\\", line 671, in main\\n    numerical_checks = check_numerical_evidence(config)\\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-k5g3ipv0/reproduction/paper_results/audit.py\\\", line 282, in check_numerical_evidence\\n    require(report[\\\"score_comparison_count\\\"] == scores == 589824 and\\n  File \\\"/dev/shm/lark-paper-snapshot-k5g3ipv0/reproduction/paper_results/audit.py\\\", line 39, in require\\n    raise ValueError(message)\\nValueError: Numerical study replay/score binding differs: benchmark\\n\\n\"}"
+    },
+    {
+      "line": 575,
+      "text": "2026-11-14T07:37:32.8450581Z {\"control_log\": \"numerical-false-cold-rebuild.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-t8827jhc/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-t8827jhc/reproduction/paper_results/audit.py\\\", line 671, in main\\n    numerical_checks = check_numerical_evidence(config)\\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-t8827jhc/reproduction/paper_results/audit.py\\\", line 282, in check_numerical_evidence\\n    require(report[\\\"score_comparison_count\\\"] == scores == 589824 and\\n  File \\\"/dev/shm/lark-paper-snapshot-t8827jhc/reproduction/paper_results/audit.py\\\", line 39, in require\\n    raise ValueError(message)\\nValueError: Numerical study replay/score binding differs: benchmark\\n\\n\"}"
+    },
+    {
+      "line": 576,
+      "text": "2026-11-14T07:37:32.8455214Z {\"control_log\": \"numerical-incomplete-sample-replay.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-0jste8cn/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-0jste8cn/reproduction/paper_results/audit.py\\\", line 671, in main\\n    numerical_checks = check_numerical_evidence(config)\\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-0jste8cn/reproduction/paper_results/audit.py\\\", line 282, in check_numerical_evidence\\n    require(report[\\\"score_comparison_count\\\"] == scores == 589824 and\\n  File \\\"/dev/shm/lark-paper-snapshot-0jste8cn/reproduction/paper_results/audit.py\\\", line 39, in require\\n    raise ValueError(message)\\nValueError: Numerical study replay/score binding differs: benchmark\\n\\n\"}"
+    },
+    {
+      "line": 577,
+      "text": "2026-11-14T07:37:32.8460104Z {\"control_log\": \"numerical-incomplete-score-total.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-65agw9ax/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-65agw9ax/reproduction/paper_results/audit.py\\\", line 671, in main\\n    numerical_checks = check_numerical_evidence(config)\\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-65agw9ax/reproduction/paper_results/audit.py\\\", line 282, in check_numerical_evidence\\n    require(report[\\\"score_comparison_count\\\"] == scores == 589824 and\\n  File \\\"/dev/shm/lark-paper-snapshot-65agw9ax/reproduction/paper_results/audit.py\\\", line 39, in require\\n    raise ValueError(message)\\nValueError: Numerical study replay/score binding differs: benchmark\\n\\n\"}"
+    },
+    {
+      "line": 578,
+      "text": "2026-11-14T07:37:32.8464745Z {\"control_log\": \"numerical-missing-artifact-control.log\", \"text\": \"Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 340, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 336, in main\\n    replay(snapshot, manuscript, creating=args.build)\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 273, in replay\\n    require(\\n  File \\\"/dev/shm/lark-snapshot-controls-02f5cq96/isolated/bin/replay_snapshot.py\\\", line 26, in require\\n    raise ValueError(message)\\nValueError: Frozen audit replay failed: Traceback (most recent call last):\\n  File \\\"/dev/shm/lark-paper-snapshot-z0m8q64t/reproduction/paper_results/audit.py\\\", line 757, in <module>\\n    main()\\n  File \\\"/dev/shm/lark-paper-snapshot-z0m8q64t/reproduction/paper_results/audit.py\\\", line 671, in main\\n    numerical_checks = check_numerical_evidence(config)\\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/dev/shm/lark-paper-snapshot-z0m8q64t/reproduction/paper_results/audit.py\\\", line 240, in check_numerical_evidence\\n    require(counted == samples and controls[\\\"negative_controls\\\"] == mutations,\\n  File \\\"/dev/shm/lark-paper-snapshot-z0m8q64t/reproduction/paper_results/audit.py\\\", line 39, in require\\n    raise ValueError(message)\\nValueError: Numerical study counts differ: production\\n\\n\"}"
+    },
+    {
+      "line": 624,
+      "text": "2026-11-14T07:37:33.0385985Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+    },
+    {
+      "line": 629,
+      "text": "2026-11-14T07:37:33.0983245Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:"
+    }
+  ],
+  "all_job_steps": [
+    [
+      "Set up job",
+      "success"
+    ],
+    [
+      "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+      "success"
+    ],
+    [
+      "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+      "success"
+    ],
+    [
+      "Audit frozen elaborated-reference numerical evidence without GPU or model calls",
+      "success"
+    ],
+    [
+      "Reject altered numerical evidence and fully rehashed scope claims",
+      "success"
+    ],
+    [
+      "Audit all seventeen benchmark reference families and complete score tensors",
+      "success"
+    ],
+    [
+      "Reject altered benchmark scope, samples, controls and score oracles",
+      "success"
+    ],
+    [
+      "Require six model cohorts and six complete-source PTX development proofs",
+      "success"
+    ],
+    [
+      "Regenerate all six model cohorts from the raw and fresh-audit packets",
+      "success"
+    ],
+    [
+      "Fetch the pinned original manuscript as data",
+      "success"
+    ],
+    [
+      "Select complete-replay temporary storage and record resources",
+      "success"
+    ],
+    [
+      "Replay the frozen ledger and all rehashed controls without Git",
+      "success"
+    ],
+    [
+      "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+      "success"
+    ],
+    [
+      "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+      "success"
+    ],
+    [
+      "Complete job",
+      "success"
+    ]
+  ]
+}

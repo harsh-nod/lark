@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 320, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 316, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 253, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/audit.py", line 684, in main
+    rotary_checks = check_ptx_rotary_evidence(config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/ptx_rotary_release.py", line 124, in check_ptx_rotary_evidence
+    packet = Recording(root / p["prefix"], "rotary").packet()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/ptx_rotary_evidence.py", line 402, in packet
+    self.counters(report, p["counters"], "kernel/recheck/execution counters differ")
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/ptx_rotary_evidence.py", line 71, in counters
+    self.require(all(type(record.get(k)) is int and record[k] == v
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c1bu2754/reproduction/paper_results/ptx_rotary_evidence.py", line 45, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX rotary kernel/recheck/execution counters differ
+

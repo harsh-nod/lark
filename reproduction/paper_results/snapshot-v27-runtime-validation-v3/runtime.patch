@@ -1,0 +1,220 @@
+diff --git a/reproduction/paper_results/replay_snapshot.py b/reproduction/paper_results/replay_snapshot.py
+index fd2dabc..072514f 100644
+--- a/reproduction/paper_results/replay_snapshot.py
++++ b/reproduction/paper_results/replay_snapshot.py
+@@ -203,21 +203,31 @@ def build(snapshot):
+ 
+ 
+ def replay(snapshot, manuscript, *, creating=False):
++    provenance = read(snapshot / "provenance.json")
++    schema = provenance["schema"]
++    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
++    expected_archives = None
+     if not creating:
+         manifest = read(snapshot / "manifest.json")
+-        verify_manifest(snapshot, manifest)
++        if schema == 2:
++            # The unpacker compares one actual digest with both independent
++            # archive bindings before decoding. Every other file is checked
++            # here, and its exact archive roster is checked against the layout.
++            expected_archives = {name: value for name, value in manifest.items()
++                                 if re.fullmatch(r"evidence-part-[0-9]{4}\.tar\.gz", name)}
++            verify_manifest(snapshot, {name: value for name, value in manifest.items()
++                                       if name not in expected_archives})
++        else:
++            verify_manifest(snapshot, manifest)
+         require(
+             file_set(snapshot) == set(manifest) | {"manifest.json"}, "Unexpected snapshot files"
+         )
+-    provenance = read(snapshot / "provenance.json")
+     evidence_hashes = read(snapshot / "evidence-manifest.json")
+     require(
+         digest((snapshot / "evidence-manifest.json").read_bytes())
+         == provenance["evidence_manifest_sha256"],
+         "Frozen evidence binding differs",
+     )
+-    schema = provenance["schema"]
+-    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
+     if schema == 1:
+         require(digest((snapshot / "evidence.tar.gz").read_bytes()) == provenance["evidence_archive_sha256"],
+                 "Frozen archive binding differs")
+@@ -231,9 +241,18 @@ def replay(snapshot, manuscript, *, creating=False):
+         root = Path(temporary)
+         if schema == 1:
+             unpack(snapshot / "evidence.tar.gz", root)
++            verify_manifest(root, evidence_hashes, exact=True)
+         else:
+-            archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes)
+-        verify_manifest(root, evidence_hashes, exact=True)
++            try:
++                archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes,
++                                               expected_archive_hashes=expected_archives)
++            except Exception:
++                # Invalid structural metadata can fail before the unpacker
++                # reaches physical archives. Preserve their outer integrity
++                # gate (and its precedence) on that failure path as well.
++                if expected_archives is not None:
++                    verify_manifest(snapshot, expected_archives)
++                raise
+         for source, target in (("auditor.py", "audit.py"), ("targets.json", "targets.json")):
+             require(
+                 (snapshot / source).read_bytes()
+diff --git a/reproduction/paper_results/snapshot_archives.py b/reproduction/paper_results/snapshot_archives.py
+index 2982087..2d09e37 100644
+--- a/reproduction/paper_results/snapshot_archives.py
++++ b/reproduction/paper_results/snapshot_archives.py
+@@ -161,16 +161,26 @@ def build_parts(snapshot, content, *, chunk_bytes=MAX_ENTRY_BYTES, tar_bytes=MAX
+     return validate_layout({"schema": SCHEMA, "logical_files": logical, "archives": archives})
+ 
+ 
+-def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
++def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archive_hashes=None):
+     snapshot, root = Path(snapshot), Path(root)
+     validate_layout(layout, expected_hashes)
+     require(root.is_dir() and not root.is_symlink() and not any(root.iterdir()),
+             "Fresh empty evidence destination required")
++    if expected_archive_hashes is not None:
++        require(type(expected_archive_hashes) is dict
++                and set(expected_archive_hashes) == {row["path"] for row in layout["archives"]}
++                and all(sha(value) for value in expected_archive_hashes.values()),
++                "Outer archive manifest differs")
+     for description in layout["archives"]:
+         source = snapshot / description["path"]
+-        require(not source.is_symlink() and source.stat().st_size == description["bytes"]
+-                and file_digest(source) == description["sha256"], "Archive bytes differ")
+-    offsets, hashes, started = {}, {}, set()
++        require(not source.is_symlink() and source.is_file()
++                and source.stat().st_size == description["bytes"], "Archive bytes differ")
++        actual = file_digest(source)
++        require(actual == description["sha256"], "Archive bytes differ")
++        if expected_archive_hashes is not None:
++            require(actual == expected_archive_hashes[description["path"]],
++                    "Snapshot bytes differ: " + description["path"])
++    offsets, started = {}, set()
+     for description in layout["archives"]:
+         expected = list(description["entries"])
+         count = 0
+@@ -193,11 +203,20 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
+                 target.parent.mkdir(parents=True, exist_ok=True)
+                 with target.open("ab" if name in started else "xb") as destination:
+                     destination.write(data)
+-                hashes.setdefault(name, hashlib.sha256()).update(data)
+                 offsets[name] = offsets.get(name, 0) + len(data)
+                 started.add(name)
+         require(count == len(expected), "Missing archive fragments")
+     require(started == set(layout["logical_files"]), "Missing evidence files")
+     for name, row in layout["logical_files"].items():
+-        require(offsets[name] == row["bytes"] and hashes[name].hexdigest() == row["sha256"],
++        target = root / safe_path(name)
++        # Verify the materialized file, rather than hashing its input again
++        # while writing and then repeating the whole-file check in replay.
++        require(offsets[name] == row["bytes"] and not target.is_symlink() and target.is_file()
++                and target.stat().st_size == row["bytes"] and file_digest(target) == row["sha256"],
+                 "Reassembled logical evidence differs")
++    actual_files = set()
++    for path in root.rglob("*"):
++        require(not path.is_symlink(), "Snapshot symlink")
++        if path.is_file():
++            actual_files.add(path.relative_to(root).as_posix())
++    require(actual_files == set(layout["logical_files"]), "Unexpected snapshot files")
+diff --git a/tests/test_snapshot_archives.py b/tests/test_snapshot_archives.py
+index 46b5f22..105ffaa 100644
+--- a/tests/test_snapshot_archives.py
++++ b/tests/test_snapshot_archives.py
+@@ -1,6 +1,7 @@
+ """Lossless multi-part evidence storage and unchanged legacy entry guards."""
+ 
+ import copy
++from contextlib import contextmanager
+ import gzip
+ import hashlib
+ import io
+@@ -134,6 +135,88 @@ class SnapshotArchiveTests(unittest.TestCase):
+         with self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
+             storage.unpack_parts(self.snapshot, layout, self.destination())
+ 
++    def test_outer_and_layout_archive_bindings_are_both_required(self):
++        content, layout = self.example()
++        outer = {row["path"]: row["sha256"] for row in layout["archives"]}
++        destination = self.destination("both-valid")
++        storage.unpack_parts(self.snapshot, layout, destination, expected_archive_hashes=outer)
++        self.assertEqual({p.relative_to(destination).as_posix(): p.read_bytes()
++                          for p in destination.rglob("*") if p.is_file()}, content)
++        first = layout["archives"][0]["path"]
++        changed_outer = {**outer, first: "0" * 64}
++        with self.assertRaisesRegex(ValueError, "Snapshot bytes differ"):
++            storage.unpack_parts(self.snapshot, layout, self.destination("bad-outer"),
++                                 expected_archive_hashes=changed_outer)
++        changed_layout = copy.deepcopy(layout)
++        changed_layout["archives"][0]["sha256"] = "0" * 64
++        with self.assertRaisesRegex(ValueError, "Archive bytes differ"):
++            storage.unpack_parts(self.snapshot, changed_layout, self.destination("bad-layout"),
++                                 expected_archive_hashes=outer)
++        for label, mapping in (("missing", {n: v for n, v in outer.items() if n != first}),
++                               ("extra", {**outer, "evidence-part-9999.tar.gz": "0" * 64})):
++            with self.subTest(label=label), self.assertRaisesRegex(ValueError, "Outer archive manifest differs"):
++                storage.unpack_parts(self.snapshot, layout, self.destination(label),
++                                     expected_archive_hashes=mapping)
++
++    def test_materialized_bytes_are_checked_after_writing(self):
++        _, layout = self.example()
++        destination = self.destination()
++        original_open = Path.open
++
++        @contextmanager
++        def corrupt_after_close(path, mode="r", *args, **kwargs):
++            with original_open(path, mode, *args, **kwargs) as stream:
++                yield stream
++            if path == destination / "evidence/code.py" and mode == "xb":
++                with original_open(path, "r+b") as output:
++                    value = output.read(1)
++                    output.seek(0)
++                    output.write(bytes([value[0] ^ 1]))
++
++        with patch.object(Path, "open", corrupt_after_close), \
++                self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
++            storage.unpack_parts(self.snapshot, layout, destination)
++
++    def test_unexpected_materialized_file_is_rejected(self):
++        _, layout = self.example()
++        destination = self.destination()
++        original_open = Path.open
++
++        @contextmanager
++        def add_unexpected_file(path, mode="r", *args, **kwargs):
++            with original_open(path, mode, *args, **kwargs) as stream:
++                yield stream
++            if path == destination / "evidence/code.py" and mode == "xb":
++                with original_open(destination / "unexpected", "xb") as extra:
++                    extra.write(b"must not be ignored")
++
++        with patch.object(Path, "open", add_unexpected_file), \
++                self.assertRaisesRegex(ValueError, "Unexpected snapshot files"):
++            storage.unpack_parts(self.snapshot, layout, destination)
++
++    def test_invalid_layout_cannot_bypass_outer_archive_integrity(self):
++        part = self.snapshot / "evidence-part-0001.tar.gz"
++        part.write_bytes(b"authored invalid-layout archive fixture; never decoded")
++        logical = {"../unsafe": storage.digest(b"x")}
++        layout = {"schema": 2, "logical_files": {"../unsafe": {"bytes": 1, "sha256": logical["../unsafe"]}},
++                  "archives": []}
++        replay.write(self.snapshot / "evidence-manifest.json", logical)
++        replay.write(self.snapshot / "evidence-layout.json", layout)
++        replay.write(self.snapshot / "provenance.json", {"schema": 2,
++                     "evidence_manifest_sha256": storage.file_digest(self.snapshot / "evidence-manifest.json"),
++                     "evidence_layout_sha256": storage.file_digest(self.snapshot / "evidence-layout.json")})
++        manifest = {p.name: storage.file_digest(p) for p in self.snapshot.iterdir()}
++        manifest[part.name] = "0" * 64
++        replay.write(self.snapshot / "manifest.json", manifest)
++        with self.assertRaisesRegex(ValueError, "Snapshot bytes differ: evidence-part-0001"):
++            replay.replay(self.snapshot, self.root / "must-not-be-read.tar")
++        manifest[part.name] = storage.file_digest(part)
++        replay.write(self.snapshot / "manifest.json", manifest)
++        # Both the physical archive and its outer binding now match. The
++        # original structural refusal is then reported, without execution.
++        with self.assertRaisesRegex(ValueError, "Complete logical files and archives required"):
++            replay.replay(self.snapshot, self.root / "must-not-be-read.tar")
++
+     def test_existing_destination_and_existing_archive_are_never_overwritten(self):
+         content, layout = self.example()
+         with self.assertRaisesRegex(ValueError, "Fresh archive outputs required"):

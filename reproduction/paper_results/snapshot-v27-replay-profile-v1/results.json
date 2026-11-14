@@ -1,0 +1,35 @@
+{
+  "status": "profile-completed",
+  "exit_code": 0,
+  "seconds": 11.748889202717692,
+  "commands": [
+    {
+      "original": [
+        "/usr/bin/python3",
+        "/tmp/lark-paper-snapshot-4fu_tdv3/reproduction/paper_results/audit.py",
+        "--source-archive",
+        "/tmp/lark-paper-v27-controls-mi350-v1-20261113/paper-source.tar",
+        "--output",
+        "/tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshots/20261113-v27/results",
+        "--check"
+      ],
+      "profiled": [
+        "/usr/bin/python3",
+        "-m",
+        "cProfile",
+        "-o",
+        "/tmp/lark-paper-v27-replay-profile-v1-20261113/auditor.prof",
+        "/tmp/lark-paper-snapshot-4fu_tdv3/reproduction/paper_results/audit.py",
+        "--source-archive",
+        "/tmp/lark-paper-v27-controls-mi350-v1-20261113/paper-source.tar",
+        "--output",
+        "/tmp/lark-paper-v27-controls-mi350-v1-20261113/source/reproduction/paper_results/snapshots/20261113-v27/results",
+        "--check"
+      ],
+      "timeout_seconds": 120
+    }
+  ],
+  "fresh_Lean_GPU_model_experiments": 0,
+  "new_control_suite_claim": false,
+  "original_paper_fully_reproduced": false
+}

@@ -12,13 +12,17 @@ import io
 import json
 from pathlib import Path, PurePosixPath
 import re
+import runpy
 import subprocess
 import sys
 import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v26"
+DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v27"
+AUDITOR_STREAM_BUFFER_BYTES = 1024 * 1024
+_TAR_OPEN = tarfile.open
+_DEFAULT_BUFFER = object()
 
 
 def require(condition, message):
@@ -28,6 +32,27 @@ def require(condition, message):
 
 def digest(content):
     return hashlib.sha256(content).hexdigest()
+
+
+def auditor_tar_open(name=None, mode="r", fileobj=None, bufsize=_DEFAULT_BUFFER, **kwargs):
+    """Use larger default stream reads; retain every stdlib parser and check."""
+    if bufsize is _DEFAULT_BUFFER:
+        bufsize = (AUDITOR_STREAM_BUFFER_BYTES if type(mode) is str and mode.startswith("r|")
+                   else tarfile.RECORDSIZE)
+    return _TAR_OPEN(name=name, mode=mode, fileobj=fileobj, bufsize=bufsize, **kwargs)
+
+
+def run_frozen_auditor(script, expected_sha256, arguments):
+    """Execute the same verified authored auditor with buffered tar streams."""
+    script = Path(script)
+    require(not script.is_symlink() and script.is_file()
+            and digest(script.read_bytes()) == expected_sha256, "Frozen auditor bytes differ")
+    tarfile.open = auditor_tar_open
+    # Match direct-script imports and argv. The child starts in isolated mode,
+    # so captured files in its working directory cannot shadow the stdlib.
+    sys.path.insert(0, str(script.parent))
+    sys.argv = [str(script), *arguments]
+    runpy.run_path(str(script), run_name="__main__")
 
 
 def read(path):
@@ -93,6 +118,34 @@ def unpack(path, root):
             target.write_bytes(archive.extractfile(entry).read())
 
 
+def preserved_origins(config, names, local):
+    """Select explicitly pinned earlier bytes without replacing their logical paths."""
+    selected = config.get("preserved_evidence_origins", {})
+    definitions = {"reproduction/paper_results/audit.py", "reproduction/paper_results/targets.json"}
+    require(type(selected) is dict and set(selected) <= names - local - definitions,
+            "Unused or invalid preserved evidence origin")
+    for name, row in selected.items():
+        safe_path(name)
+        require(type(row) is dict and set(row) == {"commit", "sha256"}
+                and type(row["commit"]) is str and re.fullmatch("[0-9a-f]{40}", row["commit"]) is not None
+                and type(row["sha256"]) is str and re.fullmatch("[0-9a-f]{64}", row["sha256"]) is not None,
+                "Concrete preserved commit and SHA256 required")
+    return selected
+
+
+def committed_evidence(name, commit, selected, *, root=ROOT):
+    safe_path(name)
+    row = selected.get(name)
+    origin = commit if row is None else row["commit"]
+    if row is not None:
+        result = subprocess.run(["git", "merge-base", "--is-ancestor", origin, commit],
+                                cwd=root, capture_output=True)
+        require(result.returncode == 0, "Preserved evidence commit is not an ancestor")
+    data = subprocess.check_output(["git", "show", origin + ":" + name], cwd=root)
+    require(row is None or digest(data) == row["sha256"], "Preserved evidence bytes differ")
+    return data, {"kind": "git-blob", "commit": origin, "path": name}
+
+
 def build(snapshot):
     require(snapshot.is_relative_to(ROOT), "Build definitions must be in this repository")
     require(
@@ -119,6 +172,7 @@ def build(snapshot):
     names.add("reproduction/results/paper-source-manifest.json")
     local = set(config["local_evidence"])
     require(local <= names, "Unused local evidence")
+    selected = preserved_origins(config, names, local)
     content, origins = {}, {}
     for name in sorted(names):
         safe_path(name)
@@ -134,8 +188,7 @@ def build(snapshot):
                 "snapshot_path": path.relative_to(snapshot).as_posix(),
             }
         else:
-            content[name] = subprocess.check_output(["git", "show", commit + ":" + name], cwd=ROOT)
-            origins[name] = {"kind": "git-blob", "commit": commit, "path": name}
+            content[name], origins[name] = committed_evidence(name, commit, selected)
     for name, source in (
         ("reproduction/paper_results/audit.py", "auditor.py"),
         ("reproduction/paper_results/targets.json", "targets.json"),
@@ -175,21 +228,31 @@ def build(snapshot):
 
 
 def replay(snapshot, manuscript, *, creating=False):
+    provenance = read(snapshot / "provenance.json")
+    schema = provenance["schema"]
+    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
+    expected_archives = None
     if not creating:
         manifest = read(snapshot / "manifest.json")
-        verify_manifest(snapshot, manifest)
+        if schema == 2:
+            # The unpacker compares one actual digest with both independent
+            # archive bindings before decoding. Every other file is checked
+            # here, and its exact archive roster is checked against the layout.
+            expected_archives = {name: value for name, value in manifest.items()
+                                 if re.fullmatch(r"evidence-part-[0-9]{4,}\.tar\.gz", name)}
+            verify_manifest(snapshot, {name: value for name, value in manifest.items()
+                                       if name not in expected_archives})
+        else:
+            verify_manifest(snapshot, manifest)
         require(
             file_set(snapshot) == set(manifest) | {"manifest.json"}, "Unexpected snapshot files"
         )
-    provenance = read(snapshot / "provenance.json")
     evidence_hashes = read(snapshot / "evidence-manifest.json")
     require(
         digest((snapshot / "evidence-manifest.json").read_bytes())
         == provenance["evidence_manifest_sha256"],
         "Frozen evidence binding differs",
     )
-    schema = provenance["schema"]
-    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
     if schema == 1:
         require(digest((snapshot / "evidence.tar.gz").read_bytes()) == provenance["evidence_archive_sha256"],
                 "Frozen archive binding differs")
@@ -197,14 +260,24 @@ def replay(snapshot, manuscript, *, creating=False):
         require(digest((snapshot / "evidence-layout.json").read_bytes()) == provenance["evidence_layout_sha256"],
                 "Frozen archive layout binding differs")
         layout = read(snapshot / "evidence-layout.json")
-        archive_storage().validate_layout(layout, evidence_hashes)
+        # unpack_parts validates this complete layout and its manifest before
+        # reading any archive. Keep that gate once, with the same bound data.
     with tempfile.TemporaryDirectory(prefix="lark-paper-snapshot-") as temporary:
         root = Path(temporary)
         if schema == 1:
             unpack(snapshot / "evidence.tar.gz", root)
+            verify_manifest(root, evidence_hashes, exact=True)
         else:
-            archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes)
-        verify_manifest(root, evidence_hashes, exact=True)
+            try:
+                archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes,
+                                               expected_archive_hashes=expected_archives)
+            except Exception:
+                # Invalid structural metadata can fail before the unpacker
+                # reaches physical archives. Preserve their outer integrity
+                # gate (and its precedence) on that failure path as well.
+                if expected_archives is not None:
+                    verify_manifest(snapshot, expected_archives)
+                raise
         for source, target in (("auditor.py", "audit.py"), ("targets.json", "targets.json")):
             require(
                 (snapshot / source).read_bytes()
@@ -213,7 +286,11 @@ def replay(snapshot, manuscript, *, creating=False):
             )
         command = [
             sys.executable,
+            "-I",
+            str(Path(__file__).resolve()),
+            "--_frozen-auditor",
             str(root / "reproduction/paper_results/audit.py"),
+            digest((root / "reproduction/paper_results/audit.py").read_bytes()),
             "--source-archive",
             str(manuscript),
             "--output",
@@ -289,4 +366,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:2] == ["--_frozen-auditor"]:
+        require(len(sys.argv) >= 4, "Frozen auditor source/hash arguments required")
+        run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+    else:
+        main()

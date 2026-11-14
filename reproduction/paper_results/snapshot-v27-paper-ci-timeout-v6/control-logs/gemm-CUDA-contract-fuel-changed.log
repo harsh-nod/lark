@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-3mj_rzr1/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-3mj_rzr1/reproduction/paper_results/audit.py", line 679, in main
+    gemm_checks = check_ptx_matrix_evidence(config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-3mj_rzr1/reproduction/paper_results/ptx_matrix_evidence.py", line 307, in check_ptx_matrix_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-3mj_rzr1/reproduction/paper_results/ptx_matrix_evidence.py", line 106, in check_recording_packet
+    require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/dev/shm/lark-paper-snapshot-3mj_rzr1/reproduction/paper_results/ptx_matrix_evidence.py", line 46, in require
+    raise ValueError("PTX matrix " + message)
+ValueError: PTX matrix proof contract/original scope differs
+

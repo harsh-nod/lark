@@ -21,6 +21,12 @@ else:
     import snapshot_archives as storage
 
 
+# The corpus mostly contains already-compressed proof/history archives. Stored
+# deflate blocks retain complete valid gzip/tar inputs and every existing hash
+# and size guard, while avoiding redundant compression in temporary controls.
+CONTROL_COMPRESSION_LEVEL = 0
+
+
 def write(path, value):
     path.write_text(json.dumps(value, indent=2) + "\n")
 
@@ -40,7 +46,7 @@ class ChunkedControlArchive:
             self.entries = {name: (root / name).read_bytes() for name in layout["logical_files"]}
         self.hashes = hashes
         self.fragments = {name: tuple(self.encode(name, data)) for name, data in self.entries.items()}
-        self.end = gzip.compress(b"\0" * 1024, compresslevel=1, mtime=0)
+        self.end = gzip.compress(b"\0" * 1024, compresslevel=CONTROL_COMPRESSION_LEVEL, mtime=0)
         # A complete unchanged physical part can be shared as an immutable
         # regular file. Readers still hash and unpack every physical/logical
         # byte. Replacing a part always unlinks its old destination first, so
@@ -71,7 +77,8 @@ class ChunkedControlArchive:
             payload = info.tobuf(format=tarfile.USTAR_FORMAT) + value + b"\0" * ((-len(value)) % 512)
             storage.require(len(payload) <= self.tar_bytes, "Bounded control chunk exceeds the part budget")
             yield member, {"file": name, "offset": offset, "bytes": len(value),
-                           "sha256": storage.digest(value)}, gzip.compress(payload, compresslevel=1, mtime=0), len(payload)
+                           "sha256": storage.digest(value)}, gzip.compress(
+                               payload, compresslevel=CONTROL_COMPRESSION_LEVEL, mtime=0), len(payload)
 
     @staticmethod
     def part_key(fragments):

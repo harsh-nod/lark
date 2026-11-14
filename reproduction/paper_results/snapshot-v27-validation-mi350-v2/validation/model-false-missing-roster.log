@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-c1ysmf7f/isolated/bin/replay_snapshot.py", line 321, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-c1ysmf7f/isolated/bin/replay_snapshot.py", line 317, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-c1ysmf7f/isolated/bin/replay_snapshot.py", line 254, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-c1ysmf7f/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-law1n9f_/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-law1n9f_/reproduction/paper_results/audit.py", line 674, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-law1n9f_/reproduction/paper_results/full_shape_evidence.py", line 236, in check_full_shape_evidence
+    require(report["missing_cohorts"] == missing
+  File "/tmp/lark-paper-v27-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-law1n9f_/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model complete/missing cohort roster differs
+

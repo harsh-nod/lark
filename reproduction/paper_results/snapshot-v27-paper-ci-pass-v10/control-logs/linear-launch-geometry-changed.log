@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 373, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 365, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 302, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 30, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 371, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/dev/shm/lark-snapshot-controls-m8_ttd2b/isolated/bin/replay_snapshot.py", line 55, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/audit.py", line 682, in main
+    linear_checks = check_ptx_linear_evidence(config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 509, in check_ptx_linear_evidence
+    return check_ptx_extended_evidence(config, kind="linear", root=root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 417, in check_ptx_extended_evidence
+    report = check_recording_packet(root / p["prefix"], kind=kind, declared=declared_packet)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 384, in check_recording_packet
+    return Recording(root, kind, declared).packet()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 344, in packet
+    self.fields(report, {**p["contract"], **p["report_boolean_fields"]}, "proof contract/original scope differs")
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 68, in fields
+    self.require(type(record) is dict and all(k in record and same_json(record[k], v)
+  File "/dev/shm/lark-paper-snapshot-00im2el3/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX linear proof contract/original scope differs
+

@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-bqryg0gk/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-paper-snapshot-4uff1kam/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-4uff1kam/reproduction/paper_results/audit.py", line 671, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-4uff1kam/reproduction/paper_results/audit.py", line 221, in check_numerical_evidence
+    require(report["selected_cases"] == cases and report["strata"] ==
+  File "/dev/shm/lark-paper-snapshot-4uff1kam/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study case coverage differs: benchmark
+

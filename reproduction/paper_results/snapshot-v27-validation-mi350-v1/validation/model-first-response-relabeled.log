@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 320, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 316, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 253, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-_92egtx1/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-33mt254q/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-33mt254q/reproduction/paper_results/audit.py", line 674, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-33mt254q/reproduction/paper_results/full_shape_evidence.py", line 175, in check_full_shape_evidence
+    require(case_summary["status"] == case["status"]
+  File "/tmp/lark-paper-v27-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-33mt254q/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model case counters/first-attempt metrics differ
+

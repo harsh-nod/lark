@@ -1,0 +1,15 @@
+{
+  "command": [
+    "ssh",
+    "-S",
+    "/tmp/lark-glm-cuda-cohort-publication-forward-20261113.sock",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mi350",
+    "python3 -c '\nimport hashlib,json,sys\nfrom pathlib import Path\nroot=Path('\"'\"'/tmp/lark-paper-v27-controls-mi350-v1-20261113'\"'\"')\nassert not root.exists()\npath=root.with_suffix('\"'\"'.tar'\"'\"')\nassert path.stat().st_size==168422400\nwith path.open('\"'\"'ab'\"'\"') as target:\n    while data:=sys.stdin.buffer.read(1024*1024): target.write(data)\nassert path.stat().st_size==487075840\ndigest=hashlib.sha256()\nwith path.open('\"'\"'rb'\"'\"') as source:\n    while data:=source.read(1024*1024): digest.update(data)\nassert digest.hexdigest()=='\"'\"'dc5fe389c383ccd73d8f22573fd939f089d6b2db8a7f4ddbd70f2d478a68021f'\"'\"'\nprint(json.dumps({'\"'\"'status'\"'\"':'\"'\"'same-partial-upload-resumed-and-completely-verified'\"'\"','\"'\"'bytes'\"'\"':path.stat().st_size,'\"'\"'sha256'\"'\"':digest.hexdigest()}),flush=True)\n'"
+  ],
+  "exit_code": 0,
+  "seconds": 473.7162256240845
+}

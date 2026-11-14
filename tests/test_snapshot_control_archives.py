@@ -130,6 +130,45 @@ class ChunkedControlArchiveTests(unittest.TestCase):
         self.assertEqual({p.name: p.read_bytes() for p in left.iterdir()},
                          {p.name: p.read_bytes() for p in right.iterdir()})
 
+    def rehash_metadata(self, output):
+        write(output / "provenance.json", {"schema": 2})
+        (output / "results").mkdir()
+        write(output / "results/audit.json", {"authored_storage_fixture": True})
+        (output / "results/RESULTS.md").write_text("Authored storage fixture; no proof execution.\n")
+
+    def test_emitted_digests_produce_the_identical_complete_control_input(self):
+        self.baseline()
+        packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=2048)
+        self.addCleanup(packed.close)
+        old, revised = self.destination("rehash-all"), self.destination("emitted-digests")
+        for target in (old, revised):
+            layout = packed.write(target, packed.entries.copy())
+            self.rehash_metadata(target)
+            rehash(target, archive_changed=True,
+                   emitted_archives=layout["archives"] if target == revised else None)
+        left = {p.relative_to(old).as_posix(): p.read_bytes() for p in old.rglob("*") if p.is_file()}
+        right = {p.relative_to(revised).as_posix(): p.read_bytes()
+                 for p in revised.rglob("*") if p.is_file()}
+        self.assertEqual(left, right)
+        self.assertEqual(self.restored(revised), self.content)
+
+    def test_independent_reader_refuses_a_forged_emitted_digest(self):
+        self.baseline()
+        packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=2048)
+        self.addCleanup(packed.close)
+        target = self.destination("forged-emitted-digest")
+        layout = packed.write(target, packed.entries.copy())
+        self.rehash_metadata(target)
+        declared = [{**row, "sha256": "0" * 64} for row in layout["archives"]]
+        rehash(target, archive_changed=True, emitted_archives=declared)
+        outer = json.loads((target / "manifest.json").read_text())
+        expected = {row["path"]: outer[row["path"]] for row in layout["archives"]}
+        with self.assertRaisesRegex(ValueError, "Snapshot bytes differ"):
+            storage.unpack_parts(target, layout, self.destination("forged-read"),
+                                 expected_archive_hashes=expected)
+        with self.assertRaisesRegex(ValueError, "Complete emitted archive roster"):
+            rehash(target, archive_changed=True, emitted_archives=layout["archives"][:-1])
+
     def test_shared_complete_parts_survive_copy_on_write_and_changed_part_boundaries(self):
         content = {"a": b"A" * 128, "b": b"B" * 128, "c": b"C" * 128}
         self.baseline(content)

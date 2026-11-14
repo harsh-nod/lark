@@ -9,14 +9,34 @@ permissions:
 
 jobs:
   paper-ledger:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
-      - name: Require six model cohorts and five complete-source PTX development proofs
+      - name: Audit frozen elaborated-reference numerical evidence without GPU or model calls
+        run: |
+          python3 reproduction/specification_validation/packet.py verify \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-verified
+      - name: Reject altered numerical evidence and fully rehashed scope claims
+        run: |
+          python3 reproduction/specification_validation/check_packet.py \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-controls
+      - name: Audit all seventeen benchmark reference families and complete score tensors
+        run: |
+          python3 reproduction/benchmark_specification_validation/packet.py verify \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-verified
+      - name: Reject altered benchmark scope, samples, controls and score oracles
+        run: |
+          python3 reproduction/benchmark_specification_validation/check_packet.py \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-controls
+      - name: Require six model cohorts and six complete-source PTX development proofs
         run: |
           python3 - <<'PY'
           import json
@@ -33,16 +53,22 @@ jobs:
           gemm = report.get('ptx_matrix_evidence_checks', {})
           bmm = report.get('ptx_batched_evidence_checks', {})
           linear = report.get('ptx_linear_evidence_checks', {})
-          assert snapshot.name == '20261113-v26' and targets['storage_schema'] == 2
-          assert len(report['evidence_sha256']) == 3792
+          rotary = report.get('ptx_rotary_evidence_checks', {})
+          assert snapshot.name == '20261113-v27' and targets['storage_schema'] == 2
+          declared = {name for names in targets['evidence_groups'].values() for name in names}
+          assert set(report['evidence_sha256']) == declared
           layout = json.loads((snapshot / 'evidence-layout.json').read_text())
-          assert len(layout['logical_files']) == 3794 and len(layout['archives']) == 4
-          old = Path('reproduction/paper_results/snapshots/20261113-v25')
-          assert hashlib.sha256((old / 'manifest.json').read_bytes()).hexdigest() == 'e90502aaaedfacbea8c0ded36ad8facd8adf1870c755c3b5a38de321dead572f'
+          old = Path('reproduction/paper_results/snapshots/20261113-v26')
+          assert hashlib.sha256((old / 'manifest.json').read_bytes()).hexdigest() == '251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed'
           old_hashes = json.loads((old / 'evidence-manifest.json').read_text())
           definitions = {'reproduction/paper_results/audit.py', 'reproduction/paper_results/targets.json'}
-          assert sum(name not in definitions for name in old_hashes) == 3623
+          assert set(layout['logical_files']) == declared | definitions
+          assert sum(name not in definitions for name in old_hashes) == 3792
           assert all(layout['logical_files'][name]['sha256'] == value for name, value in old_hashes.items() if name not in definitions)
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v26/auditor.py').read_bytes()
+                  == (old / 'auditor.py').read_bytes())
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v26/targets.json').read_bytes()
+                  == (old / 'targets.json').read_bytes())
           assert targets.get('full_shape_models', {}).get('required_cohorts') == 6, 'Final ledger must require all six cohorts'
           assert models.get('complete_independent_cohorts') == 6 and len(models.get('cohorts', [])) == 6
           assert models.get('all_six_independent_cohorts_present') is True and models.get('missing_independent_cohorts') == []
@@ -88,6 +114,16 @@ jobs:
           assert linear.get('archives_checked') == 7 and linear.get('archive_members_checked') == 960
           assert linear.get('new_registered_source_certificates') == 0
           assert linear.get('original_paper_fully_reproduced') is linear.get('nvidia_execution') is linear.get('fresh_experiments_by_ledger') is False
+          assert targets.get('ptx_rotary_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-rotary-proof-v1'
+          assert rotary.get('independent_source_bound_development_proofs') == 1
+          assert rotary.get('retained_positive_Main_checks') == 4 and rotary.get('positive_rechecks') == 3
+          assert rotary.get('development_attempts') == 17 and rotary.get('failed_development_checks') == 11
+          assert rotary.get('fresh_owned_module_builds') == 32
+          assert rotary.get('direct_Lean_negative_controls') == 4 and rotary.get('successful_source_CI_jobs') == 24
+          assert rotary.get('archives_checked') == 18 and rotary.get('archive_members_checked') == 4414
+          assert rotary.get('anonymous_publication_files') == 81
+          assert rotary.get('new_registered_source_certificates') == 0
+          assert rotary.get('original_paper_fully_reproduced') is rotary.get('nvidia_execution') is rotary.get('fresh_experiments_by_ledger') is False
           assert all(report[name] == 0 for name in ('fresh_lean_checks', 'fresh_gpu_trials', 'model_calls'))
           assert all(row['original_result_reproduced'] is False for row in report['floats'] + report['narrative']
                      if row['role'] in ('experiment', 'history'))
@@ -120,6 +156,27 @@ jobs:
           data = Path('/tmp/lark-paper-source.tar').read_bytes()
           assert hashlib.sha256(data).hexdigest() == '095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2'
           PY
+      - name: Select complete-replay temporary storage and record resources
+        run: |
+          python3 - <<'PYCODE'
+          import json
+          import os
+          from pathlib import Path
+          import shutil
+          import tempfile
+          ram = Path('/dev/shm')
+          ram_free = shutil.disk_usage(ram).free if ram.is_dir() else 0
+          memory = dict(line.split(':', 1) for line in Path('/proc/meminfo').read_text().splitlines())
+          memory_available = int(memory['MemAvailable'].split()[0]) * 1024
+          use_ram = ram_free >= 4 * 1024**3 and memory_available >= 6 * 1024**3 and os.access(ram, os.W_OK)
+          selected = str(ram) if use_ram else tempfile.gettempdir()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('TMPDIR=' + selected + '\n')
+          print(json.dumps({'temporary_directory': selected, 'RAM_filesystem_free_bytes': ram_free,
+                            'memory_available_bytes': memory_available,
+                            'complete_payload_required': True, 'aggregate_seconds': 300,
+                            'per_replay_seconds': 120, 'max_independent_replayers': 2}))
+          PYCODE
       - name: Replay the frozen ledger and all rehashed controls without Git
         run: |
           python3 - <<'PY'
@@ -133,13 +190,14 @@ jobs:
                      'reproduction/paper_results/check_snapshot_controls.py',
                      '--snapshot', os.environ['LARK_PAPER_SNAPSHOT'],
                      '--source-archive', '/tmp/lark-paper-source.tar', '--output', str(output)]
-          result = subprocess.run(command)
+          result = subprocess.run(['/usr/bin/time', '-v', *command])
           for path in sorted(output.glob('*.log')):
               print(json.dumps({'control_log': path.name, 'text': path.read_text()}), flush=True)
           if result.returncode == 0:
               record = json.loads((output / 'results.json').read_text())
-              assert record['positive_replays'] == 8 and record['negative_controls'] == 81
-              assert len(record['released_completed_temporary_control_copies']) == 80
+              assert record['positive_replays'] == 9 and record['negative_controls'] == 89
+              assert len(record['checks']) == len({row['name'] for row in record['checks']}) == 98
+              assert len(record['released_completed_temporary_control_copies']) == 88
               assert record['all_control_payloads_complete_during_replay'] is True
           raise SystemExit(result.returncode)
           PY
@@ -933,6 +991,10 @@ jobs:
           python3 reproduction/production_fused_rmsnorm/replay_native_real.py \
             --packet /tmp/lark-fused-canonical-real --output /tmp/lark-fused-canonical-real-replay \
             --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Rebuild native in-place fused RMSNorm whole seeded-inout launch outside Git
+        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
+      - name: Check whole-launch report stage guards
+        run: python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
   ptx-matrix:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -1105,29 +1167,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
-      - name: Audit frozen elaborated-reference numerical evidence without GPU or model calls
-        run: |
-          python3 reproduction/specification_validation/packet.py verify \
-            --packet reproduction/specification_validation/results/production-real-v1 \
-            --output /tmp/lark-elaborated-reference-packet-verified
-      - name: Reject altered numerical evidence and fully rehashed scope claims
-        run: |
-          python3 reproduction/specification_validation/check_packet.py \
-            --packet reproduction/specification_validation/results/production-real-v1 \
-            --output /tmp/lark-elaborated-reference-packet-controls
-      - name: Audit all seventeen benchmark reference families and complete score tensors
-        run: |
-          python3 reproduction/benchmark_specification_validation/packet.py verify \
-            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
-            --output /tmp/lark-benchmark-reference-packet-verified
-      - name: Reject altered benchmark scope, samples, controls and score oracles
-        run: |
-          python3 reproduction/benchmark_specification_validation/check_packet.py \
-            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
-            --output /tmp/lark-benchmark-reference-packet-controls
       - name: Install pinned Lean toolchain
         run: |
           curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
@@ -1136,6 +1181,8 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Install package
         run: python -m pip install -e .
+      - name: Check all3792 preserved evidence paths before Lean work
+        run: python -m unittest discover -s tests -p test_prepare_ptx_rotary_snapshot.py -v
       - name: Check machine model
         run: lake build
         working-directory: lean
@@ -1177,10 +1224,6 @@ jobs:
         working-directory: lean
       - name: Check native in-place fused RMSNorm interface and source components
         run: python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
-      - name: Rebuild native in-place fused RMSNorm whole seeded-inout launch outside Git
-        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
-      - name: Check whole-launch report stage guards
-        run: python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
       - name: Check native tiled attention address and footprint components
         run: lake build Lark.NativeAttentionAddress
         working-directory: lean

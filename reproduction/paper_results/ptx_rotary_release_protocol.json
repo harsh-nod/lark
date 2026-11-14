@@ -1,0 +1,666 @@
+{
+  "schema": 1,
+  "prefix": "reproduction/ptx/results/full-size-rotary-proof-v1",
+  "publication_prefix": "reproduction/ptx/results/full-size-rotary-proof-publication-v3",
+  "ci_prefix": "reproduction/ptx/results/full-size-rotary-proof-ci-v2",
+  "main_prefix": "reproduction/ptx/results/full-size-rotary-proof-ci-main-v2",
+  "published_source": "898d54045af3a60367650bb56afcf0b7b3615ba1",
+  "old_main": "4a7616fa7a668fec2aad85c2989cf3b4b91e2764",
+  "promoted_main": "6280d33bff617cf8fe0d6fcb44279aaa2fc85398",
+  "main_status": "RoPE-public-main-nonforce-fast-forward-verified",
+  "ci_run": 43557902131,
+  "ci_branch": "reproduction/ptx-rotary-refinement",
+  "ci_jobs": [
+    "exact-real",
+    "fused-real",
+    "native-awq-components",
+    "native-awq-real",
+    "native-flashinfer-real",
+    "native-flashinfer-rmsnorm",
+    "native-qknorm-rope",
+    "native-rope",
+    "native-sglang-real",
+    "native-sglang-rmsnorm",
+    "paper-ledger",
+    "proof-tests",
+    "ptx-batched",
+    "ptx-linear",
+    "ptx-matrix",
+    "ptx-rotary",
+    "qknorm-rope-real",
+    "qknorm-rope-split-real",
+    "reference-identity",
+    "softmax-block",
+    "softmax-grid",
+    "softmax-race",
+    "softmax-real",
+    "softmax-source"
+  ],
+  "publication_files": {
+    ".github/workflows/ci.yml": {
+      "bytes": 68349,
+      "sha256": "bbc72103acab219d59d11e1205519a8b7b9ed657a66200258bd61310351fa17a"
+    },
+    "README.md": {
+      "bytes": 28953,
+      "sha256": "5c3cc554a569e173bfb16d7863d753be1ac8edcaa070ff8ab407b72b3436877b"
+    },
+    "lark_kernels/ptx_rotary.py": {
+      "bytes": 11071,
+      "sha256": "093e2369f5a4e1805715098a3a92b77e657c85e5ddb717e90d500a7d2f853498"
+    },
+    "lark_kernels/ptx_rotary_certificate.py": {
+      "bytes": 15545,
+      "sha256": "a41f11c946a4a1cf3f205f610066dffbbc5696abd3be3c8e5a050c529fe6074c"
+    },
+    "lean/Lark/PtxRotary.lean": {
+      "bytes": 6704,
+      "sha256": "35c9cb0daeb40cc0e2e643356aff4c6f6a8615e66e5223c70f8972e6ea44e861"
+    },
+    "lean/Lark/PtxRotaryKernel.lean": {
+      "bytes": 61463,
+      "sha256": "0fbef622eeae868e3f0c45bd7ca2d3e751c814b966b4edb33c7907e89cfee0fe"
+    },
+    "lean/Lark/PtxRotaryReference.lean": {
+      "bytes": 6224,
+      "sha256": "fdc99c1ae9691198466b22a7d3e32739c2607a8c20b87cbf5cf6c1643baa68f8"
+    },
+    "pyproject.toml": {
+      "bytes": 4021,
+      "sha256": "9b8994ca617970b4e0502999c9270ab6d4583579095298541aa935299bc0660f"
+    },
+    "reproduction/paper_results/check_snapshot_controls.py": {
+      "bytes": 41765,
+      "sha256": "c0c354e319680033c95c26a276954432bfcd4ecf1ce29bcbebacdc2d936a6606"
+    },
+    "reproduction/paper_results/ptx_rotary_evidence.py": {
+      "bytes": 28913,
+      "sha256": "f98f8fef16193dcb035b041277e625211cd5f12c6d17a8aaa812d4c3ed4ebf52"
+    },
+    "reproduction/paper_results/ptx_rotary_protocol.json": {
+      "bytes": 20650,
+      "sha256": "9e40015bbb371e77631e12895fc2191c8d3bb0f5683fef3e67edc794972dbc50"
+    },
+    "reproduction/paper_results/snapshot_control_archives.py": {
+      "bytes": 7629,
+      "sha256": "f2ee3ed708dba276de22f7ae62830feb53f148ae1a268cb0efa37bf02463a7f1"
+    },
+    "reproduction/ptx/ROTARY.md": {
+      "bytes": 4856,
+      "sha256": "8cd94495a1c1cb375a81ebeb285f871a43113e1318057ee731f281f4e0e6c929"
+    },
+    "reproduction/ptx/check_rotary_recording_controls.py": {
+      "bytes": 5876,
+      "sha256": "6c5ab3c8acc609e811fc2ac2c99491fd06607814d3c85c82bb06679a42eb6af0"
+    },
+    "reproduction/ptx/check_rotary_source_controls.py": {
+      "bytes": 5462,
+      "sha256": "e259e9c975ae648ad9d6ac90861adebd1ed0c3d3dcd5cd416493a4e49710ad63"
+    },
+    "reproduction/ptx/full-size/rope/kernel.ptx": {
+      "bytes": 2522,
+      "sha256": "7bb0398eebef5e3b4a196f9caae8da45f439a6b076c4d5bdb1e37222f7924180"
+    },
+    "reproduction/ptx/full-size/rope/reference.py": {
+      "bytes": 320,
+      "sha256": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381"
+    },
+    "reproduction/ptx/full-size/rope/task.json": {
+      "bytes": 777,
+      "sha256": "a27753ffd11c6f360ae49d670328c258ea1cadca0c0c3ca275a30591390587bc"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/RESULTS.md": {
+      "bytes": 1728,
+      "sha256": "ce4c3e3fa4fa18ea5ef40927fd9e329f7f9e96e1410146824817508f374a1922"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-1-files.json": {
+      "bytes": 14315,
+      "sha256": "573a712a77e49724f99c75ecdc08fcba2d79f2e49eae99b7a0a71ce106558146"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-1.tar.gz": {
+      "bytes": 26220927,
+      "sha256": "0515bd32de85b405b00cddccfe93837f402d6ff0ea158942a2a31f27c25ca475"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-2-files.json": {
+      "bytes": 14283,
+      "sha256": "b92c3c480034ab61a11e1806247cbfbe5723a9c95855f1aa334403ccd379e448"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-2.tar.gz": {
+      "bytes": 25591871,
+      "sha256": "b9cdb1ceaeb018535948893afad4a7b09ed4d4c642b920bb710d1960a0395e65"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-3-files.json": {
+      "bytes": 15175,
+      "sha256": "af9a5245c8df4a5f2e0ea2cf98457f855b2ca40164e57064f0dc8921e9b42408"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-3.tar.gz": {
+      "bytes": 26699498,
+      "sha256": "763d96ae32ada77a305c4b2f50f655e68949e3271d8805f52a1cca12d870641a"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-4-files.json": {
+      "bytes": 6654,
+      "sha256": "9955ef8e28d03eb8df0a5706e36505bd59d6081f144e274d7a96335bb17ff679"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/development-4.tar.gz": {
+      "bytes": 11876818,
+      "sha256": "cdc3d8c91914f8118ebdd0c9942821af930f95776fb167fc38d91dbb78d25e61"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/direct-controls-files.json": {
+      "bytes": 4303,
+      "sha256": "44527772ded6964dddf88732cd62e308d866f97caa25ceca0e0603fb7f399e8d"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/direct-controls-results.json": {
+      "bytes": 4974,
+      "sha256": "ef69eeb2fe515ecbd7177f40839f8c4059cf561dde60645796945ee73516c8e8"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/direct-controls.tar.gz": {
+      "bytes": 19375,
+      "sha256": "559feb10538fb85b30324ca9efe8adad4e99270e24db0bb27fdec31ea34917cd"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/export-files.json": {
+      "bytes": 10454,
+      "sha256": "8a056c31c60a1f128a76d51b2080a2b5388b2880e92f1357b5cceeeca9c28a90"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/export-results.json": {
+      "bytes": 30112,
+      "sha256": "cc274ce816f75c054beaecaf18061077bda4d65505d7cc048f580698d524a5b7"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/export.tar.gz": {
+      "bytes": 6306005,
+      "sha256": "422e6fe1f0649363f96af0f83d99fd2f019e7376cd9840bfa811624c48ff0317"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/installed-wheel-files.json": {
+      "bytes": 262656,
+      "sha256": "c5268c9cc59cca76eb10ffb884e6c9923c487eb41b2fe2189ee7fa81a9a7506d"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/installed-wheel-results.json": {
+      "bytes": 797,
+      "sha256": "33aeaa5765e394128a2058db50d0c2b392c2554b4ef08cad62486b1a8a631993"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/installed-wheel.tar.gz": {
+      "bytes": 14070941,
+      "sha256": "26b33048fcd91e91ec9cc62e40de4bf9e2cc77ba41f8bc0d409e6be4db6d9ba1"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/manifest.json": {
+      "bytes": 4753,
+      "sha256": "4a421b83c407d0f1807e1cdab2ba0000cb63a2de08db77c4e297e5a6f85d503d"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/packaging-driver.py": {
+      "bytes": 17185,
+      "sha256": "4676f1f0f3a3f772e6e9828eba9926edd9ccb1ec470b4321077dd101a4eb2772"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/preparation-history-files.json": {
+      "bytes": 17514,
+      "sha256": "d1e00ed39b23d4b3197ee1a2415cd66e6927deeb707120f289c4ad744a32a469"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/preparation-history.tar.gz": {
+      "bytes": 5299265,
+      "sha256": "45213636d29e59bc5eda95ed11521a81566359eb5c766be86fc2bfb937f9050a"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-1-files.json": {
+      "bytes": 56319,
+      "sha256": "4fe803fdead70fb29c71e4ceaad6e7d22d3200130870a58ef8d69c8e8bef58a1"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-1.tar.gz": {
+      "bytes": 25238611,
+      "sha256": "e2714d9e377e543205370b1539e2cdc3746da585d31026926d11c8bec7e82115"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-2-files.json": {
+      "bytes": 56719,
+      "sha256": "b0a99ef2e94a8b79833c7d28a1b041d998cd1c38098573bde28489362eb50510"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-2.tar.gz": {
+      "bytes": 25238512,
+      "sha256": "e6dc22981de866ece35113dab2e9cd970fbaacb20a41e02534ddaf4de0a615f4"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-3-files.json": {
+      "bytes": 55819,
+      "sha256": "b02b6c854a645e5b9eb6bfbd2649e2e9ebf32db9954f7ab15450dc6eaae84bb4"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-3.tar.gz": {
+      "bytes": 25238804,
+      "sha256": "d49ccb7ea776c3b69456b8444b31c2f2b4501693d67dfaf2f9c94e5c115cfde6"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-4-files.json": {
+      "bytes": 57819,
+      "sha256": "79aa6bb53c2e750c86b552cb1798c5b4d2dde4a09eeec6060f03c5853bf9ccf9"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-4.tar.gz": {
+      "bytes": 25238600,
+      "sha256": "48722def1e13ba2833a06125f091ccd8eb04b94b1ceb3907a81f8ef0d55eb32b"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-5-files.json": {
+      "bytes": 15607,
+      "sha256": "97a96d39801f275c962ef027aea7a1d723b9684a96315b7d8dbde7866a3f5a8c"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-5.tar.gz": {
+      "bytes": 6310295,
+      "sha256": "d6c89fd8654cb72b8019bb3ccc445df75ff41d541462672633ec83c58ba9cb65"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-controls-results.json": {
+      "bytes": 6425,
+      "sha256": "68235c62d573606fd511e07453b152ddf755e04595717a8105a7c5dc2495cd1a"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-metadata-files.json": {
+      "bytes": 259,
+      "sha256": "022a35454cc0ddc937d3c63931f26e8d0dbdf09a21263187e9a60422b7879b28"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/rehashed-metadata.tar.gz": {
+      "bytes": 19466,
+      "sha256": "29bfb1ae6b5280ed7c0366ecddfa0dba2e1f866ac187ed138eec5dd689b43683"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v1-files.json": {
+      "bytes": 10639,
+      "sha256": "a9b229483eef42a6d8cdd4deb00b99e0aef2a6a1ce5e3bdb95b6cdab4d51b2a4"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v1-results.json": {
+      "bytes": 30111,
+      "sha256": "863dcf9ae309a94356a0692ea26f75005657315682256705fffe69720153d620"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v1.tar.gz": {
+      "bytes": 6310400,
+      "sha256": "ea00be71f2dbab73103e37d57ec2fd1800f6b3d2e98f6d19fc7dc7277b3ec3d6"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v2-files.json": {
+      "bytes": 10639,
+      "sha256": "6a1d3c4bdce5e8a8f64f5ff01ad6cda2aa122c35fc184d600160076c8b3dad46"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v2-results.json": {
+      "bytes": 30108,
+      "sha256": "b833ac7675fa970d16725fadaa7877e41fe098a1c405889b2e0b51f8db807302"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/replay-v2.tar.gz": {
+      "bytes": 6310405,
+      "sha256": "e9402088a84bbebfe743afc1dcbac302ce4bb20f2e8ed137c3b3859ac68e2d6f"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/results.json": {
+      "bytes": 10041,
+      "sha256": "4ffac9ec173a7d6686fe3cc529cb779b89a7c193a90bac3240ec71304c56e0a5"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/runtime-links.json": {
+      "bytes": 338,
+      "sha256": "395c7e10966b4684c37baa7d0c02870827c6c126a1d947bf1605f976fc037c7b"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/validation-history.json": {
+      "bytes": 12097,
+      "sha256": "44c5ebb1b86f4dba7e82147aa4a42a14f59dd018a8f26e5beef6359984ac2bcb"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-build-files.json": {
+      "bytes": 546,
+      "sha256": "86c64f24f2619d61f02d3def73f19b5ff25c80e2b52aa038dd3192fa22d07d28"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-build-results.json": {
+      "bytes": 1008,
+      "sha256": "74aa3f1aabcb17e7b31ea5f80f6147587c94eadc8f33b5ff540f3b0102e55efa"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-build.tar.gz": {
+      "bytes": 1513485,
+      "sha256": "b11c39c5364577813dc32c3aeacdb14d5356d3bf763197f59104a6dd1b9a115b"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-replay-files.json": {
+      "bytes": 10639,
+      "sha256": "f40ee3d6ed22132b5ca4079835e25b09b26bc90991b83291a85b30fd780284e0"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-replay-results.json": {
+      "bytes": 30112,
+      "sha256": "180db14c23c14ed25251082816628320c4e8352be254e40c4e1787d75260ce89"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-v1/wheel-replay.tar.gz": {
+      "bytes": 6310408,
+      "sha256": "fe4d68c1ae541ac1b8f03ca3a374966c44045a46cced29973655d04439e64115"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v1.stderr": {
+      "bytes": 12580,
+      "sha256": "e89035db82d29ab400f5032e2bc7edf88fd043944fa37ec01fa1155487f7732c"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v1.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v2.stderr": {
+      "bytes": 3900,
+      "sha256": "b3c67ab69f62b42f70afa61a86b9787935953abf7e6a5518830b006055ffefac"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v2.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v3.stderr": {
+      "bytes": 1205,
+      "sha256": "8d12a839991aac128494be57329e2ed12c581a1a230f213d77618b50f84c29ab"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/evidence-tests-v3.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/manifest.json": {
+      "bytes": 857,
+      "sha256": "da94d97d600c5b4b3ebd8bf400633c915730d8e49b60037afefeeae9b98dd531"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/packaging.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/packaging.stdout": {
+      "bytes": 1374,
+      "sha256": "7df22d4d97af09245b0fe6aa6af02de15ac1126f8ba8dde6a34808f07187c743"
+    },
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1/results.json": {
+      "bytes": 1883,
+      "sha256": "cbbcc5a8c4c2f2efd38153adda84a45edf80a2376fd9ef969e601a5ebe8ac9c7"
+    },
+    "tests/test_ptx_rotary.py": {
+      "bytes": 7220,
+      "sha256": "cf3cc167c314269b44c4fe6daa22b806a99369bbe471be14e3b9b1296dead9b8"
+    },
+    "tests/test_ptx_rotary_paper_evidence.py": {
+      "bytes": 6240,
+      "sha256": "bf4b09cd9e78fab5cc9827d145c9aafee2ce735d6ea5cb2b0e0357da6adb9050"
+    },
+    "tests/test_snapshot_control_archives.py": {
+      "bytes": 11155,
+      "sha256": "d866b59ecdd1c1a2a1e31b6b4fd9484628ca46f8307c345a39223114a62d1140"
+    }
+  },
+  "publication_bytes": 244981348,
+  "publication_verifier_sha256": "2153a16f307a6eb2933f1b27768b93dae6a15460900420c4fc5d15e59123470d",
+  "ci_observer_sha256": "c5997732e7b0fa53c032ac3e6cc1895bb9744d0c0d99477c857bebd03168c994",
+  "promotion_driver_sha256": "307e85435c215536b9441cf79035de087788e5f7feebbe4784c72ba2e5f8c6aa",
+  "post_source_paths": [
+    "README.md",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/commits.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/commits.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/exact-arxiv-id.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/exact-arxiv-id.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/exact-title-phrase.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/exact-title-phrase.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/lark-lean-gpu.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/lark-lean-gpu.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/manifest.json",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/organization-public-repositories.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/organization-public-repositories.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/releases.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/releases.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/repository.stderr",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/repository.stdout",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1/results.json",
+    "reproduction/ptx/ROTARY.md",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/jobs.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/observer.py",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1/run.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/analysis.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/job.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/logs.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/logs.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/observation.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/tested-source/reproduction/paper_results/check_snapshot_controls.py",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/tested-source/reproduction/paper_results/snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1/tested-source/tests/test_snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2/job.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2/logs.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2/logs.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/jobs.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/observer.py",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-v2/run.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/false-native-awq-certificate-count.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/global-completion-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/missing-production-case.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-boolean-numeric-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-case-cost-reconciliation.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-case-only-stub.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-changed-checkpoint-revision.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-context-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-declared-cohort-count.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-failed-candidates-falsely-rechecked.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-false-missing-roster.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-first-response-relabeled.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-forged-extra-fresh-check.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-mean-denominator-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-mismatched-accepted-Main.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-partial-audit-roster.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-premature-failed-case-stop.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-source-certificate-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/model-stub-cohort.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-benchmark-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-changed-heartbeat-cap.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-changed-sampled-value.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-changed-source-pin.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-duplicate-case.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-false-certificate.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-false-cold-rebuild.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-incomplete-sample-replay.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-incomplete-score-total.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-missing-artifact-control.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-missing-download-observations.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-production-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-production-replay-bit-difference.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-score-bit-disagreement.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/numerical-unverified-download-tls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/original-production-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/outside-checkout-no-git.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/positive-after-model-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/positive-after-numerical-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/ptx-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/ptx-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/rehashed-study-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/rehashed-study-owned-cache-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/controls/temporary-location.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/driver.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/source/reproduction/paper_results/check_snapshot_controls.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/source/reproduction/paper_results/snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/source/tests/test_snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/stderr.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/stdout.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/unit-tests-v1.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/unit-tests-v1.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/unit-tests-v2.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1/unit-tests-v2.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/MANUSCRIPT-LICENSE.md",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/bundle-manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/input.tar",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/launch.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/launch.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/launch.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/load.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/observer.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/stderr.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/stdout.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/observer/validation-files.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/paper-source.tar",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/return-manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/return-validation.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/run-controls.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/__pycache__/replay_snapshot.cpython-312.pyc",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/__pycache__/snapshot_archives.cpython-312.pyc",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/__pycache__/snapshot_control_archives.cpython-312.pyc",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/check_snapshot_controls.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/replay_snapshot.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/snapshot_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/reproduction/paper_results/snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/source/tests/test_snapshot_control_archives.py",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-CUDA-contract-fuel-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-launch-geometry-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-nvidia-execution-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-proof-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/bmm-source-CI-wrong-commit.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/false-native-awq-certificate-count.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/fully-rehashed-traversal.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-CUDA-contract-fuel-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-launch-geometry-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-nvidia-execution-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-proof-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemm-source-CI-wrong-commit.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-CUDA-contract-fuel-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-launch-geometry-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-nvidia-execution-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-proof-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/gemv-source-CI-wrong-commit.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/global-completion-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-CUDA-contract-fuel-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-launch-geometry-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-nvidia-execution-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-proof-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/linear-source-CI-wrong-commit.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/missing-production-case.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-boolean-numeric-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-case-cost-reconciliation.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-case-only-stub.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-changed-checkpoint-revision.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-context-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-declared-cohort-count.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-failed-candidates-falsely-rechecked.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-false-missing-roster.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-first-response-relabeled.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-forged-extra-fresh-check.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-mean-denominator-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-mismatched-accepted-Main.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-partial-audit-roster.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-premature-failed-case-stop.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-source-certificate-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/model-stub-cohort.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-benchmark-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-changed-heartbeat-cap.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-changed-sampled-value.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-changed-source-pin.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-duplicate-case.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-false-certificate.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-false-cold-rebuild.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-incomplete-sample-replay.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-incomplete-score-total.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-missing-artifact-control.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-missing-download-observations.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-production-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-production-replay-bit-difference.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-score-bit-disagreement.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/numerical-unverified-download-tls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/original-production-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/outside-checkout-no-git.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-bmm-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-gemm-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-gemv-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-linear-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-model-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-numerical-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/positive-after-ptx-controls.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-CUDA-contract-fuel-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-boolean-kernel-counter.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-launch-geometry-changed.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-nvidia-execution-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-original-result-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-proof-budget-increased.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-rechecks-counted-as-kernels.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/ptx-source-CI-wrong-commit.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/rehashed-study-ieee-overclaim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/rehashed-study-owned-cache-claim.log",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/temporary-location.json",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1/validation/wrong-manuscript.log",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1/stderr.log",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1/stdout.log",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1/verifier.py",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/binding.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/reader-results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/reader.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/reader.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2/verifier.py",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/binding.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/progress.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/reader-results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/reader.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/reader.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/results.json",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v3/verifier.py",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/fixed-source-push.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/fixed-source-push.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/main-preflight-v2-refusal.json",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/main-preflight-v2.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/main-preflight-v2.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/manifest.json",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-failed-push-v1.json",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-failed-push-v2.json",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-push-v2.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-push-v2.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-push-v3.stderr",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/original-source-push-v3.stdout",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1/results.json"
+  ],
+  "auxiliary_files": {
+    "publication_prefix": [
+      "binding.json",
+      "manifest.json",
+      "progress.json",
+      "reader-results.json",
+      "reader.stderr",
+      "reader.stdout",
+      "results.json",
+      "verifier.py"
+    ],
+    "ci_prefix": [
+      "jobs.json",
+      "manifest.json",
+      "observer.py",
+      "progress.json",
+      "results.json",
+      "run.json"
+    ],
+    "main_prefix": [
+      "manifest.json",
+      "progress.json",
+      "promotion-driver.py",
+      "results.json",
+      "update.json"
+    ]
+  },
+  "retained_history_manifests": {
+    "reproduction/ptx/results/full-size-rotary-proof-publication-preflight-failed-v1": "2ed0cbb483fd372042b6c1e12185ca2dd92dec2818bdd37347274d4e0f27329e",
+    "reproduction/ptx/results/full-size-rotary-proof-transport-v1": "6d3062f6f7636a0a8964c8d2a8c0bc8d4c1b8ccdd2abeaffbfcd6ac8e5f836f5",
+    "reproduction/ptx/results/full-size-rotary-proof-publication-v2": "3f1ab7fab49f409b1df00fdf46713214c3787dfeb9522ee8506014a63a876e8a",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-failed-v1": "bdac03498c104a4856937b68dd904872d54bdc68da822f9048cacf1830b851d8",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-failed-v1": "6967ff31fc0b3c8947022d9facb4942cbdf01a5d72e9e206018f8592861a0335",
+    "reproduction/ptx/results/full-size-rotary-proof-ci-ledger-success-v2": "8f835f0569d5645083b5ffe411988dcf511ed509a48bc312c14b6bdcfa36ba12",
+    "reproduction/ptx/results/full-size-rotary-proof-io-local-timeout-v1": "5a8e6d3c011ed3a1441b412fc5159307bc2252dbb0f2b14c11efaca30a42c2e6",
+    "reproduction/ptx/results/full-size-rotary-proof-io-mi350-v1": "efe12c33837d35188bb9ba3b5d272f8d1c083a2193698d6e64aabb4634dd713e",
+    "reproduction/paper_results/original-artifact-rope-refresh-20261113-v1": "08b8ec414c08f7b7e6f8c8446877d7349f62b4f549091c67d0a72c0b848fd9fb",
+    "reproduction/ptx/results/full-size-rotary-proof-validation-v1": "da94d97d600c5b4b3ebd8bf400633c915730d8e49b60037afefeeae9b98dd531"
+  }
+}

@@ -44,17 +44,17 @@ def expected_counts(targets):
     negatives = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
                  + 16*('numerical_studies' in targets) + 17*('full_shape_models' in targets)
                  + 8*sum(key in targets for key in ('ptx_pointwise_proof', 'ptx_dot_proof',
-                         'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof')))
+                         'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof', 'ptx_rotary_proof')))
     positives = ((2 if 'numerical_studies' in targets else 1) + ('full_shape_models' in targets)
                  + sum(key in targets for key in ('ptx_pointwise_proof', 'ptx_dot_proof',
-                       'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof')))
+                       'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof', 'ptx_rotary_proof')))
     return positives, negatives
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True)
-    parser.add_argument('--snapshot', default='20261113-v26')
+    parser.add_argument('--snapshot', default='20261113-v27')
     parser.add_argument('--source-archive', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--proxy', required=True)
