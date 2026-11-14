@@ -110,3 +110,13 @@ partial development attempts distinguished. It keeps every paper experiment/
 history reproduction flag false and supplies no completion percentage. Five
 preparation/renderer tests passed in 0.592 seconds. The actual v26 build and
 full control suite remain separately required.
+
+The [first v26 build record](snapshot-v26-build-v1/results.json) assembled the
+candidate snapshot in 68.4448 seconds from source `784634ae3902539280c28e2ca2803a46d8fc918a`.
+It contains 3,792 evidence files, or 3,794 logical files including its new
+auditor and targets, totaling 281,252,397 logical bytes. The four archive parts
+are 34,543,398, 80,333,995, 83,660,563 and 32,837,752 bytes. All earlier 3,623
+evidence paths and hashes and both historical definitions are retained. The
+original v25 snapshot is byte-identical. This build creates no fresh proof,
+model or GPU result and does not satisfy the pending full control-suite,
+anonymous publication, new source CI or main-promotion gates.
