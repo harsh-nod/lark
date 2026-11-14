@@ -11,7 +11,14 @@ with 32 fresh owned module builds and three positive rechecks. Four direct
 Lean binding controls and 17 coherently rehashed recording controls passed.
 The installed wheel replay ran with isolated Python outside Git and without
 network access. These checks establish one independent development kernel.
-Anonymous publication verification and the new source CI job remain pending.
+The [anonymous publication record](results/full-size-rotary-proof-publication-v3/results.json)
+verified all 81 changed files (244,981,348 bytes), 18 archives and 4,414 members
+against source `898d540`, with verified TLS and isolated Python outside Git.
+The [actual source CI record](results/full-size-rotary-proof-ci-v2/results.json)
+records all twenty-four jobs passing, including fresh RoPE export/replay and
+both control suites. Receipt commits change only documentation and recorded
+publication/CI metadata; SDK, Lean, tests, workflow and frozen snapshots retain
+their exact tested source identities. No CI claim is made for those metadata commits.
 
 The [evidence packet](results/full-size-rotary-proof-v1/RESULTS.md) preserves
 every payload, all 17 pre-SDK development attempts (six passing partial checks,

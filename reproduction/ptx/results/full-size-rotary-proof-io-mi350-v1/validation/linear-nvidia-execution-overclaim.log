@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-snapshot-controls-hzntsj3l/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/audit.py", line 670, in main
+    linear_checks = check_ptx_linear_evidence(config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 509, in check_ptx_linear_evidence
+    return check_ptx_extended_evidence(config, kind="linear", root=root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 417, in check_ptx_extended_evidence
+    report = check_recording_packet(root / p["prefix"], kind=kind, declared=declared_packet)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 384, in check_recording_packet
+    return Recording(root, kind, declared).packet()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 344, in packet
+    self.fields(report, {**p["contract"], **p["report_boolean_fields"]}, "proof contract/original scope differs")
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 68, in fields
+    self.require(type(record) is dict and all(k in record and same_json(record[k], v)
+  File "/tmp/lark-rotary-ledger-container-mi350-v1-20261113/temporary/lark-paper-snapshot-mumtjh1z/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX linear proof contract/original scope differs
+
