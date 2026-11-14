@@ -214,7 +214,7 @@ def replay(snapshot, manuscript, *, creating=False):
             # archive bindings before decoding. Every other file is checked
             # here, and its exact archive roster is checked against the layout.
             expected_archives = {name: value for name, value in manifest.items()
-                                 if re.fullmatch(r"evidence-part-[0-9]{4}\.tar\.gz", name)}
+                                 if re.fullmatch(r"evidence-part-[0-9]{4,}\.tar\.gz", name)}
             verify_manifest(snapshot, {name: value for name, value in manifest.items()
                                        if name not in expected_archives})
         else:
