@@ -1,0 +1,275 @@
+﻿2026-11-14T09:20:49.9939382Z Current runner version: '2.338.2'
+2026-11-14T09:20:49.9960685Z ##[group]Runner Image Provisioner
+2026-11-14T09:20:49.9961296Z Hosted Compute Agent
+2026-11-14T09:20:49.9961731Z Version: 20261103.629
+2026-11-14T09:20:49.9962175Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-14T09:20:49.9962775Z Build Date: 2026-11-03T17:26:59Z
+2026-11-14T09:20:49.9963235Z Worker ID: {038d7654-99c4-4f3e-bcef-ce61069ef3bc}
+2026-11-14T09:20:49.9963664Z Region: northcentralus
+2026-11-14T09:20:49.9964042Z Cloud: Azure
+2026-11-14T09:20:49.9964419Z ##[endgroup]
+2026-11-14T09:20:49.9965257Z ##[group]Operating System
+2026-11-14T09:20:49.9965680Z Ubuntu
+2026-11-14T09:20:49.9966007Z 26.04.1
+2026-11-14T09:20:49.9966685Z LTS
+2026-11-14T09:20:49.9967084Z ##[endgroup]
+2026-11-14T09:20:49.9967452Z ##[group]Runner Image
+2026-11-14T09:20:49.9967851Z Image: ubuntu-26.04
+2026-11-14T09:20:49.9968199Z Version: 20261111.196.1
+2026-11-14T09:20:49.9969102Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-14T09:20:49.9970009Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-14T09:20:49.9970619Z ##[endgroup]
+2026-11-14T09:20:49.9971288Z ##[group]GITHUB_TOKEN Permissions
+2026-11-14T09:20:49.9973032Z Contents: read
+2026-11-14T09:20:49.9973390Z Metadata: read
+2026-11-14T09:20:49.9973726Z ##[endgroup]
+2026-11-14T09:20:49.9975332Z Secret source: Actions
+2026-11-14T09:20:49.9975930Z Cache mode: write
+2026-11-14T09:20:49.9976462Z Prepare workflow directory
+2026-11-14T09:20:50.0232146Z Prepare all required actions
+2026-11-14T09:20:50.0269208Z Getting action download info
+2026-11-14T09:20:50.2120663Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-14T09:20:50.3167261Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-14T09:20:50.4665988Z Complete job name: ptx-matrix
+2026-11-14T09:20:50.5250115Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-14T09:20:50.5250675Z with:
+2026-11-14T09:20:50.5250935Z   repository: harsh-nod/lark
+2026-11-14T09:20:50.5253261Z   token: ***
+2026-11-14T09:20:50.5253514Z   ssh-strict: true
+2026-11-14T09:20:50.5253763Z   ssh-user: git
+2026-11-14T09:20:50.5254023Z   persist-credentials: true
+2026-11-14T09:20:50.5254298Z   clean: true
+2026-11-14T09:20:50.5254558Z   sparse-checkout-cone-mode: true
+2026-11-14T09:20:50.5254936Z   fetch-depth: 1
+2026-11-14T09:20:50.5255305Z   fetch-tags: false
+2026-11-14T09:20:50.5255743Z   show-progress: true
+2026-11-14T09:20:50.5256135Z   lfs: false
+2026-11-14T09:20:50.5256470Z   submodules: false
+2026-11-14T09:20:50.5256894Z   set-safe-directory: true
+2026-11-14T09:20:50.5257363Z   allow-unsafe-pr-checkout: false
+2026-11-14T09:20:50.5258104Z ##[endgroup]
+2026-11-14T09:20:50.7203291Z Syncing repository: harsh-nod/lark
+2026-11-14T09:20:50.7205255Z ##[group]Getting Git version info
+2026-11-14T09:20:50.7206020Z Working directory is '/home/runner/work/lark/lark'
+2026-11-14T09:20:50.7208317Z [command]/usr/bin/git version
+2026-11-14T09:20:50.7216342Z git version 2.56.1
+2026-11-14T09:20:50.7231570Z ##[endgroup]
+2026-11-14T09:20:50.7244503Z Temporarily overriding HOME='/home/runner/work/_temp/6b9bc4b3-0be3-4796-980b-3fa23babb986' before making global git config changes
+2026-11-14T09:20:50.7245766Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T09:20:50.7249720Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-14T09:20:50.7313522Z Deleting the contents of '/home/runner/work/lark/lark'
+2026-11-14T09:20:50.7316553Z ##[group]Initializing the repository
+2026-11-14T09:20:50.7321214Z [command]/usr/bin/git init /home/runner/work/lark/lark
+2026-11-14T09:20:50.7448090Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-14T09:20:50.7449082Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-14T09:20:50.7449868Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-14T09:20:50.7450288Z hint: call:
+2026-11-14T09:20:50.7450522Z hint:
+2026-11-14T09:20:50.7450852Z hint: 	git config --global init.defaultBranch <name>
+2026-11-14T09:20:50.7451205Z hint:
+2026-11-14T09:20:50.7451533Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-14T09:20:50.7452048Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-14T09:20:50.7452741Z hint:
+2026-11-14T09:20:50.7453140Z hint: 	git branch -m <name>
+2026-11-14T09:20:50.7453458Z hint:
+2026-11-14T09:20:50.7453818Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-14T09:20:50.7460022Z Initialized empty Git repository in /home/runner/work/lark/lark/.git/
+2026-11-14T09:20:50.7472308Z [command]/usr/bin/git remote add origin https://github.com/harsh-nod/lark
+2026-11-14T09:20:50.7528437Z ##[endgroup]
+2026-11-14T09:20:50.7529141Z ##[group]Disabling automatic garbage collection
+2026-11-14T09:20:50.7532551Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-14T09:20:50.7571936Z ##[endgroup]
+2026-11-14T09:20:50.7572601Z ##[group]Setting up auth
+2026-11-14T09:20:50.7578611Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T09:20:50.7612771Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T09:20:50.7971076Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T09:20:50.8001142Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T09:20:50.8234459Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T09:20:50.8266337Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T09:20:50.8499515Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-14T09:20:50.8536248Z ##[endgroup]
+2026-11-14T09:20:50.8536784Z ##[group]Fetching the repository
+2026-11-14T09:20:50.8543173Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +8309738beff6486be282cd92b18177eaf9b232ab:refs/remotes/origin/reproduction/ptx-ffn-refinement
+2026-11-14T09:21:30.3176829Z From https://github.com/harsh-nod/lark
+2026-11-14T09:21:30.3177908Z  * [new ref]         8309738beff6486be282cd92b18177eaf9b232ab -> origin/reproduction/ptx-ffn-refinement
+2026-11-14T09:21:30.3181045Z ##[endgroup]
+2026-11-14T09:21:30.3181586Z ##[group]Determining the checkout info
+2026-11-14T09:21:30.3182976Z ##[endgroup]
+2026-11-14T09:21:30.3188101Z [command]/usr/bin/git sparse-checkout disable
+2026-11-14T09:21:30.3240875Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-14T09:21:30.3275061Z ##[group]Checking out the ref
+2026-11-14T09:21:30.3277758Z [command]/usr/bin/git checkout --progress --force -B reproduction/ptx-ffn-refinement refs/remotes/origin/reproduction/ptx-ffn-refinement
+2026-11-14T09:21:31.4904263Z Updating files:  36% (4604/12713)
+2026-11-14T09:21:31.4979031Z Updating files:  37% (4704/12713)
+2026-11-14T09:21:31.5012582Z Updating files:  38% (4831/12713)
+2026-11-14T09:21:31.5050676Z Updating files:  39% (4959/12713)
+2026-11-14T09:21:31.5099231Z Updating files:  40% (5086/12713)
+2026-11-14T09:21:31.5133600Z Updating files:  41% (5213/12713)
+2026-11-14T09:21:31.5172013Z Updating files:  42% (5340/12713)
+2026-11-14T09:21:31.5207646Z Updating files:  43% (5467/12713)
+2026-11-14T09:21:31.5262138Z Updating files:  44% (5594/12713)
+2026-11-14T09:21:31.5315967Z Updating files:  45% (5721/12713)
+2026-11-14T09:21:31.5463127Z Updating files:  46% (5848/12713)
+2026-11-14T09:21:31.5513027Z Updating files:  47% (5976/12713)
+2026-11-14T09:21:31.8615805Z Updating files:  48% (6103/12713)
+2026-11-14T09:21:31.8648646Z Updating files:  49% (6230/12713)
+2026-11-14T09:21:31.8697141Z Updating files:  50% (6357/12713)
+2026-11-14T09:21:31.8737100Z Updating files:  51% (6484/12713)
+2026-11-14T09:21:31.8774389Z Updating files:  52% (6611/12713)
+2026-11-14T09:21:31.8829447Z Updating files:  53% (6738/12713)
+2026-11-14T09:21:31.8871184Z Updating files:  54% (6866/12713)
+2026-11-14T09:21:31.8921690Z Updating files:  55% (6993/12713)
+2026-11-14T09:21:31.9053534Z Updating files:  56% (7120/12713)
+2026-11-14T09:21:31.9663642Z Updating files:  57% (7247/12713)
+2026-11-14T09:21:31.9984844Z Updating files:  58% (7374/12713)
+2026-11-14T09:21:32.0044019Z Updating files:  59% (7501/12713)
+2026-11-14T09:21:32.0092773Z Updating files:  60% (7628/12713)
+2026-11-14T09:21:32.0136153Z Updating files:  61% (7755/12713)
+2026-11-14T09:21:32.0178077Z Updating files:  62% (7883/12713)
+2026-11-14T09:21:32.0219888Z Updating files:  63% (8010/12713)
+2026-11-14T09:21:32.0262340Z Updating files:  64% (8137/12713)
+2026-11-14T09:21:32.0305529Z Updating files:  65% (8264/12713)
+2026-11-14T09:21:32.0345388Z Updating files:  66% (8391/12713)
+2026-11-14T09:21:32.0380212Z Updating files:  67% (8518/12713)
+2026-11-14T09:21:32.0429866Z Updating files:  68% (8645/12713)
+2026-11-14T09:21:32.0467827Z Updating files:  69% (8772/12713)
+2026-11-14T09:21:32.0716152Z Updating files:  70% (8900/12713)
+2026-11-14T09:21:32.0951412Z Updating files:  71% (9027/12713)
+2026-11-14T09:21:32.1002829Z Updating files:  72% (9154/12713)
+2026-11-14T09:21:32.1042708Z Updating files:  73% (9281/12713)
+2026-11-14T09:21:32.1084878Z Updating files:  74% (9408/12713)
+2026-11-14T09:21:32.1122680Z Updating files:  75% (9535/12713)
+2026-11-14T09:21:32.1164528Z Updating files:  76% (9662/12713)
+2026-11-14T09:21:32.1419524Z Updating files:  77% (9790/12713)
+2026-11-14T09:21:32.1460437Z Updating files:  78% (9917/12713)
+2026-11-14T09:21:32.1509953Z Updating files:  79% (10044/12713)
+2026-11-14T09:21:32.1546539Z Updating files:  80% (10171/12713)
+2026-11-14T09:21:32.1620625Z Updating files:  81% (10298/12713)
+2026-11-14T09:21:32.1668910Z Updating files:  82% (10425/12713)
+2026-11-14T09:21:32.1731252Z Updating files:  83% (10552/12713)
+2026-11-14T09:21:32.1830184Z Updating files:  84% (10679/12713)
+2026-11-14T09:21:32.1872416Z Updating files:  85% (10807/12713)
+2026-11-14T09:21:32.1920802Z Updating files:  86% (10934/12713)
+2026-11-14T09:21:32.1957670Z Updating files:  87% (11061/12713)
+2026-11-14T09:21:32.2054170Z Updating files:  88% (11188/12713)
+2026-11-14T09:21:32.2160742Z Updating files:  89% (11315/12713)
+2026-11-14T09:21:32.2255260Z Updating files:  90% (11442/12713)
+2026-11-14T09:21:32.2620752Z Updating files:  91% (11569/12713)
+2026-11-14T09:21:32.3436381Z Updating files:  92% (11696/12713)
+2026-11-14T09:21:32.5393203Z Updating files:  92% (11699/12713)
+2026-11-14T09:21:32.9077952Z Updating files:  93% (11824/12713)
+2026-11-14T09:21:32.9140637Z Updating files:  94% (11951/12713)
+2026-11-14T09:21:33.3493221Z Updating files:  95% (12078/12713)
+2026-11-14T09:21:33.6689658Z Updating files:  95% (12167/12713)
+2026-11-14T09:21:33.6903755Z Updating files:  96% (12205/12713)
+2026-11-14T09:21:33.7008061Z Updating files:  97% (12332/12713)
+2026-11-14T09:21:33.7221053Z Updating files:  98% (12459/12713)
+2026-11-14T09:21:33.7271543Z Updating files:  99% (12586/12713)
+2026-11-14T09:21:33.7271723Z Updating files: 100% (12713/12713)
+2026-11-14T09:21:33.7271895Z Updating files: 100% (12713/12713), done.
+2026-11-14T09:21:33.7681648Z Switched to a new branch 'reproduction/ptx-ffn-refinement'
+2026-11-14T09:21:33.7684153Z branch 'reproduction/ptx-ffn-refinement' set up to track 'origin/reproduction/ptx-ffn-refinement'.
+2026-11-14T09:21:33.8016485Z ##[endgroup]
+2026-11-14T09:21:33.8057622Z [command]/usr/bin/git log -1 --format=%H
+2026-11-14T09:21:33.8089266Z 8309738beff6486be282cd92b18177eaf9b232ab
+2026-11-14T09:21:33.8381824Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-11-14T09:21:33.8382420Z with:
+2026-11-14T09:21:33.8382625Z   python-version: 3.12
+2026-11-14T09:21:33.8382868Z   check-latest: false
+2026-11-14T09:21:33.8385618Z   token: ***
+2026-11-14T09:21:33.8385829Z   update-environment: true
+2026-11-14T09:21:33.8386073Z   allow-prereleases: false
+2026-11-14T09:21:33.8386313Z   freethreaded: false
+2026-11-14T09:21:33.8386534Z ##[endgroup]
+2026-11-14T09:21:33.9412909Z ##[group]Installed versions
+2026-11-14T09:21:33.9491660Z (node:2198) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-14T09:21:33.9492361Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-14T09:21:33.9492851Z Successfully set up CPython (3.12.16)
+2026-11-14T09:21:33.9493266Z ##[endgroup]
+2026-11-14T09:21:34.0201421Z ##[group]Run curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+2026-11-14T09:21:34.0202169Z [36;1mcurl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh[0m
+2026-11-14T09:21:34.0202803Z [36;1msh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0[0m
+2026-11-14T09:21:34.0203090Z [36;1mbash .github/scripts/materialize-pinned-lean.sh[0m
+2026-11-14T09:21:34.0203303Z [36;1mecho "$HOME/.elan/bin" >> "$GITHUB_PATH"[0m
+2026-11-14T09:21:34.0265363Z shell: /usr/bin/bash -e {0}
+2026-11-14T09:21:34.0265584Z env:
+2026-11-14T09:21:34.0265775Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:34.0266040Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T09:21:34.0266291Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:34.0266593Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:34.0266835Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:34.0267063Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T09:21:34.0267259Z ##[endgroup]
+2026-11-14T09:21:34.2003696Z info: downloading installer
+2026-11-14T09:21:34.5916719Z info: default toolchain set to 'leanprover/lean4:v4.19.0'
+2026-11-14T09:21:35.4407824Z info: downloading https://releases.lean-lang.org/lean4/v4.19.0/lean-4.19.0-linux.tar.zst
+2026-11-14T09:21:40.6099920Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.19.0
+2026-11-14T09:21:43.6161130Z 
+2026-11-14T09:21:43.6460855Z leanprover/lean4:v4.19.0 installed - Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)
+2026-11-14T09:21:43.6461211Z 
+2026-11-14T09:21:43.6765707Z Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)
+2026-11-14T09:21:43.7100007Z ##[group]Run python3 -m lark_kernels.ptx_matrix_certificate verify \
+2026-11-14T09:21:43.7100323Z [36;1mpython3 -m lark_kernels.ptx_matrix_certificate verify \[0m
+2026-11-14T09:21:43.7100579Z [36;1m  --source reproduction/ptx/full-size/gemm/kernel.ptx \[0m
+2026-11-14T09:21:43.7100821Z [36;1m  --reference reproduction/ptx/full-size/gemm/reference.py \[0m
+2026-11-14T09:21:43.7101089Z [36;1m  --contract reproduction/ptx/full-size/gemm/task.json \[0m
+2026-11-14T09:21:43.7101353Z [36;1m  --output /tmp/lark-ptx-gemm-ci-export --lean "$HOME/.elan/bin/lean"[0m
+2026-11-14T09:21:43.7146681Z shell: /usr/bin/bash -e {0}
+2026-11-14T09:21:43.7146836Z env:
+2026-11-14T09:21:43.7147003Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:43.7147248Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T09:21:43.7147489Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:43.7147757Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:43.7147976Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:21:43.7148194Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T09:21:43.7148609Z ##[endgroup]
+2026-11-14T09:22:09.1717352Z {"status": "verified-source-bound-full-PTX-GEMM"}
+2026-11-14T09:22:09.1852864Z ##[group]Run python3 reproduction/ptx/check_matrix_controls.py \
+2026-11-14T09:22:09.1853182Z [36;1mpython3 reproduction/ptx/check_matrix_controls.py \[0m
+2026-11-14T09:22:09.1853417Z [36;1m  --recording /tmp/lark-ptx-gemm-ci-export \[0m
+2026-11-14T09:22:09.1853672Z [36;1m  --output /tmp/lark-ptx-gemm-ci-controls --lean "$HOME/.elan/bin/lean"[0m
+2026-11-14T09:22:09.1897086Z shell: /usr/bin/bash -e {0}
+2026-11-14T09:22:09.1897249Z env:
+2026-11-14T09:22:09.1897414Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:09.1897666Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T09:22:09.1897915Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:09.1898142Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:09.1898382Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:09.1898609Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T09:22:09.1898857Z ##[endgroup]
+2026-11-14T09:22:35.6998739Z {'control': 'wrong-product', 'reader_accepted': True, 'Lean_source_binding_refused': True}
+2026-11-14T09:22:37.3393449Z {'control': 'wrong-loop-counter-stride', 'reader_accepted': True, 'Lean_source_binding_refused': True}
+2026-11-14T09:22:38.9406306Z {'control': 'wrong-B-pointer-stride', 'reader_accepted': True, 'Lean_source_binding_refused': True}
+2026-11-14T09:22:40.5693367Z {'control': 'conflicting-output-address', 'reader_accepted': True, 'Lean_source_binding_refused': True}
+2026-11-14T09:22:40.5953287Z ##[group]Run python3 reproduction/ptx/check_ffn_up.py \
+2026-11-14T09:22:40.5953568Z [36;1mpython3 reproduction/ptx/check_ffn_up.py \[0m
+2026-11-14T09:22:40.5953812Z [36;1m  --output /tmp/lark-ptx-ffn-up-ci-proof --lean "$(elan which lean)"[0m
+2026-11-14T09:22:40.5995406Z shell: /usr/bin/bash -e {0}
+2026-11-14T09:22:40.5995558Z env:
+2026-11-14T09:22:40.5995713Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:40.5995956Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-14T09:22:40.5996193Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:40.5996408Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:40.5996619Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-14T09:22:40.5996832Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-14T09:22:40.5997019Z ##[endgroup]
+2026-11-14T09:23:20.4743770Z {"status": "exact-full-size-FFN-up-launch-reference-race-frame-passed", "observed_at_utc": "2026-11-14T09:23:20.435558+00:00", "module_checks": [{"module": "Nonlinear", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/Nonlinear.olean", "Lark/Nonlinear.lean"], "exit_code": 0, "timed_out": false, "seconds": 1.5680080409999988}, {"module": "Pointwise", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/Pointwise.olean", "Lark/Pointwise.lean"], "exit_code": 0, "timed_out": false, "seconds": 1.1172675619999808}, {"module": "PtxPointwise", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxPointwise.olean", "Lark/PtxPointwise.lean"], "exit_code": 0, "timed_out": false, "seconds": 1.6715700580000146}, {"module": "PtxDot", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxDot.olean", "Lark/PtxDot.lean"], "exit_code": 0, "timed_out": false, "seconds": 6.886422884000012}, {"module": "PtxMatrix", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxMatrix.olean", "Lark/PtxMatrix.lean"], "exit_code": 0, "timed_out": false, "seconds": 11.549104475999997}, {"module": "PtxFeedForwardReference", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxFeedForwardReference.olean", "Lark/PtxFeedForwardReference.lean"], "exit_code": 0, "timed_out": false, "seconds": 1.269048292000008}, {"module": "PtxFeedForwardUp", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxFeedForwardUp.olean", "Lark/PtxFeedForwardUp.lean"], "exit_code": 0, "timed_out": false, "seconds": 5.732634243000007}, {"module": "PtxFeedForwardUpExit", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxFeedForwardUpExit.olean", "Lark/PtxFeedForwardUpExit.lean"], "exit_code": 0, "timed_out": false, "seconds": 0.8291906340000139}, {"module": "PtxFeedForwardUpLaunch", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Lark/PtxFeedForwardUpLaunch.olean", "Lark/PtxFeedForwardUpLaunch.lean"], "exit_code": 0, "timed_out": false, "seconds": 8.13773485500002}, {"module": "Main", "command": ["/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean", "-o", "Main.olean", "Main.lean"], "exit_code": 0, "timed_out": false, "seconds": 0.9668628009999907}], "axiom_audits": {"LarkPointwise.correct": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.mulWide_step": [], "LarkPtxPointwise.addPointer_step": ["Quot.sound"], "LarkPtxPointwise.storeHalf_step": ["Quot.sound"], "LarkPtxPointwise.steps_append": ["propext"], "LarkPtxPointwise.halfAddress_at": ["Quot.sound", "propext"], "LarkPtxPointwise.parameters_eq": ["Quot.sound", "propext"], "LarkPtxPointwise.addresses_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.loads_eq": ["Quot.sound", "propext"], "LarkPtxPointwise.arithmetic_eq": ["Quot.sound", "propext"], "LarkPtxPointwise.store_address_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.store_memory_eq": ["Quot.sound", "propext"], "LarkPtxPointwise.store_ret_eq": [], "LarkPtxPointwise.stores_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.lane_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.partial_memory_eq": ["Quot.sound"], "LarkPtxPointwise.partial_input": ["Quot.sound", "propext"], "LarkPtxPointwise.partial_owned": ["Quot.sound", "propext"], "LarkPtxPointwise.blocks_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.launch_eq": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.race_free": ["Quot.sound", "propext"], "LarkPtxPointwise.final_extract": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxPointwise.kernel_eq_spec": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.steps_trans": [], "LarkPtxDot.one_step": [], "LarkPtxDot.transition_halted": ["propext"], "LarkPtxDot.branch_uninitialized": ["propext"], "LarkPtxDot.Gemv.program_length": [], "LarkPtxDot.Gemv.parameters_execute": [], "LarkPtxDot.transition_at": ["propext"], "LarkPtxDot.blockId_step": ["propext"], "LarkPtxDot.Gemv.vector_execute": [], "LarkPtxDot.Gemv.index_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.shiftLeft_step": ["propext"], "LarkPtxDot.wide_step": ["Quot.sound", "propext"], "LarkPtxDot.pointer_add_step": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.prologue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.program_term": [], "LarkPtxDot.loadHalf_step": ["propext"], "LarkPtxDot.fromHalf_step": ["propext"], "LarkPtxDot.binaryFloat_step": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.step_in_term": ["propext"], "LarkPtxDot.Gemv.matrix_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.vector_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.term_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.chunk_step": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.unroll_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.unroll_memory": [], "LarkPtxDot.pointer_values": ["propext"], "LarkPtxDot.add32_step": ["Quot.sound", "propext"], "LarkPtxDot.compare_ne_step": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.control_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.control_pc": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.matrix_control_pointer": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.vector_control_pointer": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.control_invariant": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.loop_body": ["propext"], "LarkPtxDot.Gemv.iteration_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.control_memory": [], "LarkPtxDot.Gemv.iteration_memory": ["propext"], "LarkPtxDot.Gemv.runChunks_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.runChunks_memory": ["propext"], "LarkPtxDot.Gemv.initialized_loop": [], "LarkPtxDot.Gemv.source_to_loop_exit": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.loopExit_memory": ["propext"], "LarkPtxDot.global_step": ["propext"], "LarkPtxDot.half_step": ["propext"], "LarkPtxDot.store_step": ["Quot.sound", "propext"], "LarkPtxDot.return_step": [], "LarkPtxDot.Gemv.output_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.epilogue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.exitReturned_stopped": [], "LarkPtxDot.Gemv.exitReturned_memory": [], "LarkPtxDot.Gemv.source_to_return": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.laneResult_memory": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.foldTerms_reference": ["propext"], "LarkPtxDot.Gemv.referenceFold_append": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.foldChunks_reference": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.dotValue_reference": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.laneResult_reference": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.afterLane_memory": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.afterLane_reads": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.runLanes_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.runLanes_reads": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.runLanes_output_memory": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.runLanes_other_memory": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.initial_reads": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.launch_execution": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.launch_outputs": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.termResult_trace_safe": ["propext"], "LarkPtxDot.Gemv.unroll_trace_safe": ["propext"], "LarkPtxDot.Gemv.iteration_trace_safe": ["propext"], "LarkPtxDot.Gemv.runChunks_trace_safe": ["propext"], "LarkPtxDot.Gemv.exitReturned_trace_safe": ["propext"], "LarkPtxDot.Gemv.afterLane_trace_safe": ["propext"], "LarkPtxDot.Gemv.runLanes_trace_safe": ["propext"], "LarkPtxDot.Gemv.trace_safe_raceFree": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.launch_raceFree": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.final_extract": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.kernel_correct": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxDot.Gemv.extract_outputs": ["Quot.sound", "propext"], "LarkPtxDot.Gemv.evaluate_reference_body": [], "LarkPtxMatrix.Gemm.column_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.next_column_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.next_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.matrix_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.zero_execute": ["propext"], "LarkPtxMatrix.Gemm.initialize_execute": ["propext"], "LarkPtxMatrix.steps_trans": ["propext"], "LarkPtxMatrix.base_step": ["propext"], "LarkPtxMatrix.signed_right_step": ["propext"], "LarkPtxMatrix.unsigned_right_step": ["propext"], "LarkPtxMatrix.and_step": ["Quot.sound", "propext"], "LarkPtxMatrix.sub_step": ["Quot.sound", "propext"], "LarkPtxMatrix.unsigned_wide_step": ["Quot.sound", "propext"], "LarkPtxMatrix.bits32_negative512": [], "LarkPtxMatrix.clear_low9": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.one_step": ["propext"], "LarkPtxMatrix.transition_at": ["propext"], "LarkPtxMatrix.Gemm.coordinates_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.addressPairs_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.prologue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.initialized_pc": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.initialized_base": ["propext"], "LarkPtxMatrix.Gemm.a_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.b_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.program_term": [], "LarkPtxMatrix.Gemm.term_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.chunk_step": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runTerms_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.body_entry": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.body_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.control_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.control_invariant": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runChunks_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.initialized_loop": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.source_to_loop_exit": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.epilogue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.source_lane": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.laneResult_memory": ["propext"], "LarkPtxMatrix.Gemm.foldTerms_reference": ["propext"], "LarkPtxMatrix.Gemm.referenceFold_append": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.foldChunks_reference": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.dotValue_reference": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.laneResult_reference": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.afterLane_memory": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.afterLane_reads": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runLanes_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runLanes_reads": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runLanes_output_memory": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.runLanes_other_memory": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.initial_reads": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.launch_execution": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.launch_outputs": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.launch_other_memory": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.control_trace": [], "LarkPtxMatrix.Gemm.termResult_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.runTerms_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.iteration_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.runChunks_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.exitReturned_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.afterLane_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.runLanes_trace_safe": ["propext"], "LarkPtxMatrix.Gemm.trace_safe_raceFree": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.launch_raceFree": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.evaluate_reference_body": [], "LarkPtxMatrix.Gemm.extract_outputs": ["Quot.sound", "propext"], "LarkPtxMatrix.Gemm.final_extract": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.Gemm.kernel_correct": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxFeedForward.Reference.evaluate_up": [], "LarkPtxFeedForward.Reference.multiply_cell": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.evaluate_body": [], "LarkPtxFeedForward.Reference.hidden_shape": [], "LarkPtxFeedForward.Reference.reference_shape": [], "LarkPtxFeedForward.Reference.hiddenWith_shape": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.dot_fold": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.multiply_fold": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.mapped_multiply_fold": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.double_mapped_multiply_fold": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.row_major_bound": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.hiddenWith_cell": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.referenceWith_cell": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.hidden_cell": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.reference_cell": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.reference_outside": ["propext"], "LarkPtxFeedForward.Reference.mapM_cells": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.extract_evaluated_tensor": ["Quot.sound", "propext"], "LarkPtxFeedForward.Reference.extract_reference_body": ["Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.column_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.next_column_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.next_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.matrix_wide_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.zero_execute": ["propext"], "LarkPtxMatrix.FfnUp.initialize_execute": ["propext"], "LarkPtxMatrix.FfnUp.coordinates_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.prologue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.a_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.b_address": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.term_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.body_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.control_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.runChunks_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.source_to_loop_exit": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.epilogue_execute": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.source_lane": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.laneResult_memory": ["propext"], "LarkPtxMatrix.FfnUp.referenceFold_scalarFold": [], "LarkPtxMatrix.FfnUp.dotValue_reference": ["Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.independent_reference_cell": ["Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.launch_execution": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.launch_outputs": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.launch_other_memory": ["Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.launch_raceFree": ["Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.final_extract": ["Classical.choice", "Quot.sound", "propext"], "LarkPtxMatrix.FfnUp.kernel_correct": ["Classical.choice", "Quot.sound", "propext"], "LarkCompiledFfnUpInput.full_up_stage_correct": ["Classical.choice", "Quot.sound", "propext"], "LarkCompiledFfnUpInput.source_to_return": ["Classical.choice", "Quot.sound", "propext"], "LarkCompiledFfnUpInput.full_reference_source": [], "LarkCompiledFfnUpInput.exact_source": [], "LarkCompiledFfnUpInput.source_to_loop": ["Classical.choice", "Quot.sound", "propext"]}, "total_seconds": 39.75954744100001, "Lean_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023", "original_stack_limits": [16777216, -1], "limits": {"maxRecDepth": 10000, "maxHeartbeats": 2000000, "per_Lean_process_seconds": 180, "source_import_build_seconds": 600}, "all_own_modules_fresh": true, "source_import_build_seconds": 600, "compiled_FFN_up_stage_correctness_proofs": 1, "compiled_FFN_down_stage_correctness_proofs": 0, "compiled_FFN_pipeline_correctness_proofs": 0, "new_registered_source_certificates": 0, "GPU_trials": 0, "model_calls": 0, "original_paper_fully_reproduced": false}
+2026-11-14T09:23:20.4885615Z Post job cleanup.
+2026-11-14T09:23:20.5751541Z (node:2971) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-14T09:23:20.5752703Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-14T09:23:20.5946502Z Post job cleanup.
+2026-11-14T09:23:20.6529983Z [command]/usr/bin/git version
+2026-11-14T09:23:20.6567859Z git version 2.56.1
+2026-11-14T09:23:20.6593189Z Temporarily overriding HOME='/home/runner/work/_temp/483ee8cd-ff85-48e2-bb4a-98dc78cc29c3' before making global git config changes
+2026-11-14T09:23:20.6593883Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-14T09:23:20.6596866Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lark/lark
+2026-11-14T09:23:20.6637149Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-14T09:23:20.6696673Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-14T09:23:20.6976267Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-14T09:23:20.7009742Z http.https://github.com/.extraheader
+2026-11-14T09:23:20.7020047Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-14T09:23:20.7057872Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-14T09:23:20.7319890Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-14T09:23:20.7351106Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-14T09:23:20.7738184Z Cleaning up orphan processes
+2026-11-14T09:23:20.7986841Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,27 @@
+Lark/PtxFeedForwardDownInit.lean:352:61: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:357:61: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:362:61: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:367:61: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:372:61: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:434:66: error: unsolved goals
+α : Type
+ops : Ops α
+t : Nat
+s : State α
+ht : t < 16384
+e :
+  execute ops layout geometry t (Instruction.andBits32 8 7 (Operand.imm (-256))) (prefix9 ops t s) =
+    some (setIndex32 (prefix9 ops t s) 8 ↑(bits32 ↑t &&& bits32 (-256)))
+⊢ ↑t % 4294967296 = ↑t
+Lark/PtxFeedForwardDownInit.lean:893:62: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardDownInit.lean:899:62: warning: unused variable `ht`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+'LarkPtxMatrix.FfnDown.prologue_execute' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LarkPtxMatrix.FfnDown.initialized_pc' does not depend on any axioms
+'LarkPtxMatrix.FfnDown.initialized_base' does not depend on any axioms

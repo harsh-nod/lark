@@ -1,5 +1,5 @@
 {
-  "status": "independent-reference-and-exact-full-size-up-stage-proved-down-stage-and-pipeline-unproved",
+  "status": "full-independent-reference-both-exact-stages-and-sequential-pipeline-proved-release-incomplete",
   "frontend_guard_tests": 8,
   "guard_seconds": 0.061,
   "Ruff_passed": true,
@@ -111,9 +111,9 @@
     }
   ],
   "reference_proof_attempts_passed": 2,
-  "full_stage_or_pipeline_proofs": 1,
+  "full_stage_or_pipeline_proofs": 3,
   "new_registered_source_certificates": 0,
-  "latest_problem": "Exact171-instruction full-size down stage and shared FP16 intermediate composition remain unproved.",
+  "latest_problem": "Finish certificate export/trusted replay, direct adversarial controls, installed verification and release validation. Hosted ledger timing also remains unresolved.",
   "frozen_snapshot_or_current_main_changes": false,
   "model_calls": 0,
   "GPU_trials": 0,
@@ -128,7 +128,7 @@
     "all_own_imports_cold": true,
     "original_inventory_sha256": "07baa3201b6d9971c68ad2ed4d22883904f335d8e76754e9461ceded84d2e878"
   },
-  "scope": "Full independent tensor reference, and complete exact173-instruction FFN up-stage launch, all65536 extracted reference outputs, actual access-trace race freedom and memory frame. Down-stage and shared-intermediate two-launch composition remain unproved. Scalar-operation and logical-pointer correspondence remain trusted; no IEEE/NVIDIA/original-model/paper-result claim.",
+  "scope": "Mathematical source-bound two-stage pipeline proof under the declared scalar, pointer and sequential host-launch interpretation. Certificate export/replay, direct adversarial controls, independent installed verification and complete release validation remain unfinished. No original paper result, IEEE, optimized original program or NVIDIA execution claim.",
   "up_stage_checks": [
     {
       "version": 1,
@@ -172,8 +172,8 @@
     }
   ],
   "compiled_FFN_up_stage_correctness_proofs": 1,
-  "compiled_FFN_down_stage_correctness_proofs": 0,
-  "compiled_FFN_pipeline_correctness_proofs": 0,
+  "compiled_FFN_down_stage_correctness_proofs": 1,
+  "compiled_FFN_pipeline_correctness_proofs": 1,
   "new_complete_compiled_FFN_families": 0,
   "direct_Lean_negative_controls_for_up_stage": 0,
   "up_stage_owned_sources": {
@@ -182,5 +182,9 @@
     "lean/Lark/PtxFeedForwardUpLaunch.lean": "8ae2419eed85bb34c8883e5b20d5ec01413e7e61ede3a53357f64546eb1fe400"
   },
   "up_stage_cold_CLI_seconds": 95.00838523299899,
-  "up_stage_cold_CLI_axiom_audits": 220
+  "up_stage_cold_CLI_axiom_audits": 220,
+  "current_pipeline_evidence": "reproduction/ptx/full-size/ffn/pipeline-development-v1",
+  "current_down_stage_evidence": "reproduction/ptx/full-size/ffn/down-stage-development-v1",
+  "current_pipeline_source_cli_axiom_audits": 256,
+  "current_pipeline_source_cli_seconds": 124.38448153703939
 }

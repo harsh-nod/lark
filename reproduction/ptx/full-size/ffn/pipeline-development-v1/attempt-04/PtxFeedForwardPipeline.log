@@ -1,0 +1,61 @@
+Lark/PtxFeedForwardPipeline.lean:40:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:66:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:74:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:304:85: error: application type mismatch
+  hu a ha
+argument
+  ha
+has type
+  liftAccess 0 upRenaming.forward a ∈
+    List.map (liftAccess 0 upRenaming.forward) (upEnd counts ops input outside).trace : Prop
+but is expected to have type
+  a ∈ (upEnd counts ops input outside).trace : Prop
+Lark/PtxFeedForwardPipeline.lean:304:114: error: application type mismatch
+  hu b hb
+argument
+  hb
+has type
+  liftAccess 0 upRenaming.forward b ∈
+    List.map (liftAccess 0 upRenaming.forward) (upEnd counts ops input outside).trace : Prop
+but is expected to have type
+  b ∈ (upEnd counts ops input outside).trace : Prop
+Lark/PtxFeedForwardPipeline.lean:314:87: error: application type mismatch
+  hd a ha
+argument
+  ha
+has type
+  liftAccess 1 downRenaming.forward a ∈
+    List.map (liftAccess 1 downRenaming.forward) (downEnd counts ops input outside).trace : Prop
+but is expected to have type
+  a ∈ (downEnd counts ops input outside).trace : Prop
+Lark/PtxFeedForwardPipeline.lean:314:118: error: application type mismatch
+  hd b hb
+argument
+  hb
+has type
+  liftAccess 1 downRenaming.forward b ∈
+    List.map (liftAccess 1 downRenaming.forward) (downEnd counts ops input outside).trace : Prop
+but is expected to have type
+  b ∈ (downEnd counts ops input outside).trace : Prop
+'LarkPtxFeedForward.Pipeline.rename_roundtrip' depends on axioms: [propext]
+'LarkPtxFeedForward.Pipeline.epoch_namespace_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.launch_namespaces_disjoint' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.up_execution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.hidden_outputs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.afterUp_other' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.down_reads' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.down_execution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.actual_intermediate_shared' does not depend on any axioms
+'LarkPtxFeedForward.Pipeline.down_reference' depends on axioms: [Quot.sound]
+'LarkPtxFeedForward.Pipeline.output_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.frame' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.race_free' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkPtxFeedForward.Pipeline.extract_outputs' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.kernel_correct_for_counts' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'LarkPtxFeedForward.Pipeline.kernel_correct' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

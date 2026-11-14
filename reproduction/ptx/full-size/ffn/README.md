@@ -1,4 +1,4 @@
-# Full-size FFN reference and first compiled stage
+# Full-size compiled FFN development proof
 
 These are exact inputs from the independently published full-size compiler
 study. `input-bindings.json` binds every file to its original archive member.
@@ -38,9 +38,30 @@ python3 reproduction/ptx/check_ffn_up.py \
   --lean /path/to/lean-4.19.0-linux/bin/lean --output /new/up-stage-directory
 ```
 
-The down stage and the shared-intermediate, two-launch composition remain
-unproved. This is one completed stage, zero completed FFN pipelines and zero
-new accepted certificates. Scalar-operation and logical-pointer correspondence
-remain trusted. There is no paper-result, original optimized program,
-IEEE guarantee or NVIDIA-execution claim. Development attempts, including the
-initial failed module, remain in `development/`.
+The down stage now also has a complete source-bound proof: its original
+47-instruction prologue, all 64 sixteen-term iterations, FP16 store, return,
+16,384 outputs, race freedom and memory frame are checked. Its tensor
+specification independently performs the 64×1024 by 1024×256 product.
+
+The composed proof binds both kernels to five shared logical allocations.
+The second launch reads the actual FP16 intermediate written by the first.
+It proves both complete executions, every final reference output, preservation
+outside the intermediate and output regions, and race freedom of the combined
+access trace. Accesses retain the model's reverse chronological order. The
+sequential host launch boundary gives the two launches separate grid-epoch
+namespaces. Symbolic proof parameters are specialized to exactly 65,536 and
+16,384 lanes; the workload and proof limits remain unchanged.
+
+```sh
+python3 reproduction/ptx/check_ffn_pipeline.py \
+  --lean /path/to/lean-4.19.0-linux/bin/lean --output /new/pipeline-directory
+```
+
+The complete source checker rebuilds fourteen owned libraries and the generated
+two-program/reference input binding, with 256 axiom audits. This is two proved
+stages and one sequential pipeline under the declared scalar-operation,
+logical-pointer and host-launch interpretation. Certificate export/replay,
+adversarial controls and full release validation remain unfinished; it adds
+zero registered certificates and zero original paper results. There is no
+original optimized-program, IEEE guarantee or NVIDIA-execution claim. Both
+failed and accepted development attempts are retained alongside their evidence.

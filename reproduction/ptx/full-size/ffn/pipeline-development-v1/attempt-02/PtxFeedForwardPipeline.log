@@ -1,0 +1,78 @@
+Lark/PtxFeedForwardPipeline.lean:31:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:57:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:65:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Lark/PtxFeedForwardPipeline.lean:141:2: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:153:4: error: type mismatch, term
+  hr
+after simplification has type
+  { space := l.space, owner := l.owner,
+      buffer :=
+        match
+          match l.buffer with
+          | 2 => 3
+          | 3 => 2
+          | n => n with
+        | 2 => 3
+        | 3 => 2
+        | n => n,
+      offset := l.offset } =
+    { space := Space.global, owner := 0, buffer := 3, offset := i } : Prop
+but is expected to have type
+  l = { space := Space.global, owner := 0, buffer := 3, offset := i } : Prop
+Lark/PtxFeedForwardPipeline.lean:154:2: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:163:4: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:166:4: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:178:0: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:194:2: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:207:4: error: type mismatch, term
+  hr
+after simplification has type
+  { space := l.space, owner := l.owner,
+      buffer :=
+        match downInverse l.buffer with
+        | 0 => 3
+        | 1 => 2
+        | 2 => 4
+        | 3 => 0
+        | 4 => 1
+        | n => n,
+      offset := l.offset } =
+    { space := Space.global, owner := 0, buffer := 4, offset := i } : Prop
+but is expected to have type
+  l = { space := Space.global, owner := 0, buffer := 4, offset := i } : Prop
+Lark/PtxFeedForwardPipeline.lean:208:2: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+Lark/PtxFeedForwardPipeline.lean:276:2: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+'LarkPtxFeedForward.Pipeline.rename_roundtrip' depends on axioms: [propext]
+'LarkPtxFeedForward.Pipeline.epoch_namespace_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.launch_namespaces_disjoint' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.up_execution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.hidden_outputs' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.afterUp_other' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.down_reads' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.down_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.actual_intermediate_shared' does not depend on any axioms
+'LarkPtxFeedForward.Pipeline.down_reference' depends on axioms: [Quot.sound]
+'LarkPtxFeedForward.Pipeline.output_values' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.frame' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.race_free' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkPtxFeedForward.Pipeline.extract_outputs' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.kernel_correct' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

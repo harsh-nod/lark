@@ -1,7 +1,8 @@
 import Lark.PtxMatrix
 
 /- The exact full-size FFN up-stage program and its real prologue/loop execution.
-   The output epilogue and complete pipeline correctness remain to be proved.
+   The output and launch components live in PtxFeedForwardUpExit and
+   PtxFeedForwardUpLaunch.
    The parsed 173-instruction list is bound independently by the source checker.
    No CUDA shape, fuel, proof budget, scalar model or existing theorem is changed. -/
 namespace LarkPtxMatrix

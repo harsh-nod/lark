@@ -1,0 +1,64 @@
+{
+  "instructions": [
+    173,
+    171
+  ],
+  "grid": [
+    65536,
+    16384
+  ],
+  "fuel": [
+    [
+      1030,
+      1,
+      1,
+      1
+    ],
+    [
+      4102,
+      1,
+      1,
+      1
+    ]
+  ],
+  "reference_body": [
+    "toHalf",
+    [
+      "matmul",
+      [
+        "fromHalf",
+        [
+          "toHalf",
+          [
+            "relu",
+            [
+              "matmul",
+              [
+                "fromHalf",
+                [
+                  "input",
+                  0
+                ]
+              ],
+              [
+                "fromHalf",
+                [
+                  "input",
+                  1
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [
+        "fromHalf",
+        [
+          "input",
+          2
+        ]
+      ]
+    ]
+  ],
+  "scope": "Exact down-stage prologue and all64 iterations of the real sixteen-term loop; output stage still unproved."
+}

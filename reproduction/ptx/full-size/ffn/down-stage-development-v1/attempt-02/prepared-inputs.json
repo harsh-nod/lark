@@ -1,0 +1,64 @@
+{
+  "instructions": [
+    173,
+    171
+  ],
+  "grid": [
+    65536,
+    16384
+  ],
+  "fuel": [
+    [
+      1030,
+      1,
+      1,
+      1
+    ],
+    [
+      4102,
+      1,
+      1,
+      1
+    ]
+  ],
+  "reference_body": [
+    "toHalf",
+    [
+      "matmul",
+      [
+        "fromHalf",
+        [
+          "toHalf",
+          [
+            "relu",
+            [
+              "matmul",
+              [
+                "fromHalf",
+                [
+                  "input",
+                  0
+                ]
+              ],
+              [
+                "fromHalf",
+                [
+                  "input",
+                  1
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [
+        "fromHalf",
+        [
+          "input",
+          2
+        ]
+      ]
+    ]
+  ],
+  "scope": "Exact original down-stage47-instruction prologue only; remaining loop and full stage are unproved."
+}

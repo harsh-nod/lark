@@ -963,6 +963,10 @@ jobs:
         run: |
           python3 reproduction/ptx/check_ffn_up.py \
             --output /tmp/lark-ptx-ffn-up-ci-proof --lean "$(elan which lean)"
+      - name: Prove both FFN stages and the actual shared-intermediate pipeline
+        run: |
+          python3 reproduction/ptx/check_ffn_pipeline.py \
+            --output /tmp/lark-ptx-ffn-pipeline-ci-proof --lean "$(elan which lean)"
   ptx-batched:
     runs-on: ubuntu-latest
     timeout-minutes: 10
