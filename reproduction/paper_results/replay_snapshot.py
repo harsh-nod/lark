@@ -38,6 +38,16 @@ def write(path, value):
     path.write_text(json.dumps(value, indent=2) + "\n")
 
 
+def archive_storage():
+    # Legacy standalone replays remain standard-library-only and do not need
+    # this helper. Version2 standalone replays receive the authored sibling.
+    if __package__:
+        from . import snapshot_archives
+    else:
+        import snapshot_archives
+    return snapshot_archives
+
+
 def safe_path(name):
     path = PurePosixPath(name)
     require(
@@ -91,6 +101,7 @@ def build(snapshot):
             for name in (
                 "evidence.tar.gz",
                 "evidence-manifest.json",
+                "evidence-layout.json",
                 "provenance.json",
                 "results",
                 "manifest.json",
@@ -98,7 +109,10 @@ def build(snapshot):
         ),
         "Fresh snapshot outputs required",
     )
+    require(not list(snapshot.glob("evidence-part-*.tar.gz")), "Fresh archive parts required")
     config = read(snapshot / "targets.json")
+    storage_schema = config.get("storage_schema", 1)
+    require(type(storage_schema) is int and storage_schema in (1, 2), "Unsupported storage schema")
     commit = config["evidence_commit"]
     require(re.fullmatch(r"[0-9a-f]{40}", commit) is not None, "Full experiment commit required")
     names = {p for group in config["evidence_groups"].values() for p in group}
@@ -128,21 +142,27 @@ def build(snapshot):
     ):
         content[name] = (snapshot / source).read_bytes()
         origins[name] = {"kind": "snapshot-definition", "snapshot_path": source}
-    with (snapshot / "evidence.tar.gz").open("wb") as raw:
-        with gzip.GzipFile(fileobj=raw, mode="wb", filename="", mtime=0) as compressed:
-            with tarfile.open(fileobj=compressed, mode="w") as archive:
-                for name, data in sorted(content.items()):
-                    info = tarfile.TarInfo(name)
-                    info.size, info.mode = len(data), 0o644
-                    archive.addfile(info, io.BytesIO(data))
+    if storage_schema == 1:
+        with (snapshot / "evidence.tar.gz").open("wb") as raw:
+            with gzip.GzipFile(fileobj=raw, mode="wb", filename="", mtime=0) as compressed:
+                with tarfile.open(fileobj=compressed, mode="w") as archive:
+                    for name, data in sorted(content.items()):
+                        info = tarfile.TarInfo(name)
+                        info.size, info.mode = len(data), 0o644
+                        archive.addfile(info, io.BytesIO(data))
+        archive_binding = {"evidence_archive_sha256": digest((snapshot / "evidence.tar.gz").read_bytes())}
+    else:
+        layout = archive_storage().build_parts(snapshot, content)
+        write(snapshot / "evidence-layout.json", layout)
+        archive_binding = {"evidence_layout_sha256": digest((snapshot / "evidence-layout.json").read_bytes())}
     hashes = {name: digest(data) for name, data in sorted(content.items())}
     write(snapshot / "evidence-manifest.json", hashes)
     write(
         snapshot / "provenance.json",
         {
-            "schema": 1,
+            "schema": storage_schema,
             "experiment_code_commit": commit,
-            "evidence_archive_sha256": digest((snapshot / "evidence.tar.gz").read_bytes()),
+            **archive_binding,
             "evidence_manifest_sha256": digest((snapshot / "evidence-manifest.json").read_bytes()),
             "sources": origins,
             "original_paper_fully_reproduced": False,
@@ -162,16 +182,29 @@ def replay(snapshot, manuscript, *, creating=False):
             file_set(snapshot) == set(manifest) | {"manifest.json"}, "Unexpected snapshot files"
         )
     provenance = read(snapshot / "provenance.json")
+    evidence_hashes = read(snapshot / "evidence-manifest.json")
     require(
-        digest((snapshot / "evidence.tar.gz").read_bytes()) == provenance["evidence_archive_sha256"]
-        and digest((snapshot / "evidence-manifest.json").read_bytes())
+        digest((snapshot / "evidence-manifest.json").read_bytes())
         == provenance["evidence_manifest_sha256"],
         "Frozen evidence binding differs",
     )
+    schema = provenance["schema"]
+    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
+    if schema == 1:
+        require(digest((snapshot / "evidence.tar.gz").read_bytes()) == provenance["evidence_archive_sha256"],
+                "Frozen archive binding differs")
+    else:
+        require(digest((snapshot / "evidence-layout.json").read_bytes()) == provenance["evidence_layout_sha256"],
+                "Frozen archive layout binding differs")
+        layout = read(snapshot / "evidence-layout.json")
+        archive_storage().validate_layout(layout, evidence_hashes)
     with tempfile.TemporaryDirectory(prefix="lark-paper-snapshot-") as temporary:
         root = Path(temporary)
-        unpack(snapshot / "evidence.tar.gz", root)
-        verify_manifest(root, read(snapshot / "evidence-manifest.json"), exact=True)
+        if schema == 1:
+            unpack(snapshot / "evidence.tar.gz", root)
+        else:
+            archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes)
+        verify_manifest(root, evidence_hashes, exact=True)
         for source, target in (("auditor.py", "audit.py"), ("targets.json", "targets.json")):
             require(
                 (snapshot / source).read_bytes()

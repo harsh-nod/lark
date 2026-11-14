@@ -1,0 +1,36 @@
+# Frozen evidence storage
+
+The default remains the immutable v25 snapshot. Version 1 snapshots retain
+their original single `evidence.tar.gz`, provenance binding and replay path.
+
+Version 2 is an opt-in storage format for the larger evidence ledger. Its
+`evidence-layout.json` binds each physical archive, every contained fragment
+and each complete logical evidence file by byte count and SHA256. Logical
+files retain their original bytes and paths. Large files are split into
+contiguous storage chunks; their full bytes are reassembled before the frozen
+auditor reads them. Code and compiled objects inside evidence remain data.
+
+The existing 10,000,000-byte limit per tar entry remains unchanged. Each new
+physical archive is bounded at 90,000,000 bytes; the writer partitions at
+85,000,000 bytes of tar entries to leave room for headers and compression
+overhead. These storage bounds change no proof, workload, launch, fuel,
+replay, aggregate-time or worker limit, and remove no evidence or control.
+
+Version 2 rejects missing, duplicate, reordered, non-contiguous, oversized and
+unsafe fragments. It verifies each archive before extraction, each fragment
+while reading, and each complete logical digest after assembly. The logical
+roster and hashes must match the independent evidence manifest. The authored
+frozen auditor and targets must still match their separately bound definitions.
+
+Eleven focused tests cover a real 10,000,001-byte logical payload, multiple
+parts, deterministic encoding, preserved empty/code files, coherent chunk-hash
+forgery, manifest forgery, path/directory collisions, typed metadata, existing
+output preservation, builder integration and the unchanged legacy entry guard.
+The full real-corpus compatibility check is recorded separately; these unit
+tests alone establish no new paper result or completed v26 snapshot.
+
+Standalone version 2 replay requires the trusted sibling
+`snapshot_archives.py`. Version 1 replay does not import that helper. The
+existing 120-second auditor cap and 300-second full control-suite cap, with
+at most two independent replay workers, remain required. No captured code,
+Lean proof, GPU trial or model call is run by this storage layer.
