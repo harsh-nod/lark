@@ -65,7 +65,7 @@ The control runner binds the new layout and complete logical manifest in
 provenance, supplies the trusted version 2 reader helper outside Git and keeps
 all earlier controls. When both new proof groups are declared, it adds eight
 BMM and eight Linear semantic controls and a positive replay after each group.
-The complete v26 snapshot and its full control-suite run remain pending.
+The complete v26 build and full control-suite receipts appear below.
 
 Eight control-writer tests, twelve storage tests and the three existing legacy
 control-archive tests passed together in 0.816 seconds. They cover complete
@@ -92,8 +92,8 @@ published archive part. Version 2 includes both trusted archive helpers in
 addition to the replayer and control runner; version 1 retains its original
 two-helper roster. Six offline roster tests passed in 0.594 seconds, including
 the real unchanged v25 eleven-file download roster, missing-part refusal and
-the expected v26 eight-positive/eighty-one-negative counts. A v26 anonymous
-download and full control-suite pass have not yet been recorded.
+the expected v26 eight-positive/eighty-one-negative counts. The completed
+v26 anonymous-download and full control-suite record appears below.
 
 `prepare_ptx_extended_snapshot.py` assembles the next ledger from the immutable
 v25 definitions only after both complete BMM/Linear publication, source CI,
@@ -108,8 +108,8 @@ The new frozen auditor adds separate BMM/Linear checks and renders five
 independent development kernels with the official rechecks, failed exports and
 partial development attempts distinguished. It keeps every paper experiment/
 history reproduction flag false and supplies no completion percentage. Five
-preparation/renderer tests passed in 0.592 seconds. The actual v26 build and
-full control suite remain separately required.
+preparation/renderer tests passed in 0.592 seconds. The actual build and
+complete control-suite results are recorded separately below.
 
 The [first v26 build record](snapshot-v26-build-v1/results.json) assembled the
 candidate snapshot in 68.4448 seconds from source `784634ae3902539280c28e2ca2803a46d8fc918a`.
@@ -118,8 +118,8 @@ auditor and targets, totaling 281,252,397 logical bytes. The four archive parts
 are 34,543,398, 80,333,995, 83,660,563 and 32,837,752 bytes. All earlier 3,623
 evidence paths and hashes and both historical definitions are retained. The
 original v25 snapshot is byte-identical. This build creates no fresh proof,
-model or GPU result and does not satisfy the pending full control-suite,
-anonymous publication, new source CI or main-promotion gates.
+model or GPU result. The separate complete-control, anonymous-publication
+and actual source-CI gates are recorded below.
 
 The [first complete v26 control-suite receipt](snapshot-v26-validation-mi350-v1/observer/results.json)
 records all eight positive replays and all eighty-one negative controls passing
@@ -129,8 +129,8 @@ Every input transport byte matched its local source before the single launch.
 All 89 logs, actual results, observer/source programs and their inventories are
 retained. The original snapshot manifest is
 `251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed`.
-No fresh Lean, GPU or model experiment ran. Anonymous publication, updated CI
-and main promotion remain pending.
+No fresh Lean, GPU or model experiment ran. Public-download and source-CI
+validation were separate requirements; their completed records appear below.
 
 The complete run exposed temporary storage growth: 69 completed logs already
 corresponded to 16,507,947,084 copied temporary bytes. GitHub documents 14 GB
@@ -152,8 +152,8 @@ temporary storage peaked at 1,285,771,151 bytes. Inputs, four bounded archive
 parts, every logical payload, logs, workload/proof limits and the maximum of
 two replay workers remain unchanged. The snapshot manifest is still `251d9b3`.
 The second run's observer, executed sources, all logs and transport bindings
-are retained separately. Anonymous publication and actual updated CI/main gates
-remain pending.
+are retained separately. The later anonymous-publication and actual source-CI
+records appear below.
 
 The [first GitHub ledger-job failure](snapshot-v26-paper-ci-timeout-v1/analysis.json)
 is retained as an actual failure: source `411663e` produced 82 completed
@@ -180,5 +180,23 @@ metadata altered. The actual suite then built its own complete cache within
 the same 300-second cap. Across 77 full archive rewrites, it avoided
 17,815,929,516 bytes of redundant original-container copying. Every final input
 and every check remain unchanged; sampled temporary storage stayed below 2 GiB.
-This is validation of the I/O change on MI350 CPU. A new standard-runner source
-CI gate is still required; the earlier timeout is not relabeled as success.
+This validates the I/O change on MI350 CPU. The later actual standard-runner
+source CI succeeded; the earlier timeout remains a failed gate.
+
+The [anonymous v26 publication run](snapshot-v26-publication/results.json)
+downloaded all 17 source/snapshot files, totaling 238,899,106 bytes,
+from exact source `ce56116` with HTTPS verification and no authorization
+header. Every byte matched its Git object. All 89 controls then passed
+outside Git on MI350 CPU within the unchanged limits. Download plus
+validation took 186.2903 seconds. Its complete logs, observer, single-launch
+record and selected actual Git-object view are retained. The latter is
+explicitly a selected commit/tree/blob view, not a full repository checkout.
+
+The [actual successful source CI](snapshot-v26-source-ci-v2/results.json)
+records all 23 jobs passing at that source; the ledger control step took
+261 seconds under its original 300-second cap. The
+[first source CI](snapshot-v26-source-ci-failed-v1/results.json) remains
+a 22-success/one-timeout failure, and no workflow was rerun. Only the
+three documentation files and these new receipts follow the successful
+source; all executable, test, workflow, Lean and snapshot bytes remain
+identical. These are evidence-validation results, not new paper experiments.

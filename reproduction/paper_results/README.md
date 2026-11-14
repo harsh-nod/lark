@@ -57,7 +57,8 @@ passed **eight positive replays and 81 negative controls** on MI350 CPU in
 178.36 seconds. All 89 logs and executed source identities are retained.
 No new Lean, GPU or model experiment ran. Limits remain 120 seconds per replay,
 300 seconds for the complete suite and at most two independent replay workers.
-Anonymous publication, updated source CI and main promotion remain pending.
+This first run did not establish the separate public-download or source-CI gates.
+Their completed receipts are recorded below.
 
 The [storage-managed revision](snapshot-v26-validation-mi350-v2/observer/results.json)
 also passed all 89 identical check records in 182.48 seconds. It releases each
@@ -77,7 +78,24 @@ The [I/O revision's complete validation](snapshot-v26-validation-mi350-v3/observ
 passed the same 89 check records in 174.83 seconds on MI350 CPU, with a separate
 real-corpus byte-for-byte input-equivalence check. It avoids 17.8 GB of copying
 containers that are immediately rewritten. No final payload, control or limit
-changes; a new standard-runner source CI pass is still required.
+changes. The subsequent actual source CI and public-download passes are recorded below.
+
+The [anonymous v26 publication check](snapshot-v26-publication/results.json)
+downloaded all **17 files / 238,899,106 bytes** from source `ce56116` over
+verified HTTPS without authentication. Every byte matched that exact Git
+commit. All eight positive replays and 81 negative controls then passed
+outside Git on MI350 CPU; the full download-and-validation run took 186.29
+seconds. The [observer and capture records](snapshot-v26-publication/observer/results.json)
+retain its single launch, all 89 logs and complete source bindings.
+
+The [actual source CI](snapshot-v26-source-ci-v2/results.json) records all
+**23 jobs passing** at `ce56116`, including the five-proof ledger and its
+unchanged 300-second full control-suite cap. The [earlier source CI](snapshot-v26-source-ci-failed-v1/results.json)
+remains a failure: 22 jobs passed and the ledger timed out. It was not
+rerun. Only documentation and retained receipts follow the successful
+source; code, Lean libraries, tests, workflows and snapshots retain the
+exact tested bytes. These checks establish evidence integrity and add
+no original model outcome, NVIDIA measurement or full-paper result.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \

@@ -289,7 +289,13 @@ compares flat proof execution with loop induction. See the [paper coverage ledge
 for original pass rates, kernels, timings and other results that remain missing.
 The [updated result-by-result source audit](reproduction/paper_results/snapshots/20261113-v26/results/RESULTS.md)
 maps every paper table and figure to published evidence and concrete dependencies;
-all original paper results have not been reproduced.
+all original paper results have not been reproduced. The
+[v26 public-download validation](reproduction/paper_results/snapshot-v26-publication/results.json)
+verified all 17 published files against source `ce56116` and passed eight
+positive replays plus 81 negative controls outside Git. All
+[23 CI jobs](reproduction/paper_results/snapshot-v26-source-ci-v2/results.json)
+passed at that source. Subsequent documentation and receipts preserve
+the tested code, workflow, Lean, test and snapshot bytes.
 
 The pipeline reads a kernel and a separately written PyTorch reference,
 constructs a flat machine program, checks race freedom, verifies a proposed
