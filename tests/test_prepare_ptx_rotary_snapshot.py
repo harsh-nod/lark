@@ -5,7 +5,9 @@ import json
 from pathlib import Path
 import unittest
 
-from reproduction.paper_results.prepare_ptx_rotary_snapshot import augment_auditor
+from reproduction.paper_results.prepare_ptx_rotary_snapshot import (
+    augment_auditor, check_retained_evidence, preservation_plan,
+)
 from reproduction.paper_results.ptx_rotary_evidence import PROTOCOLS
 
 
@@ -38,6 +40,26 @@ class RotaryAuditorPreparationTests(unittest.TestCase):
         for source in (original + "\n", augment_auditor(original)):
             with self.assertRaisesRegex(ValueError, "Frozen v26 auditor integration point differs"):
                 augment_auditor(source)
+
+    def test_all3792_original_paths_and_hashes_survive_runtime_changes(self):
+        config = json.loads((BASELINE / "targets.json").read_text())
+        config["preserved_evidence_origins"] = preservation_plan()
+        retained = check_retained_evidence(config)
+        self.assertEqual(len(retained), 3792)
+        for name in ("reproduction/paper_results/replay_snapshot.py",
+                     "reproduction/paper_results/check_snapshot_controls.py",
+                     "reproduction/paper_results/snapshot_control_archives.py",
+                     "tests/test_snapshot_control_archives.py"):
+            self.assertIn(name, config["preserved_evidence_origins"])
+            self.assertEqual(config["preserved_evidence_origins"][name]["sha256"], retained[name])
+
+    def test_old_evidence_member_cannot_be_removed_from_all_groups(self):
+        config = json.loads((BASELINE / "targets.json").read_text())
+        removed = "reproduction/paper_results/ptx_matrix_evidence.py"
+        config["evidence_groups"] = {key: [n for n in names if n != removed]
+                                     for key, names in config["evidence_groups"].items()}
+        with self.assertRaisesRegex(ValueError, "Every earlier evidence member must remain declared"):
+            check_retained_evidence(config)
 
 
 if __name__ == "__main__":
