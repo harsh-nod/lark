@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-yanupsxp/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-yanupsxp/reproduction/paper_results/audit.py", line 658, in main
+    production_checks = check_new_production_evidence(config, production_cases)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-yanupsxp/reproduction/paper_results/audit.py", line 159, in check_new_production_evidence
+    require(type(record["source_certificates"]) is int and record["source_certificates"] == 4
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-yanupsxp/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: New production proof scope differs: vllm-awq-gemm
+

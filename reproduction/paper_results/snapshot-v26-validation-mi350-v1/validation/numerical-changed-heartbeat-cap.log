@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c0kl_seg/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c0kl_seg/reproduction/paper_results/audit.py", line 659, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c0kl_seg/reproduction/paper_results/audit.py", line 260, in check_numerical_evidence
+    require(report["sample_count"] == samples and report["ieee_equivalence_theorem"] is False and
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-c0kl_seg/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study arithmetic/resource scope differs: benchmark
+

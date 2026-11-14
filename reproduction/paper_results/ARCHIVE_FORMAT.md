@@ -120,3 +120,14 @@ evidence paths and hashes and both historical definitions are retained. The
 original v25 snapshot is byte-identical. This build creates no fresh proof,
 model or GPU result and does not satisfy the pending full control-suite,
 anonymous publication, new source CI or main-promotion gates.
+
+The [first complete v26 control-suite receipt](snapshot-v26-validation-mi350-v1/observer/results.json)
+records all eight positive replays and all eighty-one negative controls passing
+on MI350 CPU in 178.3592 seconds. Limits remain 120 seconds per replay, 300
+seconds for the complete suite and at most two independent replay workers.
+Every input transport byte matched its local source before the single launch.
+All 89 logs, actual results, observer/source programs and their inventories are
+retained. The original snapshot manifest is
+`251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed`.
+No fresh Lean, GPU or model experiment ran. Anonymous publication, updated CI
+and main promotion remain pending.

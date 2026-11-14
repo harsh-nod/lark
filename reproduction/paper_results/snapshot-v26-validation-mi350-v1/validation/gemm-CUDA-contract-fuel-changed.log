@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-snapshot-controls-q5pwqnbt/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-3dam3llu/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-3dam3llu/reproduction/paper_results/audit.py", line 667, in main
+    gemm_checks = check_ptx_matrix_evidence(config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-3dam3llu/reproduction/paper_results/ptx_matrix_evidence.py", line 307, in check_ptx_matrix_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-3dam3llu/reproduction/paper_results/ptx_matrix_evidence.py", line 106, in check_recording_packet
+    require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/tmp/lark-paper-v26-controls-mi350-v1-20261113/temporary/lark-paper-snapshot-3dam3llu/reproduction/paper_results/ptx_matrix_evidence.py", line 46, in require
+    raise ValueError("PTX matrix " + message)
+ValueError: PTX matrix proof contract/original scope differs
+
