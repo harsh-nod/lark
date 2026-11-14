@@ -46,6 +46,20 @@ also hit 300 seconds, after writing 106 logs. It retains the same snapshot,
 remain separate from the first run. Neither partial run establishes the full
 release gate.
 
+The [complete third validation](snapshot-v28-validation-mi350-v3/source-and-record-comparison.json)
+passed **ten positive replays and 98 negative controls** on MI350 CPU in
+263.70 seconds. All 108 logs are retained, and all 98 earlier check records
+match in their original order. Every physical and logical byte is checked on
+accepted replay; no reader verification cache is used. Contradictory headers
+are refused before unrelated nested proof packets. The unchanged frozen
+auditor still runs in full on accepted inputs. Limits remain 120 seconds per
+replay, 300 seconds for the complete suite and two independent replayers.
+This validation is separate from the source-CI and public-download gates.
+The [older-ledger compatibility check](snapshot-v28-older-ledger-compatibility-v1/results.json)
+also freshly replayed both unchanged v26 and v27 artifacts with this reader.
+Those two checks establish positive compatibility; they do not claim separate
+full reruns of the older control suites.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261114-v28 \

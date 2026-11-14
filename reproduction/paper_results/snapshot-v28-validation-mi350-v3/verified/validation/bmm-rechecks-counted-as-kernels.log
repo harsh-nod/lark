@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 506, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 498, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 435, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 504, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 56, in run_frozen_auditor
+    preflight_frozen_release_headers(script)
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 161, in preflight_frozen_release_headers
+    preflight_frozen_ptx(script, config)
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-snapshot-controls-ovxi3cp1/isolated/bin/replay_snapshot.py", line 148, in preflight_frozen_ptx
+    reader.counters(report, protocol["counters"], "kernel/recheck/execution counters differ")
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-paper-snapshot-ia6kcypv/reproduction/paper_results/ptx_extended_evidence.py", line 72, in counters
+    self.require(all(type(record.get(k)) is int and record[k] == v
+  File "/tmp/lark-paper-v28-controls-mi350-v3-20261114/temporary/lark-paper-snapshot-ia6kcypv/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX bmm kernel/recheck/execution counters differ
+

@@ -72,8 +72,8 @@ source CI jobs passed at `898d540`. This adds no original model or NVIDIA result
 A separate [compiled FP16 PTX FFN pipeline](reproduction/ptx/full-size/ffn/README.md)
 proves both stateful launches and their shared 65,536-value intermediate,
 including the complete 256/1,024-term reductions and all 16,384 reference
-outputs. Three local certificate checks, two hosted certificate checks and
-installed-wheel source equivalence concern one pipeline identity. Four direct
+outputs. Three local certificate checks, including installed-wheel replay,
+and two hosted certificate checks concern one pipeline identity. Four direct
 Lean dependency controls and 31 complete false-recording controls passed.
 [All 24 source CI jobs](https://github.com/harsh-nod/lark/actions/runs/43588453453)
 passed for checkpoint `3991812`. The proof retains abstract scalar, pointer and
