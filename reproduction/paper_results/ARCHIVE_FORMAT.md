@@ -26,8 +26,15 @@ Eleven focused tests cover a real 10,000,001-byte logical payload, multiple
 parts, deterministic encoding, preserved empty/code files, coherent chunk-hash
 forgery, manifest forgery, path/directory collisions, typed metadata, existing
 output preservation, builder integration and the unchanged legacy entry guard.
-The full real-corpus compatibility check is recorded separately; these unit
-tests alone establish no new paper result or completed v26 snapshot.
+The [full real-corpus compatibility record](snapshot-v26-format-compatibility-v1/results.json)
+checks all 3,625 frozen v25 files, including all 3,623 original evidence members.
+Legacy replay passed in 7.3327 seconds and version 2 replay in 7.6966 seconds;
+encoding and both sequential replays took 24.4268 seconds in total. All logical
+bytes and hashes and every original v25 snapshot byte remain identical. The
+two new archive parts are 34,995,694 and 48,598,737 bytes. Raw prototype copies
+remain retained locally; this receipt contains the original commands, logs,
+source identity and complete-corpus bindings. This verifies storage compatibility,
+not BMM/Linear ledger integration or a completed v26 snapshot.
 
 Standalone version 2 replay requires the trusted sibling
 `snapshot_archives.py`. Version 1 replay does not import that helper. The
