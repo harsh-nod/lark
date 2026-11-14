@@ -170,6 +170,17 @@ GEMM_CONTROLS = tuple(("gemm" + name.removeprefix("ptx"), gate) for name, gate i
 BMM_CONTROLS = tuple(("bmm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 LINEAR_CONTROLS = tuple(("linear" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 ROTARY_CONTROLS = tuple(("rotary" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+FFN_CONTROLS = (
+    ("ffn-source-CI-wrong-commit", "actual source CI differs"),
+    ("ffn-source-CI-boolean-job-counter", "source CI execution counters differ"),
+    ("ffn-source-CI-stack-cap-increased", "CI positive proof/resource/input scope differs"),
+    ("ffn-source-CI-missing-axiom-audit", "CI actual axiom audits differ"),
+    ("ffn-direct-Lean-control-timed-out", "checker completion/resource/log binding differs"),
+    ("ffn-publication-authenticated", "actual anonymous download observation differs"),
+    ("ffn-publication-without-TLS", "actual anonymous download observation differs"),
+    ("ffn-publication-incomplete-roster", "actual anonymous download roster differs"),
+    ("ffn-earlier-cancelled-CI-relabeled", "retained FFN evidence/history bytes differ"),
+)
 
 
 class ControlArchive:
@@ -278,6 +289,92 @@ def mutate_rotary_evidence(entries, config, control):
     """Keep RoPE's complete packet while changing a fully rehashed claim."""
     selected = {**config, "ptx_pointwise_proof": config["ptx_rotary_proof"]}
     mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("rotary"))
+
+
+def mutate_ffn_evidence(entries, config, control):
+    """Forge FFN metadata while synchronizing raw dumps and all inner manifests."""
+    spec, changed = config["ptx_ffn_proof"], set()
+
+    def get(name):
+        return json.loads(entries[name])
+
+    def put(name, value):
+        entries[name] = (json.dumps(value, indent=2) + "\n").encode()
+        changed.add(name)
+
+    def dump(name, value):
+        prefix = spec["ci_job_prefix"]
+        put(prefix + "/dumped-evidence/" + name, value)
+        path = prefix + "/logs.raw"
+        lines, count = [], 0
+        for line in entries[path].decode().splitlines(keepends=True):
+            index = line.find('{"FFN_evidence":')
+            if index >= 0:
+                record = json.loads(line[index:])
+                if record["FFN_evidence"] == name:
+                    record["text"] = entries[prefix + "/dumped-evidence/" + name].decode()
+                    line = line[:index] + json.dumps(record) + "\n"
+                    count += 1
+            lines.append(line)
+        if count != 1:
+            raise ValueError("Exactly one actual CI dump record required")
+        entries[path] = "".join(lines).encode()
+        changed.add(path)
+
+    if control in ("ffn-source-CI-wrong-commit", "ffn-source-CI-boolean-job-counter"):
+        name = "run.json" if control.endswith("wrong-commit") else "results.json"
+        path = spec["ci_prefix"] + "/" + name
+        row = get(path)
+        row["head_sha" if name == "run.json" else "successful_jobs"] = "0" * 40 if name == "run.json" else True
+        put(path, row)
+    elif control in ("ffn-source-CI-stack-cap-increased", "ffn-source-CI-missing-axiom-audit"):
+        name = "lark-ptx-ffn-ci-export/results.json"
+        row = get(spec["ci_job_prefix"] + "/dumped-evidence/" + name)
+        if control.endswith("stack-cap-increased"):
+            row["original_stack_limits"][0] *= 2
+        else:
+            del row["axiom_audits"]["LarkPtxFfnCertificate.complete_pipeline"]
+        dump(name, row)
+    elif control == "ffn-direct-Lean-control-timed-out":
+        name = "lark-ptx-ffn-ci-source-controls/results.json"
+        row = get(spec["ci_job_prefix"] + "/dumped-evidence/" + name)
+        row["negative_controls"][0]["Lean"]["timed_out"] = True
+        dump(name, row)
+        case = row["negative_controls"][0]
+        dump("lark-ptx-ffn-ci-source-controls/" + case["control"] + "/results.json", case)
+    elif control.startswith("ffn-publication-"):
+        path = spec["publication_prefix"] + "/downloads.json"
+        rows = get(path)
+        if control.endswith("authenticated"):
+            rows[0]["authorization_header"] = True
+        elif control.endswith("without-TLS"):
+            rows[0]["tls_verification"] = False
+        elif control.endswith("incomplete-roster"):
+            rows.pop()
+        else:
+            raise ValueError("Unknown FFN publication control")
+        put(path, rows)
+    elif control == "ffn-earlier-cancelled-CI-relabeled":
+        path = spec["receipt_prefix"] + "/previous-completed-receipts/FFN-source-CI3-whole-workflow/results.json"
+        row = get(path)
+        row["status"] = "exact-source-CI-all-24-passed"
+        row["successful_jobs"] = 24
+        put(path, row)
+    else:
+        raise ValueError("Unknown FFN control: " + control)
+    # Update only changed files and their enclosing inventories. Immutable
+    # producer archive bytes are preserved; independent replay rechecks them.
+    manifests = sorted((n for n in entries if n.endswith("/manifest.json")), key=len, reverse=True)
+    for name in manifests:
+        manifest = get(name)
+        if type(manifest) is not dict or not all(type(v) is str for v in manifest.values()):
+            continue
+        prefix = name.removesuffix("manifest.json")
+        touched = {n for n in manifest if prefix + n in changed}
+        if touched:
+            for member in touched:
+                manifest[member] = hashlib.sha256(entries[prefix + member]).hexdigest()
+            put(name, manifest)
 
 
 def mutate_ptx_evidence(entries, config, control):
@@ -750,6 +847,26 @@ def main():
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(extended_control, controls))
             schedule.baseline(results, positive_baseline, "positive-after-" + kind + "-controls")
+        if "ptx_ffn_proof" in read(snapshot / "targets.json"):
+            def ffn_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                copies.copy(altered, rewrite_archive=True)
+                entries = packed_controls.entries.copy()
+                config = read(altered / "targets.json")
+                mutate_ffn_evidence(entries, config, control_name)
+                rewrite_control(packed_controls, altered, entries)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX ffn " + expected_gate not in log:
+                    raise RuntimeError("PTX FFN control failed: " + control_name + "\n" + log)
+                release(altered)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen complete FFN proof/CI/publication/failure evidence"}
+
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(ffn_control, FFN_CONTROLS))
+            schedule.baseline(results, positive_baseline, "positive-after-ffn-controls")
         altered = root / "traversal"
         copies.copy(altered, rewrite_archive=True)
         entries = packed_controls.entries.copy()

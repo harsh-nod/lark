@@ -36,7 +36,7 @@ jobs:
           python3 reproduction/benchmark_specification_validation/check_packet.py \
             --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
             --output /tmp/lark-benchmark-reference-packet-controls
-      - name: Require six model cohorts and six complete-source PTX development proofs
+      - name: Require six model cohorts, six PTX kernels and the complete FFN pipeline
         run: |
           python3 - <<'PY'
           import json
@@ -54,7 +54,8 @@ jobs:
           bmm = report.get('ptx_batched_evidence_checks', {})
           linear = report.get('ptx_linear_evidence_checks', {})
           rotary = report.get('ptx_rotary_evidence_checks', {})
-          assert snapshot.name == '20261113-v27' and targets['storage_schema'] == 2
+          ffn = report.get('ptx_ffn_evidence_checks', {})
+          assert snapshot.name == '20261114-v28' and targets['storage_schema'] == 2
           declared = {name for names in targets['evidence_groups'].values() for name in names}
           assert set(report['evidence_sha256']) == declared
           layout = json.loads((snapshot / 'evidence-layout.json').read_text())
@@ -69,6 +70,15 @@ jobs:
                   == (old / 'auditor.py').read_bytes())
           assert (Path('reproduction/paper_results/frozen-definitions/20261113-v26/targets.json').read_bytes()
                   == (old / 'targets.json').read_bytes())
+          previous = Path('reproduction/paper_results/snapshots/20261113-v27')
+          assert hashlib.sha256((previous / 'manifest.json').read_bytes()).hexdigest() == 'aa23c786cf8a7c2ca059c76beddcb86dc148dc03e3d70096e0bd2f930044fea0'
+          previous_hashes = json.loads((previous / 'evidence-manifest.json').read_text())
+          assert sum(name not in definitions for name in previous_hashes) == 4133
+          assert all(layout['logical_files'][name]['sha256'] == value for name, value in previous_hashes.items() if name not in definitions)
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v27/auditor.py').read_bytes()
+                  == (previous / 'auditor.py').read_bytes())
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v27/targets.json').read_bytes()
+                  == (previous / 'targets.json').read_bytes())
           assert targets.get('full_shape_models', {}).get('required_cohorts') == 6, 'Final ledger must require all six cohorts'
           assert models.get('complete_independent_cohorts') == 6 and len(models.get('cohorts', [])) == 6
           assert models.get('all_six_independent_cohorts_present') is True and models.get('missing_independent_cohorts') == []
@@ -124,6 +134,19 @@ jobs:
           assert rotary.get('anonymous_publication_files') == 81
           assert rotary.get('new_registered_source_certificates') == 0
           assert rotary.get('original_paper_fully_reproduced') is rotary.get('nvidia_execution') is rotary.get('fresh_experiments_by_ledger') is False
+          assert targets.get('ptx_ffn_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-ffn-certificate-payloads-v1'
+          assert ffn.get('independent_source_bound_development_pipelines') == 1
+          assert len(ffn.get('distinct_recorded_pipeline_identities', [])) == 1
+          assert len(ffn.get('recorded_positive_checks', [])) == 3
+          assert ffn.get('recorded_source_CI_positive_builds') == 2 and ffn.get('successful_source_CI_jobs') == 24
+          assert ffn.get('recorded_direct_Lean_refusals') == 4
+          assert len(ffn.get('independent_false_recording_refusals', [])) == 31
+          assert ffn.get('archives_checked') == 15 and ffn.get('archive_members_checked') == 4416
+          assert ffn.get('uncompressed_member_bytes_checked') == 940266976
+          assert ffn.get('wheel_owned_sources_byte_checked') == 72
+          assert ffn.get('anonymous_publication_files') == 34
+          assert ffn.get('fresh_Lean_checks') == ffn.get('GPU_trials') == ffn.get('model_calls') == 0
+          assert ffn.get('original_paper_fully_reproduced') is ffn.get('captured_code_executed') is ffn.get('fresh_experiments_by_ledger') is False
           assert all(report[name] == 0 for name in ('fresh_lean_checks', 'fresh_gpu_trials', 'model_calls'))
           assert all(row['original_result_reproduced'] is False for row in report['floats'] + report['narrative']
                      if row['role'] in ('experiment', 'history'))

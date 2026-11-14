@@ -19,7 +19,7 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v27"
+DEFAULT = Path(__file__).resolve().parent / "snapshots/20261114-v28"
 AUDITOR_STREAM_BUFFER_BYTES = 1024 * 1024
 _TAR_OPEN = tarfile.open
 _DEFAULT_BUFFER = object()

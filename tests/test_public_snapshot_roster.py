@@ -96,6 +96,8 @@ class PublicSnapshotRosterTests(unittest.TestCase):
         self.assertEqual(expected_counts(targets), (8, 81))
         targets.update(ptx_rotary_proof={})
         self.assertEqual(expected_counts(targets), (9, 89))
+        targets.update(ptx_ffn_proof={})
+        self.assertEqual(expected_counts(targets), (10, 98))
 
 
 if __name__ == "__main__":
