@@ -6,6 +6,7 @@ does not establish execution, a certificate, IEEE behavior or a model outcome.
 
 import ast
 from dataclasses import dataclass
+import json
 import re
 
 from . import ptx_matrix, rotary
@@ -16,6 +17,20 @@ OPERATIONS = {
     "setp.eq.b32": "compareEqBits32", "mov.pred": "predicateLiteral",
     "xor.pred": "predicateXor", "not.pred": "predicateNot", "bra.uni": "branchAlways",
 }
+PROFILE = "source-bound-compiled-rotary-fp16-v1"
+TAGS = ("source_program", "reference_body", "reference_denotation", "launch", "race_free",
+        "segment_equivalence", "kernel_eq_spec")
+
+
+def selected_input(index):
+    return ["select", 2, index, ["reshape", [256, 64, 2], ["fromHalf", ["input", 0]]]]
+
+
+REFERENCE = ["toHalf", ["reshape", [256, 128], ["stackLast",
+    ["sub", ["mul", selected_input(0), ["fromHalf", ["input", 1]]],
+            ["mul", selected_input(1), ["fromHalf", ["input", 2]]]],
+    ["add", ["mul", selected_input(0), ["fromHalf", ["input", 2]]],
+            ["mul", selected_input(1), ["fromHalf", ["input", 1]]]]]]]
 
 
 def lean_instruction(instruction):
@@ -126,3 +141,86 @@ def prepare(source, reference, contract):
     if translation.readback().encode() != source.encode():
         raise Refusal("ptx-rotary-readback", "complete source readback differs")
     return task, translation
+
+
+def prepare_certificate(source, reference, contract):
+    task, translation = prepare(source, reference, contract)
+    return task, translation, json.loads(json.dumps(REFERENCE))
+
+
+def lean_reference(body):
+    try:
+        encoded = json.dumps(body, separators=(",", ":"), allow_nan=False)
+    except (TypeError, ValueError) as error:
+        raise Refusal("ptx-rotary-reference", "a closed JSON tensor reference AST is required") from error
+    if encoded != json.dumps(REFERENCE, separators=(",", ":")):
+        raise Refusal("ptx-rotary-reference", "unsupported full-size interleaved RoPE tensor reference AST")
+
+    def render_node(node):
+        tag, *args = node
+        if tag == "input":
+            return f"(.input {args[0]})"
+        if tag in {"fromHalf", "toHalf"}:
+            return f"(.{tag} {render_node(args[0])})"
+        if tag == "reshape":
+            return f"(.reshape {args[0]} {render_node(args[1])})"
+        if tag == "select":
+            return f"(.select {args[0]} {args[1]} {render_node(args[2])})"
+        if tag == "stackLast":
+            return f"(.stackLast {render_node(args[0])} {render_node(args[1])})"
+        return f"(.binary .{tag} {render_node(args[0])} {render_node(args[1])})"
+
+    return render_node(body)
+
+
+def render(task, translation, reference_body):
+    fixed_task(task)
+    reference = lean_reference(reference_body)
+    return f"""import Lark.PtxRotaryReference
+set_option maxRecDepth 10000
+set_option maxHeartbeats 2000000
+namespace LarkPtxRotaryCertificate
+open LarkNonlinear
+def program : List LarkPtxRotary.Instruction := {translation.lean_program()}
+def referenceBody : LarkPtxRotary.Reference.TensorReference := {reference}
+def spec (ops : Ops α) (input : Nat → Nat → α) : List α :=
+  (LarkPtxRotary.Reference.extractReference ops input referenceBody).getD []
+theorem source_program : program = LarkPtxRotary.Kernel.program := by decide
+theorem reference_body : referenceBody = LarkPtxRotary.Reference.referenceBody := by rfl
+theorem reference_denotation (ops : Ops α) (input : Nat → Nat → α) :
+    LarkPtxRotary.Reference.extractReference ops input referenceBody =
+      some (LarkPtxRotary.Kernel.referenceSpec ops input) := by
+  rw [reference_body]
+  exact LarkPtxRotary.Reference.extract_reference_body ops input
+theorem kernel_eq_spec (ops : Ops α) : LarkPtxRotary.Kernel.Correct ops program (spec ops) := by
+  have hs : spec ops = LarkPtxRotary.Reference.spec ops := by
+    funext input
+    simp only [spec, LarkPtxRotary.Reference.spec, reference_body]
+  rw [source_program, hs]
+  exact LarkPtxRotary.Reference.closed_reference_correct ops
+theorem launch (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    ∃ final, LarkPtxRotary.Kernel.LaneSequence ops program 0 32768
+      (initial LarkPtxRotary.Kernel.layout input outside) final ∧
+    raceFree LarkPtxRotary.Kernel.geometry final.trace = true ∧
+    extract LarkPtxRotary.Kernel.layout final = some (spec ops input) ∧
+    (∀ l, (∀ i, i < 32768 → l ≠ LarkPtxRotary.Kernel.outputCell i) →
+      final.memory l = (initial LarkPtxRotary.Kernel.layout input outside).memory l) :=
+  kernel_eq_spec ops input outside
+theorem race_free (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    ∃ final, LarkPtxRotary.Kernel.LaneSequence ops program 0 32768
+      (initial LarkPtxRotary.Kernel.layout input outside) final ∧
+      raceFree LarkPtxRotary.Kernel.geometry final.trace = true := by
+  obtain ⟨final, execution, race, _, _⟩ := launch ops input outside
+  exact ⟨final, execution, race⟩
+theorem segment_equivalence (ops : Ops α) (input : Nat → Nat → α) (outside : Location → Option α) :
+    ∃ final, LarkPtxRotary.Kernel.LaneSequence ops program 0 32768
+      (initial LarkPtxRotary.Kernel.layout input outside) final ∧
+      extract LarkPtxRotary.Kernel.layout final =
+        LarkPtxRotary.Reference.extractReference ops input referenceBody := by
+  obtain ⟨final, execution, _, values, _⟩ := launch ops input outside
+  have hs : spec ops input = LarkPtxRotary.Kernel.referenceSpec ops input := by
+    simp only [spec, reference_denotation, Option.getD_some]
+  rw [hs] at values
+  exact ⟨final, execution, values.trans (reference_denotation ops input).symm⟩
+""" + "".join("#print axioms LarkPtxRotaryCertificate." + tag + "\n" for tag in TAGS) + (
+        "end LarkPtxRotaryCertificate\n")

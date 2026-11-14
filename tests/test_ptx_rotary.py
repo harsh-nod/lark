@@ -1,5 +1,6 @@
 """Full compiled RoPE reader and input boundaries; no kernel-proof claim."""
 
+import copy
 import json
 from pathlib import Path
 import tarfile
@@ -20,6 +21,29 @@ def inputs():
 
 
 class PtxRotaryReaderTests(unittest.TestCase):
+    def test_closed_tensor_AST_and_generated_statement_bind_the_complete_reference(self):
+        prepared = reader.prepare_certificate(*inputs())
+        body = prepared[2]
+        self.assertEqual(body, reader.REFERENCE)
+        self.assertIsNot(body, reader.REFERENCE)
+        rendered = reader.render(*prepared)
+        self.assertIn("LarkPtxRotary.Kernel.Correct ops program (spec ops)", rendered)
+        self.assertIn("(.select 2 0", rendered)
+        self.assertIn("(.select 2 1", rendered)
+        self.assertIn("(.stackLast", rendered)
+        self.assertIn("(.reshape [256, 128]", rendered)
+        self.assertIn("extractReference ops input referenceBody", rendered)
+        self.assertIn("reference_denotation", rendered)
+        altered = copy.deepcopy(body)
+        altered[1][1][0] = True
+        with self.assertRaises(Refusal):
+            reader.lean_reference(altered)
+        altered = copy.deepcopy(body)
+        altered[1][2][1][0] = "add"
+        with self.assertRaises(Refusal):
+            reader.lean_reference(altered)
+        self.assertEqual(body, reader.REFERENCE)
+
     def test_complete_source_predicates_branches_shape_and_launch_are_preserved(self):
         source, reference, contract = inputs()
         task, parsed = reader.prepare(source, reference, contract)
