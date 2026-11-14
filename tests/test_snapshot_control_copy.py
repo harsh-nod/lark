@@ -1,5 +1,6 @@
 """Skipping overwritten containers must preserve every final replay input byte."""
 
+import errno
 import hashlib
 import io
 import json
@@ -8,6 +9,7 @@ import shutil
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from reproduction.paper_results import snapshot_archives as storage
 from reproduction.paper_results.check_snapshot_controls import (
@@ -104,6 +106,55 @@ class ControlCopyEquivalenceTests(unittest.TestCase):
                 target = self.root / ("report-only-" + str(schema))
                 ControlSnapshotCopies(source).copy(target)
                 self.assertEqual(contents(source), contents(target))
+
+    def test_report_controls_share_only_complete_immutable_baseline_archives(self):
+        for schema in (1, 2):
+            with self.subTest(schema=schema):
+                source, _ = self.baseline(schema)
+                baseline, target = self.root / ("baseline-" + str(schema)), self.root / ("shared-" + str(schema))
+                shutil.copytree(source, baseline)
+                original = contents(source)
+                copies = ControlSnapshotCopies(source)
+                copies.copy(target, immutable_archives_from=baseline)
+                self.assertEqual(contents(target), original)
+                for name in copies.archives:
+                    self.assertEqual((target / name).stat().st_ino, (baseline / name).stat().st_ino)
+                self.assertNotEqual((target / "results/evidence.tar.gz").stat().st_ino,
+                                    (baseline / "results/evidence.tar.gz").stat().st_ino)
+                write(target / "results/audit.json", {"forged": True})
+                self.assertEqual(contents(source), original)
+                self.assertEqual(contents(baseline), original)
+
+    def test_cross_device_fallback_still_copies_every_input_byte(self):
+        source, _ = self.baseline(2)
+        target = self.root / "cross-device-fallback"
+        with patch("os.link", side_effect=OSError(errno.EXDEV, "authored cross-device fixture")):
+            ControlSnapshotCopies(source).copy(target, immutable_archives_from=source)
+        self.assertEqual(contents(target), contents(source))
+
+    def test_shared_archives_are_freshly_checked_after_external_byte_corruption(self):
+        source, _ = self.baseline(2)
+        baseline, target = self.root / "validated-baseline", self.root / "shared-corrupted"
+        shutil.copytree(source, baseline)
+        first = self.root / "first-fresh-read"
+        first.mkdir()
+        layout = json.loads((baseline / "evidence-layout.json").read_text())
+        storage.unpack_parts(baseline, layout, first)
+        copies = ControlSnapshotCopies(source)
+        copies.copy(target, immutable_archives_from=baseline)
+        (target / next(iter(copies.archives))).write_bytes(b"changed physical bytes")
+        for name, packet in (("baseline-recheck", baseline), ("control-recheck", target)):
+            destination = self.root / name
+            destination.mkdir()
+            with self.assertRaisesRegex(ValueError, "Archive bytes differ"):
+                storage.unpack_parts(packet, layout, destination)
+
+    def test_shared_archive_mode_cannot_be_combined_with_a_rewrite(self):
+        source, _ = self.baseline(2)
+        target = self.root / "invalid-shared-rewrite"
+        with self.assertRaisesRegex(ValueError, "cannot also be rewritten"):
+            ControlSnapshotCopies(source).copy(target, rewrite_archive=True, immutable_archives_from=source)
+        self.assertFalse(target.exists())
 
     def test_invalid_storage_schema_is_refused_before_copying_anything(self):
         source = self.root / "bad-schema"

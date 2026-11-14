@@ -3,6 +3,7 @@
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack, contextmanager
+import errno
 import gzip
 import hashlib
 import json
@@ -234,7 +235,8 @@ class ControlSnapshotCopies:
 
     A rewrite replaces every physical container before replay. Avoiding a copy
     of those immediately overwritten containers changes no final logical or
-    physical input byte. Report-only controls still copy their complete input.
+    physical input byte. Report-only controls may share the just-validated,
+    read-only baseline's regular archive files; every reader rechecks all bytes.
     """
 
     def __init__(self, snapshot):
@@ -250,15 +252,36 @@ class ControlSnapshotCopies:
         self.archive_bytes = sum((self.snapshot / n).stat().st_size for n in names)
         self.preparations = []
 
-    def copy(self, target, *, rewrite_archive=False):
+    def copy(self, target, *, rewrite_archive=False, immutable_archives_from=None):
+        if rewrite_archive and immutable_archives_from is not None:
+            raise ValueError("Shared immutable archives cannot also be rewritten")
+        shared = Path(immutable_archives_from) if immutable_archives_from is not None else None
+
         def ignore(directory, names):
             return self.archives.intersection(names) if Path(directory) == self.snapshot else set()
 
-        shutil.copytree(self.snapshot, target, ignore=ignore if rewrite_archive else None)
-        self.preparations.append({"name": Path(target).name,
-                                  "complete_archive_rewrite_before_replay": rewrite_archive,
-                                  "redundant_original_container_bytes_not_copied":
-                                      self.archive_bytes if rewrite_archive else 0})
+        def copy_file(source, destination):
+            path = Path(source)
+            if shared is not None and path.parent == self.snapshot and path.name in self.archives:
+                original = shared / path.name
+                if original.is_symlink() or not original.is_file():
+                    raise ValueError("Complete regular immutable baseline archive required")
+                try:
+                    os.link(original, destination)
+                    return destination
+                except OSError as error:
+                    if error.errno not in (errno.EXDEV, errno.EPERM, errno.EACCES, errno.ENOSYS,
+                                           errno.EOPNOTSUPP):
+                        raise
+                return shutil.copy2(original, destination)
+            return shutil.copy2(source, destination)
+
+        shutil.copytree(self.snapshot, target, ignore=ignore if rewrite_archive else None, copy_function=copy_file)
+        row = {"name": Path(target).name, "complete_archive_rewrite_before_replay": rewrite_archive,
+               "redundant_original_container_bytes_not_copied": self.archive_bytes if rewrite_archive else 0}
+        if shared is not None:
+            row["immutable_archive_source"] = "validated-read-only-baseline"
+        self.preparations.append(row)
 
 
 def mutate_gemv_evidence(entries, config, control):
@@ -592,9 +615,10 @@ def main():
         if has_production_cases:
             names.append("false-native-awq-certificate-count" if awq_case["registered_source_certificates"]
                          else "invented-native-awq-coverage")
-        for name in names:
+
+        def completion_control(name):
             altered = root / name
-            copies.copy(altered)
+            copies.copy(altered, immutable_archives_from=isolated)
             report = read(altered / "results/audit.json")
             if name == "global-completion-claim":
                 report["original_paper_fully_reproduced"] = True
@@ -615,15 +639,12 @@ def main():
             code, log = execute(name, altered)
             if code == 0 or "Audit differs: audit.json" not in log:
                 raise RuntimeError("False completion was not rejected at regeneration: " + log)
-            results.append(
-                {
-                    "name": name,
-                    "accepted": False,
-                    "fully_rehashed": True,
-                    "gate": "frozen report regeneration",
-                }
-            )
             release(altered)
+            return {"name": name, "accepted": False, "fully_rehashed": True,
+                    "gate": "frozen report regeneration"}
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            results.extend(pool.map(completion_control, names))
         if has_production_cases:
             altered = root / "missing-production-case"
             copies.copy(altered, rewrite_archive=True)

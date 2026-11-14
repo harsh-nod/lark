@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 373, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 365, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 302, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 30, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 371, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 55, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/audit.py", line 768, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/audit.py", line 692, in main
+    rotary_checks = check_ptx_rotary_evidence(config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/ptx_rotary_release.py", line 128, in check_ptx_rotary_evidence
+    check_source_ci(reader, summary, run, jobs, p)
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/ptx_rotary_release.py", line 22, in check_source_ci
+    reader.fields(run, {"id": protocol["ci_run"], "head_sha": protocol["published_source"],
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/ptx_rotary_evidence.py", line 67, in fields
+    self.require(type(record) is dict and all(k in record and same_json(record[k], v)
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-hr26yq5o/reproduction/paper_results/ptx_rotary_evidence.py", line 45, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX rotary actual source CI differs
+

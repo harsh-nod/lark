@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 373, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 365, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 302, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 30, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 371, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-snapshot-controls-son546yx/isolated/bin/replay_snapshot.py", line 55, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-c28ve38i/reproduction/paper_results/audit.py", line 768, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-c28ve38i/reproduction/paper_results/audit.py", line 682, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-c28ve38i/reproduction/paper_results/full_shape_evidence.py", line 212, in check_full_shape_evidence
+    require(proof["raw_results_sha256"] == audit["recording_results_sha256"]
+  File "/tmp/lark-paper-v28-controls-mi350-v1-20261114/temporary/lark-paper-snapshot-c28ve38i/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model recorded proof/protocol binding differs
+
