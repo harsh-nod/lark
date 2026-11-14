@@ -1,0 +1,1175 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  paper-ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Audit frozen elaborated-reference numerical evidence without GPU or model calls
+        run: |
+          python3 reproduction/specification_validation/packet.py verify \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-verified
+      - name: Reject altered numerical evidence and fully rehashed scope claims
+        run: |
+          python3 reproduction/specification_validation/check_packet.py \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-controls
+      - name: Audit all seventeen benchmark reference families and complete score tensors
+        run: |
+          python3 reproduction/benchmark_specification_validation/packet.py verify \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-verified
+      - name: Reject altered benchmark scope, samples, controls and score oracles
+        run: |
+          python3 reproduction/benchmark_specification_validation/check_packet.py \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-controls
+      - name: Require six model cohorts and six complete-source PTX development proofs
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import hashlib
+          from pathlib import Path
+          from reproduction.paper_results.replay_snapshot import DEFAULT
+          snapshot = DEFAULT.resolve()
+          targets = json.loads((snapshot / 'targets.json').read_text())
+          report = json.loads((snapshot / 'results/audit.json').read_text())
+          models = report.get('full_shape_model_evidence_checks', {})
+          ptx = report.get('ptx_pointwise_evidence_checks', {})
+          gemv = report.get('ptx_dot_evidence_checks', {})
+          gemm = report.get('ptx_matrix_evidence_checks', {})
+          bmm = report.get('ptx_batched_evidence_checks', {})
+          linear = report.get('ptx_linear_evidence_checks', {})
+          rotary = report.get('ptx_rotary_evidence_checks', {})
+          assert snapshot.name == '20261113-v27' and targets['storage_schema'] == 2
+          declared = {name for names in targets['evidence_groups'].values() for name in names}
+          assert set(report['evidence_sha256']) == declared
+          layout = json.loads((snapshot / 'evidence-layout.json').read_text())
+          old = Path('reproduction/paper_results/snapshots/20261113-v26')
+          assert hashlib.sha256((old / 'manifest.json').read_bytes()).hexdigest() == '251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed'
+          old_hashes = json.loads((old / 'evidence-manifest.json').read_text())
+          definitions = {'reproduction/paper_results/audit.py', 'reproduction/paper_results/targets.json'}
+          assert set(layout['logical_files']) == declared | definitions
+          assert sum(name not in definitions for name in old_hashes) == 3792
+          assert all(layout['logical_files'][name]['sha256'] == value for name, value in old_hashes.items() if name not in definitions)
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v26/auditor.py').read_bytes()
+                  == (old / 'auditor.py').read_bytes())
+          assert (Path('reproduction/paper_results/frozen-definitions/20261113-v26/targets.json').read_bytes()
+                  == (old / 'targets.json').read_bytes())
+          assert targets.get('full_shape_models', {}).get('required_cohorts') == 6, 'Final ledger must require all six cohorts'
+          assert models.get('complete_independent_cohorts') == 6 and len(models.get('cohorts', [])) == 6
+          assert models.get('all_six_independent_cohorts_present') is True and models.get('missing_independent_cohorts') == []
+          assert report['counts'] == {'tables': 17, 'outer_figure_groups': 7, 'narrative_anchors': 16}
+          assert report['original_paper_fully_reproduced'] is False and report['completion_percentage'] is None
+          assert models['original_paper_fully_reproduced'] is False and models['fresh_experiments_by_ledger'] is False
+          assert targets.get('ptx_pointwise_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-relu-proof-v1'
+          assert ptx.get('independent_source_bound_development_proofs') == 1
+          assert ptx.get('retained_positive_Main_checks') == 4 and ptx.get('positive_rechecks') == 3
+          assert ptx.get('direct_Lean_negative_controls') == 4 and ptx.get('successful_source_CI_jobs') == 19
+          assert ptx.get('new_registered_source_certificates') == 0
+          assert ptx.get('original_paper_fully_reproduced') is ptx.get('nvidia_execution') is False
+          assert targets.get('ptx_dot_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-gemv-proof-v1'
+          assert gemv.get('independent_source_bound_development_proofs') == 1
+          assert gemv.get('retained_positive_Main_checks') == 4 and gemv.get('positive_rechecks') == 3
+          assert gemv.get('direct_Lean_negative_controls') == 4 and gemv.get('successful_source_CI_jobs') == 20
+          assert gemv.get('new_registered_source_certificates') == 0
+          assert gemv.get('original_paper_fully_reproduced') is gemv.get('nvidia_execution') is False
+          assert targets.get('ptx_matrix_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-gemm-proof-v1'
+          assert gemm.get('independent_source_bound_development_proofs') == 1
+          assert gemm.get('retained_positive_Main_checks') == 4 and gemm.get('positive_rechecks') == 3
+          assert gemm.get('direct_Lean_negative_controls') == 4 and gemm.get('successful_source_CI_jobs') == 21
+          assert gemm.get('new_registered_source_certificates') == 0
+          assert gemm.get('original_paper_fully_reproduced') is gemm.get('nvidia_execution') is False
+          assert targets.get('ptx_batched_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-bmm-proof-v1'
+          assert bmm.get('independent_source_bound_development_proofs') == 1
+          assert bmm.get('retained_positive_Main_checks') == 5 and bmm.get('positive_rechecks') == 4
+          assert bmm.get('current_SDK_positive_Main_checks') == 4 and bmm.get('initial_SDK_positive_Main_checks') == 1
+          assert bmm.get('retained_failed_official_exports') == 1
+          assert bmm.get('owned_module_builds_across_four_current_checks') == 32
+          assert bmm.get('direct_Lean_negative_controls') == 4 and bmm.get('successful_source_CI_jobs') == 22
+          assert bmm.get('archives_checked') == 9 and bmm.get('archive_members_checked') == 702
+          assert bmm.get('new_registered_source_certificates') == 0
+          assert bmm.get('original_paper_fully_reproduced') is bmm.get('nvidia_execution') is bmm.get('fresh_experiments_by_ledger') is False
+          assert targets.get('ptx_linear_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-linear-proof-v1'
+          assert linear.get('independent_source_bound_development_proofs') == 1
+          assert linear.get('retained_positive_Main_checks') == 4 and linear.get('positive_rechecks') == 3
+          assert linear.get('retained_failed_official_exports') == 0
+          assert linear.get('retained_pre_SDK_development_attempts') == 12
+          assert linear.get('accepted_pre_SDK_development_checks') == 7 and linear.get('failed_pre_SDK_development_checks') == 5
+          assert linear.get('owned_module_builds_across_four_checks') == 40
+          assert linear.get('direct_Lean_negative_controls') == 4 and linear.get('successful_source_CI_jobs') == 23
+          assert linear.get('archives_checked') == 7 and linear.get('archive_members_checked') == 960
+          assert linear.get('new_registered_source_certificates') == 0
+          assert linear.get('original_paper_fully_reproduced') is linear.get('nvidia_execution') is linear.get('fresh_experiments_by_ledger') is False
+          assert targets.get('ptx_rotary_proof', {}).get('prefix') == 'reproduction/ptx/results/full-size-rotary-proof-v1'
+          assert rotary.get('independent_source_bound_development_proofs') == 1
+          assert rotary.get('retained_positive_Main_checks') == 4 and rotary.get('positive_rechecks') == 3
+          assert rotary.get('development_attempts') == 17 and rotary.get('failed_development_checks') == 11
+          assert rotary.get('fresh_owned_module_builds') == 32
+          assert rotary.get('direct_Lean_negative_controls') == 4 and rotary.get('successful_source_CI_jobs') == 24
+          assert rotary.get('archives_checked') == 18 and rotary.get('archive_members_checked') == 4414
+          assert rotary.get('anonymous_publication_files') == 81
+          assert rotary.get('new_registered_source_certificates') == 0
+          assert rotary.get('original_paper_fully_reproduced') is rotary.get('nvidia_execution') is rotary.get('fresh_experiments_by_ledger') is False
+          assert all(report[name] == 0 for name in ('fresh_lean_checks', 'fresh_gpu_trials', 'model_calls'))
+          assert all(row['original_result_reproduced'] is False for row in report['floats'] + report['narrative']
+                     if row['role'] in ('experiment', 'history'))
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('LARK_PAPER_SNAPSHOT=' + str(snapshot) + '\n')
+          PY
+      - name: Regenerate all six model cohorts from the raw and fresh-audit packets
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from reproduction.local_models import compare_full_shape
+          snapshot = Path(os.environ['LARK_PAPER_SNAPSHOT'])
+          spec = json.loads((snapshot / 'targets.json').read_text())['full_shape_models']
+          fresh = compare_full_shape.compare([Path(row['prefix']) for row in spec['packets']])
+          prefix = Path(spec['comparison_prefix'])
+          recorded = json.loads((prefix / 'results.json').read_text())
+          assert {k: v for k, v in fresh.items() if k != 'created_at_utc'} == {k: v for k, v in recorded.items() if k != 'created_at_utc'}
+          assert compare_full_shape.markdown(fresh) == (prefix / 'RESULTS.md').read_text()
+          print(json.dumps({'complete_independent_cohorts': 6, 'model_calls': 0, 'fresh_lean_checks': 0, 'gpu_trials': 0}))
+          PY
+      - name: Fetch the pinned original manuscript as data
+        run: |
+          curl -q --proto '=https' --proto-redir '=https' --connect-timeout 10 --max-time 90 -fsSL \
+            https://arxiv.org/src/2611.02028v1 --output /tmp/lark-paper-source.tar
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          data = Path('/tmp/lark-paper-source.tar').read_bytes()
+          assert hashlib.sha256(data).hexdigest() == '095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2'
+          PY
+      - name: Select complete-replay temporary storage and record resources
+        run: |
+          python3 - <<'PYCODE'
+          import json
+          import os
+          from pathlib import Path
+          import shutil
+          import tempfile
+          ram = Path('/dev/shm')
+          ram_free = shutil.disk_usage(ram).free if ram.is_dir() else 0
+          memory = dict(line.split(':', 1) for line in Path('/proc/meminfo').read_text().splitlines())
+          memory_available = int(memory['MemAvailable'].split()[0]) * 1024
+          use_ram = ram_free >= 4 * 1024**3 and memory_available >= 6 * 1024**3 and os.access(ram, os.W_OK)
+          selected = str(ram) if use_ram else tempfile.gettempdir()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('TMPDIR=' + selected + '\n')
+          print(json.dumps({'temporary_directory': selected, 'RAM_filesystem_free_bytes': ram_free,
+                            'memory_available_bytes': memory_available,
+                            'complete_payload_required': True, 'aggregate_seconds': 300,
+                            'per_replay_seconds': 120, 'max_independent_replayers': 2}))
+          PYCODE
+      - name: Replay the frozen ledger and all rehashed controls without Git
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+          output = Path('/tmp/lark-paper-ci-controls')
+          command = ['timeout', '--kill-after=5s', '300s', sys.executable,
+                     'reproduction/paper_results/check_snapshot_controls.py',
+                     '--snapshot', os.environ['LARK_PAPER_SNAPSHOT'],
+                     '--source-archive', '/tmp/lark-paper-source.tar', '--output', str(output)]
+          result = subprocess.run(['/usr/bin/time', '-v', *command])
+          for path in sorted(output.glob('*.log')):
+              print(json.dumps({'control_log': path.name, 'text': path.read_text()}), flush=True)
+          if result.returncode == 0:
+              record = json.loads((output / 'results.json').read_text())
+              assert record['positive_replays'] == 9 and record['negative_controls'] == 89
+              assert len(record['checks']) == len({row['name'] for row in record['checks']}) == 98
+              assert len(record['released_completed_temporary_control_copies']) == 88
+              assert record['all_control_payloads_complete_during_replay'] is True
+          raise SystemExit(result.returncode)
+          PY
+  reference-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      LARK_REAL_PROJECT: ${{ github.workspace }}/lean-real
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Extract the two independently pinned full-size preparations as data
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import tarfile
+          for name, destination in [('full-shape-preparation-v2','/tmp/lark-reference-hip'),
+                                    ('full-shape-cuda-preparation-v1','/tmp/lark-reference-cuda')]:
+              root = Path(destination)
+              root.mkdir(exist_ok=False)
+              with tarfile.open('reproduction/local_models/results/'+name+'/preparation.tar.gz') as archive:
+                  for member in archive:
+                      relative = PurePosixPath(member.name)
+                      assert member.isfile() and not relative.is_absolute() and '..' not in relative.parts
+                      path = root / relative
+                      path.parent.mkdir(parents=True, exist_ok=True)
+                      path.write_bytes(archive.extractfile(member).read())
+          PY
+      - name: Recheck all seventeen source-specification identities and wrong-operator refusal on CPU
+        run: |
+          python3 reproduction/local_models/reference_identity.py \
+            --hip-prepared /tmp/lark-reference-hip --cuda-prepared /tmp/lark-reference-cuda \
+            --output /tmp/lark-reference-identities --lean "$HOME/.elan/bin/lean"
+  native-awq-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Export and recheck four complete native AWQ real certificates and rejection controls
+        run: python3 reproduction/production_awq_gemm/check_native_real.py --output /tmp/lark-awq-canonical-real
+      - name: Rebuild frozen native AWQ proofs without Git or owned compiled objects
+        run: |
+          python3 reproduction/production_awq_gemm/replay_native_real.py \
+            --packet /tmp/lark-awq-canonical-real --output /tmp/lark-awq-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Reject fully rehashed proof scope changes before extraction
+        run: |
+          python3 reproduction/production_awq_gemm/check_native_real_stages.py \
+            --packet /tmp/lark-awq-canonical-real --output /tmp/lark-awq-canonical-real-stage-guards \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Verify, recheck and reject a rehashed certificate from an installed wheel outside the checkout
+        run: |
+          python3 reproduction/production_awq_gemm/check_installed.py \
+            --output /tmp/lark-awq-installed-wheel --lean "$HOME/.elan/bin/lean" \
+            --dependency-project lean-real
+  native-awq-components:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check typed native matrix execution and mutation controls
+        run: python3 -m unittest discover -s tests -p test_native_awq_gemm.py -v
+      - name: Check all four finite source executions and traffic
+        run: python3 reproduction/production_awq_gemm/run_symbolic.py --output /tmp/lark-awq-finite
+      - name: Check complete source identity, K loop, guarded stores and whole grid execution
+        run: |
+          python3 reproduction/production_awq_gemm/check_components.py \
+            --output /tmp/lark-awq-components --lean-bin "$HOME/.elan/bin"
+      - name: Replay standalone source archive without Git or an owned cache
+        run: |
+          python3 reproduction/production_awq_gemm/replay_components.py \
+            --packet /tmp/lark-awq-components --archive /tmp/lark-awq-components/source-project.tar.gz \
+            --output /tmp/lark-awq-component-replay --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed false stage claims before extraction
+        run: |
+          python3 reproduction/production_awq_gemm/check_component_stages.py \
+            --packet /tmp/lark-awq-components --output /tmp/lark-awq-component-stages \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Replay the historical first-decode source archive
+        run: |
+          python3 reproduction/production_awq_gemm/replay_components.py \
+            --packet reproduction/production_awq_gemm/results/source-components-v1 \
+            --archive reproduction/production_awq_gemm/results/source-components-v1/source-project.tar.gz \
+            --output /tmp/lark-awq-legacy-replay --lean-bin "$HOME/.elan/bin"
+  native-sglang-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native SGLang RMSNorm real certificates and controls
+        run: python3 reproduction/production_sglang_rmsnorm/check_native_real.py --output /tmp/lark-sglang-canonical-real
+      - name: Replay frozen native SGLang RMSNorm real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_native_real.py \
+            --packet /tmp/lark-sglang-canonical-real --output /tmp/lark-sglang-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Reject fully rehashed proof scope claims before extraction
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_native_real_stages.py \
+            --packet /tmp/lark-sglang-canonical-real --output /tmp/lark-sglang-canonical-real-stage-guards \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Verify and recheck a certificate from an installed wheel outside the checkout
+        env:
+          LARK_REAL_PROJECT: ${{ github.workspace }}/lean-real
+        run: |
+          python3 -m pip wheel . --no-deps --wheel-dir /tmp/lark-sglang-wheel
+          python3 -m venv /tmp/lark-sglang-installed
+          /tmp/lark-sglang-installed/bin/pip install --no-index --no-deps /tmp/lark-sglang-wheel/*.whl
+          cd /tmp
+          /tmp/lark-sglang-installed/bin/lark verify-native-sglang-rmsnorm \
+            "$GITHUB_WORKSPACE/reproduction/production_sglang_rmsnorm/cases/native_fixed/kernel.hip" \
+            --reference "$GITHUB_WORKSPACE/reproduction/production_sglang_rmsnorm/cases/native_fixed/reference.py" \
+            --task "$GITHUB_WORKSPACE/reproduction/production_sglang_rmsnorm/cases/native_fixed/task.json" \
+            --output /tmp/lark-sglang-installed-certificate --lean "$HOME/.elan/bin/lean" --timeout 600
+          /tmp/lark-sglang-installed/bin/lark check /tmp/lark-sglang-installed-certificate \
+            --lean "$HOME/.elan/bin/lean" --timeout 600
+  native-flashinfer-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native FlashInfer RMSNorm real certificates and controls
+        run: python3 reproduction/production_flashinfer_rmsnorm/check_native_real.py --output /tmp/lark-flashinfer-canonical-real
+      - name: Replay frozen native FlashInfer RMSNorm real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/replay_native_real.py \
+            --packet /tmp/lark-flashinfer-canonical-real --output /tmp/lark-flashinfer-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Verify and recheck a certificate from an installed wheel outside the checkout
+        env:
+          LARK_REAL_PROJECT: ${{ github.workspace }}/lean-real
+        run: |
+          python3 -m pip wheel . --no-deps --wheel-dir /tmp/lark-flashinfer-wheel
+          python3 -m venv /tmp/lark-flashinfer-installed
+          /tmp/lark-flashinfer-installed/bin/pip install --no-index --no-deps /tmp/lark-flashinfer-wheel/*.whl
+          cd /tmp
+          /tmp/lark-flashinfer-installed/bin/lark verify-native-flashinfer-rmsnorm \
+            "$GITHUB_WORKSPACE/reproduction/production_flashinfer_rmsnorm/cases/native_16384/kernel.hip" \
+            --reference "$GITHUB_WORKSPACE/reproduction/production_flashinfer_rmsnorm/cases/native_16384/reference.py" \
+            --task "$GITHUB_WORKSPACE/reproduction/production_flashinfer_rmsnorm/cases/native_16384/task.json" \
+            --output /tmp/lark-flashinfer-installed-certificate --lean "$HOME/.elan/bin/lean" --timeout 600
+          /tmp/lark-flashinfer-installed/bin/lark check /tmp/lark-flashinfer-installed-certificate \
+            --lean "$HOME/.elan/bin/lean" --timeout 600
+  native-sglang-rmsnorm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check typed half-cache and reference boundary
+        run: python3 -m unittest discover -s tests -p test_native_sglang_rmsnorm.py -v
+      - name: Check complete source binding, private bounds and cut-state instruction witnesses
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_program.py \
+            --output /tmp/lark-sglang-components --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen components without Git or owned compiled caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_components.py \
+            --packet /tmp/lark-sglang-components --output /tmp/lark-sglang-component-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed reachability and whole-kernel overclaims
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_component_stages.py \
+            --packet /tmp/lark-sglang-components --output /tmp/lark-sglang-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Check complete finite original and repaired launches
+        run: python3 reproduction/production_sglang_rmsnorm/run_symbolic.py --output /tmp/lark-sglang-symbolic
+      - name: Reject changed reduction, traffic and output controls
+        run: python3 reproduction/production_sglang_rmsnorm/check_controls.py --output /tmp/lark-sglang-finite-controls
+      - name: Check scalar initializer and input preload prefix equations through PC16
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_input_preloads.py \
+            --output /tmp/lark-sglang-input-preloads --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen input preload equations without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_input_preloads.py \
+            --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed claims about later execution
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_input_preload_stages.py \
+            --packet /tmp/lark-sglang-input-preloads --output /tmp/lark-sglang-input-preload-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Prove successful native scalar execution to the first shuffle
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_prefix.py \
+            --output /tmp/lark-sglang-first-shuffle --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen first-shuffle proofs without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_prefix.py \
+            --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed claims about later collectives and shared stores
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_prefix_stages.py \
+            --packet /tmp/lark-sglang-first-shuffle --output /tmp/lark-sglang-first-shuffle-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Prove carried native wave preparation and the first XOR snapshot
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_entry.py \
+            --output /tmp/lark-sglang-wave-entry --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen native wave-entry proofs without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_wave_entry.py \
+            --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed claims about later reduction and synchronization
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_entry_stages.py \
+            --packet /tmp/lark-sglang-wave-entry --output /tmp/lark-sglang-wave-entry-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Prove complete native waves through the first block-barrier visit
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_partial.py \
+            --output /tmp/lark-sglang-wave-partial --lean-bin "$HOME/.elan/bin"
+      - name: Replay first-barrier execution and initialized race without Git or owned caches
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/replay_wave_partial.py \
+            --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed block-resumption and whole-kernel overclaims
+        run: |
+          python3 reproduction/production_sglang_rmsnorm/check_wave_partial_stages.py \
+            --packet /tmp/lark-sglang-wave-partial --output /tmp/lark-sglang-wave-partial-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Check guarded initialized whole-block development proof and axioms
+        working-directory: lean
+        run: |
+          lake build Lark.NativeSglangRmsNormCompleteBlockFrame 2>&1 | tee /tmp/lark-sglang-complete-block.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log = Path('/tmp/lark-sglang-complete-block.log').read_text()
+          assert 'Build completed successfully.' in log
+          assert not re.search(r'^error:|^warning:|Stack overflow', log, re.M)
+          axioms = re.findall(r'depends on axioms:\s*\[([^\]]*)\]', log)
+          used = {a.strip() for group in axioms for a in group.split(',')}
+          assert used <= {'propext', 'Classical.choice', 'Quot.sound'}, used
+          for name in ('complete_block_run', 'complete_block_value', 'complete_block_good',
+                       'initial_complete_block_run', 'initial_complete_block_race_free'):
+              assert f"'LarkNativeSglangRmsNorm.{name}'" in log, name
+          print('Whole-block development proof passed; whole-grid and exact-real validation remain separate.')
+          PY
+  native-flashinfer-rmsnorm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check closed FlashInfer signature and reference boundary
+        run: python3 -m unittest discover -s tests -p test_native_flashinfer_rmsnorm.py -v
+      - name: Bind full source and prove address and conditional footprint components
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_program.py \
+            --output /tmp/lark-flashinfer-components --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen components without Git or owned compiled caches
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/replay_components.py \
+            --packet /tmp/lark-flashinfer-components --output /tmp/lark-flashinfer-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject fully rehashed execution and certificate overclaims
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_component_stages.py \
+            --packet /tmp/lark-flashinfer-components --output /tmp/lark-flashinfer-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Check finite expression DAGs, actual access patterns and source controls
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/run_symbolic.py \
+            --output /tmp/lark-flashinfer-symbolic
+      - name: Prove actual native execution through the first block barrier
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_execution.py \
+            --output /tmp/lark-flashinfer-first-block --lean-bin "$HOME/.elan/bin"
+      - name: Replay first-block execution from frozen sources without Git or owned caches
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/replay_execution.py \
+            --packet /tmp/lark-flashinfer-first-block --output /tmp/lark-flashinfer-first-block-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject overclaims about later execution and outputs
+        run: |
+          python3 reproduction/production_flashinfer_rmsnorm/check_execution_stages.py \
+            --packet /tmp/lark-flashinfer-first-block --output /tmp/lark-flashinfer-first-block-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+  native-qknorm-rope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check closed fused Q/K host contract and reference boundary
+        run: python3 -m unittest discover -s tests -p test_native_qknorm_rope.py -v
+      - name: Bind both complete sources and check native ownership and bounds
+        run: python3 reproduction/production_qknorm_rope/check_program.py --output /tmp/lark-fused-qk-components
+      - name: Rebuild partial reduction and normalization execution proofs from fresh sources
+        run: |
+          python3 reproduction/production_qknorm_rope/check_execution_prefix.py \
+            --output /tmp/lark-fused-qk-execution-prefix --lean-bin "$HOME/.elan/bin"
+      - name: Check complete native interleaved physical-wave execution and false source controls
+        run: |
+          python3 reproduction/production_qknorm_rope/check_interleaved_wave.py \
+            --output /tmp/lark-fused-qk-interleaved-wave --lean-bin "$HOME/.elan/bin"
+      - name: Check complete interleaved grid, output extraction and source-order correctness
+        run: |
+          python3 reproduction/production_qknorm_rope/check_interleaved_launch.py \
+            --output /tmp/lark-fused-qk-interleaved-launch --lean-bin "$HOME/.elan/bin"
+      - name: Check complete split-half physical wave, both warp fences and changed-source controls
+        run: |
+          python3 reproduction/production_qknorm_rope/check_split_wave.py \
+            --output /tmp/lark-fused-qk-split-wave --lean-bin "$HOME/.elan/bin"
+      - name: Replay frozen components without Git or owned compiled caches
+        run: |
+          python3 reproduction/production_qknorm_rope/replay_components.py \
+            --packet /tmp/lark-fused-qk-components --output /tmp/lark-fused-qk-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed proof-stage changes before extraction
+        run: |
+          python3 reproduction/production_qknorm_rope/check_component_stages.py \
+            --packet /tmp/lark-fused-qk-components --output /tmp/lark-fused-qk-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Execute all finite fused Q/K values and traces and reject source mutations
+        run: python3 reproduction/production_qknorm_rope/run_symbolic.py --output /tmp/lark-fused-qk-symbolic
+  native-rope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check native mutable Q/K contract and complete finite values
+        run: python3 -m unittest discover -s tests -p test_native_rope.py -v
+      - name: Bind both complete source layouts and check initialized interfaces and ownership
+        run: python3 reproduction/production_rope/check_program.py --output /tmp/lark-rope-components
+      - name: Replay frozen native RoPE components without Git or owned compiled caches
+        run: |
+          python3 reproduction/production_rope/replay_components.py \
+            --packet /tmp/lark-rope-components --output /tmp/lark-rope-components-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed RoPE stage overclaims before extraction
+        run: |
+          python3 reproduction/production_rope/check_component_stages.py \
+            --packet /tmp/lark-rope-components --output /tmp/lark-rope-stage-guards \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Execute complete finite native Q/K traces and reject source mutations
+        run: python3 reproduction/production_rope/run_symbolic.py --output /tmp/lark-rope-symbolic
+      - name: Export and recheck both complete native RoPE layouts and reject false claims
+        run: python3 reproduction/production_rope/run_whole.py --output /tmp/lark-rope-whole
+      - name: Rebuild frozen whole-launch certificates without Git or owned proof caches
+        run: |
+          python3 reproduction/production_rope/replay_whole.py \
+            --packet /tmp/lark-rope-whole --output /tmp/lark-rope-whole-replay \
+            --lean-bin "$HOME/.elan/bin"
+      - name: Reject rehashed whole-launch scope changes and promoted component packets
+        run: |
+          python3 reproduction/production_rope/check_whole_stages.py \
+            --packet /tmp/lark-rope-whole \
+            --earlier-packet reproduction/production_rope/results/components-v1 \
+            --output /tmp/lark-rope-whole-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check full softmax source binding, instruction witnesses and refusals
+        run: python3 reproduction/production_softmax/check_program.py --output /tmp/lark-softmax-components
+      - name: Replay frozen components and complete finite traces without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_components.py \
+            --packet /tmp/lark-softmax-components \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-components-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check closed native softmax contract and private-array ownership
+        run: python3 -m unittest discover -s tests -p test_native_softmax.py -v
+      - name: Check source-bound native softmax maximum prefix and rejection controls
+        run: python3 reproduction/production_softmax/check_prefix.py --output /tmp/lark-softmax-max-prefix
+      - name: Replay native softmax maximum-prefix archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_prefix.py \
+            --packet /tmp/lark-softmax-max-prefix \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-max-prefix-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check maximum-prefix report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_prefix_stages.py \
+            --packet /tmp/lark-softmax-max-prefix \
+            --earlier-packet reproduction/production_softmax/results/components-v3 \
+            --output /tmp/lark-softmax-max-prefix-stage-guards --lean-bin "$HOME/.elan/bin"
+      - name: Check source-bound native softmax maximum first wave and rejection controls
+        run: python3 reproduction/production_softmax/check_first_wave.py --output /tmp/lark-softmax-max-first-wave
+      - name: Replay native softmax maximum-wave archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_first_wave.py \
+            --packet /tmp/lark-softmax-max-first-wave \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-max-first-wave-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check maximum-wave report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_first_wave_stages.py \
+            --packet /tmp/lark-softmax-max-first-wave \
+            --earlier-packet reproduction/production_softmax/results/max-prefix-v1 \
+            --output /tmp/lark-softmax-max-first-wave-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-block:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check source-bound native softmax complete five-phase block and converted normalization outputs
+        run: python3 reproduction/production_softmax/check_whole_block.py --output /tmp/lark-softmax-whole-block
+      - name: Replay native softmax whole-block archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_whole_block.py \
+            --packet /tmp/lark-softmax-whole-block \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-whole-block-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check whole-block report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_whole_block_stages.py \
+            --packet /tmp/lark-softmax-whole-block \
+            --earlier-packet reproduction/production_softmax/results/reduction-prefix-v1 \
+            --output /tmp/lark-softmax-whole-block-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-grid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check source-bound repaired softmax complete grid and source-order Correct relation
+        run: python3 reproduction/production_softmax/check_whole_grid.py --output /tmp/lark-softmax-whole-grid
+      - name: Replay complete grid archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_whole_grid.py \
+            --packet /tmp/lark-softmax-whole-grid \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-whole-grid-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check whole-grid report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_whole_grid_stages.py \
+            --packet /tmp/lark-softmax-whole-grid \
+            --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+            --output /tmp/lark-softmax-whole-grid-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-race:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check reached original softmax conflict and one-row launch counterexample
+        run: python3 reproduction/production_softmax/check_original_race.py --output /tmp/lark-softmax-original-race
+      - name: Replay original-race archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_original_race.py \
+            --packet /tmp/lark-softmax-original-race \
+            --finite-trace-packet reproduction/production_softmax/results/finite-trace-v2 \
+            --output /tmp/lark-softmax-original-race-replay --lean-bin "$HOME/.elan/bin"
+      - name: Check original-race report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_original_race_stages.py \
+            --packet /tmp/lark-softmax-original-race \
+            --earlier-packet reproduction/production_softmax/results/whole-grid-v1 \
+            --output /tmp/lark-softmax-original-race-stage-guards --lean-bin "$HOME/.elan/bin"
+  softmax-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check source-bound canonical-real repaired softmax whole grid
+        run: python3 reproduction/production_softmax/check_native_real.py --output /tmp/lark-softmax-canonical-real
+      - name: Replay canonical-real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_softmax/replay_native_real.py \
+            --packet /tmp/lark-softmax-canonical-real \
+            --output /tmp/lark-softmax-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Check canonical-real report stage guards
+        run: |
+          python3 reproduction/production_softmax/check_native_real_stages.py \
+            --packet /tmp/lark-softmax-canonical-real \
+            --earlier-packet reproduction/production_softmax/results/whole-block-v1 \
+            --output /tmp/lark-softmax-canonical-real-stage-guards --lean-bin "$HOME/.elan/bin"
+  exact-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check source-bound real wave reduction and tamper controls
+        run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_wave_sum.py -v
+      - name: Check source-bound native RMSNorm certificates and tamper controls
+        run: LARK_TEST_REAL=1 python3 -m unittest discover -s tests -p test_native_rmsnorm.py -v
+      - name: Check real interpretation, machine specializations and algebra controls
+        run: python3 reproduction/exact_real/run.py --output /tmp/lark-exact-real
+      - name: Check native RMSNorm canonical-real whole launch
+        run: lake build LarkReal.NativeRmsNorm
+        working-directory: lean-real
+      - name: Check online-attention algebra and false-update counterexamples
+        run: python3 reproduction/online_attention/run_algebra.py --output /tmp/lark-online-algebra
+      - name: Check source-bound native attention canonical-real whole launch
+        run: python3 reproduction/online_attention/check_native_real.py --output /tmp/lark-native-attention-real
+  qknorm-rope-split-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native split-half Q/K normalization and RoPE real certificates and controls
+        run: python3 reproduction/production_qknorm_rope/check_split_real.py --output /tmp/lark-qknorm-rope-split-canonical-real
+      - name: Replay frozen native split-half Q/K normalization and RoPE real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_qknorm_rope/replay_split_real.py \
+            --packet /tmp/lark-qknorm-rope-split-canonical-real --output /tmp/lark-qknorm-rope-split-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+  qknorm-rope-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native interleaved Q/K normalization and RoPE real certificates and controls
+        run: python3 reproduction/production_qknorm_rope/check_native_real.py --output /tmp/lark-qknorm-rope-canonical-real
+      - name: Replay frozen native interleaved Q/K normalization and RoPE real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_qknorm_rope/replay_native_real.py \
+            --packet /tmp/lark-qknorm-rope-canonical-real --output /tmp/lark-qknorm-rope-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+  fused-real:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch locked optional dependencies
+        run: |
+          MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
+          git diff --exit-code -- lake-manifest.json
+        working-directory: lean-real
+      - name: Fetch selected Mathlib cache
+        run: |
+          lake exe cache get Mathlib.Data.Complex.Trigonometric \
+            Mathlib.Analysis.SpecialFunctions.Sqrt \
+            Mathlib.Algebra.BigOperators.Group.List.Basic Mathlib.Tactic.NormNum Mathlib.Data.Nat.Bitwise \
+            Mathlib.Tactic.FieldSimp Mathlib.Tactic.Ring
+        working-directory: lean-real
+      - name: Check native fused RMSNorm real certificates and controls
+        run: python3 reproduction/production_fused_rmsnorm/check_native_real.py --output /tmp/lark-fused-canonical-real
+      - name: Replay frozen native fused RMSNorm real archive without Git or own compiled cache
+        run: |
+          python3 reproduction/production_fused_rmsnorm/replay_native_real.py \
+            --packet /tmp/lark-fused-canonical-real --output /tmp/lark-fused-canonical-real-replay \
+            --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Rebuild native in-place fused RMSNorm whole seeded-inout launch outside Git
+        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
+      - name: Check whole-launch report stage guards
+        run: python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
+  ptx-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Prove the exact full-size compiled GEMM with five fresh owned modules
+        run: |
+          python3 -m lark_kernels.ptx_matrix_certificate verify \
+            --source reproduction/ptx/full-size/gemm/kernel.ptx \
+            --reference reproduction/ptx/full-size/gemm/reference.py \
+            --contract reproduction/ptx/full-size/gemm/task.json \
+            --output /tmp/lark-ptx-gemm-ci-export --lean "$HOME/.elan/bin/lean"
+      - name: Replay from trusted source and refuse four accepted-grammar mutations in Lean
+        run: |
+          python3 reproduction/ptx/check_matrix_controls.py \
+            --recording /tmp/lark-ptx-gemm-ci-export \
+            --output /tmp/lark-ptx-gemm-ci-controls --lean "$HOME/.elan/bin/lean"
+  ptx-batched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Prove the exact full-size compiled BMM with eight fresh owned modules
+        run: |
+          python3 -m lark_kernels.ptx_batched_certificate verify \
+            --source reproduction/ptx/full-size/bmm/kernel.ptx \
+            --reference reproduction/ptx/full-size/bmm/reference.py \
+            --contract reproduction/ptx/full-size/bmm/task.json \
+            --output /tmp/lark-ptx-bmm-ci-export --lean "$HOME/.elan/bin/lean"
+      - name: Replay from trusted source and refuse four accepted-grammar mutations in Lean
+        run: |
+          python3 reproduction/ptx/check_batched_source_controls.py \
+            --recording /tmp/lark-ptx-bmm-ci-export \
+            --output /tmp/lark-ptx-bmm-ci-controls --lean "$HOME/.elan/bin/lean"
+  ptx-linear:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Prove the exact full-size compiled Linear with ten fresh owned modules
+        run: |
+          python3 -m lark_kernels.ptx_linear_certificate verify \
+            --source reproduction/ptx/full-size/linear/kernel.ptx \
+            --reference reproduction/ptx/full-size/linear/reference.py \
+            --contract reproduction/ptx/full-size/linear/task.json \
+            --output /tmp/lark-ptx-linear-ci-export --lean "$HOME/.elan/bin/lean"
+      - name: Replay from trusted source and refuse four accepted-grammar mutations in Lean
+        run: |
+          python3 reproduction/ptx/check_linear_source_controls.py \
+            --recording /tmp/lark-ptx-linear-ci-export \
+            --output /tmp/lark-ptx-linear-ci-controls --lean "$HOME/.elan/bin/lean"
+  ptx-rotary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Validate complete recorded RoPE evidence as data
+        run: |
+          python3 -I reproduction/paper_results/ptx_rotary_evidence.py \
+            --packet reproduction/ptx/results/full-size-rotary-proof-v1 \
+            --output /tmp/lark-ptx-rotary-ci-recorded-evidence.json
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Prove all original RoPE lanes with eight fresh owned modules
+        run: |
+          python3 -m lark_kernels.ptx_rotary_certificate verify \
+            --source reproduction/ptx/full-size/rope/kernel.ptx \
+            --reference reproduction/ptx/full-size/rope/reference.py \
+            --contract reproduction/ptx/full-size/rope/task.json \
+            --output /tmp/lark-ptx-rotary-ci-export --lean "$HOME/.elan/bin/lean"
+      - name: Replay from fresh trusted sources and refuse four changes directly in Lean
+        run: |
+          python3 reproduction/ptx/check_rotary_source_controls.py \
+            --recording /tmp/lark-ptx-rotary-ci-export \
+            --output /tmp/lark-ptx-rotary-ci-controls --lean "$HOME/.elan/bin/lean"
+      - name: Refuse seventeen coherently rehashed false SDK recordings before fresh work
+        run: |
+          python3 reproduction/ptx/check_rotary_recording_controls.py \
+            --recording /tmp/lark-ptx-rotary-ci-export \
+            --output /tmp/lark-ptx-rotary-ci-recording-controls --lean "$HOME/.elan/bin/lean"
+  proof-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned Lean toolchain
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain leanprover/lean4:v4.19.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Check all3792 preserved evidence paths before Lean work
+        run: python -m unittest discover -s tests -p test_prepare_ptx_rotary_snapshot.py -v
+      - name: Check machine model
+        run: lake build
+        working-directory: lean
+      - name: Check nonlinear machine model
+        run: lean Lark/Nonlinear.lean
+        working-directory: lean
+      - name: Check pointwise induction proof
+        run: lake env lean Lark/Pointwise.lean
+        working-directory: lean
+      - name: Check counted-loop induction proof
+        run: lake env lean Lark/Reduction.lean
+        working-directory: lean
+      - name: Check matrix address and dot-loop proofs
+        run: lake env lean Lark/Matrix.lean
+        working-directory: lean
+      - name: Check multiwave scalar SiLU strided-loop proof
+        run: lake env lean Lark/Silu.lean
+        working-directory: lean
+      - name: Check bias epilogue and Linear proof
+        run: lake env lean Lark/Bias.lean
+        working-directory: lean
+      - name: Check interleaved rotary proof
+        run: lake env lean Lark/Rotary.lean
+        working-directory: lean
+      - name: Check convolution address proofs
+        run: lake env lean Lark/Convolution.lean
+        working-directory: lean
+      - name: Check normalization loop and grid proofs
+        run: lake env lean Lark/Normalization.lean
+        working-directory: lean
+      - name: Check full-wave64 shuffle machine and transfer proof
+        run: lake env lean Lark/ShuffleTransfer.lean
+        working-directory: lean
+      - name: Check full-wave64 MFMA machine and tile proof
+        run: lake env lean Lark/MFMATile.lean
+        working-directory: lean
+      - name: Check native RMSNorm execution components
+        run: lake build Lark.NativeRmsNormCorrect
+        working-directory: lean
+      - name: Check native in-place fused RMSNorm interface and source components
+        run: python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
+      - name: Check native tiled attention address and footprint components
+        run: lake build Lark.NativeAttentionAddress
+        working-directory: lean
+      - name: Check native attention source identity and footprint witnesses
+        run: python3 reproduction/online_attention/check_native_program.py --output /tmp/lark-native-attention-binding
+      - name: Rebuild native attention execution prefix outside Git
+        run: python3 reproduction/online_attention/check_native_prefix.py --stage whole-launch --output /tmp/lark-native-attention-prefix
+      - name: Run tests, including Lean integration and mutants
+        run: python -m unittest discover -s tests -v
+      - name: Check two-launch FFN composition
+        run: lake env lean Lark/FeedForward.lean
+        working-directory: lean
+      - name: Export example certificates
+        run: python tools/verify_examples.py certificates
+      - name: Check FP32-projection SwiGLU composition
+        run: lake env lean Lark/SwiGLU.lean
+        working-directory: lean
+      - name: Check dense SDPA and grouped-query composition
+        run: lake env lean Lark/AttentionPipeline.lean
+        working-directory: lean
+      - name: Recheck standalone export
+        run: lake build
+        working-directory: certificates/vector_add
+      - name: Check production-race address witness
+        run: python reproduction/production_race.py --output /tmp/lark-production-race

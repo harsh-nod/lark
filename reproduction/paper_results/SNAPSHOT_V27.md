@@ -100,6 +100,39 @@ The v25 and v26 snapshots replayed outside Git with the initial consolidation,
 before adding the early-failure fallback. These checks do not establish a new
 complete 98-case or source-CI pass. Both frozen snapshots and v27 remain intact.
 
+The [fourth complete suite](snapshot-v27-validation-mi350-v4/observer/results.json)
+then passed all 98 checks in **253.108 seconds** on MI350 CPU at `ceb5eb7`,
+with all 89 earlier check records identical. Its returned logs and executed
+helpers are independently bound to that exact Git source. The corresponding
+[hosted ledger attempt](snapshot-v27-paper-ci-timeout-v3/analysis.json) still
+hit the 300-second cap after 66 logs. A CPU-host pass is not a source-CI pass.
+
+The [first complete CI observation](snapshot-v27-source-ci-failed-v1/results.json)
+retains 22 successful jobs, the failed ledger job and a `proof-tests` job
+cancelled at its unchanged 30-minute job limit. Its raw test log had already
+reported an error for the 3,792-path preservation test. The
+[isolated ancestry diagnostic](snapshot-v27-ci-scheduling-v1/shallow-results.json)
+reproduces why full history is necessary: the same old blob verifies with
+complete ancestry and is correctly refused by a shallow view.
+
+The [workflow revision](snapshot-v27-ci-scheduling-v1/final-workflow.yml)
+keeps all 24 jobs and all their existing time limits. The four existing numerical
+packet audits move to `paper-ledger`; the existing cold fused whole-launch
+proof and its report guards move to `fused-real`. Every original named command
+remains. `proof-tests` fetches full ancestry with a blob filter and checks the
+preservation test before expensive Lean work. No Lean, whole-suite or individual
+replay limit increases.
+
+Temporary replay storage uses available `/dev/shm` only when it has at least
+4 GiB free and the host has at least 6 GiB available memory; otherwise it keeps
+the usual temporary directory. The entire control workspace is constructed
+inside the same 300-second window. The [actual storage comparison](snapshot-v27-RAM-storage-equivalence-v1/results.json)
+compares every one of **547,956,518 bytes** across all sixteen physical files of
+one complete false input on disk and RAM. All 4,135 logical files remain. This
+storage check performs no replay or proof and replaces none of the 98 cases.
+CI also records timing and I/O diagnostics. These changes still require their
+own actual full source-CI result and anonymous publication verification.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v27 \

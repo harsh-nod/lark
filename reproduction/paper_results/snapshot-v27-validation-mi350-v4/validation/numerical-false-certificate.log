@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-snapshot-controls-j370u0ou/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-snapshot-controls-j370u0ou/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-snapshot-controls-j370u0ou/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-snapshot-controls-j370u0ou/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-paper-snapshot-oxho54a6/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-paper-snapshot-oxho54a6/reproduction/paper_results/audit.py", line 671, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-paper-snapshot-oxho54a6/reproduction/paper_results/audit.py", line 218, in check_numerical_evidence
+    require(all(type(item[k]) is int and item[k] == 0
+  File "/tmp/lark-paper-v27-controls-mi350-v4-20261113/temporary/lark-paper-snapshot-oxho54a6/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study execution/proof scope differs: production
+

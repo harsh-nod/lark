@@ -16,6 +16,26 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
+      - name: Audit frozen elaborated-reference numerical evidence without GPU or model calls
+        run: |
+          python3 reproduction/specification_validation/packet.py verify \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-verified
+      - name: Reject altered numerical evidence and fully rehashed scope claims
+        run: |
+          python3 reproduction/specification_validation/check_packet.py \
+            --packet reproduction/specification_validation/results/production-real-v1 \
+            --output /tmp/lark-elaborated-reference-packet-controls
+      - name: Audit all seventeen benchmark reference families and complete score tensors
+        run: |
+          python3 reproduction/benchmark_specification_validation/packet.py verify \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-verified
+      - name: Reject altered benchmark scope, samples, controls and score oracles
+        run: |
+          python3 reproduction/benchmark_specification_validation/check_packet.py \
+            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
+            --output /tmp/lark-benchmark-reference-packet-controls
       - name: Require six model cohorts and six complete-source PTX development proofs
         run: |
           python3 - <<'PY'
@@ -136,6 +156,27 @@ jobs:
           data = Path('/tmp/lark-paper-source.tar').read_bytes()
           assert hashlib.sha256(data).hexdigest() == '095aae393369d4e8459e5c4c46af73b83ee9765ce786f4ebb870d2cd0cdf20d2'
           PY
+      - name: Select complete-replay temporary storage and record resources
+        run: |
+          python3 - <<'PYCODE'
+          import json
+          import os
+          from pathlib import Path
+          import shutil
+          import tempfile
+          ram = Path('/dev/shm')
+          ram_free = shutil.disk_usage(ram).free if ram.is_dir() else 0
+          memory = dict(line.split(':', 1) for line in Path('/proc/meminfo').read_text().splitlines())
+          memory_available = int(memory['MemAvailable'].split()[0]) * 1024
+          use_ram = ram_free >= 4 * 1024**3 and memory_available >= 6 * 1024**3 and os.access(ram, os.W_OK)
+          selected = str(ram) if use_ram else tempfile.gettempdir()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('TMPDIR=' + selected + '\n')
+          print(json.dumps({'temporary_directory': selected, 'RAM_filesystem_free_bytes': ram_free,
+                            'memory_available_bytes': memory_available,
+                            'complete_payload_required': True, 'aggregate_seconds': 300,
+                            'per_replay_seconds': 120, 'max_independent_replayers': 2}))
+          PYCODE
       - name: Replay the frozen ledger and all rehashed controls without Git
         run: |
           python3 - <<'PY'
@@ -149,7 +190,7 @@ jobs:
                      'reproduction/paper_results/check_snapshot_controls.py',
                      '--snapshot', os.environ['LARK_PAPER_SNAPSHOT'],
                      '--source-archive', '/tmp/lark-paper-source.tar', '--output', str(output)]
-          result = subprocess.run(command)
+          result = subprocess.run(['/usr/bin/time', '-v', *command])
           for path in sorted(output.glob('*.log')):
               print(json.dumps({'control_log': path.name, 'text': path.read_text()}), flush=True)
           if result.returncode == 0:
@@ -932,6 +973,10 @@ jobs:
           python3 reproduction/production_fused_rmsnorm/replay_native_real.py \
             --packet /tmp/lark-fused-canonical-real --output /tmp/lark-fused-canonical-real-replay \
             --lean-bin "$HOME/.elan/bin" --dependency-project lean-real
+      - name: Rebuild native in-place fused RMSNorm whole seeded-inout launch outside Git
+        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
+      - name: Check whole-launch report stage guards
+        run: python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
   ptx-matrix:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -1047,29 +1092,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
-      - name: Audit frozen elaborated-reference numerical evidence without GPU or model calls
-        run: |
-          python3 reproduction/specification_validation/packet.py verify \
-            --packet reproduction/specification_validation/results/production-real-v1 \
-            --output /tmp/lark-elaborated-reference-packet-verified
-      - name: Reject altered numerical evidence and fully rehashed scope claims
-        run: |
-          python3 reproduction/specification_validation/check_packet.py \
-            --packet reproduction/specification_validation/results/production-real-v1 \
-            --output /tmp/lark-elaborated-reference-packet-controls
-      - name: Audit all seventeen benchmark reference families and complete score tensors
-        run: |
-          python3 reproduction/benchmark_specification_validation/packet.py verify \
-            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
-            --output /tmp/lark-benchmark-reference-packet-verified
-      - name: Reject altered benchmark scope, samples, controls and score oracles
-        run: |
-          python3 reproduction/benchmark_specification_validation/check_packet.py \
-            --packet reproduction/benchmark_specification_validation/results/benchmark-float64-v1 \
-            --output /tmp/lark-benchmark-reference-packet-controls
       - name: Install pinned Lean toolchain
         run: |
           curl -sSfL https://raw.githubusercontent.com/leanprover/elan/58e8d545e33641f66dbcbd22c4283109e71757be/elan-init.sh -o /tmp/elan-init.sh
@@ -1077,6 +1105,8 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Install package
         run: python -m pip install -e .
+      - name: Check all3792 preserved evidence paths before Lean work
+        run: python -m unittest discover -s tests -p test_prepare_ptx_rotary_snapshot.py -v
       - name: Check machine model
         run: lake build
         working-directory: lean
@@ -1118,10 +1148,6 @@ jobs:
         working-directory: lean
       - name: Check native in-place fused RMSNorm interface and source components
         run: python3 reproduction/production_fused_rmsnorm/check_program.py --output /tmp/lark-native-fused-rmsnorm-components
-      - name: Rebuild native in-place fused RMSNorm whole seeded-inout launch outside Git
-        run: python3 reproduction/production_fused_rmsnorm/check_prefix.py --stage whole-launch --output /tmp/lark-native-fused-rmsnorm-whole-launch
-      - name: Check whole-launch report stage guards
-        run: python3 reproduction/production_fused_rmsnorm/check_replay_stages.py --output /tmp/lark-fused-whole-stage-guards --lean-bin "$HOME/.elan/bin"
       - name: Check native tiled attention address and footprint components
         run: lake build Lark.NativeAttentionAddress
         working-directory: lean
