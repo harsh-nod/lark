@@ -54,7 +54,7 @@ def expected_counts(targets):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True)
-    parser.add_argument('--snapshot', default='20261113-v25')
+    parser.add_argument('--snapshot', default='20261113-v26')
     parser.add_argument('--source-archive', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--proxy', required=True)

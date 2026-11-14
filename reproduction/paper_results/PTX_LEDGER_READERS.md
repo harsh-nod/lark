@@ -67,8 +67,8 @@ They include all eight scope controls for each new proof, nested axiom/AST/
 module/budget attacks, failure-history preservation, wheel isolation, anonymous
 TLS observations and main-promotion guards.
 
-The immutable default remains v25. These readers alone neither create a v26
-snapshot nor establish that all paper results have been reproduced.
+The default is now the v26 ledger containing these recorded packets. The
+readers validate retained evidence and establish no full-paper completion.
 
 The [pinned reader-validation receipt](snapshot-v26-ptx-reader-validation-v1/results.json)
 records a complete standard-library-only run from isolated Python outside Git
