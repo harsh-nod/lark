@@ -161,6 +161,30 @@ def build_parts(snapshot, content, *, chunk_bytes=MAX_ENTRY_BYTES, tar_bytes=MAX
     return validate_layout({"schema": SCHEMA, "logical_files": logical, "archives": archives})
 
 
+def verify_materialized_file(target, row, fragments):
+    """Bind actual read-back bytes to the complete file and every fragment."""
+    if len(fragments) == 1:
+        # Validated contiguous coverage makes the sole fragment the entire
+        # logical file, including the empty-file case. One actual read-back
+        # digest must satisfy both independent expected bindings.
+        actual = file_digest(target)
+        require(actual == row["sha256"], "Reassembled logical evidence differs")
+        require(actual == fragments[0]["sha256"], "Archive fragment bytes differ")
+        return
+    logical, actual_fragments = hashlib.sha256(), []
+    with target.open("rb") as source:
+        for fragment in fragments:
+            data = source.read(fragment["bytes"])
+            require(len(data) == fragment["bytes"], "Reassembled logical evidence differs")
+            logical.update(data)
+            actual_fragments.append(digest(data))
+        require(source.read(1) == b"", "Reassembled logical evidence differs")
+    require(logical.hexdigest() == row["sha256"], "Reassembled logical evidence differs")
+    require(all(actual == fragment["sha256"]
+                for actual, fragment in zip(actual_fragments, fragments, strict=True)),
+            "Archive fragment bytes differ")
+
+
 def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archive_hashes=None):
     snapshot, root = Path(snapshot), Path(root)
     validate_layout(layout, expected_hashes)
@@ -180,7 +204,7 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
         if expected_archive_hashes is not None:
             require(actual == expected_archive_hashes[description["path"]],
                     "Snapshot bytes differ: " + description["path"])
-    offsets, started = {}, set()
+    offsets, started, fragments = {}, set(), {}
     for description in layout["archives"]:
         expected = list(description["entries"])
         count = 0
@@ -195,8 +219,7 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
                 fragment = description["entries"][entry.name]
                 require(entry.size == fragment["bytes"], "Archive fragment size differs")
                 data = archive.extractfile(entry).read()
-                require(len(data) == fragment["bytes"] and digest(data) == fragment["sha256"],
-                        "Archive fragment bytes differ")
+                require(len(data) == fragment["bytes"], "Archive fragment bytes differ")
                 name = fragment["file"]
                 require(fragment["offset"] == offsets.get(name, 0), "Fragment order differs")
                 target = root / safe_path(name)
@@ -205,15 +228,17 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
                     destination.write(data)
                 offsets[name] = offsets.get(name, 0) + len(data)
                 started.add(name)
+                fragments.setdefault(name, []).append(fragment)
         require(count == len(expected), "Missing archive fragments")
     require(started == set(layout["logical_files"]), "Missing evidence files")
     for name, row in layout["logical_files"].items():
         target = root / safe_path(name)
-        # Verify the materialized file, rather than hashing its input again
-        # while writing and then repeating the whole-file check in replay.
+        # Read back the materialized bytes once. Every fragment binding and
+        # the complete logical binding are checked before any frozen code runs.
         require(offsets[name] == row["bytes"] and not target.is_symlink() and target.is_file()
-                and target.stat().st_size == row["bytes"] and file_digest(target) == row["sha256"],
+                and target.stat().st_size == row["bytes"],
                 "Reassembled logical evidence differs")
+        verify_materialized_file(target, row, fragments[name])
     actual_files = set()
     for path in root.rglob("*"):
         require(not path.is_symlink(), "Snapshot symlink")

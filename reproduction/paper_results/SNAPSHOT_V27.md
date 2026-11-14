@@ -170,6 +170,31 @@ fails. It adds no proof, dependency-audit or replay retries, changes no existing
 job limit and retains the original failed job's complete raw log. A fresh
 workflow is required to validate this repair; the failed workflow is not rerun.
 
+The producer revision's [hosted ledger job](snapshot-v27-paper-ci-pass-v5/controls-capture.json)
+passed all 98 checks in **287.95 seconds** at `f305b2a`; all original logs are
+retained. The subsequent setup-repair source `e0ba05e` has identical replay
+helpers but its [hosted ledger job](snapshot-v27-paper-ci-timeout-v6/analysis.json)
+timed out after 86 logs. The pass and failure are separate observations, and
+neither establishes a complete successful 24-job workflow.
+
+The [exact-source anonymous publication](snapshot-v27-publication-v3/verified/observer/results.json)
+for `e0ba05e6a38d3490f38b8d861572e04d6dcf0d47` passed all 20 anonymous,
+TLS-verified downloads (**485,435,928 bytes**) and all 98 checks. Its expected
+Git objects come from the complete verified MI350 v5 inputs, with blob IDs
+checked against the actual publication commit; all public URL downloads still
+occurred. All 98 records match the earlier complete MI350 suite. This receipt
+does not cover a later changed helper.
+
+The next [read-back validation](snapshot-v27-runtime-validation-v4/results.json)
+checks the complete-file digest and every fragment digest against the actual
+materialized bytes in one read-back pass. A single-fragment file, including
+an empty one, uses one actual digest checked against both expected bindings.
+Multi-fragment files require the digest of every bounded fragment and the
+incremental complete-file digest. All physical hashes, sizes, paths, inventory
+and post-write checks remain. Nineteen archive guards and twelve control-writer
+guards pass, as do complete immutable v25/v26 replays outside Git. The revised
+reader still requires its own complete 98-check suite and source CI.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v27 \

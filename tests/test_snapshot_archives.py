@@ -177,6 +177,57 @@ class SnapshotArchiveTests(unittest.TestCase):
                 self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
             storage.unpack_parts(self.snapshot, layout, destination)
 
+    def test_single_fragment_and_empty_files_require_both_readback_hash_bindings(self):
+        _, layout = self.example()
+        for name in ["evidence/code.py", "evidence/empty"]:
+            for binding in ["fragment", "logical"]:
+                altered = copy.deepcopy(layout)
+                if binding == "logical":
+                    altered["logical_files"][name]["sha256"] = "0" * 64
+                else:
+                    rows = [r for part in altered["archives"] for r in part["entries"].values()
+                            if r["file"] == name]
+                    self.assertEqual(len(rows), 1)
+                    rows[0]["sha256"] = "0" * 64
+                gate = ("Archive fragment bytes differ" if binding == "fragment"
+                        else "Reassembled logical evidence differs")
+                with self.subTest(name=name, binding=binding), self.assertRaisesRegex(ValueError, gate):
+                    storage.unpack_parts(self.snapshot, altered,
+                                         self.destination(name.rsplit("/", 1)[1] + "-" + binding))
+
+    def test_every_fragment_of_a_multifragment_file_is_independently_bound(self):
+        _, layout = self.example()
+        rows = [r for part in layout["archives"] for r in part["entries"].values()
+                if r["file"] == "evidence/a.bin"]
+        self.assertGreater(len(rows), 1)
+        for index in range(len(rows)):
+            altered = copy.deepcopy(layout)
+            fragments = [r for part in altered["archives"] for r in part["entries"].values()
+                         if r["file"] == "evidence/a.bin"]
+            fragments[index]["sha256"] = "0" * 64
+            with self.subTest(fragment=index), self.assertRaisesRegex(ValueError, "Archive fragment bytes differ"):
+                storage.unpack_parts(self.snapshot, altered, self.destination("fragment-" + str(index)))
+
+    def test_multifragment_materialized_file_is_checked_after_its_final_write(self):
+        content, layout = self.example()
+        destination = self.destination()
+        original_open = Path.open
+
+        @contextmanager
+        def corrupt_after_assembly(path, mode="r", *args, **kwargs):
+            with original_open(path, mode, *args, **kwargs) as stream:
+                yield stream
+            if (path == destination / "evidence/a.bin" and mode == "ab"
+                    and path.stat().st_size == len(content["evidence/a.bin"])):
+                with original_open(path, "r+b") as output:
+                    value = output.read(1)
+                    output.seek(0)
+                    output.write(bytes([value[0] ^ 1]))
+
+        with patch.object(Path, "open", corrupt_after_assembly), \
+                self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
+            storage.unpack_parts(self.snapshot, layout, destination)
+
     def test_unexpected_materialized_file_is_rejected(self):
         _, layout = self.example()
         destination = self.destination()
