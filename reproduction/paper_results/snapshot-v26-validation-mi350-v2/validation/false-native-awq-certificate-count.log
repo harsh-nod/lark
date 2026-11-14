@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-83m0b7cd/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-83m0b7cd/reproduction/paper_results/audit.py", line 723, in main
+    require((args.output / name).read_bytes() == value, "Audit differs: " + name)
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-83m0b7cd/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Audit differs: audit.json
+

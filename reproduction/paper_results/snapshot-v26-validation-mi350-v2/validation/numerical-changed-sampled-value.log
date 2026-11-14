@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-dqynzr13/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-dqynzr13/reproduction/paper_results/audit.py", line 659, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-dqynzr13/reproduction/paper_results/audit.py", line 234, in check_numerical_evidence
+    require(type(actual) in (float, int) and type(oracle) in (float, int) and
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-dqynzr13/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study sampled value differs: benchmark
+

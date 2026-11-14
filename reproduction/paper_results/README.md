@@ -59,6 +59,13 @@ No new Lean, GPU or model experiment ran. Limits remain 120 seconds per replay,
 300 seconds for the complete suite and at most two independent replay workers.
 Anonymous publication, updated source CI and main promotion remain pending.
 
+The [storage-managed revision](snapshot-v26-validation-mi350-v2/observer/results.json)
+also passed all 89 identical check records in 182.48 seconds. It releases each
+complete temporary false snapshot after verification while keeping inputs and
+all logs; unexpected failures retain their workspace. Sampled temporary storage
+peaked at 1.29 GB, with the same complete payload, all controls and unchanged
+resource limits.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v26 \

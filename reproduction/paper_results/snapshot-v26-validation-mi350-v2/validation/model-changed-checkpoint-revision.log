@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 292, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 288, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 225, in replay
+    require(
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-snapshot-controls-1hzw3b8l/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-tel6vgko/reproduction/paper_results/audit.py", line 742, in <module>
+    main()
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-tel6vgko/reproduction/paper_results/audit.py", line 662, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-tel6vgko/reproduction/paper_results/full_shape_evidence.py", line 123, in check_full_shape_evidence
+    require(key not in keys and key[0] in MODELS and language in ("hip", "cuda")
+  File "/tmp/lark-paper-v26-controls-mi350-v2-20261113/temporary/lark-paper-snapshot-tel6vgko/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model model/language/revision identity differs
+

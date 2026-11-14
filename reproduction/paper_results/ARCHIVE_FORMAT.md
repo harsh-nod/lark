@@ -140,6 +140,17 @@ its expected outcome is verified. Original input snapshots and all logs remain;
 an unexpected failure preserves its workspace. Every case still receives and
 validates the complete payload, and every control and limit remains unchanged.
 Seven focused workspace tests plus the eleven existing archive-control tests
-passed in 0.523 seconds. A new complete run of this storage-management revision
-is required before publication. CI now targets v26 and explicitly enforces the
+passed in 0.523 seconds. CI now targets v26 and explicitly enforces the
 300-second suite cap while retaining each completed control log in its output.
+
+The [second complete v26 control run](snapshot-v26-validation-mi350-v2/observer/results.json)
+validated that revision in 182.4833 seconds with all eight positives and
+eighty-one negatives. All 89 check records match the first completed run.
+Eighty full temporary false copies were released only after their verified
+outcomes; the wrong-manuscript control reuses the positive baseline. Sampled
+temporary storage peaked at 1,285,771,151 bytes. Inputs, four bounded archive
+parts, every logical payload, logs, workload/proof limits and the maximum of
+two replay workers remain unchanged. The snapshot manifest is still `251d9b3`.
+The second run's observer, executed sources, all logs and transport bindings
+are retained separately. Anonymous publication and actual updated CI/main gates
+remain pending.
