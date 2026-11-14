@@ -165,9 +165,9 @@ def preflight_frozen_release_headers(script):
 def preflight_frozen_ffn(script, config=None):
     """Check cheap FFN release claims early; never skip or cache the full audit.
 
-    Physical archives and materialized logical bytes have already been checked.
-    Use the same frozen CI checker that the full auditor will call again. An
-    accepted replay always runs the unchanged, separately hashed frozen auditor.
+    Header files and physical archives have already been checked. Use the same
+    frozen CI checker again after a complete unpack. An accepted replay always
+    runs the unchanged, separately hashed frozen auditor over all logical bytes.
     """
     script = Path(script)
     if config is None:
@@ -186,6 +186,85 @@ def preflight_frozen_ffn(script, config=None):
                    "declared FFN proof paths differ")
     ffn.check_ci(reader, protocol)
     preflight_ffn_publication(reader, protocol)
+
+
+def preflight_header_paths(layout, config):
+    """Select authored readers and their release headers, never proof payloads."""
+    if type(config) is not dict or "ptx_ffn_proof" not in config:
+        return set()
+    names = set(layout["logical_files"])
+    directory = PurePosixPath("reproduction/paper_results")
+    selected = {name for name in names if PurePosixPath(name).parent == directory
+                and PurePosixPath(name).suffix in (".py", ".json")}
+    for key in ("ptx_pointwise_proof", "ptx_dot_proof", "ptx_matrix_proof",
+                "ptx_batched_proof", "ptx_linear_proof", "ptx_rotary_proof"):
+        spec = config.get(key)
+        if type(spec) is not dict or not all(type(spec.get(k)) is str for k in ("prefix", "ci_prefix")):
+            return set()
+        selected.update((spec["prefix"] + "/results.json", spec["ci_prefix"] + "/run.json"))
+    spec = config["ptx_ffn_proof"]
+    if type(spec) is not dict or not all(type(spec.get(k)) is str
+                                        for k in ("ci_prefix", "ci_job_prefix", "publication_prefix")):
+        return set()
+    for key in ("ci_prefix", "ci_job_prefix"):
+        selected.update(name for name in names if name.startswith(spec[key] + "/"))
+    selected.update(spec["publication_prefix"] + "/" + name
+                    for name in ("results.json", "descriptor.json", "driver.py", "downloads.json"))
+    # Incomplete or unsupported headers fall back to the complete reader.
+    return selected if selected <= names else set()
+
+
+def run_frozen_headers(script, expected_sha256):
+    """Run only necessary refusal predicates in a fresh isolated subprocess."""
+    script = Path(script)
+    require(not script.is_symlink() and script.is_file()
+            and digest(script.read_bytes()) == expected_sha256, "Frozen auditor bytes differ")
+    sys.path.insert(0, str(script.parent))
+    try:
+        preflight_frozen_release_headers(script)
+    except (OSError, KeyError, ImportError, AttributeError):
+        # A partial view cannot establish acceptance or reject an unknown
+        # format. The caller must still run the complete unpack and auditor.
+        return
+    except ValueError as error:
+        if str(error).startswith(tuple("PTX " + kind + " " for kind in
+                                       ("pointwise", "dot", "matrix", "bmm", "linear", "rotary", "ffn"))):
+            raise
+
+
+def preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives):
+    """Refuse contradictory verified headers before unrelated logical payloads.
+
+    This is never a positive replay. On return, the caller freshly checks and
+    unpacks every physical/logical byte and runs the complete frozen auditor.
+    No header bytes, hashes or check results are shared with that later work.
+    """
+    if not (snapshot / "targets.json").is_file():
+        return
+    selected = preflight_header_paths(layout, read(snapshot / "targets.json"))
+    if not selected:
+        return
+    with tempfile.TemporaryDirectory(prefix="lark-paper-headers-") as temporary:
+        root = Path(temporary)
+        try:
+            archive_storage().unpack_header_files(
+                snapshot, layout, root, selected, expected_hashes=evidence_hashes,
+                expected_archive_hashes=expected_archives,
+            )
+        except Exception:
+            if expected_archives is not None:
+                verify_manifest(snapshot, expected_archives)
+            raise
+        directory = root / "reproduction/paper_results"
+        for source, target in (("auditor.py", "audit.py"), ("targets.json", "targets.json")):
+            require((snapshot / source).read_bytes() == (directory / target).read_bytes(),
+                    "Frozen auditor/targets differ from definitions")
+        result = subprocess.run(
+            [sys.executable, "-I", str(Path(__file__).resolve()), "--_frozen-headers",
+             str(directory / "audit.py"), digest((directory / "audit.py").read_bytes())],
+            cwd=root, text=True, capture_output=True, timeout=120,
+        )
+        require(result.returncode == 0, "Frozen audit replay failed: " + result.stdout + result.stderr)
 
 
 def read(path):
@@ -401,6 +480,8 @@ def replay(snapshot, manuscript, *, creating=False):
             unpack(snapshot / "evidence.tar.gz", root)
             verify_manifest(root, evidence_hashes, exact=True)
         else:
+            if not creating:
+                preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives)
             try:
                 archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes,
                                                expected_archive_hashes=expected_archives)
@@ -499,7 +580,10 @@ def main():
 
 
 if __name__ == "__main__":
-    if sys.argv[1:2] == ["--_frozen-auditor"]:
+    if sys.argv[1:2] == ["--_frozen-headers"]:
+        require(len(sys.argv) == 4, "Frozen header source/hash arguments required")
+        run_frozen_headers(sys.argv[2], sys.argv[3])
+    elif sys.argv[1:2] == ["--_frozen-auditor"]:
         require(len(sys.argv) >= 4, "Frozen auditor source/hash arguments required")
         run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
     else:

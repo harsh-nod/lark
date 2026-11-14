@@ -218,10 +218,11 @@ jobs:
               print(json.dumps({'control_log': path.name, 'text': path.read_text()}), flush=True)
           if result.returncode == 0:
               record = json.loads((output / 'results.json').read_text())
-              assert record['positive_replays'] == 9 and record['negative_controls'] == 89
-              assert len(record['checks']) == len({row['name'] for row in record['checks']}) == 98
-              assert len(record['released_completed_temporary_control_copies']) == 88
+              assert record['positive_replays'] == 10 and record['negative_controls'] == 98
+              assert len(record['checks']) == len({row['name'] for row in record['checks']}) == 108
+              assert len(record['released_completed_temporary_control_copies']) == 97
               assert record['all_control_payloads_complete_during_replay'] is True
+              print(json.dumps({'control_results': record}), flush=True)
           raise SystemExit(result.returncode)
           PY
   reference-identity:

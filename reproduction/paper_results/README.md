@@ -60,6 +60,19 @@ also freshly replayed both unchanged v26 and v27 artifacts with this reader.
 Those two checks establish positive compatibility; they do not claim separate
 full reruns of the older control suites.
 
+The [first hosted v28 ledger job](snapshot-v28-source-CI-ledger-failure-v1/results.json)
+hit the unchanged 300-second limit after 77 control logs. Its raw resource
+measurements and actual workflow are retained. The separate
+[FFN job at that same source](snapshot-v28-source-CI-FFN-job-v1/results.json)
+passed both fresh 8 MiB certificate builds, all 35 controls and all 4,416
+payload members; that job does not establish a whole-workflow pass.
+The current reader first freshly hashes all physical parts and reads verified
+release headers for necessary refusal predicates. Consistent headers always
+lead to a fresh complete unpack and the unchanged full auditor. This avoids
+materializing unrelated logical payloads on contradictory headers and adds
+no verification cache. The workflow's final counters now require the complete
+10-positive/98-negative roster and all 97 releasable control copies.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261114-v28 \

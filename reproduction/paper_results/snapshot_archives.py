@@ -186,6 +186,28 @@ def verify_materialized_file(target, row, fragments):
 
 
 def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archive_hashes=None):
+    """Verify and materialize every physical, fragment and logical binding."""
+    return _unpack_part_files(snapshot, layout, root, expected_hashes=expected_hashes,
+                              expected_archive_hashes=expected_archive_hashes)
+
+
+def unpack_header_files(snapshot, layout, root, names, *, expected_hashes=None,
+                        expected_archive_hashes=None):
+    """Read selected metadata for refusal only; this never certifies a snapshot.
+
+    Every physical archive is freshly hashed. Selected logical files and their
+    fragments receive the same read-back checks as a complete unpack. Accepted
+    replays must subsequently call unpack_parts without reusing this result.
+    """
+    require(type(names) is set and bool(names) and names <= set(layout["logical_files"]),
+            "Declared nonempty header selection required")
+    return _unpack_part_files(snapshot, layout, root, expected_hashes=expected_hashes,
+                              expected_archive_hashes=expected_archive_hashes,
+                              selected_files=names)
+
+
+def _unpack_part_files(snapshot, layout, root, *, expected_hashes=None,
+                       expected_archive_hashes=None, selected_files=None):
     snapshot, root = Path(snapshot), Path(root)
     validate_layout(layout, expected_hashes)
     require(root.is_dir() and not root.is_symlink() and not any(root.iterdir()),
@@ -204,9 +226,15 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
         if expected_archive_hashes is not None:
             require(actual == expected_archive_hashes[description["path"]],
                     "Snapshot bytes differ: " + description["path"])
+    selected = set(layout["logical_files"]) if selected_files is None else selected_files
     offsets, started, fragments = {}, set(), {}
     for description in layout["archives"]:
+        if not any(row["file"] in selected for row in description["entries"].values()):
+            continue
         expected = list(description["entries"])
+        last_needed = (len(expected) if selected_files is None else
+                       max(index for index, member in enumerate(expected, 1)
+                           if description["entries"][member]["file"] in selected))
         count = 0
         # GzipFile decodes every concatenated member used by the complete
         # control writer; tarfile's streaming gzip decoder stops after one.
@@ -218,6 +246,8 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
                         "Unexpected bounded archive entry")
                 fragment = description["entries"][entry.name]
                 require(entry.size == fragment["bytes"], "Archive fragment size differs")
+                if fragment["file"] not in selected:
+                    continue
                 data = archive.extractfile(entry).read()
                 require(len(data) == fragment["bytes"], "Archive fragment bytes differ")
                 name = fragment["file"]
@@ -229,9 +259,13 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
                 offsets[name] = offsets.get(name, 0) + len(data)
                 started.add(name)
                 fragments.setdefault(name, []).append(fragment)
-        require(count == len(expected), "Missing archive fragments")
-    require(started == set(layout["logical_files"]), "Missing evidence files")
+                if selected_files is not None and count == last_needed:
+                    break
+        require(count == last_needed, "Missing archive fragments")
+    require(started == selected, "Missing evidence files")
     for name, row in layout["logical_files"].items():
+        if name not in selected:
+            continue
         target = root / safe_path(name)
         # Read back the materialized bytes once. Every fragment binding and
         # the complete logical binding are checked before any frozen code runs.
@@ -244,4 +278,4 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archi
         require(not path.is_symlink(), "Snapshot symlink")
         if path.is_file():
             actual_files.add(path.relative_to(root).as_posix())
-    require(actual_files == set(layout["logical_files"]), "Unexpected snapshot files")
+    require(actual_files == selected, "Unexpected snapshot files")

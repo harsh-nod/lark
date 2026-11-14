@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 506, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 498, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 435, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 504, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 56, in run_frozen_auditor
+    preflight_frozen_release_headers(script)
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 161, in preflight_frozen_release_headers
+    preflight_frozen_ptx(script, config)
+  File "/dev/shm/lark-snapshot-controls-82ta_xz1/isolated/bin/replay_snapshot.py", line 129, in preflight_frozen_ptx
+    module.require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/dev/shm/lark-paper-snapshot-h8u42jsj/reproduction/paper_results/ptx_dot_evidence.py", line 46, in require
+    raise ValueError("PTX dot " + message)
+ValueError: PTX dot proof contract/original scope differs
+
