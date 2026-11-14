@@ -94,3 +94,19 @@ two-helper roster. Six offline roster tests passed in 0.594 seconds, including
 the real unchanged v25 eleven-file download roster, missing-part refusal and
 the expected v26 eight-positive/eighty-one-negative counts. A v26 anonymous
 download and full control-suite pass have not yet been recorded.
+
+`prepare_ptx_extended_snapshot.py` assembles the next ledger from the immutable
+v25 definitions only after both complete BMM/Linear publication, source CI,
+main-promotion and validation receipts exist. Its preflight checks all 3,623
+earlier evidence paths and hashes, both byte-identical historical definitions,
+all five PTX proof packets and the complete six-cohort comparison. The old
+definitions live at committed `frozen-definitions/20261113-v25/` paths, so their
+source links exist at the evidence checkpoint. No uncommitted local-evidence
+path is used. Only the exact v25 auditor source can be augmented.
+
+The new frozen auditor adds separate BMM/Linear checks and renders five
+independent development kernels with the official rechecks, failed exports and
+partial development attempts distinguished. It keeps every paper experiment/
+history reproduction flag false and supplies no completion percentage. Five
+preparation/renderer tests passed in 0.592 seconds. The actual v26 build and
+full control suite remain separately required.
