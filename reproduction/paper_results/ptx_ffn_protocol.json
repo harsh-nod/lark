@@ -669,5 +669,818 @@
     ]
   ],
   "translation_sha256": "f44a7adad807480986becccf9abec78c04e32706b5a1f3879a53981955ded83d",
-  "original_export_manifest_sha256": "4c7c15e071d83f14a0328a0cda4357aab01103878f3190e38765e26a1fbdc3bf"
+  "original_export_manifest_sha256": "4c7c15e071d83f14a0328a0cda4357aab01103878f3190e38765e26a1fbdc3bf",
+  "packet": {
+    "manifest_sha256": "b6e2bac6a997003f89066cc314aaa709d68091b88cddc80004be23e459c59345",
+    "fields": {
+      "schema": 1,
+      "status": "complete-current-FFN-certificate-payloads-packaged-and-byte-checked",
+      "SDK_producer_commit": "f49adeb6472a163b58e209e0ec62646b2f23c75f",
+      "scope": "Source-bound full-size compiled FP16 feed-forward development proof. Both actual parsed PTX programs (173 up-stage and 171 down-stage instructions), their prologues, all original 256/1024 reduction terms, ReLU and FP16 stores/loads, returns, all 65536 up-stage and 16384 down-stage lanes and all 16384 reference outputs are covered. The actual 65536-value FP16 intermediate connects the two stateful executions. The sequential host-launch model has explicit bijective root-buffer bindings, disjoint epoch namespaces, reverse-chronological actual access traces, race freedom and a frame outside intermediate/output footprints. The independent tensor reference interprets both matmuls, ReLU and both FP16 round trips. Original shapes, dtypes, grid/block/warp and CUDA fuel [1030,1,1,1]/[4102,1,1,1] remain unchanged. Scalar operations are universally quantified. Parsing/reference formalization, logical aligned disjoint non-wrapping pointer allocations, scalar-operation correspondence and sequential host-launch correspondence remain trusted. No IEEE/error-bound, NVIDIA execution/conformance, original optimized-kernel, original model-result or paper-completion claim. This separate development checker registers no legacy SDK profile or model success.",
+      "complete_original_positive_checks": 3,
+      "direct_Lean_negative_controls": 4,
+      "complete_false_recording_payloads": 31,
+      "current_owned_source_bindings": 72,
+      "local_positive_stack_limits": [
+        8388608,
+        -1
+      ],
+      "source_bindings": {
+        "lean/Lark/Nonlinear.lean": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+        "lean/Lark/Pointwise.lean": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+        "lean/Lark/PtxDot.lean": "72e2ba1640862dd2d96cc837cd8a7c8b2243f2c2ea2d263f3e04ebd8a5ce3fc0",
+        "lean/Lark/PtxFeedForwardDown.lean": "b94c7677b3d98883ade5a6549993dd1eede1323c1fefb69acbddad988be73acd",
+        "lean/Lark/PtxFeedForwardDownExit.lean": "d19e52e73eea8da5fe1c81557442b51b8acb5d55d6eb67f1803d25256ba5c911",
+        "lean/Lark/PtxFeedForwardDownInit.lean": "f0aa2d4ce4320334ee469964cfa2899f8ae57856e85b9c04c685888c5d954fa0",
+        "lean/Lark/PtxFeedForwardDownLaunch.lean": "4e89f42ec9efa42aba0e2f87693f4baae521a69fd350dd4bc0e436644d485ecd",
+        "lean/Lark/PtxFeedForwardPipeline.lean": "a6197973e286caf686251fd77ddc1a463d59d60d5b4dae048e66a843129e276e",
+        "lean/Lark/PtxFeedForwardReference.lean": "bc8f71bd58cc99bc67bd9cffe8a165cf2f7bd7b58ae91406e0180ba8920b9dc7",
+        "lean/Lark/PtxFeedForwardUp.lean": "ea2c63a5bf92cf58d8b7ec9d10bdbf8167d44a6e2c810957e79e2935440525be",
+        "lean/Lark/PtxFeedForwardUpExit.lean": "14039fef0c3ad6919af03fe9bfa828ecf5b6f1c8e959a1fbbc193e5cb3c43bec",
+        "lean/Lark/PtxFeedForwardUpLaunch.lean": "8ae2419eed85bb34c8883e5b20d5ec01413e7e61ede3a53357f64546eb1fe400",
+        "lean/Lark/PtxMatrix.lean": "bee0489765af0d661ec758c27b96773407e506ffa668ec39b72ba0ae0f6458a7",
+        "lean/Lark/PtxPointwise.lean": "ebf712e739baa192651ee01b5b7a9cf9202dc738badee5695876b02cd5de2eaa",
+        "python/__init__.py": "20b63d4a965ae28818ee887d93e9ed3717f58a0df09900c368b97d5fd3e4f75c",
+        "python/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+        "python/attention.py": "fbc63966cdc3fa1f09630663ac4a9920d35d5f58611dc7c7da1814870a440bb2",
+        "python/certificate.py": "504b39be240ca3d882863f1b2c0dfa9d77eaf4bfd213665959010ffee62e99aa",
+        "python/cli.py": "29c90db90b8e448f1249a7e1f4065daa57dc22b8bf2e5300018fd9ca1189a6c6",
+        "python/collective.py": "4fa25ca692501f8d76c8c0e645a465355191621133b8baea749de0b341bc1d00",
+        "python/convolution.py": "d95e16380f7249408abc28f7f9d84b1e455be1015b48c0191edade11c4fd5f10",
+        "python/feedforward.py": "35f5905e2c1cc2e3c54d74ab82c963e15d478aff65df6a1ef59a81c8ff213fb2",
+        "python/frontend.py": "0dfae584fdc2d5262b361926f04f66ef9aa58ab9376d6f8a929945bbab8187dd",
+        "python/gemv.py": "962dd73777b43758f1a2e061979ec7e98fca6b34d0397e85a5db7950d2a36eae",
+        "python/ir.py": "a4a893014efc5c62546e310184346621dd76e3ca130a5cf6b9ef8d2a2b4a2551",
+        "python/linear.py": "c2468f946562f03416034fb9a3b5d4757063ff27f19fb1e6899527265150bb13",
+        "python/machine.py": "356d2d19b1560222412a1ab77892775cce5d4278cea8d6a90522717e51ad2ec8",
+        "python/matrix.py": "e070b0936574f2152c0ffcca4dca115939c0ff224b0497bc58ed16e1b960fc65",
+        "python/mfma.py": "89a0064f15fdd906f8176e9fc7f561bf68618bff4b2b02cd9272176d32570af5",
+        "python/native_attention.py": "e55c8ca6b022be5e37883cea5d33f9ff301c757cf70690f6aee57b82ad496efc",
+        "python/native_awq_gemm.py": "f80b3d6e3d87c37f0b7b678bf183900890bc65fb3a6567e3d10f07b4f1679953",
+        "python/native_awq_gemm_certificate.py": "d29ce46fc470a981ec649da286d4696af1540b9924c78766e231ecf018b41b76",
+        "python/native_flashinfer_rmsnorm.py": "2a9d92dd3589868828e1a33fc24db8954ff52260ef7901a5723aa3764fcb1e24",
+        "python/native_flashinfer_rmsnorm_certificate.py": "75174a745fe2fa47f77da9e64634596a2fa7c631571226f070566ecef86001d9",
+        "python/native_fused_rmsnorm.py": "067a4bc7883425f60fd009674594726b6f81cabe74ea6ba0cac92ebce6a25c83",
+        "python/native_fused_rmsnorm_certificate.py": "77c7f2631ed0b9085f4386b9f8bed8b753209e650bba1938cd5662a0fd3f5704",
+        "python/native_qknorm_rope.py": "3190d28066ce6ebc5b9500e003a41db0e2536dfae985e649e665b2b88f2af75b",
+        "python/native_qknorm_rope_certificate.py": "3ded1fd09000cfe2c62153d619115494e572b8ca0a0e11071d024b14f999500f",
+        "python/native_qknorm_rope_split_certificate.py": "43e0c120fb26044f5e84c726a63f7338becc7e0d86d7b014970020992a9fa1f5",
+        "python/native_rmsnorm.py": "94df905cc592ca792ce710ae4409c09635c9bb5b51abd5f1fd03339de4cc7ed2",
+        "python/native_rmsnorm_certificate.py": "650c34bd841f44045656cdee40643e92da7548d08c5bd93462af3b57061dfa4e",
+        "python/native_rope.py": "103f439b8de5bc5e91b36a26c362f371382d7c887d0ca9fcf245d7346649083d",
+        "python/native_rope_backend.py": "6c9af94e60bf1ed38522e5a45f0870504070f6969f15c0bc07abe03abf70dcf7",
+        "python/native_rope_certificate.py": "7789003f0553b17d5c8573bac58af555a55f535d2fb17128a696e2403a89888d",
+        "python/native_sglang_rmsnorm.py": "cb2fdb623e20ca49ff425ffc1db039017df21a9396eb080e9c65f37d34694bce",
+        "python/native_sglang_rmsnorm_certificate.py": "d8f1580719a1c84966791f54bb6ae6e209f8b1d5283ce805de3f0a6b220cfef7",
+        "python/native_softmax.py": "79db9eff37ff4170c47ee9c55f9712c3e89c006ebb9837e76bf16d189ab5df83",
+        "python/normalization.py": "d097eade7fce48cbb7fe1111e7664a76b3e5f4c94c2f101f8744e2be9745075e",
+        "python/partition_collective.py": "1672f19b7deb1483e993d23a2d88a413cc6cce20b9aec21222171f484fcdfb15",
+        "python/pointwise.py": "70f98958e28ebd9e20983ec1a07d55cb3a66519e92cd803d9d032b90b5f566f2",
+        "python/proof_syntax.py": "9d21a163be1aa3d8ac4ff525be91af3746fc67d93d4f40debdd709899dbbc80f",
+        "python/ptx.py": "81a36c69f3620e550ce1c42b4f59aeae78ead745c0656a33b45069ad22e6be75",
+        "python/ptx_batched.py": "500ce1079b151ae7d87ca1daccae79b0f9ab189a1c24f95b3640441861cbdc8d",
+        "python/ptx_batched_certificate.py": "01771ba6aae95c74113dbf159d663dcd5eab21f6eaf66d55abbaff5c517b15ff",
+        "python/ptx_dot.py": "3841b350cd0e37c332fbf2f8ac5e67377ce6b2e2503aadcb04d98ee6f41d3fbb",
+        "python/ptx_dot_certificate.py": "9a6ff4c6c237b553bf760d0eef2845c082564e9b66a269756fec3b3beb3b7a61",
+        "python/ptx_ffn.py": "b07af659996a15187a282445a5429522e02e90473c69d5f7e8165d3fe6d6d52c",
+        "python/ptx_ffn_certificate.py": "0205b11f00e70d8619b947f723b73bd223faf06d79cb58796e3195f1106dd885",
+        "python/ptx_linear.py": "390bbd6344f8945bbd60bfd41c2893310a7722ee1ae974af8e285dd68384c919",
+        "python/ptx_linear_certificate.py": "a7f35709845d088ae50ea0d613267ea8e837a845606ffd08367784bdb470636e",
+        "python/ptx_matrix.py": "ec41e2a7f98b540ec2a06a871f4c002a00f80bf7bd8ed48813d84a18b7d21ce2",
+        "python/ptx_matrix_certificate.py": "1e6a88b4721dcb513bc3aa733507d2a5278bd6c1c250856367b25ca1b319c0ed",
+        "python/ptx_pointwise.py": "5262a83c9edbffb986c2e449a915602bb64ed44858ebe5a1a72f3c79cbc7ca25",
+        "python/ptx_pointwise_certificate.py": "33d3f7831307b478d7e9c273b8d58ad94bea03ae87612396bbe51b6ac50a1be3",
+        "python/ptx_rotary.py": "093e2369f5a4e1805715098a3a92b77e657c85e5ddb717e90d500a7d2f853498",
+        "python/ptx_rotary_certificate.py": "a41f11c946a4a1cf3f205f610066dffbbc5696abd3be3c8e5a050c529fe6074c",
+        "python/real_backend.py": "53a1c17543c83bdac7f7bafc6e7a45db71a954c05b026cc5a0ea5d859fc9d803",
+        "python/rotary.py": "395b16e5f935b028fabdfe03c4ece4957c122662b652869af9c3158d46d46689",
+        "python/silu.py": "6869687d410e59a0e2d52e3d3aa35a1ca4487b297210c5720687063c90bfc8bf",
+        "python/spec.py": "b3738b71c978b24e05039857305b47d930c20cf2b4e6cc2ac9f48b3b9cef19a1",
+        "python/swiglu.py": "e85af967c369948a55bb3899e6fc9921f5868918aa8ed71ed0936b888c9d4647",
+        "python/wave_sum.py": "5d0667b8f7a46c33f3a2b5231e06739a9488195686654cbc033448fd92a2e55a"
+      },
+      "all_original_payload_files_included": true,
+      "venv_is_tool_environment_excluded_from_wheel_evidence_manifest": true,
+      "historical_development_evidence_retained_on_existing_public_branch": true,
+      "public_download_validation_pending": true,
+      "main_promotion_claim": false,
+      "fresh_Lean_checks_during_packaging": 0,
+      "source_bound_proofs_added": 0,
+      "new_registered_source_certificates": 0,
+      "model_calls": 0,
+      "GPU_trials": 0,
+      "original_paper_fully_reproduced": false
+    },
+    "archives": {
+      "export": {
+        "group": "positive",
+        "files": 126,
+        "uncompressed_bytes": 27557094
+      },
+      "source-controls-and-fresh-replay": {
+        "group": "direct-controls",
+        "files": 174,
+        "uncompressed_bytes": 28086102
+      },
+      "installed-wheel-and-fresh-replay": {
+        "group": "installed-wheel",
+        "files": 144,
+        "uncompressed_bytes": 29276985
+      },
+      "false-recordings-01": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717211
+      },
+      "false-recordings-02": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717223
+      },
+      "false-recordings-03": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717226
+      },
+      "false-recordings-04": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717233
+      },
+      "false-recordings-05": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717300
+      },
+      "false-recordings-06": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717284
+      },
+      "false-recordings-07": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717291
+      },
+      "false-recordings-08": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82716594
+      },
+      "false-recordings-09": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717321
+      },
+      "false-recordings-10": {
+        "group": "rehashed-controls",
+        "files": 384,
+        "uncompressed_bytes": 82717361
+      },
+      "false-recordings-11": {
+        "group": "rehashed-controls",
+        "files": 128,
+        "uncompressed_bytes": 27572387
+      },
+      "false-recordings-metadata": {
+        "group": "rehashed-controls",
+        "files": 4,
+        "uncompressed_bytes": 602364
+      }
+    },
+    "direct_fields": {
+      "schema": 1,
+      "status": "all-four-direct-Lean-FFN-controls-rejected",
+      "driver_sha256": "e1efd87f9d2f64f2be2bc65b9b674ca2e27349c5bcdac8ea2f98f432722717cc",
+      "recording_manifest_sha256": "4c7c15e071d83f14a0328a0cda4357aab01103878f3190e38765e26a1fbdc3bf",
+      "positive_controls": 1,
+      "source_bound_proofs_added": 0,
+      "new_registered_source_certificates": 0,
+      "model_calls": 0,
+      "gpu_trials": 0,
+      "nvidia_execution": false,
+      "original_paper_fully_reproduced": false,
+      "scope": "Fresh source-only replay of the exact complete two-launch FFN proof. Two accepted-grammar PTX mutations traverse the actual frontend/render path. One direct reference-constructor mutation bypasses Python preflight. One direct host-composition source mutation disconnects the actual intermediate. All four must fail at the specified Lean proof, without resource failures or timeouts. Negative controls use only the just-source-built positive imports. Original shapes, launches, CUDA fuel and resource caps remain unchanged. These are proof-binding/dependency controls, not a general falsity classifier or the paper's original 42 mutants, and add no hardware/model/paper result.",
+      "direct_Lean_negative_controls": 4,
+      "timeouts": 0,
+      "resource_limit_failures": 0,
+      "owned_modules_freshly_compiled": 14,
+      "old_owned_olean_cache_used": false,
+      "negative_control_imports": "source-checked imports from the fresh positive replay"
+    },
+    "direct_controls": [
+      {
+        "fields": {
+          "control": "up-ReLU-replaced-by-addition",
+          "expected_gate": "exact_up",
+          "expected_lines": [
+            10,
+            10
+          ],
+          "reader_accepted": true,
+          "preflight_bypassed": false,
+          "expected_rejection_verified": true,
+          "rejected_at_expected_gate": true,
+          "resource_failure": false,
+          "source_sha256": "79aa13c18cef703cbb0d4ba28b6fd69c42b252878c587a655229b57c196d98e8",
+          "input_bindings": {
+            "up/kernel.ptx": "1d6908c63c13938cb47e0117abbfd6e60d301d7e859a382aed6c9e2b5d4be2bc",
+            "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+            "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+            "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+            "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+          },
+          "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+          "general_kernel_falsity_claim": false
+        },
+        "files": [
+          "Lean.log",
+          "Main.lean",
+          "down/contract.json",
+          "down/kernel.ptx",
+          "manifest.json",
+          "reference.py",
+          "results.json",
+          "scope.json",
+          "translation.json",
+          "up/contract.json",
+          "up/kernel.ptx"
+        ],
+        "command": [
+          "Main.lean"
+        ],
+        "scope.json_sha256": "4596cd20b5ac037827bfb40b749d1ffe3ab0a7d46d3c8eee295d287f461843fa",
+        "translation.json_sha256": "19950b3fdcf2ddb370871e181556f14c783969637863f9c39d852b1a7d8ac775"
+      },
+      {
+        "fields": {
+          "control": "down-reduction-bound-shortened",
+          "expected_gate": "exact_down",
+          "expected_lines": [
+            11,
+            11
+          ],
+          "reader_accepted": true,
+          "preflight_bypassed": false,
+          "expected_rejection_verified": true,
+          "rejected_at_expected_gate": true,
+          "resource_failure": false,
+          "source_sha256": "4666d5bfecbf7fbd6f9b6a247bce21ee772cdb4e7f47bebc7ef92596cd7ad30d",
+          "input_bindings": {
+            "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+            "down/kernel.ptx": "aca3021495315c8a07069aacc8ee791fe28eac025042c2105dd2bc29ebbedaed",
+            "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+            "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+            "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+          },
+          "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+          "general_kernel_falsity_claim": false
+        },
+        "files": [
+          "Lean.log",
+          "Main.lean",
+          "down/contract.json",
+          "down/kernel.ptx",
+          "manifest.json",
+          "reference.py",
+          "results.json",
+          "scope.json",
+          "translation.json",
+          "up/contract.json",
+          "up/kernel.ptx"
+        ],
+        "command": [
+          "Main.lean"
+        ],
+        "scope.json_sha256": "4596cd20b5ac037827bfb40b749d1ffe3ab0a7d46d3c8eee295d287f461843fa",
+        "translation.json_sha256": "3508d1b0c250cbe6b8dd0d153114799f9aa5b2e0f7de882930b236151eff9b30"
+      },
+      {
+        "fields": {
+          "control": "intermediate-half-cast-removed",
+          "expected_gate": "original_reference",
+          "expected_lines": [
+            9,
+            9
+          ],
+          "reader_accepted": false,
+          "preflight_bypassed": true,
+          "expected_rejection_verified": true,
+          "rejected_at_expected_gate": true,
+          "resource_failure": false,
+          "source_sha256": "b47be7e5540538e0e93fedf83d9379965291f896129d3e1e074fa085b9e67c83",
+          "input_bindings": {
+            "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+            "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+            "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+            "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+            "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+          },
+          "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+          "general_kernel_falsity_claim": false
+        },
+        "files": [
+          "Lean.log",
+          "Main.lean",
+          "bypass.json",
+          "down/contract.json",
+          "down/kernel.ptx",
+          "manifest.json",
+          "reference.py",
+          "results.json",
+          "up/contract.json",
+          "up/kernel.ptx"
+        ],
+        "command": [
+          "Main.lean"
+        ],
+        "bypass.json_sha256": "6f858ebcd6ef1ae956e374c594efdb4543e1887caa1425732c679a6a81087c29"
+      },
+      {
+        "fields": {
+          "control": "down-launch-disconnected-from-up-memory",
+          "expected_gate": "actual_intermediate_shared",
+          "expected_lines": [
+            193,
+            197
+          ],
+          "reader_accepted": false,
+          "preflight_bypassed": true,
+          "expected_rejection_verified": true,
+          "rejected_at_expected_gate": true,
+          "resource_failure": false,
+          "source_sha256": "6c1f4e95c64d42b6e8f15a4b5ced0abd302bbe4ec9a5116732e6ab63c9f5a614",
+          "input_bindings": {
+            "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+            "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+            "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+            "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+            "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+          },
+          "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+          "general_kernel_falsity_claim": false
+        },
+        "files": [
+          "DisconnectedPipeline.lean",
+          "Lean.log",
+          "bypass.json",
+          "down/contract.json",
+          "down/kernel.ptx",
+          "manifest.json",
+          "reference.py",
+          "results.json",
+          "up/contract.json",
+          "up/kernel.ptx"
+        ],
+        "command": [
+          "DisconnectedPipeline.lean"
+        ],
+        "bypass.json_sha256": "358a75806b932013c199b9aaec2beeb79e2980370ffc3793befbfd0987ae2abb"
+      }
+    ],
+    "false_controls": [
+      {
+        "name": "boolean-schema",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "3143838cc91b97ab76228d0231fff96918b5f4970d9a386b95cf18b262dd4d36"
+      },
+      {
+        "name": "boolean-development-count",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "ec5fe0e91c959e8fc02566519697a5119db7e556e844ac13497312c5b76c8039"
+      },
+      {
+        "name": "floating-module-count",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "218abac2d34e4e64d169cb5cdb65bc2acd0f3c830224ac3ee7277b16f162d7af"
+      },
+      {
+        "name": "NVIDIA-execution-overclaim",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "9f25da1a0c030009ff399fa1a0fc9f14822ebefcd8a1d920b7346589d4b7bded"
+      },
+      {
+        "name": "paper-reproduction-overclaim",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "e1752f20308fac7d24d881757360f2e3c0127987ec6e7228e7428612208b1f26"
+      },
+      {
+        "name": "legacy-certificate-overclaim",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "d75b63592c95be4424d4680fa551a780dbc740b01e3e4505897930f03c5ebe2a"
+      },
+      {
+        "name": "paid-model-call-overclaim",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recording proof/experiment scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "c8e1910a366cb7a1f7f0a85222ac7cbb207ae1edbc37947743d23a2d2b2bc04e"
+      },
+      {
+        "name": "heartbeat-cap-increased",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "368b386ed9b02cb7f0de02d14818ea7b98924a10fb674d8b87c6c3423d690dcc"
+      },
+      {
+        "name": "recursion-cap-increased",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "9f949dc2fae8f41b84a06cc7124ea518caafb72120f944a37dc19467bdbef693"
+      },
+      {
+        "name": "per-process-cap-increased",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "805105819ec98de98725797d839d69578562bfb308651ab0eb9aa46d3f2d99ea"
+      },
+      {
+        "name": "source-build-cap-increased",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "1c5f5a92f0aecbc2718c5a2119b64bc82c4f626893f95d7a7f5eaf26a16873c7"
+      },
+      {
+        "name": "stack-cap-increased",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "b8b2554226c75792db8b5168d68877b4d8387553b2f34e9415c4005213e8c094"
+      },
+      {
+        "name": "down-CUDA-fuel-shortened",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "ddf2c325fad92d808e5709932b2ed5f4293b61656db24bef165f5d0aa2381775"
+      },
+      {
+        "name": "boolean-up-CUDA-fuel",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "b3b34192c8dfd7ad869d0945d1adb8c97f3f77d84fbdc6bac33fdeb0bd92548c"
+      },
+      {
+        "name": "boolean-down-block-size",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "84c1b78a94df622fbd8c41848035745c709e41ba1f589d01890fafeb46dbd22d"
+      },
+      {
+        "name": "half-up-launch",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "e80cf895e803c191581fc6aad43c2fb53bdd88d7bb305a58e47b053c8dc324b3"
+      },
+      {
+        "name": "shortened-down-program",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "7a0da228162e9c410e955a02e930cabcb193c7a323cb0fcc188c43cf498d0baa"
+      },
+      {
+        "name": "launch-order-reversed",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "420b729d6bca02160e4f6d2a868f976c15fc3afaf200159a90c93385597bb726"
+      },
+      {
+        "name": "intermediate-rebound",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "496f9644eeb77d5fd879b1ba3c8f90ab1f1e270955b20d340cfe2d23e4ae0f8e"
+      },
+      {
+        "name": "intermediate-dtype-changed",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded task/program/host-pipeline scope differs from actual inputs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "174b8d0e7aafefc101847be07d5f8004ac23077feb64b106b88ba801e4d7c90b"
+      },
+      {
+        "name": "claimed-owned-cache-reuse",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Resource/import/source/toolchain scope differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "caf62ccf7a788ae939edb2ffad1f6073e1a9b3eb17cf60ddd3feac00a7e5b14c"
+      },
+      {
+        "name": "module-roster-shortened",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded owned-module roster differs",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "2b30959d638afb6c0d73a31d387628f6ccf9c4b2f0655c376f63dd752472eb81"
+      },
+      {
+        "name": "missing-pipeline-axiom-audit",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded Main axiom audits differ",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "77b58bf2c9d6032f343982c22fd5351807a486d1a812214d7ed80428c9dd31e0"
+      },
+      {
+        "name": "missing-library-axiom-audit",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Recorded library/Main kernel checks differ",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "444b167565ff887b9aec1cae64857e2a82b894371ba648146f61670f6a33bf86"
+      },
+      {
+        "name": "coherently-rehashed-reference-AST",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Main/translations/reference do not regenerate from actual input bytes",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "db2aa657081e5f15e4e2a7ebec3fd66600fa8a3cb292aeae0c728a10a2aa3b06"
+      },
+      {
+        "name": "coherently-rehashed-translation",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Main/translations/reference do not regenerate from actual input bytes",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "6da3c24b054626fd83e643ce4b7056aff15813fe8397f6c2bc28f4172a9772bd"
+      },
+      {
+        "name": "coherently-rehashed-Main",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Main/translations/reference do not regenerate from actual input bytes",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "9e9275512051687a43aff7b6c27635ef9283c517929643e8243becf16cd8c9a0"
+      },
+      {
+        "name": "coherently-rehashed-captured-Python",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Current trusted SDK/library differs from captured source",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "cfb4e24897bf187ea6407e8268a0200947ed30ae961c7c032046dfdd6dd59bf9"
+      },
+      {
+        "name": "coherently-rehashed-captured-Lean",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-ffn-certificate",
+        "detail": "Current trusted SDK/library differs from captured source",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "382e051030fddc26059a0a5140dd6f8df14fc1276263d15672cc4c69718c3783"
+      },
+      {
+        "name": "coherently-rehashed-forbidden-axiom-log",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "ptx-pointwise-certificate",
+        "detail": "Lean error or unproved axiom",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "90dbaade7e22df1cd7a7e404081f5234829bf9d8123b72f6af33e6cf90dc5464"
+      },
+      {
+        "name": "coherently-rehashed-down-contract",
+        "status": "rejected-before-fresh-Lean-work",
+        "code": "matrix",
+        "detail": "fuel must be [4*K+6,1,1,1]",
+        "output_created": false,
+        "complete_false_recording_manifest_sha256": "f08a93e967fdb69ea72fbaffaba98fdfa89c4b631c4339f131ce20ef2b2edae2"
+      }
+    ],
+    "wheel_fields": {
+      "schema": 1,
+      "status": "offline-wheel-installed-isolated-FFN-source-replay-passed",
+      "source_commit": "f49adeb6472a163b58e209e0ec62646b2f23c75f",
+      "installed_probe": {
+        "installed_checker": "/tmp/lark-ptx-ffn-wheel-v1-20261114/venv/lib/python3.12/site-packages/lark_kernels/ptx_ffn_certificate.py",
+        "installed_Lean_library": "/tmp/lark-ptx-ffn-wheel-v1-20261114/venv/share/lark/lean/Lark/Pointwise.lean",
+        "owned_source_bindings_checked": 72,
+        "all_owned_bytes_equal_to_export": true,
+        "isolated_python": true,
+        "data_path": "/tmp/lark-ptx-ffn-wheel-v1-20261114/venv"
+      },
+      "model_calls": 0,
+      "gpu_trials": 0,
+      "nvidia_execution": false,
+      "new_registered_source_certificates": 0,
+      "source_bound_proofs_added": 0,
+      "original_paper_fully_reproduced": false
+    },
+    "wheel_build_fields": {
+      "status": "offline-FFN-wheel-built-and-all-owned-source-bytes-checked",
+      "source_commit": "f49adeb6472a163b58e209e0ec62646b2f23c75f",
+      "backend": {
+        "setuptools": "80.9.0",
+        "wheel": "0.45.1"
+      },
+      "command": [
+        "/tmp/lark-ptx-pointwise-build-env-20261113/bin/python",
+        "-I",
+        "-m",
+        "pip",
+        "wheel",
+        "--no-index",
+        "--no-deps",
+        "--no-build-isolation",
+        "--wheel-dir",
+        "/tmp/lark-ptx-ffn-wheel-v1-20261114",
+        "/tmp/lark-ptx-ffn-refinement-20261114"
+      ],
+      "wheel_filename": "lark_kernels-0.4.0-py3-none-any.whl",
+      "wheel_sha256": "1fb3e1afea64b7f0fc4c3f423ebac128ba8b96c466088cd93325639e2652e0b3",
+      "wheel_bytes": 1692409,
+      "owned_source_bindings_checked": 72,
+      "owned_Lean_files_included": 14,
+      "new_FFN_Lean_files_included": 9,
+      "network_during_build": false
+    },
+    "wheel_original_inventory": {
+      "build-results.json": "db03ef6edae9aa078592cbb4a1aa4860d9975bcce11c99448f1e2aa5ef67f39a",
+      "build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "build.stdout": "c0fcf1e7454da539bd9eb5c5ba2cd6f0b60ca0e0a6d072e2decc58fadea3c9e0",
+      "check_installed.py": "b6abed0a47b448dd55024e282c83ae176863e6eb2c84e1bbd41e5c06a57d5cf9",
+      "create-venv.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "create-venv.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "driver.py": "e0c22ecb5240743fa20a836f45b2aa54e2169596eb64e8d03f40a56b807b9253",
+      "fresh-installed-replay/Main.lean": "49a34ed7505f4ff5dac2b8eb6f2544dc7235411a010a2c02994c44adfcfde195",
+      "fresh-installed-replay/Main.log": "40762cc41250ebe55d8d798f05ba53377f9bdf691cf7294e911b8dc4a6f11a29",
+      "fresh-installed-replay/Nonlinear.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fresh-installed-replay/Pointwise.log": "d538fab26dda9b6a28029f431c7bbbf25ed8626bc4bf82d97feb7171a698156f",
+      "fresh-installed-replay/PtxDot.log": "03f8fe57a7f63c9affa0cf1e0568746fe7001f26b26f7bb8eb2615187d4586f2",
+      "fresh-installed-replay/PtxFeedForwardDown.log": "33c1615341cfeaa3b3647da8cd0b90da4f5a1e362183c1e735b69e300b07d031",
+      "fresh-installed-replay/PtxFeedForwardDownExit.log": "082bf8964b1220cc2b7282bb972f699469e8c10cdbc10c2419b235c794a431a6",
+      "fresh-installed-replay/PtxFeedForwardDownInit.log": "a67628252d6b0f2730cf3cbc50a978ac78fc492ff2838a22c35526e6d5230e3c",
+      "fresh-installed-replay/PtxFeedForwardDownLaunch.log": "4d42feaa4cdb440ab16a8c93f8c85fc133ac918330f92f060eb2c4db5310a005",
+      "fresh-installed-replay/PtxFeedForwardPipeline.log": "5c7295f2de136eb2aea9e5666e730fc0a99dc6df29af2b3068cd285c20cf24e6",
+      "fresh-installed-replay/PtxFeedForwardReference.log": "c7e4250db4c9307854f795581ab2c3d20e06563d9f5e2c26fc1f61f7e5ddc2d6",
+      "fresh-installed-replay/PtxFeedForwardUp.log": "ca1ea02ff58b437460489f5e9e94f08bd9e116435bafdbc5a69706e74bf68f3a",
+      "fresh-installed-replay/PtxFeedForwardUpExit.log": "114a47f33082485df3287900c44528a9cf4359f47f838f5c2fd23e09b6a8ce79",
+      "fresh-installed-replay/PtxFeedForwardUpLaunch.log": "5d1ba43fe594199c0548037d4eccfc96f6233204adc2d0f112baa4febdffd82e",
+      "fresh-installed-replay/PtxMatrix.log": "4b28960b89c2576a2e40b01348967192b84be35475816caf2c9aab4747dbfeca",
+      "fresh-installed-replay/PtxPointwise.log": "d0055ea61d05ee9f3dd77a943d10750a8e619f00d6b3e8d16fc46df065c8b403",
+      "fresh-installed-replay/down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9",
+      "fresh-installed-replay/down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+      "fresh-installed-replay/manifest.json": "ca6f1c49baa2071c8c0fb981b9944c75c249e88278675c81974f2aed4b37b8ed",
+      "fresh-installed-replay/modules/Lark/Nonlinear.lean": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+      "fresh-installed-replay/modules/Lark/Nonlinear.olean": "28f163728127fbc3c9b0e732105c81da5f4383221516fc31eacf0a9c4db94f42",
+      "fresh-installed-replay/modules/Lark/Pointwise.lean": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+      "fresh-installed-replay/modules/Lark/Pointwise.olean": "34e7704e6af65d640dda4756ee3439c234352ae6d4daa6a3be682754387ea906",
+      "fresh-installed-replay/modules/Lark/PtxDot.lean": "72e2ba1640862dd2d96cc837cd8a7c8b2243f2c2ea2d263f3e04ebd8a5ce3fc0",
+      "fresh-installed-replay/modules/Lark/PtxDot.olean": "26e20153494e3c3a9bbb1720dd214045b25b99c79772a18c6371d4a24de36261",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDown.lean": "b94c7677b3d98883ade5a6549993dd1eede1323c1fefb69acbddad988be73acd",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDown.olean": "1a4868313b5cfca8ca0d74b84a958ec98409876c322ea944a97911b4e7334966",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownExit.lean": "d19e52e73eea8da5fe1c81557442b51b8acb5d55d6eb67f1803d25256ba5c911",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownExit.olean": "c5435d14b17acafa761116d77a241d00be1746a79649f82fb69e906b511b6895",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownInit.lean": "f0aa2d4ce4320334ee469964cfa2899f8ae57856e85b9c04c685888c5d954fa0",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownInit.olean": "0609bf947da8e9a4b0527bc8a843fbd37abc0e95e84d8a226ddf017b936bd17a",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownLaunch.lean": "4e89f42ec9efa42aba0e2f87693f4baae521a69fd350dd4bc0e436644d485ecd",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardDownLaunch.olean": "41506c89b0e0e8e042f65a07ee30dd5782da67433ecde748141ea85269d26118",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardPipeline.lean": "a6197973e286caf686251fd77ddc1a463d59d60d5b4dae048e66a843129e276e",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardPipeline.olean": "a86fe8274e1f7fe933d85cdfea9b0a0b252bc53f7e10d9c742d8be3b2d3aeb6a",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardReference.lean": "bc8f71bd58cc99bc67bd9cffe8a165cf2f7bd7b58ae91406e0180ba8920b9dc7",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardReference.olean": "913c82b26730de8e871ea038f0619c64077de74d19de3394367bc54c51cd70b2",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUp.lean": "ea2c63a5bf92cf58d8b7ec9d10bdbf8167d44a6e2c810957e79e2935440525be",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUp.olean": "961b95ad8f2a356dd7b8fff7720e2e81f6df2be656d22a1153ddbda099fcd440",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUpExit.lean": "14039fef0c3ad6919af03fe9bfa828ecf5b6f1c8e959a1fbbc193e5cb3c43bec",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUpExit.olean": "6e12cfc90869c0585b31e71f6e63893a060de57d507313ec77520751c145cfc4",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUpLaunch.lean": "8ae2419eed85bb34c8883e5b20d5ec01413e7e61ede3a53357f64546eb1fe400",
+      "fresh-installed-replay/modules/Lark/PtxFeedForwardUpLaunch.olean": "32fae0d6db0ee715a970f9844989fddabef3885c0c5d67d059c4f49a8446429a",
+      "fresh-installed-replay/modules/Lark/PtxMatrix.lean": "bee0489765af0d661ec758c27b96773407e506ffa668ec39b72ba0ae0f6458a7",
+      "fresh-installed-replay/modules/Lark/PtxMatrix.olean": "752881127d1c9c1add74b58a886d98eea19c733b42c1cc472be2b2dcd6a03eac",
+      "fresh-installed-replay/modules/Lark/PtxPointwise.lean": "ebf712e739baa192651ee01b5b7a9cf9202dc738badee5695876b02cd5de2eaa",
+      "fresh-installed-replay/modules/Lark/PtxPointwise.olean": "021d6bdd7627d6e886aa52cedb9695406b68a8abe83d8f0cff58175ba36b4172",
+      "fresh-installed-replay/owned-sources/lean/Lark/Nonlinear.lean": "aa2be4b0130e1c393cfbcdb9edcfb1756db6f1d41374b9cc41b07c587d75c2f4",
+      "fresh-installed-replay/owned-sources/lean/Lark/Pointwise.lean": "f712c2da1321d9ff9bd664bd2ec0a9a2eeb7a5dfffb3ad871679248ad749747e",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxDot.lean": "72e2ba1640862dd2d96cc837cd8a7c8b2243f2c2ea2d263f3e04ebd8a5ce3fc0",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardDown.lean": "b94c7677b3d98883ade5a6549993dd1eede1323c1fefb69acbddad988be73acd",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardDownExit.lean": "d19e52e73eea8da5fe1c81557442b51b8acb5d55d6eb67f1803d25256ba5c911",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardDownInit.lean": "f0aa2d4ce4320334ee469964cfa2899f8ae57856e85b9c04c685888c5d954fa0",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardDownLaunch.lean": "4e89f42ec9efa42aba0e2f87693f4baae521a69fd350dd4bc0e436644d485ecd",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardPipeline.lean": "a6197973e286caf686251fd77ddc1a463d59d60d5b4dae048e66a843129e276e",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardReference.lean": "bc8f71bd58cc99bc67bd9cffe8a165cf2f7bd7b58ae91406e0180ba8920b9dc7",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardUp.lean": "ea2c63a5bf92cf58d8b7ec9d10bdbf8167d44a6e2c810957e79e2935440525be",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardUpExit.lean": "14039fef0c3ad6919af03fe9bfa828ecf5b6f1c8e959a1fbbc193e5cb3c43bec",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxFeedForwardUpLaunch.lean": "8ae2419eed85bb34c8883e5b20d5ec01413e7e61ede3a53357f64546eb1fe400",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxMatrix.lean": "bee0489765af0d661ec758c27b96773407e506ffa668ec39b72ba0ae0f6458a7",
+      "fresh-installed-replay/owned-sources/lean/Lark/PtxPointwise.lean": "ebf712e739baa192651ee01b5b7a9cf9202dc738badee5695876b02cd5de2eaa",
+      "fresh-installed-replay/owned-sources/python/__init__.py": "20b63d4a965ae28818ee887d93e9ed3717f58a0df09900c368b97d5fd3e4f75c",
+      "fresh-installed-replay/owned-sources/python/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "fresh-installed-replay/owned-sources/python/attention.py": "fbc63966cdc3fa1f09630663ac4a9920d35d5f58611dc7c7da1814870a440bb2",
+      "fresh-installed-replay/owned-sources/python/certificate.py": "504b39be240ca3d882863f1b2c0dfa9d77eaf4bfd213665959010ffee62e99aa",
+      "fresh-installed-replay/owned-sources/python/cli.py": "29c90db90b8e448f1249a7e1f4065daa57dc22b8bf2e5300018fd9ca1189a6c6",
+      "fresh-installed-replay/owned-sources/python/collective.py": "4fa25ca692501f8d76c8c0e645a465355191621133b8baea749de0b341bc1d00",
+      "fresh-installed-replay/owned-sources/python/convolution.py": "d95e16380f7249408abc28f7f9d84b1e455be1015b48c0191edade11c4fd5f10",
+      "fresh-installed-replay/owned-sources/python/feedforward.py": "35f5905e2c1cc2e3c54d74ab82c963e15d478aff65df6a1ef59a81c8ff213fb2",
+      "fresh-installed-replay/owned-sources/python/frontend.py": "0dfae584fdc2d5262b361926f04f66ef9aa58ab9376d6f8a929945bbab8187dd",
+      "fresh-installed-replay/owned-sources/python/gemv.py": "962dd73777b43758f1a2e061979ec7e98fca6b34d0397e85a5db7950d2a36eae",
+      "fresh-installed-replay/owned-sources/python/ir.py": "a4a893014efc5c62546e310184346621dd76e3ca130a5cf6b9ef8d2a2b4a2551",
+      "fresh-installed-replay/owned-sources/python/linear.py": "c2468f946562f03416034fb9a3b5d4757063ff27f19fb1e6899527265150bb13",
+      "fresh-installed-replay/owned-sources/python/machine.py": "356d2d19b1560222412a1ab77892775cce5d4278cea8d6a90522717e51ad2ec8",
+      "fresh-installed-replay/owned-sources/python/matrix.py": "e070b0936574f2152c0ffcca4dca115939c0ff224b0497bc58ed16e1b960fc65",
+      "fresh-installed-replay/owned-sources/python/mfma.py": "89a0064f15fdd906f8176e9fc7f561bf68618bff4b2b02cd9272176d32570af5",
+      "fresh-installed-replay/owned-sources/python/native_attention.py": "e55c8ca6b022be5e37883cea5d33f9ff301c757cf70690f6aee57b82ad496efc",
+      "fresh-installed-replay/owned-sources/python/native_awq_gemm.py": "f80b3d6e3d87c37f0b7b678bf183900890bc65fb3a6567e3d10f07b4f1679953",
+      "fresh-installed-replay/owned-sources/python/native_awq_gemm_certificate.py": "d29ce46fc470a981ec649da286d4696af1540b9924c78766e231ecf018b41b76",
+      "fresh-installed-replay/owned-sources/python/native_flashinfer_rmsnorm.py": "2a9d92dd3589868828e1a33fc24db8954ff52260ef7901a5723aa3764fcb1e24",
+      "fresh-installed-replay/owned-sources/python/native_flashinfer_rmsnorm_certificate.py": "75174a745fe2fa47f77da9e64634596a2fa7c631571226f070566ecef86001d9",
+      "fresh-installed-replay/owned-sources/python/native_fused_rmsnorm.py": "067a4bc7883425f60fd009674594726b6f81cabe74ea6ba0cac92ebce6a25c83",
+      "fresh-installed-replay/owned-sources/python/native_fused_rmsnorm_certificate.py": "77c7f2631ed0b9085f4386b9f8bed8b753209e650bba1938cd5662a0fd3f5704",
+      "fresh-installed-replay/owned-sources/python/native_qknorm_rope.py": "3190d28066ce6ebc5b9500e003a41db0e2536dfae985e649e665b2b88f2af75b",
+      "fresh-installed-replay/owned-sources/python/native_qknorm_rope_certificate.py": "3ded1fd09000cfe2c62153d619115494e572b8ca0a0e11071d024b14f999500f",
+      "fresh-installed-replay/owned-sources/python/native_qknorm_rope_split_certificate.py": "43e0c120fb26044f5e84c726a63f7338becc7e0d86d7b014970020992a9fa1f5",
+      "fresh-installed-replay/owned-sources/python/native_rmsnorm.py": "94df905cc592ca792ce710ae4409c09635c9bb5b51abd5f1fd03339de4cc7ed2",
+      "fresh-installed-replay/owned-sources/python/native_rmsnorm_certificate.py": "650c34bd841f44045656cdee40643e92da7548d08c5bd93462af3b57061dfa4e",
+      "fresh-installed-replay/owned-sources/python/native_rope.py": "103f439b8de5bc5e91b36a26c362f371382d7c887d0ca9fcf245d7346649083d",
+      "fresh-installed-replay/owned-sources/python/native_rope_backend.py": "6c9af94e60bf1ed38522e5a45f0870504070f6969f15c0bc07abe03abf70dcf7",
+      "fresh-installed-replay/owned-sources/python/native_rope_certificate.py": "7789003f0553b17d5c8573bac58af555a55f535d2fb17128a696e2403a89888d",
+      "fresh-installed-replay/owned-sources/python/native_sglang_rmsnorm.py": "cb2fdb623e20ca49ff425ffc1db039017df21a9396eb080e9c65f37d34694bce",
+      "fresh-installed-replay/owned-sources/python/native_sglang_rmsnorm_certificate.py": "d8f1580719a1c84966791f54bb6ae6e209f8b1d5283ce805de3f0a6b220cfef7",
+      "fresh-installed-replay/owned-sources/python/native_softmax.py": "79db9eff37ff4170c47ee9c55f9712c3e89c006ebb9837e76bf16d189ab5df83",
+      "fresh-installed-replay/owned-sources/python/normalization.py": "d097eade7fce48cbb7fe1111e7664a76b3e5f4c94c2f101f8744e2be9745075e",
+      "fresh-installed-replay/owned-sources/python/partition_collective.py": "1672f19b7deb1483e993d23a2d88a413cc6cce20b9aec21222171f484fcdfb15",
+      "fresh-installed-replay/owned-sources/python/pointwise.py": "70f98958e28ebd9e20983ec1a07d55cb3a66519e92cd803d9d032b90b5f566f2",
+      "fresh-installed-replay/owned-sources/python/proof_syntax.py": "9d21a163be1aa3d8ac4ff525be91af3746fc67d93d4f40debdd709899dbbc80f",
+      "fresh-installed-replay/owned-sources/python/ptx.py": "81a36c69f3620e550ce1c42b4f59aeae78ead745c0656a33b45069ad22e6be75",
+      "fresh-installed-replay/owned-sources/python/ptx_batched.py": "500ce1079b151ae7d87ca1daccae79b0f9ab189a1c24f95b3640441861cbdc8d",
+      "fresh-installed-replay/owned-sources/python/ptx_batched_certificate.py": "01771ba6aae95c74113dbf159d663dcd5eab21f6eaf66d55abbaff5c517b15ff",
+      "fresh-installed-replay/owned-sources/python/ptx_dot.py": "3841b350cd0e37c332fbf2f8ac5e67377ce6b2e2503aadcb04d98ee6f41d3fbb",
+      "fresh-installed-replay/owned-sources/python/ptx_dot_certificate.py": "9a6ff4c6c237b553bf760d0eef2845c082564e9b66a269756fec3b3beb3b7a61",
+      "fresh-installed-replay/owned-sources/python/ptx_ffn.py": "b07af659996a15187a282445a5429522e02e90473c69d5f7e8165d3fe6d6d52c",
+      "fresh-installed-replay/owned-sources/python/ptx_ffn_certificate.py": "0205b11f00e70d8619b947f723b73bd223faf06d79cb58796e3195f1106dd885",
+      "fresh-installed-replay/owned-sources/python/ptx_linear.py": "390bbd6344f8945bbd60bfd41c2893310a7722ee1ae974af8e285dd68384c919",
+      "fresh-installed-replay/owned-sources/python/ptx_linear_certificate.py": "a7f35709845d088ae50ea0d613267ea8e837a845606ffd08367784bdb470636e",
+      "fresh-installed-replay/owned-sources/python/ptx_matrix.py": "ec41e2a7f98b540ec2a06a871f4c002a00f80bf7bd8ed48813d84a18b7d21ce2",
+      "fresh-installed-replay/owned-sources/python/ptx_matrix_certificate.py": "1e6a88b4721dcb513bc3aa733507d2a5278bd6c1c250856367b25ca1b319c0ed",
+      "fresh-installed-replay/owned-sources/python/ptx_pointwise.py": "5262a83c9edbffb986c2e449a915602bb64ed44858ebe5a1a72f3c79cbc7ca25",
+      "fresh-installed-replay/owned-sources/python/ptx_pointwise_certificate.py": "33d3f7831307b478d7e9c273b8d58ad94bea03ae87612396bbe51b6ac50a1be3",
+      "fresh-installed-replay/owned-sources/python/ptx_rotary.py": "093e2369f5a4e1805715098a3a92b77e657c85e5ddb717e90d500a7d2f853498",
+      "fresh-installed-replay/owned-sources/python/ptx_rotary_certificate.py": "a41f11c946a4a1cf3f205f610066dffbbc5696abd3be3c8e5a050c529fe6074c",
+      "fresh-installed-replay/owned-sources/python/real_backend.py": "53a1c17543c83bdac7f7bafc6e7a45db71a954c05b026cc5a0ea5d859fc9d803",
+      "fresh-installed-replay/owned-sources/python/rotary.py": "395b16e5f935b028fabdfe03c4ece4957c122662b652869af9c3158d46d46689",
+      "fresh-installed-replay/owned-sources/python/silu.py": "6869687d410e59a0e2d52e3d3aa35a1ca4487b297210c5720687063c90bfc8bf",
+      "fresh-installed-replay/owned-sources/python/spec.py": "b3738b71c978b24e05039857305b47d930c20cf2b4e6cc2ac9f48b3b9cef19a1",
+      "fresh-installed-replay/owned-sources/python/swiglu.py": "e85af967c369948a55bb3899e6fc9921f5868918aa8ed71ed0936b888c9d4647",
+      "fresh-installed-replay/owned-sources/python/wave_sum.py": "5d0667b8f7a46c33f3a2b5231e06739a9488195686654cbc033448fd92a2e55a",
+      "fresh-installed-replay/proof-export-manifest.json": "272cf2cae965a44e94d06cbac0b01bc0a53bc454d5d37da811c7996804c66332",
+      "fresh-installed-replay/reference-ast.json": "43620dd8b8650f29336e9316181587ceb5c3b5f0ffe0dda9d18014b815146ba1",
+      "fresh-installed-replay/reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+      "fresh-installed-replay/replay.json": "d5d45d2473dc667a9f33b5331382e7694005502e0fc6afc6de06510b3f5f9591",
+      "fresh-installed-replay/results.json": "f0d97452df1448eb176d27d9ad67538f465b15a0c928b4c324b01bd897942e81",
+      "fresh-installed-replay/source-bindings.json": "f9ea5e8d9d84da47edc36e50c63b270f1bff6aa41e79a9ba442eeb55aea92f1b",
+      "fresh-installed-replay/translation.json": "f44a7adad807480986becccf9abec78c04e32706b5a1f3879a53981955ded83d",
+      "fresh-installed-replay/up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+      "fresh-installed-replay/up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+      "install.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "install.stdout": "25a9a1d0f616d5eb9ade17aecfb51a2940c77b16246fdd67292a5e1b96082e6b",
+      "installed-path-and-bindings.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "installed-path-and-bindings.stdout": "c78f62f1574581f9adc2fd00b36f496db519be681c5c094ca91370c4d6ab44ba",
+      "installed-replay.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "installed-replay.stdout": "2f598914436b591843a03834a559a95f3cfeef2cc92c3a82ea8c84be341ca35d",
+      "lark_kernels-0.4.0-py3-none-any.whl": "1fb3e1afea64b7f0fc4c3f423ebac128ba8b96c466088cd93325639e2652e0b3",
+      "progress.json": "977d20f48028df10b26b9d9bd0df7aeac378df991218e72a2a3d9ebed85461a2",
+      "results.json": "7256bcec7972bd3818dfc003aaddc95ff46d771e77a980484a85551b14f3955d"
+    },
+    "wheel_original_inventory_manifest_sha256": "87615ae429cc9f2a419734f009848464c4d52935facd9b3194726a5e87eca26a"
+  }
 }

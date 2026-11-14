@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "status": "all-four-direct-Lean-FFN-controls-rejected",
+  "checked_at_utc": "2026-11-14T11:14:21.677020+00:00",
+  "driver_sha256": "e1efd87f9d2f64f2be2bc65b9b674ca2e27349c5bcdac8ea2f98f432722717cc",
+  "recording_manifest_sha256": "51f4d36dab198f395a27552157778dfa423e3335cd351a88419500e333df9f58",
+  "positive_replay": {
+    "schema": 1,
+    "status": "fresh-source-only-PTX-FFN-pipeline-proof-replay-passed",
+    "recording_manifest_sha256": "51f4d36dab198f395a27552157778dfa423e3335cd351a88419500e333df9f58",
+    "fresh_export_manifest_sha256": "165b372eecb509b7eafaa3f83fd0622f0cb8beef4066aabb501f8da574bb832f",
+    "main_sha256": "49a34ed7505f4ff5dac2b8eb6f2544dc7235411a010a2c02994c44adfcfde195",
+    "main_regenerated_identically": true,
+    "owned_modules_freshly_compiled": 14,
+    "old_owned_olean_cache_used": false,
+    "fresh_export_axiom_audits": {
+      "LarkPtxFfnCertificate.original_reference": [],
+      "LarkPtxFfnCertificate.exact_up": [],
+      "LarkPtxFfnCertificate.exact_down": [],
+      "LarkPtxFfnCertificate.complete_pipeline": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "positive_rechecks": 1,
+    "source_bound_proofs_added": 0,
+    "model_calls": 0,
+    "gpu_trials": 0,
+    "nvidia_execution": false,
+    "new_registered_source_certificates": 0,
+    "original_paper_fully_reproduced": false,
+    "scope": "Installed matched trusted SDK regenerates identical Main from both PTX programs, the full independent reference and unchanged contracts. All fourteen owned modules compile from current installed source before checking Main and standard axioms. Captured Python/Lean/oleans are data, never executed or loaded. One existing full pipeline development proof is rechecked; no new kernel/model/hardware result."
+  },
+  "positive_controls": 1,
+  "negative_controls": [
+    {
+      "control": "up-ReLU-replaced-by-addition",
+      "expected_gate": "exact_up",
+      "expected_lines": [
+        10,
+        10
+      ],
+      "reader_accepted": true,
+      "preflight_bypassed": false,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 1.5960607499999924,
+        "log_sha256": "d3583db071ec0bfe186a9681ed78bd814e9ceb40d466997d81a84e7fc86c926e",
+        "command": [
+          "/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "expected_rejection_verified": true,
+      "rejected_at_expected_gate": true,
+      "resource_failure": false,
+      "source_sha256": "79aa13c18cef703cbb0d4ba28b6fd69c42b252878c587a655229b57c196d98e8",
+      "input_bindings": {
+        "up/kernel.ptx": "1d6908c63c13938cb47e0117abbfd6e60d301d7e859a382aed6c9e2b5d4be2bc",
+        "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+      },
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+      "general_kernel_falsity_claim": false
+    },
+    {
+      "control": "down-reduction-bound-shortened",
+      "expected_gate": "exact_down",
+      "expected_lines": [
+        11,
+        11
+      ],
+      "reader_accepted": true,
+      "preflight_bypassed": false,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 1.6984344119999832,
+        "log_sha256": "177d37abc55e1808150c82bee068811a7fdbce27c4bf3610b0c15f3a4be73fe1",
+        "command": [
+          "/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "expected_rejection_verified": true,
+      "rejected_at_expected_gate": true,
+      "resource_failure": false,
+      "source_sha256": "4666d5bfecbf7fbd6f9b6a247bce21ee772cdb4e7f47bebc7ef92596cd7ad30d",
+      "input_bindings": {
+        "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+        "down/kernel.ptx": "aca3021495315c8a07069aacc8ee791fe28eac025042c2105dd2bc29ebbedaed",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+      },
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+      "general_kernel_falsity_claim": false
+    },
+    {
+      "control": "intermediate-half-cast-removed",
+      "expected_gate": "original_reference",
+      "expected_lines": [
+        9,
+        9
+      ],
+      "reader_accepted": false,
+      "preflight_bypassed": true,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 1.9273316709999335,
+        "log_sha256": "0a99c2dc52626a391ed506cef4332d01c1744c5a88370eba5e05a02b2da2b8f5",
+        "command": [
+          "/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean",
+          "Main.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "expected_rejection_verified": true,
+      "rejected_at_expected_gate": true,
+      "resource_failure": false,
+      "source_sha256": "b47be7e5540538e0e93fedf83d9379965291f896129d3e1e074fa085b9e67c83",
+      "input_bindings": {
+        "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+        "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+      },
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+      "general_kernel_falsity_claim": false
+    },
+    {
+      "control": "down-launch-disconnected-from-up-memory",
+      "expected_gate": "actual_intermediate_shared",
+      "expected_lines": [
+        193,
+        197
+      ],
+      "reader_accepted": false,
+      "preflight_bypassed": true,
+      "Lean": {
+        "exit_code": 1,
+        "timed_out": false,
+        "seconds": 1.8452968020000071,
+        "log_sha256": "12460d15c254b3bf5f47f17262b59311227c915862cb411c0ab5c4495f9d87b1",
+        "command": [
+          "/home/runner/.elan/toolchains/leanprover--lean4---v4.19.0/bin/lean",
+          "DisconnectedPipeline.lean"
+        ],
+        "timeout_seconds": 180
+      },
+      "expected_rejection_verified": true,
+      "rejected_at_expected_gate": true,
+      "resource_failure": false,
+      "source_sha256": "6c1f4e95c64d42b6e8f15a4b5ced0abd302bbe4ec9a5116732e6ab63c9f5a614",
+      "input_bindings": {
+        "up/kernel.ptx": "299d828a47a8387a62a3da1dc1de6fa2d053fd2dffefaf150cc40ffdfd6de0e0",
+        "down/kernel.ptx": "8a2098b08ca67dd40f62e5ddf5e83d445c6dcdbb9a68875e55051f761c6b5413",
+        "reference.py": "00c8a9cdf04ba58b14dcfa61ea655bc527713a226cddabe304bd982cc1210879",
+        "up/contract.json": "2e0816934d773d6263c15097af56792b350392b70b3f890c3acf9a774e88b416",
+        "down/contract.json": "cb6bb588c4ccd398973655cab68687aedf698ba4a1e1e42db3a7b17f4f8c66f9"
+      },
+      "all_shapes_dtypes_geometry_and_CUDA_fuel_unchanged": true,
+      "general_kernel_falsity_claim": false
+    }
+  ],
+  "source_bound_proofs_added": 0,
+  "new_registered_source_certificates": 0,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "nvidia_execution": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Fresh source-only replay of the exact complete two-launch FFN proof. Two accepted-grammar PTX mutations traverse the actual frontend/render path. One direct reference-constructor mutation bypasses Python preflight. One direct host-composition source mutation disconnects the actual intermediate. All four must fail at the specified Lean proof, without resource failures or timeouts. Negative controls use only the just-source-built positive imports. Original shapes, launches, CUDA fuel and resource caps remain unchanged. These are proof-binding/dependency controls, not a general falsity classifier or the paper's original 42 mutants, and add no hardware/model/paper result.",
+  "direct_Lean_negative_controls": 4,
+  "timeouts": 0,
+  "resource_limit_failures": 0,
+  "owned_modules_freshly_compiled": 14,
+  "old_owned_olean_cache_used": false,
+  "negative_control_imports": "source-checked imports from the fresh positive replay"
+}

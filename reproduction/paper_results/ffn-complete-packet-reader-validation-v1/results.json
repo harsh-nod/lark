@@ -1,0 +1,37 @@
+{
+  "status": "complete-FFN-recorded-packet-reader-validated-ledger-integration-pending",
+  "current_validation": "v2/results.json",
+  "current_validation_sha256": "7e224b1dc331d9da12a0871bc76698e194989f6ff6c7d25d0c74ac2defb3a2c5",
+  "retained_previous_successful_validation": "v1/results.json",
+  "original_wheel_inventory_sha256": "87615ae429cc9f2a419734f009848464c4d52935facd9b3194726a5e87eca26a",
+  "standalone_packet_seconds": 9.257348143029958,
+  "complete_archives": 15,
+  "actual_archive_members": 4416,
+  "uncompressed_bytes": 940266976,
+  "recorded_positive_checks": 3,
+  "distinct_pipeline_identities": 1,
+  "recorded_direct_Lean_refusals": 4,
+  "independently_refused_complete_false_recordings": 31,
+  "additional_rehashed_direct_control_forgeries_refused": 9,
+  "owned_wheel_source_bytes_checked": 72,
+  "captured_code_executed": false,
+  "fresh_Lean_checks": 0,
+  "model_calls": 0,
+  "GPU_trials": 0,
+  "new_registered_source_certificates": 0,
+  "original_paper_fully_reproduced": false,
+  "frozen_ledger_integration_complete": false,
+  "reader_development_corrections": [
+    {
+      "attempt": "initial CLI validation",
+      "exception": "PTX ffn recording member/size differs",
+      "cause": "The archived wheel contains all 144 files listed by its original manifest, rather than the manifest itself. The reader now binds that complete original inventory separately."
+    },
+    {
+      "attempt": "second CLI validation",
+      "exception": "PTX ffn false-control refusal scope differs",
+      "cause": "Two original SDK refusals carry delegated reader codes ptx-pointwise-certificate and matrix. The reader preserves and checks all exact original refusal rows, without relabeling the delegated codes."
+    }
+  ],
+  "scope": "Recorded-data validation only. All old payloads, failure histories and successful development checks remain retained. Frozen ledger, CI and public-release integration for this new reader remain pending."
+}

@@ -25,8 +25,11 @@ def same_json(actual, expected):
 
 
 class Recording:
-    def __init__(self, root, protocol=None):
-        self.root = Path(root).resolve()
+    def __init__(self, root=None, protocol=None, *, entries=None, max_file_bytes=10_000_000):
+        self.root = Path(root).resolve() if root is not None else None
+        self.entries = entries
+        self.max_file_bytes = max_file_bytes
+        self.require((self.root is None) != (entries is None), "one recording source required")
         self.protocol = protocol or json.loads(
             Path(__file__).with_name("ptx_ffn_protocol.json").read_text())
 
@@ -39,10 +42,15 @@ class Recording:
         path = PurePosixPath(name)
         self.require(bool(path.parts) and not path.is_absolute() and ".." not in path.parts
                      and str(path) == name, "unsafe recording path")
+        if self.entries is not None:
+            self.require(name in self.entries and type(self.entries[name]) is bytes
+                         and len(self.entries[name]) <= self.max_file_bytes,
+                         "recording member/size differs")
+            return self.entries[name]
         target = self.root / name
         self.require(target.is_file() and not target.is_symlink()
                      and target.resolve().is_relative_to(self.root)
-                     and target.stat().st_size <= 10_000_000, "recording path/size differs")
+                     and target.stat().st_size <= self.max_file_bytes, "recording path/size differs")
         return target.read_bytes()
 
     def read(self, name):
@@ -57,11 +65,12 @@ class Recording:
                      for key, value in expected.items()), gate)
 
     def inventory(self):
-        paths = set()
-        for path in self.root.rglob("*"):
-            self.require(not path.is_symlink(), "recording symlink")
-            if path.is_file():
-                paths.add(path.relative_to(self.root).as_posix())
+        paths = set(self.entries) if self.entries is not None else set()
+        if self.entries is None:
+            for path in self.root.rglob("*"):
+                self.require(not path.is_symlink(), "recording symlink")
+                if path.is_file():
+                    paths.add(path.relative_to(self.root).as_posix())
         manifest = self.read("manifest.json")
         self.require(type(manifest) is dict and paths == set(manifest) | {"manifest.json"},
                      "recording file inventory differs")
@@ -84,10 +93,11 @@ class Recording:
                      "positive axiom audit differs")
         return result
 
-    def check(self, row, log, command):
+    def check(self, row, log, command, *, accepted=True):
         self.require(type(row) is dict, "checker record required")
         elapsed, timeout = row.get("seconds"), row.get("timeout_seconds")
-        self.require(type(row.get("exit_code")) is int and row["exit_code"] == 0
+        self.require(type(row.get("exit_code")) is int
+                     and (row["exit_code"] == 0 if accepted else row["exit_code"] != 0)
                      and row.get("timed_out") is False and row.get("log_sha256") == sha(log)
                      and type(row.get("command")) is list and row["command"][1:] == command
                      and type(elapsed) in (int, float) and math.isfinite(elapsed) and 0 <= elapsed <= 180

@@ -110,6 +110,25 @@ python3 reproduction/ptx/check_ffn_payloads.py \
   --output /new/payload-integrity-check
 ```
 
+The separate standard-library evidence reader also validates the three complete
+positive recordings, actual direct-refusal logs and theorem locations, all 31
+complete false recordings and their SDK refusal transcripts, and all 72 owned
+source files inside the wheel. It counts one pipeline identity across the three
+recordings. Captured code is never executed. The wheel archive includes the 144
+files listed in its original manifest; that complete original inventory is
+separately pinned by the reader protocol.
+
+```sh
+python3 -I reproduction/paper_results/ptx_ffn_packet.py \
+  --packet reproduction/ptx/results/full-size-ffn-certificate-payloads-v1 \
+  --output /new/recorded-packet-check
+```
+
+Its isolated check completed in 9.26 seconds locally with no SDK, Lean, Git or
+executable search path. Nine additional coherently rehashed direct-refusal
+forgeries were rejected. The original captures and validation history remain in
+`reproduction/paper_results/ffn-complete-packet-reader-validation-v1/`.
+
 ```sh
 python3 reproduction/ptx/check_ffn_source_controls.py \
   --recording /new/export --lean /path/to/lean --output /new/source-controls
@@ -119,8 +138,14 @@ python3 reproduction/ptx/check_ffn_recording_controls.py \
 
 The unchanged limits are 10,000 recursion depth, two million heartbeats,
 180 seconds per Lean process, 600 seconds per complete fresh source build,
-and the original 8 MiB stack. Full release validation, complete evidence
-download validation and integration into the complete paper ledger remain unfinished.
+and the original 8 MiB stack. All 24 source CI jobs passed for public draft
+commit `3991812f0170ef73a174eff7be1dcaabb80d46fa` in
+[run 43588453453](https://github.com/harsh-nod/lark/actions/runs/43588453453).
+An independent MI350 download check fetched all 34 public files over verified
+anonymous HTTPS and checked all 15 archives and 4,416 members. Complete source
+CI, publication and preceding main-release receipts are retained in
+`reproduction/paper_results/ffn-source399-release-evidence-v1/`.
+Integration of FFN into the frozen main paper ledger remains unfinished.
 This adds zero registered certificates and zero original paper results.
 There is no original optimized-program, IEEE guarantee or NVIDIA-execution
 claim. Failed and accepted development attempts remain alongside their evidence.
@@ -129,6 +154,7 @@ Earlier hosted FFN source checks used the runner's actual 16 MiB stack default;
 their raw reports retain that value. The three local certificate checks used
 8 MiB. New certificate CI steps explicitly set 8 MiB before execution; their
 export, fresh replay and all 35 controls have now passed at that limit in
-CI run 43586151243, job 132420938496. The complete workflow and the final
-integrated release remain separate gates. The retained raw job report is in
+CI run 43586151243, job 132420938496. That earlier workflow was cancelled at
+its time limit; the later integrated run linked above passed all 24 jobs.
+The retained earlier raw job report is in
 `source-CI-certificate-job-v3/`.
