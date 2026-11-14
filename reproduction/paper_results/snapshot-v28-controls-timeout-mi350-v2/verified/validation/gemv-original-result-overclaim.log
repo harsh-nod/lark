@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 373, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 365, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 302, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 30, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 371, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-snapshot-controls-b5ip34vj/isolated/bin/replay_snapshot.py", line 55, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-paper-snapshot-rspxridq/reproduction/paper_results/audit.py", line 768, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-paper-snapshot-rspxridq/reproduction/paper_results/audit.py", line 685, in main
+    gemv_checks = check_ptx_dot_evidence(config)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-paper-snapshot-rspxridq/reproduction/paper_results/ptx_dot_evidence.py", line 290, in check_ptx_dot_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-paper-snapshot-rspxridq/reproduction/paper_results/ptx_dot_evidence.py", line 106, in check_recording_packet
+    require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/tmp/lark-paper-v28-controls-mi350-v2-20261114/temporary/lark-paper-snapshot-rspxridq/reproduction/paper_results/ptx_dot_evidence.py", line 46, in require
+    raise ValueError("PTX dot " + message)
+ValueError: PTX dot proof contract/original scope differs
+

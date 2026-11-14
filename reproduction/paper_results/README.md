@@ -1,6 +1,8 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261113-v26/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261114-v28/results/RESULTS.md) ·
+[earlier v27 ledger](snapshots/20261113-v27/results/RESULTS.md) ·
+[earlier v26 ledger](snapshots/20261113-v26/results/RESULTS.md) ·
 [earlier v25 ledger](snapshots/20261113-v25/results/RESULTS.md) ·
 [earlier v24 ledger](snapshots/20261113-v24/results/RESULTS.md) ·
 [earlier v23 ledger](snapshots/20261113-v23/results/RESULTS.md) ·
@@ -18,6 +20,40 @@ tables and seven outer figure groups in the arXiv v1 preprint, plus 16 narrative
 anchors for results and implementation requirements that a table-only checklist
 would miss. Configuration tables and method diagrams are identified separately
 from measurements. Overlapping items do not define a completion percentage.
+
+The v28 snapshot binds **5,732 evidence files** from source `7697e92`, plus its
+auditor and targets, in eleven bounded archive parts. Every one of v27's
+**4,133 evidence paths and hashes** remains present. Both v26 and v27 remain
+byte-identical frozen artifacts. The six individual PTX development proofs
+are joined by a separate complete FFN pipeline with two actual compiled
+launches, their shared FP16 intermediate and an independent tensor reference.
+Its three local checks and two hosted checks concern one pipeline identity.
+All 35 custom FFN proof/recording controls, installed-wheel source equivalence,
+the actual source CI and anonymous publication records are retained. These
+custom controls do not recover the paper's original 42-mutant registry.
+
+The [first expanded control run](snapshot-v28-controls-timeout-mi350-v1/return-verification.json)
+hit the existing 300-second limit after writing 102 logs; it did not complete
+the required 108-check release gate. All logs and a complete byte inventory
+of the retained failed workspaces remain available. The independent model
+results remain 85/102 successes across six adapted cohorts, with 782 responses
+and 15,509,481 reported tokens. These are separate from the original models
+and experiments in the paper.
+
+The [second expanded run](snapshot-v28-controls-timeout-mi350-v2/return-verification.json)
+also hit 300 seconds, after writing 106 logs. It retains the same snapshot,
+108 required checks and two-replayer maximum. Its inputs and failure records
+remain separate from the first run. Neither partial run establishes the full
+release gate.
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261114-v28 \
+  --source-archive /path/to/2611.02028v1.tar
+timeout --kill-after=5s 300s python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261114-v28 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v28-controls
+```
 
 A separate [Level-2 cost-table arithmetic check](level2-cost-arithmetic-v1/RESULTS.md)
 binds the original v1 source archive and checks all four displayed token means.

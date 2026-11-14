@@ -69,6 +69,19 @@ installed-wheel replay passed. The complete evidence and failed development
 history are retained. Anonymous publication verification and all twenty-four
 source CI jobs passed at `898d540`. This adds no original model or NVIDIA result.
 
+A separate [compiled FP16 PTX FFN pipeline](reproduction/ptx/full-size/ffn/README.md)
+proves both stateful launches and their shared 65,536-value intermediate,
+including the complete 256/1,024-term reductions and all 16,384 reference
+outputs. Three local certificate checks, two hosted certificate checks and
+installed-wheel source equivalence concern one pipeline identity. Four direct
+Lean dependency controls and 31 complete false-recording controls passed.
+[All 24 source CI jobs](https://github.com/harsh-nod/lark/actions/runs/43588453453)
+passed for checkpoint `3991812`. The proof retains abstract scalar, pointer and
+sequential host-launch interpretations; it adds no original model, IEEE or
+NVIDIA execution result. The [frozen ledger](reproduction/paper_results/snapshots/20261114-v28/results/RESULTS.md)
+binds this evidence alongside the six individual kernels and six adapted model
+cohorts, with earlier evidence and failure histories preserved.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X

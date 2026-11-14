@@ -8,6 +8,7 @@ Lean, model calls, GPU experiments or code supplied by the manuscript.
 import argparse
 import gzip
 import hashlib
+import importlib
 import io
 import json
 from pathlib import Path, PurePosixPath
@@ -52,7 +53,139 @@ def run_frozen_auditor(script, expected_sha256, arguments):
     # so captured files in its working directory cannot shadow the stdlib.
     sys.path.insert(0, str(script.parent))
     sys.argv = [str(script), *arguments]
+    preflight_frozen_release_headers(script)
     runpy.run_path(str(script), run_name="__main__")
+
+
+def preflight_ffn_publication(reader, protocol):
+    """Refuse inconsistent publication metadata before expensive proof packets.
+
+    This does not certify downloaded bytes. The complete frozen auditor still
+    hashes all published files and decodes every proof packet on accepted runs.
+    """
+    p, prefix = protocol, protocol["publication_prefix"]
+    report = reader.read(prefix + "/results.json")
+    reader.fields(report, p["publication_fields"], "anonymous FFN publication scope/counters differ")
+    reader.require(digest(reader.content(prefix + "/descriptor.json")) == p["publication_descriptor_sha256"]
+                   and digest(reader.content(prefix + "/driver.py")) == p["publication_driver_sha256"],
+                   "actual anonymous publication descriptor/driver differs")
+    descriptor = reader.read(prefix + "/descriptor.json")
+    downloads = reader.read(prefix + "/downloads.json")
+    reader.require(descriptor["source_commit"] == p["published_source"] and len(downloads) == 34
+                   and len(descriptor["files"]) == 34 and len({r["path"] for r in downloads}) == 34
+                   and {r["path"] for r in downloads} == set(p["publication_files"]),
+                   "actual anonymous download roster differs")
+    for row in downloads:
+        expected = p["publication_files"][row["path"]]
+        url = "https://raw.githubusercontent.com/harsh-nod/lark/" + p["published_source"] + "/" + row["path"]
+        reader.fields(row, {**expected, "url": url, "final_url": url, "status": "verified",
+                      "http_status": 200, "authorization_header": False, "tls_verification": True},
+                      "actual anonymous download observation differs")
+    reader.require(sum(r["bytes"] for r in downloads) == 289901390,
+                   "anonymous FFN downloaded-byte total differs")
+
+
+def frozen_reader_module(name, script):
+    module = importlib.import_module(name)
+    require(Path(module.__file__).resolve().parent == Path(script).parent.resolve(),
+            "Frozen PTX reader origin differs")
+    return module
+
+
+def frozen_header(root, name):
+    path = Path(root) / safe_path(name)
+    require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(Path(root).resolve())
+            and path.stat().st_size <= 10_000_000, "Frozen header path/size differs")
+    return read(path)
+
+
+def preflight_frozen_ptx(script, config):
+    """Reject contradictory kernel headers with the frozen checkers' predicates.
+
+    These are necessary metadata conditions only. No nested archive or proof
+    check is skipped by the complete frozen auditor on a successful replay.
+    """
+    root = Path(script).resolve().parents[2]
+    def canonical(value):
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+    for key, name, grid, fuel, shapes in (
+        ("ptx_pointwise_proof", "ptx_pointwise_evidence", 16384, 4, None),
+        ("ptx_dot_proof", "ptx_dot_evidence", 512, 4102, [[512, 1024], [1024, 1], [512, 1]]),
+        ("ptx_matrix_proof", "ptx_matrix_evidence", 32768, 1030, [[64, 256], [256, 512], [64, 512]]),
+    ):
+        if key not in config:
+            continue
+        module = frozen_reader_module(name, script)
+        report = frozen_header(root, module.PREFIX + "/results.json")
+        module.counters(report, {"independent_source_bound_development_proofs": 1},
+                        "kernel/recheck/execution counters differ")
+        fields = {"limits": module.LIMITS, "dtype": "float16", "scope": module.SCOPE,
+                  "launch": {"grid": grid, "block": 1, "warp": 32},
+                  "unchanged_CUDA_contract_fuel": [fuel, 1, 1, 1], "main_sha256": module.MAIN,
+                  "input_bindings": module.INPUTS, "lean_binary_sha256": module.LEAN}
+        if shapes is not None:
+            fields["shapes"] = shapes
+        module.require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+                       and all(k in report and canonical(report[k]) == canonical(v) for k, v in fields.items()),
+                       "proof contract/original scope differs")
+        module.require(frozen_header(root, module.CI + "/run.json")["head_sha"] == module.PUBLISHED,
+                       "actual source CI differs")
+    for key, name, kind in (
+        ("ptx_batched_proof", "ptx_extended_evidence", "bmm"),
+        ("ptx_linear_proof", "ptx_extended_evidence", "linear"),
+        ("ptx_rotary_proof", "ptx_rotary_evidence", "rotary"),
+    ):
+        if key not in config:
+            continue
+        module = frozen_reader_module(name, script)
+        protocol = module.PROTOCOLS if kind == "rotary" else module.PROTOCOLS[kind]
+        layout = (frozen_reader_module("ptx_rotary_release", script).load_protocol()
+                  if kind == "rotary" else protocol)
+        reader = module.Recording(root / layout["prefix"], kind)
+        report = reader.read("results.json")
+        reader.fields(report, protocol["identity"], "recording identity differs")
+        reader.counters(report, protocol["counters"], "kernel/recheck/execution counters differ")
+        reader.fields(report, {**protocol["contract"], **protocol["report_boolean_fields"]},
+                      "proof contract/original scope differs")
+        reader.require(frozen_header(root, layout["ci_prefix"] + "/run.json")["head_sha"]
+                       == layout["published_source"], "actual source CI differs")
+
+
+def preflight_frozen_release_headers(script):
+    targets = Path(script).with_name("targets.json")
+    if not targets.is_file():
+        return
+    config = read(targets)
+    if type(config) is dict:
+        preflight_frozen_ptx(script, config)
+        preflight_frozen_ffn(script, config)
+
+
+def preflight_frozen_ffn(script, config=None):
+    """Check cheap FFN release claims early; never skip or cache the full audit.
+
+    Physical archives and materialized logical bytes have already been checked.
+    Use the same frozen CI checker that the full auditor will call again. An
+    accepted replay always runs the unchanged, separately hashed frozen auditor.
+    """
+    script = Path(script)
+    if config is None:
+        targets = script.with_name("targets.json")
+        if not targets.is_file():
+            return
+        config = read(targets)
+    if type(config) is not dict or "ptx_ffn_proof" not in config:
+        return
+    import ptx_ffn_release as ffn
+    require(Path(ffn.__file__).resolve().parent == script.parent.resolve(),
+            "Frozen FFN reader origin differs")
+    protocol = ffn.load_protocol()
+    reader = ffn.Recording(script.resolve().parents[2], max_file_bytes=90_000_000)
+    reader.require(ffn.same_json(config["ptx_ffn_proof"], {k: protocol[k] for k in ffn.SPEC_KEYS}),
+                   "declared FFN proof paths differ")
+    ffn.check_ci(reader, protocol)
+    preflight_ffn_publication(reader, protocol)
 
 
 def read(path):
