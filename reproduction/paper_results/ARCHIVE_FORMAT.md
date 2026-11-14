@@ -1,6 +1,6 @@
 # Frozen evidence storage
 
-The default remains the immutable v25 snapshot. Version 1 snapshots retain
+The default is the validated v26 snapshot. Version 1 snapshots retain
 their original single `evidence.tar.gz`, provenance binding and replay path.
 
 Version 2 is an opt-in storage format for the larger evidence ledger. Its
@@ -131,3 +131,15 @@ retained. The original snapshot manifest is
 `251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed`.
 No fresh Lean, GPU or model experiment ran. Anonymous publication, updated CI
 and main promotion remain pending.
+
+The complete run exposed temporary storage growth: 69 completed logs already
+corresponded to 16,507,947,084 copied temporary bytes. GitHub documents 14 GB
+of SSD for its [standard public Linux runners](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job).
+The control runner now releases each full copied false snapshot only after
+its expected outcome is verified. Original input snapshots and all logs remain;
+an unexpected failure preserves its workspace. Every case still receives and
+validates the complete payload, and every control and limit remains unchanged.
+Seven focused workspace tests plus the eleven existing archive-control tests
+passed in 0.523 seconds. A new complete run of this storage-management revision
+is required before publication. CI now targets v26 and explicitly enforces the
+300-second suite cap while retaining each completed control log in its output.

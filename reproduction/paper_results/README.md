@@ -1,6 +1,7 @@
 # Audit of every paper table and figure
 
-[Updated frozen ledger](snapshots/20261113-v25/results/RESULTS.md) ·
+[Updated frozen ledger](snapshots/20261113-v26/results/RESULTS.md) ·
+[earlier v25 ledger](snapshots/20261113-v25/results/RESULTS.md) ·
 [earlier v24 ledger](snapshots/20261113-v24/results/RESULTS.md) ·
 [earlier v23 ledger](snapshots/20261113-v23/results/RESULTS.md) ·
 [earlier v22 ledger](snapshots/20261112-v22/results/RESULTS.md) ·
@@ -31,7 +32,48 @@ python3 reproduction/paper_results/audit_level2_costs.py \
   --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-level2-cost-check
 ```
 
-The v25 snapshot freezes **3,623 evidence files** at commit `c61497b`, plus
+The v26 snapshot freezes **3,792 evidence files** at commit `784634a`, plus
+its auditor and targets. All **3,623 earlier evidence paths and hashes** are
+preserved, and both earlier frozen definitions have byte-identical history
+copies. Four bounded archive parts retain every logical byte, including the
+complete BMM and Linear development and failure histories. Logical files are
+reassembled and hashed before the frozen auditor reads them; the existing
+10,000,000-byte tar-entry limit remains unchanged.
+
+Five independent complete-source abstract PTX development proofs are checked:
+ReLU, GEMV, GEMM, BMM and Linear. Each has four current source-only Main
+recordings; BMM also retains one earlier official success and one failed
+official export. Linear retains twelve earlier development attempts, including
+five failures, separately from its four official checks. Full source/launch,
+closed-reference extraction, actual-trace race freedom and outside-output
+memory preservation are covered within their declared scalar models. Parsing,
+ABI, pointer layout and scalar correspondence remain trusted. These add no
+original model success, IEEE theorem, NVIDIA execution or full-paper result.
+The six adapted HIP/CUDA model cohorts remain 85/102 verified, with 782
+responses and 15,509,481 reported tokens.
+
+The [first complete v26 validation](snapshot-v26-validation-mi350-v1/observer/results.json)
+passed **eight positive replays and 81 negative controls** on MI350 CPU in
+178.36 seconds. All 89 logs and executed source identities are retained.
+No new Lean, GPU or model experiment ran. Limits remain 120 seconds per replay,
+300 seconds for the complete suite and at most two independent replay workers.
+Anonymous publication, updated source CI and main promotion remain pending.
+
+```bash
+python3 reproduction/paper_results/replay_snapshot.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v26 \
+  --source-archive /path/to/2611.02028v1.tar
+timeout --kill-after=5s 300s python3 reproduction/paper_results/check_snapshot_controls.py \
+  --snapshot reproduction/paper_results/snapshots/20261113-v26 \
+  --source-archive /path/to/2611.02028v1.tar --output /tmp/lark-v26-controls
+```
+
+See [the storage format and validation records](ARCHIVE_FORMAT.md) and
+[BMM/Linear evidence-reader scope](PTX_LEDGER_READERS.md). The original closed
+model outcomes, optimized programs, harness, mutation registry and exact
+NVIDIA measurements remain unreproduced.
+
+The earlier v25 snapshot freezes **3,623 evidence files** at commit `c61497b`, plus
 its auditor and targets. Every earlier evidence member is preserved byte for
 byte. The six full-size HIP/CUDA model cohorts retain 85 verified outcomes
 across 102 tasks, 782 responses and 15,509,481 reported tokens under the fixed

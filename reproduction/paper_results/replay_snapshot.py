@@ -18,7 +18,7 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v25"
+DEFAULT = Path(__file__).resolve().parent / "snapshots/20261113-v26"
 
 
 def require(condition, message):

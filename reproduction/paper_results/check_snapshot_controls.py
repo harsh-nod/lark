@@ -2,6 +2,7 @@
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 import gzip
 import hashlib
 import json
@@ -22,6 +23,28 @@ else:
 
 # Temporary false-control archives preserve member bytes at faster compression.
 CONTROL_COMPRESSION_LEVEL = 1
+
+
+@contextmanager
+def control_workspace(parent=None):
+    """Keep unexpected failures; remove the workspace after a completed suite."""
+    root = Path(tempfile.mkdtemp(prefix="lark-snapshot-controls-", dir=parent))
+    try:
+        yield root
+    except BaseException:
+        raise
+    else:
+        shutil.rmtree(root)
+
+
+def release_completed_control(path, root, *, expected_outcome_verified=False):
+    """Release only a completed copied control, retaining inputs and its log."""
+    path, root = Path(path), Path(root)
+    if expected_outcome_verified is not True:
+        raise ValueError("Expected control outcome must be verified before releasing its copy")
+    if path.parent != root or path.is_symlink() or not path.is_dir():
+        raise ValueError("Only a direct copied control directory can be released")
+    shutil.rmtree(path)
 
 
 def sha(path):
@@ -301,8 +324,12 @@ def main():
     )
     out.mkdir(parents=True, exist_ok=False)
     results = []
-    with tempfile.TemporaryDirectory(prefix="lark-snapshot-controls-") as temporary:
-        root = Path(temporary)
+    released = []
+    with control_workspace() as root:
+        def release(altered):
+            release_completed_control(altered, root, expected_outcome_verified=True)
+            released.append(altered.name)
+
         write(out / "temporary-location.json", {"root": str(root), "pid": os.getpid()})
         script = root / "isolated/bin/replay_snapshot.py"
         script.parent.mkdir(parents=True)
@@ -380,6 +407,7 @@ def main():
                     "gate": "frozen report regeneration",
                 }
             )
+            release(altered)
         if has_production_cases:
             altered = root / "missing-production-case"
             shutil.copytree(snapshot, altered)
@@ -401,6 +429,7 @@ def main():
                 "name": "missing-production-case", "accepted": False,
                 "fully_rehashed": True, "gate": "actual manuscript production table",
             })
+            release(altered)
         if "production_proof_checks" in read(snapshot / "targets.json"):
             awq = read(snapshot / "targets.json")["production_proof_checks"]["vllm-awq-gemm"]
             for name, selected, field, value, expected_gate in (
@@ -429,6 +458,7 @@ def main():
                     "name": name, "accepted": False, "fully_rehashed": True,
                     "gate": "frozen study scope consistency",
                 })
+                release(altered)
         if "numerical_studies" in read(snapshot / "targets.json"):
             production = "reproduction/specification_validation/results/production-real"
             benchmark = "reproduction/benchmark_specification_validation/results/benchmark-float64"
@@ -491,6 +521,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "Numerical study " + expected_gate not in log:
                     raise RuntimeError("Numerical study control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                                 "inner_receipt_hash_synchronized": True,
                                 "gate": "frozen numerical report and receipt consistency"}
@@ -515,6 +546,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "Full-shape model " + expected_gate not in log:
                     raise RuntimeError("Full-shape model control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                         "inner_report_and_configuration_pins_synchronized": True,
                         "gate": "frozen model summary, metric and recorded replay consistency"}
@@ -540,6 +572,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX pointwise " + expected_gate not in log:
                     raise RuntimeError("PTX pointwise control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                         "inner_packet_inventory_synchronized": True,
                         "gate": "frozen exact-source PTX proof/replay scope and actual source CI"}
@@ -563,6 +596,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX dot " + expected_gate not in log:
                     raise RuntimeError("PTX GEMV control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                         "inner_packet_inventory_synchronized": True,
                         "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"}
@@ -585,6 +619,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX matrix " + expected_gate not in log:
                     raise RuntimeError("PTX GEMM control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                         "inner_packet_inventory_synchronized": True,
                         "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"}
@@ -613,6 +648,7 @@ def main():
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX " + kind + " " + expected_gate not in log:
                     raise RuntimeError("PTX " + kind + " control failed: " + control_name + "\n" + log)
+                release(altered)
                 return {"name": control_name, "accepted": False, "fully_rehashed": True,
                         "inner_packet_inventory_synchronized": True,
                         "gate": "frozen complete-source proof/replay/failure scope and actual source CI"}
@@ -644,6 +680,7 @@ def main():
                 "gate": "safe archive path",
             }
         )
+        release(altered)
         wrong = root / "wrong-manuscript.tar"
         wrong.write_bytes(b"wrong manuscript bytes")
         code, log = execute("wrong-manuscript", isolated, wrong)
@@ -652,6 +689,8 @@ def main():
         results.append(
             {"name": "wrong-manuscript", "accepted": False, "gate": "pinned manuscript digest"}
         )
+        if len(released) != sum(not row["accepted"] for row in results) - 1:
+            raise RuntimeError("Completed temporary control-copy inventory differs")
     write(
         out / "results.json",
         {
@@ -659,6 +698,8 @@ def main():
             "checks": results,
             "positive_replays": sum(row["accepted"] for row in results),
             "negative_controls": sum(not row["accepted"] for row in results),
+            "released_completed_temporary_control_copies": sorted(released),
+            "all_control_payloads_complete_during_replay": True,
             "source_snapshot_manifest_sha256": sha(snapshot / "manifest.json"),
             "replayer_sha256": sha(Path(__file__).with_name("replay_snapshot.py")),
             "control_runner_sha256": sha(Path(__file__)),
