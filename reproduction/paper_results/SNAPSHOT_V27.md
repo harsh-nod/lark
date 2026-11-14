@@ -32,9 +32,9 @@ controls, totaling 98 checks. All 89 earlier v26 check records must remain
 identical. RoPE adds eight coherently rehashed false-claim controls and one
 positive replay after them. Limits stay at 120 seconds per replay, 300 seconds
 for the complete suite and two independent replay workers. The complete v27
-suite has not passed; build completion and local CI-ledger assertions do not
-establish the remaining release gates. Public main continues to use the
-validated v26 ledger until those gates complete.
+suite now passes on MI350 CPU, as recorded below. New source CI and anonymous
+publication remain release gates. Public main continues to use the validated
+v26 ledger until those gates complete.
 
 The [first complete-suite attempt](snapshot-v27-validation-mi350-v1/observer/results.json)
 hit the unchanged 300-second aggregate cap at 300.064 seconds after writing
@@ -51,8 +51,8 @@ in the frozen auditor and 2.83 seconds in archive reconstruction. The runtime
 revision uses a 1 MiB tar stream buffer while retaining every size, inventory,
 fragment and logical-file hash guard. Layout validation runs once inside the
 unpacker before any archive is read. All twelve archive-guard tests pass.
-The revised complete suite, its new source CI and anonymous publication still
-need to pass. The frozen v27 snapshot bytes remain unchanged.
+The buffer revision's full outcome is recorded below. The frozen v27 snapshot
+bytes remain unchanged.
 
 The [second full attempt](snapshot-v27-validation-mi350-v2/observer/results.json)
 also hit the same cap, at 300.114 seconds with 91 logs. Its complete logs and
@@ -66,7 +66,22 @@ level 0. These remain complete valid gzip/tar files; most large logical members
 are themselves compressed proof/history archives. Every member, size bound,
 hash, independent replay and control remains required. All ten control-writer
 guard tests pass, including mutation isolation, changed part boundaries and
-complete regular-file fallback. Its complete 98-check run remains pending.
+complete regular-file fallback.
+
+The [third full suite](snapshot-v27-validation-mi350-v3/observer/results.json)
+passed in **284.218 seconds** on MI350 CPU at source `20f5f77`: all nine
+positive replays and 89 negative controls completed under the unchanged limits.
+All 89 earlier check records are identical. The [independent return check](snapshot-v27-validation-mi350-v3/independent-return-validation.json)
+verifies all 98 retained logs and the four executed helper files against that
+exact Git source. The two earlier timeouts remain failures; the new runtime
+changes did not alter the frozen snapshot, workload, payload or case roster.
+No fresh Lean, model or GPU experiment was performed by these replays.
+
+The fresh source CI run is
+[43565831419](https://github.com/harsh-nod/lark/actions/runs/43565831419),
+attempt 1 for source `20f5f7760f90c9e0d50e123f2b3a21fe51d40ce6`.
+Its complete 24-job result and the anonymous full-snapshot publication check
+remain pending. The MI350 pass alone establishes neither gate.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
