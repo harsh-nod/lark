@@ -80,8 +80,13 @@ No fresh Lean, model or GPU experiment was performed by these replays.
 The fresh source CI run is
 [43565831419](https://github.com/harsh-nod/lark/actions/runs/43565831419),
 attempt 1 for source `20f5f7760f90c9e0d50e123f2b3a21fe51d40ce6`.
-Its complete 24-job result and the anonymous full-snapshot publication check
-remain pending. The MI350 pass alone establishes neither gate.
+Its [ledger job](snapshot-v27-paper-ci-timeout-v2/analysis.json) reached 86 logs
+before hitting the same 300-second cap with exit code 124. All logs and four
+executed source files are retained. The job was not rerun; the other jobs in
+that workflow are still being observed. Source CI has therefore not passed,
+and anonymous full-snapshot publication remains pending. The MI350 pass alone
+establishes neither gate. Further runtime work must preserve every byte,
+case, hash check and existing limit.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
