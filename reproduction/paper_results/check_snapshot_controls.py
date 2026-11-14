@@ -103,6 +103,7 @@ GEMV_CONTROLS = tuple(("gemv" + name.removeprefix("ptx"), gate) for name, gate i
 GEMM_CONTROLS = tuple(("gemm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 BMM_CONTROLS = tuple(("bmm" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 LINEAR_CONTROLS = tuple(("linear" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
+ROTARY_CONTROLS = tuple(("rotary" + name.removeprefix("ptx"), gate) for name, gate in PTX_CONTROLS)
 
 
 class ControlArchive:
@@ -205,6 +206,12 @@ def mutate_linear_evidence(entries, config, control):
     """Preserve every Linear recording while changing the selected scope claim."""
     selected = {**config, "ptx_pointwise_proof": config["ptx_linear_proof"]}
     mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("linear"))
+
+
+def mutate_rotary_evidence(entries, config, control):
+    """Keep RoPE's complete packet while changing a fully rehashed claim."""
+    selected = {**config, "ptx_pointwise_proof": config["ptx_rotary_proof"]}
+    mutate_ptx_evidence(entries, selected, "ptx" + control.removeprefix("rotary"))
 
 
 def mutate_ptx_evidence(entries, config, control):
@@ -667,6 +674,7 @@ def main():
         for kind, key, controls, mutate in (
             ("bmm", "ptx_batched_proof", BMM_CONTROLS, mutate_bmm_evidence),
             ("linear", "ptx_linear_proof", LINEAR_CONTROLS, mutate_linear_evidence),
+            ("rotary", "ptx_rotary_proof", ROTARY_CONTROLS, mutate_rotary_evidence),
         ):
             if key not in read(snapshot / "targets.json"):
                 continue

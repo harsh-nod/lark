@@ -3,10 +3,13 @@
 import copy
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from reproduction.paper_results.prepare_ptx_rotary_snapshot import (
-    augment_auditor, check_retained_evidence, preservation_plan,
+    HISTORY, RUNTIME, assemble_config, augment_auditor, check_retained_evidence,
+    preservation_plan, stage_inputs,
 )
 from reproduction.paper_results.ptx_rotary_evidence import PROTOCOLS
 
@@ -60,6 +63,42 @@ class RotaryAuditorPreparationTests(unittest.TestCase):
                                      for key, names in config["evidence_groups"].items()}
         with self.assertRaisesRegex(ValueError, "Every earlier evidence member must remain declared"):
             check_retained_evidence(config)
+
+    def test_source_captures_preserve_both_versions_and_refuse_overwrite(self):
+        with tempfile.TemporaryDirectory(prefix="lark-rotary-source-captures-") as temporary:
+            root = Path(temporary)
+            baseline = root / "reproduction/paper_results/snapshots/20261113-v26"
+            baseline.mkdir(parents=True)
+            for name in ("auditor.py", "targets.json"):
+                (baseline / name).write_bytes((BASELINE / name).read_bytes())
+            name = "reproduction/paper_results/check_snapshot_controls.py"
+            (root / name).write_bytes(b"authored current source fixture\n")
+            selected = {name: {"commit": "a" * 40, "sha256": "b" * 64}}
+            with patch("reproduction.paper_results.prepare_ptx_rotary_snapshot.baseline_evidence"), \
+                    patch("reproduction.paper_results.prepare_ptx_rotary_snapshot.preservation_plan",
+                          return_value=selected):
+                result = stage_inputs(root)
+                self.assertEqual(len(result["files"]), 4)
+                for definition in ("auditor.py", "targets.json"):
+                    self.assertEqual((root / HISTORY / definition).read_bytes(),
+                                     (BASELINE / definition).read_bytes())
+                alias = root / RUNTIME / name
+                self.assertEqual(alias.read_bytes(), (root / name).read_bytes())
+                self.assertEqual(stage_inputs(root), result)
+                (root / name).write_bytes(b"changed authored current source fixture\n")
+                with self.assertRaisesRegex(ValueError, "Existing frozen input differs"):
+                    stage_inputs(root)
+                self.assertEqual(alias.read_bytes(), b"authored current source fixture\n")
+
+    def test_missing_release_receipts_refused_before_source_capture_or_git(self):
+        with tempfile.TemporaryDirectory(prefix="lark-rotary-missing-release-") as temporary:
+            root = Path(temporary)
+            protocol = root / "reproduction/paper_results/ptx_rotary_release_protocol.json"
+            protocol.parent.mkdir(parents=True)
+            protocol.write_bytes((ROOT / protocol.relative_to(root)).read_bytes())
+            with self.assertRaisesRegex(ValueError, "Complete RoPE publication, source CI, main"):
+                assemble_config("0" * 40, root)
+            self.assertFalse((root / RUNTIME).exists())
 
 
 if __name__ == "__main__":
