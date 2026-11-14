@@ -1,0 +1,42 @@
+test_captured_python_is_inert_and_cannot_replace_the_trusted_sdk (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_captured_python_is_inert_and_cannot_replace_the_trusted_sdk) ... ok
+test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused) ... 
+  test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused) (change={'owned_Lean_modules_freshly_compiled': 8.0}) ... FAIL
+test_coherently_rehashed_forbidden_axiom_is_refused (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_coherently_rehashed_forbidden_axiom_is_refused) ... ok
+test_complete_packet_all_positives_controls_and_failed_history (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_complete_packet_all_positives_controls_and_failed_history) ... ERROR
+test_missing_independent_tensor_denotation_audit_is_refused (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_missing_independent_tensor_denotation_audit_is_refused) ... ok
+test_tar_symlinks_and_traversal_are_refused_without_extraction (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_tar_symlinks_and_traversal_are_refused_without_extraction) ... ok
+
+======================================================================
+ERROR: test_complete_packet_all_positives_controls_and_failed_history (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_complete_packet_all_positives_controls_and_failed_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/lark-ptx-rotary-refinement-20261113/tests/test_ptx_rotary_paper_evidence.py", line 44, in test_complete_packet_all_positives_controls_and_failed_history
+    report = check_recording_packet(PACKET)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-ptx-rotary-refinement-20261113/reproduction/paper_results/ptx_rotary_evidence.py", line 445, in check_recording_packet
+    return Recording(root, "rotary").packet()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-ptx-rotary-refinement-20261113/reproduction/paper_results/ptx_rotary_evidence.py", line 431, in packet
+    self.direct_controls(group("direct-controls"))
+  File "/tmp/lark-ptx-rotary-refinement-20261113/reproduction/paper_results/ptx_rotary_evidence.py", line 258, in direct_controls
+    self.require(len(lines) == 1 and type(row["expected_Main_line"]) is int
+  File "/tmp/lark-ptx-rotary-refinement-20261113/reproduction/paper_results/ptx_rotary_evidence.py", line 45, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX rotary direct Lean binding-control refusal differs
+
+======================================================================
+FAIL: test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused (test_ptx_rotary_paper_evidence.RotaryEvidenceTests.test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused) (change={'owned_Lean_modules_freshly_compiled': 8.0})
+----------------------------------------------------------------------
+ValueError: PTX rotary positive proof counters differ
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/lark-ptx-rotary-refinement-20261113/tests/test_ptx_rotary_paper_evidence.py", line 68, in test_coherent_boolean_scope_limit_and_execution_forgeries_are_refused
+    with self.assertRaisesRegex(ValueError, "positive.*(scope|counters|binding) differs"):
+AssertionError: "positive.*(scope|counters|binding) differs" does not match "PTX rotary positive proof counters differ"
+
+----------------------------------------------------------------------
+Ran 6 tests in 22.381s
+
+FAILED (failures=1, errors=1)

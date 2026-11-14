@@ -60,6 +60,15 @@ and isolated installed-wheel replay passed. Anonymous publication verification
 and all twenty-three source CI jobs passed. This adds no original model or
 NVIDIA result.
 
+A sixth [compiled FP16 PTX development proof](reproduction/ptx/ROTARY.md)
+covers the unchanged interleaved RoPE task and all 32,768 output lanes.
+The 51-instruction program, initialized predicates, both actual branch paths,
+race freedom and memory outside the output are linked to an independently
+defined tensor reference. Four fresh checks, 21 negative controls and isolated
+installed-wheel replay passed locally. The complete evidence and failed
+development history are retained; anonymous publication verification and the
+new source CI job remain pending. This adds no original model or NVIDIA result.
+
 The opt-in [full-wave HIP shuffle profile](reproduction/shuffle/README.md)
 adds snapshot register transport to the Lean machine. Five independent 64-lane
 kernels have whole-launch certificates and exact-source checks on both MI350X

@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "status": "complete-full-size-PTX-ROTARY-proof-evidence-retained",
+  "packaged_at_utc": "2026-11-14T04:00:41.623616+00:00",
+  "SDK_source_commit": "538500cbb1a0374f798eded3a83199bbf630ada6",
+  "wheel_source_commit": "20e4605ebf7de7254fb121d00f9e9e5bd9042615",
+  "packaging_driver_sha256": "4676f1f0f3a3f772e6e9828eba9926edd9ccb1ec470b4321077dd101a4eb2772",
+  "profile": "source-bound-compiled-rotary-fp16-v1",
+  "scope": "Source-bound complete compiled [256,128] FP16 interleaved RoPE development proof. All 51 actual parsed instructions and both predicate-controlled paths are retained. Every one of the 32768 lanes executes its actual 41-instruction path through ret, including initialized predicates, paired input loads, sine/cosine loads, floating multiplications, subtraction/addition, final half conversion and output store. The actual five-access trace per lane is proved race-free; all extracted outputs match the closed reshape/select/stack/arithmetic/half tensor reference. The tensor operators have an independent shape-checked flattened denotation, and memory outside the output footprint is preserved. These results use the declared abstract scalar interpretation and unchanged shapes/dtypes, grid32768/block1/warp32 and CUDA fuel[8,1,1,1]. Finite PTX execution uses inductive actual successful transitions, with no new execution fuel. The full launch uses symbolic existence lemmas under unchanged proof limits. Python parsing/reference formalization, logical pointer provenance, aligned disjoint non-wrapping allocations and scalar-operation correspondence remain trusted. No IEEE/error-bound, PyTorch/NVIDIA hardware-conformance, NVIDIA execution, original optimized kernel, original model result or original-paper-completion claim. This separate development checker registers no legacy SDK profile or model success.",
+  "independent_source_bound_development_proofs": 1,
+  "retained_positive_Main_checks": 4,
+  "positive_rechecks": 3,
+  "fresh_owned_module_builds": 32,
+  "direct_Lean_negative_controls": 4,
+  "coherently_rehashed_negative_controls": 17,
+  "development_attempts": 17,
+  "passed_development_checks": 6,
+  "failed_development_checks": 11,
+  "retained_failed_official_exports": 0,
+  "owned_source_files": 64,
+  "Python_files": 56,
+  "Lean_files": 8,
+  "PTX_instructions": 51,
+  "registers": 52,
+  "active_lanes": 32768,
+  "actual_instructions_per_lane": 41,
+  "actual_accesses_per_lane": 5,
+  "library_axiom_audits_per_check": 265,
+  "Main_axiom_audits_per_check": 7,
+  "model_calls": 0,
+  "gpu_trials": 0,
+  "new_registered_source_certificates": 0,
+  "nvidia_execution": false,
+  "original_paper_fully_reproduced": false,
+  "all_payloads_and_failed_history_retained": true,
+  "captured_code_executed_by_packager": false,
+  "wheel_sha256": "a2e298691d95bb5d4d570cb91d73ad1906b70af23407d8d31e5e6295b79e0f56",
+  "archives": {
+    "export": {
+      "group": "positive",
+      "files": 98,
+      "uncompressed_bytes": 20630260,
+      "archive_bytes": 6306005,
+      "archive_sha256": "422e6fe1f0649363f96af0f83d99fd2f019e7376cd9840bfa811624c48ff0317",
+      "inventory_sha256": "8a056c31c60a1f128a76d51b2080a2b5388b2880e92f1357b5cceeeca9c28a90"
+    },
+    "replay-v1": {
+      "group": "positive",
+      "files": 100,
+      "uncompressed_bytes": 20642554,
+      "archive_bytes": 6310400,
+      "archive_sha256": "ea00be71f2dbab73103e37d57ec2fd1800f6b3d2e98f6d19fc7dc7277b3ec3d6",
+      "inventory_sha256": "a9b229483eef42a6d8cdd4deb00b99e0aef2a6a1ce5e3bdb95b6cdab4d51b2a4"
+    },
+    "replay-v2": {
+      "group": "positive",
+      "files": 100,
+      "uncompressed_bytes": 20642551,
+      "archive_bytes": 6310405,
+      "archive_sha256": "e9402088a84bbebfe743afc1dcbac302ce4bb20f2e8ed137c3b3859ac68e2d6f",
+      "inventory_sha256": "6a1d3c4bdce5e8a8f64f5ff01ad6cda2aa122c35fc184d600160076c8b3dad46"
+    },
+    "wheel-replay": {
+      "group": "positive",
+      "files": 100,
+      "uncompressed_bytes": 20642555,
+      "archive_bytes": 6310408,
+      "archive_sha256": "fe4d68c1ae541ac1b8f03ca3a374966c44045a46cced29973655d04439e64115",
+      "inventory_sha256": "f40ee3d6ed22132b5ca4079835e25b09b26bc90991b83291a85b30fd780284e0"
+    },
+    "direct-controls": {
+      "group": "direct-controls",
+      "files": 37,
+      "uncompressed_bytes": 130954,
+      "archive_bytes": 19375,
+      "archive_sha256": "559feb10538fb85b30324ca9efe8adad4e99270e24db0bb27fdec31ea34917cd",
+      "inventory_sha256": "44527772ded6964dddf88732cd62e308d866f97caa25ceca0e0603fb7f399e8d"
+    },
+    "rehashed-controls-1": {
+      "group": "rehashed-controls",
+      "files": 400,
+      "uncompressed_bytes": 82568407,
+      "archive_bytes": 25238611,
+      "archive_sha256": "e2714d9e377e543205370b1539e2cdc3746da585d31026926d11c8bec7e82115",
+      "inventory_sha256": "4fe803fdead70fb29c71e4ceaad6e7d22d3200130870a58ef8d69c8e8bef58a1"
+    },
+    "rehashed-controls-2": {
+      "group": "rehashed-controls",
+      "files": 400,
+      "uncompressed_bytes": 82568433,
+      "archive_bytes": 25238512,
+      "archive_sha256": "e6dc22981de866ece35113dab2e9cd970fbaacb20a41e02534ddaf4de0a615f4",
+      "inventory_sha256": "b0a99ef2e94a8b79833c7d28a1b041d998cd1c38098573bde28489362eb50510"
+    },
+    "rehashed-controls-3": {
+      "group": "rehashed-controls",
+      "files": 400,
+      "uncompressed_bytes": 82568332,
+      "archive_bytes": 25238804,
+      "archive_sha256": "d49ccb7ea776c3b69456b8444b31c2f2b4501693d67dfaf2f9c94e5c115cfde6",
+      "inventory_sha256": "b02b6c854a645e5b9eb6bfbd2649e2e9ebf32db9954f7ab15450dc6eaae84bb4"
+    },
+    "rehashed-controls-4": {
+      "group": "rehashed-controls",
+      "files": 400,
+      "uncompressed_bytes": 82568446,
+      "archive_bytes": 25238600,
+      "archive_sha256": "48722def1e13ba2833a06125f091ccd8eb04b94b1ceb3907a81f8ef0d55eb32b",
+      "inventory_sha256": "79aa6bb53c2e750c86b552cb1798c5b4d2dde4a09eeec6060f03c5853bf9ccf9"
+    },
+    "rehashed-controls-5": {
+      "group": "rehashed-controls",
+      "files": 100,
+      "uncompressed_bytes": 20642104,
+      "archive_bytes": 6310295,
+      "archive_sha256": "d6c89fd8654cb72b8019bb3ccc445df75ff41d541462672633ec83c58ba9cb65",
+      "inventory_sha256": "97a96d39801f275c962ef027aea7a1d723b9684a96315b7d8dbde7866a3f5a8c"
+    },
+    "rehashed-metadata": {
+      "group": "rehashed-controls",
+      "files": 3,
+      "uncompressed_bytes": 254704,
+      "archive_bytes": 19466,
+      "archive_sha256": "29bfb1ae6b5280ed7c0366ecddfa0dba2e1f866ac187ed138eec5dd689b43683",
+      "inventory_sha256": "022a35454cc0ddc937d3c63931f26e8d0dbdf09a21263187e9a60422b7879b28"
+    },
+    "development-1": {
+      "group": "development",
+      "files": 93,
+      "uncompressed_bytes": 84119486,
+      "archive_bytes": 26220927,
+      "archive_sha256": "0515bd32de85b405b00cddccfe93837f402d6ff0ea158942a2a31f27c25ca475",
+      "inventory_sha256": "573a712a77e49724f99c75ecdc08fcba2d79f2e49eae99b7a0a71ce106558146"
+    },
+    "development-2": {
+      "group": "development",
+      "files": 90,
+      "uncompressed_bytes": 82163253,
+      "archive_bytes": 25591871,
+      "archive_sha256": "b9cdb1ceaeb018535948893afad4a7b09ed4d4c642b920bb710d1960a0395e65",
+      "inventory_sha256": "b92c3c480034ab61a11e1806247cbfbe5723a9c95855f1aa334403ccd379e448"
+    },
+    "development-3": {
+      "group": "development",
+      "files": 92,
+      "uncompressed_bytes": 85694325,
+      "archive_bytes": 26699498,
+      "archive_sha256": "763d96ae32ada77a305c4b2f50f655e68949e3271d8805f52a1cca12d870641a",
+      "inventory_sha256": "af9a5245c8df4a5f2e0ea2cf98457f855b2ca40164e57064f0dc8921e9b42408"
+    },
+    "development-4": {
+      "group": "development",
+      "files": 41,
+      "uncompressed_bytes": 38037525,
+      "archive_bytes": 11876818,
+      "archive_sha256": "cdc3d8c91914f8118ebdd0c9942821af930f95776fb167fc38d91dbb78d25e61",
+      "inventory_sha256": "9955ef8e28d03eb8df0a5706e36505bd59d6081f144e274d7a96335bb17ff679"
+    },
+    "preparation-history": {
+      "group": "preparation",
+      "files": 121,
+      "uncompressed_bytes": 17371927,
+      "archive_bytes": 5299265,
+      "archive_sha256": "45213636d29e59bc5eda95ed11521a81566359eb5c766be86fc2bfb937f9050a",
+      "inventory_sha256": "d1e00ed39b23d4b3197ee1a2415cd66e6927deeb707120f289c4ad744a32a469"
+    },
+    "wheel-build": {
+      "group": "wheel",
+      "files": 6,
+      "uncompressed_bytes": 1646719,
+      "archive_bytes": 1513485,
+      "archive_sha256": "b11c39c5364577813dc32c3aeacdb14d5356d3bf763197f59104a6dd1b9a115b",
+      "inventory_sha256": "86c64f24f2619d61f02d3def73f19b5ff25c80e2b52aa038dd3192fa22d07d28"
+    },
+    "installed-wheel": {
+      "group": "installed",
+      "files": 1833,
+      "uncompressed_bytes": 44712658,
+      "archive_bytes": 14070941,
+      "archive_sha256": "26b33048fcd91e91ec9cc62e40de4bf9e2cc77ba41f8bc0d409e6be4db6d9ba1",
+      "inventory_sha256": "c5268c9cc59cca76eb10ffb884e6c9923c487eb41b2fe2189ee7fa81a9a7506d"
+    }
+  },
+  "shapes": [
+    [
+      256,
+      128
+    ],
+    [
+      256,
+      64
+    ],
+    [
+      256,
+      64
+    ],
+    [
+      256,
+      128
+    ]
+  ],
+  "launch": {
+    "grid": 32768,
+    "block": 1,
+    "warp": 32
+  },
+  "unchanged_CUDA_contract_fuel": [
+    8,
+    1,
+    1,
+    1
+  ],
+  "limits": {
+    "maxRecDepth": 10000,
+    "maxHeartbeats": 2000000,
+    "per_Lean_process_seconds": 180,
+    "source_import_build_seconds": 600
+  },
+  "input_bindings": {
+    "kernel.ptx": "7bb0398eebef5e3b4a196f9caae8da45f439a6b076c4d5bdb1e37222f7924180",
+    "reference.py": "08f18bebe41ee28f809d2a3d5d3af4ccf3daf6a3d04f0f48d1bf04213ac53381",
+    "contract.json": "a27753ffd11c6f360ae49d670328c258ea1cadca0c0c3ca275a30591390587bc"
+  },
+  "lean_binary_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+  "main_sha256": "fe13885baaa126fe7edeb6eafc442cb72fc3fc7b42589ecd90a64a0bfaa8e035",
+  "source_bindings_sha256": "da744699b3a80b6252efa53ca679ca4a053fad651a020a4d17a44c4b2ef583a3",
+  "reference_ast_sha256": "2282fb38eb7375a27cc163c878c626ec4ac02cd05a28ab9fb045b831982becc1"
+}
