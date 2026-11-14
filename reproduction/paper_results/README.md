@@ -78,8 +78,12 @@ The [complete fourth MI350 run](snapshot-v28-validation-mi350-v4/source-and-reco
 at `f551fe0` passed all 108 checks in 256.95 seconds. Every check record matches
 the third run, and all four returned readers match that exact Git source.
 The subsequent scheduling revision avoids optional header reads when their
-declared bindings are unchanged. Its 80 snapshot unit tests passed; it needs
-its own complete-suite, source-CI and public-download validation.
+declared bindings are unchanged. Its 80 snapshot unit tests passed. The
+[complete fifth MI350 run](snapshot-v28-validation-mi350-v5/source-and-record-comparison.json)
+at `6b448cd` passed all 108 checks in 234.36 seconds, preserving every check
+record, all 97 releasable copies and the original limits. All 28 actual inputs
+were rehashed before and after the run; all four returned readers match that
+exact source. Source-CI and anonymous public-download gates remain separate.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \

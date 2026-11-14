@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 605, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 594, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 499, in replay
+    preflight_schema2_headers(snapshot, layout, evidence_hashes, expected_archives)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 282, in preflight_schema2_headers
+    require(result.returncode == 0, "Frozen audit replay failed: " + result.stdout + result.stderr)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 600, in <module>
+    run_frozen_headers(sys.argv[2], sys.argv[3])
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 224, in run_frozen_headers
+    preflight_frozen_release_headers(script)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 161, in preflight_frozen_release_headers
+    preflight_frozen_ptx(script, config)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 149, in preflight_frozen_ptx
+    reader.fields(report, {**protocol["contract"], **protocol["report_boolean_fields"]},
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-headers-arz8si1c/reproduction/paper_results/ptx_extended_evidence.py", line 68, in fields
+    self.require(type(record) is dict and all(k in record and same_json(record[k], v)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-headers-arz8si1c/reproduction/paper_results/ptx_extended_evidence.py", line 47, in require
+    raise ValueError("PTX " + self.kind + " " + message)
+ValueError: PTX linear proof contract/original scope differs
+

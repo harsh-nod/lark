@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 605, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 594, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 531, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 603, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 57, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-1k4grs5_/reproduction/paper_results/audit.py", line 768, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-1k4grs5_/reproduction/paper_results/audit.py", line 682, in main
+    model_checks = check_full_shape_evidence(config)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-1k4grs5_/reproduction/paper_results/full_shape_evidence.py", line 157, in check_full_shape_evidence
+    require(case["test_stub"] is False and case["new_source_certificates"] == 0
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-1k4grs5_/reproduction/paper_results/full_shape_evidence.py", line 38, in require
+    raise ValueError("Full-shape model " + message)
+ValueError: Full-shape model case stub/execution scope differs
+

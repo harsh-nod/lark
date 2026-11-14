@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 605, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 594, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 531, in replay
+    require(
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 31, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 603, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-wt0h5cph/isolated/bin/replay_snapshot.py", line 57, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-vfcyrfa4/reproduction/paper_results/audit.py", line 768, in <module>
+    main()
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-vfcyrfa4/reproduction/paper_results/audit.py", line 679, in main
+    numerical_checks = check_numerical_evidence(config)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-vfcyrfa4/reproduction/paper_results/audit.py", line 242, in check_numerical_evidence
+    require(publication["downloaded_files"] == len(publication["observations"]) == 8 and
+  File "/tmp/lark-paper-v28-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-vfcyrfa4/reproduction/paper_results/audit.py", line 39, in require
+    raise ValueError(message)
+ValueError: Numerical study anonymous publication differs: benchmark
+
