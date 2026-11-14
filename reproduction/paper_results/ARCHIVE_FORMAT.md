@@ -73,3 +73,15 @@ multi-part reconstruction, the actual 10,000,001-byte boundary, empty/code/long
 logical paths, retained unsafe control bytes, two independent workers,
 deterministic compression reuse, old copied-part cleanup without dropping a
 logical byte, corrupt-baseline refusal and complete provenance rehashing.
+
+The [complete real-corpus control-writer validation](snapshot-v26-control-storage-validation-v1/results.json)
+then exercised all 3,625 frozen v25 files through the new writer and trusted
+standalone replayer. The positive replay passed; a completely rehashed GEMM
+kernel-count overclaim failed at its semantic gate, and an additional retained
+unsafe logical member failed at the trusted path gate. Cache construction,
+three full copied control archives and all three sequential replays took
+25.0956 seconds. Every original logical file remains present; only the two
+selected GEMM metadata files change in that false control. Both the original
+v25 snapshot and the retained schema-two prototype remain byte-identical.
+The complete raw control snapshots remain retained locally. This checks the
+new control-storage path, not the final v26 snapshot or its full control suite.

@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "status": "complete-real-v25-control-storage-positive-and-two-negatives-passed",
+  "source_revision": "a559e40ab293237b40552aa81f59b2260e6bf554",
+  "source_sha256": {
+    "replay_snapshot.py": "119c2f8d7035f9b7181dcd322e2ba35a557a61a097346fee089669cabd7a76e4",
+    "snapshot_archives.py": "0a7b899eb8a504560b27d6cd6322adfe4d7ca0f4e308e247bb44b2dda26d2114",
+    "snapshot_control_archives.py": "57d770c8161b91e6a2175753b9479712e6da9985d3f6b047ae68476feb2be359",
+    "check_snapshot_controls.py": "de23b902651e7f02d70d8a0bbb7accf6b8edbba845c1be87aab3431562eed325"
+  },
+  "whole_corpus_cache_seconds": 7.569558263989165,
+  "seconds": 25.09558947896585,
+  "outcomes": {
+    "positive": {
+      "command": [
+        "/usr/bin/python3",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/bin/replay_snapshot.py",
+        "--snapshot",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/cases/positive",
+        "--source-archive",
+        "/tmp/lark-reproduction-paper-source.tar"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 8.289109182078391,
+      "expected_acceptance": true,
+      "expected_gate": "frozen-snapshot-replayed",
+      "expected_gate_observed": true
+    },
+    "rehashed-gemm-kernel-overclaim": {
+      "command": [
+        "/usr/bin/python3",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/bin/replay_snapshot.py",
+        "--snapshot",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/cases/rehashed-gemm-kernel-overclaim",
+        "--source-archive",
+        "/tmp/lark-reproduction-paper-source.tar"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 6.969311257940717,
+      "expected_acceptance": false,
+      "expected_gate": "PTX matrix kernel/recheck/execution counters differ",
+      "expected_gate_observed": true
+    },
+    "retained-unsafe-control": {
+      "command": [
+        "/usr/bin/python3",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/bin/replay_snapshot.py",
+        "--snapshot",
+        "/tmp/lark-paper-v26-control-storage-v1-20261113/cases/retained-unsafe-control",
+        "--source-archive",
+        "/tmp/lark-reproduction-paper-source.tar"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 0.4196619070135057,
+      "expected_acceptance": false,
+      "expected_gate": "Unsafe evidence path",
+      "expected_gate_observed": true
+    }
+  },
+  "cases": {
+    "positive": {
+      "logical_files": 3625,
+      "original_logical_files_retained": 3625,
+      "original_logical_files_unchanged": 3625,
+      "intentional_changed_metadata_files": [],
+      "layout_sha256": "13811ce18256235671c5a69765fce632661b8634461c7963e9e571abafafe66d",
+      "logical_manifest_sha256": "144db2e68c0cb61dc0969c3a088a9ae6ed01e71159fe835d8483db0a4b854b54",
+      "snapshot_manifest_sha256": "ec40c0f56ff502f6f658c6f4347eff6dc24f37e7a112030396ae9dc2e66d3111",
+      "parts": [
+        {
+          "path": "evidence-part-0001.tar.gz",
+          "bytes": 37664814,
+          "sha256": "16f971574f0f11aaefbb6fa06f8f8d2ebaea177a90f339021eca27e6eaba74c3"
+        },
+        {
+          "path": "evidence-part-0002.tar.gz",
+          "bytes": 48757788,
+          "sha256": "1c85fb97ec52bcf21b8480f6dba881aa1617f66e9f3d5c6466e6f624524552a4"
+        }
+      ]
+    },
+    "rehashed-gemm-kernel-overclaim": {
+      "logical_files": 3625,
+      "original_logical_files_retained": 3625,
+      "original_logical_files_unchanged": 3623,
+      "intentional_changed_metadata_files": [
+        "reproduction/ptx/results/full-size-gemm-proof-v1/manifest.json",
+        "reproduction/ptx/results/full-size-gemm-proof-v1/results.json"
+      ],
+      "layout_sha256": "40fd9625ada440162b88e0e062ac6bd1fc8f901a8a5cf0846b2f88197abceda3",
+      "logical_manifest_sha256": "d65c064c176caf173ea9217edf377192149a884faf9971b37f119b4ab7c7a6e9",
+      "snapshot_manifest_sha256": "672dc2502e3442cdacb2c08848b41ecd1ff08e3bb2d43b9c7dac1104534f4b15",
+      "parts": [
+        {
+          "path": "evidence-part-0001.tar.gz",
+          "bytes": 37664814,
+          "sha256": "16f971574f0f11aaefbb6fa06f8f8d2ebaea177a90f339021eca27e6eaba74c3"
+        },
+        {
+          "path": "evidence-part-0002.tar.gz",
+          "bytes": 48757789,
+          "sha256": "1d33100753867676377d75cd6a5f8958e5dd3bef55d1a001543d6efa1bd98c18"
+        }
+      ]
+    },
+    "retained-unsafe-control": {
+      "logical_files": 3626,
+      "original_logical_files_retained": 3625,
+      "original_logical_files_unchanged": 3625,
+      "intentional_changed_metadata_files": [],
+      "layout_sha256": "97fc59130a12f69bbe930031771193bdeb1ab9f11d48b682ecb1004b3b87ecb4",
+      "logical_manifest_sha256": "791de7969a9046cc2df14d10a55859eac283c63cd93a6960704be1326614797e",
+      "snapshot_manifest_sha256": "4599ad8f320c9a2537ee23fae2f2a7e71110796b5d1fa08caa88b1537f450b36",
+      "parts": [
+        {
+          "path": "evidence-part-0001.tar.gz",
+          "bytes": 37664987,
+          "sha256": "16c61b562610e2b5d795b2883f28eb4c485be0d6253b54a4ef99d3051f2a91e8"
+        },
+        {
+          "path": "evidence-part-0002.tar.gz",
+          "bytes": 48757788,
+          "sha256": "1c85fb97ec52bcf21b8480f6dba881aa1617f66e9f3d5c6466e6f624524552a4"
+        }
+      ]
+    }
+  },
+  "all_original_evidence_members": 3623,
+  "all_original_frozen_files": 3625,
+  "raw_control_snapshots_retained_locally": "/tmp/lark-paper-v26-control-storage-v1-20261113/cases",
+  "original_v25_and_retained_schema2_prototype_byte_identical": true,
+  "per_replay_limit_seconds": 120,
+  "aggregate_limit_seconds": 300,
+  "independent_replayers": 1,
+  "max_tar_entry_bytes": 10000000,
+  "fresh_Lean_checks": 0,
+  "gpu_trials": 0,
+  "model_calls": 0,
+  "v26_snapshot_created": false,
+  "full_v26_control_suite_run": false,
+  "original_paper_fully_reproduced": false,
+  "scope": "Three actual standalone standard-library replay checks of the complete real-v25 corpus rewritten by the new schema-two concatenated-gzip control writer. Every original logical file is retained; only the two explicitly selected GEMM metadata files change in that false control. The unsafe control retains all baseline bytes plus its malicious logical member for the trusted reader to reject. No new paper result, Lean/GPU/model experiment, final v26 ledger or full-v26 control-suite claim."
+}
