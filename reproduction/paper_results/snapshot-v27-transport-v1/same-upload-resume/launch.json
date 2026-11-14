@@ -1,0 +1,14 @@
+{
+  "command": [
+    "ssh",
+    "-S",
+    "/tmp/lark-glm-cuda-cohort-publication-forward-20261113.sock",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mi350",
+    "python3 -c '\nimport hashlib,json,subprocess,tarfile\nfrom pathlib import Path,PurePosixPath\nroot=Path('\"'\"'/tmp/lark-paper-v27-controls-mi350-v1-20261113'\"'\"')\narchive=root.with_suffix('\"'\"'.tar'\"'\"')\ndigest=hashlib.sha256()\nwith archive.open('\"'\"'rb'\"'\"') as source:\n    while data:=source.read(1024*1024): digest.update(data)\nassert digest.hexdigest()=='\"'\"'dc5fe389c383ccd73d8f22573fd939f089d6b2db8a7f4ddbd70f2d478a68021f'\"'\"'\nassert not root.exists()\nroot.mkdir()\nwith tarfile.open(archive,'\"'\"'r:'\"'\"') as stream:\n    names=set()\n    for member in stream:\n        name=PurePosixPath(member.name)\n        assert member.isfile() and not name.is_absolute() and '\"'\"'..'\"'\"' not in name.parts and str(name)==member.name\n        assert member.name not in names\n        names.add(member.name)\n        target=root/member.name\n        target.parent.mkdir(parents=True,exist_ok=True)\n        with stream.extractfile(member) as source,target.open('\"'\"'xb'\"'\"') as output:\n            while data:=source.read(1024*1024): output.write(data)\nbindings=json.loads((root/'\"'\"'bundle-manifest.json'\"'\"').read_text())\nassert names==set(bindings)|{'\"'\"'bundle-manifest.json'\"'\"'}\nfor name,value in bindings.items():\n    digest=hashlib.sha256()\n    with (root/name).open('\"'\"'rb'\"'\"') as source:\n        while data:=source.read(1024*1024): digest.update(data)\n    assert digest.hexdigest()==value\nwith (root/'\"'\"'driver.stdout'\"'\"').open('\"'\"'xb'\"'\"') as stdout,(root/'\"'\"'driver.stderr'\"'\"').open('\"'\"'xb'\"'\"') as stderr:\n    child=subprocess.Popen(['\"'\"'python3'\"'\"',str(root/'\"'\"'driver.py'\"'\"')],cwd=root,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,start_new_session=True)\nrecord={'\"'\"'pid'\"'\"':child.pid,'\"'\"'remote'\"'\"':str(root),'\"'\"'archive_sha256'\"'\"':'\"'\"'dc5fe389c383ccd73d8f22573fd939f089d6b2db8a7f4ddbd70f2d478a68021f'\"'\"','\"'\"'files'\"'\"':len(names),'\"'\"'stage'\"'\"':'\"'\"'launched-one-owned-CPU-control-suite'\"'\"'}\n(root/'\"'\"'launch.json'\"'\"').write_text(json.dumps(record,indent=2)+'\"'\"'\\n'\"'\"')\nprint(json.dumps(record),flush=True)\n'"
+  ],
+  "exit_code": 0
+}

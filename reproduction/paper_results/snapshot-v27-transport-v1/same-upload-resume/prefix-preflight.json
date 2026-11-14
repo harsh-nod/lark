@@ -1,0 +1,14 @@
+{
+  "command": [
+    "ssh",
+    "-S",
+    "/tmp/lark-glm-cuda-cohort-publication-forward-20261113.sock",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mi350",
+    "python3 -c '\nimport hashlib,json\nfrom pathlib import Path\nroot=Path('\"'\"'/tmp/lark-paper-v27-controls-mi350-v1-20261113'\"'\"')\nassert not root.exists(), '\"'\"'Observe the existing job rather than resuming an upload'\"'\"'\npath=root.with_suffix('\"'\"'.tar'\"'\"')\nbefore=path.stat()\ndigest=hashlib.sha256()\nwith path.open('\"'\"'rb'\"'\"') as source:\n    while data:=source.read(1024*1024): digest.update(data)\nafter=path.stat()\nassert (before.st_size,before.st_mtime_ns)==(after.st_size,after.st_mtime_ns)\nprint(json.dumps({'\"'\"'bytes'\"'\"':after.st_size,'\"'\"'sha256'\"'\"':digest.hexdigest(),'\"'\"'mtime_ns'\"'\"':after.st_mtime_ns}))\n'"
+  ],
+  "exit_code": 0
+}

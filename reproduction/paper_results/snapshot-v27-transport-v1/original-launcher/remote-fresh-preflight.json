@@ -1,0 +1,15 @@
+{
+  "command": [
+    "ssh",
+    "-S",
+    "/tmp/lark-glm-cuda-cohort-publication-forward-20261113.sock",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mi350",
+    "python3 -c 'from pathlib import Path; assert not Path('\"'\"'/tmp/lark-paper-v27-controls-mi350-v1-20261113'\"'\"').exists() and not Path('\"'\"'/tmp/lark-paper-v27-controls-mi350-v1-20261113.tar'\"'\"').exists(), '\"'\"'Observe existing inputs or job instead of replacing them'\"'\"''"
+  ],
+  "returncode": 0,
+  "seconds": 0.25253552198410034
+}

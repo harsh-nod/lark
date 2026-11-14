@@ -16,6 +16,8 @@ SCHEMA = 2
 MAX_ENTRY_BYTES = 10_000_000
 MAX_TAR_BYTES = 85_000_000
 MAX_ARCHIVE_BYTES = 90_000_000
+# Decode larger blocks without changing any physical/member/logical limit.
+STREAM_BUFFER_BYTES = 1024 * 1024
 
 
 def require(condition, message):
@@ -175,7 +177,7 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
         # GzipFile decodes every concatenated member used by the complete
         # control writer; tarfile's streaming gzip decoder stops after one.
         with gzip.GzipFile(snapshot / description["path"], mode="rb") as decoded, \
-                tarfile.open(fileobj=decoded, mode="r|") as archive:
+                tarfile.open(fileobj=decoded, mode="r|", bufsize=STREAM_BUFFER_BYTES) as archive:
             for count, entry in enumerate(archive, 1):
                 require(count <= len(expected) and entry.name == expected[count - 1]
                         and entry.isfile() and 0 <= entry.size <= MAX_ENTRY_BYTES,

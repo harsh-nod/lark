@@ -225,7 +225,8 @@ def replay(snapshot, manuscript, *, creating=False):
         require(digest((snapshot / "evidence-layout.json").read_bytes()) == provenance["evidence_layout_sha256"],
                 "Frozen archive layout binding differs")
         layout = read(snapshot / "evidence-layout.json")
-        archive_storage().validate_layout(layout, evidence_hashes)
+        # unpack_parts validates this complete layout and its manifest before
+        # reading any archive. Keep that gate once, with the same bound data.
     with tempfile.TemporaryDirectory(prefix="lark-paper-snapshot-") as temporary:
         root = Path(temporary)
         if schema == 1:

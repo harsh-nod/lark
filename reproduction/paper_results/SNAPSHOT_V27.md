@@ -32,9 +32,27 @@ controls, totaling 98 checks. All 89 earlier v26 check records must remain
 identical. RoPE adds eight coherently rehashed false-claim controls and one
 positive replay after them. Limits stay at 120 seconds per replay, 300 seconds
 for the complete suite and two independent replay workers. The complete v27
-suite, new source CI and anonymous snapshot publication are still pending;
-build completion and local CI-ledger assertions do not establish those gates.
-Public main continues to use the validated v26 ledger until those gates complete.
+suite has not passed; build completion and local CI-ledger assertions do not
+establish the remaining release gates. Public main continues to use the
+validated v26 ledger until those gates complete.
+
+The [first complete-suite attempt](snapshot-v27-validation-mi350-v1/observer/results.json)
+hit the unchanged 300-second aggregate cap at 300.064 seconds after writing
+89 of 98 logs. It is a failed run. All logs and the executed helpers are
+retained; the [capture inventory](snapshot-v27-validation-mi350-v1/capture.json)
+binds all 8,336 files left in the original interrupted workspaces. Those
+workspaces, the complete snapshot and original transport archive remain on
+MI350. No control or input was removed and the run was not restarted.
+
+The [diagnostic replay](snapshot-v27-replay-profile-v1/results.json) profiled
+one complete unchanged snapshot after that failure, performing no Lean, model
+or GPU experiment. Its 11.75 seconds include profiler overhead: 7.49 seconds
+in the frozen auditor and 2.83 seconds in archive reconstruction. The runtime
+revision uses a 1 MiB tar stream buffer while retaining every size, inventory,
+fragment and logical-file hash guard. Layout validation runs once inside the
+unpacker before any archive is read. All twelve archive-guard tests pass.
+The revised complete suite, its new source CI and anonymous publication still
+need to pass. The frozen v27 snapshot bytes remain unchanged.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \

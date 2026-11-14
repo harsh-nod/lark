@@ -1,0 +1,36 @@
+diff --git a/reproduction/paper_results/replay_snapshot.py b/reproduction/paper_results/replay_snapshot.py
+index 998140b..fd2dabc 100644
+--- a/reproduction/paper_results/replay_snapshot.py
++++ b/reproduction/paper_results/replay_snapshot.py
+@@ -225,7 +225,8 @@ def replay(snapshot, manuscript, *, creating=False):
+         require(digest((snapshot / "evidence-layout.json").read_bytes()) == provenance["evidence_layout_sha256"],
+                 "Frozen archive layout binding differs")
+         layout = read(snapshot / "evidence-layout.json")
+-        archive_storage().validate_layout(layout, evidence_hashes)
++        # unpack_parts validates this complete layout and its manifest before
++        # reading any archive. Keep that gate once, with the same bound data.
+     with tempfile.TemporaryDirectory(prefix="lark-paper-snapshot-") as temporary:
+         root = Path(temporary)
+         if schema == 1:
+diff --git a/reproduction/paper_results/snapshot_archives.py b/reproduction/paper_results/snapshot_archives.py
+index be9bb2d..2982087 100644
+--- a/reproduction/paper_results/snapshot_archives.py
++++ b/reproduction/paper_results/snapshot_archives.py
+@@ -16,6 +16,8 @@ SCHEMA = 2
+ MAX_ENTRY_BYTES = 10_000_000
+ MAX_TAR_BYTES = 85_000_000
+ MAX_ARCHIVE_BYTES = 90_000_000
++# Decode larger blocks without changing any physical/member/logical limit.
++STREAM_BUFFER_BYTES = 1024 * 1024
+ 
+ 
+ def require(condition, message):
+@@ -175,7 +177,7 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
+         # GzipFile decodes every concatenated member used by the complete
+         # control writer; tarfile's streaming gzip decoder stops after one.
+         with gzip.GzipFile(snapshot / description["path"], mode="rb") as decoded, \
+-                tarfile.open(fileobj=decoded, mode="r|") as archive:
++                tarfile.open(fileobj=decoded, mode="r|", bufsize=STREAM_BUFFER_BYTES) as archive:
+             for count, entry in enumerate(archive, 1):
+                 require(count <= len(expected) and entry.name == expected[count - 1]
+                         and entry.isfile() and 0 <= entry.size <= MAX_ENTRY_BYTES,
