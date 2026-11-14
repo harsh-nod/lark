@@ -1,0 +1,66 @@
+Lark/PtxFeedForwardReference.lean:118:20: error: tactic 'rfl' failed, the left-hand side
+  dot ops a b row column k 0 acc
+is not definitionally equal to the right-hand side
+  some (scalarFold (fun j v => ops.add v (ops.mul (left j) (right j))) k 0 acc)
+case zero
+α : Type
+ops : Ops α
+a b : Tensor α
+row column : Nat
+left right : Nat → α
+k : Nat
+acc : α
+ha✝ : ∀ (j : Nat), k ≤ j → j < k + 0 → a.cell (row * a.columns + j) = some (left j)
+hb✝ : ∀ (j : Nat), k ≤ j → j < k + 0 → b.cell (j * b.columns + column) = some (right j)
+⊢ dot ops a b row column k 0 acc = some (scalarFold (fun j v => ops.add v (ops.mul (left j) (right j))) k 0 acc)
+Lark/PtxFeedForwardReference.lean:121:6: error: failed to generate equational theorem for 'LarkPtxFeedForward.Reference.dot'
+α : Type
+ops : Ops α
+a b : Tensor α
+row column x : Nat
+x_1 : α
+r : Nat
+⊢ ((a.cell (row * a.columns + x)).bind fun x_2 => do
+      let y ← b.cell (x * b.columns + column)
+      (Nat.rec ⟨fun x x => some x, PUnit.unit⟩
+              (fun n n_ih =>
+                ⟨fun x x_3 => do
+                  let x_4 ← a.cell (row * a.columns + x)
+                  let y ← b.cell (x * b.columns + column)
+                  n_ih.1 (x + 1) (ops.add x_3 (ops.mul x_4 y)), n_ih⟩)
+              r).1
+          (x + 1) (ops.add x_1 (ops.mul x_2 y))) =
+    do
+    let x_2 ← a.cell (row * a.columns + x)
+    let y ← b.cell (x * b.columns + column)
+    dot ops a b row column (x + 1) r (ops.add x_1 (ops.mul x_2 y))
+Lark/PtxFeedForwardReference.lean:123:6: error: type mismatch
+  ih (k + 1) (ops.add acc (ops.mul (left k) (right k)))
+    (fun j hj hk =>
+      ha j (Decidable.byContradiction fun a => dot_fold._proof_34 r k j hj a)
+        (Decidable.byContradiction fun a => dot_fold._proof_35 r k j hk a))
+    fun j hj hk =>
+    hb j (Decidable.byContradiction fun a => dot_fold._proof_34 r k j hj a)
+      (Decidable.byContradiction fun a => dot_fold._proof_35 r k j hk a)
+has type
+  dot ops a b row column (k + 1) r (ops.add acc (ops.mul (left k) (right k))) =
+    some
+      (scalarFold (fun j v => ops.add v (ops.mul (left j) (right j))) (k + 1) r
+        (ops.add acc (ops.mul (left k) (right k)))) : Prop
+but is expected to have type
+  dot ops a b row column k (r + 1) acc =
+    some
+      (scalarFold (fun j v => ops.add v (ops.mul (left j) (right j))) (k + 1) r
+        (ops.add acc (ops.mul (left k) (right k)))) : Prop
+Lark/PtxFeedForwardReference.lean:134:8: error: (kernel) deep recursion detected
+'LarkPtxFeedForward.Reference.evaluate_up' does not depend on any axioms
+'LarkPtxFeedForward.Reference.evaluate_body' does not depend on any axioms
+'LarkPtxFeedForward.Reference.hidden_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.reference_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.dot_fold' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Reference.hidden_cell' depends on axioms: [LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_cell' depends on axioms: [propext,
+ sorryAx,
+ Quot.sound,
+ LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_outside' depends on axioms: [propext]

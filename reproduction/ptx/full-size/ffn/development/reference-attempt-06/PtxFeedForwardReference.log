@@ -1,0 +1,68 @@
+Lark/PtxFeedForwardReference.lean:162:42: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 0
+  c ≥ 0
+  c + 256*d ≥ 16384
+  b ≥ 0
+  b - c ≥ 1
+  0 ≤ a ≤ 65535
+  0 ≤ a - 1024*d ≤ 1023
+where
+ a := ↑t
+ b := ↑(mapTensor ops.fromHalf (tensorAt input 0)).columns
+ c := ↑j
+ d := ↑t / 1024
+Lark/PtxFeedForwardReference.lean:166:44: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 0
+  b ≥ 0
+  b - c ≥ 1
+  0 ≤ a ≤ 65535
+  0 ≤ a - 1024*d ≤ 1023
+  a + 1024*c - 1024*d ≥ 262144
+where
+ a := ↑t
+ b := ↑(mapTensor ops.fromHalf (tensorAt input 0)).columns
+ c := ↑j
+ d := ↑t / 1024
+Lark/PtxFeedForwardReference.lean:153:8: error: (kernel) deep recursion detected
+Lark/PtxFeedForwardReference.lean:187:42: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  d ≥ 0
+  c ≥ 0
+  c + 1024*d ≥ 65536
+  b ≥ 0
+  b - c ≥ 1
+  0 ≤ a ≤ 16383
+  0 ≤ a - 256*d ≤ 255
+where
+ a := ↑t
+ b := ↑(mapTensor ops.fromHalf (hiddenTensor ops input)).columns
+ c := ↑j
+ d := ↑t / 256
+Lark/PtxFeedForwardReference.lean:193:42: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 0
+  b ≥ 0
+  b - c ≥ 1
+  0 ≤ a ≤ 16383
+  0 ≤ a - 256*d ≤ 255
+  a + 256*c - 256*d ≥ 262144
+where
+ a := ↑t
+ b := ↑(mapTensor ops.fromHalf (hiddenTensor ops input)).columns
+ c := ↑j
+ d := ↑t / 256
+'LarkPtxFeedForward.Reference.evaluate_up' does not depend on any axioms
+'LarkPtxFeedForward.Reference.multiply_cell' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.evaluate_body' does not depend on any axioms
+'LarkPtxFeedForward.Reference.hidden_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.reference_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.dot_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.multiply_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.hidden_cell' depends on axioms: [LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_cell' depends on axioms: [propext,
+ sorryAx,
+ Quot.sound,
+ LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_outside' depends on axioms: [propext]

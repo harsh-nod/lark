@@ -1,0 +1,50 @@
+{
+  "status": "failed-reference-development-check",
+  "observed_at_utc": "2026-11-14T08:05:17.816316+00:00",
+  "module_checks": [
+    {
+      "module": "Nonlinear",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/Nonlinear.olean",
+        "Lark/Nonlinear.lean"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "seconds": 4.468956321943551
+    },
+    {
+      "module": "PtxFeedForwardReference",
+      "command": [
+        "/tmp/lean-4.19.0-linux/bin/lean",
+        "-o",
+        "Lark/PtxFeedForwardReference.olean",
+        "Lark/PtxFeedForwardReference.lean"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "seconds": 6.786909829010256
+    }
+  ],
+  "axiom_audits": {},
+  "total_seconds": 11.257010266999714,
+  "Lean_sha256": "92c3d35b5bfaa5e0fea413a775d504cf46cd95e1345df61c2274f76779e7e023",
+  "original_stack_limits": [
+    8388608,
+    -1
+  ],
+  "limits": {
+    "maxRecDepth": 10000,
+    "maxHeartbeats": 2000000,
+    "per_Lean_process_seconds": 180,
+    "source_import_build_seconds": 600
+  },
+  "all_own_modules_fresh": true,
+  "source_import_build_seconds": 600,
+  "compiled_FFN_kernel_correctness_proofs": 0,
+  "new_registered_source_certificates": 0,
+  "GPU_trials": 0,
+  "model_calls": 0,
+  "original_paper_fully_reproduced": false
+}
