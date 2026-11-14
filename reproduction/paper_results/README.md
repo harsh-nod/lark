@@ -111,6 +111,13 @@ See [the storage format and validation records](ARCHIVE_FORMAT.md) and
 model outcomes, optimized programs, harness, mutation registry and exact
 NVIDIA measurements remain unreproduced.
 
+The [completed main-promotion record](snapshot-v26-ci-main-v2/results.json)
+records the guarded fast-forward from `db1eb9b` to `c6c02ac`. All 23 source
+CI jobs passed at `ce56116`; the promoted commit changes only the three
+documentation files and publication/CI receipts after that source.
+This later promotion receipt also adds no executable or snapshot changes
+and claims no separate CI run for its metadata-only commit.
+
 The earlier v25 snapshot freezes **3,623 evidence files** at commit `c61497b`, plus
 its auditor and targets. Every earlier evidence member is preserved byte for
 byte. The six full-size HIP/CUDA model cohorts retain 85 verified outcomes
