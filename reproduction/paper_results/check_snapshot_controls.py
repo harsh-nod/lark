@@ -51,7 +51,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def rehash(snapshot, *, archive_changed=False):
+def rehash(snapshot, *, archive_changed=False, emitted_archives=None):
     if archive_changed:
         provenance = read(snapshot / "provenance.json")
         if provenance["schema"] == 2:
@@ -62,10 +62,40 @@ def rehash(snapshot, *, archive_changed=False):
         write(snapshot / "provenance.json", provenance)
     results = snapshot / "results"
     write(results / "manifest.json", {n: sha(results / n) for n in ("audit.json", "RESULTS.md")})
+    files = file_set(snapshot)
+    emitted = {}
+    if emitted_archives is not None:
+        if not archive_changed or read(snapshot / "provenance.json")["schema"] != 2:
+            raise ValueError("Emitted archive bindings require a schema-two rewrite")
+        if type(emitted_archives) is not list or not emitted_archives:
+            raise ValueError("Complete emitted archive bindings required")
+        for index, row in enumerate(emitted_archives, 1):
+            name = f"evidence-part-{index:04d}.tar.gz"
+            if (type(row) is not dict or row.get("path") != name
+                    or type(row.get("bytes")) is not int or not 0 < row["bytes"] <= 90_000_000
+                    or type(row.get("sha256")) is not str or len(row["sha256"]) != 64
+                    or any(c not in "0123456789abcdef" for c in row["sha256"])
+                    or not (snapshot / name).is_file()
+                    or (snapshot / name).stat().st_size != row["bytes"]):
+                raise ValueError("Emitted archive size/path/hash binding differs")
+            emitted[name] = row["sha256"]
+        if set(emitted) != {n for n in files if n.startswith("evidence-part-") and n.endswith(".tar.gz")}:
+            raise ValueError("Complete emitted archive roster required")
+        # The producer just wrote or linked these complete immutable parts and
+        # already hashed their actual bytes. Reuse that work only to author
+        # the outer control manifest. Independent replay still reads and
+        # hashes every physical part against both expected bindings.
     write(
         snapshot / "manifest.json",
-        {n: sha(snapshot / n) for n in sorted(file_set(snapshot)) if n != "manifest.json"},
+        {n: emitted[n] if n in emitted else sha(snapshot / n)
+         for n in sorted(files) if n != "manifest.json"},
     )
+
+
+def rewrite_control(packed_controls, snapshot, entries):
+    layout = packed_controls.write(snapshot, entries)
+    emitted = layout["archives"] if type(layout) is dict else None
+    rehash(snapshot, archive_changed=True, emitted_archives=emitted)
 
 
 MODEL_CONTROLS = (
@@ -462,8 +492,7 @@ def main():
             target_name = "reproduction/paper_results/targets.json"
             entries = packed_controls.entries.copy()
             entries[target_name] = (altered / "targets.json").read_bytes()
-            packed_controls.write(altered, entries)
-            rehash(altered, archive_changed=True)
+            rewrite_control(packed_controls, altered, entries)
             code, log = execute("missing-production-case", altered)
             if code == 0 or "Production case inventory differs from manuscript" not in log:
                 raise RuntimeError("Production inventory control failed: " + log)
@@ -491,8 +520,7 @@ def main():
                     hashes = json.loads(entries[inner_manifest])
                     hashes[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[inner_manifest] = (json.dumps(hashes, indent=2) + "\n").encode()
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(name, altered)
                 if code == 0 or expected_gate not in log:
                     raise RuntimeError("Study scope control failed: " + name + "\n" + log)
@@ -558,8 +586,7 @@ def main():
                     manifest = json.loads(entries[manifest_name])
                     manifest.get("files", manifest)[Path(selected).name] = hashlib.sha256(entries[selected]).hexdigest()
                     entries[manifest_name] = (json.dumps(manifest, indent=2)+"\n").encode()
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "Numerical study " + expected_gate not in log:
                     raise RuntimeError("Numerical study control failed: " + control_name + "\n" + log)
@@ -583,8 +610,7 @@ def main():
                 config = read(altered / "targets.json")
                 mutate_model_evidence(entries, config, control_name)
                 write(altered / "targets.json", config)
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "Full-shape model " + expected_gate not in log:
                     raise RuntimeError("Full-shape model control failed: " + control_name + "\n" + log)
@@ -609,8 +635,7 @@ def main():
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_ptx_evidence(entries, config, control_name)
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX pointwise " + expected_gate not in log:
                     raise RuntimeError("PTX pointwise control failed: " + control_name + "\n" + log)
@@ -633,8 +658,7 @@ def main():
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_gemv_evidence(entries, config, control_name)
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX dot " + expected_gate not in log:
                     raise RuntimeError("PTX GEMV control failed: " + control_name + "\n" + log)
@@ -656,8 +680,7 @@ def main():
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate_gemm_evidence(entries, config, control_name)
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX matrix " + expected_gate not in log:
                     raise RuntimeError("PTX GEMM control failed: " + control_name + "\n" + log)
@@ -686,8 +709,7 @@ def main():
                 entries = packed_controls.entries.copy()
                 config = read(altered / "targets.json")
                 mutate(entries, config, control_name)
-                packed_controls.write(altered, entries)
-                rehash(altered, archive_changed=True)
+                rewrite_control(packed_controls, altered, entries)
                 code, log = execute(control_name, altered)
                 if code == 0 or "PTX " + kind + " " + expected_gate not in log:
                     raise RuntimeError("PTX " + kind + " control failed: " + control_name + "\n" + log)
@@ -708,8 +730,7 @@ def main():
         entries = packed_controls.entries.copy()
         unsafe = "../lark-paper-control-" + uuid.uuid4().hex
         entries[unsafe] = b"must not be extracted"
-        packed_controls.write(altered, entries)
-        rehash(altered, archive_changed=True)
+        rewrite_control(packed_controls, altered, entries)
         code, log = execute("fully-rehashed-traversal", altered)
         traversal_gate = ("Unsafe evidence path" if read(snapshot / "provenance.json")["schema"] == 2
                           else "Unsafe path: " + unsafe)

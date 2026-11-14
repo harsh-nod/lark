@@ -32,8 +32,9 @@ controls, totaling 98 checks. All 89 earlier v26 check records must remain
 identical. RoPE adds eight coherently rehashed false-claim controls and one
 positive replay after them. Limits stay at 120 seconds per replay, 300 seconds
 for the complete suite and two independent replay workers. The complete v27
-suite now passes on MI350 CPU, as recorded below. New source CI and anonymous
-publication remain release gates. Public main continues to use the validated
+suite now passes on MI350 CPU, as recorded below. Anonymous publication has
+also passed for source `8eae2cd`; complete source CI remains a release gate.
+Public main continues to use the validated
 v26 ledger until those gates complete.
 
 The [first complete-suite attempt](snapshot-v27-validation-mi350-v1/observer/results.json)
@@ -82,10 +83,11 @@ The fresh source CI run is
 attempt 1 for source `20f5f7760f90c9e0d50e123f2b3a21fe51d40ce6`.
 Its [ledger job](snapshot-v27-paper-ci-timeout-v2/analysis.json) reached 86 logs
 before hitting the same 300-second cap with exit code 124. All logs and four
-executed source files are retained. The job was not rerun; the other jobs in
-that workflow are still being observed. Source CI has therefore not passed,
-and anonymous full-snapshot publication remains pending. The MI350 pass alone
-establishes neither gate. Further runtime work must preserve every byte,
+executed source files are retained. The job was not rerun. The complete second
+and third workflow observations retain 22 successful jobs each and the same
+preserved-evidence ancestry error in `proof-tests`. Source CI has therefore
+not passed. The MI350 pass alone establishes no source-CI gate. Further runtime
+work must preserve every byte,
 case, hash check and existing limit.
 
 The next [runtime validation](snapshot-v27-runtime-validation-v3/results.json)
@@ -130,8 +132,31 @@ inside the same 300-second window. The [actual storage comparison](snapshot-v27-
 compares every one of **547,956,518 bytes** across all sixteen physical files of
 one complete false input on disk and RAM. All 4,135 logical files remain. This
 storage check performs no replay or proof and replaces none of the 98 cases.
-CI also records timing and I/O diagnostics. These changes still require their
-own actual full source-CI result and anonymous publication verification.
+CI also records timing and I/O diagnostics. The fourth workflow's `proof-tests`
+job passed with complete ancestry. Its
+[ledger job](snapshot-v27-paper-ci-timeout-v4/analysis.json) still timed out
+at 300 seconds after 91 logs; RAM storage was selected and the timing record
+shows the remaining CPU cost. No workflow was rerun.
+
+The [anonymous publication](snapshot-v27-publication-v1/verified/observer/results.json)
+at exact source `8eae2cd8bf4230f2f71d7257b37e36588599397e` downloaded all
+20 files, **485,434,432 bytes**, with TLS verification and no authentication.
+All bytes match the committed files and all 98 checks passed outside Git,
+with the same records as the MI350 suite. Expected Git objects were seeded
+from the previously verified complete MI350 inputs and checked against the
+real commit's blob IDs; the actual anonymous URL downloads still occurred.
+The receipt includes that preparation, all 98 logs and the original failed
+local launch serialization preflight. Every downloaded file remains on MI350.
+This publication tests `8eae2cd`, not later runtime changes.
+
+The next [producer validation](snapshot-v27-producer-validation-v1/results.json)
+reuses archive digests already computed by the control writer when authoring
+the outer control manifest. Independent replay still reads every part and
+checks both expected hash bindings. Twelve control-writer guards pass,
+including refusal of a forged emitted digest by the independent reader.
+All sixteen physical files of a complete real false input match the previous
+producer byte for byte: **547,956,518 bytes**, preserving all 4,135 logical
+files. The new producer still requires its own full 98-check suite and source CI.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
