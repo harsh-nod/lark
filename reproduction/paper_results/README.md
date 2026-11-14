@@ -73,6 +73,12 @@ removes redundant copies of original archive containers immediately before
 their complete rewrite; equivalence tests verify every final replay input byte
 matches the earlier path. The full 89 checks and all payloads remain required.
 
+The [I/O revision's complete validation](snapshot-v26-validation-mi350-v3/observer/results.json)
+passed the same 89 check records in 174.83 seconds on MI350 CPU, with a separate
+real-corpus byte-for-byte input-equivalence check. It avoids 17.8 GB of copying
+containers that are immediately rewritten. No final payload, control or limit
+changes; a new standard-runner source CI pass is still required.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v26 \

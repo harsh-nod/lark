@@ -170,5 +170,15 @@ replay. Four equivalence tests include complete byte-for-byte comparison with
 the previous copy-then-rewrite path for both storage versions, preserved unsafe
 control data and nested metadata with matching archive basenames. Together with
 the workspace/archive regressions, 22 tests passed in 0.745 seconds. No archived
-input, check, proof obligation or limit changes. A new complete run and a new
-source CI gate remain required for this revision.
+input, check, proof obligation or limit changes.
+
+The [third complete v26 validation](snapshot-v26-validation-mi350-v3/observer/results.json)
+passed all 89 unchanged check records in 174.8304 seconds. A separately timed
+6.1577-second real-corpus comparison first checked all 13 final input files
+byte-for-byte, with all 3,794 logical files present and only the intended GEMM
+metadata altered. The actual suite then built its own complete cache within
+the same 300-second cap. Across 77 full archive rewrites, it avoided
+17,815,929,516 bytes of redundant original-container copying. Every final input
+and every check remain unchanged; sampled temporary storage stayed below 2 GiB.
+This is validation of the I/O change on MI350 CPU. A new standard-runner source
+CI gate is still required; the earlier timeout is not relabeled as success.
