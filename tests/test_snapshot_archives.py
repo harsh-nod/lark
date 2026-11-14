@@ -1,6 +1,7 @@
 """Lossless multi-part evidence storage and unchanged legacy entry guards."""
 
 import copy
+import gzip
 import hashlib
 import io
 import json
@@ -61,6 +62,19 @@ class SnapshotArchiveTests(unittest.TestCase):
         self.assertEqual(first, second)
         for part in first["archives"]:
             self.assertEqual((self.snapshot / part["path"]).read_bytes(), (other / part["path"]).read_bytes())
+
+    def test_concatenated_gzip_control_stream_keeps_every_original_fragment(self):
+        content, layout = self.example()
+        for description in layout["archives"]:
+            path = self.snapshot / description["path"]
+            stream = gzip.decompress(path.read_bytes())
+            path.write_bytes(b"".join(gzip.compress(stream[i:i+512], mtime=0)
+                                     for i in range(0, len(stream), 512)))
+            description.update(bytes=path.stat().st_size, sha256=storage.file_digest(path))
+        destination = self.destination()
+        storage.unpack_parts(self.snapshot, layout, destination)
+        self.assertEqual({p.relative_to(destination).as_posix(): p.read_bytes()
+                          for p in destination.rglob("*") if p.is_file()}, content)
 
     def test_missing_reordered_duplicated_and_boolean_fragment_metadata_are_refused(self):
         _, layout = self.example()

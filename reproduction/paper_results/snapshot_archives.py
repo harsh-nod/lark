@@ -172,7 +172,10 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
     for description in layout["archives"]:
         expected = list(description["entries"])
         count = 0
-        with tarfile.open(snapshot / description["path"], mode="r|gz") as archive:
+        # GzipFile decodes every concatenated member used by the complete
+        # control writer; tarfile's streaming gzip decoder stops after one.
+        with gzip.GzipFile(snapshot / description["path"], mode="rb") as decoded, \
+                tarfile.open(fileobj=decoded, mode="r|") as archive:
             for count, entry in enumerate(archive, 1):
                 require(count <= len(expected) and entry.name == expected[count - 1]
                         and entry.isfile() and 0 <= entry.size <= MAX_ENTRY_BYTES,

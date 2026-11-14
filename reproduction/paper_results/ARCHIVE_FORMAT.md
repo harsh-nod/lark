@@ -22,10 +22,13 @@ while reading, and each complete logical digest after assembly. The logical
 roster and hashes must match the independent evidence manifest. The authored
 frozen auditor and targets must still match their separately bound definitions.
 
-Eleven focused tests cover a real 10,000,001-byte logical payload, multiple
+Twelve focused tests cover a real 10,000,001-byte logical payload, multiple
 parts, deterministic encoding, preserved empty/code files, coherent chunk-hash
 forgery, manifest forgery, path/directory collisions, typed metadata, existing
-output preservation, builder integration and the unchanged legacy entry guard.
+output preservation, builder integration, concatenated gzip control streams
+and the unchanged legacy entry guard. The version 2 streaming reader uses
+`gzip.GzipFile` to decode every concatenated gzip member before reading the
+complete tar stream, with the same fragment and logical-file checks.
 The [full real-corpus compatibility record](snapshot-v26-format-compatibility-v1/results.json)
 checks all 3,625 frozen v25 files, including all 3,623 original evidence members.
 Legacy replay passed in 7.3327 seconds and version 2 replay in 7.6966 seconds;
