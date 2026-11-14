@@ -156,7 +156,19 @@ checks both expected hash bindings. Twelve control-writer guards pass,
 including refusal of a forged emitted digest by the independent reader.
 All sixteen physical files of a complete real false input match the previous
 producer byte for byte: **547,956,518 bytes**, preserving all 4,135 logical
-files. The new producer still requires its own full 98-check suite and source CI.
+files. The [fifth complete MI350 suite](snapshot-v27-validation-mi350-v5/observer/results.json)
+at source `f305b2a` passed all 98 checks in **236.165 seconds**, under the same
+limits. All 98 records match the preceding complete suite, and the returned
+four helper files match their exact Git source. Its full source CI remains
+separate: one runner failed before proof execution because it could not resolve
+`release.lean-lang.org` while Elan tried to download the pinned toolchain.
+
+The [CI setup repair](snapshot-v27-CI-network-setup-v1/results.json) explicitly
+materializes Lean 4.19.0 during installation. It allows at most three toolchain
+download attempts with two short delays, then fails if installation still
+fails. It adds no proof, dependency-audit or replay retries, changes no existing
+job limit and retains the original failed job's complete raw log. A fresh
+workflow is required to validate this repair; the failed workflow is not rerun.
 
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \

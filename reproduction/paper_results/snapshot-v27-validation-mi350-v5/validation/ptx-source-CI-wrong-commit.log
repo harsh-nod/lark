@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-6ddf6su0/isolated/bin/replay_snapshot.py", line 340, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-6ddf6su0/isolated/bin/replay_snapshot.py", line 336, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-6ddf6su0/isolated/bin/replay_snapshot.py", line 273, in replay
+    require(
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-snapshot-controls-6ddf6su0/isolated/bin/replay_snapshot.py", line 26, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-mb13xa0u/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-mb13xa0u/reproduction/paper_results/audit.py", line 675, in main
+    ptx_checks = check_ptx_pointwise_evidence(config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-mb13xa0u/reproduction/paper_results/ptx_pointwise_evidence.py", line 303, in check_ptx_pointwise_evidence
+    require(summary["status"] == "exact-source-CI-all-19-passed" and summary["source_commit"] == PUBLISHED
+  File "/tmp/lark-paper-v27-controls-mi350-v5-20261114/temporary/lark-paper-snapshot-mb13xa0u/reproduction/paper_results/ptx_pointwise_evidence.py", line 53, in require
+    raise ValueError("PTX pointwise " + message)
+ValueError: PTX pointwise actual source CI differs
+
