@@ -1,0 +1,23 @@
+{
+  "status": "all16-final-archive-and10-control-writer-guards-passed",
+  "changes": [
+    "Actual physical digest checked against both outer and layout bindings in one pass.",
+    "Materialized logical files read back and hashed once; exact inventory still checked before frozen code execution.",
+    "Early structural failures retain the deferred outer physical hash check and original precedence."
+  ],
+  "tests": {
+    "final_archive_guards": 16,
+    "control_writer_guards": 10,
+    "intermediate_archive_guards": 15
+  },
+  "compatibility": {
+    "v25_and_v26_full_replays_passed": true,
+    "tested_helpers": "compat-tested-helpers",
+    "scope": "Compatibility replay used the initial consolidation before adding only the early structural-failure fallback. Final16 guards include that fallback."
+  },
+  "base_source": "614387aa72bc605f40e8332ae57b8b663fa990ae",
+  "unchanged_snapshot_manifest_sha256": "aa23c786cf8a7c2ca059c76beddcb86dc148dc03e3d70096e0bd2f930044fea0",
+  "full98_run_and_new_source_CI_still_required": true,
+  "fresh_Lean_GPU_model_experiments": 0,
+  "original_paper_fully_reproduced": false
+}

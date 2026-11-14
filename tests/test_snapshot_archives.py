@@ -1,6 +1,7 @@
 """Lossless multi-part evidence storage and unchanged legacy entry guards."""
 
 import copy
+from contextlib import contextmanager
 import gzip
 import hashlib
 import io
@@ -133,6 +134,88 @@ class SnapshotArchiveTests(unittest.TestCase):
         description.update(bytes=path.stat().st_size, sha256=storage.file_digest(path))
         with self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
             storage.unpack_parts(self.snapshot, layout, self.destination())
+
+    def test_outer_and_layout_archive_bindings_are_both_required(self):
+        content, layout = self.example()
+        outer = {row["path"]: row["sha256"] for row in layout["archives"]}
+        destination = self.destination("both-valid")
+        storage.unpack_parts(self.snapshot, layout, destination, expected_archive_hashes=outer)
+        self.assertEqual({p.relative_to(destination).as_posix(): p.read_bytes()
+                          for p in destination.rglob("*") if p.is_file()}, content)
+        first = layout["archives"][0]["path"]
+        changed_outer = {**outer, first: "0" * 64}
+        with self.assertRaisesRegex(ValueError, "Snapshot bytes differ"):
+            storage.unpack_parts(self.snapshot, layout, self.destination("bad-outer"),
+                                 expected_archive_hashes=changed_outer)
+        changed_layout = copy.deepcopy(layout)
+        changed_layout["archives"][0]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "Archive bytes differ"):
+            storage.unpack_parts(self.snapshot, changed_layout, self.destination("bad-layout"),
+                                 expected_archive_hashes=outer)
+        for label, mapping in (("missing", {n: v for n, v in outer.items() if n != first}),
+                               ("extra", {**outer, "evidence-part-9999.tar.gz": "0" * 64})):
+            with self.subTest(label=label), self.assertRaisesRegex(ValueError, "Outer archive manifest differs"):
+                storage.unpack_parts(self.snapshot, layout, self.destination(label),
+                                     expected_archive_hashes=mapping)
+
+    def test_materialized_bytes_are_checked_after_writing(self):
+        _, layout = self.example()
+        destination = self.destination()
+        original_open = Path.open
+
+        @contextmanager
+        def corrupt_after_close(path, mode="r", *args, **kwargs):
+            with original_open(path, mode, *args, **kwargs) as stream:
+                yield stream
+            if path == destination / "evidence/code.py" and mode == "xb":
+                with original_open(path, "r+b") as output:
+                    value = output.read(1)
+                    output.seek(0)
+                    output.write(bytes([value[0] ^ 1]))
+
+        with patch.object(Path, "open", corrupt_after_close), \
+                self.assertRaisesRegex(ValueError, "Reassembled logical evidence differs"):
+            storage.unpack_parts(self.snapshot, layout, destination)
+
+    def test_unexpected_materialized_file_is_rejected(self):
+        _, layout = self.example()
+        destination = self.destination()
+        original_open = Path.open
+
+        @contextmanager
+        def add_unexpected_file(path, mode="r", *args, **kwargs):
+            with original_open(path, mode, *args, **kwargs) as stream:
+                yield stream
+            if path == destination / "evidence/code.py" and mode == "xb":
+                with original_open(destination / "unexpected", "xb") as extra:
+                    extra.write(b"must not be ignored")
+
+        with patch.object(Path, "open", add_unexpected_file), \
+                self.assertRaisesRegex(ValueError, "Unexpected snapshot files"):
+            storage.unpack_parts(self.snapshot, layout, destination)
+
+    def test_invalid_layout_cannot_bypass_outer_archive_integrity(self):
+        part = self.snapshot / "evidence-part-0001.tar.gz"
+        part.write_bytes(b"authored invalid-layout archive fixture; never decoded")
+        logical = {"../unsafe": storage.digest(b"x")}
+        layout = {"schema": 2, "logical_files": {"../unsafe": {"bytes": 1, "sha256": logical["../unsafe"]}},
+                  "archives": []}
+        replay.write(self.snapshot / "evidence-manifest.json", logical)
+        replay.write(self.snapshot / "evidence-layout.json", layout)
+        replay.write(self.snapshot / "provenance.json", {"schema": 2,
+                     "evidence_manifest_sha256": storage.file_digest(self.snapshot / "evidence-manifest.json"),
+                     "evidence_layout_sha256": storage.file_digest(self.snapshot / "evidence-layout.json")})
+        manifest = {p.name: storage.file_digest(p) for p in self.snapshot.iterdir()}
+        manifest[part.name] = "0" * 64
+        replay.write(self.snapshot / "manifest.json", manifest)
+        with self.assertRaisesRegex(ValueError, "Snapshot bytes differ: evidence-part-0001"):
+            replay.replay(self.snapshot, self.root / "must-not-be-read.tar")
+        manifest[part.name] = storage.file_digest(part)
+        replay.write(self.snapshot / "manifest.json", manifest)
+        # Both the physical archive and its outer binding now match. The
+        # original structural refusal is then reported, without execution.
+        with self.assertRaisesRegex(ValueError, "Complete logical files and archives required"):
+            replay.replay(self.snapshot, self.root / "must-not-be-read.tar")
 
     def test_existing_destination_and_existing_archive_are_never_overwritten(self):
         content, layout = self.example()

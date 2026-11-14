@@ -88,6 +88,18 @@ and anonymous full-snapshot publication remains pending. The MI350 pass alone
 establishes neither gate. Further runtime work must preserve every byte,
 case, hash check and existing limit.
 
+The next [runtime validation](snapshot-v27-runtime-validation-v3/results.json)
+records consolidation of duplicate digest passes. One actual physical digest
+must match both the outer manifest and archive-layout binding. Every fully
+reconstructed logical file is read back and hashed, with its size and exact
+file inventory checked before executing the authored frozen auditor. Invalid
+structural metadata still triggers the outer archive-integrity check. Sixteen
+archive tests include conflicting bindings, post-write corruption, unexpected
+files and early malformed layouts; all ten control-writer guards also pass.
+The v25 and v26 snapshots replayed outside Git with the initial consolidation,
+before adding the early-failure fallback. These checks do not establish a new
+complete 98-case or source-CI pass. Both frozen snapshots and v27 remain intact.
+
 ```bash
 python3 reproduction/paper_results/replay_snapshot.py \
   --snapshot reproduction/paper_results/snapshots/20261113-v27 \

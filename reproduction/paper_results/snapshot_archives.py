@@ -161,16 +161,26 @@ def build_parts(snapshot, content, *, chunk_bytes=MAX_ENTRY_BYTES, tar_bytes=MAX
     return validate_layout({"schema": SCHEMA, "logical_files": logical, "archives": archives})
 
 
-def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
+def unpack_parts(snapshot, layout, root, *, expected_hashes=None, expected_archive_hashes=None):
     snapshot, root = Path(snapshot), Path(root)
     validate_layout(layout, expected_hashes)
     require(root.is_dir() and not root.is_symlink() and not any(root.iterdir()),
             "Fresh empty evidence destination required")
+    if expected_archive_hashes is not None:
+        require(type(expected_archive_hashes) is dict
+                and set(expected_archive_hashes) == {row["path"] for row in layout["archives"]}
+                and all(sha(value) for value in expected_archive_hashes.values()),
+                "Outer archive manifest differs")
     for description in layout["archives"]:
         source = snapshot / description["path"]
-        require(not source.is_symlink() and source.stat().st_size == description["bytes"]
-                and file_digest(source) == description["sha256"], "Archive bytes differ")
-    offsets, hashes, started = {}, {}, set()
+        require(not source.is_symlink() and source.is_file()
+                and source.stat().st_size == description["bytes"], "Archive bytes differ")
+        actual = file_digest(source)
+        require(actual == description["sha256"], "Archive bytes differ")
+        if expected_archive_hashes is not None:
+            require(actual == expected_archive_hashes[description["path"]],
+                    "Snapshot bytes differ: " + description["path"])
+    offsets, started = {}, set()
     for description in layout["archives"]:
         expected = list(description["entries"])
         count = 0
@@ -193,11 +203,20 @@ def unpack_parts(snapshot, layout, root, *, expected_hashes=None):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with target.open("ab" if name in started else "xb") as destination:
                     destination.write(data)
-                hashes.setdefault(name, hashlib.sha256()).update(data)
                 offsets[name] = offsets.get(name, 0) + len(data)
                 started.add(name)
         require(count == len(expected), "Missing archive fragments")
     require(started == set(layout["logical_files"]), "Missing evidence files")
     for name, row in layout["logical_files"].items():
-        require(offsets[name] == row["bytes"] and hashes[name].hexdigest() == row["sha256"],
+        target = root / safe_path(name)
+        # Verify the materialized file, rather than hashing its input again
+        # while writing and then repeating the whole-file check in replay.
+        require(offsets[name] == row["bytes"] and not target.is_symlink() and target.is_file()
+                and target.stat().st_size == row["bytes"] and file_digest(target) == row["sha256"],
                 "Reassembled logical evidence differs")
+    actual_files = set()
+    for path in root.rglob("*"):
+        require(not path.is_symlink(), "Snapshot symlink")
+        if path.is_file():
+            actual_files.add(path.relative_to(root).as_posix())
+    require(actual_files == set(layout["logical_files"]), "Unexpected snapshot files")

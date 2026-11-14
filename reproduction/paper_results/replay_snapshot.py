@@ -203,21 +203,31 @@ def build(snapshot):
 
 
 def replay(snapshot, manuscript, *, creating=False):
+    provenance = read(snapshot / "provenance.json")
+    schema = provenance["schema"]
+    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
+    expected_archives = None
     if not creating:
         manifest = read(snapshot / "manifest.json")
-        verify_manifest(snapshot, manifest)
+        if schema == 2:
+            # The unpacker compares one actual digest with both independent
+            # archive bindings before decoding. Every other file is checked
+            # here, and its exact archive roster is checked against the layout.
+            expected_archives = {name: value for name, value in manifest.items()
+                                 if re.fullmatch(r"evidence-part-[0-9]{4}\.tar\.gz", name)}
+            verify_manifest(snapshot, {name: value for name, value in manifest.items()
+                                       if name not in expected_archives})
+        else:
+            verify_manifest(snapshot, manifest)
         require(
             file_set(snapshot) == set(manifest) | {"manifest.json"}, "Unexpected snapshot files"
         )
-    provenance = read(snapshot / "provenance.json")
     evidence_hashes = read(snapshot / "evidence-manifest.json")
     require(
         digest((snapshot / "evidence-manifest.json").read_bytes())
         == provenance["evidence_manifest_sha256"],
         "Frozen evidence binding differs",
     )
-    schema = provenance["schema"]
-    require(type(schema) is int and schema in (1, 2), "Unsupported storage schema")
     if schema == 1:
         require(digest((snapshot / "evidence.tar.gz").read_bytes()) == provenance["evidence_archive_sha256"],
                 "Frozen archive binding differs")
@@ -231,9 +241,18 @@ def replay(snapshot, manuscript, *, creating=False):
         root = Path(temporary)
         if schema == 1:
             unpack(snapshot / "evidence.tar.gz", root)
+            verify_manifest(root, evidence_hashes, exact=True)
         else:
-            archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes)
-        verify_manifest(root, evidence_hashes, exact=True)
+            try:
+                archive_storage().unpack_parts(snapshot, layout, root, expected_hashes=evidence_hashes,
+                                               expected_archive_hashes=expected_archives)
+            except Exception:
+                # Invalid structural metadata can fail before the unpacker
+                # reaches physical archives. Preserve their outer integrity
+                # gate (and its precedence) on that failure path as well.
+                if expected_archives is not None:
+                    verify_manifest(snapshot, expected_archives)
+                raise
         for source, target in (("auditor.py", "audit.py"), ("targets.json", "targets.json")):
             require(
                 (snapshot / source).read_bytes()
