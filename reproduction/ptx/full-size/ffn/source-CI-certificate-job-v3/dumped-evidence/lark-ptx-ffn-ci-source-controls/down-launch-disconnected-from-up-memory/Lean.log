@@ -1,0 +1,67 @@
+DisconnectedPipeline.lean:40:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+DisconnectedPipeline.lean:66:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+DisconnectedPipeline.lean:74:4: warning: unused variable `n`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+DisconnectedPipeline.lean:125:15: warning: unused variable `counts`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+DisconnectedPipeline.lean:125:39: warning: unused variable `ops`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+DisconnectedPipeline.lean:176:4: error: 'change' tactic failed, pattern
+  (afterUp counts ops input outside).memory (cell 3 i) = some (Reference.hiddenValue ops input i)
+is not definitionally equal to target
+  (FfnDown.start (downStart counts ops input outside)).registers.base.memory
+      { space := Space.global, owner := 0, buffer := 0, offset := i } =
+    some (downInput ops input 0 i)
+DisconnectedPipeline.lean:179:4: error: 'change' tactic failed, pattern
+  (afterUp counts ops input outside).memory (cell 2 i) = some (input 2 i)
+is not definitionally equal to target
+  (FfnDown.start (downStart counts ops input outside)).registers.base.memory
+      { space := Space.global, owner := 0, buffer := 1, offset := i } =
+    some (downInput ops input 1 i)
+DisconnectedPipeline.lean:196:60: error: type mismatch
+  rfl
+has type
+  ?m.4270 = ?m.4270 : Prop
+but is expected to have type
+  (downStart counts ops input outside).memory (cell 0 i) = (upEnd counts ops input outside).memory (cell 2 i) : Prop
+DisconnectedPipeline.lean:228:2: error: type mismatch
+  congrArg (afterUp counts ops input outside).memory (rename_roundtrip downRenaming l)
+has type
+  (afterUp counts ops input outside).memory
+      (renameLocation downRenaming.forward (renameLocation downRenaming.backward l)) =
+    (afterUp counts ops input outside).memory l : Prop
+but is expected to have type
+  (downStart counts ops input outside).memory (renameLocation downRenaming.backward l) =
+    (afterUp counts ops input outside).memory l : Prop
+DisconnectedPipeline.lean:351:45: error: application type mismatch
+  And.intro (down_execution counts ops input outside)
+argument
+  down_execution counts ops input outside
+has type
+  FfnDown.LaneSequence ops FfnDown.program 0 counts.downCount (downStart counts ops input outside)
+    (downEnd counts ops input outside) : Prop
+but is expected to have type
+  FfnDown.LaneSequence ops FfnDown.program 0 counts.downCount
+    (view downRenaming (commit upRenaming 0 (initial layout input outside) (upEnd counts ops input outside)))
+    (downEnd counts ops input outside) : Prop
+'LarkPtxFeedForward.Pipeline.rename_roundtrip' depends on axioms: [propext]
+'LarkPtxFeedForward.Pipeline.epoch_namespace_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.launch_namespaces_disjoint' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.up_execution' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.hidden_outputs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.afterUp_other' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.down_reads' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.down_execution' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.actual_intermediate_shared' depends on axioms: [sorryAx]
+'LarkPtxFeedForward.Pipeline.down_reference' depends on axioms: [Quot.sound]
+'LarkPtxFeedForward.Pipeline.output_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LarkPtxFeedForward.Pipeline.frame' depends on axioms: [propext, sorryAx, Quot.sound]
+'LarkPtxFeedForward.Pipeline.race_free' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.extract_outputs' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Pipeline.kernel_correct_for_counts' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'LarkPtxFeedForward.Pipeline.kernel_correct' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

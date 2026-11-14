@@ -1,0 +1,13 @@
+{
+  "status": "complete-FFN-payload-reader-CI-wiring-validated",
+  "all24_job_names_runners_caps_and_old_steps_unchanged": true,
+  "additional_step": {
+    "name": "Verify every member of the complete retained FFN certificate payloads",
+    "run": "python3 reproduction/ptx/check_ffn_payloads.py \\\n  --packet reproduction/ptx/results/full-size-ffn-certificate-payloads-v1 \\\n  --expected-manifest-sha256 b6e2bac6a997003f89066cc314aaa709d68091b88cddc80004be23e459c59345 \\\n  --output /tmp/lark-ptx-ffn-ci-payload-integrity\n"
+  },
+  "reader_sha256": "85f6602bfd8a8a1ebefa5bbceb4f4eac2355f83bdffb978bfb6b4a6497df746b",
+  "new_source_CI_execution_claim": false,
+  "model_calls": 0,
+  "GPU_trials": 0,
+  "original_paper_fully_reproduced": false
+}

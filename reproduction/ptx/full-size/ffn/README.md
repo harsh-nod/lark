@@ -94,9 +94,21 @@ classifier of incorrect kernels.
 `certificate-development-v1/` retains the export/replay check logs, direct
 controls, recording-control results and complete original inventory hashes.
 An isolated wheel installation reproduced the proof using only installed
-trusted Python and Lean sources. Complete original payload directories remain
-retained; the published development receipts do not claim to contain those
-entire payloads. Their full archive publication is still pending.
+trusted Python and Lean sources. The complete current local export, fresh
+replay, wheel replay, four direct controls and all 31 false recording payloads
+are additionally retained in `reproduction/ptx/results/full-size-ffn-certificate-payloads-v1/`.
+Its fifteen bounded archives contain 4,416 files and 940,266,976 uncompressed
+bytes. The independent standard-library reader checks every file and archive
+member against a separately pinned manifest; it executes no captured code.
+The original payload directories also remain retained. Earlier development
+history stays in the existing development evidence directories.
+
+```sh
+python3 reproduction/ptx/check_ffn_payloads.py \
+  --packet reproduction/ptx/results/full-size-ffn-certificate-payloads-v1 \
+  --expected-manifest-sha256 b6e2bac6a997003f89066cc314aaa709d68091b88cddc80004be23e459c59345 \
+  --output /new/payload-integrity-check
+```
 
 ```sh
 python3 reproduction/ptx/check_ffn_source_controls.py \
@@ -108,7 +120,7 @@ python3 reproduction/ptx/check_ffn_recording_controls.py \
 The unchanged limits are 10,000 recursion depth, two million heartbeats,
 180 seconds per Lean process, 600 seconds per complete fresh source build,
 and the original 8 MiB stack. Full release validation, complete evidence
-publication and integration into the complete paper ledger remain unfinished.
+download validation and integration into the complete paper ledger remain unfinished.
 This adds zero registered certificates and zero original paper results.
 There is no original optimized-program, IEEE guarantee or NVIDIA-execution
 claim. Failed and accepted development attempts remain alongside their evidence.
@@ -116,4 +128,7 @@ claim. Failed and accepted development attempts remain alongside their evidence.
 Earlier hosted FFN source checks used the runner's actual 16 MiB stack default;
 their raw reports retain that value. The three local certificate checks used
 8 MiB. New certificate CI steps explicitly set 8 MiB before execution; their
-execution is a separate pending validation gate.
+export, fresh replay and all 35 controls have now passed at that limit in
+CI run 43586151243, job 132420938496. The complete workflow and the final
+integrated release remain separate gates. The retained raw job report is in
+`source-CI-certificate-job-v3/`.

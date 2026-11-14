@@ -1006,6 +1006,12 @@ jobs:
                       print(json.dumps({'FFN_evidence': name + '/' + str(relative),
                                         'text': p.read_text()}), flush=True)
           PY
+      - name: Verify every member of the complete retained FFN certificate payloads
+        run: |
+          python3 reproduction/ptx/check_ffn_payloads.py \
+            --packet reproduction/ptx/results/full-size-ffn-certificate-payloads-v1 \
+            --expected-manifest-sha256 b6e2bac6a997003f89066cc314aaa709d68091b88cddc80004be23e459c59345 \
+            --output /tmp/lark-ptx-ffn-ci-payload-integrity
   ptx-batched:
     runs-on: ubuntu-latest
     timeout-minutes: 10
