@@ -1,8 +1,8 @@
-"""Prepare both complete compiled FFN stages and their independent reference.
+"""Parse and bind the two complete compiled FFN stages to their Lean proof.
 
-This is a development frontend only. Lossless parsing and fixed-contract checks
-do not establish either stage's execution, pipeline correctness or a certificate.
-The original shapes, launch geometry, FP16 intermediate and CUDA fuel are fixed.
+Parsing alone establishes no correctness. The separate certificate checker
+freshly compiles the owned libraries and the Main produced here. The original
+shapes, launch geometry, FP16 intermediate and CUDA fuel remain fixed.
 """
 
 import ast
@@ -19,9 +19,11 @@ CONTRACTS = {
     "down": (("hidden", "down", "out"), ((64, 1024), (1024, 256), (64, 256)),
              16384, (4102, 1, 1, 1)),
 }
+PROFILE = "source-bound-compiled-ffn-fp16-v1"
+TAGS = ("original_reference", "exact_up", "exact_down", "complete_pipeline")
 
 # Preserve both FP16 round trips and the independently supplied Torch operation
-# order. The future reference denotation must interpret these constructors;
+# order. The independent Lean tensor interpreter interprets these constructors;
 # recognizing this data alone is not a correctness theorem.
 REFERENCE = ["toHalf", ["matmul",
     ["fromHalf", ["toHalf", ["relu", ["matmul",
@@ -87,3 +89,35 @@ def prepare(up_source, down_source, reference, up_contract, down_contract):
         raise Refusal("ptx-ffn-contract", "the same complete FP16 intermediate must connect both stages")
     body = reference_body(reference)
     return tasks, translations, body
+
+
+def render(tasks, translations, body):
+    """Render only closed constructors; captured reference/Python is never code."""
+    if len(tasks) != 2 or len(translations) != 2:
+        raise Refusal("ptx-ffn-contract", "both original launch stages required")
+    for stage, task in zip(("up", "down"), tasks, strict=True):
+        fixed_task(task, stage)
+    reference = lean_reference(body)
+    return """import Lark.PtxFeedForwardPipeline
+set_option maxRecDepth 10000
+set_option maxHeartbeats 2000000
+namespace LarkPtxFfnCertificate
+open LarkNonlinear LarkPtxMatrix LarkPtxFeedForward
+def up : List LarkPtxMatrix.Instruction := """ + translations[0].lean_program() + """
+def down : List LarkPtxMatrix.Instruction := """ + translations[1].lean_program() + """
+def originalReference : Reference.TensorReference := """ + reference + """
+theorem original_reference : originalReference = Reference.referenceBody := by rfl
+theorem exact_up : up = FfnUp.program := by decide
+theorem exact_down : down = FfnDown.program := by decide
+theorem complete_pipeline (ops : Ops α) :
+    originalReference = Reference.referenceBody ∧ Pipeline.Correct ops up down := by
+  constructor
+  · exact original_reference
+  · rw [exact_up, exact_down]
+    exact Pipeline.kernel_correct ops
+#print axioms original_reference
+#print axioms exact_up
+#print axioms exact_down
+#print axioms complete_pipeline
+end LarkPtxFfnCertificate
+"""
