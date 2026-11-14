@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+from threading import BoundedSemaphore
 import uuid
 
 if __package__:
@@ -23,6 +24,41 @@ else:
 
 # Temporary false-control archives preserve member bytes at faster compression.
 CONTROL_COMPRESSION_LEVEL = 1
+
+
+class ReplaySchedule:
+    """Overlap independent baseline reads with later controls, with two slots.
+
+    Each post-group baseline is submitted only after that group's controls have
+    completed and been checked. The baseline snapshot is read-only. A single
+    baseline worker also prevents concurrent readers of that same snapshot.
+    Every subprocess, including the main thread's controls, uses the same two
+    slots. Resolving in result order preserves the complete original roster.
+    """
+
+    def __init__(self):
+        self.slots = BoundedSemaphore(2)
+        self.baselines = ThreadPoolExecutor(max_workers=1)
+        self.pending = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, kind, value, traceback):
+        self.baselines.shutdown(wait=True, cancel_futures=kind is not None)
+
+    def execute(self, function, *args):
+        with self.slots:
+            return function(*args)
+
+    def baseline(self, results, function, *args):
+        index = len(results)
+        results.append(None)
+        self.pending.append((index, self.baselines.submit(self.execute, function, *args)))
+
+    def resolve(self, results):
+        for index, future in self.pending:
+            results[index] = future.result()
 
 
 @contextmanager
@@ -411,13 +447,14 @@ def main():
         packed_controls = control_archive(snapshot)
         if hasattr(packed_controls, "close"):
             resources.callback(packed_controls.close)
+        schedule = resources.enter_context(ReplaySchedule())
         copies = ControlSnapshotCopies(snapshot)
         env = dict(os.environ)
         env["PATH"] = "/nonexistent"
         env.pop("PYTHONPATH", None)
         env["PYTHONNOUSERSITE"] = "1"
 
-        def execute(name, data, source=manuscript):
+        def execute_in_slot(name, data, source):
             run = subprocess.run(
                 [
                     sys.executable,
@@ -436,6 +473,16 @@ def main():
             log = run.stdout + run.stderr
             (out / (name + ".log")).write_text(log)
             return run.returncode, log
+
+        def execute(name, data, source=manuscript):
+            return schedule.execute(execute_in_slot, name, data, source)
+
+        def positive_baseline(name):
+            # Called inside the scheduler's slot, so do not acquire it twice.
+            code, log = execute_in_slot(name, isolated, manuscript)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-control standalone replay failed: " + name + "\n" + log)
+            return {"name": name, "accepted": True, "git_on_path": False}
 
         code, log = execute("outside-checkout-no-git", isolated)
         if code or "frozen-snapshot-replayed" not in log:
@@ -596,11 +643,7 @@ def main():
                                 "gate": "frozen numerical report and receipt consistency"}
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(numerical_control, cases))
-            code, log = execute("positive-after-numerical-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-numerical-controls", "accepted": True,
-                            "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-numerical-controls")
         if "full_shape_models" in read(snapshot / "targets.json"):
             def model_control(item):
                 control_name, expected_gate = item
@@ -622,11 +665,7 @@ def main():
             # Per-replay limits remain 120 seconds; the public aggregate remains 300.
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(model_control, MODEL_CONTROLS))
-            code, log = execute("positive-after-model-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-model-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-model-controls", "accepted": True,
-                            "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-model-controls")
         if "ptx_pointwise_proof" in read(snapshot / "targets.json"):
             def ptx_control(item):
                 control_name, expected_gate = item
@@ -645,11 +684,7 @@ def main():
                         "gate": "frozen exact-source PTX proof/replay scope and actual source CI"}
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(ptx_control, PTX_CONTROLS))
-            code, log = execute("positive-after-ptx-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-PTX-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-ptx-controls", "accepted": True,
-                            "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-ptx-controls")
         if "ptx_dot_proof" in read(snapshot / "targets.json"):
             def gemv_control(item):
                 control_name, expected_gate = item
@@ -668,10 +703,7 @@ def main():
                         "gate": "frozen complete-source GEMV proof/replay scope and actual source CI"}
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(gemv_control, GEMV_CONTROLS))
-            code, log = execute("positive-after-gemv-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-GEMV-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-gemv-controls", "accepted": True, "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-gemv-controls")
         if "ptx_matrix_proof" in read(snapshot / "targets.json"):
             def gemm_control(item):
                 control_name, expected_gate = item
@@ -690,10 +722,7 @@ def main():
                         "gate": "frozen complete-source GEMM proof/replay scope and actual source CI"}
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(gemm_control, GEMM_CONTROLS))
-            code, log = execute("positive-after-gemm-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-GEMM-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-gemm-controls", "accepted": True, "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-gemm-controls")
         for kind, key, controls, mutate in (
             ("bmm", "ptx_batched_proof", BMM_CONTROLS, mutate_bmm_evidence),
             ("linear", "ptx_linear_proof", LINEAR_CONTROLS, mutate_linear_evidence),
@@ -720,11 +749,7 @@ def main():
 
             with ThreadPoolExecutor(max_workers=2) as pool:
                 results.extend(pool.map(extended_control, controls))
-            code, log = execute("positive-after-" + kind + "-controls", isolated)
-            if code or "frozen-snapshot-replayed" not in log:
-                raise RuntimeError("Post-" + kind + "-control standalone replay failed: " + log)
-            results.append({"name": "positive-after-" + kind + "-controls", "accepted": True,
-                            "git_on_path": False})
+            schedule.baseline(results, positive_baseline, "positive-after-" + kind + "-controls")
         altered = root / "traversal"
         copies.copy(altered, rewrite_archive=True)
         entries = packed_controls.entries.copy()
@@ -753,6 +778,7 @@ def main():
         results.append(
             {"name": "wrong-manuscript", "accepted": False, "gate": "pinned manuscript digest"}
         )
+        schedule.resolve(results)
         if len(released) != sum(not row["accepted"] for row in results) - 1:
             raise RuntimeError("Completed temporary control-copy inventory differs")
     write(

@@ -1,0 +1,59 @@
+{
+  "status": "bounded-overlap-unit-tests-and-invariants-passed",
+  "checks": [
+    {
+      "name": "snapshot-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_snapshot_*.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "ruff",
+        "check",
+        "reproduction/paper_results/check_snapshot_controls.py",
+        "tests/test_snapshot_replay_schedule.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "frozen_snapshot_manifest_sha256": {
+    "20261113-v26": "251d9b381282f54cc721587bc88d78e0f344a44eaeaf03f112fb6f6556baf6ed",
+    "20261113-v27": "aa23c786cf8a7c2ca059c76beddcb86dc148dc03e3d70096e0bd2f930044fea0"
+  },
+  "caps": {
+    "per_replay_seconds": 120,
+    "full_suite_seconds": 300,
+    "max_independent_replayers": 2
+  },
+  "baseline_worker_count": 1,
+  "every_baseline_starts_after_own_group_controls_verified": true,
+  "all_baseline_results_resolved_before_success_or_workspace_cleanup": true,
+  "no_cache_or_dropped_checks_or_reduced_cases": true,
+  "fresh_full98_not_yet_run": true,
+  "new_source_CI_not_yet_run": true,
+  "model_calls": 0,
+  "GPU_trials": 0,
+  "original_paper_fully_reproduced": false
+}
