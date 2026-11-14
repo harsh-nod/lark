@@ -1,0 +1,38 @@
+def LarkPtxFeedForward.Reference.dot : {α : Type} →
+  Ops α → Tensor α → Tensor α → Nat → Nat → Nat → Nat → α → Option α :=
+fun {α} ops a b row column x x_1 x_2 =>
+  Nat.brecOn (motive := fun x => Nat → α → Option α) x_1
+    (fun x f x_3 x_4 =>
+      (match (motive := Nat → (x : Nat) → α → Nat.below (motive := fun x => Nat → α → Option α) x → Option α) x_3, x,
+          x_4 with
+        | x, 0, acc => fun x => some acc
+        | k, r.succ, acc => fun x => do
+          let x_5 ← a.cell (row * a.columns + k)
+          let y ← b.cell (k * b.columns + column)
+          x.1 (k + 1) (ops.add acc (ops.mul x_5 y)))
+        f)
+    x x_2
+def LarkPtxFeedForward.Reference.scalarFold.{u_1} : {α : Sort u_1} → (Nat → α → α) → Nat → Nat → α → α :=
+fun {α} term x x_1 x_2 =>
+  Nat.brecOn (motive := fun x => Nat → α → α) x_1
+    (fun x f x_3 x_4 =>
+      (match (motive := Nat → (x : Nat) → α → Nat.below (motive := fun x => Nat → α → α) x → α) x_3, x, x_4 with
+        | x, 0, acc => fun x => acc
+        | k, r.succ, acc => fun x => x.1 (k + 1) (term k acc))
+        f)
+    x x_2
+Lark/PtxFeedForwardReference.lean:183:8: error: (kernel) deep recursion detected
+'LarkPtxFeedForward.Reference.evaluate_up' does not depend on any axioms
+'LarkPtxFeedForward.Reference.multiply_cell' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.evaluate_body' does not depend on any axioms
+'LarkPtxFeedForward.Reference.hidden_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.reference_shape' does not depend on any axioms
+'LarkPtxFeedForward.Reference.dot_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.multiply_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.mapped_multiply_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.double_mapped_multiply_fold' depends on axioms: [propext, Quot.sound]
+'LarkPtxFeedForward.Reference.hidden_cell' depends on axioms: [LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_cell' depends on axioms: [propext,
+ Quot.sound,
+ LarkPtxFeedForward.Reference.hidden_cell]
+'LarkPtxFeedForward.Reference.reference_outside' depends on axioms: [propext]
