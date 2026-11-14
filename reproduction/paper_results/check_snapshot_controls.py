@@ -31,7 +31,10 @@ def sha(path):
 def rehash(snapshot, *, archive_changed=False):
     if archive_changed:
         provenance = read(snapshot / "provenance.json")
-        provenance["evidence_archive_sha256"] = sha(snapshot / "evidence.tar.gz")
+        if provenance["schema"] == 2:
+            provenance["evidence_layout_sha256"] = sha(snapshot / "evidence-layout.json")
+        else:
+            provenance["evidence_archive_sha256"] = sha(snapshot / "evidence.tar.gz")
         provenance["evidence_manifest_sha256"] = sha(snapshot / "evidence-manifest.json")
         write(snapshot / "provenance.json", provenance)
     results = snapshot / "results"
@@ -113,6 +116,16 @@ class ControlArchive:
                     hashes[name] = hashlib.sha256(data).hexdigest()
             output.write(self.end)
         write(snapshot / "evidence-manifest.json", hashes)
+
+
+def control_archive(snapshot):
+    if read(snapshot / "provenance.json")["schema"] == 2:
+        if __package__:
+            from .snapshot_control_archives import ChunkedControlArchive
+        else:
+            from snapshot_control_archives import ChunkedControlArchive
+        return ChunkedControlArchive(snapshot)
+    return ControlArchive(snapshot / "evidence.tar.gz")
 
 
 def mutate_gemv_evidence(entries, config, control):
@@ -294,9 +307,12 @@ def main():
         script = root / "isolated/bin/replay_snapshot.py"
         script.parent.mkdir(parents=True)
         shutil.copyfile(Path(__file__).with_name("replay_snapshot.py"), script)
+        if read(snapshot / "provenance.json")["schema"] == 2:
+            shutil.copyfile(Path(__file__).with_name("snapshot_archives.py"),
+                            script.with_name("snapshot_archives.py"))
         isolated = root / "isolated/snapshot"
         shutil.copytree(snapshot, isolated)
-        packed_controls = ControlArchive(snapshot / "evidence.tar.gz")
+        packed_controls = control_archive(snapshot)
         env = dict(os.environ)
         env["PATH"] = "/nonexistent"
         env.pop("PYTHONPATH", None)
@@ -578,6 +594,36 @@ def main():
             if code or "frozen-snapshot-replayed" not in log:
                 raise RuntimeError("Post-GEMM-control standalone replay failed: " + log)
             results.append({"name": "positive-after-gemm-controls", "accepted": True, "git_on_path": False})
+        for kind, key, controls, mutate in (
+            ("bmm", "ptx_batched_proof", BMM_CONTROLS, mutate_bmm_evidence),
+            ("linear", "ptx_linear_proof", LINEAR_CONTROLS, mutate_linear_evidence),
+        ):
+            if key not in read(snapshot / "targets.json"):
+                continue
+
+            def extended_control(item):
+                control_name, expected_gate = item
+                altered = root / control_name
+                shutil.copytree(snapshot, altered)
+                entries = packed_controls.entries.copy()
+                config = read(altered / "targets.json")
+                mutate(entries, config, control_name)
+                packed_controls.write(altered, entries)
+                rehash(altered, archive_changed=True)
+                code, log = execute(control_name, altered)
+                if code == 0 or "PTX " + kind + " " + expected_gate not in log:
+                    raise RuntimeError("PTX " + kind + " control failed: " + control_name + "\n" + log)
+                return {"name": control_name, "accepted": False, "fully_rehashed": True,
+                        "inner_packet_inventory_synchronized": True,
+                        "gate": "frozen complete-source proof/replay/failure scope and actual source CI"}
+
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                results.extend(pool.map(extended_control, controls))
+            code, log = execute("positive-after-" + kind + "-controls", isolated)
+            if code or "frozen-snapshot-replayed" not in log:
+                raise RuntimeError("Post-" + kind + "-control standalone replay failed: " + log)
+            results.append({"name": "positive-after-" + kind + "-controls", "accepted": True,
+                            "git_on_path": False})
         altered = root / "traversal"
         shutil.copytree(snapshot, altered)
         entries = packed_controls.entries.copy()
@@ -586,7 +632,9 @@ def main():
         packed_controls.write(altered, entries)
         rehash(altered, archive_changed=True)
         code, log = execute("fully-rehashed-traversal", altered)
-        if code == 0 or "Unsafe path: " + unsafe not in log:
+        traversal_gate = ("Unsafe evidence path" if read(snapshot / "provenance.json")["schema"] == 2
+                          else "Unsafe path: " + unsafe)
+        if code == 0 or traversal_gate not in log:
             raise RuntimeError("Wrong traversal-control outcome: " + log)
         results.append(
             {

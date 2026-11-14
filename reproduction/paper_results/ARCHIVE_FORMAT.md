@@ -52,3 +52,24 @@ Standalone version 2 replay requires the trusted sibling
 existing 120-second auditor cap and 300-second full control-suite cap, with
 at most two independent replay workers, remain required. No captured code,
 Lean proof, GPU trial or model call is run by this storage layer.
+
+`snapshot_control_archives.py` extends the copied false-control archives to
+version 2. It preserves every complete logical byte while reusing immutable
+compressed fragments; each worker owns its changed metadata, output parts and
+replay. Opaque fragment names depend on logical file names, so adding a control
+does not invalidate unchanged compression. Unsafe logical paths are deliberately
+retained as control data for the actual trusted replayer to reject. They are
+never used as physical archive paths by the writer.
+
+The control runner binds the new layout and complete logical manifest in
+provenance, supplies the trusted version 2 reader helper outside Git and keeps
+all earlier controls. When both new proof groups are declared, it adds eight
+BMM and eight Linear semantic controls and a positive replay after each group.
+The complete v26 snapshot and its full control-suite run remain pending.
+
+Eight control-writer tests, twelve storage tests and the three existing legacy
+control-archive tests passed together in 0.816 seconds. They cover complete
+multi-part reconstruction, the actual 10,000,001-byte boundary, empty/code/long
+logical paths, retained unsafe control bytes, two independent workers,
+deterministic compression reuse, old copied-part cleanup without dropping a
+logical byte, corrupt-baseline refusal and complete provenance rehashing.
