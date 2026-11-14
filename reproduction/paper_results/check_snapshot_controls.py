@@ -2,7 +2,7 @@
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 import gzip
 import hashlib
 import json
@@ -357,7 +357,7 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     results = []
     released = []
-    with control_workspace() as root:
+    with control_workspace() as root, ExitStack() as resources:
         def release(altered):
             release_completed_control(altered, root, expected_outcome_verified=True)
             released.append(altered.name)
@@ -372,6 +372,8 @@ def main():
         isolated = root / "isolated/snapshot"
         shutil.copytree(snapshot, isolated)
         packed_controls = control_archive(snapshot)
+        if hasattr(packed_controls, "close"):
+            resources.callback(packed_controls.close)
         copies = ControlSnapshotCopies(snapshot)
         env = dict(os.environ)
         env["PATH"] = "/nonexistent"

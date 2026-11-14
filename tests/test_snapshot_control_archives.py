@@ -1,6 +1,7 @@
 """Preserve complete schema-two control bytes and reject them in trusted replay."""
 
 from concurrent.futures import ThreadPoolExecutor
+import errno
 import gzip
 import io
 import json
@@ -8,6 +9,7 @@ from pathlib import Path
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from reproduction.paper_results import snapshot_archives as storage
 from reproduction.paper_results.check_snapshot_controls import control_archive, rehash
@@ -53,6 +55,7 @@ class ChunkedControlArchiveTests(unittest.TestCase):
     def test_complete_multipart_roundtrip_with_empty_code_and_long_logical_names(self):
         self.baseline()
         packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=1024)
+        self.addCleanup(packed.close)
         output = self.destination("complete")
         layout = packed.write(output, packed.entries.copy())
         self.assertGreater(len(layout["archives"]), 1)
@@ -63,6 +66,7 @@ class ChunkedControlArchiveTests(unittest.TestCase):
         content = {"whole-original.bin": b"z" * 10_000_001}
         self.baseline(content)
         packed = ChunkedControlArchive(self.source)
+        self.addCleanup(packed.close)
         output = self.destination("large")
         layout = packed.write(output, packed.entries.copy())
         fragments = [row for part in layout["archives"] for row in part["entries"].values()]
@@ -72,6 +76,7 @@ class ChunkedControlArchiveTests(unittest.TestCase):
     def test_unsafe_logical_control_and_all_original_bytes_reach_the_trusted_reader(self):
         self.baseline()
         packed = ChunkedControlArchive(self.source)
+        self.addCleanup(packed.close)
         entries = packed.entries.copy()
         unsafe = "../escaped-control-marker"
         entries[unsafe] = b"preserved unsafe control bytes"
@@ -100,6 +105,7 @@ class ChunkedControlArchiveTests(unittest.TestCase):
     def test_two_independent_workers_keep_every_baseline_member_and_their_own_mutation(self):
         self.baseline()
         packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=2048)
+        self.addCleanup(packed.close)
 
         def build(index):
             output = self.destination(str(index))
@@ -117,18 +123,61 @@ class ChunkedControlArchiveTests(unittest.TestCase):
     def test_reordered_dictionary_and_reused_immutable_fragments_are_deterministic(self):
         self.baseline()
         packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=2048)
+        self.addCleanup(packed.close)
         left, right = self.destination("left"), self.destination("right")
         packed.write(left, packed.entries.copy())
         packed.write(right, dict(reversed(list(packed.entries.items()))))
         self.assertEqual({p.name: p.read_bytes() for p in left.iterdir()},
                          {p.name: p.read_bytes() for p in right.iterdir()})
 
+    def test_shared_complete_parts_survive_copy_on_write_and_changed_part_boundaries(self):
+        content = {"a": b"A" * 128, "b": b"B" * 128, "c": b"C" * 128}
+        self.baseline(content)
+        packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=1024)
+        self.addCleanup(packed.close)
+        left, right = self.destination("left"), self.destination("right")
+        original_layout = packed.write(left, packed.entries.copy())
+        original_files = {p.name: p.read_bytes() for p in left.iterdir()}
+        packed.write(right, packed.entries.copy())
+        for part in original_layout["archives"]:
+            self.assertTrue((left / part["path"]).samefile(right / part["path"]))
+            self.assertFalse((left / part["path"]).is_symlink())
+
+        # Growing b creates a new fragment and moves c to another physical part.
+        # Rewriting left must preserve the complete, independent right snapshot.
+        changed = {**packed.entries, "b": b"changed" * 20}
+        changed_layout = packed.write(left, changed)
+        self.assertGreater(len(changed_layout["archives"]), len(original_layout["archives"]))
+        self.assertEqual(self.restored(left), changed)
+        self.assertEqual(self.restored(right), content)
+        self.assertEqual({p.name: p.read_bytes() for p in right.iterdir()}, original_files)
+
+        # Replacing shared files again must leave the private baseline reusable.
+        packed.write(left, packed.entries.copy())
+        self.assertEqual(self.restored(left), content)
+        self.assertEqual({p.name: p.read_bytes() for p in left.iterdir()}, original_files)
+        packed.close()
+        self.assertEqual(self.restored(right), content)
+
+    def test_unavailable_hard_links_fall_back_to_complete_regular_file_bytes(self):
+        self.baseline()
+        packed = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=1024)
+        self.addCleanup(packed.close)
+        output = self.destination("copy-fallback")
+        with patch("reproduction.paper_results.snapshot_control_archives.os.link",
+                   side_effect=OSError(errno.EXDEV, "Synthetic cross-device link refusal")):
+            layout = packed.write(output, packed.entries.copy())
+        self.assertTrue(all((output / row["path"]).is_file() for row in layout["archives"]))
+        self.assertEqual(self.restored(output), self.content)
+
     def test_obsolete_copied_parts_are_removed_without_dropping_any_logical_byte(self):
         self.baseline()
         output = self.destination("rewritten")
         first = ChunkedControlArchive(self.source, chunk_bytes=128, tar_bytes=1024)
+        self.addCleanup(first.close)
         first_layout = first.write(output, first.entries.copy())
         second = ChunkedControlArchive(self.source, chunk_bytes=1024, tar_bytes=4096)
+        self.addCleanup(second.close)
         second_layout = second.write(output, second.entries.copy())
         self.assertGreater(len(first_layout["archives"]), len(second_layout["archives"]))
         self.assertEqual({p.name for p in output.glob("evidence-part-*.tar.gz")},
@@ -145,6 +194,7 @@ class ChunkedControlArchiveTests(unittest.TestCase):
     def test_factory_selects_schema_two_and_rehash_binds_complete_layout_and_manifest(self):
         self.baseline()
         packed = control_archive(self.source)
+        self.addCleanup(packed.close)
         self.assertIsInstance(packed, ChunkedControlArchive)
         packed.write(self.source, packed.entries.copy())
         results = self.source / "results"
