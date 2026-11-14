@@ -69,3 +69,12 @@ TLS observations and main-promotion guards.
 
 The immutable default remains v25. These readers alone neither create a v26
 snapshot nor establish that all paper results have been reproduced.
+
+The [pinned reader-validation receipt](snapshot-v26-ptx-reader-validation-v1/results.json)
+records a complete standard-library-only run from isolated Python outside Git
+and the checkout, with Git absent from `PATH` and no SDK import. Both complete
+packets, all 16 archives and all 1,662 members passed. The subsequent complete
+17-test reader/control suite passed in 56.167 seconds, including all sixteen
+coherently rehashed scope controls. The complete driver, commands, stdout,
+stderr, source hashes and result bindings are retained. No fresh Lean, GPU or
+model experiment was performed, and the original v25 snapshot is unchanged.
