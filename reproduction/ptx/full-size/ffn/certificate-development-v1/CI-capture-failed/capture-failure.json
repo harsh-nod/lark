@@ -1,0 +1,11 @@
+{
+  "status": "collector-assertion-failed-after-successful-original-proof-job",
+  "assertion": "expected hosted stack [8388608,-1]",
+  "actual_hosted_stack": [
+    16777216,
+    -1
+  ],
+  "proof_job_was_successful": true,
+  "new_Lean_jobs_or_CI_reruns": 0,
+  "correction": "Retain actual hosted stack; do not claim the historical CI used the local 8 MiB limit. New certificate CI steps explicitly set 8 MiB."
+}

@@ -967,6 +967,45 @@ jobs:
         run: |
           python3 reproduction/ptx/check_ffn_pipeline.py \
             --output /tmp/lark-ptx-ffn-pipeline-ci-proof --lean "$(elan which lean)"
+      - name: Export the source-bound full FFN pipeline certificate
+        run: |
+          ulimit -S -s 8192
+          python3 -m lark_kernels.ptx_ffn_certificate verify \
+            --up-source reproduction/ptx/full-size/ffn/up/kernel.ptx \
+            --down-source reproduction/ptx/full-size/ffn/down/kernel.ptx \
+            --reference reproduction/ptx/full-size/ffn/reference.py \
+            --up-contract reproduction/ptx/full-size/ffn/up/task.json \
+            --down-contract reproduction/ptx/full-size/ffn/down/task.json \
+            --output /tmp/lark-ptx-ffn-ci-export --lean "$HOME/.elan/bin/lean"
+      - name: Rebuild the FFN certificate and refuse four direct Lean dependency changes
+        run: |
+          ulimit -S -s 8192
+          python3 reproduction/ptx/check_ffn_source_controls.py \
+            --recording /tmp/lark-ptx-ffn-ci-export \
+            --output /tmp/lark-ptx-ffn-ci-source-controls --lean "$HOME/.elan/bin/lean"
+      - name: Refuse 31 coherently rehashed FFN recordings before fresh Lean work
+        run: |
+          ulimit -S -s 8192
+          python3 reproduction/ptx/check_ffn_recording_controls.py \
+            --recording /tmp/lark-ptx-ffn-ci-export \
+            --output /tmp/lark-ptx-ffn-ci-recording-controls --lean "$HOME/.elan/bin/lean"
+      - name: Retain FFN certificate and control reports and Lean logs
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for name in ('lark-ptx-ffn-ci-export', 'lark-ptx-ffn-ci-source-controls',
+                       'lark-ptx-ffn-ci-recording-controls'):
+              root = Path('/tmp') / name
+              for p in sorted(root.rglob('*')):
+                  relative = p.relative_to(root)
+                  if 'recording' in relative.parts:
+                      continue
+                  if p.is_file() and (p.name in ('results.json', 'replay.json') or p.suffix == '.log'):
+                      print(json.dumps({'FFN_evidence': name + '/' + str(relative),
+                                        'text': p.read_text()}), flush=True)
+          PY
   ptx-batched:
     runs-on: ubuntu-latest
     timeout-minutes: 10

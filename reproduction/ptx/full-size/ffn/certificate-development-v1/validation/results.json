@@ -1,0 +1,63 @@
+{
+  "status": "FFN-certificate-frontend-Ruff-CI-wiring-checks-passed",
+  "commands": [
+    {
+      "name": "frontend-tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_ptx_ffn_frontend.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "ruff",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "ruff",
+        "check",
+        "lark_kernels/ptx_ffn.py",
+        "lark_kernels/ptx_ffn_certificate.py",
+        "reproduction/ptx/check_ffn_source_controls.py",
+        "reproduction/ptx/check_ffn_recording_controls.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "frontend_tests_passed": 8,
+  "CI_jobs": 24,
+  "all_old_jobs_steps_runners_and_limits_unchanged": true,
+  "only_CI_change_four_additional_FFN_steps": [
+    "Export the source-bound full FFN pipeline certificate",
+    "Rebuild the FFN certificate and refuse four direct Lean dependency changes",
+    "Refuse 31 coherently rehashed FFN recordings before fresh Lean work",
+    "Retain FFN certificate and control reports and Lean logs"
+  ],
+  "source_bindings": {
+    "lark_kernels/ptx_ffn.py": "b07af659996a15187a282445a5429522e02e90473c69d5f7e8165d3fe6d6d52c",
+    "lark_kernels/ptx_ffn_certificate.py": "0205b11f00e70d8619b947f723b73bd223faf06d79cb58796e3195f1106dd885",
+    "pyproject.toml": "e9c10deac6770b0234de761e37c3939d292865c6c154f459fc9efae00fe7cd87",
+    ".github/workflows/ci.yml": "d60e019d94581d750786612f93437f0cc1b1d28d9bc1ce6265f99a3c5e373156",
+    "reproduction/ptx/check_ffn_source_controls.py": "e1efd87f9d2f64f2be2bc65b9b674ca2e27349c5bcdac8ea2f98f432722717cc",
+    "reproduction/ptx/check_ffn_recording_controls.py": "8a8f81f3b93282b4d13cd4a7967ff0bf2aaf87ecfd70f39453f301677dbe59c7"
+  },
+  "model_calls": 0,
+  "GPU_trials": 0,
+  "original_paper_fully_reproduced": false
+}

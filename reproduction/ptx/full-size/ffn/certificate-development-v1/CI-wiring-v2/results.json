@@ -1,0 +1,29 @@
+{
+  "status": "FFN-certificate-CI-explicit-8MiB-stack-wiring-passed",
+  "jobs": 24,
+  "all_existing_jobs_steps_runners_caps_unchanged": true,
+  "four_new_steps": [
+    {
+      "name": "Export the source-bound full FFN pipeline certificate",
+      "run": "ulimit -S -s 8192\npython3 -m lark_kernels.ptx_ffn_certificate verify \\\n  --up-source reproduction/ptx/full-size/ffn/up/kernel.ptx \\\n  --down-source reproduction/ptx/full-size/ffn/down/kernel.ptx \\\n  --reference reproduction/ptx/full-size/ffn/reference.py \\\n  --up-contract reproduction/ptx/full-size/ffn/up/task.json \\\n  --down-contract reproduction/ptx/full-size/ffn/down/task.json \\\n  --output /tmp/lark-ptx-ffn-ci-export --lean \"$HOME/.elan/bin/lean\"\n"
+    },
+    {
+      "name": "Rebuild the FFN certificate and refuse four direct Lean dependency changes",
+      "run": "ulimit -S -s 8192\npython3 reproduction/ptx/check_ffn_source_controls.py \\\n  --recording /tmp/lark-ptx-ffn-ci-export \\\n  --output /tmp/lark-ptx-ffn-ci-source-controls --lean \"$HOME/.elan/bin/lean\"\n"
+    },
+    {
+      "name": "Refuse 31 coherently rehashed FFN recordings before fresh Lean work",
+      "run": "ulimit -S -s 8192\npython3 reproduction/ptx/check_ffn_recording_controls.py \\\n  --recording /tmp/lark-ptx-ffn-ci-export \\\n  --output /tmp/lark-ptx-ffn-ci-recording-controls --lean \"$HOME/.elan/bin/lean\"\n"
+    },
+    {
+      "name": "Retain FFN certificate and control reports and Lean logs",
+      "if": "always()",
+      "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\nfor name in ('lark-ptx-ffn-ci-export', 'lark-ptx-ffn-ci-source-controls',\n             'lark-ptx-ffn-ci-recording-controls'):\n    root = Path('/tmp') / name\n    for p in sorted(root.rglob('*')):\n        relative = p.relative_to(root)\n        if 'recording' in relative.parts:\n            continue\n        if p.is_file() and (p.name in ('results.json', 'replay.json') or p.suffix == '.log'):\n            print(json.dumps({'FFN_evidence': name + '/' + str(relative),\n                              'text': p.read_text()}), flush=True)\nPY\n"
+    }
+  ],
+  "new_proof_and_control_steps_explicitly_set_stack_8MiB": true,
+  "workflow_sha256": "c15d8b189a670a47d8a4351fe3f31a732187658dff4a9d2f94845764d7dc430c",
+  "previous_wiring_receipt_retained": "/tmp/lark-ptx-ffn-certificate-validation-v1-20261114",
+  "historical_FFN_source_CI_actual_stack_16MiB": true,
+  "new_CI_execution_claim": false
+}

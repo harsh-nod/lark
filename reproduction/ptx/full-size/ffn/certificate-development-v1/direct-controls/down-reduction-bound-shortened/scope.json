@@ -1,0 +1,87 @@
+{
+  "source_language": "ptx",
+  "stages": [
+    {
+      "stage": "up",
+      "reference_contract_language": "cuda",
+      "shapes": [
+        [
+          64,
+          256
+        ],
+        [
+          256,
+          1024
+        ],
+        [
+          64,
+          1024
+        ]
+      ],
+      "dtypes": [
+        "float16",
+        "float16",
+        "float16"
+      ],
+      "launch": {
+        "grid": 65536,
+        "block": 1,
+        "warp": 32
+      },
+      "unchanged_CUDA_contract_fuel": [
+        1030,
+        1,
+        1,
+        1
+      ],
+      "PTX_instructions": 173
+    },
+    {
+      "stage": "down",
+      "reference_contract_language": "cuda",
+      "shapes": [
+        [
+          64,
+          1024
+        ],
+        [
+          1024,
+          256
+        ],
+        [
+          64,
+          256
+        ]
+      ],
+      "dtypes": [
+        "float16",
+        "float16",
+        "float16"
+      ],
+      "launch": {
+        "grid": 16384,
+        "block": 1,
+        "warp": 32
+      },
+      "unchanged_CUDA_contract_fuel": [
+        4102,
+        1,
+        1,
+        1
+      ],
+      "PTX_instructions": 171
+    }
+  ],
+  "host_launch_order": [
+    "up",
+    "down"
+  ],
+  "shared_intermediate": {
+    "name": "hidden",
+    "shape": [
+      64,
+      1024
+    ],
+    "dtype": "float16"
+  }
+}

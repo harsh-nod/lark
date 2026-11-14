@@ -1,0 +1,45 @@
+{
+  "name": "ffn_down_cuda_64_256_1024_256",
+  "entry": "ffn_down_cuda_64_256_1024_256",
+  "language": "cuda",
+  "buffers": [
+    {
+      "name": "hidden",
+      "role": "input",
+      "shape": [
+        64,
+        1024
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "down",
+      "role": "input",
+      "shape": [
+        1024,
+        256
+      ],
+      "dtype": "float16"
+    },
+    {
+      "name": "out",
+      "role": "output",
+      "shape": [
+        64,
+        256
+      ],
+      "dtype": "float16"
+    }
+  ],
+  "launch": {
+    "grid": 16384,
+    "block": 1,
+    "warp": 32
+  },
+  "fuel": [
+    4102,
+    1,
+    1,
+    1
+  ]
+}
