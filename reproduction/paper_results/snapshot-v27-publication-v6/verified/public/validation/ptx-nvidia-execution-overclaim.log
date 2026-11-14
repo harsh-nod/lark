@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 373, in <module>
+    main()
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 365, in main
+    replay(snapshot, manuscript, creating=args.build)
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 302, in replay
+    require(
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 30, in require
+    raise ValueError(message)
+ValueError: Frozen audit replay failed: Traceback (most recent call last):
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 371, in <module>
+    run_frozen_auditor(sys.argv[2], sys.argv[3], sys.argv[4:])
+  File "/dev/shm/lark-snapshot-controls-docowh2m/isolated/bin/replay_snapshot.py", line 55, in run_frozen_auditor
+    runpy.run_path(str(script), run_name="__main__")
+  File "<frozen runpy>", line 286, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/dev/shm/lark-paper-snapshot-s9jfwsbk/reproduction/paper_results/audit.py", line 757, in <module>
+    main()
+  File "/dev/shm/lark-paper-snapshot-s9jfwsbk/reproduction/paper_results/audit.py", line 675, in main
+    ptx_checks = check_ptx_pointwise_evidence(config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-s9jfwsbk/reproduction/paper_results/ptx_pointwise_evidence.py", line 255, in check_ptx_pointwise_evidence
+    report = check_recording_packet(root / PREFIX,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/dev/shm/lark-paper-snapshot-s9jfwsbk/reproduction/paper_results/ptx_pointwise_evidence.py", line 107, in check_recording_packet
+    require(report["nvidia_execution"] is report["original_paper_fully_reproduced"] is False
+  File "/dev/shm/lark-paper-snapshot-s9jfwsbk/reproduction/paper_results/ptx_pointwise_evidence.py", line 53, in require
+    raise ValueError("PTX pointwise " + message)
+ValueError: PTX pointwise proof contract/original scope differs
+
