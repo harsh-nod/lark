@@ -17,6 +17,40 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def published_paths(root, commit, snapshot):
+    """Use the pinned Git tree, including every physical part and helper."""
+    relative = Path('reproduction/paper_results')
+
+    def blob(name):
+        return subprocess.check_output(['git', 'show', commit + ':' + name.as_posix()], cwd=root)
+
+    provenance = json.loads(blob(snapshot / 'provenance.json'))
+    schema = provenance['schema']
+    assert type(schema) is int and schema in (1, 2), 'Unsupported published storage schema'
+    names = subprocess.check_output(
+        ['git', 'ls-tree', '-rz', '--name-only', commit, '--', snapshot.as_posix()], cwd=root,
+    ).decode().split('\0')
+    files = {Path(name) for name in names if name}
+    manifest = json.loads(blob(snapshot / 'manifest.json'))
+    assert files == {snapshot / name for name in manifest} | {snapshot / 'manifest.json'}, \
+        'Complete committed snapshot inventory required'
+    helpers = [relative / 'replay_snapshot.py', relative / 'check_snapshot_controls.py']
+    if schema == 2:
+        helpers += [relative / 'snapshot_archives.py', relative / 'snapshot_control_archives.py']
+    return helpers + sorted(files)
+
+
+def expected_counts(targets):
+    negatives = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
+                 + 16*('numerical_studies' in targets) + 17*('full_shape_models' in targets)
+                 + 8*sum(key in targets for key in ('ptx_pointwise_proof', 'ptx_dot_proof',
+                         'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof')))
+    positives = ((2 if 'numerical_studies' in targets else 1) + ('full_shape_models' in targets)
+                 + sum(key in targets for key in ('ptx_pointwise_proof', 'ptx_dot_proof',
+                       'ptx_matrix_proof', 'ptx_batched_proof', 'ptx_linear_proof')))
+    return positives, negatives
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True)
@@ -28,13 +62,12 @@ def main():
     out = args.output.resolve()
     assert not any((p/'.git').exists() for p in (out, *out.parents))
     assert len(args.commit) == 40 and all(c in '0123456789abcdef' for c in args.commit)
-    assert Path(args.snapshot).name == args.snapshot
+    assert Path(args.snapshot).name == args.snapshot and args.snapshot not in ('', '.', '..')
     out.mkdir(parents=True, exist_ok=False)
     downloaded = out/'download'
     relative = Path('reproduction/paper_results')
     snapshot = relative/'snapshots'/args.snapshot
-    paths = [relative/'replay_snapshot.py', relative/'check_snapshot_controls.py']
-    paths += [p.relative_to(ROOT) for p in sorted((ROOT/snapshot).rglob('*')) if p.is_file()]
+    paths = published_paths(ROOT, args.commit, snapshot)
     records = []
     for name in paths:
         expected = subprocess.check_output(['git','show',args.commit+':'+str(name)],cwd=ROOT)
@@ -62,13 +95,7 @@ def main():
     assert result.returncode == 0, result.stdout+result.stderr
     validation = json.loads((out/'validation/results.json').read_text())
     targets = json.loads((downloaded/snapshot/'targets.json').read_text())
-    expected_controls = (4 + 2*('production_cases' in targets) + 2*('production_proof_checks' in targets)
-                         + 16*('numerical_studies' in targets)
-                         + 17*('full_shape_models' in targets) + 8*('ptx_pointwise_proof' in targets)
-                         + 8*('ptx_dot_proof' in targets) + 8*('ptx_matrix_proof' in targets))
-    expected_positives = ((2 if 'numerical_studies' in targets else 1)
-                          + ('full_shape_models' in targets) + ('ptx_pointwise_proof' in targets)
-                          + ('ptx_dot_proof' in targets) + ('ptx_matrix_proof' in targets))
+    expected_positives, expected_controls = expected_counts(targets)
     assert validation['positive_replays'] == expected_positives and validation['negative_controls'] == expected_controls
     assert validation['replayer_sha256'] == sha(downloaded/relative/'replay_snapshot.py')
     assert validation['control_runner_sha256'] == sha(downloaded/relative/'check_snapshot_controls.py')

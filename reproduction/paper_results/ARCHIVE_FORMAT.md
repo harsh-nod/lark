@@ -85,3 +85,12 @@ selected GEMM metadata files change in that false control. Both the original
 v25 snapshot and the retained schema-two prototype remain byte-identical.
 The complete raw control snapshots remain retained locally. This checks the
 new control-storage path, not the final v26 snapshot or its full control suite.
+
+The public downloader now derives its complete file roster from the pinned Git
+commit, so deletion or replacement in the local working tree cannot omit a
+published archive part. Version 2 includes both trusted archive helpers in
+addition to the replayer and control runner; version 1 retains its original
+two-helper roster. Six offline roster tests passed in 0.594 seconds, including
+the real unchanged v25 eleven-file download roster, missing-part refusal and
+the expected v26 eight-positive/eighty-one-negative counts. A v26 anonymous
+download and full control-suite pass have not yet been recorded.
